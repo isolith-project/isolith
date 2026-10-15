@@ -1,0 +1,53 @@
+name: CI (lint + unit + integration)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/don/keelworks.git" .
+          git log --oneline -1
+      - name: rustfmt check
+        run: |
+          rustup component add rustfmt
+          cargo fmt --all -- --check
+      - name: clippy (deny warnings)
+        run: |
+          rustup component add clippy
+          cargo clippy --workspace --all-targets -- -D warnings 2>&1 | tail -25
+
+  unit:
+    name: unit
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/don/keelworks.git" .
+          git log --oneline -1
+      - name: Unit tests
+        run: cargo test --workspace --lib 2>&1 | tail -25
+
+  integration:
+    name: integration
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/don/keelworks.git" .
+          git log --oneline -1
+      - name: Integration tests
+        run: cargo test --workspace --tests 2>&1 | tail -25
