@@ -107,7 +107,9 @@ def api_get(path, token, base):
         return json.loads(r.read().decode())
 
 
-def test_branch_protection_and_runs(token, base):
+def branch_protection_and_runs(token, base):
+    """PART B live-check helper (called from main(); NOT a pytest test — it
+    takes token/base as args, which pytest would wrongly treat as fixtures)."""
     global _partB_ok
     owner, repo = (os.environ.get("OEP_REPO") or "keelworks/keelworks").split("/", 1)
     try:
@@ -159,7 +161,7 @@ def main():
     token = os.environ.get("GITEA_TOKEN", "")
     if token:
         base = os.environ.get("GITEA_BASE", "http://192.168.0.101:3200/api/v1")
-        test_branch_protection_and_runs(token, base)
+        branch_protection_and_runs(token, base)
     else:
         print("-- PART B SKIPPED (no GITEA_TOKEN env) --")
     print("=" * 60)
