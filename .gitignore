@@ -1,0 +1,6 @@
+# git worktrees (worktree-isolation discipline)
+.worktrees/
+
+# Python artifacts
+__pycache__/
+*.pyc
