@@ -35,9 +35,10 @@ WORKFLOW_DIR = os.path.join(REPO, ".gitea", "workflows")
 
 EXPECTED_JOBS = ["lint", "unit", "integration"]
 EXPECTED_TRIGGERS = ["push"]
-# Context names Gitea branch protection must require (job names in the workflow).
-EXPECTED_STATUS_CONTEXTS = ["lint", "unit", "integration"]
-
+# Context names Gitea branch protection must require. Gitea records Actions
+# job statuses as "<workflow name> / <job name> (<event>)" -- assert the real
+# shape, not the bare job name (verified live on keelworks 2026-10-15).
+STATUS_PREFIX = "CI (lint + unit + integration) / "
 _failures = []
 _partB_ok = True
 
@@ -127,8 +128,11 @@ def test_branch_protection_and_runs(token, base):
         return
     contexts = main_rule.get("status_check_contexts") or []
     check("PART B: main requires status checks", bool(contexts), repr(contexts))
-    for ctx in EXPECTED_STATUS_CONTEXTS:
-        check("PART B: main requires status check '%s'" % ctx, ctx in contexts, repr(contexts))
+    # Gitea records Actions contexts as "<workflow> / <job> (<event>)".
+    for job in EXPECTED_JOBS:
+        expected = STATUS_PREFIX + job + " (pull_request)"
+        check("PART B: main requires status check '%s'" % expected,
+              expected in contexts, repr(contexts))
     # pushes to main blocked (enable_push set) = PR-based flow
     check("PART B: direct push protection on main", main_rule.get("enable_push") is True,
           "enable_push=%s" % main_rule.get("enable_push"))
