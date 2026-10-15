@@ -4,6 +4,10 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
+  # Toolchain: the general rust:1-slim-bookworm image provides rustup; the
+  # repo's rust-toolchain.toml (P0-M3-T02) is the single source of truth for
+  # the exact channel + components (rustfmt, clippy), auto-installed on first
+  # use. CI follows toolchain bumps without editing this file.
   lint:
     name: lint
     runs-on: ubuntu-latest
@@ -13,16 +17,12 @@ jobs:
       - name: Checkout
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates
-          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/don/keelworks.git" .
+          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git" .
           git log --oneline -1
       - name: rustfmt check
-        run: |
-          rustup component add rustfmt
-          cargo fmt --all -- --check
+        run: cargo fmt --all -- --check
       - name: clippy (deny warnings)
-        run: |
-          rustup component add clippy
-          cargo clippy --workspace --all-targets -- -D warnings 2>&1 | tail -25
+        run: cargo clippy --workspace --all-targets -- -D warnings 2>&1 | tail -25
 
   unit:
     name: unit
@@ -33,7 +33,7 @@ jobs:
       - name: Checkout
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates
-          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/don/keelworks.git" .
+          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git" .
           git log --oneline -1
       - name: Unit tests
         run: cargo test --workspace --lib 2>&1 | tail -25
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates
-          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/don/keelworks.git" .
+          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git" .
           git log --oneline -1
       - name: Integration tests
         run: cargo test --workspace --tests 2>&1 | tail -25

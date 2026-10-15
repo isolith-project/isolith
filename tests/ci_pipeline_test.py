@@ -108,8 +108,9 @@ def api_get(path, token, base):
 
 def test_branch_protection_and_runs(token, base):
     global _partB_ok
+    owner, repo = (os.environ.get("OEP_REPO") or "keelworks/keelworks").split("/", 1)
     try:
-        rules = api_get("/repos/don/keelworks/branch_protections", token, base)
+        rules = api_get("/repos/%s/%s/branch_protections" % (owner, repo), token, base)
     except urllib.error.HTTPError as e:
         check("PART B: branch protections fetchable", False, "HTTP %s" % e.code)
         _partB_ok = False
@@ -133,7 +134,7 @@ def test_branch_protection_and_runs(token, base):
           "enable_push=%s" % main_rule.get("enable_push"))
     # workflow actually ran successfully on a push event
     try:
-        runs = api_get("/repos/don/keelworks/actions/runs?limit=10", token, base)
+        runs = api_get("/repos/%s/%s/actions/runs?limit=10" % (owner, repo), token, base)
     except Exception as e:
         check("PART B: actions runs fetchable", False, repr(e))
         _partB_ok = False
