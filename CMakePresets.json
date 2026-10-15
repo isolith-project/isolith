@@ -1,0 +1,55 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default (GCC 13, Unix Makefiles)",
+      "description": "Reference build for U1 (Ubuntu 24.04): GCC 13.3.0, standard C++20. Pinned in .tool-versions",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "clang",
+      "displayName": "Clang 18.1.3",
+      "description": "Alternative toolchain: LLVM/Clang 18.1.3. Pinned in .tool-versions",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ninja",
+      "displayName": "Ninja (CI)",
+      "description": "CI uses Ninja when available; matches GCC 13 defaults otherwise",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "default", "configurePreset": "default" },
+    { "name": "clang", "configurePreset": "clang" },
+    { "name": "ninja", "configurePreset": "ninja" }
+  ]
+}

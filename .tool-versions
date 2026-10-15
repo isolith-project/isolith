@@ -1,0 +1,13 @@
+# Keelworks single source of truth for toolchain versions (P0-M3-T02).
+# Every toolchain the build touches is pinned here in one place. The
+# per-tool manifests (rust-toolchain.toml, .python-version, CMakePresets.json)
+# reference the same versions; acceptance-test.sh verifies they agree with the
+# real `--version` output on the host. Bump deliberately, together.
+#
+# Format: <tool> <version>   (asdf/mise compatible)
+
+rust    1.98.1
+python  3.14.7
+cmake   3.28.3
+cxx     gcc-13.3.0          # C++ toolchain: GCC 13.3.0 (Ubuntu 24.04); Clang 18.1.3 alt
+clang   18.1.3

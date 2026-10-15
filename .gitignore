@@ -7,3 +7,12 @@ __pycache__/
 
 # Rust build artifacts (cargo workspace)
 /target/
+
+# C/C++ build artifacts (CMake)
+build/
+*.o
+*.a
+*.so
+
+# Python local venv (uv)
+.venv/
