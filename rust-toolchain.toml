@@ -1,0 +1,12 @@
+# Keelworks Rust toolchain pin (P0-M3-T02).
+# Purpose: reproducible builds across machines (P11-T06 supply-chain doctrine).
+# This pins the exact stable channel used for all workspace crates. Do NOT use
+# "stable" here: an unpinned channel drifts on rustup update.
+#
+# Reference host (U1, 2026-10-15): rustc 1.98.1.
+# Bump deliberately via a toolchain-pin PR; update .tool-versions in the same PR.
+
+[toolchain]
+channel = "1.98.1"
+profile = "minimal"
+components = ["rustfmt", "clippy"]
