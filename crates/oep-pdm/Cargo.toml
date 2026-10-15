@@ -1,0 +1,7 @@
+[package]
+name = "oep-pdm"
+description = "P8: Self-hosted PDM (ENOVIA-lite) service skeleton (reserved)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true

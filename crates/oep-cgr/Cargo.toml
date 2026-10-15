@@ -1,0 +1,7 @@
+[package]
+name = "oep-cgr"
+description = "P2: CGR (Dassault geometry/tessellation) reader skeleton."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true

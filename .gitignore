@@ -4,3 +4,6 @@
 # Python artifacts
 __pycache__/
 *.pyc
+
+# Rust build artifacts (cargo workspace)
+/target/

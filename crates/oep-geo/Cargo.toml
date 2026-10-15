@@ -1,0 +1,7 @@
+[package]
+name = "oep-geo"
+description = "P6: Geometry core and model representation skeleton."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true

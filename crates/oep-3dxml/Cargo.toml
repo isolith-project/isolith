@@ -1,0 +1,7 @@
+[package]
+name = "oep-3dxml"
+description = "P3: 3DXML reader/writer skeleton."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
