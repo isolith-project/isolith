@@ -1,0 +1,7 @@
+[package]
+name = "oep-step"
+description = "P4: STEP AP242/QIF/JT interop skeleton (reserved)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true

@@ -1,0 +1,23 @@
+# Keelworks / Open Engineering Platform -- Rust workspace root.
+#
+# One crate per workstream (see docs/layout.md for the full mapping).
+# Toolchain pinning (edition bumps, rust-toolchain.toml, lockfile policy) is
+# owned by P0-M3-T02 -- this file only defines the workspace member layout.
+#
+# SPDX license for each crate is set by the P0-M2 legal pass, not here.
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/oep-cgr",
+    "crates/oep-3dxml",
+    "crates/oep-geo",
+    "crates/oep-step",
+    "crates/oep-pdm",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Keelworks contributors"]
+repository = "http://192.168.0.101:3200/don/keelworks"
