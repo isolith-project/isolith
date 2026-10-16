@@ -1,0 +1,5 @@
+# Build artifacts for the standalone headless-render spike crate.
+# The root .gitignore only covers the root /target/ (the cargo workspace);
+# this spike is an independent workspace with its own target dir, so it needs
+# its own ignore entry. Never commit build output.
+/target/

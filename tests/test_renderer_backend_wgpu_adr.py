@@ -208,8 +208,9 @@ def run_checks():
         slow = spike.lower()
         check("wgpu" in slow, "spike must use wgpu")
         check("wgsl" in slow, "spike must contain a WGSL shader")
-        check("no surface" not in slow and "create_surface" not in slow,
-              "spike must NOT create a surface (headless proof)")
+        check("create_surface(" not in slow and "surface_configuration" not in slow
+              and "get_current_texture" not in slow and "swapchain_descriptor" not in slow,
+              "spike must not use any surface/swapchain API (headless proof)")
     png_ok = os.path.isfile(PROOF_PNG)
     check(png_ok, "missing proof image: P6-M5/spike/headless-render/proof.png")
     if png_ok:
