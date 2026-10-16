@@ -20,12 +20,14 @@
 //! - [`assembly`]: [`Assembly`], [`Instance`], [`InstanceSource`].
 //! - [`transform`]: the 4x4 row-major [`Transform`].
 //! - [`validate`]: structural invariant rules as [`ValidationError`]s.
+//! - [`math`]: vendored std-only f64 math core (P6-M2-T01).
 #![deny(missing_docs)]
 
 pub mod assembly;
 pub mod body;
 pub mod document;
 pub mod feature;
+pub mod math;
 pub mod part;
 pub mod transform;
 pub mod validate;
