@@ -78,7 +78,9 @@ pub fn build_example() -> Document {
             Instance::new(
                 format!("oep-inst-fastener-{}", i + 1),
                 format!("F{}", i + 1),
-                InstanceSource::Part("oep-part-fastener".to_string()),
+                InstanceSource::Part {
+                    id: "oep-part-fastener".to_string(),
+                },
             )
             .with_transform(Transform::translation(*x, *y, 0.0)),
         );
@@ -88,7 +90,9 @@ pub fn build_example() -> Document {
             Instance::new(
                 "oep-inst-bracket",
                 "bracket",
-                InstanceSource::Part("oep-part-bracket".to_string()),
+                InstanceSource::Part {
+                    id: "oep-part-bracket".to_string(),
+                },
             )
             .with_transform(Transform::identity()),
         )
@@ -96,7 +100,9 @@ pub fn build_example() -> Document {
             Instance::new(
                 "oep-inst-fastener-set",
                 "fastener-set",
-                InstanceSource::Assembly("oep-assembly-fastener-set".to_string()),
+                InstanceSource::Assembly {
+                    id: "oep-assembly-fastener-set".to_string(),
+                },
             )
             .with_transform(Transform::identity()),
         );
@@ -148,7 +154,11 @@ fn golden_roundtrips_and_validates_clean() {
     assert_eq!(doc.format(), "oep-geo");
     assert_eq!(doc.version(), 1);
     assert_eq!(doc.units(), "mm");
-    assert!(doc.validate().is_empty(), "unexpected issues: {:?}", doc.validate());
+    assert!(
+        doc.validate().is_empty(),
+        "unexpected issues: {:?}",
+        doc.validate()
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -178,8 +188,9 @@ fn validate_rejects_unresolved_part_ref() {
 #[test]
 fn validate_rejects_unresolved_instance_source() {
     let mut doc = build_example();
-    doc.assemblies[0].instances[0].source =
-        InstanceSource::Part("oep-part-ghost".to_string());
+    doc.assemblies[0].instances[0].source = InstanceSource::Part {
+        id: "oep-part-ghost".to_string(),
+    };
     assert!(codes(doc.validate()).contains(&"unresolved-source"));
 }
 
@@ -197,12 +208,16 @@ fn validate_rejects_assembly_cycle() {
     let a = Assembly::new("oep-asm-a", "A").with_instance(Instance::new(
         "oep-inst-a1",
         "b",
-        InstanceSource::Assembly("oep-asm-b".to_string()),
+        InstanceSource::Assembly {
+            id: "oep-asm-b".to_string(),
+        },
     ));
     let b = Assembly::new("oep-asm-b", "B").with_instance(Instance::new(
         "oep-inst-b1",
         "a",
-        InstanceSource::Assembly("oep-asm-a".to_string()),
+        InstanceSource::Assembly {
+            id: "oep-asm-a".to_string(),
+        },
     ));
     doc.push_assembly(a);
     doc.push_assembly(b);
@@ -215,8 +230,12 @@ fn validate_rejects_assembly_cycle() {
 
 #[test]
 fn instance_source_serializes_as_interned_tag() {
-    let part_src = InstanceSource::Part("oep-part-x".to_string());
-    let asm_src = InstanceSource::Assembly("oep-asm-x".to_string());
+    let part_src = InstanceSource::Part {
+        id: "oep-part-x".to_string(),
+    };
+    let asm_src = InstanceSource::Assembly {
+        id: "oep-asm-x".to_string(),
+    };
     assert_eq!(
         serde_json::to_value(&part_src).unwrap(),
         serde_json::json!({"kind": "part", "id": "oep-part-x"})

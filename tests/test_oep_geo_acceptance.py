@@ -329,7 +329,8 @@ def test_golden_spot_values():
         ("sub-assembly", "oep-assembly-fastener-set"),
     ]
     bracket_inst = next(i for i in top["instances"] if i["source"]["id"] == "oep-part-bracket")
-    assert _floats(bracket_inst["transform"]) == [1.0, 0.0, 0.0, 0.0] * 4
+    IDENTITY = [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+    assert _floats(bracket_inst["transform"]) == IDENTITY
 
     # feature vocabulary uses the open PascalCase kind convention.
     for feat in doc["features"]:
