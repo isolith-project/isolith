@@ -1,0 +1,353 @@
+# OEP PDM REST API v1 -- OpenAPI contract
+#
+# Owner: P7-M2-T02 (stub-first browser/PDM integration). Inherited by P8-M6-T01
+# ("REST API v1 + python client; OpenAPI spec as the contract").
+#
+# The stub server ships with the P7 modeler lane (crates/oep-pdm, binary
+# `oep-pdm-stub`). The real P8 service comes online by implementing this exact
+# contract at the same base path; the client that the OEP workbench/browser uses
+# (crates/oep-pdm `client`) then keeps working with no rewrite.
+#
+# Base path: all resources live under /api/v1 regardless of host/port.
+#
+# Object model (P8-M1-T02 vault model, subset): Item -> Revision -> File(file blob).
+# Files are content-addressed: every file ref carries blob_sha256. Relationship
+# and context objects are deferred to P8-M1-T02/P8-M3; v1 carries item.context
+# as a free string so clients round-trip it without loss.
+#
+# Conventions:
+#   * Uploads: file content is base64-encoded inside the JSON body (single-shot
+#     atomic revision create). A streaming/multipart upload path may be added by
+#     P8 later WITHOUT breaking this contract (new endpoint, not a change).
+#   * Downloads: raw bytes, Content-Type application/octet-stream (or stored
+#     content_type), metadata in X-Oep-* / X-Blob-Sha256 response headers.
+#   * Errors: {"error": {"code": ..., "message": ...}} with the listed status.
+openapi: 3.0.3
+info:
+  title: OEP PDM REST API
+  version: 1.0.0
+  description: >-
+    Self-hosted PDM / ENOVIA-lite vault service (Keelworks P8). v1 is the
+    stub-first contract: items, revisions, content-addressed files, open and
+    save-revision verbs. P8-M6-T01 implements this same contract for real.
+tags:
+  - name: health
+  - name: items
+  - name: revisions
+  - name: files
+paths:
+  /health:
+    get:
+      tags: [health]
+      summary: Service liveness + contract identity.
+      operationId: health
+      responses:
+        '200':
+          description: Service is up.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Health' }
+  /items:
+    get:
+      tags: [items]
+      summary: List items (browser catalogue). Newest first.
+      operationId: listItems
+      parameters:
+        - in: query
+          name: prefix
+          required: false
+          schema: { type: string }
+          description: Filter by item-name prefix.
+        - in: query
+          name: limit
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 500, default: 100 }
+        - in: query
+          name: offset
+          required: false
+          schema: { type: integer, default: 0 }
+      responses:
+        '200':
+          description: Item catalogue page.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ItemList' }
+    post:
+      tags: [items]
+      summary: Create a vault item.
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateItemRequest' }
+      responses:
+        '201':
+          description: Item created.
+          headers:
+            Location:
+              schema: { type: string }
+              description: /api/v1/items/{item_id}
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Item' }
+        '400':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+  /items/{item_id}:
+    get:
+      tags: [items]
+      summary: Get one item with its current latest revision number.
+      operationId: getItem
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+      responses:
+        '200':
+          description: Item.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Item' }
+        '404':
+          $ref: '#/components/responses/Error'
+  /items/{item_id}/file/latest:
+    get:
+      tags: [files]
+      summary: >-
+        Open-from-PDM: download the latest revision's file bytes in one call.
+        The browser uses this after the user picks an item.
+      operationId: openLatestFile
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+      responses:
+        '200':
+          $ref: '#/components/responses/FileBytes'
+        '404':
+          $ref: '#/components/responses/Error'
+  /items/{item_id}/revisions:
+    get:
+      tags: [revisions]
+      summary: List all revisions of an item, newest first.
+      operationId: listRevisions
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+      responses:
+        '200':
+          description: Revisions of the item.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RevisionList' }
+        '404':
+          $ref: '#/components/responses/Error'
+    post:
+      tags: [revisions]
+      summary: >-
+        Save-revision-to-PDM: create the next revision of an item and upload its
+        file (content-addressed). The stub assigns the next integer revision
+        number; the real service applies the P8-M2-T01 state machine.
+      operationId: createRevision
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateRevisionRequest' }
+      responses:
+        '201':
+          description: Revision created.
+          headers:
+            Location:
+              schema: { type: string }
+              description: /api/v1/items/{item_id}/revisions/{rev}
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Revision' }
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+  /items/{item_id}/revisions/{rev}:
+    get:
+      tags: [revisions]
+      summary: Get revision metadata (no file bytes).
+      operationId: getRevision
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+        - { $ref: '#/components/parameters/Rev' }
+      responses:
+        '200':
+          description: Revision metadata.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Revision' }
+        '404':
+          $ref: '#/components/responses/Error'
+  /items/{item_id}/revisions/{rev}/file:
+    get:
+      tags: [files]
+      summary: Download a specific revision's file bytes.
+      operationId: openRevisionFile
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+        - { $ref: '#/components/parameters/Rev' }
+      responses:
+        '200':
+          $ref: '#/components/responses/FileBytes'
+        '404':
+          $ref: '#/components/responses/Error'
+components:
+  parameters:
+    ItemId:
+      name: item_id
+      in: path
+      required: true
+      schema: { type: string }
+      description: Vault item id (opaque, url-safe).
+    Rev:
+      name: rev
+      in: path
+      required: true
+      schema: { type: string }
+      description: Revision number as a string ("1", "2", ...).
+  responses:
+    Error:
+      description: Contract error.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    FileBytes:
+      description: File bytes plus metadata headers.
+      headers:
+        Content-Type:
+          schema: { type: string }
+          description: application/octet-stream or the stored content_type.
+        X-Oep-Item:
+          schema: { type: string }
+        X-Oep-Rev:
+          schema: { type: string }
+        X-Oep-Filename:
+          schema: { type: string }
+        X-Oep-Format:
+          schema: { type: string }
+        X-Blob-Sha256:
+          schema: { type: string }
+          description: Content-address; hex lowercase sha-256 of the body.
+      content:
+        application/octet-stream:
+          schema: { type: string, format: binary }
+  schemas:
+    Health:
+      type: object
+      required: [status, service, version]
+      properties:
+        status: { type: string, enum: [ok] }
+        service: { type: string, example: oep-pdm-stub }
+        version: { type: string, example: "1.0.0" }
+    CreateItemRequest:
+      type: object
+      required: [name, kind]
+      properties:
+        name: { type: string, minLength: 1 }
+        kind: { type: string, enum: [part, assembly, document] }
+        description: { type: string }
+        owner: { type: string }
+        context: { type: string }
+    Item:
+      type: object
+      required: [id, name, kind, latest_revision, revision_count, created_at]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        kind: { type: string }
+        description: { type: string, nullable: true }
+        owner: { type: string, nullable: true }
+        context: { type: string, nullable: true }
+        created_at: { type: string, format: date-time }
+        latest_revision: { type: string, nullable: true }
+        revision_count: { type: integer }
+    ItemSummary:
+      type: object
+      required: [id, name, kind, latest_revision, revision_count]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        kind: { type: string }
+        latest_revision: { type: string, nullable: true }
+        revision_count: { type: integer }
+    ItemList:
+      type: object
+      required: [items, total]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/ItemSummary' }
+        total: { type: integer }
+    CreateRevisionRequest:
+      type: object
+      required: [file]
+      properties:
+        state:
+          type: string
+          enum: [working, under_review, released, obsolete]
+          default: working
+        comment: { type: string }
+        created_by: { type: string }
+        file: { $ref: '#/components/schemas/FileUpload' }
+    FileUpload:
+      type: object
+      required: [filename, format, content]
+      properties:
+        filename: { type: string, minLength: 1 }
+        format: { type: string, minLength: 1, example: step }
+        content_type: { type: string, example: application/octet-stream }
+        content:
+          type: string
+          description: base64-encoded file bytes (standard base64 with padding).
+    Revision:
+      type: object
+      required: [number, state, created_at, created_by, files]
+      properties:
+        number: { type: string, example: "1" }
+        state:
+          type: string
+          enum: [working, under_review, released, obsolete]
+        maturity: { type: string, nullable: true }
+        comment: { type: string, nullable: true }
+        created_at: { type: string, format: date-time }
+        created_by: { type: string }
+        files:
+          type: array
+          items: { $ref: '#/components/schemas/FileRef' }
+    FileRef:
+      type: object
+      required: [id, filename, format, content_type, size, blob_sha256]
+      properties:
+        id: { type: string }
+        filename: { type: string }
+        format: { type: string }
+        content_type: { type: string }
+        size: { type: integer, format: int64 }
+        blob_sha256:
+          type: string
+          description: hex lowercase sha-256 of the file bytes.
+    RevisionList:
+      type: object
+      required: [item_id, latest, revisions]
+      properties:
+        item_id: { type: string }
+        latest: { type: string, nullable: true }
+        revisions:
+          type: array
+          items: { $ref: '#/components/schemas/Revision' }
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error: { $ref: '#/components/schemas/ErrorDetail' }
+    ErrorDetail:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string, example: not_found }
+        message: { type: string }
