@@ -1,0 +1,99 @@
+{
+  "taxonomy_version": "1.0.0",
+  "domain_root": "oep",
+  "naming_rules": {
+    "case": "lowercase",
+    "token_charset": "a-z 0-9 - _",
+    "separator": ".",
+    "max_tokens": 16,
+    "max_chars": 256,
+    "wildcard_star": "matches exactly one token",
+    "wildcard_gt": "matches one or more trailing tokens, last position only; never legal in the middle",
+    "reserved_prefixes_avoided": ["$SYS", "$JS", "$KV", "_INBOX"],
+    "whitespace": "forbidden anywhere in a subject"
+  },
+  "areas": {
+    "jobs": "Compute job lifecycle events per queue: state, progress, log, dead-letter. Scheduler and workers publish; dashboard and data consumers subscribe.",
+    "workers": "Worker presence, capabilities, and state transitions at job-execution level.",
+    "nodes": "Mesh node presence and health at machine level (a node may run many workers).",
+    "vault": "PDM object lifecycle events (publish, supersede) that trigger or reference jobs.",
+    "rpc": "Request-reply services: submit, cancel, status, dequeue, stats. The caller publishes to the service subject with an _INBOX reply; the server subscribes to the service subject.",
+    "internal": "Instrumentation and ops: metrics feed for the dashboards, audit pointers, operator control."
+  },
+  "subject_templates": [
+    {"area": "jobs", "pattern": "oep.jobs.{queue}.state.{job-id}"},
+    {"area": "jobs", "pattern": "oep.jobs.{queue}.progress.{job-id}"},
+    {"area": "jobs", "pattern": "oep.jobs.{queue}.log.{job-id}"},
+    {"area": "jobs", "pattern": "oep.jobs.{queue}.dlq.{job-id}"},
+    {"area": "workers", "pattern": "oep.workers.{worker-id}.heartbeat"},
+    {"area": "workers", "pattern": "oep.workers.{worker-id}.status"},
+    {"area": "nodes", "pattern": "oep.nodes.{node-id}.heartbeat"},
+    {"area": "nodes", "pattern": "oep.nodes.{node-id}.leave"},
+    {"area": "nodes", "pattern": "oep.nodes.{node-id}.{event}.{detail}"},
+    {"area": "vault", "pattern": "oep.vault.object.{vault-id}.published"},
+    {"area": "vault", "pattern": "oep.vault.object.{vault-id}.superseded"},
+    {"area": "rpc", "pattern": "oep.rpc.jobs.submit"},
+    {"area": "rpc", "pattern": "oep.rpc.jobs.status.{job-id}"},
+    {"area": "rpc", "pattern": "oep.rpc.scheduler.stats"},
+    {"area": "internal", "pattern": "oep.metrics.{node-id}.{metric}"},
+    {"area": "internal", "pattern": "oep.audit.jobs.{job-id}"}
+  ],
+  "publish": [
+    {"subject": "oep.jobs.render.state.job-alp01", "area": "jobs", "publisher": "scheduler", "description": "state transition for job-alp01 in the render queue"},
+    {"subject": "oep.jobs.render.progress.job-alp01", "area": "jobs", "publisher": "worker", "description": "progress update for job-alp01"},
+    {"subject": "oep.jobs.render.log.job-alp01", "area": "jobs", "publisher": "worker", "description": "log line for job-alp01"},
+    {"subject": "oep.jobs.convert.state.job-bet02", "area": "jobs", "publisher": "scheduler", "description": "state transition for job-bet02 in the convert queue"},
+    {"subject": "oep.jobs.gpu.state.job-gam03", "area": "jobs", "publisher": "scheduler", "description": "state transition for job-gam03 in the gpu queue"},
+    {"subject": "oep.jobs.render.dlq.job-alp01", "area": "jobs", "publisher": "scheduler", "description": "dead-letter entry for exhausted retries of job-alp01"},
+    {"subject": "oep.workers.wrk-u1-01.heartbeat", "area": "workers", "publisher": "worker", "description": "liveness + load of worker wrk-u1-01"},
+    {"subject": "oep.workers.wrk-u1-01.status", "area": "workers", "publisher": "worker", "description": "state transition (idle/busy/draining/offline) of worker wrk-u1-01"},
+    {"subject": "oep.nodes.u1.heartbeat", "area": "nodes", "publisher": "node agent", "description": "node-level heartbeat from U1"},
+    {"subject": "oep.nodes.nas-ds.heartbeat", "area": "nodes", "publisher": "node agent", "description": "node-level heartbeat from the NAS (DS920)"},
+    {"subject": "oep.nodes.nas-ds.heartbeat.nested", "area": "nodes", "publisher": "node agent", "description": "node heartbeat with an extra detail segment, matched by the trailing oep.nodes.> subscription"},
+    {"subject": "oep.vault.object.vlt-a1b2.published", "area": "vault", "publisher": "oep-pdm", "description": "vault object vlt-a1b2 was published; may trigger render/convert jobs"},
+    {"subject": "oep.vault.object.vlt-a1b2.superseded", "area": "vault", "publisher": "oep-pdm", "description": "vault object vlt-a1b2 was superseded by a newer revision"},
+    {"subject": "oep.rpc.jobs.submit", "area": "rpc", "publisher": "any client", "description": "submit a job; reply carries the job id (request-reply)"},
+    {"subject": "oep.rpc.jobs.status.job-alp01", "area": "rpc", "publisher": "any client", "description": "query job status (request-reply)"},
+    {"subject": "oep.rpc.scheduler.stats", "area": "rpc", "publisher": "ops dashboard", "description": "query queue depth and node load (request-reply)"},
+    {"subject": "oep.metrics.u1.queue-depth", "area": "internal", "publisher": "scheduler", "description": "render queue depth sampled on u1"},
+    {"subject": "oep.audit.jobs.job-alp01", "area": "internal", "publisher": "audit forwarder", "description": "audit pointer event for job-alp01 (record lives in the PDM audit store)"}
+  ],
+  "subscribe": [
+    {"pattern": "oep.jobs.*.state.>", "area": "jobs", "subscriber": "scheduler, dashboard, PDM job trigger", "description": "any job state transition in any queue"},
+    {"pattern": "oep.jobs.*.progress.>", "area": "jobs", "subscriber": "dashboard", "description": "any job progress update"},
+    {"pattern": "oep.jobs.*.log.>", "area": "jobs", "subscriber": "ops dashboard, log sink", "description": "any job log line"},
+    {"pattern": "oep.jobs.*.dlq.>", "area": "jobs", "subscriber": "ops dashboard, alerting", "description": "any dead-letter entry"},
+    {"pattern": "oep.workers.*.heartbeat", "area": "workers", "subscriber": "scheduler, ops", "description": "any worker heartbeat"},
+    {"pattern": "oep.workers.*.status", "area": "workers", "subscriber": "scheduler, ops dashboard", "description": "any worker state transition"},
+    {"pattern": "oep.nodes.>", "area": "nodes", "subscriber": "mesh monitor, scheduler", "description": "any mesh node presence event at any depth"},
+    {"pattern": "oep.vault.object.*.published", "area": "vault", "subscriber": "PDM job trigger", "description": "any object publish"},
+    {"pattern": "oep.vault.object.*.superseded", "area": "vault", "subscriber": "PDM job trigger, consumers", "description": "any object supersede"},
+    {"pattern": "oep.rpc.jobs.submit", "area": "rpc", "subscriber": "scheduler handler", "description": "job submission service"},
+    {"pattern": "oep.rpc.jobs.status.>", "area": "rpc", "subscriber": "scheduler handler", "description": "job status service"},
+    {"pattern": "oep.rpc.scheduler.stats", "area": "rpc", "subscriber": "scheduler handler", "description": "scheduler stats service"},
+    {"pattern": "oep.metrics.>", "area": "internal", "subscriber": "metrics sink, P9-M5 dashboard", "description": "everything under the metrics tree"},
+    {"pattern": "oep.audit.jobs.>", "area": "internal", "subscriber": "audit forwarder", "description": "job audit pointer events"}
+  ],
+  "streams": [
+    {"name": "JOBS_QUEUE_<QUEUE>", "binding": "oep.jobs.<queue>.state.>", "retention": "workqueue", "purpose": "durable per-queue assignment queue; consumers ack; max_deliver sends to the dead-letter stream (P9-M2-T01)"},
+    {"name": "JOBS_STATE", "binding": "oep.jobs.*.state.>", "retention": "limits", "purpose": "job state journal for replay and the dashboard"},
+    {"name": "JOBS_DLQ", "binding": "oep.jobs.*.dlq.>", "retention": "limits", "purpose": "dead-letter stream for jobs whose retries are exhausted"},
+    {"name": "WORKER_EVENTS", "binding": "oep.workers.>", "retention": "interest", "purpose": "worker presence journal"},
+    {"name": "NODE_EVENTS", "binding": "oep.nodes.>", "retention": "interest", "purpose": "node presence journal"},
+    {"name": "VAULT_EVENTS", "binding": "oep.vault.>", "retention": "limits", "purpose": "PDM lifecycle event journal feeding job triggers"},
+    {"name": "METRICS_<SITE>", "binding": "oep.metrics.>", "retention": "limits", "purpose": "telemetry window for the P9-M5 ops dashboard"}
+  ],
+  "kv": [
+    {"bucket": "QUEUE_STATE", "purpose": "per-job scheduling state: priority, DAG refs, attempt, owner node"},
+    {"bucket": "NODES", "purpose": "mesh node registry keyed by node-id"},
+    {"bucket": "WORKERS", "purpose": "worker registry keyed by worker-id (capabilities, slots, team)"},
+    {"bucket": "SCHED_META", "purpose": "scheduler long-lived meta: epoch, placements, config"}
+  ],
+  "notes": [
+    "Wildcards appear in SUBSCRIPTIONS only; publishers always emit fully specified subjects.",
+    "The job-id, worker-id, node-id, vault-id and queue segments are lowercase identifiers (a-z 0-9 - _); no wildcard characters in identifiers.",
+    "Queue segment values are the named lanes: default, priority, render, convert, gpu, and per-team lanes; fair-share and quota (P9-M2-T02) are enforced per queue stream consumer group.",
+    "Request-reply uses per-connection _INBOX.<token> reply subjects; the service subjects here stay concrete so a queue-group of handler instances can share them.",
+    "Reserved NATS system namespaces ($SYS, $JS, $KV, _INBOX.*) are never used as product subjects; the taxonomy lives entirely under the oep root."
+  ]
+}
