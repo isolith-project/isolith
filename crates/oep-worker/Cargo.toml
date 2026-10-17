@@ -1,0 +1,29 @@
+[package]
+name = "oep-worker"
+description = "P9: P2P compute lane - export/convert worker functions (CGR->glTF, STEP->mesh) + batch convert driver. Dogfoods P2 oep-cgr and P4 oep-step against the P8 vault."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# P9 substrate: the job/task spec this lane executes.
+oep-job = { path = "../oep-job" }
+# Dogfooded readers: P2 (CGR -> glTF) and P4 (STEP -> mesh).
+oep-cgr = { path = "../oep-cgr" }
+oep-step = { path = "../oep-step" }
+# Vault seam: P8 content-addressed store, reached through the P8-M6-T02
+# integration adapter (the sanctioned tool -> PDM API seam).
+oep-pdm = { path = "../oep-pdm" }
+
+# Wire + hashing.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+base64 = "0.22"
+
+[dev-dependencies]
+
+[[bin]]
+name = "oep-batch-convert"
+path = "src/bin/oep-batch-convert.rs"

@@ -15,6 +15,7 @@ members = [
     "crates/oep-step",
     "crates/oep-pdm",
     "crates/oep-job",
+    "crates/oep-worker",
 ]
 
 [workspace.package]

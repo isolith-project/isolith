@@ -378,6 +378,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "oep-worker"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "oep-cgr",
+ "oep-job",
+ "oep-pdm",
+ "oep-step",
+ "serde",
+ "serde_json",
+ "sha2",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.21.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"

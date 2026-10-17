@@ -22,8 +22,10 @@ EXPECTED_CRATES = {
     "oep-geo": "P6",   # geometry core + model representation
     "oep-step": "P4",  # STEP AP242/QIF/JT interop (reserved)
     "oep-pdm": "P8",   # self-hosted PDM (reserved)
+    "oep-job": "P9",   # P2P compute: job/task spec (P9-M1-T01)
+    "oep-worker": "P9",# P2P compute: export/convert workers (P9-M3-T02)
 }
-WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8"}
+WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8", "P9"}
 CRATE_PREFIX = "oep-"
 
 _failures = []
