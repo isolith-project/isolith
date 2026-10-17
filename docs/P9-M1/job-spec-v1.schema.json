@@ -1,0 +1,355 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oep-job/job-spec-v1.schema.json",
+  "title": "OEP P9 job/task spec (v1)",
+  "description": "The machine contract for the P9 compute lane job/task spec. A job names its P8 vault object inputs (the input currency), the executor/worker that runs it, the resource caps the sandbox must enforce, and the declared outputs landing back in the P8 vault. Wire format header: format='oep-job', version=1. Kept within a documented JSON-Schema subset (type/properties/required/items/enum/const/pattern/oneOf/minimum/maximum/minLength) so tests/test_p9_job_spec.py can validate without external deps.",
+  "type": "object",
+  "required": [
+    "format",
+    "version",
+    "executor",
+    "resources"
+  ],
+  "properties": {
+    "format": {
+      "const": "oep-job"
+    },
+    "version": {
+      "const": 1
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "input": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/inputRef"
+      }
+    },
+    "executor": {
+      "$ref": "#/$defs/executorRef"
+    },
+    "resources": {
+      "$ref": "#/$defs/resourceCaps"
+    },
+    "output": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/outputRef"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "vaultObjectRef": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "item",
+            "revision",
+            "file"
+          ]
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "blob_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "oneOf": [
+        {
+          "title": "item",
+          "properties": {
+            "kind": {
+              "const": "item"
+            },
+            "item_id": {}
+          },
+          "required": [
+            "kind",
+            "item_id"
+          ],
+          "type": "object"
+        },
+        {
+          "title": "revision",
+          "properties": {
+            "kind": {
+              "const": "revision"
+            },
+            "item_id": {},
+            "revision": {}
+          },
+          "required": [
+            "kind",
+            "item_id",
+            "revision"
+          ],
+          "type": "object"
+        },
+        {
+          "title": "file",
+          "properties": {
+            "kind": {
+              "const": "file"
+            },
+            "blob_sha256": {}
+          },
+          "required": [
+            "kind",
+            "blob_sha256"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "inputRef": {
+      "type": "object",
+      "required": [
+        "name",
+        "ref"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "$ref": "#/$defs/vaultObjectRef"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "executorRef": {
+      "type": "object",
+      "required": [
+        "kind",
+        "function"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "render",
+            "convert",
+            "import",
+            "export",
+            "validate",
+            "custom"
+          ]
+        },
+        "function": {
+          "type": "string",
+          "minLength": 1
+        },
+        "image": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._/:@-]+$"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "gpuRequest": {
+      "type": "object",
+      "required": [
+        "count"
+      ],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "resourceCaps": {
+      "type": "object",
+      "required": [
+        "cpu_millicores",
+        "memory_mib"
+      ],
+      "properties": {
+        "cpu_millicores": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64000
+        },
+        "memory_mib": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "disk_mib": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        },
+        "gpu": {
+          "$ref": "#/$defs/gpuRequest"
+        },
+        "network_egress": {
+          "type": "boolean",
+          "default": false
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 604800
+        },
+        "checkpoint_every_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 360000
+        }
+      }
+    },
+    "outputTarget": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "blob",
+            "new_item",
+            "attach_item"
+          ]
+        },
+        "item_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "item_kind": {
+          "type": "string",
+          "enum": [
+            "part",
+            "assembly",
+            "document"
+          ]
+        },
+        "context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "title": "blob",
+          "properties": {
+            "kind": {
+              "const": "blob"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "title": "new_item",
+          "properties": {
+            "kind": {
+              "const": "new_item"
+            },
+            "item_name": {}
+          },
+          "required": [
+            "kind",
+            "item_name"
+          ],
+          "type": "object"
+        },
+        {
+          "title": "attach_item",
+          "properties": {
+            "kind": {
+              "const": "attach_item"
+            },
+            "item_id": {}
+          },
+          "required": [
+            "kind",
+            "item_id"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "outputRef": {
+      "type": "object",
+      "required": [
+        "name",
+        "format"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_type": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/outputTarget"
+        },
+        "expected_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "required": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}

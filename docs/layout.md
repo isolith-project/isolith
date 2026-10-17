@@ -19,10 +19,11 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   P8-M6/integration-adapters.md (P8-M6-T02 adapter layer: oep_pdm::adapter,
   unit-instrumented seam the OEP shell and adopted tools use to reach the live
   PDM API)
+- P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
+                       executor, resource caps, output refs) (P9-M1-T01)
 
 Not yet materialized as crates (laid out when their workstream starts):
-P1 corpus tooling (python), P9 P2P compute, P10 hybrid cloud, P12 QA/CI,
-P14 integration.
+P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
 
 ## Conventions
 
