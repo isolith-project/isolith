@@ -14,6 +14,7 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite
 - P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
                        executor, resource caps, output refs)
+- P9 oep-sandbox    -- P2P compute lane: worker sandbox (RLIMIT caps + seccomp no-egress)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
