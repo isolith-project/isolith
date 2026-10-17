@@ -25,6 +25,11 @@ pub const ALLOWED_KINDS: [&str; 3] = ["part", "assembly", "document"];
 /// is P8-M2-T01's work, the stub stores what it is given within these values).
 pub const ALLOWED_STATES: [&str; 4] = ["working", "under_review", "released", "obsolete"];
 
+/// The sync-push path (offline working set -> server).
+pub const SYNC_PUSH_PATH: &str = "/api/v1/sync/push";
+/// The sync-conflict collection/root path.
+pub const SYNC_CONFLICTS_PATH: &str = "/api/v1/sync/conflicts";
+
 /// Literal error codes used in the `{"error":{code,message}}` envelope.
 // Values are part of the wire contract (see the OpenAPI spec); this module
 // documents them as strings so server and client agree by name.
@@ -38,6 +43,8 @@ pub mod error_code {
     pub const METHOD_NOT_ALLOWED: &str = "method_not_allowed";
     pub const UNSUPPORTED_MEDIA: &str = "unsupported_media";
     pub const INTERNAL: &str = "internal_error";
+    /// P8-M5-T02: a conflict id is unknown or already resolved.
+    pub const SYNC_CONFLICT: &str = "sync_conflict";
 }
 
 /// `GET /api/v1/health` response.
@@ -240,4 +247,109 @@ impl ErrorEnvelope {
             },
         }
     }
+}
+
+// ---------------------------------------------------------------------------
+// P8-M5-T02: offline sync surface (sync push + conflict resolution)
+// ---------------------------------------------------------------------------
+
+/// Request body for `POST /api/v1/sync/push`.
+///
+/// Carries one offline-made edit plus the identity of the revision it was
+/// based on (["item_id"]). The server accepts it as a clean next revision only
+/// when the item's current head still equals the stated `base_revision` and
+/// `base_blob_sha256`; otherwise it records a pending merge ([`SyncConflictView`]
+/// via [`SyncPushResult::Conflict`]) and no revision is created.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct SyncPushRequest {
+    /// The item the offline edit targets.
+    pub item_id: String,
+    /// The revision number the offline edit was based on ("1", "2", ...).
+    pub base_revision: String,
+    /// Content address of base_revision's file (content truth for divergence).
+    pub base_blob_sha256: String,
+    /// Optional lifecycle state for the new revision (default `working`).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub state: Option<String>,
+    /// Optional change comment.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub comment: Option<String>,
+    /// Optional acting principal tag (defaults to `pdm`).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub created_by: Option<String>,
+    /// The offline edit (ours). Content-addressed by the server.
+    pub file: FileUpload,
+}
+
+/// Result of `POST /api/v1/sync/push`.
+///
+/// Tagged on `status`: `synced` (201) means the offline edit became the next
+/// revision; `conflict` (409) means divergence was detected and a pending merge
+/// was recorded at `sync_id` (no revision created).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "snake_case", tag = "status")]
+pub enum SyncPushResult {
+    /// Clean sync: the offline edit became the item's next revision (201).
+    Synced {
+        /// The revision that was created from the offline edit.
+        revision: Revision,
+    },
+    /// Divergent: the item's head moved since `base_revision` (409). No
+    /// revision was created; route the conflict id to the view/resolve surface.
+    Conflict {
+        /// Server-minted id of the recorded pending merge.
+        sync_id: String,
+        /// The base revision echoed back (unchanged from the request).
+        base_revision: String,
+        /// The base content hash echoed back.
+        base_blob_sha256: String,
+        /// The item's current head revision (the "theirs" snapshot).
+        theirs_revision: String,
+        /// The content hash of the item's current head ("theirs" content).
+        theirs_blob_sha256: String,
+    },
+}
+
+/// One immutable snapshot of a three-way merge (base / ours / theirs).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct ConflictSide {
+    /// Server revision number for base/theirs; `None` for ``ours`` because the
+    /// offline edit has not (yet) become a server revision.
+    pub revision: Option<String>,
+    /// Original file name.
+    pub filename: String,
+    /// Format tag (`step`, `cgr`, ...).
+    pub format: String,
+    /// Stored media type.
+    pub content_type: String,
+    /// Decoded file size in bytes.
+    pub size: u64,
+    /// Content address of this snapshot's bytes.
+    pub blob_sha256: String,
+}
+
+/// `GET /api/v1/sync/conflicts/{sync_id}`: the three snapshots of a pending
+/// merge, so a resolution UI can render base/ours/theirs.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct SyncConflictView {
+    /// The pending-merge id.
+    pub sync_id: String,
+    /// The item the conflict belongs to.
+    pub item_id: String,
+    /// The revision the offline edit was based on.
+    pub base: ConflictSide,
+    /// The offline edit that was pushed but not committed.
+    pub ours: ConflictSide,
+    /// The item's head at conflict time.
+    pub theirs: ConflictSide,
+}
+
+/// Request body for `POST /api/v1/sync/conflicts/{sync_id}/resolve`.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct SyncResolveRequest {
+    /// Which snapshot wins: `ours`, `theirs`, or `merged` (client-provided).
+    pub choice: String,
+    /// Required when `choice == "merged"`; the client-merged document to commit.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub merged: Option<FileUpload>,
 }
