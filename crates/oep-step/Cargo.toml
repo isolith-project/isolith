@@ -1,7 +1,18 @@
 [package]
 name = "oep-step"
-description = "P4: STEP AP242/QIF/JT interop skeleton (reserved)."
+description = "P4: STEP AP242/QIF/JT read lane - vendor-neutral wrapper over an OSS STEP library, mapping faceted parts onto the oep-geo native model."
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 repository.workspace = true
+
+[dependencies]
+# P4-M1-T01: wrapped OSS STEP library (pure Rust, MIT OR Apache-2.0), pinned
+# per supply-chain doctrine. Library choice: P4-M1/step-library-adr.md.
+step-io = { version = "=0.2.5" }
+# The canonical native model (dependency-free). oep-step is a leaf reader that
+# maps parsed facets onto it (P4 feed for the P6 importer hub).
+oep-geo = { path = "../oep-geo" }
+
+[dev-dependencies]
+serde_json = "1"

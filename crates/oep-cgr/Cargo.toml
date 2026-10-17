@@ -1,6 +1,6 @@
 [package]
 name = "oep-cgr"
-description = "P2: CGR (Dassault geometry/tessellation) reader skeleton."
+description = "P2: CGR reader (mesh extraction + glTF/GLB export)."
 version.workspace = true
 edition.workspace = true
 authors.workspace = true

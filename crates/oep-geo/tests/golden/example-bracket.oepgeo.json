@@ -1,0 +1,297 @@
+{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-bracket",
+      "name": "bracket",
+      "part_number": "KW-BKT-001",
+      "body_ids": [
+        "oep-body-bracket"
+      ],
+      "feature_ids": [
+        "oep-feature-bracket-extrude",
+        "oep-feature-bracket-fillet",
+        "oep-feature-bracket-hole"
+      ]
+    },
+    {
+      "id": "oep-part-fastener",
+      "name": "fastener",
+      "part_number": "KW-FST-002",
+      "body_ids": [
+        "oep-body-fastener"
+      ],
+      "feature_ids": [
+        "oep-feature-fastener-turn"
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-bracket",
+      "name": "bracket-solid",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          80.0,
+          40.0,
+          6.0
+        ]
+      },
+      "feature_ids": [
+        "oep-feature-bracket-extrude",
+        "oep-feature-bracket-fillet"
+      ]
+    },
+    {
+      "id": "oep-body-fastener",
+      "name": "fastener-solid",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          10.0,
+          10.0,
+          20.0
+        ]
+      },
+      "feature_ids": [
+        "oep-feature-fastener-turn"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "oep-feature-bracket-extrude",
+      "name": "extrude-base",
+      "kind": "Extrude",
+      "parameters": {
+        "height": 6.0
+      },
+      "body_ids": [
+        "oep-body-bracket"
+      ]
+    },
+    {
+      "id": "oep-feature-bracket-fillet",
+      "name": "fillet-edges",
+      "kind": "Fillet",
+      "parameters": {
+        "radius": 2.0
+      },
+      "body_ids": [
+        "oep-body-bracket"
+      ]
+    },
+    {
+      "id": "oep-feature-bracket-hole",
+      "name": "mount-hole",
+      "kind": "Hole",
+      "parameters": {
+        "depth": 6.0,
+        "diameter": 6.0
+      },
+      "body_ids": [
+        "oep-body-bracket"
+      ]
+    },
+    {
+      "id": "oep-feature-fastener-turn",
+      "name": "turn-shank",
+      "kind": "Revolve",
+      "parameters": {
+        "angle": 360.0
+      },
+      "body_ids": [
+        "oep-body-fastener"
+      ]
+    }
+  ],
+  "assemblies": [
+    {
+      "id": "oep-assembly-fastener-set",
+      "name": "fastener-set",
+      "instances": [
+        {
+          "id": "oep-inst-fastener-1",
+          "name": "F1",
+          "source": {
+            "kind": "part",
+            "id": "oep-part-fastener"
+          },
+          "transform": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            10.0,
+            10.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        },
+        {
+          "id": "oep-inst-fastener-2",
+          "name": "F2",
+          "source": {
+            "kind": "part",
+            "id": "oep-part-fastener"
+          },
+          "transform": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            70.0,
+            10.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        },
+        {
+          "id": "oep-inst-fastener-3",
+          "name": "F3",
+          "source": {
+            "kind": "part",
+            "id": "oep-part-fastener"
+          },
+          "transform": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            10.0,
+            30.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        },
+        {
+          "id": "oep-inst-fastener-4",
+          "name": "F4",
+          "source": {
+            "kind": "part",
+            "id": "oep-part-fastener"
+          },
+          "transform": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            70.0,
+            30.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "oep-assembly-bracket-assembly",
+      "name": "bracket-assembly",
+      "instances": [
+        {
+          "id": "oep-inst-bracket",
+          "name": "bracket",
+          "source": {
+            "kind": "part",
+            "id": "oep-part-bracket"
+          },
+          "transform": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        },
+        {
+          "id": "oep-inst-fastener-set",
+          "name": "fastener-set",
+          "source": {
+            "kind": "sub-assembly",
+            "id": "oep-assembly-fastener-set"
+          },
+          "transform": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
