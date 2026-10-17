@@ -21,6 +21,10 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   PDM API)
 - P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
                        executor, resource caps, output refs) (P9-M1-T01)
+- P9 oep-worker     -- P2P compute lane: export/convert workers (cgr2gltf,
+                       step2mesh) + batch convert driver (P9-M3-T02). Dogfoods
+                       P2 oep-cgr + P4 oep-step into the P8 vault; outputs
+                       hash-verified content addresses (P9-M5-T02 gate)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.

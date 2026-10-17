@@ -1,0 +1,271 @@
+{
+  "format": "oep-batch",
+  "version": 1,
+  "description": "P9-M3-T02 corpus batch - CGR->glTF (P2 dogfood) + STEP->mesh (P4 dogfood); outputs hash-verified in the P8 vault",
+  "jobs": [
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "cgr-stc06",
+      "description": "P9-M3-T02 proof run: cgr2gltf",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-stc06"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "cgr2gltf"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "gltf",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-stc06"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "cgr-valve",
+      "description": "P9-M3-T02 proof run: cgr2gltf",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-valve"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "cgr2gltf"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "gltf",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-valve"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "step-box-ref",
+      "description": "P9-M3-T02 proof run: step2mesh",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-box-ref"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "step2mesh"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "oep-mesh",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-box-ref"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "step-box-part",
+      "description": "P9-M3-T02 proof run: step2mesh",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-box-part"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "step2mesh"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "oep-mesh",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-box-part"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "step-assembly",
+      "description": "P9-M3-T02 proof run: step2mesh",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-assembly"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "step2mesh"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "oep-mesh",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-assembly"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "step-box-mini",
+      "description": "P9-M3-T02 proof run: step2mesh",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-box-mini"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "step2mesh"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "oep-mesh",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-box-mini"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "step-fc-probe",
+      "description": "P9-M3-T02 proof run: step2mesh",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-fc-probe"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "step2mesh"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "oep-mesh",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-fc-probe"
+          }
+        }
+      ]
+    },
+    {
+      "format": "oep-job",
+      "version": 1,
+      "name": "step-fc-box",
+      "description": "P9-M3-T02 proof run: step2mesh",
+      "input": [
+        {
+          "name": "source",
+          "ref": {
+            "kind": "item",
+            "item_id": "corpus-fc-box"
+          }
+        }
+      ],
+      "executor": {
+        "kind": "convert",
+        "function": "step2mesh"
+      },
+      "resources": {
+        "cpu_millicores": 1000,
+        "memory_mib": 2048
+      },
+      "output": [
+        {
+          "name": "out",
+          "format": "oep-mesh",
+          "target": {
+            "kind": "attach_item",
+            "item_id": "out-fc-box"
+          }
+        }
+      ]
+    }
+  ]
+}
