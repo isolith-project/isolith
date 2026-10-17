@@ -1,0 +1,13 @@
+[package]
+name = "oep-state"
+description = "P9: P2P compute lane - distributed job state: node-loss survival, at-least-once delivery, idempotent effects."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1"
