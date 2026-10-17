@@ -14,10 +14,16 @@
 //!   unchanged. The stub is the contract test, not a throwaway.
 //! * [`client`]  -- [`client::PdmClient`], the browser/modeler face: open from
 //!   PDM (`open_latest_file`), save revisions to PDM (`save_revision`).
+//! * [`adapter`] -- P8-M6-T02 integration adapters: the thin seam the OEP
+//!   shell (P7 workbench) and any adopted tools use to talk to this API --
+//!   a [`adapter::PdmAdapter`] over the live service with unit-level
+//!   instrumentation ([`adapter::AdapterInstrument`]).
 //!
-//! Integration points: `P7-M2/pdm-integration.md`.
+//! Integration points: `P7-M2/pdm-integration.md` and
+//! `P8-M6/integration-adapters.md`.
 #![deny(missing_docs)]
 
+pub mod adapter;
 pub mod api;
 pub mod client;
 pub mod http;
