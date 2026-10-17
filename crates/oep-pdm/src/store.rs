@@ -16,8 +16,9 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest as _, Sha256};
 
 use crate::api::{
-    CreateItemRequest, CreateRevisionRequest, ErrorEnvelope, FileRef, Health, Item, ItemList,
-    ItemSummary, Revision, RevisionList, API_VERSION, SERVICE_NAME,
+    ConflictSide, CreateItemRequest, CreateRevisionRequest, ErrorEnvelope, FileRef, Health, Item,
+    ItemList, ItemSummary, Revision, RevisionList, SyncConflictView, SyncPushRequest,
+    SyncPushResult, SyncResolveRequest, API_VERSION, SERVICE_NAME,
 };
 
 /// Domain-level store failure, mapped to the contract error envelope by the
@@ -90,6 +91,25 @@ struct VaultMeta {
     owner: String,
     next_item_seq: u64,
     items: Vec<StoredItem>,
+    /// P8-M5-T02: pending sync merges awaiting resolution. Persisted so an
+    /// unresolved conflict survives a restart (the three snapshots are
+    /// content-addressed; base/theirs revisions stay in the vault).
+    pending_conflicts: Vec<SyncConflictRecord>,
+}
+
+/// A recorded divergent sync push (P8-M5-T02 pending merge). `ours` is the
+/// offline edit's file (its blob lives in the content-addressed store); base
+/// and theirs are existing vault revisions referenced by number + hash.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+struct SyncConflictRecord {
+    sync_id: String,
+    item_id: String,
+    base_revision: String,
+    base_blob_sha256: String,
+    ours: FileRef,
+    theirs_revision: String,
+    theirs_blob_sha256: String,
+    created_at: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -153,6 +173,7 @@ impl VaultStore {
                 owner: "keelworks".to_string(),
                 next_item_seq: 0,
                 items: Vec::new(),
+                pending_conflicts: Vec::new(),
             },
             blobs: HashMap::new(),
             persist_dir: None,
@@ -439,6 +460,281 @@ impl VaultStore {
         let bytes = self.blobs.get(&file.blob_sha256)?.clone();
         Some((revision.number.clone(), file.clone(), bytes))
     }
+
+    /// The file metadata attached to one revision (its single file).
+    fn revision_file(&self, item_id: &str, rev: &str) -> Result<FileRef, StoreError> {
+        let stored = self
+            .find_item(item_id)
+            .ok_or_else(|| StoreError::NotFound("item", item_id.to_string()))?;
+        let revision = stored
+            .revisions
+            .iter()
+            .find(|r| r.number == rev)
+            .ok_or_else(|| StoreError::NotFound("revision", format!("{item_id}/{rev}")))?;
+        revision
+            .files
+            .first()
+            .cloned()
+            .ok_or_else(|| StoreError::Internal("revision has no file".into()))
+    }
+
+    /// Bytes of one vault revision's file.
+    fn revision_file_bytes(&self, item_id: &str, rev: &str) -> Result<Vec<u8>, StoreError> {
+        let file = self.revision_file(item_id, rev)?;
+        self.blobs
+            .get(&file.blob_sha256)
+            .cloned()
+            .ok_or_else(|| StoreError::Internal("blob missing from store".into()))
+    }
+
+    fn conflict_record(&self, sync_id: &str) -> Result<&SyncConflictRecord, StoreError> {
+        self.meta
+            .pending_conflicts
+            .iter()
+            .find(|c| c.sync_id == sync_id)
+            .ok_or_else(|| StoreError::NotFound("sync conflict", sync_id.to_string()))
+    }
+}
+
+impl VaultStore {
+    /// P8-M5-T02: push one offline edit with its base identity.
+    ///
+    /// Content-true divergence check: the edit is accepted as the item's next
+    /// revision only when the current head equals the stated `base_revision`
+    /// *and* `base_blob_sha256`. On match a revision is created from `ours`
+    /// (201-family [`SyncPushResult::Synced`]). On mismatch a pending merge is
+    /// recorded -- `ours` stored content-addressed -- and
+    /// [`SyncPushResult::Conflict`] is returned (no revision created), to be
+    /// resolved through the conflict surface.
+    pub fn sync_push(&mut self, req: &SyncPushRequest) -> Result<SyncPushResult, StoreError> {
+        // The item must exist and already carry at least one revision to be a
+        // base; an item with no revisions has no content to diverge from.
+        self.find_item(&req.item_id)
+            .ok_or_else(|| StoreError::NotFound("item", req.item_id.clone()))?;
+        let (head_rev, head_file) = match self.open_latest(&req.item_id) {
+            Ok((rev, file, _)) => (rev, file.blob_sha256),
+            Err(_) => return Err(StoreError::NoFile),
+        };
+
+        if head_rev == req.base_revision && head_file == req.base_blob_sha256 {
+            // Clean sync: ours becomes the next revision.
+            let rev = self.create_revision(
+                &req.item_id,
+                &CreateRevisionRequest {
+                    state: req.state.clone(),
+                    comment: req.comment.clone(),
+                    created_by: req.created_by.clone(),
+                    file: req.file.clone(),
+                },
+            )?;
+            return Ok(SyncPushResult::Synced { revision: rev });
+        }
+
+        // Divergent: store ours content-addressed, record the pending merge.
+        let bytes = base64::engine::general_purpose::STANDARD
+            .decode(req.file.content.as_bytes())
+            .map_err(|e| StoreError::BadRequest(format!("file.content invalid base64: {e}")))?;
+        let sha = hex_sha256(&bytes);
+        let ours_size = bytes.len() as u64;
+        self.blobs.entry(sha.clone()).or_insert(bytes);
+        let ours = FileRef {
+            id: format!("file-sync-{}-{}", req.item_id, req.base_revision),
+            filename: req.file.filename.clone(),
+            format: req.file.format.clone(),
+            content_type: req
+                .file
+                .content_type
+                .clone()
+                .unwrap_or_else(|| "application/octet-stream".to_string()),
+            size: ours_size,
+            blob_sha256: sha,
+        };
+        let sync_id = next_sync_id(&req.item_id, &req.base_revision, &ours.blob_sha256);
+        self.meta.pending_conflicts.push(SyncConflictRecord {
+            sync_id: sync_id.clone(),
+            item_id: req.item_id.clone(),
+            base_revision: req.base_revision.clone(),
+            base_blob_sha256: req.base_blob_sha256.clone(),
+            ours,
+            theirs_revision: head_rev.clone(),
+            theirs_blob_sha256: head_file.clone(),
+            created_at: Self::now(),
+        });
+        self.save()?;
+        Ok(SyncPushResult::Conflict {
+            sync_id,
+            base_revision: req.base_revision.clone(),
+            base_blob_sha256: req.base_blob_sha256.clone(),
+            theirs_revision: head_rev,
+            theirs_blob_sha256: head_file,
+        })
+    }
+
+    /// The three immutable snapshots of a pending merge for the resolution UI.
+    pub fn get_sync_conflict(&self, sync_id: &str) -> Result<SyncConflictView, StoreError> {
+        let record = self.conflict_record(sync_id)?;
+        let base = self.revision_file(&record.item_id, &record.base_revision)?;
+        let theirs = self.revision_file(&record.item_id, &record.theirs_revision)?;
+        Ok(SyncConflictView {
+            sync_id: record.sync_id.clone(),
+            item_id: record.item_id.clone(),
+            base: ConflictSide {
+                revision: Some(record.base_revision.clone()),
+                filename: base.filename,
+                format: base.format,
+                content_type: base.content_type,
+                size: base.size,
+                blob_sha256: base.blob_sha256,
+            },
+            ours: ConflictSide {
+                revision: None,
+                filename: record.ours.filename.clone(),
+                format: record.ours.format.clone(),
+                content_type: record.ours.content_type.clone(),
+                size: record.ours.size,
+                blob_sha256: record.ours.blob_sha256.clone(),
+            },
+            theirs: ConflictSide {
+                revision: Some(record.theirs_revision.clone()),
+                filename: theirs.filename,
+                format: theirs.format,
+                content_type: theirs.content_type,
+                size: theirs.size,
+                blob_sha256: theirs.blob_sha256,
+            },
+        })
+    }
+
+    /// Raw bytes of one side of a pending merge, for byte-exact verification.
+    pub fn open_conflict_side(
+        &self,
+        sync_id: &str,
+        side: &str,
+    ) -> Result<(ConflictSide, Vec<u8>), StoreError> {
+        let view = self.get_sync_conflict(sync_id)?;
+        let bytes = match side {
+            "base" => {
+                let rev = view
+                    .base
+                    .revision
+                    .as_deref()
+                    .ok_or_else(|| StoreError::Internal("base has no revision".into()))?;
+                self.revision_file_bytes(&view.item_id, rev)?
+            }
+            "ours" => self
+                .blobs
+                .get(&view.ours.blob_sha256)
+                .cloned()
+                .ok_or_else(|| StoreError::Internal("ours blob missing from store".into()))?,
+            "theirs" => {
+                let rev = view
+                    .theirs
+                    .revision
+                    .as_deref()
+                    .ok_or_else(|| StoreError::Internal("theirs has no revision".into()))?;
+                self.revision_file_bytes(&view.item_id, rev)?
+            }
+            other => {
+                return Err(StoreError::BadRequest(format!(
+                    "side must be base/ours/theirs, got {other}"
+                )))
+            }
+        };
+        let meta = match side {
+            "base" => view.base,
+            "ours" => view.ours,
+            "theirs" => view.theirs,
+            _ => unreachable!(),
+        };
+        Ok((meta, bytes))
+    }
+
+    /// P8-M5-T02: resolve a pending merge by committing a new revision.
+    ///
+    /// `ours`/`theirs` reuse the recorded snapshot content (content-verified);
+    /// `merged` uses the client-provided document. The committed revision's
+    /// blob hash is the hash of the resolved bytes -- clients verify the
+    /// outcome by comparing the returned `files[0].blob_sha256` against a
+    /// locally computed digest of the same bytes.
+    pub fn resolve_conflict(
+        &mut self,
+        sync_id: &str,
+        req: &SyncResolveRequest,
+    ) -> Result<Revision, StoreError> {
+        let record = self.conflict_record(sync_id)?.clone();
+        let (filename, format, content_type, bytes) = match req.choice.as_str() {
+            "ours" => {
+                let b = self
+                    .blobs
+                    .get(&record.ours.blob_sha256)
+                    .cloned()
+                    .ok_or_else(|| StoreError::Internal("ours blob missing from store".into()))?;
+                (
+                    record.ours.filename.clone(),
+                    record.ours.format.clone(),
+                    None,
+                    b,
+                )
+            }
+            "theirs" => {
+                let meta = self.revision_file(&record.item_id, &record.theirs_revision)?;
+                let b = self.revision_file_bytes(&record.item_id, &record.theirs_revision)?;
+                (
+                    meta.filename.clone(),
+                    meta.format.clone(),
+                    Some(meta.content_type),
+                    b,
+                )
+            }
+            "merged" => {
+                let upload = req.merged.as_ref().ok_or_else(|| {
+                    StoreError::BadRequest("merged resolution requires a file".into())
+                })?;
+                let b = base64::engine::general_purpose::STANDARD
+                    .decode(upload.content.as_bytes())
+                    .map_err(|e| {
+                        StoreError::BadRequest(format!("merged.content invalid base64: {e}"))
+                    })?;
+                (
+                    upload.filename.clone(),
+                    upload.format.clone(),
+                    upload.content_type.clone(),
+                    b,
+                )
+            }
+            other => {
+                return Err(StoreError::BadRequest(format!(
+                    "choice must be one of ours/theirs/merged, got {other}"
+                )))
+            }
+        };
+        // Commit a new revision from the resolved bytes (content-addressed).
+        let content = base64::engine::general_purpose::STANDARD.encode(&bytes);
+        let revision = self.create_revision(
+            &record.item_id,
+            &CreateRevisionRequest {
+                state: None,
+                comment: Some(format!("sync resolution of {sync_id} ({})", req.choice)),
+                created_by: None,
+                file: crate::api::FileUpload {
+                    filename,
+                    format,
+                    content_type,
+                    content,
+                },
+            },
+        )?;
+        self.meta.pending_conflicts.retain(|c| c.sync_id != sync_id);
+        self.save()?;
+        Ok(revision)
+    }
+}
+
+/// Deterministic server-minted sync-conflict id (item + base + ours hash).
+fn next_sync_id(item_id: &str, base_revision: &str, ours_sha: &str) -> String {
+    let mut h = Sha256::new();
+    h.update(format!("{item_id}|{base_revision}|{ours_sha}").as_bytes());
+    format!("sync-{:x}", h.finalize())[..40].to_string()
 }
 
 impl Default for VaultStore {
