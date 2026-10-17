@@ -20,6 +20,7 @@
 
 pub mod api;
 pub mod client;
+pub mod deploy_role;
 pub mod http;
 pub mod service;
 pub mod store;
