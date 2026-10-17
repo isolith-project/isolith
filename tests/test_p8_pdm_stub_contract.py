@@ -133,7 +133,7 @@ def test_pdm_wire_contract_from_python_client():
             # health: contract identity.
             code, h = stub.request("GET", "/health")
             assert code == 200
-            assert h == {"status": "ok", "service": "oep-pdm-stub", "version": "1.0.0"}, h
+            assert h == {"status": "ok", "service": "oep-pdm", "version": "1.0.0"}, h
 
             # fresh catalogue.
             code, items = stub.request("GET", "/items")

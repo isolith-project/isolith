@@ -51,7 +51,7 @@ fn accept_health_verifies_contract_identity() {
 
     let h = c.health().expect("GET /api/v1/health succeeds");
     assert_eq!(h.status, "ok");
-    assert_eq!(h.service, "oep-pdm-stub");
+    assert_eq!(h.service, "oep-pdm");
     assert_eq!(
         h.version, API_VERSION,
         "service reports the contract version"

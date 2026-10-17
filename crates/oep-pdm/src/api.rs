@@ -16,8 +16,8 @@ pub const HEALTH_PATH: &str = "/api/v1/health";
 /// The item catalogue path (browser browse root).
 pub const ITEMS_PATH: &str = "/api/v1/items";
 
-/// Name the stub server identifies itself with (health payload).
-pub const SERVICE_NAME: &str = "oep-pdm-stub";
+/// Name the service identifies itself with (health payload).
+pub const SERVICE_NAME: &str = "oep-pdm";
 
 /// Item kinds accepted by the v1 contract (P8-M1-T02 vault model subset).
 pub const ALLOWED_KINDS: [&str; 3] = ["part", "assembly", "document"];
@@ -45,7 +45,7 @@ pub mod error_code {
 pub struct Health {
     /// Liveness flag; always `"ok"` when the response is 200.
     pub status: String,
-    /// Server identity, e.g. `oep-pdm-stub`.
+    /// Server identity, e.g. `oep-pdm`.
     pub service: String,
     /// Contract version this server speaks (must equal [`API_VERSION`]).
     pub version: String,
