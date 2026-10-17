@@ -11,7 +11,8 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P3 oep-3dxml      -- 3DXML reader/writer
 - P6 oep-geo        -- geometry core + model representation
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
-- P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite (reserved)
+- P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 stub + PdmClient
+  (P7-M2-T02), contract: P8-M6/openapi-v1.yaml, integration: P7-M2/pdm-integration.md
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P9 P2P compute, P10 hybrid cloud, P12 QA/CI,
