@@ -1,4 +1,8 @@
-//! Injectable clock for deterministic lease/redelivery semantics (RED API).
+//! Injectable clock for deterministic lease/redelivery semantics.
+//!
+//! The node-loss drill must advance time deterministically (a test cannot
+//! sleep or race the wall clock). [`Clock`] is the seam: production uses
+//! [`SystemClock`]; tests use [`ManualClock`].
 
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -45,5 +49,18 @@ impl ManualClock {
 impl Clock for ManualClock {
     fn now(&self) -> u64 {
         self.now.load(Ordering::SeqCst)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn manual_advances_monotonically() {
+        let c = ManualClock::new(10);
+        assert_eq!(c.now(), 10);
+        c.advance(5);
+        assert_eq!(c.now(), 15);
     }
 }
