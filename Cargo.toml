@@ -13,6 +13,7 @@ members = [
     "crates/oep-3dxml",
     "crates/oep-geo",
     "crates/oep-viewer",
+    "crates/oep-render-worker",
     "crates/oep-step",
     "crates/oep-pdm",
 ]

@@ -35,6 +35,15 @@ name = "oep-pdm"
 version = "0.1.0"
 
 [[package]]
+name = "oep-render-worker"
+version = "0.1.0"
+dependencies = [
+ "oep-geo",
+ "oep-viewer",
+ "serde_json",
+]
+
+[[package]]
 name = "oep-step"
 version = "0.1.0"
 
