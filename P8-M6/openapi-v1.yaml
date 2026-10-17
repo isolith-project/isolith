@@ -9,6 +9,11 @@
 # (crates/oep-pdm `client`) then keeps working with no rewrite.
 #
 # Base path: all resources live under /api/v1 regardless of host/port.
+# Declared once here (servers.url) so code generators and tools resolve the
+# contract root unambiguously; the serving binaries implement exactly this.
+servers:
+  - url: /api/v1
+    description: OEP PDM REST API v1 contract root.
 #
 # Object model (P8-M1-T02 vault model, subset): Item -> Revision -> File(file blob).
 # Files are content-addressed: every file ref carries blob_sha256. Relationship
