@@ -134,11 +134,22 @@ async fn shutdown_signal(shutdown: Arc<AtomicBool>) {
     }
 }
 
+/// Upload limit: 512 MiB. axum defaults to 2 MiB, which rejects real CAD
+/// files (base64-in-JSON inflates by ~33%). P9-M3-T02 raised the cap so the
+/// compute lane can dogfood real material through the vault.
+pub const BODY_LIMIT_BYTES: usize = 512 * 1024 * 1024;
+
 /// Build the contract router over `store`. Exposed so tests and the binaries
 /// can construct it directly; `PdmService` also uses this. The router is
 /// returned ready-to-serve (`Router<()>`: the store is baked in by
 /// [`Router::with_state`], which is what [`axum::serve`] accepts).
 pub fn build_router(store: Store) -> Router<()> {
+    // P9-M3-T02: real CAD uploads exceed axum's 2 MiB default request-body
+    // cap (the NIST V5-6R2023 STC-06 CATPart is ~2.5 MiB, and base64-in-JSON
+    // inflates by ~33%). The vault must accept real files, so the upload
+    // limit is raised to 512 MiB (generous but bounded; bodies are still
+    // decoded + content-hashed before anything is stored).
+    let body_limit = axum::extract::DefaultBodyLimit::max(BODY_LIMIT_BYTES);
     Router::new()
         .route("/api/v1/health", get(health))
         .route(ITEMS_PATH, get(list_items).post(create_item))
@@ -155,6 +166,7 @@ pub fn build_router(store: Store) -> Router<()> {
         )
         .method_not_allowed_fallback(method_not_allowed)
         .fallback(not_found)
+        .layer(body_limit)
         .with_state(store)
 }
 
