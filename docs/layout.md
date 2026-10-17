@@ -12,9 +12,11 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P6 oep-geo        -- geometry core + model representation
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite (reserved)
+- P9 oep-lane       -- P2P compute lane: scheduler (queue, priorities, DAG,
+                       retries, dead-letter) + the at-least-once seam
 
 Not yet materialized as crates (laid out when their workstream starts):
-P1 corpus tooling (python), P9 P2P compute, P10 hybrid cloud, P12 QA/CI,
+P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI,
 P14 integration.
 
 ## Conventions
