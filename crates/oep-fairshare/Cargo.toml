@@ -1,0 +1,13 @@
+[package]
+name = "oep-fairshare"
+description = "P9: P2P compute lane - per-team/per-node weighted fair-share scheduling + quota enforcement (throttling of oversubscribed teams)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1"
