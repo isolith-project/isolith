@@ -14,7 +14,8 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per P8-M1/web-stack-adr.md, AGPL-3.0; retained
   P7-M2-T02 StubServer identity + PdmClient), contract: P8-M6/openapi-v1.yaml,
-  integration: P7-M2/pdm-integration.md
+  generated python client: python/oep_pdm_client.py (P8-M6-T01), validator:
+  scripts/validate-openapi.py, integration: P7-M2/pdm-integration.md
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P9 P2P compute, P10 hybrid cloud, P12 QA/CI,
