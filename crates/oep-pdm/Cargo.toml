@@ -23,6 +23,10 @@ axum = "0.8"
 # + time (graceful-shutdown poll).
 tokio = { version = "1", features = ["rt-multi-thread", "net", "time"] }
 
+# PDM relationship graph (P8-M2-T03): ingest real oep-geo assembly
+# documents into the uses/composed-of graph and query where-used / impact.
+oep-geo = { path = "../oep-geo" }
+
 [[bin]]
 name = "oep-pdm"
 path = "src/bin/oep-pdm.rs"

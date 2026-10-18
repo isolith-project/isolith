@@ -1,0 +1,30 @@
+[package]
+name = "oep-web"
+description = "P8-M4-T01: self-hosted PDM web UI (item explorer, BOM tree, viewer embed, compare view) on the ratified axum web stack. Merges the oep-pdm REST API v1 router with UI routes over the same vault store; the viewer embed renders real oep-geo models through the P6 oep-viewer seam (reference CPU rasterizer)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# Shared web stack (same pins as P8-M1-T01).
+axum = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "time"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# The vault + relationship graph + REST service we surface.
+oep-pdm = { path = "../oep-pdm" }
+# Viewer embed: render the stored oep-geo document to pixels.
+oep-viewer = { path = "../oep-viewer" }
+# oep-geo model types (Document parse for the viewer embed / BOM ingest).
+oep-geo = { path = "../oep-geo" }
+
+[dev-dependencies]
+# The acceptance test uploads fixture content (base64 wire encoding per the
+# REST contract).
+base64 = "0.22"
+
+[[bin]]
+name = "oep-web"
+path = "src/bin/oep-web.rs"

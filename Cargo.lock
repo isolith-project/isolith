@@ -404,6 +404,7 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "base64",
+ "oep-geo",
  "serde",
  "serde_json",
  "sha2",
@@ -449,6 +450,20 @@ version = "0.1.0"
 dependencies = [
  "oep-geo",
  "serde_json",
+]
+
+[[package]]
+name = "oep-web"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "base64",
+ "oep-geo",
+ "oep-pdm",
+ "oep-viewer",
+ "serde",
+ "serde_json",
+ "tokio",
 ]
 
 [[package]]
