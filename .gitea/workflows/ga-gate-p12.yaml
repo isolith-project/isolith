@@ -1,0 +1,49 @@
+# P12 gate workflow (ga-gate convention: one workflow per GA-lane feature +
+# the lane GA gate). Job:
+#   ga-gate-p12t06  P12-T06 release install rehearsal (CI-safe degraded mode:
+#                   RELEASE + DOCS legs PASS, live-machine legs SKIP under the
+#                   closed taxonomy; the recorded two-machine proof per release
+#                   is committed under P12/proof/).
+# Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
+# branch under validation.
+#
+# CI has no second approved host and no docker daemon (decision #9: U1 + a
+# VM/garage PC are live-LAN actions), so install-rehearsal.sh --selfcheck
+# classifies the machine legs SKIP - exactly how the P8/P9/P10 gates treat
+# their live-LAN legs. The measured PASS rows live in the committed
+# P12/proof/release-rehearsal-<ver>.{json,md}, produced by
+# scripts/install-rehearsal.sh on U1 + the keelwb2 VM before each release.
+name: P12 gates (release install rehearsal)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ga-gate-p12t06:
+    name: ga-gate-p12t06
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: P12-T06 install-rehearsal acceptance (TDD)
+        run: |
+          if [ ! -f tests/test_p12t06_install_rehearsal.py ]; then
+            echo "P12-T06 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p12t06_install_rehearsal.py
+      - name: P12-T06 release rehearsal driver selfcheck (CI-safe degraded mode)
+        run: |
+          if [ ! -f scripts/install-rehearsal.sh ]; then
+            echo "P12-T06 rehearsal driver not present on this ref; skipping"
+            exit 0
+          fi
+          ./scripts/install-rehearsal.sh --selfcheck --out /tmp/p12out/release-rehearsal
