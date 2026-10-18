@@ -1,0 +1,293 @@
+Script started on 2026-10-18 04:19:18-07:00 [COMMAND="bash /home/r1a/.hermes/cache/scratch/walkthrough-a.sh" <not executed on terminal>]
+
+[1;36m==== Keelworks P10 fresh-install walkthrough on machine A (U1) ====[0m
+promaxgb10-83f1
+aarch64
+
+[1;36m==== 1. Confirm clean state (no keelworks containers / volumes / image / .env) ====[0m
+(purging any previous keelworks artifacts -> clean machine)
+
+[1;36m==== 2. One-command install (docs: ./install.sh) ====[0m
+[0;32m[OEP][0m Preflight... (docker + compose + disk)
+[0;32m[OEP][0m Wrote .env from .env.example (host binds default to 127.0.0.1).
+[0;32m[OEP][0m Preflight ok.
+[0;32m[OEP][0m Building stack image keelworks/oep-stack:0.1.0 (first build fetches crates, minutes)...
+[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                         
+ => [internal] load local bake definitions                                 0.0s
+[?25h[1A[1A[0G[?25l[+] Building 0.1s (1/2)                                                         
+[34m => [internal] load local bake definitions                                 0.0s
+[0m[34m => => reading from stdin 642B                                             0.0s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Building 0.3s (2/3)                                                         
+[34m => [internal] load local bake definitions                                 0.0s
+[0m[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.2s
+[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (2/3)                                                         
+[34m => [internal] load local bake definitions                                 0.0s
+[0m[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (3/3)                                                         
+[34m => [internal] load local bake definitions                                 0.0s
+[0m[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[0m[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.6s (4/6)                                                         
+[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3f  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906  0.0s
+[0m => [internal] load metadata for docker.io/library/rust:1.98-bookworm      0.0s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.7s (4/6)                                                         
+[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3f  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906  0.0s
+[0m => [internal] load metadata for docker.io/library/rust:1.98-bookworm      0.2s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.9s (4/6)                                                         
+[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3f  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906  0.0s
+[0m => [internal] load metadata for docker.io/library/rust:1.98-bookworm      0.3s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.9s (5/6)                                                         
+[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3f  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/rust:1.98-bookworm      0.3s
+[0m => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.0s (8/24)                                                        
+[34m => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.3s
+[0m[34m => [internal] load .dockerignore                                          0.0s
+[0m[34m => => transferring context: 359B                                          0.0s
+[0m => [runtime  1/11] FROM docker.io/library/debian:bookworm-slim@sha256:7c  0.1s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9  0.0s
+[34m => [internal] load build context                                          0.0s
+[0m => [builder 1/5] FROM docker.io/library/rust:1.98-bookworm@sha256:93ce27  0.1s
+[34m => => resolve docker.io/library/rust:1.98-bookworm@sha256:93ce27a8865505  0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.1s (24/25)                                                       
+[34m => CACHED [runtime  9/11] COPY --from=builder /src/target/release/oep-ga  0.0s
+[0m[34m => CACHED [runtime 10/11] COPY --from=builder /src/target/release/oep-re  0.0s
+[0m[34m => CACHED [runtime 11/11] WORKDIR /srv                                    0.0s
+[0m => exporting to image                                                     0.0s
+[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.3s (24/25)                                                       
+ => exporting to image                                                     0.3s
+[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.5s (24/25)                                                       
+ => exporting to image                                                     0.4s
+[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.6s (24/25)                                                       
+ => exporting to image                                                     0.6s
+[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.7s (24/25)                                                       
+ => exporting to image                                                     0.7s
+[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (25/25)                                                       
+[34m => exporting to image                                                     0.7s
+[0m[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (25/26)                                                       
+[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m => resolving provenance for metadata file                                 0.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (26/26) FINISHED                                              
+[34m => [internal] load local bake definitions                                 0.0s
+[0m[34m => => reading from stdin 642B                                             0.0s
+[0m[34m => [internal] load build definition from Dockerfile                       0.0s
+[0m[34m => => transferring dockerfile: 2.67kB                                     0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1  0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3f  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/rust:1.98-bookworm      0.3s
+[0m[34m => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.3s
+[0m[34m => [internal] load .dockerignore                                          0.0s
+[0m[34m => => transferring context: 359B                                          0.0s
+[0m[34m => [runtime  1/11] FROM docker.io/library/debian:bookworm-slim@sha256:7c  0.1s
+[0m[34m => => resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9  0.0s
+[0m[34m => [internal] load build context                                          0.0s
+[0m[34m => => transferring context: 13.13kB                                       0.0s
+[0m[34m => [builder 1/5] FROM docker.io/library/rust:1.98-bookworm@sha256:93ce27  0.0s
+[0m[34m => => resolve docker.io/library/rust:1.98-bookworm@sha256:93ce27a8865505  0.0s
+[0m[34m => CACHED [runtime  2/11] RUN apt-get update && apt-get install -y --no-  0.0s
+[0m[34m => CACHED [builder 2/5] WORKDIR /src                                      0.0s
+[0m[34m => CACHED [builder 3/5] COPY Cargo.toml Cargo.lock rust-toolchain.toml .  0.0s
+[0m[34m => CACHED [builder 4/5] COPY crates ./crates                              0.0s
+[0m[34m => CACHED [builder 5/5] RUN set -eux;     cargo build --release --bins    0.0s
+[0m[34m => CACHED [runtime  3/11] COPY --from=builder /src/target/release/oep-pd  0.0s
+[0m[34m => CACHED [runtime  4/11] COPY --from=builder /src/target/release/oep-pd  0.0s
+[0m[34m => CACHED [runtime  5/11] COPY --from=builder /src/target/release/oep-we  0.0s
+[0m[34m => CACHED [runtime  6/11] COPY --from=builder /src/target/release/oep-op  0.0s
+[0m[34m => CACHED [runtime  7/11] COPY --from=builder /src/target/release/oep-ba  0.0s
+[0m[34m => CACHED [runtime  8/11] COPY --from=builder /src/target/release/oep-ga  0.0s
+[0m[34m => CACHED [runtime  9/11] COPY --from=builder /src/target/release/oep-ga  0.0s
+[0m[34m => CACHED [runtime 10/11] COPY --from=builder /src/target/release/oep-re  0.0s
+[0m[34m => CACHED [runtime 11/11] WORKDIR /srv                                    0.0s
+[0m[34m => exporting to image                                                     0.7s
+[0m[34m => => exporting layers                                                    0.0s
+[0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
+[0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
+[0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
+[0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
+[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[34m => resolving provenance for metadata file                                 0.0s
+[0m[?25h[?25l[0G[+] build 1/1
+ [32m✔[0m Image keelworks/oep-stack:0.1.0 [32mBuilt[0m                                    [34m2.0s[0m
+[?25h[0;32m[OEP][0m Starting stack (pdm + viewer + p2p)...
+[?25l[0G[+] up 2/4
+ [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [33m⠋[0m Container keelworks-p2p      Creating                                    [34m0.1s[0m
+ [33m⠋[0m Container keelworks-pdm      Creating                                    [34m0.1s[0m
+[?25h[?25l[5A[0G[+] up 4/5
+ [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Container keelworks-p2p      [32mCreated[0m                                     [34m0.1s[0m
+ [32m✔[0m Container keelworks-pdm      [32mCreated[0m                                     [34m0.1s[0m
+ [33m⠋[0m Container keelworks-viewer   Creating                                    [34m0.1s[0m
+[?25h[?25l[6A[0G[+] up 3/5
+ [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [33m⠙[0m Container keelworks-p2p      Starting                                    [34m0.3s[0m
+ [33m⠙[0m Container keelworks-pdm      Starting                                    [34m0.3s[0m
+ [32m✔[0m Container keelworks-viewer   [32mCreated[0m                                     [34m0.1s[0m
+[?25h[?25l[6A[0G[+] up 3/5
+ [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [33m⠹[0m Container keelworks-p2p      Starting                                    [34m0.4s[0m
+ [32m✔[0m Container keelworks-pdm      [32mStarted[0m                                     [34m0.3s[0m
+ [33m⠙[0m Container keelworks-viewer   Starting                                    [34m0.3s[0m
+[?25h[?25l[6A[0G[+] up 4/5
+ [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Container keelworks-p2p      [32mStarted[0m                                     [34m0.4s[0m
+ [32m✔[0m Container keelworks-pdm      [32mStarted[0m                                     [34m0.3s[0m
+ [33m⠹[0m Container keelworks-viewer   Starting                                    [34m0.4s[0m
+[?25h[?25l[6A[0G[+] up 5/5
+ [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Container keelworks-p2p      [32mStarted[0m                                     [34m0.4s[0m
+ [32m✔[0m Container keelworks-pdm      [32mStarted[0m                                     [34m0.3s[0m
+ [32m✔[0m Container keelworks-viewer   [32mStarted[0m                                     [34m0.4s[0m
+[?25h[0;32m[OEP][0m Waiting for health checks to go green (up to 180s)...
+[0;32m[OEP][0m All 3 services healthy.
+[0;32m[OEP][0m Verifying each health endpoint directly...
+[0;32m[OEP][0m pdm    /api/v1/health        OK
+[0;32m[OEP][0m viewer /                     OK
+[0;32m[OEP][0m p2p    /healthz             OK
+
+  PDM     (REST API v1, health /api/v1/health)  http://127.0.0.1:8787/api/v1/health
+  Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
+  P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
+
+[0;32m[OEP][0m One-command install complete: the full Keelworks stack is up with health checks green.
+install.sh exit=0
+
+[1;36m==== 3. PDM health  (GET /api/v1/health) ====[0m
+{"status":"ok","service":"oep-pdm","version":"1.0.0"}
+HTTP 200
+
+[1;36m==== 4. Viewer health (GET / -> 200) ====[0m
+HTTP 200
+
+[1;36m==== 5. P2P health (GET /healthz) ====[0m
+{"status":"ok"}
+HTTP 200
+
+[1;36m==== 6. Worker binary shipped (oep-batch-convert, the P9 convert worker) ====[0m
+oep-batch-convert — P9-M3-T02 batch convert driver (dogfood P2/P4 into the P8 vault).
+
+USAGE:
+    oep-batch-convert seed <seed.json>  [--vault URL]
+    oep-batch-convert run  <batch.json> [--vault URL] [--report PATH]
+
+VERBS:
+    seed   Upload the local real-material files named in the seed manifest
+           (format 'oep-seed', version 1) into the vault as revision-1 items.
+    run    Execute every JobSpec in the batch manifest (format 'oep-batch',
+           version 1) across the seeded corpus, store outputs in the vault,
+           and emit a hash-verified report (format 'oep-batch-report').
+
+OPTIONS:
+    --vault URL   PDM base URL (default: http://127.0.0.1:8787).
+    --report PATH Write the run report JSON here (default: ./batch-report.json).
+
+EXIT CODES:
+    0  ok (or only classified skips)
+    1  usage / vault / batch error, or at least one job errored
+
+[1;36m==== 7. Render-worker binary shipped (oep-render-worker) ====[0m
+{
+  "kind": "render",
+  "function": "oep-geo-render",
+  "binary": "oep-render-worker",
+  "version": "0.1.0",
+  "description": "Headless oep-geo renderer: renders a real oep-geo model to a PNG image behind the P6-M5-T01 render seam, parameterized by resolution and fidelity.",
+  "fidelity_levels": ["low", "medium", "high"],
+  "args": ["--resolution", "--fidelity"]
+}
+
+[1;36m==== 8. Update checker off by default (no phone-home in generated .env) ====[0m
+no OEP_UPDATE_CHECK line in .env -> checker stays off (decision #11)
+
+[1;36m==== Containers (all healthy) ====[0m
+NAMES              STATUS
+keelworks-viewer   Up 7 seconds (healthy)
+keelworks-p2p      Up 7 seconds (healthy)
+keelworks-pdm      Up 7 seconds (healthy)
+=== WALKTHROUGH A COMPLETE: full stack healthy, update checker off ===
+
+Script done on 2026-10-18 04:19:28-07:00 [COMMAND_EXIT_CODE="0"]

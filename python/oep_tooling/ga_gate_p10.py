@@ -276,7 +276,8 @@ def check_install_machine(name, host, port, root, report, docker_available):
     def x(cmd, timeout=1800):
         if host is None:
             return run(["bash", "-lc", cmd], timeout=timeout)
-        return ssh_run(host, port, cmd, timeout=timeout)
+        # machine B: the RC tree was rsynced to ~/keelworks by the proof driver
+        return ssh_run(host, port, f"cd ~/keelworks && {cmd}", timeout=timeout)
 
     def curl_on_target(path, want_status=200):
         # Run the documented health curl on the machine that hosts the stack.
@@ -437,22 +438,36 @@ def check_airgap(root, report, docker_available):
                                 timeout=1800)
             routes = t("ip route | wc -l || true")
             n_routes = routes.stdout.strip()
-            verify = t("bash /opt/airgap-scripts/airgap-verify.sh --bundle /media/keelworks-offline-0.1.0.tar.gz")
+            # Pre-install verify proves signature + on-media integrity. The
+            # script also health-checks, which is expected to be NOT-passing
+            # before the stack is up (exit 3 = "stack may not be running").
+            # So we take the signature/integrity markers as the proof here and
+            # demand a clean rc=0 verify AFTER the install (final verification).
+            verify_before = t("bash /opt/airgap-scripts/airgap-verify.sh "
+                              "--bundle /media/keelworks-offline-0.1.0.tar.gz")
+            vb_out = verify_before.stdout + verify_before.stderr
+            sig_ok = ("bundle signature OK" in vb_out) and \
+                     ("manifest signature OK" in vb_out)
             install = t("bash /opt/airgap-scripts/airgap-install.sh "
                         "--bundle /media/keelworks-offline-0.1.0.tar.gz "
                         "--install-dir /opt/keelworks --project oep")
             off = "OEP_UPDATE_CHECK=off" in install.stdout or "OEP_UPDATE_CHECK=off" in install.stderr
-            if verify.returncode == 0 and install.returncode == 0 and off:
+            verify_after = t("bash /opt/airgap-scripts/airgap-verify.sh "
+                             "--bundle /media/keelworks-offline-0.1.0.tar.gz "
+                             "--install-dir /opt/keelworks --project oep")
+            if sig_ok and install.returncode == 0 and off and verify_after.returncode == 0:
                 report.add(LegRow(
                     "airgap", "AIRGAP", "PASS",
                     f"signed bundle install on --network none target "
-                    f"(routes={n_routes}): sig+sha256 verified, docker load only, "
-                    f"OEP_UPDATE_CHECK=off, same health green"))
+                    f"(routes={n_routes}): sig+sha256+manifest verified, "
+                    f"docker load only, OEP_UPDATE_CHECK=off, post-install "
+                    f"verify rc=0 (health green)"))
             else:
                 report.add(LegRow(
                     "airgap", "AIRGAP", "FAIL",
-                    f"verify rc={verify.returncode} install rc={install.returncode} "
-                    f"update_off={off} routes={n_routes}; "
+                    f"sig_ok={sig_ok} prever_rc={verify_before.returncode} "
+                    f"install rc={install.returncode} update_off={off} "
+                    f"postver_rc={verify_after.returncode} routes={n_routes}; "
                     f"{install.stderr[-300:]}"))
         finally:
             tar = run(["docker", "rm", "-f", "oep-airgap-target"])

@@ -1,0 +1,57 @@
+{
+  "task": "P10-M5-T02",
+  "title": "P10 GA gate: fresh install walkthrough verified on two machines",
+  "timestamp": "2026-10-18T13:49:47Z",
+  "schema_version": 1,
+  "summary": {
+    "total": 6,
+    "PASS": 6,
+    "FAIL": 0,
+    "SKIP": 0
+  },
+  "rows": [
+    {
+      "id": "walkthrough-doc",
+      "leg": "DOCS",
+      "status": "PASS",
+      "detail": "checklist present and self-consistent (8 checklist rows, air-gap + online paths)",
+      "class": ""
+    },
+    {
+      "id": "update-env",
+      "leg": "UPDATE",
+      "status": "PASS",
+      "detail": "off by default: airgap template OEP_UPDATE_CHECK=off; install .env never enables; acceptance pinned; no phone-home (stack binds 127.0.0.1)",
+      "class": ""
+    },
+    {
+      "id": "install-A",
+      "leg": "INSTALL",
+      "status": "PASS",
+      "detail": "clean-state one-command install on A (localhost) -> pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present in image",
+      "class": ""
+    },
+    {
+      "id": "install-B",
+      "leg": "INSTALL",
+      "status": "PASS",
+      "detail": "clean-state one-command install on B (op@127.0.0.1) -> pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present in image",
+      "class": ""
+    },
+    {
+      "id": "full-stack",
+      "leg": "STACK",
+      "status": "PASS",
+      "detail": "pdm+viewer+p2p healthy (3), oep-batch-convert + oep-render-worker bins present in image",
+      "class": ""
+    },
+    {
+      "id": "airgap",
+      "leg": "AIRGAP",
+      "status": "PASS",
+      "detail": "signed bundle install on --network none target (routes=0): sig+sha256+manifest verified, docker load only, OEP_UPDATE_CHECK=off, post-install verify rc=0 (health green)",
+      "class": ""
+    }
+  ],
+  "report": "ga-gate-p10-m5t02.json"
+}

@@ -1,0 +1,66 @@
+Script started on 2026-10-18 05:09:13-07:00 [COMMAND="ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -p 2229 op@127.0.0.1 "bash /tmp/wtb.sh"" <not executed on terminal>]
+
+[1;36m==== Keelworks P10 fresh-install walkthrough on machine B (U1/VM-class, keelwb2) ====[0m
+ubuntu
+aarch64
+
+[1;36m==== 1. Confirm clean state ====[0m
+
+[1;36m==== 2. One-command install (docs: ./install.sh) ====[0m
+[0;32m[OEP][0m Preflight... (docker + compose + disk)
+[0;32m[OEP][0m Wrote .env from .env.example (host binds default to 127.0.0.1).
+[0;32m[OEP][0m Preflight ok.
+[0;32m[OEP][0m Building stack image keelworks/oep-stack:0.1.0 (first build fetches crates, minutes)...
+time="2026-10-18T12:09:25Z" level=warning msg=… (4613s of release build elided) …
+ go green (up to 180s)...
+[0;32m[OEP][0m All 3 services healthy.
+[0;32m[OEP][0m Verifying each health endpoint directly...
+[0;32m[OEP][0m pdm    /api/v1/health        OK
+[0;32m[OEP][0m viewer /                     OK
+[0;32m[OEP][0m p2p    /healthz             OK
+
+  PDM     (REST API v1, health /api/v1/health)  http://127.0.0.1:8787/api/v1/health
+  Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
+  P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
+
+[0;32m[OEP][0m One-command install complete: the full Keelworks stack is up with health checks green.
+install.sh exit=0
+
+[1;36m==== 3. PDM health ====[0m
+{"status":"ok","service":"oep-pdm","version":"1.0.0"}
+HTTP 200
+
+[1;36m==== 4. Viewer health ====[0m
+HTTP 200
+
+[1;36m==== 5. P2P health ====[0m
+{"status":"ok"}
+HTTP 200
+
+[1;36m==== 6. Worker binary shipped (oep-batch-convert, the P9 convert worker) ====[0m
+oep-batch-convert — P9-M3-T02 batch convert driver (dogfood P2/P4 into the P8 vault).
+
+USAGE:
+    oep-batch-convert seed <seed.json>  [--vault URL]
+    oep-batch-convert run  <batch.json> [--vault URL] [--report PATH]
+
+
+[1;36m==== 7. Render-worker binary shipped (oep-render-worker) ====[0m
+{
+  "kind": "render",
+  "function": "oep-geo-render",
+  "binary": "oep-render-worker",
+  "version": "0.1.0",
+  "description": "Headless oep-geo renderer: renders a real oep-geo model to a PNG image behind the P6-M5-T01 render seam, parameterized by resolution and fidelity.",
+
+[1;36m==== 8. Update checker off by default ====[0m
+no OEP_UPDATE_CHECK line in .env -> checker stays off (decision #11)
+
+[1;36m==== Containers (all healthy) ====[0m
+NAMES              STATUS
+keelworks-viewer   Up 43 seconds (healthy)
+keelworks-p2p      Up 59 seconds (healthy)
+keelworks-pdm      Up 50 seconds (healthy)
+=== WALKTHROUGH B COMPLETE: full stack healthy, update checker off ===
+
+Script done on 2026-10-18 06:26:44-07:00 [COMMAND_EXIT_CODE="0"]
