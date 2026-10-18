@@ -10,6 +10,16 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P2 oep-cgr        -- CGR reader (geometry/tessellation)
 - P3 oep-3dxml      -- 3DXML reader/writer
 - P6 oep-geo        -- geometry core + model representation
+- P6 oep-engine-occ -- P6-M3-T04 / ADR v1.1.0 geometry-kernel seam: the pinned
+                       OCCT 8.0.x binding (booleans, fillet/chamfer,
+                       primitives) behind the oep-geo `kernel` module. This is
+                       the one cross-crate path dep the layout allows before
+                       P6-M4-T02: oep-geo (feature `kernel`, off by default)
+                       depends on it. FEATURE-GATED: the workspace builds
+                       without a C++/OCCT toolchain unless `kernel`/`build-engine`
+                       is requested. License: OCCT is LGPL-2.1 + Exception, kept a
+                       separate dependency (our crates stay Apache-2.0); OCCT
+                       notice written by the P0-M2 legal pass before release.
 - P6 oep-viewer     -- P6-M5 preview viewer (render seam, camera/select/clip)
 - P9 oep-render-worker -- headless oep-geo render worker (P9-M3-T01)
 - P9 oep-farm       -- beam/farm-style checkpoint + resume for long jobs (P9-M4-T02)

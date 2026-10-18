@@ -12,6 +12,7 @@ members = [
     "crates/oep-cgr",
     "crates/oep-3dxml",
     "crates/oep-geo",
+    "crates/oep-engine-occ",
     "crates/oep-viewer",
     "crates/oep-render-worker",
     "crates/oep-web",

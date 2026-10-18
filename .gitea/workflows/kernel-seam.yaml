@@ -1,0 +1,59 @@
+# P6-M3-T04 / ADR v1.1.0: kernel seam gates.
+#
+# Two jobs:
+#   1. guardrails -- the seam-denial scan (no OCCT identifiers in oep-geo
+#      public items), the no-vendored-OCCT scan, and the ADR v1.1.0 contract.
+#      Pure Python, no kernel build.
+#   2. acceptance -- the through-the-seam test gate on REAL material: builds
+#      the pinned OCCT 8.0.1 dependency (scripts/kernel/build-occt.sh) and runs
+#      crates/oep-geo/tests/kernel_seam.rs with the `kernel` feature (oep-geo
+#      types in, oep-geo types out). Volumes to tolerance, face counts, typed
+#      errors.
+#
+# The general CI jobs (lint/unit/integration) do NOT enable the kernel feature,
+# so the rest of the workspace stays C++-free and fast; the OCCT build happens
+# only here.
+name: Kernel seam (OCCT 8.0.x)
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  guardrails:
+    name: guardrails
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Kernel seam guardrails (seam denial, no vendored OCCT, ADR v1.1.0)
+        run: python3 -m pytest -q tests/test_kernel_seam_guardrails.py
+
+  acceptance:
+    name: acceptance
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates curl cmake g++ make
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Build pinned OCCT 8.0.1 (static, fetched as a dependency)
+        run: |
+          bash scripts/kernel/build-occt.sh
+      - name: Through-the-seam kernel acceptance (oep-geo <=> OCCT 8.0.1)
+        run: cargo test -p oep-geo --features kernel --test kernel_seam -- --test-threads=1

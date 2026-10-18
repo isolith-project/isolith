@@ -21,12 +21,15 @@
 //! - [`transform`]: the 4x4 row-major [`Transform`].
 //! - [`validate`]: structural invariant rules as [`ValidationError`]s.
 //! - [`math`]: vendored std-only f64 math core (P6-M2-T01).
+//! - [`kernel`]: the geometry-kernel seam (P6-M3-T04 / ADR v1.1.0) -- exact
+//!   B-Rep booleans, fillet/chamfer, primitives, typed errors.
 #![deny(missing_docs)]
 
 pub mod assembly;
 pub mod body;
 pub mod document;
 pub mod feature;
+pub mod kernel;
 pub mod math;
 pub mod part;
 pub mod transform;
@@ -46,6 +49,14 @@ pub use part::Part;
 pub use transform::Transform;
 /// [`ValidationError`]: a single documented structural violation.
 pub use validate::ValidationError;
+
+/// Kernel seam: [the geometry-kernel seam][`kernel`], exposed as oep-geo-typed
+/// types and free functions only (no kernel identifier leaks, ADR section 5).
+pub use kernel::{
+    make_box, make_cylinder, make_sphere, solid_boolean, solid_chamfer, solid_edges, solid_fillet,
+    sys_drop, sys_new, BooleanError, BooleanOp, EdgeRef, KernelError, Solid, SolidMeasures,
+    SysHandle, Tolerance,
+};
 
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P6-GEO";

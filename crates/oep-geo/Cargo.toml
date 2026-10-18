@@ -9,6 +9,14 @@ repository.workspace = true
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+oep-engine-occ = { path = "../oep-engine-occ", optional = true }
+
+# P6-M3-T04 / ADR v1.1.0: the kernel seam is OFF by default so the workspace
+# builds with no C++/OCCT toolchain; `kernel` enables the OCCT binding and
+# links the pinned 8.0.x engine (the acceptance job builds with --features kernel).
+[features]
+default = []
+kernel = ["dep:oep-engine-occ", "oep-engine-occ/build-engine"]
 
 [dev-dependencies]
 serde_json = "1"
