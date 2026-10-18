@@ -34,3 +34,8 @@ P10-M4/proof/.local-rows.jsonl
 P10-M4/proof/.remote-rows.jsonl
 P10-M4/proof/.pdm-live.log
 P10-M4/proof/.vault-live/
+# P10-M1-T02: generated TLS identities (CA + leaf private keys) must never be
+# committed; the gen-stack-certs.sh tooling recreates them per host.
+P10-M1/certs/
+*.srl
+server.key

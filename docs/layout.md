@@ -71,6 +71,19 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P12 QA/CI, P14 integration.
 
+P10 hybrid cloud / self-hosted delivery to date ships as tooling + scripts, not
+new crates (the PDM server that carries TLS is P8 `oep-pdm`):
+
+- `scripts/gen-stack-certs.sh`        -- local CA + leaf for the stack (P10-M1-T02)
+- `scripts/backup/vault-backup.sh`    -- checksummed vault DB+blob backup to a
+                                         second disk / archive target (P10-M1-T02)
+- `scripts/backup/vault-restore-check.sh` -- producer-side restore round-trip
+- `scripts/backup/install-vault-backup-cron.sh` -- daily scheduled backup
+- `scripts/p10m1t02-proof.sh`         -- acceptance proof capture (P10-M1-T02)
+- `scripts/dr/backup-vault.sh` `scripts/dr/drill-restore.sh` -- DR lane (P10-M3-T01),
+  consuming the same `keelworks-vault-backup/` bundle contract
+- docs: `P10-M1/` (lane docs + proof), `P10-M3/` (DR runbook + proof)
+
 ## Conventions
 
 - Rust core: one `crates/oep-<stream>` crate per workstream, listed as a

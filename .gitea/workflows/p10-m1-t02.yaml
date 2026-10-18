@@ -1,0 +1,52 @@
+# P10-M1-T02: TLS + certs for the stack, vault DB/blob backup to a second
+# disk/archive, restore round-trip -- acceptance in CI.
+#
+# Separate workflow file (NOT ci.yaml): the P8/P9 gate convention is one new
+# workflow per delivery/Gate lane so lanes never collide with the main
+# lint/unit/integration pipeline or with each other. Checkout uses the
+# TRIGGERING ref (same pattern as the ga-gate + precommit workflows), so the
+# lane tests the branch under validation.
+#
+# What is actually proven here, on the CI container, is the transport / script
+# contract over REAL sockets + REAL openssl:
+#   * oep-pdm --tls-cert --tls-key terminates HTTPS; openssl s_client
+#     -verify_return_error trusts the chain; health rides over TLS; plain HTTP
+#     is not served on the TLS listener (native rustls via axum-server).
+#   * scripts/gen-stack-certs.sh emits a CA + leaf + key that chain-verifies.
+#   * the backup producer snapshots store.json + blobs + audit, writes a sha256
+#     manifest and self-verifies; the restore check boots a fresh oep-pdm on a
+#     restored copy and the real vault read hash round-trips against the
+#     manifest (the "restore round-trips" acceptance).
+#
+# The runner needs openssl for the TLS/cert legs; rust:1-slim-bookworm ships
+# it. The python acceptance degrades legs gracefully when the tool is absent
+# (CI-safe), so a container without openssl still exits 0.
+name: P10-M1-T02 (TLS + vault backup/restore round-trip)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  tls-and-backup:
+    name: tls-and-backup
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest openssl curl
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Build oep-pdm
+        run: cargo build -p oep-pdm 2>&1 | tail -5
+      - name: P10-M1-T02 acceptance (TLS + backup/restore)
+        run: |
+          if [ ! -f tests/test_p10_m1_t02_tls_and_backup.py ]; then
+            echo "P10-M1-T02 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p10_m1_t02_tls_and_backup.py
