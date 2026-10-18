@@ -26,6 +26,14 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   audit}) into the served contract as additive gate verbs (lock / lock release
   / transition / audit / audit-verify; see P8-M6/ga-gate.md), with the gate
   harness python/oep_tooling/ga_gate_p8.py and proof under P8-M6/proof/
+- P10 oep-pdm sync   -- multi-site replication demo (P10-M4-T01): LAN node +
+                       remote node replicating the vault with conflict semantics
+                       documented (docs/P10-M4/multi-site-replication.md),
+                       driven by the offline-sync surface rooted in
+                       P8-M5/hybrid-cloud-role-adr.md (airgap default,
+                       deploy_role) + the generated client sync verbs;
+                       harness python/oep_tooling/replication_demo.py, live
+                       two-host (U1 + garage PC) proof under P10-M4/proof/
 - P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
                        executor, resource caps, output refs)
 - P9 oep-lane       -- P2P compute lane: scheduler (queue, priorities, DAG,

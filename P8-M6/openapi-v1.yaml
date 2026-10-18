@@ -271,12 +271,115 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Revision' }
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error' 
+  # ---------------------------------------------------------------------------
+  # P8-M5-T02 offline-sync surface (offline working set -> server). Additive
+  # to the v1 contract: one offline edit per push, divergence detected by the
+  # server on base identity (revision number + content hash), conflicts
+  # resolved through the 3-way (base/ours/theirs) merge surface below.
+  # ---------------------------------------------------------------------------
+  /sync/push:
+    post:
+      tags: [sync]
+      summary: >-
+        Push one offline edit with its base identity (P8-M5-T02). The server
+        applies it as the item's next revision only when the current head
+        equals the stated base_revision + base_blob_sha256; a clean sync is
+        201 status:"synced", a divergent head is 409 status:"conflict" and
+        records a pending merge at sync_id (no revision created).
+      operationId: syncPush
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SyncPushRequest' }
+      responses:
+        '201':
+          description: Clean sync; revision created.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SyncPushResult' }
+        '409':
+          description: Divergent; pending merge recorded (expected outcome).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SyncPushResult' }
+        '404':
+          $ref: '#/components/responses/Error'
+  /sync/conflicts/{sync_id}:
+    get:
+      tags: [sync]
+      summary: The three snapshots of a pending merge (base/ours/theirs).
+      operationId: getSyncConflict
+      parameters:
+        - { $ref: '#/components/parameters/SyncId' }
+      responses:
+        '200':
+          description: The pending merge.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SyncConflictView' }
+        '404':
+          $ref: '#/components/responses/Error'
+  /sync/conflicts/{sync_id}/file/{side}:
+    get:
+      tags: [sync]
+      summary: Raw bytes of one side of a pending merge (base, ours, their).
+      operationId: openConflictSide
+      parameters:
+        - { $ref: '#/components/parameters/SyncId' }
+        - { $ref: '#/components/parameters/SyncSide' }
+      responses:
+        '200':
+          description: File bytes plus X-Blob-Sha256 metadata headers.
+          headers:
+            Content-Type:
+              schema: { type: string }
+            X-Oep-Filename:
+              schema: { type: string }
+            X-Oep-Format:
+              schema: { type: string }
+            X-Blob-Sha256:
+              schema: { type: string }
+              description: Content-address; hex lowercase sha-256 of the body.
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+  /sync/conflicts/{sync_id}/resolve:
+    post:
+      tags: [sync]
+      summary: >-
+        Resolve a pending merge by committing a new revision whose file is the
+        chosen snapshot (ours/theirs) or a client-provided merged document.
+        The returned revision files[0].blob_sha256 is the hash of the resolved
+        bytes.
+      operationId: resolveConflict
+      parameters:
+        - { $ref: '#/components/parameters/SyncId' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SyncResolveRequest' }
+      responses:
+        '201':
+          description: Resolution committed as a new revision.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Revision' }
         '400':
           $ref: '#/components/responses/Error'
         '404':
           $ref: '#/components/responses/Error'
         '409':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/Error' 
   /audit:
     get:
       tags: [gate]
@@ -304,7 +407,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/AuditVerifyReply' }
         '409':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/Error' 
 components:
   parameters:
     ItemId:
@@ -319,6 +422,18 @@ components:
       required: true
       schema: { type: string }
       description: Revision number as a string ("1", "2", ...).
+    SyncId:
+      name: sync_id
+      in: path
+      required: true
+      schema: { type: string }
+      description: Pending-merge id (server-minted by the sync push).
+    SyncSide:
+      name: side
+      in: path
+      required: true
+      schema: { type: string, enum: [base, ours, theirs] }
+      description: Which snapshot of the pending merge to fetch bytes for.
   responses:
     Error:
       description: Contract error.
@@ -440,6 +555,62 @@ components:
         blob_sha256:
           type: string
           description: hex lowercase sha-256 of the file bytes.
+    SyncPushRequest:
+      type: object
+      required: [item_id, base_revision, base_blob_sha256, file]
+      properties:
+        item_id: { type: string, description: The item the offline edit targets }
+        base_revision: { type: string, description: The revision the edit was based on }
+        base_blob_sha256: { type: string, description: Content address of base_revision's file }
+        state:
+          type: string
+          enum: [working, under_review, released, obsolete]
+          default: working
+        comment: { type: string }
+        created_by: { type: string }
+        file: { $ref: '#/components/schemas/FileUpload' }
+    SyncPushResult:
+      type: object
+      required: [status]
+      properties:
+        status: { type: string, enum: [synced, conflict] }
+        revision: { $ref: '#/components/schemas/Revision' }
+        sync_id: { type: string }
+        base_revision: { type: string }
+        base_blob_sha256: { type: string }
+        theirs_revision: { type: string }
+        theirs_blob_sha256: { type: string }
+      description: >-
+        Tagged on status: synced (201) carries revision; conflict (409) carries
+        sync_id + base/theirs identity and records a pending merge.
+    ConflictSide:
+      type: object
+      required: [revision, filename, format, content_type, size, blob_sha256]
+      properties:
+        revision: { type: string, nullable: true, description: null for "ours" (no server revision yet) }
+        filename: { type: string }
+        format: { type: string }
+        content_type: { type: string }
+        size: { type: integer, format: int64 }
+        blob_sha256: { type: string }
+    SyncConflictView:
+      type: object
+      required: [sync_id, item_id, base, ours, theirs]
+      properties:
+        sync_id: { type: string }
+        item_id: { type: string }
+        base: { $ref: '#/components/schemas/ConflictSide' }
+        ours: { $ref: '#/components/schemas/ConflictSide' }
+        theirs: { $ref: '#/components/schemas/ConflictSide' }
+    SyncResolveRequest:
+      type: object
+      required: [choice]
+      properties:
+        choice: { type: string, enum: [ours, theirs, merged] }
+        merged:
+          allOf:
+            - { $ref: '#/components/schemas/FileUpload' }
+          description: Required when choice == merged (the client-merged document).
     RevisionList:
       type: object
       required: [item_id, latest, revisions]
