@@ -24,3 +24,8 @@ broken.py
 # Dev-only real-material corpus for the P9-M5-T02 GA gate (clean-room
 # invariant: real CAD/CATPart bytes are reference material, never committed).
 pending-corpus/
+
+# P10-M1-T01 one-command stack: locally generated env + release bundles
+# (offline image tarballs + checksums) are build artifacts, not source.
+P10-M1/deploy/.env
+P10-M1/releases/

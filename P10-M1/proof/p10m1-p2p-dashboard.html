@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>OEP P9 Ops Dashboard</title><style>body{font-family:system-ui,sans-serif;margin:2rem;color:#1a1a1a;background:#fafafa}h1{font-size:1.4rem} h2{font-size:1.1rem;margin-top:1.6rem;border-bottom:1px solid #ddd;padding-bottom:.2rem}table{border-collapse:collapse;width:100%;font-size:.85rem}th,td{text-align:left;padding:.35rem .6rem;border-bottom:1px solid #ececec}th{background:#f0f0f0} .ok{color:#1a7f37} .bad{color:#cf222e}.warn{color:#9a6700} .mono{font-family:ui-monospace,Menlo,monospace;font-size:.8rem}.card{background:#fff;border:1px solid #e2e2e2;border-radius:8px;padding:1rem;margin:.5rem 0}.stat{display:inline-block;margin-right:1.4rem} .stat b{font-size:1.3rem;display:block}</style></head><body>
+<h1>OEP P9 Ops Dashboard <span class="mono">(format oep-opsdash v1)</span></h1>
+<p class="mono">snapshot at t=132192ms</p>
+<h2>Queue depth</h2><div class="card">
+<span class="stat"><b class="">0</b>waiting</span>
+<span class="stat"><b class="">0</b>ready</span>
+<span class="stat"><b class="ok">2</b>running</span>
+<span class="stat"><b class="">0</b>retrying</span>
+<span class="stat"><b class="">1413</b>succeeded</span>
+<span class="stat"><b class="bad">0</b>dead-lettered</span>
+</div>
+<h2>Node health</h2><table><tr><th>node</th><th>health</th><th>cpu</th><th>mem</th><th>power W</th><th>running</th><th>succeeded</th><th>reclaimed</th><th>last hb</th></tr>
+<tr><td class="mono">nas-ds</td><td class="ok">online</td><td>8000</td><td>32000</td><td>60</td><td class="mono">1414</td><td>628</td><td>0</td><td class="mono">132175</td></tr>
+<tr><td class="mono">u1</td><td class="ok">online</td><td>32000</td><td>128000</td><td>350</td><td class="mono">1413</td><td>785</td><td>0</td><td class="mono">132175</td></tr>
+</table>
+<h2>Job logs</h2><table><tr><th>t</th><th>job</th><th>node</th><th>event</th><th>detail</th></tr>
+<tr><td class="mono">132175</td><td class="mono">1414</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">132175</td><td class="mono">1414</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">132175</td><td class="mono">1413</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">132175</td><td class="mono">1413</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131925</td><td class="mono">1412</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131925</td><td class="mono">1411</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131925</td><td class="mono">1410</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131925</td><td class="mono">1409</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1412</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1412</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1411</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1411</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1410</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1410</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1409</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131895</td><td class="mono">1409</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131645</td><td class="mono">1408</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131645</td><td class="mono">1407</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131645</td><td class="mono">1406</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131615</td><td class="mono">1408</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131615</td><td class="mono">1408</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131615</td><td class="mono">1407</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131615</td><td class="mono">1407</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131615</td><td class="mono">1406</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131615</td><td class="mono">1406</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131364</td><td class="mono">1405</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131364</td><td class="mono">1404</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131334</td><td class="mono">1405</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131334</td><td class="mono">1405</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131334</td><td class="mono">1404</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131334</td><td class="mono">1404</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131083</td><td class="mono">1403</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131083</td><td class="mono">1402</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131083</td><td class="mono">1401</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131083</td><td class="mono">1400</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1403</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1403</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1402</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1402</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1401</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1401</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1400</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">131053</td><td class="mono">1400</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130802</td><td class="mono">1399</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130802</td><td class="mono">1398</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130802</td><td class="mono">1397</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130771</td><td class="mono">1399</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130771</td><td class="mono">1399</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130771</td><td class="mono">1398</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130771</td><td class="mono">1398</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130771</td><td class="mono">1397</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130771</td><td class="mono">1397</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130521</td><td class="mono">1396</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130521</td><td class="mono">1395</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130491</td><td class="mono">1396</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130491</td><td class="mono">1396</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130491</td><td class="mono">1395</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130491</td><td class="mono">1395</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130241</td><td class="mono">1394</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130241</td><td class="mono">1393</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130241</td><td class="mono">1392</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130241</td><td class="mono">1391</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1394</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1394</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1393</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1393</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1392</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1392</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1391</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">130210</td><td class="mono">1391</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129959</td><td class="mono">1390</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129959</td><td class="mono">1389</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129959</td><td class="mono">1388</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129929</td><td class="mono">1390</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129929</td><td class="mono">1390</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129929</td><td class="mono">1389</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129929</td><td class="mono">1389</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129929</td><td class="mono">1388</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129929</td><td class="mono">1388</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129679</td><td class="mono">1387</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129679</td><td class="mono">1386</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129649</td><td class="mono">1387</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129649</td><td class="mono">1387</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129649</td><td class="mono">1386</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129649</td><td class="mono">1386</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129398</td><td class="mono">1385</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129398</td><td class="mono">1384</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129398</td><td class="mono">1383</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129398</td><td class="mono">1382</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1385</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1385</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1384</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1384</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1383</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1383</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1382</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129368</td><td class="mono">1382</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129117</td><td class="mono">1381</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129117</td><td class="mono">1380</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129117</td><td class="mono">1379</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">129087</td><td class="mono">1381</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129087</td><td class="mono">1381</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129087</td><td class="mono">1380</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129087</td><td class="mono">1380</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">129087</td><td class="mono">1379</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">129087</td><td class="mono">1379</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128836</td><td class="mono">1378</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128836</td><td class="mono">1377</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128806</td><td class="mono">1378</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128806</td><td class="mono">1378</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128806</td><td class="mono">1377</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128806</td><td class="mono">1377</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128555</td><td class="mono">1376</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128555</td><td class="mono">1375</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128555</td><td class="mono">1374</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128555</td><td class="mono">1373</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1376</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1376</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1375</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1375</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1374</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1374</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1373</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128525</td><td class="mono">1373</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128275</td><td class="mono">1372</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128275</td><td class="mono">1371</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128275</td><td class="mono">1370</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">128244</td><td class="mono">1372</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128244</td><td class="mono">1372</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128244</td><td class="mono">1371</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128244</td><td class="mono">1371</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">128244</td><td class="mono">1370</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">128244</td><td class="mono">1370</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127993</td><td class="mono">1369</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127993</td><td class="mono">1368</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127963</td><td class="mono">1369</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127963</td><td class="mono">1369</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127963</td><td class="mono">1368</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127963</td><td class="mono">1368</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127712</td><td class="mono">1367</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127712</td><td class="mono">1366</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127712</td><td class="mono">1365</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127712</td><td class="mono">1364</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1367</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1367</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1366</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1366</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1365</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1365</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1364</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127682</td><td class="mono">1364</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127431</td><td class="mono">1363</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127431</td><td class="mono">1362</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127431</td><td class="mono">1361</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127401</td><td class="mono">1363</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127401</td><td class="mono">1363</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127401</td><td class="mono">1362</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127401</td><td class="mono">1362</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127401</td><td class="mono">1361</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127401</td><td class="mono">1361</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127151</td><td class="mono">1360</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127151</td><td class="mono">1359</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">127120</td><td class="mono">1360</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127120</td><td class="mono">1360</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">127120</td><td class="mono">1359</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">127120</td><td class="mono">1359</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126870</td><td class="mono">1358</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126870</td><td class="mono">1357</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126870</td><td class="mono">1356</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126870</td><td class="mono">1355</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1358</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1358</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1357</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1357</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1356</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1356</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1355</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126840</td><td class="mono">1355</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126590</td><td class="mono">1354</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126590</td><td class="mono">1353</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126590</td><td class="mono">1352</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126559</td><td class="mono">1354</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126559</td><td class="mono">1354</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126559</td><td class="mono">1353</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126559</td><td class="mono">1353</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126559</td><td class="mono">1352</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126559</td><td class="mono">1352</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126309</td><td class="mono">1351</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126309</td><td class="mono">1350</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126279</td><td class="mono">1351</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126279</td><td class="mono">1351</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126279</td><td class="mono">1350</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">126279</td><td class="mono">1350</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">126028</td><td class="mono">1349</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126028</td><td class="mono">1348</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126028</td><td class="mono">1347</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">126028</td><td class="mono">1346</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">125998</td><td class="mono">1349</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">125998</td><td class="mono">1349</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">125998</td><td class="mono">1348</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+</table>
+<h2>Cost / Energy</h2><div class="card">
+<span class="stat"><b>1833</b>energy mWh</span><span class="stat"><b>0</b>cost micro-USD</span><span class="stat"><b>1413</b>runs</span>
+</div><table><tr><th>node</th><th>energy mWh</th><th>cost micro-USD</th><th>runs</th></tr>
+<tr><td class="mono">nas-ds</td><td>0</td><td>0</td><td>628</td></tr>
+<tr><td class="mono">u1</td><td>1833</td><td>0</td><td>785</td></tr>
+</table></body></html>
