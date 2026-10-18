@@ -220,16 +220,19 @@ def list_repos(org="keelworks"):
         "%s/orgs/%s/repos?limit=100" % (GITEA_API, org),
         headers={"Authorization": "token " + tok})
     with urllib.request.urlopen(req, timeout=30) as r:
-        return [x["name"] for x in json.load(r)]
+        data = json.load(r)
+    return {x["name"]: bool(x.get("archived")) for x in data}
 
 
 def check_repos(allowed, legacy=None):
     legacy = LEGACY_REPOS if legacy is None else legacy
-    names = set(list_repos())
+    archived = list_repos()
+    names = set(archived)
     extra = sorted(names - allowed - legacy)
-    legacy_present = sorted(names & legacy)
+    legacy_active = sorted(n for n in (names & legacy) if not archived.get(n))
+    legacy_archived = sorted(n for n in (names & legacy) if archived.get(n))
     missing = sorted(allowed - names)
-    return names, extra, legacy_present, missing
+    return names, extra, legacy_active, legacy_archived, missing
 
 
 # --------------------------------------------------------------------------
@@ -336,15 +339,17 @@ def main(argv=None):
 
     if args.cmd == "repos":
         allowed = set(x.strip() for x in args.allow.split(",") if x.strip())
-        names, extra, legacy_present, missing = check_repos(allowed)
+        names, extra, legacy_active, legacy_archived, missing = check_repos(allowed)
         if extra:
             print("HYGIENE FAIL: unexpected repositories: %s" % ", ".join(extra))
             print("policy section 6: exactly %s are allowed" % ", ".join(sorted(allowed)))
             return 1
         print("repo hygiene OK: %s" % ", ".join(sorted(names)))
-        if legacy_present:
-            print("warning: legacy repo present (no new work, archive pending decision): %s"
-                  % ", ".join(legacy_present))
+        if legacy_active:
+            print("warning: legacy repo active, no new work permitted: %s"
+                  % ", ".join(legacy_active))
+        if legacy_archived:
+            print("note: legacy repo archived, resolved: %s" % ", ".join(legacy_archived))
         if missing:
             print("note: allowed but absent: %s" % ", ".join(missing))
         return 0
