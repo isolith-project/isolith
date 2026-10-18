@@ -13,7 +13,7 @@ from typing import List, Optional
 API_BASE = "/api/v1"
 API_VERSION = "1.0.0"
 # SHA-256 of the P8-M6/openapi-v1.yaml bytes this client was generated from.
-SPEC_SHA256 = "cd26418539ddfd717ab88ae5f74955b454104246d8e1c9d4c9fad5ea1597e4fb"
+SPEC_SHA256 = "205fce896a60a217997092a4ee7c202565c15893b3bcf5679a50d1b25a88bb39"
 
 @dataclass
 class Health:
@@ -71,6 +71,34 @@ class RevisionList:
     item_id: str
     latest: str
     revisions: List[Revision]
+
+@dataclass
+class SyncPushResult:
+    status: str
+    revision: Optional[Revision] = None
+    sync_id: Optional[str] = None
+    base_revision: Optional[str] = None
+    base_blob_sha256: Optional[str] = None
+    theirs_revision: Optional[str] = None
+    theirs_blob_sha256: Optional[str] = None
+
+@dataclass
+class ConflictSide:
+    revision: str
+    # null for "ours" (no server revision yet)
+    filename: str
+    format: str
+    content_type: str
+    size: int
+    blob_sha256: str
+
+@dataclass
+class SyncConflictView:
+    sync_id: str
+    item_id: str
+    base: ConflictSide
+    ours: ConflictSide
+    theirs: ConflictSide
 
 
 class PdmError(Exception):
@@ -144,6 +172,30 @@ class PdmClient:
         import json as _json
         status, _headers, raw = self._request(method, path, body)
         return status, _json.loads(raw) if raw else None
+
+    def _json_tolerant(self, method, path, body=None):
+        """Like _json but returns (status, payload) for expected 4xx business
+        outcomes (e.g. sync_push 409 = a SyncPushResult conflict payload),
+        which the server documents as data, not as the error envelope."""
+        import json as _json
+        import urllib.error as _uerror
+        import urllib.request as _ureq
+        data = None
+        headers = {"Accept": "application/json, application/octet-stream"}
+        if body is not None:
+            data = _json.dumps(body).encode()
+            headers["Content-Type"] = "application/json"
+        req = _ureq.Request(self._url(path), data=data, headers=headers, method=method)
+        try:
+            with _ureq.urlopen(req, timeout=self._timeout) as resp:
+                return resp.status, _json.loads(resp.read() or b"\"\"")
+        except _uerror.HTTPError as e:
+            raw = e.read()
+            try:
+                payload = _json.loads(raw or b"\"\"")
+            except Exception:  # noqa: BLE001 - non-JSON error body
+                payload = None
+            return e.code, payload
 
     def health(self):
         # Service liveness + contract identity.
@@ -251,6 +303,39 @@ class PdmClient:
         import urllib.parse as _up
         path = "/audit/verify"
         return self._json("GET", path)
+
+    def sync_push(self, body):
+        # Push one offline edit with its base identity (P8-M5-T02). The server applies it as the item's next revision only when the current head equals the stated base_revision + base_blob_sha256; a clean sync is 201 status:"synced", a divergent head is 409 status:"conflict" and records a pending merge at sync_id (no revision created).
+        import urllib.parse as _up
+        path = "/sync/push"
+        return self._json_tolerant("POST", path, body)
+
+    def get_sync_conflict(self, sync_id):
+        # The three snapshots of a pending merge (base/ours/theirs).
+        import urllib.parse as _up
+        path = "" + "/sync/conflicts" + "/" + _up.quote(str(sync_id))
+        return self._json("GET", path)
+
+    def open_conflict_side(self, sync_id, side):
+        # Raw bytes of one side of a pending merge (base, ours, their).
+        import urllib.parse as _up
+        path = "" + "/sync/conflicts" + "/" + _up.quote(str(sync_id)) + "/file" + "/" + _up.quote(str(side))
+        status, headers, raw = self._request("GET", path)
+        return FilePayload(
+            item_id=headers.get("x-oep-item", ""),
+            rev=headers.get("x-oep-rev", ""),
+            filename=headers.get("x-oep-filename", ""),
+            format=headers.get("x-oep-format", ""),
+            content_type=headers.get("content-type", "application/octet-stream"),
+            blob_sha256=headers.get("x-blob-sha256", ""),
+            bytes=raw,
+        )
+
+    def resolve_conflict(self, sync_id, body):
+        # Resolve a pending merge by committing a new revision whose file is the chosen snapshot (ours/theirs) or a client-provided merged document. The returned revision files[0].blob_sha256 is the hash of the resolved bytes.
+        import urllib.parse as _up
+        path = "" + "/sync/conflicts" + "/" + _up.quote(str(sync_id)) + "/resolve"
+        return self._json("POST", path, body)
 
     def save_revision(self, item_id, filename, format, content, *,
                         state="working", comment=None, created_by=None,

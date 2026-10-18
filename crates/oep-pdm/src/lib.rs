@@ -21,6 +21,7 @@
 //!   shell (P7 workbench) and any adopted tools use to talk to this API --
 //!   a [`adapter::PdmAdapter`] over the live service with unit-level
 //!   instrumentation ([`adapter::AdapterInstrument`]).
+//!
 //! P8-M6-T03 (the P8 GA gate) brings the real multi-user lifecycle layers
 //! online, wiring the already-tested capability modules from their milestone
 //! PRs into the served contract as additive REST surface:

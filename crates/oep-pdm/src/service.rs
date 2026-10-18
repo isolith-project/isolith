@@ -179,10 +179,7 @@ pub fn build_router(store: Store) -> Router<()> {
         .route("/api/v1/audit/verify", get(verify_audit))
         // ---- P8-M5-T02 offline-sync surface (offline working set) ----
         .route(SYNC_PUSH_PATH, post(sync_push))
-        .route(
-            "/api/v1/sync/conflicts/{sync_id}",
-            get(get_sync_conflict),
-        )
+        .route("/api/v1/sync/conflicts/{sync_id}", get(get_sync_conflict))
         .route(
             "/api/v1/sync/conflicts/{sync_id}/file/{side}",
             get(open_conflict_side),

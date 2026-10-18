@@ -57,6 +57,11 @@ OPERATION_METHODS: Dict[str, str] = {
     "transitionRevision": "transition_revision",
     "listAudit": "list_audit",
     "verifyAudit": "verify_audit",
+    # P8-M5-T02 offline-sync surface (sync push + 3-way conflict resolution).
+    "syncPush": "sync_push",
+    "getSyncConflict": "get_sync_conflict",
+    "openConflictSide": "open_conflict_side",
+    "resolveConflict": "resolve_conflict",
 }
 
 # Schemas whose wire shape the client models as dataclasses, in emit order.
@@ -71,6 +76,10 @@ MODEL_SCHEMAS: List[str] = [
     "ItemSummary",
     "ItemList",
     "RevisionList",
+    # P8-M5-T02 offline-sync surface models.
+    "SyncPushResult",
+    "ConflictSide",
+    "SyncConflictView",
 ]
 
 SCHEMA_PY: Dict[str, str] = {
@@ -268,7 +277,31 @@ def emit_client(
         "        status, _headers, raw = self._request(method, path, body)\n"
         "        return status, _json.loads(raw) if raw else None\n"
         "\n"
-    )
+        "    def _json_tolerant(self, method, path, body=None):\n"
+        '        """Like _json but returns (status, payload) for expected 4xx business\n'
+        '        outcomes (e.g. sync_push 409 = a SyncPushResult conflict payload),\n'
+        '        which the server documents as data, not as the error envelope."""\n'
+        "        import json as _json\n"
+        "        import urllib.error as _uerror\n"
+        "        import urllib.request as _ureq\n"
+        "        data = None\n"
+        '        headers = {"Accept": "application/json, application/octet-stream"}\n'
+        "        if body is not None:\n"
+        "            data = _json.dumps(body).encode()\n"
+        '            headers["Content-Type"] = "application/json"\n'
+        "        req = _ureq.Request(self._url(path), data=data, headers=headers, method=method)\n"
+        "        try:\n"
+        "            with _ureq.urlopen(req, timeout=self._timeout) as resp:\n"
+        "                return resp.status, _json.loads(resp.read() or b\"\\\"\\\"\")\n"
+        "        except _uerror.HTTPError as e:\n"
+        "            raw = e.read()\n"
+        "            try:\n"
+        "                payload = _json.loads(raw or b\"\\\"\\\"\")\n"
+        "            except Exception:  # noqa: BLE001 - non-JSON error body\n"
+        "                payload = None\n"
+        "            return e.code, payload\n"
+        "\n"
+        )
 
     emitted = []
     for op_id, py_name in operation_methods.items():
@@ -293,6 +326,8 @@ def emit_client(
             "acquire_lock",
             "release_lock",
             "transition_revision",
+            "sync_push",
+            "resolve_conflict",
         ):
             w.write(", body")
         w.write("):\n")
@@ -332,8 +367,13 @@ def emit_client(
                 "acquire_lock",
                 "release_lock",
                 "transition_revision",
+                "resolve_conflict",
             ):
                 w.write('        return self._json("%s", path, body)\n' % verb_upper)
+            elif has_body and py_name == "sync_push":
+                # 409 is a documented payload (SyncPushResult conflict), not an
+                # error: the tolerant helper returns (status, payload) for both.
+                w.write('        return self._json_tolerant("%s", path, body)\n' % verb_upper)
             else:
                 w.write('        return self._json("%s", path)\n' % verb_upper)
         w.write("\n")
