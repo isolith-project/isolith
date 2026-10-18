@@ -44,6 +44,7 @@ jobs:
             echo "P9 gate module not present on this ref; skipping"
             exit 0
           fi
+          mkdir -p /tmp/p9g-out /tmp/p9g-persist
           PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.ga_gate_p9 \
             --repo "$PWD" \
             --fleet P9-M5/fleet.local.json \

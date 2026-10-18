@@ -108,6 +108,10 @@ class GateReport:
         return self.base + ".md"
 
     def write(self):
+        # Ensure the report directory exists (the gate must never fail on I/O
+        # for lack of a dir it controls).
+        os.makedirs(os.path.dirname(os.path.abspath(self.base)) or ".", exist_ok=True)
+
         # JSON (self-consistent: summary totals roll up to row count).
         data = self.as_dict()
         with open(self.json_path(), "w") as fh:
