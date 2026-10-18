@@ -118,10 +118,12 @@ show_summary() {
     local pdm="${OEP_PDM_BIND:-127.0.0.1}:${OEP_PDM_PORT:-8787}"
     local viewer="${OEP_VIEWER_BIND:-127.0.0.1}:${OEP_VIEWER_PORT:-8790}"
     local p2p="${OEP_P2P_BIND:-127.0.0.1}:${OEP_P2P_PORT:-8080}"
+    local docs="${OEP_DOCS_BIND:-127.0.0.1}:${OEP_DOCS_PORT:-8792}"
     echo
     echo "  PDM     (REST API v1, health /api/v1/health)  http://${pdm}/api/v1/health"
     echo "  Viewer  (P6 preview + browser UI)              http://${viewer}/"
     echo "  P2P     (compute lane dashboard)               http://${p2p}/      /healthz"
+    echo "  Docs    (P13 docs site, served by the stack)   http://${docs}/"
     echo
 }
 
@@ -129,10 +131,12 @@ verify_health() {
     local pdm_port="${OEP_PDM_PORT:-8787}"
     local viewer_port="${OEP_VIEWER_PORT:-8790}"
     local p2p_port="${OEP_P2P_PORT:-8080}"
+    local docs_port="${OEP_DOCS_PORT:-8792}"
     log "Verifying each health endpoint directly..."
     curl -fsS "http://127.0.0.1:${pdm_port}/api/v1/health"    >/dev/null && log "pdm    /api/v1/health        OK"
     curl -fsS -o /dev/null "http://127.0.0.1:${viewer_port}/" >/dev/null && log "viewer /                     OK"
     curl -fsS "http://127.0.0.1:${p2p_port}/healthz"          >/dev/null && log "p2p    /healthz             OK"
+    curl -fsS "http://127.0.0.1:${docs_port}/healthz"         >/dev/null && log "docs   /healthz             OK"
 }
 
 main() {
@@ -141,7 +145,7 @@ main() {
         compose down; log "Stack stopped."; return 0
     fi
     load_or_build
-    log "Starting stack (pdm + viewer + p2p)..."
+    log "Starting stack (pdm + viewer + p2p + docs)..."
     compose up -d
     wait_healthy
     verify_health

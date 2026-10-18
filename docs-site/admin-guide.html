@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin and install guide - Open Engineering Platform</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="format-matrix.html">Format matrix</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Guide 2 of 3</p>
+  <h1>Admin and install guide</h1>
+  <p class="lead">
+    How to install, secure, back up, and recover the OEP delivery stack. There
+    are two install paths: the online one-command path and the signed air-gap
+    path for machines with no network at all. Both finish on the same health
+    checks.
+  </p>
+
+  <h2>1. Prerequisites (every install)</h2>
+  <ul>
+    <li>Ubuntu 24.04 (aarch64 or amd64) or Debian 12, on a U1/VM-class host.
+        The NAS is the repository and storage host only; it never runs
+        Keelworks services.</li>
+    <li>Docker Engine 24+ running (<code>docker info</code>) and Docker Compose v2.</li>
+    <li>About 5 GB free disk, <code>curl</code>, <code>git</code>.</li>
+    <li>Online path: outbound internet to fetch build base images and crates.
+        Air-gap path: the signed offline bundle instead (below).</li>
+  </ul>
+
+  <h2>2. Online install (one command)</h2>
+  <pre><code>git clone http://gitea/keelworks/keelworks.git keelworks
+cd keelworks/P10-M1/deploy
+./install.sh</code></pre>
+  <p>
+    The script preflights Docker/Compose/disk, writes <code>.env</code> from
+    <code>.env.example</code> (host binds default to 127.0.0.1 so nothing is
+    exposed to the LAN), builds the single stack image, starts the services,
+    waits for every health check, and curls each surface. Exit 0 iff all
+    surfaces answer green.
+  </p>
+  <table>
+    <thead><tr><th>Service</th><th>Binary</th><th>Host address (default)</th><th>Health surface</th></tr></thead>
+    <tbody>
+      <tr><td><code>pdm</code></td><td><code>oep-pdm</code></td><td><code>127.0.0.1:8787</code></td><td><code>GET /api/v1/health</code></td></tr>
+      <tr><td><code>viewer</code></td><td><code>oep-web</code></td><td><code>127.0.0.1:8790</code></td><td><code>GET /</code> (200)</td></tr>
+      <tr><td><code>p2p</code></td><td><code>oep-opsdash</code></td><td><code>127.0.0.1:8080</code></td><td><code>GET /healthz</code></td></tr>
+      <tr><td><code>docs</code></td><td><code>oep-docs</code></td><td><code>127.0.0.1:8792</code></td><td><code>GET /healthz</code></td></tr>
+    </tbody>
+  </table>
+  <p>
+    Manage the stack with <code>./install.sh --down</code> (stop),
+    <code>--no-build</code> (reuse the image) and, for bundling,
+    <code>./release.sh 0.1.0 --tarball --out ../releases</code> which produces
+    the offline image tarball plus a <code>.sha256</code> checksum.
+  </p>
+
+  <h2>3. Air-gap install (no network at all)</h2>
+  <p>
+    An air-gapped shop has a machine with no default route, no DNS, and no
+    registry. The signed offline bundle is the single artifact that crosses the
+    gap (USB stick or ISO). Everything the target needs is inside it. There is
+    no reach-back, no phone-home, no registry pull, and no runtime that talks
+    to a vendor cloud.
+  </p>
+  <p class="note"><strong>The flow:</strong>
+    build on a connected host &rarr; transfer by USB/ISO &rarr; verify on the
+    target &rarr; load &rarr; configure &rarr; start &rarr; verify &rarr;
+    rollback on failure. None of the target steps touch the network.</p>
+  <h3>On the connected build host</h3>
+  <pre><code>cd scripts/airgap
+gpg --import keys/oep-airgap-signing.pub.asc
+export SIGN_KEY_ID=oep-airgap-signing
+./build-offline-bundle.sh --version 0.1.0 \
+    --images keelworks/oep-pdm:0.1.0 \
+    --compose docker-compose.airgap.yml \
+    --out dist/</code></pre>
+  <p>Output: <code>keelworks-offline-0.1.0.tar.gz</code> (the bundle),
+     <code>.sha256</code> (media checksum), and <code>.sig</code>
+     (detached signature, P11).</p>
+  <h3>On the air-gapped target</h3>
+  <pre><code>sha256sum -c keelworks-offline-0.1.0.tar.gz.sha256
+sudo ./airgap-verify.sh --bundle /media/usb/keelworks-offline-0.1.0.tar.gz
+sudo ./airgap-install.sh \
+    --bundle /media/usb/keelworks-offline-0.1.0.tar.gz \
+    --install-dir /opt/keelworks --project oep</code></pre>
+  <p>
+    <code>airgap-install.sh</code> verifies the bundle gpg signature and its
+    sha256, extracts and verifies the signed MANIFEST (every file's checksum is
+    checked, so a tampered bit anywhere fails install), docker-loads the
+    embedded images (no pull), writes a fresh <code>/opt/keelworks/.env</code>
+    with a new local secret and <code>OEP_UPDATE_CHECK=off</code> by default,
+    brings the stack up, waits for the same health checks as an online install,
+    and records <code>proof/airgap-install-record.json</code> as the audit
+    record. If health never comes up it rolls back; it never leaves a
+    half-broken stack pretending to be healthy.
+  </p>
+
+  <h2>4. TLS</h2>
+  <p>
+    <code>oep-pdm</code> terminates TLS natively (no reverse proxy required).
+    For a zero-config LAN identity, generate a local CA + leaf and point the
+    PDM at it:
+  </p>
+  <pre><code>scripts/gen-stack-certs.sh P10-M1/certs    # ca.pem, cert.pem, key.pem (+chain)
+oep-pdm --persist-dir &lt;vault&gt; --tls-cert P10-M1/certs/cert.pem --tls-key P10-M1/certs/key.pem</code></pre>
+  <ul>
+    <li><code>--tls-cert</code> and <code>--tls-key</code> must be given
+        together; otherwise the server refuses to start (exit 2). Plain HTTP is
+        not served on the TLS listener.</li>
+    <li>Rotate the certs before 27 months (the script's RSA validity). For
+        production, mount real PKI certs and point <code>--tls-cert /
+        --tls-key</code> at them.</li>
+    <li>Verification of the whole stack is <code>openssl s_client
+        -verify_return_error -CAfile</code>, and the health JSON rides over TLS.</li>
+  </ul>
+
+  <h2>5. Backup (daily, checksummed, to a second disk)</h2>
+  <p>The vault (metadata DB + content-addressed blobs + tamper-evident audit
+     chain) is snapshotted to a second disk or archive target:</p>
+  <pre><code>scripts/backup/vault-backup.sh &lt;BK_TARGET&gt;   # write bundle + self-verify
+scripts/backup/install-vault-backup-cron.sh    # schedule it daily
+scripts/backup/vault-restore-check.sh          # restore round-trip proof</code></pre>
+  <ul>
+    <li>The producer writes a sha256 manifest over every bundle file and
+        self-verifies (<code>sha256sum -c</code>) before exiting 0.</li>
+    <li>Blobs are content-addressed and each name is checked against the sha256
+        of its bytes.</li>
+    <li>The NAS is passive storage and is never a backup target by policy.</li>
+  </ul>
+
+  <h2>6. Disaster recovery</h2>
+  <p>
+    The quarterly DR runbook restores the full vault from the P10-M1 backup to
+    a fresh U1/VM-class machine in under 60 minutes, verified by health checks
+    and a real vault read. Run <code>scripts/dr/drill-restore.sh</code> or the
+    manual procedure in <code>P10-M3/dr-runbook.md</code>. Schedule an off-cycle
+    drill whenever the vault schema, backup layout, restore procedure, or a
+    release train changes.
+  </p>
+
+  <h2>7. Update posture (decision 11)</h2>
+  <p>
+    The update checker is advisory, non-blocking, disable-able, and off by
+    default. The program runs identically whether the checker finds a server,
+    finds nothing, or cannot reach anything; no update gate ever prevents
+    launch. It polls a configurable source (remote URL, on-site mirror, or an
+    offline signed bundle placed by an admin), verifies signed manifests before
+    any payload, and never fails closed. Telemetry stays out (P0-M5-T02).
+  </p>
+
+  <h2>8. Health checks, honest summary</h2>
+  <p>
+    Every install path ends on the same contract: <code>PDM /api/v1/health</code>,
+    <code>viewer GET /</code> 200, <code>p2p /healthz</code>, and
+    <code>docs /healthz</code>. Success is measured, not assumed; air-gap
+    installs record an audit file on the target. If a step cannot be shown
+    green, the install is reported as failed and (air-gap) rolled back.
+  </p>
+
+  <p><a href="format-matrix.html">Next: the honest format capability matrix</a></p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Open Engineering Platform documentation - version 0.1.0. Sourced from the
+    committed P10 stack records (P10-M1 stack, P10-M2 air-gap, P10-M3 DR).
+  </div>
+</footer>
+</body>
+</html>
