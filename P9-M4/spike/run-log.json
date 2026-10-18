@@ -1,0 +1,28 @@
+{
+  "p9_m4_gpu_discovery": "real-hardware run-log (reference host, 2026-10-17)",
+  "method": "nvidia-smi --query-gpu=index,name,uuid,driver_version,compute_cap,memory.total --format=csv,noheader executed on the host; parsed by crates/oep-lane/src/gpu via parse_smi_csv",
+  "readme": "Honest numbers as measured. memory.total reports [N/A] on this DGX-class device because its memory is unified (not a per-device BAR): the discovery layer records memory_mib: null rather than inventing a value.",
+  "host": [
+    {
+      "hostname": "promaxgb10-83f1",
+      "arch": "NVIDIA GB10 (DGX-class)",
+      "cpu_count": 20,
+      "system_memory_mib": 124544,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GB10",
+          "uuid": "GPU-331f26d3-21e3-86c0-3574-fa1c79e58297",
+          "driver_version": "580.178.04",
+          "compute_cap": "12.1",
+          "memory_mib": null,
+          "memory_total_reported": "[N/A]"
+        }
+      ]
+    }
+  ],
+  "parse_check": [
+    "parse_smi_csv on the exact line below yields one device:",
+    "0, NVIDIA GB10, GPU-331f26d3-21e3-86c0-3574-fa1c79e58297, 580.178.04, 12.1, [N/A]"
+  ]
+}
