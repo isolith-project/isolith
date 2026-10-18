@@ -195,19 +195,18 @@ async fn serve_tls(
     shutdown: Arc<AtomicBool>,
     tls: TlsConfig,
 ) {
-    let config = match axum_server::tls_rustls::RustlsConfig::from_pem_file(&tls.cert, &tls.key)
-        .await
-    {
-        Ok(c) => c,
-        Err(e) => {
-            eprintln!(
-                "oep-pdm: cannot load TLS cert/key ({} / {}): {e}",
-                tls.cert.display(),
-                tls.key.display()
-            );
-            return;
-        }
-    };
+    let config =
+        match axum_server::tls_rustls::RustlsConfig::from_pem_file(&tls.cert, &tls.key).await {
+            Ok(c) => c,
+            Err(e) => {
+                eprintln!(
+                    "oep-pdm: cannot load TLS cert/key ({} / {}): {e}",
+                    tls.cert.display(),
+                    tls.key.display()
+                );
+                return;
+            }
+        };
     let handle = axum_server::Handle::new();
     let h2 = handle.clone();
     let shutdown_watch = shutdown.clone();
