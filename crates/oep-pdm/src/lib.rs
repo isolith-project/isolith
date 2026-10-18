@@ -49,6 +49,7 @@ pub mod adapter;
 pub mod api;
 pub mod audit;
 pub mod client;
+pub mod graph;
 pub mod http;
 pub mod service;
 pub mod state;
@@ -58,6 +59,11 @@ pub mod working_set;
 
 pub use api::API_VERSION;
 pub use state::{Maturity, RevisionState};
+
+/// Re-export the graph surface for one-import ergonomics (P8-M2-T03).
+pub use graph::{
+    Change, ImpactReport, ItemKind, LifecycleState, RelationshipGraph, WhereUsedReport,
+};
 
 /// Workstream anchor kept for workspace-layout tooling.
 pub const WORKSTREAM: &str = "P8-PDM";
