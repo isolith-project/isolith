@@ -49,6 +49,7 @@ pub mod adapter;
 pub mod api;
 pub mod audit;
 pub mod client;
+pub mod deploy_role;
 pub mod http;
 pub mod service;
 pub mod state;
