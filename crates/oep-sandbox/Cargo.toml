@@ -1,0 +1,16 @@
+[package]
+name = "oep-sandbox"
+description = "P9: P2P compute lane - worker sandbox: RLIMIT CPU/RAM/disk caps + seccomp no-network-egress-by-default, escaping fails a test."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+libc = "0.2"
+
+# Test-only worker binary: drives the sandbox acceptance probe suite
+# (see src/bin/sbox_probe.rs and tests/sandbox_limits.rs).
+[[bin]]
+name = "sbox-probe"
+path = "src/bin/sbox_probe.rs"
