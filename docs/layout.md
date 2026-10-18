@@ -14,6 +14,7 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-render-worker -- headless oep-geo render worker (P9-M3-T01)
 - P9 oep-farm       -- beam/farm-style checkpoint + resume for long jobs (P9-M4-T02)
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
+<<<<<<< HEAD
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per P8-M1/web-stack-adr.md, AGPL-3.0; retained
   P7-M2-T02 StubServer identity + PdmClient), contract: P8-M6/openapi-v1.yaml,
@@ -37,6 +38,8 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
                        P2 oep-cgr + P4 oep-step into the P8 vault; outputs
                        hash-verified content addresses (P9-M5-T02 gate)
 - P9 oep-sandbox    -- P2P compute lane: worker sandbox (RLIMIT caps + seccomp no-egress)
+- P9 oep-state      -- P2P compute lane: distributed job state (node-loss
+                       survival, at-least-once delivery, idempotent effects)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.

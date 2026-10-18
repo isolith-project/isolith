@@ -21,6 +21,7 @@ members = [
     "crates/oep-farm",
     "crates/oep-worker",
     "crates/oep-sandbox",
+    "crates/oep-state",
 ]
 
 [workspace.package]
