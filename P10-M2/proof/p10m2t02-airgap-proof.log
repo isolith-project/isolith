@@ -1,0 +1,73 @@
+[proof] === 0. container images already built: keelworks/oep-pdm:airgap-proof-src ===
+[proof] === 1. build signed offline bundle ===
+[proof] bundle built: keelworks-offline-0.1.0.tar.gz
+[proof] === 2. transfer: mount the bundle into the no-network target (USB analog) ===
+[proof] assessing target connectivity (must be ZERO):
+000 <- routes on target
+0 <- /proc/net/route entries (0 = no route at all)
+UNREACHABLE
+[proof] === 3. verify the bundle on the target (signature + integrity) ===
+[airgap] === Keelworks air-gap stack verification (no-phone-home) ===
+[airgap] bundle signature OK
+[airgap] bundle sha256 OK
+[airgap] manifest signature OK
+[airgap] === no-phone-home posture check ===
+[airgap] === health check (same as online install) ===
+[airgap] health check did not pass (stack may not be running)
+
+[proof] === 4. install from the bundle on the no-network target ===
+[airgap] === Keelworks air-gap install (no-phone-home, signed bundle) ===
+[airgap] verifying bundle signature
+[airgap] bundle signature OK
+[airgap] bundle sha256 OK: b3ddd7903fa47d3eb4d8fb4c86a5901a34e7d67228257db10e9eead56b241ee6
+[airgap] extracting bundle
+[airgap] bundle root: /tmp/tmp.n05a0CsFLZ/keelworks-offline-0.1.0
+[airgap] verifying signed MANIFEST.json
+[airgap] manifest signature OK
+[airgap] verifying all on-media file checksums against the manifest
+manifest files verified: 10 corrupt/missing: 0
+[airgap] on-media integrity OK
+[airgap] installing files to /opt/keelworks
+[airgap] snapshotted current local images for rollback
+[airgap] loading images (offline — docker load only, no pull)
+[airgap]   docker load < keelworks_oep-pdm_airgap-proof-src.tar.gz
+Loaded image: keelworks/oep-pdm:airgap-proof-src
+[airgap]   docker load < nats_2-alpine.tar.gz
+Loaded image: nats:2-alpine
+[airgap] generated /opt/keelworks/.env from embedded template (fresh OEP_LOCAL_SECRET)
+[airgap] update-checker posture in .env:
+OEP_UPDATE_CHECK=off
+OEP_UPDATE_MIRROR_URL=
+OEP_UPDATE_OFFLINE_BUNDLE=
+[airgap] compose file: /opt/keelworks/compose.yaml
+[airgap] starting stack (docker compose up -d, never pulls)
+ Container oep-airgap-pdm Creating 
+ Container oep-airgap-bus Creating 
+ Container oep-airgap-pdm Created 
+ Container oep-airgap-bus Created 
+ Container oep-airgap-bus Starting 
+ Container oep-airgap-pdm Starting 
+ Container oep-airgap-pdm Started 
+ Container oep-airgap-bus Started 
+[airgap] waiting for compose service health (same healthchecks as online install)
+[airgap] compose service health ALL HEALTHY (same checks as online install)
+[airgap] health endpoint http://127.0.0.1:8787/api/v1/health not reachable from here (expected inside a --network none target); compose health already confirmed
+install record: /opt/keelworks/proof/airgap-install-record.json
+[airgap] === AIR-GAP INSTALL COMPLETE (no network used) ===
+
+[proof] === 5. verify the resulting stack ===
+[airgap] === Keelworks air-gap stack verification (no-phone-home) ===
+[airgap] bundle signature OK
+[airgap] bundle sha256 OK
+[airgap] manifest signature OK
+[airgap] === no-phone-home posture check ===
+[airgap] update-checker: OFF (default) — non-phoning
+[airgap] === health check (same as online install) ===
+[airgap] health round-trip PASSED (GET /api/v1/health -> {"status":"ok","service":"oep-pdm","version":"1.0.0"})
+[airgap] === VERIFICATION PASS ===
+
+[proof] === 6. proof artifacts ===
+total 12
+drwxrwxr-x 2 r1a r1a 4096 Oct 18 00:56 .
+drwxrwxr-x 4 r1a r1a 4096 Oct 18 00:56 ..
+-rw-r--r-- 1 r1a r1a  444 Oct 18 00:56 airgap-install-record.json
