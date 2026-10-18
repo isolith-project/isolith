@@ -1,0 +1,73 @@
+# P11 gate workflow (ga-gate convention: one workflow per GA-lane feature +
+# the lane GA gate). Job:
+#   p11t02-sbom-cve  P11-T02 dependency SBOM + CVE scanning in CI.
+#   For every push / PR (and therefore every release build on release/* and
+#   v-tag refs) this job:
+#     1. runs the hermetic TDD acceptance suite, then the real green-scan
+#        check (real Cargo.lock vs the real rustsec advisory-db),
+#     2. emits the SPDX + CycloneDX BOMs (Rust crate tree from the committed
+#        Cargo.lock + the container base images the Dockerfiles declare),
+#     3. scans Cargo.lock against the advisory-db and GATES the ref: the job
+#        fails (release must not proceed) iff any unfixed critical/high
+#        finding is outside the committed waiver file (P11/waivers.toml),
+#     4. uploads the BOMs + scan report as a per-build CI artifact.
+#   The lockfile/RustSec gate is authoritative and always runs. An OSV
+#   cross-check leg runs when the endpoint is reachable (report-only, never
+#   the authorizer) and the container-image leg is a real trivy scan on the
+#   release host, recorded under P11/proof/ - CI classifies those SKIP under
+#   the closed taxonomy exactly like the P8/P9/P10/P12 gates classify their
+#   live-LAN legs.
+name: P11 gates (dependency SBOM + CVE)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  p11t02-sbom-cve:
+    name: p11t02-sbom-cve
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: P11-T02 acceptance (TDD, hermetic fixtures + live green scan)
+        run: |
+          if [ ! -f tests/test_p11t02_sbom_cve.py ]; then
+            echo "P11-T02 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          # the live green-scan check inside the suite needs the real
+          # advisory-db; bring it in first (shallow), like the gate driver does
+          if [ ! -d P11/.advisory-db/crates ]; then
+            git clone -q --depth 1 https://github.com/rustsec/advisory-db.git P11/.advisory-db
+          fi
+          python3 tests/test_p11t02_sbom_cve.py
+      - name: P11-T02 SBOM + CVE release gate (lockfile gate authoritative)
+        env:
+          OEP_REF: "${{ (startsWith(github.ref, 'refs/tags/') && github.ref_name) || (startsWith(github.ref, 'refs/heads/release/') && format('{0}-{1}', github.ref_name, github.sha)) || github.sha }}"
+        run: |
+          if [ ! -f scripts/sbom-cve-gate.sh ]; then
+            echo "P11-T02 gate driver not present on this ref; skipping"
+            exit 0
+          fi
+          ./scripts/sbom-cve-gate.sh --repo "$PWD" --ref "$OEP_REF" --out /tmp/p11out --osv
+      - name: P11-T02 deliberate-failure repro (seeded critical vuln fails the gate)
+        run: |
+          if [ ! -f scripts/sbom-cve-fail-repro.sh ]; then
+            echo "P11-T02 fail-repro script not present on this ref; skipping"
+            exit 0
+          fi
+          bash scripts/sbom-cve-fail-repro.sh
+      - name: Upload SBOM + scan report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: p11-sbom-cve-${{ github.sha }}
+          path: /tmp/p11out
+          if-no-files-found: error
