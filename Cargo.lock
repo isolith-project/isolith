@@ -341,6 +341,14 @@ name = "oep-cgr"
 version = "0.1.0"
 
 [[package]]
+name = "oep-fairshare"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "oep-farm"
 version = "0.1.0"
 
