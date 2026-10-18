@@ -26,7 +26,9 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
                        executor, resource caps, output refs)
 - P9 oep-lane       -- P2P compute lane: scheduler (queue, priorities, DAG,
-                        retries, dead-letter) + the at-least-once seam
+                       retries, dead-letter) + the at-least-once seam
+                       + GPU discovery & placement (P9-M4-T01: node pool,
+                       GPU requests, exclusive device reservation, CPU fallback)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
