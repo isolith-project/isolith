@@ -47,9 +47,15 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-gate       -- P9-M5-T02 GA gate: 100-job render/convert wave across
                        3+ nodes, all outputs hash-verified in the P8 vault
                        (oep_ga_gate driver + oep_ga_node agent + ga_gate_p9)
+- P10 oep-update    -- P10-M5-T01 update checker (decision #11): advisory,
+                       NON-BLOCKING update check against a configurable source
+                       (remote URL / on-site mirror / offline signed bundle);
+                       signed manifest verified before any download; runs
+                       identically with no source reachable; disable-able and
+                       non-phoning by default (off).
 
 Not yet materialized as crates (laid out when their workstream starts):
-P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
+P1 corpus tooling (python), P12 QA/CI, P14 integration.
 
 ## Conventions
 

@@ -32,7 +32,6 @@ use oep_update::{
     check, verify_payload, LaunchDecision, PayloadMeta, Probe, UpdateConfig, UpdateSource,
     UpdateStatus,
 };
-
 /// A scratch directory unique to this process+tag (repo convention).
 fn scratch(tag: &str) -> PathBuf {
     let dir = std::env::temp_dir().join(format!(
@@ -70,7 +69,7 @@ fn write_signed_bundle(
     payload_bytes: &[u8],
     tamper_byte: Option<usize>,
 ) -> PathBuf {
-    use oep_update::signing::{sign_bundle, BundleFile};
+    use oep_update::signing::sign_bundle;
     let manifest = oep_update::Manifest {
         schema: "oep-update-manifest/1".into(),
         product: "oep".into(),
@@ -129,7 +128,10 @@ fn launch_without_source_missing_mirror_flags_unavailable_and_proceeds() {
         }
         other => panic!("expected Unreachable, got {other:?}"),
     }
-    assert!(matches!(Probe::new(&cfg).preflight(), LaunchDecision::Proceed { .. }));
+    assert!(matches!(
+        Probe::new(&cfg).preflight(),
+        LaunchDecision::Proceed { .. }
+    ));
 }
 
 // An enabled source with a missing signature key must never be trusted: the
@@ -149,7 +151,10 @@ fn source_without_public_key_is_untrusted_not_consumed() {
     let status = check(&cfg);
     assert!(matches!(status, UpdateStatus::Untrusted { .. }));
     assert!(!matches!(status, UpdateStatus::UpdateAvailable { .. }));
-    assert!(matches!(Probe::new(&cfg).preflight(), LaunchDecision::Proceed { .. }));
+    assert!(matches!(
+        Probe::new(&cfg).preflight(),
+        LaunchDecision::Proceed { .. }
+    ));
 }
 
 // ---------------------------------------------------------------------------
@@ -172,7 +177,9 @@ fn launch_with_old_bundle_flags_update_available_and_proceeds() {
     };
     let status = check(&cfg);
     match &status {
-        UpdateStatus::UpdateAvailable { version, payloads, .. } => {
+        UpdateStatus::UpdateAvailable {
+            version, payloads, ..
+        } => {
             assert_eq!(version, "0.2.0");
             assert_eq!(payloads.len(), 1);
             assert_eq!(payloads[0].name, "oep-pdm.bin");
@@ -180,7 +187,10 @@ fn launch_with_old_bundle_flags_update_available_and_proceeds() {
         }
         other => panic!("expected UpdateAvailable, got {other:?}"),
     }
-    assert!(matches!(Probe::new(&cfg).preflight(), LaunchDecision::Proceed { .. }));
+    assert!(matches!(
+        Probe::new(&cfg).preflight(),
+        LaunchDecision::Proceed { .. }
+    ));
 }
 
 #[test]
@@ -227,7 +237,10 @@ fn tampered_bundle_signature_never_exposes_payloads() {
     let status = check(&cfg);
     match &status {
         UpdateStatus::Untrusted { detail } => {
-            assert!(!detail.is_empty(), "must explain why the source is untrusted");
+            assert!(
+                !detail.is_empty(),
+                "must explain why the source is untrusted"
+            );
         }
         UpdateStatus::Unreachable { .. } => {
             // A tamper can also surface as a parse failure; still never a
@@ -237,7 +250,10 @@ fn tampered_bundle_signature_never_exposes_payloads() {
     }
     // No UpdateAvailable: the tampered bundle must not be consumed.
     assert!(!matches!(status, UpdateStatus::UpdateAvailable { .. }));
-    assert!(matches!(Probe::new(&cfg).preflight(), LaunchDecision::Proceed { .. }));
+    assert!(matches!(
+        Probe::new(&cfg).preflight(),
+        LaunchDecision::Proceed { .. }
+    ));
 }
 
 #[test]
@@ -280,7 +296,10 @@ fn refused_remote_source_flags_unavailable_and_proceeds() {
     };
     let status = check(&cfg);
     assert!(matches!(status, UpdateStatus::Unreachable { .. }));
-    assert!(matches!(Probe::new(&cfg).preflight(), LaunchDecision::Proceed { .. }));
+    assert!(matches!(
+        Probe::new(&cfg).preflight(),
+        LaunchDecision::Proceed { .. }
+    ));
 }
 
 // A local mirror dir whose manifest is missing must also be advisory.
@@ -294,5 +313,8 @@ fn empty_local_mirror_is_advisory_not_blocking() {
     };
     let status = check(&cfg);
     assert!(matches!(status, UpdateStatus::Unreachable { .. }));
-    assert!(matches!(Probe::new(&cfg).preflight(), LaunchDecision::Proceed { .. }));
+    assert!(matches!(
+        Probe::new(&cfg).preflight(),
+        LaunchDecision::Proceed { .. }
+    ));
 }
