@@ -57,7 +57,16 @@ def git(repo, *args):
 
 
 def repo_root(repo):
-    return git(repo, "rev-parse", "--show-toplevel")
+    """Working tree root, or the repo path itself when it is bare.
+
+    Read-only subcommands (validate, manifest, verify, repos) work against a
+    bare repo; only checkpoint writes files and therefore needs a work tree.
+    """
+    r = subprocess.run(["git", "-C", repo, "rev-parse", "--show-toplevel"],
+                       capture_output=True, text=True)
+    if r.returncode == 0 and r.stdout.strip():
+        return r.stdout.strip()
+    return os.path.abspath(repo)
 
 
 def rev(repo, ref):
