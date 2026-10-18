@@ -28,6 +28,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./airgap-lib.sh
+# Ensure the shipped verification key is present before any signature check so
+# an operator with only the bundle + scripts can verify without prior setup.
+import_public_key
 
 BUNDLE=""
 INSTALL_DIR="/opt/keelworks"
