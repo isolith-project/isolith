@@ -1,0 +1,65 @@
+# P10-M4-T01: multi-site replication demo gate — a vault edit on one node
+# appears on the other, concurrent-edit conflict resolves deterministically.
+# Separate workflow file (NOT ci.yaml), the P2/P3/P4/P8/P9 gate convention.
+# Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
+# branch under validation.
+#
+# CI has no second approved host (decision #9: U1 + garage PC), so this job
+# runs the demo's CI-safe single-host path: the REAL oep-pdm vault + the REAL
+# replication_demo driver + the REAL generated client on loopback, asserting
+# replicate (both directions) + conflict (deterministic, hash-verified) +
+# airgap (no egress beyond the bound LAN host). The live two-host proof
+# (U1 LAN node + garage PC WoL remote node) is a live-LAN action documented in
+# scripts/p10m4t01-replication-proof.sh -> P10-M4/proof/p10m4t01-replication.*
+name: P10-M4 replication demo (multi-site, conflict semantics)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  p10m4-replication-demo:
+    name: p10m4-replication-demo
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Build the vault binary
+        run: cargo build -p oep-pdm --bins 2>&1 | tail -5
+      - name: P10-M4 replication demo acceptance (TDD)
+        run: |
+          if [ ! -f tests/test_p10m4t01_replication_demo.py ]; then
+            echo "P10-M4 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p10m4t01_replication_demo.py
+      - name: P10-M4 replication demo run (real vault, local node pair)
+        run: |
+          if [ ! -f python/oep_tooling/replication_demo.py ]; then
+            echo "P10-M4 demo module not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p10m4-persist /tmp/p10m4-out
+          ./target/debug/oep-pdm --addr 127.0.0.1:18789 \
+            --persist-dir /tmp/p10m4-persist >/tmp/p10m4-pdm.log 2>&1 &
+          PDM_PID=$!
+          # loopback health wait
+          for i in $(seq 1 60); do
+            if grep -q "listening\|Axum\|serving\|ready" /tmp/p10m4-pdm.log 2>/dev/null; then break; fi
+            kill -0 $PDM_PID 2>/dev/null || break
+            sleep 0.5
+          done
+          PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.replication_demo \
+            --base-url http://127.0.0.1:18789/api/v1 \
+            --outdir /tmp/p10m4-out/p10m4t01-replication \
+            --binary "$PWD/target/debug/oep-pdm"
+          code=$?
+          kill $PDM_PID 2>/dev/null || true
+          test "$code" -eq 0

@@ -24,3 +24,9 @@ broken.py
 # Dev-only real-material corpus for the P9-M5-T02 GA gate (clean-room
 # invariant: real CAD/CATPart bytes are reference material, never committed).
 pending-corpus/
+
+# P10-M4 replication proof scratch (aggregated JSON/MD are the artifacts)
+P10-M4/proof/.local-rows.jsonl
+P10-M4/proof/.remote-rows.jsonl
+P10-M4/proof/.pdm-live.log
+P10-M4/proof/.vault-live/
