@@ -149,8 +149,13 @@ P10-M5/
     video/                        install walkthrough recording
       machine-a-online.typescript (+ .timing)  U1 online install session
       machine-b-online.typescript (+ .timing)  VM online install session
-      airgap-and-updateoff.typescript (+ .timing)
-      keelworks-install-walkthrough.mp4        rendered replay of the above
+      machine-a-online.mp4                     rendered replay (U1)
+      machine-b-online.mp4                     rendered replay (VM, build elided)
+      keelworks-install-walkthrough.mp4        combined replay (headline video)
+      README.md                                what each file is + how to replay
+                                       (air-gap re-proof + update-off posture are
+                                        the measured AIRGAP/UPDATE rows in the
+                                        gate proof, plus P10-M2/proof/*)
 ```
 
 ## 9. Version history
