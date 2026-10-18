@@ -14,6 +14,7 @@ members = [
     "crates/oep-geo",
     "crates/oep-step",
     "crates/oep-pdm",
+    "crates/oep-farm",
 ]
 
 [workspace.package]
