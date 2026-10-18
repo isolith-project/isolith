@@ -28,7 +28,6 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   harness python/oep_tooling/ga_gate_p8.py and proof under P8-M6/proof/
 - P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
                        executor, resource caps, output refs)
-<<<<<<< HEAD
 - P9 oep-lane       -- P2P compute lane: scheduler (queue, priorities, DAG,
                        retries, dead-letter) + the at-least-once seam
                        + GPU discovery & placement (P9-M4-T01: node pool,
