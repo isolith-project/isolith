@@ -74,6 +74,12 @@ def test_spec_declares_the_stub_contract_surface():
         "createRevision",
         "getRevision",
         "openRevisionFile",
+        # P8-M6-T03 additive gate surface.
+        "acquireLock",
+        "releaseLock",
+        "transitionRevision",
+        "listAudit",
+        "verifyAudit",
     ]:
         assert "operationId: %s" % op_id in text, "missing operationId %s" % op_id
     for path in [
@@ -84,6 +90,11 @@ def test_spec_declares_the_stub_contract_surface():
         "/items/{item_id}/revisions",
         "/items/{item_id}/revisions/{rev}",
         "/items/{item_id}/revisions/{rev}/file",
+        # P8-M6-T03 additive gate surface paths.
+        "/items/{item_id}/lock",
+        "/items/{item_id}/revisions/{rev}/transition",
+        "/audit",
+        "/audit/verify",
     ]:
         assert path in text, "missing path %s" % path
     # Download semantics still declared (headers + octet-stream body).
