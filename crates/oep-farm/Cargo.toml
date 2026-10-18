@@ -1,0 +1,22 @@
+[package]
+name = "oep-farm"
+description = "P9-M4-T02: beam/farm-style checkpoint + resume for long P9 jobs - a long job survives worker eviction via durable checkpoints and resumes from the last checkpoint; resume is verified byte-equivalent to a clean run on output."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# std-only by design (matches the oep-lane scheduler doctrine): a farm runner
+# is deterministic streaming + durable state-transition logic. Item bytes are
+# pure functions of (index, seed); integrity is a self-contained FNV-1a hash;
+# the checkpoint store writes atomic files through std::fs. No external dep
+# is needed, so CI stays hermetic and byte-equivalence is host-independent.
+
+[[bin]]
+name = "oep-farm-drill"
+path = "src/bin/drill.rs"
+
+[dev-dependencies]
+# Integration tests use the injected clock/fn patterns and real temp dirs; no
+# external deps needed.
