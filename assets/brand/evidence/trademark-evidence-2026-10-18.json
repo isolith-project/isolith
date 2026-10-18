@@ -1,0 +1,129 @@
+{
+  "searched_on": "2026-10-18",
+  "primary_name": "isolith",
+  "registries": [
+    "uspto",
+    "euipo",
+    "wipo",
+    "tmview"
+  ],
+  "check_method": "Same method as P0-M1-T02 (decision record 0001): live query of USPTO Trademark Search (tmsearch.uspto.gov), the WIPO Global Brand Database / TMview aggregate (branddb.wipo.int, 89 data sources incl. EUIPO and national offices), and public-web common-law checks. Captured by the P13-T08 identity kit worker on 2026-10-18.",
+  "terms": [
+    {
+      "term": "isolith",
+      "registration_found": true,
+      "software_class_collision": false,
+      "uspto_wordmark_results": 0,
+      "wipo_embedded_results": 5,
+      "search_note": "USPTO wordmark search returns NO results for 'isolith' (zero US filings or registrations in any class). WIPO Global Brand Database / TMview embedded search returns 5 records, all in non-software classes (2 = paints/coatings, 5 = pharmaceutical/dental products, 19 = building/insulation materials). No mark in Nice class 9 (software) or class 42 (software design and development services), which are the classes a CAD/CAE/PDM platform uses. Coined combination of ISO (standards, equal) + -lith (stone; printing plate), so phonetic confusion with the unrelated marks below is low and field-specific.",
+      "marks": [
+        {
+          "jurisdiction": "FR",
+          "registry": "INPI (via WIPO/TMview)",
+          "number": "1421401",
+          "classes": [2],
+          "status": "Registered",
+          "registration_date": "1988-01-22",
+          "owner": "ZOLPAN SAS (France)",
+          "note": "ISOLITH wordmark in class 2 (paints, coatings). Unrelated goods."
+        },
+        {
+          "jurisdiction": "DE",
+          "registry": "DPMA (via WIPO/TMview)",
+          "number": "645066",
+          "classes": [5],
+          "status": "Registered",
+          "registration_date": "1953-09-29",
+          "owner": "DeguDent GmbH (Germany)",
+          "note": "Isolith in class 5 (dental / pharmaceutical products). Unrelated goods."
+        },
+        {
+          "jurisdiction": "DE",
+          "registry": "DPMA (via WIPO/TMview)",
+          "number": "1074635",
+          "classes": [19],
+          "status": "Registered",
+          "registration_date": "1985-03-11",
+          "owner": "BBU Rheinische Bimsbaustoff-Union GmbH (Germany)",
+          "note": "Isolith in class 19 (building materials). Unrelated goods."
+        },
+        {
+          "jurisdiction": "FR",
+          "registry": "INPI (via WIPO/TMview)",
+          "number": "1029703",
+          "classes": [2],
+          "status": "Registered",
+          "owner": "Anciens Etablissements Marius Dufour & Fils S.A. (France)",
+          "note": "ISOLITH in class 2 (paints). Unrelated goods."
+        },
+        {
+          "jurisdiction": "DE",
+          "registry": "DPMA (via WIPO/TMview)",
+          "number": "DD648123",
+          "classes": [19],
+          "status": "Expired",
+          "expiry_date": "2020-07-31",
+          "owner": "BBU Rheinische Bimsbaustoff-Union GmbH (Germany)",
+          "note": "Earlier Isolith class-19 record, expired 2020-07-31."
+        }
+      ]
+    },
+    {
+      "term": "keelworks",
+      "registration_found": true,
+      "software_class_collision": true,
+      "control": "regression control",
+      "note": "Control term: confirms the same USPTO method still surfaces the registered KEELWORKS mark that decision record 0001 identified. USPTO result 1 of 1: serial 79353104, registration 7153038, filing date 2022-03-16, owner KeelWorks Ltd (UK). This is why the public brand must differ from the internal codename, and it validates the check tools."
+    },
+    {
+      "term": "open engineering platform",
+      "registration_found": false,
+      "software_class_collision": false,
+      "note": "Descriptive working title. No identical registered mark found in USPTO or WIPO Global Brand Database (consistent with decision record 0001 finding). Kept as the descriptive subtitle of the product, not the registrable brand."
+    },
+    {
+      "term": "oep",
+      "registration_found": true,
+      "software_class_collision": false,
+      "note": "Acronym remains overloaded across unrelated classes (consistent with decision record 0001). Used as the expanded-name acronym inside the product (Open Engineering Platform), never as the brand."
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "term": "orthoplex",
+      "reason": "USPTO shows 1 live mark + 2 dead records; WIPO embedded returns 23 hits. More prior art than isolith, all else equal.",
+      "uspto_status_summary": "Live 1, Dead 2"
+    },
+    {
+      "term": "geolith",
+      "reason": "Class 42 collision: US registration 8147704 (international 1834226), LIVE/REGISTERED 2026-02-24, covering classes 001, 007, 011, 037, 040, 042. Class 42 is exactly software/engineering services.",
+      "uspto_status_summary": "Registered 8147704"
+    },
+    {
+      "term": "stratolith",
+      "reason": "Live US application serial 50149416 filed 2026-10-07 in classes 025, 035 (clothing, business services). Not classes 9/42 but a live US applicant on the identical name narrows clearance; name also reads poorly.",
+      "uspto_status_summary": "Pending 50149416"
+    },
+    {
+      "term": "isoplex",
+      "reason": "WIPO embedded returns 21 hits including a live German mark in classes 1, 3, 17. Also a known building-insulation product family.",
+      "uspto_status_summary": "live marks present"
+    },
+    {
+      "term": "keyline",
+      "reason": "WIPO embedded returns 157 hits. Name space too crowded.",
+      "uspto_status_summary": "157 WIPO hits"
+    }
+  ],
+  "common_law_users": {
+    "isolith_insulation_austria": "Isolith Leichtbauplattenwerk M. Hattinger GmbH (Stra\u00dfwalchen, Austria); wood-wool insulation and building panels (class 19 field). isolith.com.",
+    "isolith_services_ltd_uk": "Isolith Services Ltd, UK company 11722509 (incorporated 2018-12-11, Bromsgrove); SIC 82990 other business support services, no software or trademark registration found.",
+    "isolith_godot_game": "github.com/ewanc26/isolith - an isometric 3D platformer video game (Godot), MIT licensed, created 2026-07-27, tiny hobby footprint, no registered mark, entertainment goods not engineering software. Recorded for transparency; field distance reduces confusion risk but the P0-M2-T03 memo should weigh it."
+  },
+  "sources": [
+    "USPTO Trademark Search (tmsearch.uspto.gov), 2026-10-18",
+    "WIPO Global Brand Database / TMview aggregate (branddb.wipo.int), 2026-10-18",
+    "Public web presence checks, 2026-10-18"
+  ],
+  "note": "P13-T08 preliminary collision check for the public product brand. Completes the check deferred by decision record 0001 ('any candidate must clear the same registries before use'). The formal legal memo card P0-M2-T03 owns the full analysis (likelihood of confusion, common-law depth, attorney review recommendation)."
+}
