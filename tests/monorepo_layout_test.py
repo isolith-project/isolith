@@ -23,6 +23,11 @@ EXPECTED_CRATES = {
     "oep-step": "P4",  # STEP AP242/QIF/JT interop (reserved)
     "oep-pdm": "P8",   # self-hosted PDM (reserved)
     "oep-lane": "P9",  # P2P compute lane: scheduler (P9-M2-T01)
+    "oep-job": "P9",   # P2P compute: job/task spec (P9-M1-T01)
+    "oep-worker": "P9",# P2P compute: export/convert workers (P9-M3-T02)
+    "oep-viewer": "P6",# P6-M5 preview viewer (render seam)
+    "oep-render-worker": "P9", # headless oep-geo render worker (P9-M3-T01)
+    "oep-farm": "P9",  # beam/farm checkpoint + resume (P9-M4-T02)
 }
 WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8", "P9"}
 CRATE_PREFIX = "oep-"

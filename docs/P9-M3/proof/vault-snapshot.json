@@ -1,0 +1,217 @@
+{
+  "format": "oep-vault-snapshot",
+  "version": 1,
+  "base": "http://127.0.0.1:8787",
+  "entries": [
+    {
+      "item_id": "item-d-9b9e19025c07",
+      "name": "out-fc-box",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "fc_box_export.oepmesh.json",
+          "format": "oep-mesh",
+          "size": 410,
+          "blob_sha256": "304e13c08d5064815961b073a1832fd6c471ea8ad749b27b557fd1f0fcdc6a0c"
+        }
+      ]
+    },
+    {
+      "item_id": "item-c-c86d48bb9a82",
+      "name": "out-fc-probe",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "fc_probe_step.oepmesh.json",
+          "format": "oep-mesh",
+          "size": 420,
+          "blob_sha256": "92c00bfb92c1c935befd251a4ba924b8912b462536287cdea435f5a8a2a5c53b"
+        }
+      ]
+    },
+    {
+      "item_id": "item-b-dc1b1ab8c79c",
+      "name": "out-assembly",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "assembly.oepmesh.json",
+          "format": "oep-mesh",
+          "size": 412,
+          "blob_sha256": "9375a5ce38ce02c15192962a565c55c6d2417d82b146a9ee307ab4295eb05833"
+        }
+      ]
+    },
+    {
+      "item_id": "item-a-7f3247792720",
+      "name": "out-box-part",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "box-part.oepmesh.json",
+          "format": "oep-mesh",
+          "size": 405,
+          "blob_sha256": "f0e61138e1859602d6d9d89431f840a76fbbec18d125cc4da3d253d5c7f0d216"
+        }
+      ]
+    },
+    {
+      "item_id": "item-9-7dd94795bcf2",
+      "name": "out-box-ref",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "box-reference.oepmesh.json",
+          "format": "oep-mesh",
+          "size": 420,
+          "blob_sha256": "d1eaa8fb5bd25943fc84e77a2a293ba5055375ef392e07d6f134860cb965e38e"
+        }
+      ]
+    },
+    {
+      "item_id": "item-8-4efc0e7524ae",
+      "name": "out-stc06",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "nist_stc_06_asme1_V56R2023.glb",
+          "format": "gltf",
+          "size": 21372,
+          "blob_sha256": "214156f46cc9e9e66e94f2cf15bcad9fc98326a587de14b718842f39687b4d89"
+        }
+      ]
+    },
+    {
+      "item_id": "item-7-ca98a51e923c",
+      "name": "corpus-fc-box",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "fc_box_export.step",
+          "format": "step",
+          "size": 6768,
+          "blob_sha256": "78adbf69b2ee24725af1e3022b01af94ae01263071c85174e84bbecbc3c577d4"
+        }
+      ]
+    },
+    {
+      "item_id": "item-6-78015e7fc914",
+      "name": "corpus-fc-probe",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "fc_probe_step.step",
+          "format": "step",
+          "size": 5674,
+          "blob_sha256": "fd872c82abb4cb52cdf364283703ae0fce43dc476099bf329ee3a033c3c3462a"
+        }
+      ]
+    },
+    {
+      "item_id": "item-5-6b6a651b3b2e",
+      "name": "corpus-box-mini",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "box-mini.step",
+          "format": "step",
+          "size": 452,
+          "blob_sha256": "e40bdeea3788ddd14499bc39f5eb90086d49b5d297d2cd71ba6712cc4c4960c2"
+        }
+      ]
+    },
+    {
+      "item_id": "item-4-cf387b0eaaae",
+      "name": "corpus-assembly",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "assembly.step",
+          "format": "step",
+          "size": 12568,
+          "blob_sha256": "eabaf52bc0c656a1e33c248fc9f8caea31ec58aba27b28855bfd55eafb142213"
+        }
+      ]
+    },
+    {
+      "item_id": "item-3-fdbe5696a3c0",
+      "name": "corpus-box-part",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "box-part.step",
+          "format": "step",
+          "size": 10757,
+          "blob_sha256": "0a3a57964bb1203353e90a713ebdafcf33a857a3da70c17396573983a2e73e57"
+        }
+      ]
+    },
+    {
+      "item_id": "item-2-6751696fc20c",
+      "name": "corpus-box-ref",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "box-reference.step",
+          "format": "step",
+          "size": 5690,
+          "blob_sha256": "5ba858eacd63d1b41da3d0421a39667ad6f653614ab85f0c479097c149b707f4"
+        }
+      ]
+    },
+    {
+      "item_id": "item-1-8989811e2e5c",
+      "name": "corpus-valve",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "VALVE.cgr",
+          "format": "cgr",
+          "size": 697431,
+          "blob_sha256": "17a1db1fa456b8cc46c9acb43cfc1bf3b6dcb0bf2bc0d656cc2d4afce54832f5"
+        }
+      ]
+    },
+    {
+      "item_id": "item-0-113679944e8e",
+      "name": "corpus-stc06",
+      "kind": "part",
+      "revision": "1",
+      "state": "working",
+      "files": [
+        {
+          "filename": "nist_stc_06_asme1_V56R2023.CATPart",
+          "format": "cgr",
+          "size": 2550648,
+          "blob_sha256": "5c7dfddbb95f9ef1c2e5768d8710fdc142b784c6c77629497c20acaf28734073"
+        }
+      ]
+    }
+  ]
+}
