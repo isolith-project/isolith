@@ -18,7 +18,11 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   scripts/validate-openapi.py, integration: P7-M2/pdm-integration.md and
   P8-M6/integration-adapters.md (P8-M6-T02 adapter layer: oep_pdm::adapter,
   unit-instrumented seam the OEP shell and adopted tools use to reach the live
-  PDM API)
+  PDM API). P8-M6-T03 (GA gate) wires the real working-set lock, revision
+  state machine and tamper-evident audit log (oep_pdm::{working_set,state,
+  audit}) into the served contract as additive gate verbs (lock / lock release
+  / transition / audit / audit-verify; see P8-M6/ga-gate.md), with the gate
+  harness python/oep_tooling/ga_gate_p8.py and proof under P8-M6/proof/
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P9 P2P compute, P10 hybrid cloud, P12 QA/CI,

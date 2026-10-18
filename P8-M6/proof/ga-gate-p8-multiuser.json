@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "description": "P8 GA gate: multi-user edit/publish/release + concurrent lock test",
+  "generated_at": "2026-10-18T01:04:08.131029+00:00",
+  "base_url": "http://127.0.0.1:28893/api/v1",
+  "binary": "/home/r1a/keelworks-main/.worktrees/p8m6t03-ga-gate-1017a/target/debug/oep-pdm",
+  "nas_base": "http://192.168.0.101:3200",
+  "summary": {
+    "total": 11,
+    "PASS": 11,
+    "FAIL": 0,
+    "SKIP": 0,
+    "failures": []
+  },
+  "rows": [
+    {
+      "id": "client-00",
+      "leg": "multiuser",
+      "status": "PASS",
+      "detail": "user-00 edited+published+released item-3-802c703cb2ad",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "client-01",
+      "leg": "multiuser",
+      "status": "PASS",
+      "detail": "user-01 edited+published+released item-1-0fbcd366a084",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "client-02",
+      "leg": "multiuser",
+      "status": "PASS",
+      "detail": "user-02 edited+published+released item-2-d9179eb25687",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "client-03",
+      "leg": "multiuser",
+      "status": "PASS",
+      "detail": "user-03 edited+published+released item-0-6886ad2b8ea3",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "concurrent-lock-single-winner",
+      "leg": "locks",
+      "status": "PASS",
+      "detail": "exactly one of 1 racers held the lock: racer-01",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "publish-gate",
+      "leg": "locks",
+      "status": "PASS",
+      "detail": "non-holder refused (409), racer-01 allowed (200)",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "immutable-after-release",
+      "leg": "immutable",
+      "status": "PASS",
+      "detail": "released->working hop refused",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "content-address-stable",
+      "leg": "immutable",
+      "status": "PASS",
+      "detail": "blob sha stable",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "audit-log-present",
+      "leg": "audit",
+      "status": "PASS",
+      "detail": "append_only=True count=33",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "audit-chain-verifies",
+      "leg": "audit",
+      "status": "PASS",
+      "detail": "head verified, count=33",
+      "reader": "client",
+      "class": ""
+    },
+    {
+      "id": "nas-bundle-sha256",
+      "leg": "nas",
+      "status": "PASS",
+      "detail": "NAS already-staged+re-hash: 34281160B re-verified sha256=dba4c21b6d2acb04 (put=None)",
+      "reader": "client",
+      "class": ""
+    }
+  ]
+}
