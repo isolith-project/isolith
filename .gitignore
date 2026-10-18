@@ -20,3 +20,7 @@ build/
 # Quality-gate test fixtures (unique names only; a generic broken.py must never
 # be committed even if a tmpdir fixture strays into the repo root).
 broken.py
+
+# Dev-only real-material corpus for the P9-M5-T02 GA gate (clean-room
+# invariant: real CAD/CATPart bytes are reference material, never committed).
+pending-corpus/

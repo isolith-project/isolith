@@ -1,0 +1,9 @@
+{
+  "format": "oep-gate-fleet",
+  "version": 1,
+  "memory_mib": 124544,
+  "coordinator": "u1",
+  "nodes": [
+    {"id": "u1", "local": true, "agent_dir": "/tmp", "gpus": []}
+  ]
+}

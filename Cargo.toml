@@ -24,6 +24,7 @@ members = [
     "crates/oep-state",
     "crates/oep-fairshare",
     "crates/oep-opsdash",
+    "crates/oep-gate",
 ]
 
 [workspace.package]

@@ -44,6 +44,9 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-opsdash    -- ops dashboard for the P9 compute lane: live queue
                        depth, node health, job logs, cost/energy; read from
                        the real oep-lane Scheduler, served over HTTP
+- P9 oep-gate       -- P9-M5-T02 GA gate: 100-job render/convert wave across
+                       3+ nodes, all outputs hash-verified in the P8 vault
+                       (oep_ga_gate driver + oep_ga_node agent + ga_gate_p9)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.

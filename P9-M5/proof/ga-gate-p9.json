@@ -1,0 +1,49 @@
+{
+  "task": "P9-M5-T02",
+  "timestamp": "2026-10-18T03:40:01Z",
+  "schema_version": 1,
+  "summary": {
+    "total": 5,
+    "PASS": 5,
+    "FAIL": 0,
+    "SKIP": 0
+  },
+  "rows": [
+    {
+      "id": "vault-boot",
+      "leg": "BOOT",
+      "status": "PASS",
+      "detail": "real oep-pdm on http://127.0.0.1:28913 (persist /home/r1a/.hermes/cache/scratch/p9ga-proof-1loYja)",
+      "class": ""
+    },
+    {
+      "id": "wave",
+      "leg": "WAVE",
+      "status": "PASS",
+      "detail": "100-job wave: total=100 ok=100 skip=0 fail=0 hash_verified=100 nodes=3/3",
+      "class": ""
+    },
+    {
+      "id": "pdm",
+      "leg": "PDM",
+      "status": "PASS",
+      "detail": "all 100 outputs re-hashed in the vault",
+      "class": ""
+    },
+    {
+      "id": "nodes",
+      "leg": "NODES",
+      "status": "PASS",
+      "detail": "3 distinct nodes executed jobs",
+      "class": ""
+    },
+    {
+      "id": "audit",
+      "leg": "AUDIT",
+      "status": "PASS",
+      "detail": "tamper-evident audit chain re-verified",
+      "class": ""
+    }
+  ],
+  "report": "ga-gate-p9.json"
+}

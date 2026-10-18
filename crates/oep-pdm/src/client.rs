@@ -201,9 +201,34 @@ impl PdmClient {
 
     /// List the vault catalogue (`GET /items`), optionally prefix-filtered.
     pub fn list_items(&self, prefix: Option<&str>) -> Result<ItemList, PdmError> {
-        let path = match prefix {
-            Some(p) if !p.is_empty() => format!("/items?prefix={}", http::encode_segment(p)),
-            _ => "/items".to_string(),
+        self.list_items_page(prefix, None, None)
+    }
+
+    /// List a page of the vault catalogue with explicit `limit`/`offset`
+    /// (P9-M5-T02: the GA gate creates >100 items, so name resolution walks
+    /// the whole catalogue instead of assuming one page).
+    pub fn list_items_page(
+        &self,
+        prefix: Option<&str>,
+        limit: Option<usize>,
+        offset: Option<usize>,
+    ) -> Result<ItemList, PdmError> {
+        let mut qs: Vec<String> = Vec::new();
+        if let Some(p) = prefix {
+            if !p.is_empty() {
+                qs.push(format!("prefix={}", http::encode_segment(p)));
+            }
+        }
+        if let Some(l) = limit {
+            qs.push(format!("limit={l}"));
+        }
+        if let Some(o) = offset {
+            qs.push(format!("offset={o}"));
+        }
+        let path = if qs.is_empty() {
+            "/items".to_string()
+        } else {
+            format!("/items?{}", qs.join("&"))
         };
         self.request_typed("GET", &path, None)
     }

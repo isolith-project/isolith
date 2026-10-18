@@ -32,6 +32,7 @@ EXPECTED_CRATES = {
     "oep-state": "P9", # distributed state (P9-M2-T03)
     "oep-fairshare": "P9", # fair share / quota (P9-M2-T02)
     "oep-opsdash": "P9", # ops dashboard (P9-M5-T01)
+    "oep-gate": "P9",  # P9-M5-T02 GA gate (wave driver + node agent)
 }
 WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8", "P9"}
 CRATE_PREFIX = "oep-"

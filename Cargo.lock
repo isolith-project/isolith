@@ -353,6 +353,23 @@ name = "oep-farm"
 version = "0.1.0"
 
 [[package]]
+name = "oep-gate"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "oep-geo",
+ "oep-job",
+ "oep-lane",
+ "oep-pdm",
+ "oep-render-worker",
+ "oep-viewer",
+ "oep-worker",
+ "serde",
+ "serde_json",
+ "sha2",
+]
+
+[[package]]
 name = "oep-geo"
 version = "0.1.0"
 dependencies = [

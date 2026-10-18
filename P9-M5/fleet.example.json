@@ -1,0 +1,40 @@
+{
+  "format": "oep-gate-fleet",
+  "version": 1,
+  "gpu_model": "NVIDIA GB10",
+  "memory_mib": 124544,
+  "coordinator": "u1",
+  "nodes": [
+    {
+      "id": "u1",
+      "local": true,
+      "agent_dir": "/home/r1a/p9ga",
+      "gpus": [
+        {"name": "NVIDIA GB10", "uuid": "GPU-331f26d3-21e3-86c0-3574-fa1c79e58297",
+         "driver_version": "580.178.04", "compute_cap": "12.1"}
+      ]
+    },
+    {
+      "id": "u2",
+      "local": false,
+      "host": "192.168.0.69",
+      "user": "r1a",
+      "agent_dir": "/home/r1a/p9ga",
+      "gpus": [
+        {"name": "NVIDIA GB10", "uuid": "GPU-u2-0000", "driver_version": "580.178.04",
+         "compute_cap": "12.1"}
+      ]
+    },
+    {
+      "id": "u3",
+      "local": false,
+      "host": "192.168.0.70",
+      "user": "r1a",
+      "agent_dir": "/home/r1a/p9ga",
+      "gpus": [
+        {"name": "NVIDIA GB10", "uuid": "GPU-u3-0000", "driver_version": "580.178.04",
+         "compute_cap": "12.1"}
+      ]
+    }
+  ]
+}

@@ -308,19 +308,37 @@ impl PdmAdapter {
         if item.trim().is_empty() {
             return Err(AdapterError::ItemNotFound(item.to_string()));
         }
-        let list = self.client.list_items(Some("")).map_err(|e| {
-            self.instr.errors += 1;
-            AdapterError::from(e)
-        })?;
-        // Direct server-id hit first.
-        if let Some(r) = list.items.iter().find(|i| i.id == item) {
-            return Ok(r.id.clone());
+        // Walk the whole catalogue (paged), not just the newest page, so the
+        // GA gate's >100-item wave can still resolve its earliest seed items
+        // by name. Page size 100; the loop terminates when a page returns
+        // fewer than the requested size or a full page with total reached.
+        let page_size = 100;
+        let mut offset = 0usize;
+        loop {
+            let list = self
+                .client
+                .list_items_page(Some(""), Some(page_size), Some(offset))
+                .map_err(|e| {
+                    self.instr.errors += 1;
+                    AdapterError::from(e)
+                })?;
+            // Direct server-id hit first.
+            if let Some(r) = list.items.iter().find(|i| i.id == item) {
+                return Ok(r.id.clone());
+            }
+            // Name hit.
+            if let Some(r) = list.items.iter().find(|i| i.name == item) {
+                return Ok(r.id.clone());
+            }
+            if list.items.is_empty() {
+                break;
+            }
+            offset += list.items.len();
+            if offset >= list.total {
+                break;
+            }
         }
-        // Name hit.
-        match list.items.iter().find(|i| i.name == item) {
-            Some(r) => Ok(r.id.clone()),
-            None => Err(AdapterError::ItemNotFound(item.to_string())),
-        }
+        Err(AdapterError::ItemNotFound(item.to_string()))
     }
 
     /// Create the item the shell named (auto-create on first save).

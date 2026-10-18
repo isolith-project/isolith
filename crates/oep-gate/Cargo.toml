@@ -1,0 +1,39 @@
+[package]
+name = "oep-gate"
+description = "P9-M5-T02: the P9 GA gate. Runs a 100-job render/convert wave across 3+ real nodes, zero manual intervention, every output hash-verified in the P8 vault. Combines the real oep-lane scheduler (ordering, leases, acks), the real worker functions (render oep-geo, convert cgr/step), and the real oep-pdm vault (content-addressed, hash-verified)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# P9 scheduling spine: the real scheduler this gate drives (P9-M2-T01 /
+# P9-M4-T01 placement). std-only, injected-clock; the gate wall-clocks it.
+oep-lane = { path = "../oep-lane" }
+# The job/task spec (P9-M1-T01): the payload the scheduler treats as opaque.
+oep-job = { path = "../oep-job" }
+# The real convert workers (P9-M3-T02): cgr2gltf + step2mesh, vault-native.
+oep-worker = { path = "../oep-worker" }
+# The real render worker (P9-M3-T01): headless oep-geo renderer.
+oep-render-worker = { path = "../oep-render-worker" }
+# PNG encoding + scene build for the render-to-vault path (P6-M5 seam).
+oep-viewer = { path = "../oep-viewer" }
+# The P8 vault seam: content-addressed store + integration adapter + client.
+oep-pdm = { path = "../oep-pdm" }
+oep-geo = { path = "../oep-geo" }
+
+# Wire + hashing.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+base64 = "0.22"
+
+[dev-dependencies]
+
+[[bin]]
+name = "oep-ga-gate"
+path = "src/bin/oep-ga-gate.rs"
+
+[[bin]]
+name = "oep-ga-node"
+path = "src/bin/oep-ga-node.rs"
