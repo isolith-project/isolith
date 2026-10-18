@@ -1,0 +1,5 @@
+
+** (wixl:261): CRITICAL **: 18:06:12.940: wixl_add_braces: assertion 'str != NULL' failed
+
+** (wixl:261): CRITICAL **: 18:06:12.940: wixl_msi_table_property_add: assertion 'value != NULL' failed
+-rw-r--r-- 1 root root 813568 Oct 18 18:06 keelworks-oep-update-check-x86_64-pc-windows-gnu-0.1.0.msi
