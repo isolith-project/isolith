@@ -84,6 +84,23 @@ new crates (the PDM server that carries TLS is P8 `oep-pdm`):
   consuming the same `keelworks-vault-backup/` bundle contract
 - docs: `P10-M1/` (lane docs + proof), `P10-M3/` (DR runbook + proof)
 
+P11 supply-chain / release gating ships as tooling + docs, not new crates:
+
+- `python/oep_tooling/sbom_cve.py` -- P11-T02 engine: emits CycloneDX
+  (1.5) + SPDX (2.3) BOMs for the Rust crate tree (from the committed
+  Cargo.lock) and the container base images, scans Cargo.lock against the
+  rustsec advisory-db, folds in a release-host trivy image scan, enforces
+  the critical/high gate with the committed waiver file P11/waivers.toml.
+- `scripts/sbom-cve-gate.sh` -- release-gate driver (exit-code contract:
+  0 == gate PASS; 1 == do not release).
+- `scripts/sbom-cve-fail-repro.sh` -- deliberate-failure repro (seeded
+  critical vuln MUST fail the gate).
+- `P11/sbom-cve.md` (runbook), `P11/waivers.toml` (waiver register),
+  `P11/artifacts/<ver>/` (committed per-release SBOMs + report),
+  `P11/proof/` (durable proof: clean-scan report, trivy image scan,
+  deliberate-failure repro), `P11/.advisory-db/` (gitignored cache).
+
+
 ## Conventions
 
 - Rust core: one `crates/oep-<stream>` crate per workstream, listed as a
