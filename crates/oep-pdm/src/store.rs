@@ -46,6 +46,12 @@ pub enum StoreError {
     LockToken(String),
     /// A defect or store-level failure (500).
     Internal(String),
+    /// P11-T04: a content hash verification failed while reading a vault blob
+    /// (tamper or corruption). Never served silently (500). Distinct from
+    /// [`StoreError::Internal`] so callers and the test suite can target the
+    /// exact guarantee: the bytes under a blob's sha-256 key actually hash to
+    /// that key, or the read fails.
+    Integrity(String),
 }
 
 impl std::fmt::Display for StoreError {
@@ -61,6 +67,7 @@ impl std::fmt::Display for StoreError {
             }
             StoreError::LockToken(m) => write!(f, "lock token rejected: {m}"),
             StoreError::Internal(m) => write!(f, "internal error: {m}"),
+            StoreError::Integrity(m) => write!(f, "integrity error: {m}"),
         }
     }
 }
@@ -152,6 +159,9 @@ impl StoreError {
                 ErrorEnvelope::new(ec::LOCK_TOKEN, format!("lock token rejected: {msg}")),
             ),
             StoreError::Internal(msg) => (500, ErrorEnvelope::new(ec::INTERNAL, msg.clone())),
+            StoreError::Integrity(msg) => {
+                (500, ErrorEnvelope::new(ec::INTEGRITY, msg.clone()))
+            }
         }
     }
 }
@@ -292,8 +302,19 @@ impl VaultStore {
             })? {
                 let entry = entry.map_err(|e| StoreError::Internal(e.to_string()))?;
                 let fname = entry.file_name().to_string_lossy().to_string();
+                // Content-addressed layout: each blob is stored under its
+                // sha-256 hex name. P11-T04: on load we verify every readable
+                // blob's bytes actually hash to that name - a tampered or
+                // corrupted blob fails the load instead of being served.
                 if fname.len() == 64 {
                     if let Ok(bytes) = std::fs::read(entry.path()) {
+                        let got = hex_sha256(&bytes);
+                        if got != fname {
+                            return Err(StoreError::Integrity(format!(
+                                "on-disk blob {} content hash mismatch: named {fname}, computed {got}",
+                                entry.path().display()
+                            )));
+                        }
                         blobs.insert(fname, bytes);
                     }
                 }
@@ -699,6 +720,10 @@ impl VaultStore {
     }
 
     /// Latest-revision file payload: (item_id, rev, FileRef clone, bytes).
+    ///
+    /// P11-T04: every retrieval re-verifies the blob's content hash against
+    /// the revision's stored `blob_sha256`. A tampered/corrupt blob surfaces
+    /// as [`StoreError::Integrity`], never as silent bad bytes.
     pub fn open_latest(&self, item_id: &str) -> Result<(String, FileRef, Vec<u8>), StoreError> {
         let stored = self
             .find_item(item_id)
@@ -712,10 +737,9 @@ impl VaultStore {
             .find(|r| &r.number == latest)
             .ok_or_else(|| StoreError::Internal("latest revision missing from store".into()))?;
         self.file_payload(rev)
-            .ok_or_else(|| StoreError::Internal("blob missing from store".into()))
     }
 
-    /// Specific-revision file payload.
+    /// Specific-revision file payload (content-hash-verified on read).
     pub fn open_revision(
         &self,
         item_id: &str,
@@ -730,13 +754,39 @@ impl VaultStore {
             .find(|r| r.number == rev)
             .ok_or_else(|| StoreError::NotFound("revision", format!("{item_id}/{rev}")))?;
         self.file_payload(revision)
-            .ok_or_else(|| StoreError::Internal("blob missing from store".into()))
     }
 
-    fn file_payload(&self, revision: &Revision) -> Option<(String, FileRef, Vec<u8>)> {
-        let file = revision.files.first()?;
-        let bytes = self.blobs.get(&file.blob_sha256)?.clone();
-        Some((revision.number.clone(), file.clone(), bytes))
+    fn file_payload(&self, revision: &Revision) -> Result<(String, FileRef, Vec<u8>), StoreError> {
+        let file = revision
+            .files
+            .first()
+            .cloned()
+            .ok_or_else(|| StoreError::Internal("revision has no file".into()))?;
+        let bytes = self.blob_bytes(&file.blob_sha256)?;
+        Ok((revision.number.clone(), file, bytes))
+    }
+
+    /// Fetch bytes under their expected blob hash and VERIFY they hash to it
+    /// (P11-T04 content-hash integrity). Every blob read funnels through here.
+    fn blob_bytes(&self, expected_sha: &str) -> Result<Vec<u8>, StoreError> {
+        let bytes = self.blobs.get(expected_sha).cloned().ok_or_else(|| {
+            StoreError::Internal(format!("blob {expected_sha} missing from store"))
+        })?;
+        Self::verify_blob(expected_sha, &bytes)?;
+        Ok(bytes)
+    }
+
+    /// The content-hash gate: recompute sha-256 of `bytes` and require it to
+    /// equal `expected_sha`, else the store refuses to serve it.
+    pub fn verify_blob(expected_sha: &str, bytes: &[u8]) -> Result<(), StoreError> {
+        let got = hex_sha256(bytes);
+        if got == expected_sha {
+            Ok(())
+        } else {
+            Err(StoreError::Integrity(format!(
+                "blob {expected_sha}: content hash mismatch (computed {got})"
+            )))
+        }
     }
 
     /// The file metadata attached to one revision (its single file).
@@ -756,13 +806,10 @@ impl VaultStore {
             .ok_or_else(|| StoreError::Internal("revision has no file".into()))
     }
 
-    /// Bytes of one vault revision's file.
+    /// Bytes of one vault revision's file (content-hash-verified on read).
     fn revision_file_bytes(&self, item_id: &str, rev: &str) -> Result<Vec<u8>, StoreError> {
         let file = self.revision_file(item_id, rev)?;
-        self.blobs
-            .get(&file.blob_sha256)
-            .cloned()
-            .ok_or_else(|| StoreError::Internal("blob missing from store".into()))
+        self.blob_bytes(&file.blob_sha256)
     }
 
     fn conflict_record(&self, sync_id: &str) -> Result<&SyncConflictRecord, StoreError> {
@@ -899,11 +946,7 @@ impl VaultStore {
                     .ok_or_else(|| StoreError::Internal("base has no revision".into()))?;
                 self.revision_file_bytes(&view.item_id, rev)?
             }
-            "ours" => self
-                .blobs
-                .get(&view.ours.blob_sha256)
-                .cloned()
-                .ok_or_else(|| StoreError::Internal("ours blob missing from store".into()))?,
+            "ours" => self.blob_bytes(&view.ours.blob_sha256)?,
             "theirs" => {
                 let rev = view
                     .theirs
@@ -942,11 +985,7 @@ impl VaultStore {
         let record = self.conflict_record(sync_id)?.clone();
         let (filename, format, content_type, bytes) = match req.choice.as_str() {
             "ours" => {
-                let b = self
-                    .blobs
-                    .get(&record.ours.blob_sha256)
-                    .cloned()
-                    .ok_or_else(|| StoreError::Internal("ours blob missing from store".into()))?;
+                let b = self.blob_bytes(&record.ours.blob_sha256)?;
                 (
                     record.ours.filename.clone(),
                     record.ours.format.clone(),
@@ -1018,5 +1057,114 @@ fn next_sync_id(item_id: &str, base_revision: &str, ours_sha: &str) -> String {
 impl Default for VaultStore {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+#[cfg(test)]
+mod blob_integrity_tests {
+    //! P11-T04: content-hash integrity on vault blobs (verify on read).
+    //! The acceptance is a tampered-blob test that FAILS verification; these
+    //! unit tests exercise the in-memory gate directly and the persistence
+    //! integration test (tests/blob_integrity.rs) covers the on-disk path.
+
+    use super::*;
+    use crate::api::{CreateItemRequest, CreateRevisionRequest, FileUpload};
+
+    const PAYLOAD: &[u8] = b"ISO-10303-21; FILE_DESCRIPTION(('oep-blob-integrity'),'2;1');";
+
+    fn seed() -> (VaultStore, String) {
+        let mut store = VaultStore::new();
+        let item = store
+            .create_item(&CreateItemRequest {
+                name: "blob-int".into(),
+                kind: "part".into(),
+                description: None,
+                owner: Some("test".into()),
+                context: Some("p11-t04".into()),
+            })
+            .expect("create item");
+        let iid = item.id.clone();
+        store
+            .create_revision(
+                &iid,
+                &CreateRevisionRequest {
+                    state: Some("released".into()),
+                    comment: Some("seed".into()),
+                    created_by: None,
+                    file: FileUpload {
+                        filename: "blob.step".into(),
+                        format: "step".into(),
+                        content_type: None,
+                        content: base64::engine::general_purpose::STANDARD.encode(PAYLOAD),
+                    },
+                },
+            )
+            .expect("create revision");
+        (store, iid)
+    }
+
+    #[test]
+    fn intact_blob_retrieval_hashes_to_stored_sha() {
+        let (store, iid) = seed();
+        let (rev, file, bytes) = store.open_latest(&iid).expect("open latest");
+        assert_eq!(rev, "1");
+        assert_eq!(file.blob_sha256, hex_sha256(&bytes));
+        assert_eq!(bytes, PAYLOAD);
+    }
+
+    #[test]
+    fn tampered_in_memory_blob_fails_retrieval_with_integrity() {
+        let (mut store, iid) = seed();
+        // Flip one byte of the stored blob in place, keeping the map key (the
+        // content address) unchanged - exactly what a tamperer on the blob
+        // store would leave behind.
+        let (_, file, _) = store.open_latest(&iid).expect("peek stored file");
+        let entry = store
+            .blobs
+            .get_mut(&file.blob_sha256)
+            .expect("blob present under its stored hash");
+        entry[0] ^= 0xFF;
+
+        match store.open_latest(&iid) {
+            Err(StoreError::Integrity(detail)) => {
+                assert!(
+                    detail.contains(&file.blob_sha256),
+                    "integrity error must name the broken blob, got: {detail}"
+                );
+            }
+            other => panic!("expected Integrity on tampered blob, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn tampered_specific_revision_fails_retrieval() {
+        let (mut store, iid) = seed();
+        let (_, file, _) = store.open_latest(&iid).expect("peek stored file");
+        store.blobs.get_mut(&file.blob_sha256).unwrap()[3] ^= 0x01;
+        let err = store.open_revision(&iid, "1").unwrap_err();
+        assert!(
+            matches!(err, StoreError::Integrity(_)),
+            "expected Integrity, got {err:?}"
+        );
+    }
+
+    #[test]
+    fn verify_blob_gate_rejects_wrong_bytes() {
+        let good = hex_sha256(PAYLOAD);
+        assert!(VaultStore::verify_blob(&good, PAYLOAD).is_ok());
+        let mut bad = PAYLOAD.to_vec();
+        bad[0] ^= 0xFF;
+        assert!(matches!(
+            VaultStore::verify_blob(&good, &bad),
+            Err(StoreError::Integrity(_))
+        ));
+    }
+
+    #[test]
+    fn integrity_error_maps_to_integrity_envelope() {
+        let err = StoreError::Integrity("blob xyz: content hash mismatch".into());
+        let (status, envelope) = err.envelope();
+        assert_eq!(status, 500);
+        assert_eq!(envelope.error.code, crate::api::error_code::INTEGRITY);
     }
 }

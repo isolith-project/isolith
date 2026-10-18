@@ -43,6 +43,8 @@ pub mod error_code {
     pub const METHOD_NOT_ALLOWED: &str = "method_not_allowed";
     pub const UNSUPPORTED_MEDIA: &str = "unsupported_media";
     pub const INTERNAL: &str = "internal_error";
+    /// P11-T04: a vault blob failed its content-hash verification on read.
+    pub const INTEGRITY: &str = "integrity_error";
     // ---- P8-M6-T03 additive gate surface (never used by the v1 verbs) ----
     /// A working-set lock cannot be acquired (another principal holds it).
     pub const LOCK_CONFLICT: &str = "lock_conflict";

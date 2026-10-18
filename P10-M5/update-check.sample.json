@@ -6,7 +6,7 @@
   "//": "  Remote URL:      {\"url\": \"https://updates.customer.example/keelworks/update.bundle.json\"}",
   "//": "  Offline bundle:  {\"bundle\": \"/var/lib/keelworks/updates/update.bundle.json\"}",
   "source": null,
-  "//public_key": "Hex-encoded Ed25519 public key that signs every manifest.",
+  "//public_key": "Hex-encoded Ed25519 public key that signs every manifest. See P11/keys/oep-update-signing.pub (P11-T04 committed release key).",
   "public_key": null,
   "current_version": "0.1.0",
   "timeout_ms": 3000

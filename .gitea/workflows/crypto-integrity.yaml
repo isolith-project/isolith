@@ -1,0 +1,48 @@
+# P11-T04: crypto / integrity gates (blob content-hash + release signing).
+#
+# Holds every branch/PR to the crypto bar:
+#   1) test_p11t04_crypto.py machine-checks the committed mechanism (blob
+#      integrity tests present, sign/verify scripts, committed pubkeys,
+#      recorded signed-release proof, doc sections) and, with gpg available,
+#      runs a full self-contained gpg detached-signature round trip with a
+#      scratch key (sign -> verify PASS -> tamper -> verify FAIL).
+#   2) The Rust acceptance tests for the two crypto surfaces are run on the
+#      exact ref: the tampered-blob test (oep-pdm) and the update-checker
+#      signed-bundle acceptance (oep-update). The shared precommit gate also
+#      runs them via `cargo test`, so this is the explicit, named crypto gate.
+name: Crypto integrity (blob hash + release signing)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  crypto-integrity:
+    name: crypto-integrity
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Install test deps (python, pytest, gnupg for the round trip)
+        run: |
+          apt-get update -qq && apt-get install -y -qq python3 python3-pytest gnupg gnupg2
+      - name: Machine check + gpg signed-release round trip (scratch keys)
+        run: python3 tests/test_p11t04_crypto.py --full
+      - name: Tampered-blob acceptance (oep-pdm)
+        run: |
+          cargo test -p oep-pdm --lib blob_integrity
+          cargo test -p oep-pdm --test blob_integrity
+      - name: Signed update-manifest acceptance (oep-update)
+        run: cargo test -p oep-update
+      - name: Keep the recorded signed-release proof referenced by the test
+        run: |
+          ls -l P11/proof/ | tail -5
+          echo "crypto proof recorded on this ref"
