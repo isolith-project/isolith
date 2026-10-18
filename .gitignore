@@ -24,3 +24,9 @@ broken.py
 # Dev-only real-material corpus for the P9-M5-T02 GA gate (clean-room
 # invariant: real CAD/CATPart bytes are reference material, never committed).
 pending-corpus/
+
+# P10-M1-T02: generated TLS identities (CA + leaf private keys) must never be
+# committed; the gen-stack-certs.sh tooling recreates them per host.
+P10-M1/certs/
+*.srl
+server.key

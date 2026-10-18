@@ -1,0 +1,21 @@
+{
+  "card": "P10-M1-T02: TLS + certs, vault DB/blob backup to second disk/archive (U1/VM verified)",
+  "schema_version": 1,
+  "host": "promaxgb10-83f1",
+  "timestamp_utc": "2026-10-18T08:27:48Z",
+  "tls": {
+    "terminates_with_trusted_chain": true,
+    "health_over_tls": "HTTP/1.1 200 OKcontent-type: application/jsoncontent-length: 53connection: closedate: Sun, 18 Oct 2026 08:27:44 GMT{\"status\":\"ok\",\"service\":\"oep-pdm\",\"version\":\"1.0.0\"}"
+  },
+  "backup": {
+    "seeded_items": 5,
+    "catalogue_total": 5,
+    "audit_verify_ok": true,
+    "blob_count": 5,
+    "bundle_contract": "keelworks-vault-backup/{latest,manifest.sha256,meta.json}"
+  },
+  "restore_round_trips_on_this_host": true,
+  "scheduled": "cron-ok",
+  "vault_dir": "/tmp/p10m1-vault-proof",
+  "archive_target": "/tmp/p10m1-archive-proof"
+}

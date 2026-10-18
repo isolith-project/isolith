@@ -16,6 +16,7 @@
 
 use std::io;
 use std::net::SocketAddr;
+use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::thread::JoinHandle;
@@ -37,6 +38,27 @@ use crate::store::{StoreError, VaultStore};
 /// Shared store handle handed to every handler via axum state.
 pub type Store = Arc<Mutex<VaultStore>>;
 
+/// P10-M1-T02: native TLS termination (rustls) so the self-hosted PDM serves
+/// HTTPS directly on the LAN/web surface with no external reverse proxy.
+///
+/// axum-server's rustls acceptor serves the SAME axum router; enabling HTTPS
+/// is purely a bind-time decision. The cert/key are PEM files (a leaf + chain
+/// and a PKCS#8/PKCS#1 key, per axum-server's `RustlsConfig::from_pem_file`).
+#[derive(Debug, Clone, Default)]
+pub struct TlsConfig {
+    /// PEM certificate chain file (leaf + intermediates).
+    pub cert: PathBuf,
+    /// PEM private key file.
+    pub key: PathBuf,
+}
+
+impl TlsConfig {
+    /// TLS is enabled only when BOTH files are given (never half-configured).
+    pub fn is_enabled(&self) -> bool {
+        !self.cert.as_os_str().is_empty() && !self.key.as_os_str().is_empty()
+    }
+}
+
 /// A running oep-pdm service. `Drop` stops the accept loop (used by tests and
 /// the demo); the standalone binaries run forever.
 pub struct PdmService {
@@ -44,6 +66,8 @@ pub struct PdmService {
     shutdown: Arc<AtomicBool>,
     handle: Option<JoinHandle<()>>,
     store: Store,
+    /// Whether this instance terminates TLS (P10-M1-T02).
+    tls: bool,
 }
 
 impl PdmService {
@@ -52,8 +76,19 @@ impl PdmService {
         Self::start_with_store(addr, VaultStore::new())
     }
 
-    /// Start serving with an already-populated/loaded store (binary path).
+    /// Start a plain-HTTP service (legacy path; P10-M1-T02 keeps this the
+    /// default so every existing test + client keeps its plaintext contract).
     pub fn start_with_store(addr: &str, store: VaultStore) -> io::Result<PdmService> {
+        Self::start_with_store_and_tls(addr, store, TlsConfig::default())
+    }
+
+    /// Start serving with an already-populated/loaded store (binary path),
+    /// terminating TLS when a full `TlsConfig` (cert + key) is supplied.
+    pub fn start_with_store_and_tls(
+        addr: &str,
+        store: VaultStore,
+        tls: TlsConfig,
+    ) -> io::Result<PdmService> {
         let listener = std::net::TcpListener::bind(addr)?;
         listener.set_nonblocking(true)?;
         let addr = listener.local_addr()?;
@@ -62,13 +97,15 @@ impl PdmService {
         let handle = {
             let store = Arc::clone(&store);
             let shutdown = Arc::clone(&shutdown);
-            std::thread::spawn(move || run_runtime(listener, store, shutdown))
+            let tls = tls.clone();
+            std::thread::spawn(move || run_runtime(listener, store, shutdown, tls))
         };
         Ok(PdmService {
             addr,
             shutdown,
             handle: Some(handle),
             store,
+            tls: tls.is_enabled(),
         })
     }
 
@@ -78,13 +115,20 @@ impl PdmService {
     }
 
     /// Contract-anchored base URL the client should talk to (always `/api/v1`).
+    /// Reflects the scheme: `https://` when TLS is enabled, else `http://`.
     pub fn base_url(&self) -> String {
-        format!("http://{}/api/v1", self.addr)
+        let scheme = if self.tls { "https" } else { "http" };
+        format!("{scheme}://{}/api/v1", self.addr)
     }
 
     /// Access to the live store (tests and the demo inspect state).
     pub fn store(&self) -> Store {
         Arc::clone(&self.store)
+    }
+
+    /// Whether this service terminates TLS (P10-M1-T02).
+    pub fn tls_enabled(&self) -> bool {
+        self.tls
     }
 }
 
@@ -99,7 +143,14 @@ impl Drop for PdmService {
 
 /// Boot a tokio runtime for `listener` and serve the axum router until told
 /// to stop. Runs inside the boundary thread; returning here means shutdown.
-fn run_runtime(listener: std::net::TcpListener, store: Store, shutdown: Arc<AtomicBool>) {
+/// When `tls` is enabled, the router is served over HTTPS via axum-server's
+/// rustls acceptor (P10-M1-T02); otherwise it is the plain HTTP `axum::serve`.
+fn run_runtime(
+    listener: std::net::TcpListener,
+    store: Store,
+    shutdown: Arc<AtomicBool>,
+    tls: TlsConfig,
+) {
     let rt = match tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .build()
@@ -110,20 +161,70 @@ fn run_runtime(listener: std::net::TcpListener, store: Store, shutdown: Arc<Atom
             return;
         }
     };
+    let tls = if tls.is_enabled() { Some(tls) } else { None };
     rt.block_on(async move {
         let app = build_router(store);
-        let listener = match tokio::net::TcpListener::from_std(listener) {
-            Ok(l) => l,
-            Err(e) => {
-                eprintln!("oep-pdm: cannot adopt listener: {e}");
-                return;
+        if let Some(tls) = tls {
+            serve_tls(listener, app, shutdown, tls).await;
+        } else {
+            let listener = match tokio::net::TcpListener::from_std(listener) {
+                Ok(l) => l,
+                Err(e) => {
+                    eprintln!("oep-pdm: cannot adopt listener: {e}");
+                    return;
+                }
+            };
+            let server =
+                axum::serve(listener, app).with_graceful_shutdown(shutdown_signal(shutdown));
+            if let Err(e) = server.await {
+                eprintln!("oep-pdm: serve error: {e}");
             }
-        };
-        let server = axum::serve(listener, app).with_graceful_shutdown(shutdown_signal(shutdown));
-        if let Err(e) = server.await {
-            eprintln!("oep-pdm: serve error: {e}");
         }
     });
+}
+
+/// Serve HTTPS (rustls) over an already-bound `std::net::TcpListener` using
+/// axum-server (P10-M1-T02). The router is identical to the plain-HTTP path;
+/// only the transport differs. Cooperative shutdown via the shared atomic is
+/// mapped onto axum-server's graceful-shutdown handle.
+async fn serve_tls(
+    listener: std::net::TcpListener,
+    app: Router<()>,
+    shutdown: Arc<AtomicBool>,
+    tls: TlsConfig,
+) {
+    let config = match axum_server::tls_rustls::RustlsConfig::from_pem_file(&tls.cert, &tls.key)
+        .await
+    {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!(
+                "oep-pdm: cannot load TLS cert/key ({} / {}): {e}",
+                tls.cert.display(),
+                tls.key.display()
+            );
+            return;
+        }
+    };
+    let handle = axum_server::Handle::new();
+    let h2 = handle.clone();
+    let shutdown_watch = shutdown.clone();
+    tokio::spawn(async move {
+        while !shutdown_watch.load(Ordering::Relaxed) {
+            tokio::time::sleep(Duration::from_millis(100)).await;
+        }
+        h2.graceful_shutdown(Some(Duration::from_secs(5)));
+    });
+    let server = match axum_server::from_tcp_rustls(listener, config) {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("oep-pdm: cannot start TLS server: {e}");
+            return;
+        }
+    };
+    if let Err(e) = server.handle(handle).serve(app.into_make_service()).await {
+        eprintln!("oep-pdm: TLS serve error: {e}");
+    }
 }
 
 /// Cooperative shutdown: poll the atomic flag instead of installing a signal
@@ -511,7 +612,8 @@ fn file_response(item_id: &str, rev: &str, file: &FileRef, bytes: Vec<u8>) -> Re
 /// Shared standalone-binary entrypoint: parse the CLI args, load the store
 /// (optionally from a persistence dir), and serve until killed.
 ///
-/// Usage: `oep-pdm [--addr 127.0.0.1:8787] [--persist-dir DIR]`
+/// Usage: `oep-pdm [--addr 127.0.0.1:8787] [--persist-dir DIR]
+///                 [--tls-cert CERT.pem --tls-key KEY.pem]`
 ///
 /// `service_name` only affects the banner/help text (`oep-pdm` vs the retained
 /// `oep-pdm-stub` compat binary); both serve the same contract and report the
@@ -519,6 +621,9 @@ fn file_response(item_id: &str, rev: &str, file: &FileRef, bytes: Vec<u8>) -> Re
 pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
     let mut addr = "127.0.0.1:8787".to_string();
     let mut persist_dir: Option<std::path::PathBuf> = None;
+    // P10-M1-T02: optional native TLS termination (both files are required).
+    let mut tls_cert: Option<std::path::PathBuf> = None;
+    let mut tls_key: Option<std::path::PathBuf> = None;
 
     let mut i = 0;
     while i < args.len() {
@@ -530,6 +635,18 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
             "--persist-dir" => {
                 i += 1;
                 persist_dir = Some(std::path::PathBuf::from(
+                    args.get(i).cloned().unwrap_or_default(),
+                ));
+            }
+            "--tls-cert" => {
+                i += 1;
+                tls_cert = Some(std::path::PathBuf::from(
+                    args.get(i).cloned().unwrap_or_default(),
+                ));
+            }
+            "--tls-key" => {
+                i += 1;
+                tls_key = Some(std::path::PathBuf::from(
                     args.get(i).cloned().unwrap_or_default(),
                 ));
             }
@@ -545,6 +662,15 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
         }
         i += 1;
     }
+
+    let tls = match (tls_cert, tls_key) {
+        (Some(cert), Some(key)) => TlsConfig { cert, key },
+        (None, None) => TlsConfig::default(),
+        _ => {
+            eprintln!("{service_name}: --tls-cert and --tls-key must be given together");
+            return 2;
+        }
+    };
 
     let mut store = VaultStore::new();
     if let Some(dir) = &persist_dir {
@@ -574,7 +700,7 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
         }
     }
 
-    let server = match PdmService::start_with_store(&addr, store) {
+    let server = match PdmService::start_with_store_and_tls(&addr, store, tls) {
         Ok(s) => s,
         Err(e) => {
             eprintln!("{service_name}: cannot bind {addr}: {e}");
@@ -593,9 +719,12 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
 fn print_help(service_name: &str) {
     eprintln!(
         "{service_name} -- P8 REST API v1 service skeleton (axum)\n\n\
-         usage: {service_name} [--addr 127.0.0.1:8787] [--persist-dir DIR]\n\n\
+         usage: {service_name} [--addr 127.0.0.1:8787] [--persist-dir DIR]\n\
+         \t[--tls-cert CERT.pem --tls-key KEY.pem]\n\n\
          --addr        listen address (default 127.0.0.1:8787)\n\
          --persist-dir keep a snapshot + content-addressed blobs in DIR\n\
+         --tls-cert    PEM cert chain for native HTTPS (P10-M1-T02)\n\
+         --tls-key     PEM private key for native HTTPS (P10-M1-T02)\n\
          --help        this message"
     );
 }
