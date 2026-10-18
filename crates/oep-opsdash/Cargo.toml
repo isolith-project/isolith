@@ -1,0 +1,23 @@
+[package]
+name = "oep-opsdash"
+description = "P9-M5-T01: ops dashboard for the P9 compute lane. Live queue depth, node health, job logs and a cost/energy view, all read from the real oep-lane Scheduler (never mocked); served as JSON + rendered HTML."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# The dashboard's data source is the REAL oep-lane Scheduler (P9-M2-T01):
+# queue counters, per-job statuses and the dead-letter log are read through
+# its public API, and node health / job logs / energy are derived from the
+# real lease+ack lifecycle transitions it emits. Nothing here is fabricated.
+oep-lane = { path = "../oep-lane" }
+
+# Wire JSON for the HTTP API and the rendered snapshot (same deps the rest of
+# the P8/P9 line uses; keeps the dashboard contract machine-readable).
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+# Integration acceptance uses serde_json to assert the real snapshot round
+# trip and the served JSON.

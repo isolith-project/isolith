@@ -41,6 +41,9 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
                        survival, at-least-once delivery, idempotent effects)
 - P9 oep-fairshare  -- P2P compute lane: fair share per team/node + quota
                        enforcement
+- P9 oep-opsdash    -- ops dashboard for the P9 compute lane: live queue
+                       depth, node health, job logs, cost/energy; read from
+                       the real oep-lane Scheduler, served over HTTP
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
@@ -49,7 +52,9 @@ P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
 
 - Rust core: one `crates/oep-<stream>` crate per workstream, listed as a
   member of the root Cargo workspace. No cross-crate `path` deps until the
-  P6 importer hub (P6-M4-T02) defines them.
+  P6 importer hub (P6-M4-T02) defines them; the P9 lane is the one
+  exception (oep-opsdash path-depends on oep-lane: its whole contract is to
+  read the real scheduler, so it must link it).
 - Python tooling/scripts: `python/oep_tooling/` package (corpus pipelines,
   P1 harnesses, MBD validator first cut). Python is for tooling only; core is
   Rust-first (decision 6).

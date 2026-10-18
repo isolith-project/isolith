@@ -28,6 +28,10 @@ EXPECTED_CRATES = {
     "oep-viewer": "P6",# P6-M5 preview viewer (render seam)
     "oep-render-worker": "P9", # headless oep-geo render worker (P9-M3-T01)
     "oep-farm": "P9",  # beam/farm checkpoint + resume (P9-M4-T02)
+    "oep-sandbox": "P9", # worker sandbox (P9-M3-T03)
+    "oep-state": "P9", # distributed state (P9-M2-T03)
+    "oep-fairshare": "P9", # fair share / quota (P9-M2-T02)
+    "oep-opsdash": "P9", # ops dashboard (P9-M5-T01)
 }
 WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8", "P9"}
 CRATE_PREFIX = "oep-"

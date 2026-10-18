@@ -373,6 +373,15 @@ name = "oep-lane"
 version = "0.1.0"
 
 [[package]]
+name = "oep-opsdash"
+version = "0.1.0"
+dependencies = [
+ "oep-lane",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "oep-pdm"
 version = "0.1.0"
 dependencies = [

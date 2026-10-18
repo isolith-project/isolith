@@ -1,0 +1,223 @@
+{
+  "format": "oep-opsdash",
+  "version": 1,
+  "at_ms": 911,
+  "queue": {
+    "waiting": 0,
+    "ready": 1,
+    "running": 0,
+    "retrying": 0,
+    "succeeded": 3,
+    "dead_lettered": 1
+  },
+  "dead_letters": [
+    {
+      "job": 3,
+      "reason": "poison reported by worker: worker: unreadable model",
+      "priority": 5,
+      "attempts_used": 0,
+      "dead_at_ms": 851
+    }
+  ],
+  "nodes": [
+    {
+      "id": "nas-ds",
+      "health": "online",
+      "cpu_millicores": 8000,
+      "memory_mib": 32000,
+      "power_w": 60,
+      "running_jobs": [],
+      "jobs_succeeded": 1,
+      "jobs_reclaimed": 0,
+      "last_heartbeat_ms": 750
+    },
+    {
+      "id": "u1",
+      "health": "degraded",
+      "cpu_millicores": 32000,
+      "memory_mib": 128000,
+      "power_w": 350,
+      "running_jobs": [],
+      "jobs_succeeded": 2,
+      "jobs_reclaimed": 1,
+      "last_heartbeat_ms": 911
+    }
+  ],
+  "jobs": [
+    {
+      "job": 0,
+      "status": "succeeded",
+      "priority": 10,
+      "failures": 0,
+      "generation": 1
+    },
+    {
+      "job": 1,
+      "status": "succeeded",
+      "priority": 8,
+      "failures": 0,
+      "generation": 1
+    },
+    {
+      "job": 2,
+      "status": "succeeded",
+      "priority": 6,
+      "failures": 1,
+      "generation": 2
+    },
+    {
+      "job": 3,
+      "status": "dead-lettered",
+      "priority": 5,
+      "failures": 0,
+      "generation": 1
+    },
+    {
+      "job": 4,
+      "status": "ready",
+      "priority": 0,
+      "failures": 0,
+      "generation": 1
+    }
+  ],
+  "log": [
+    {
+      "at_ms": 0,
+      "job": 0,
+      "node": null,
+      "kind": "enqueue",
+      "detail": "priority=10"
+    },
+    {
+      "at_ms": 0,
+      "job": 0,
+      "node": "u1",
+      "kind": "dispatch",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 500,
+      "job": 0,
+      "node": null,
+      "kind": "ack",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 500,
+      "job": 1,
+      "node": null,
+      "kind": "enqueue",
+      "detail": "priority=8"
+    },
+    {
+      "at_ms": 500,
+      "job": 1,
+      "node": "nas-ds",
+      "kind": "dispatch",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 750,
+      "job": 1,
+      "node": null,
+      "kind": "ack",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 750,
+      "job": 2,
+      "node": null,
+      "kind": "enqueue",
+      "detail": "priority=6"
+    },
+    {
+      "at_ms": 750,
+      "job": 2,
+      "node": "u1",
+      "kind": "dispatch",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 750,
+      "job": 2,
+      "node": null,
+      "kind": "fail",
+      "detail": "transient: bus timeout"
+    },
+    {
+      "at_ms": 851,
+      "job": 2,
+      "node": "u1",
+      "kind": "dispatch",
+      "detail": "gen=2"
+    },
+    {
+      "at_ms": 851,
+      "job": 2,
+      "node": null,
+      "kind": "ack",
+      "detail": "gen=2"
+    },
+    {
+      "at_ms": 851,
+      "job": 3,
+      "node": null,
+      "kind": "enqueue",
+      "detail": "priority=5"
+    },
+    {
+      "at_ms": 851,
+      "job": 3,
+      "node": "u1",
+      "kind": "dispatch",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 851,
+      "job": 3,
+      "node": null,
+      "kind": "poison",
+      "detail": "worker: unreadable model"
+    },
+    {
+      "at_ms": 851,
+      "job": 4,
+      "node": null,
+      "kind": "enqueue",
+      "detail": "priority=0"
+    },
+    {
+      "at_ms": 851,
+      "job": 4,
+      "node": "u1",
+      "kind": "dispatch",
+      "detail": "gen=1"
+    },
+    {
+      "at_ms": 911,
+      "job": 4,
+      "node": null,
+      "kind": "reclaim",
+      "detail": "lease expired"
+    }
+  ],
+  "cost": {
+    "nas-ds": {
+      "node": "nas-ds",
+      "energy_mwh": 4,
+      "cost_usd_micro": 0,
+      "runs": 1
+    },
+    "u1": {
+      "node": "u1",
+      "energy_mwh": 53,
+      "cost_usd_micro": 7,
+      "runs": 5
+    }
+  },
+  "cost_totals": {
+    "energy_mwh": 57,
+    "cost_usd_micro": 7,
+    "runs": 6
+  }
+}
