@@ -13,12 +13,14 @@
 //!   names the axum skeleton, so the P7 contract tests and browser demos run
 //!   unchanged. The stub is the contract test, not a throwaway.
 //! * [`client`]  -- [`client::PdmClient`], the browser/modeler face: open from
-//!   PDM (`open_latest_file`), save revisions to PDM (`save_revision`).
+//!   PDM (`open_latest_file`), save revisions to PDM (`save_revision`), and
+//!   the P8-M5-T02 offline-sync verbs (`sync_push`, conflict view/resolve).
+//! * [`sync`]    -- P8-M5-T02 offline working set + sync-back on reconnect
+//!   ([`sync::OfflineWorkingSet`], [`sync::SyncEngine`]).
 //! * [`adapter`] -- P8-M6-T02 integration adapters: the thin seam the OEP
 //!   shell (P7 workbench) and any adopted tools use to talk to this API --
 //!   a [`adapter::PdmAdapter`] over the live service with unit-level
 //!   instrumentation ([`adapter::AdapterInstrument`]).
-//!
 //! P8-M6-T03 (the P8 GA gate) brings the real multi-user lifecycle layers
 //! online, wiring the already-tested capability modules from their milestone
 //! PRs into the served contract as additive REST surface:
@@ -55,10 +57,12 @@ pub mod service;
 pub mod state;
 pub mod store;
 pub mod stub;
+pub mod sync;
 pub mod working_set;
 
 pub use api::API_VERSION;
 pub use state::{Maturity, RevisionState};
+pub use sync::{EditStatus, LocalEdit, OfflineWorkingSet, SyncEngine, SyncError, SyncReport};
 
 /// Workstream anchor kept for workspace-layout tooling.
 pub const WORKSTREAM: &str = "P8-PDM";

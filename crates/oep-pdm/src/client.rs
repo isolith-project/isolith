@@ -15,7 +15,7 @@ use std::time::Duration;
 
 use serde::de::DeserializeOwned;
 
-use crate::api::{ErrorEnvelope, Health, Item, ItemList, Revision, RevisionList};
+use crate::api::{ErrorEnvelope, Health, Item, ItemList, Revision, RevisionList, SyncPushResult};
 use crate::http;
 
 /// Errors surfaced to the workbench/browser layer.
@@ -358,6 +358,63 @@ impl PdmClient {
             },
         };
         self.create_revision(id, &req)
+    }
+
+    // ---- P8-M5-T02 offline-sync verbs -----------------------------------
+
+    /// P8-M5-T02: push one offline edit with its base identity
+    /// (`POST /api/v1/sync/push`). Returns the tagged result: clean sync
+    /// (`Synced`) on 201, or a recorded pending merge (`Conflict`) on 409.
+    /// A conflict is an expected outcome with a payload, so this verb does NOT
+    /// surface it as an error -- the caller routes it to the resolution UI.
+    pub fn sync_push(&self, req: &crate::api::SyncPushRequest) -> Result<SyncPushResult, PdmError> {
+        let body = serde_json::to_string(req).map_err(PdmError::protocolify)?;
+        let resp = self.exchange("POST", "/sync/push", Some(&body))?;
+        match resp.status {
+            201 | 409 => serde_json::from_slice(&resp.body).map_err(|e| {
+                PdmError::Protocol(format!(
+                    "cannot parse sync_push result ({}): {e}",
+                    resp.status
+                ))
+            }),
+            _ => Err(err_from_response(&resp)),
+        }
+    }
+
+    /// P8-M5-T02: the three snapshots of a pending merge
+    /// (`GET /api/v1/sync/conflicts/{sync_id}`).
+    pub fn get_sync_conflict(
+        &self,
+        sync_id: &str,
+    ) -> Result<crate::api::SyncConflictView, PdmError> {
+        let path = format!("/sync/conflicts/{}", http::encode_segment(sync_id));
+        self.request_typed("GET", &path, None)
+    }
+
+    /// P8-M5-T02: raw bytes of one side of a pending merge
+    /// (`GET /api/v1/sync/conflicts/{sync_id}/file/{side}`), hash-verifiable.
+    pub fn open_conflict_side(&self, sync_id: &str, side: &str) -> Result<FilePayload, PdmError> {
+        let path = format!(
+            "/sync/conflicts/{}/file/{}",
+            http::encode_segment(sync_id),
+            http::encode_segment(side)
+        );
+        self.request_bytes("GET", &path)
+            .and_then(|r| parse_file_payload(sync_id, &r))
+    }
+
+    /// P8-M5-T02: resolve a pending merge
+    /// (`POST /api/v1/sync/conflicts/{sync_id}/resolve`). Returns the new
+    /// revision; callers verify `files[0].blob_sha256` against the resolved
+    /// bytes they intended (hash-after-commit acceptance).
+    pub fn resolve_conflict(
+        &self,
+        sync_id: &str,
+        req: &crate::api::SyncResolveRequest,
+    ) -> Result<Revision, PdmError> {
+        let body = serde_json::to_string(req).map_err(PdmError::protocolify)?;
+        let path = format!("/sync/conflicts/{}/resolve", http::encode_segment(sync_id));
+        self.request_typed("POST", &path, Some(&body))
     }
 }
 
