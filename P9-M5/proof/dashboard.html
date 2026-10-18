@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>OEP P9 Ops Dashboard</title><style>body{font-family:system-ui,sans-serif;margin:2rem;color:#1a1a1a;background:#fafafa}h1{font-size:1.4rem} h2{font-size:1.1rem;margin-top:1.6rem;border-bottom:1px solid #ddd;padding-bottom:.2rem}table{border-collapse:collapse;width:100%;font-size:.85rem}th,td{text-align:left;padding:.35rem .6rem;border-bottom:1px solid #ececec}th{background:#f0f0f0} .ok{color:#1a7f37} .bad{color:#cf222e}.warn{color:#9a6700} .mono{font-family:ui-monospace,Menlo,monospace;font-size:.8rem}.card{background:#fff;border:1px solid #e2e2e2;border-radius:8px;padding:1rem;margin:.5rem 0}.stat{display:inline-block;margin-right:1.4rem} .stat b{font-size:1.3rem;display:block}</style></head><body>
+<h1>OEP P9 Ops Dashboard <span class="mono">(format oep-opsdash v1)</span></h1>
+<p class="mono">snapshot at t=911ms</p>
+<h2>Queue depth</h2><div class="card">
+<span class="stat"><b class="">0</b>waiting</span>
+<span class="stat"><b class="">1</b>ready</span>
+<span class="stat"><b class="ok">0</b>running</span>
+<span class="stat"><b class="">0</b>retrying</span>
+<span class="stat"><b class="">3</b>succeeded</span>
+<span class="stat"><b class="bad">1</b>dead-lettered</span>
+</div>
+<h3>Dead-letter log</h3><table><tr><th>job</th><th>reason</th><th>priority</th><th>attempts</th><th>t</th></tr>
+<tr><td class="mono">3</td><td>poison reported by worker: worker: unreadable model</td><td>5</td><td>0</td><td class="mono">851</td></tr>
+</table>
+<h2>Node health</h2><table><tr><th>node</th><th>health</th><th>cpu</th><th>mem</th><th>power W</th><th>running</th><th>succeeded</th><th>reclaimed</th><th>last hb</th></tr>
+<tr><td class="mono">nas-ds</td><td class="ok">online</td><td>8000</td><td>32000</td><td>60</td><td class="mono"></td><td>1</td><td>0</td><td class="mono">750</td></tr>
+<tr><td class="mono">u1</td><td class="warn">degraded</td><td>32000</td><td>128000</td><td>350</td><td class="mono"></td><td>2</td><td>1</td><td class="mono">911</td></tr>
+</table>
+<h2>Job logs</h2><table><tr><th>t</th><th>job</th><th>node</th><th>event</th><th>detail</th></tr>
+<tr><td class="mono">911</td><td class="mono">4</td><td class="mono"></td><td class="bad">reclaim</td><td>lease expired</td></tr>
+<tr><td class="mono">851</td><td class="mono">4</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">851</td><td class="mono">4</td><td class="mono"></td><td class="">enqueue</td><td>priority=0</td></tr>
+<tr><td class="mono">851</td><td class="mono">3</td><td class="mono"></td><td class="bad">poison</td><td>worker: unreadable model</td></tr>
+<tr><td class="mono">851</td><td class="mono">3</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">851</td><td class="mono">3</td><td class="mono"></td><td class="">enqueue</td><td>priority=5</td></tr>
+<tr><td class="mono">851</td><td class="mono">2</td><td class="mono"></td><td class="ok">ack</td><td>gen=2</td></tr>
+<tr><td class="mono">851</td><td class="mono">2</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=2</td></tr>
+<tr><td class="mono">750</td><td class="mono">2</td><td class="mono"></td><td class="warn">fail</td><td>transient: bus timeout</td></tr>
+<tr><td class="mono">750</td><td class="mono">2</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">750</td><td class="mono">2</td><td class="mono"></td><td class="">enqueue</td><td>priority=6</td></tr>
+<tr><td class="mono">750</td><td class="mono">1</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">500</td><td class="mono">1</td><td class="mono">nas-ds</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">500</td><td class="mono">1</td><td class="mono"></td><td class="">enqueue</td><td>priority=8</td></tr>
+<tr><td class="mono">500</td><td class="mono">0</td><td class="mono"></td><td class="ok">ack</td><td>gen=1</td></tr>
+<tr><td class="mono">0</td><td class="mono">0</td><td class="mono">u1</td><td class="">dispatch</td><td>gen=1</td></tr>
+<tr><td class="mono">0</td><td class="mono">0</td><td class="mono"></td><td class="">enqueue</td><td>priority=10</td></tr>
+</table>
+<h2>Cost / Energy</h2><div class="card">
+<span class="stat"><b>57</b>energy mWh</span><span class="stat"><b>7</b>cost micro-USD</span><span class="stat"><b>6</b>runs</span>
+</div><table><tr><th>node</th><th>energy mWh</th><th>cost micro-USD</th><th>runs</th></tr>
+<tr><td class="mono">nas-ds</td><td>4</td><td>0</td><td>1</td></tr>
+<tr><td class="mono">u1</td><td>53</td><td>7</td><td>5</td></tr>
+</table></body></html>
