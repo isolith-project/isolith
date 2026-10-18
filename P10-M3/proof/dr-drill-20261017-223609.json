@@ -1,0 +1,21 @@
+{
+  "drill": "P10-M3-T01 DR drill: fresh-machine restore from backup",
+  "timestamp": "20261017-223609",
+  "measured_tdr_seconds": 3,
+  "under_60_min": true,
+  "health": {
+    "status": "ok",
+    "service": "oep-pdm",
+    "version": "1.0.0"
+  },
+  "restored_item_count": 100,
+  "verified_blob_sha256": "d1eaa8fb5bd25943fc84e77a2a293ba5055375ef392e07d6f134860cb965e38e",
+  "blob_count_in_backup": 12,
+  "audit": {
+    "ok": true,
+    "count": 413,
+    "head_hash": "2e69da7abc2be059a1b28f731e96214c6a942d20cdd16f6a15c0a39d6446bbb3"
+  },
+  "backup_target": "/home/r1a/keelworks-data",
+  "fresh_image": "ubuntu:24.04"
+}
