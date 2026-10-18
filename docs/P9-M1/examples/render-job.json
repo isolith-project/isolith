@@ -1,0 +1,56 @@
+{
+  "format": "oep-job",
+  "version": 1,
+  "job_id": "j-demo-render-001",
+  "name": "Cowl panel thumbnail render",
+  "description": "P9-M1-T01 example: render a thumbnail plus a preview scene from a vault revision on one strict GPU.",
+  "created_at": "2026-10-17T12:00:00Z",
+  "input": [
+    {
+      "name": "mesh",
+      "ref": { "kind": "revision", "item_id": "cowl-panel", "revision": "3" },
+      "note": "revision 3 of the cowl panel item (GET /api/v1/items/cowl-panel/revisions/3)"
+    },
+    {
+      "name": "materials",
+      "ref": {
+        "kind": "file",
+        "blob_sha256": "b12d95603073a6e0035c853be4661cee615dad4465d0b5f8e0e69fd03183ea31"
+      }
+    }
+  ],
+  "executor": {
+    "kind": "render",
+    "function": "oep-geo-render",
+    "image": "oep-workers/render:v1",
+    "args": ["--resolution", "1920x1080", "--fidelity", "high"]
+  },
+  "resources": {
+    "cpu_millicores": 2000,
+    "memory_mib": 4096,
+    "disk_mib": 512,
+    "gpu": { "count": 1, "required": true, "model": "dgx" },
+    "network_egress": false,
+    "timeout_seconds": 3600,
+    "checkpoint_every_seconds": 900
+  },
+  "output": [
+    {
+      "name": "thumbnail",
+      "format": "png",
+      "content_type": "image/png",
+      "target": { "kind": "blob" },
+      "required": true
+    },
+    {
+      "name": "preview-scene",
+      "format": "gltf",
+      "target": {
+        "kind": "new_item",
+        "item_name": "cowl-panel-preview",
+        "item_kind": "document",
+        "context_id": "ctx-cowl"
+      }
+    }
+  ]
+}

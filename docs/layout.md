@@ -23,10 +23,11 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   audit}) into the served contract as additive gate verbs (lock / lock release
   / transition / audit / audit-verify; see P8-M6/ga-gate.md), with the gate
   harness python/oep_tooling/ga_gate_p8.py and proof under P8-M6/proof/
+- P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
+                       executor, resource caps, output refs)
 
 Not yet materialized as crates (laid out when their workstream starts):
-P1 corpus tooling (python), P9 P2P compute, P10 hybrid cloud, P12 QA/CI,
-P14 integration.
+P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
 
 ## Conventions
 
