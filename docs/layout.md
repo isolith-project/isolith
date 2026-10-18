@@ -47,6 +47,12 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-gate       -- P9-M5-T02 GA gate: 100-job render/convert wave across
                        3+ nodes, all outputs hash-verified in the P8 vault
                        (oep_ga_gate driver + oep_ga_node agent + ga_gate_p9)
+- P8 oep-web        -- P8-M4-T01 web UI merged with the oep-pdm REST v1 router
+                       over the same vault store: item explorer, item page with
+                       BOM tree, P6 preview embed (oep-viewer PNG renders),
+                       compare view (P10-M1-T01 integrates it onto the P9
+                       assembly; graph + viewer surfaces via oep_pdm::graph
+                       RelationshipGraph, re-exported from oep-pdm)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
