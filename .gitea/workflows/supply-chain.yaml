@@ -1,0 +1,69 @@
+# P11-T06: supply-chain gates (lock-pin + reproducible build).
+#
+# Two gates hold every branch/P R.
+#
+# 1) lockpin: on EVERY push and pull_request, the verifier rejects any
+#    unpinned/unverified dependency state:
+#      - Cargo.lock must be committed, in sync with the manifests, and every
+#        external package must be verifiable (registry+checksum or pinned git
+#        rev); a dependency change that was not committed with its lockfile
+#        update fails CI.
+#    This is the literal "CI fails on any unpinned/unverified dependency
+#    change" acceptance.
+#
+# 2) reproducible-build: gated to the RELEASE BRANCH line (release/* pushes
+#    and pull_requests targeting release/*) plus workflow_dispatch for
+#    on-demand verification on any ref. It builds the workspace twice in
+#    isolated clean-room dirs under a deterministic environment and requires
+#    byte-identical artifacts (P11-T04 feeds on the emitted SHA256SUMS
+#    manifest). This is the literal "reproducible-build check running in CI on
+#    the release branch" acceptance.
+name: Supply chain (lockpin + reproducible build)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lockpin:
+    name: lockpin
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Verify dependency pinning (fails on unpinned/unverified change)
+        run: bash scripts/supply-chain/verify-lockpin.sh
+
+  reproducible-build:
+    name: reproducible-build
+    # Release-branch line + manual dispatch. See doc P11/supply-chain.md
+    # section 5: release branches accept no direct feature pushes (P12-T05),
+    # so changes enter by merge/cherry-pick and this gate runs on the branch
+    # head before anything ships.
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/release/') || startsWith(github.base_ref, 'release/')
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Clean-room reproducible build (twice, byte-identical required)
+        run: bash scripts/supply-chain/reproducible-build.sh
+      - name: Keep the byte-identity proof in CI
+        run: |
+          ls -l P11/proof/ | tail -5
+          echo "reproducible build proof recorded on this ref"
