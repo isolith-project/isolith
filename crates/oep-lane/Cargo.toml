@@ -1,0 +1,16 @@
+[package]
+name = "oep-lane"
+description = "P9: P2P compute lane. Scheduler (P9-M2-T01): priority queue, dependency DAG, retries with backoff, dead-letter for poison jobs; lease/ack contract provides the at-least-once seam for P9-M2-T03."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# std-only by design (matches oep-pdm working-set/rbac modules): a scheduler
+# is pure state-transition logic; time is injected by the caller (`now_ms`)
+# so every test is deterministic and no wall-clock or RNG is hidden here.
+
+[dev-dependencies]
+# Integration tests (tests/scheduler_acceptance.rs) use the same deterministic
+# injected-clock model as the unit tests; no external deps needed.
