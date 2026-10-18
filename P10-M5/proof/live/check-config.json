@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "source": { "bundle": "P10-M5/proof/live/update.bundle.json" },
+  "public_key": "bd64655f73888419fa1cde1c1cbdb5e1d25026391eefbc156cc70a3346594d79",
+  "current_version": "0.1.0",
+  "timeout_ms": 3000
+}

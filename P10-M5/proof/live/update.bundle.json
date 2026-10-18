@@ -1,0 +1,17 @@
+{
+  "schema": "oep-update-manifest/1",
+  "product": "oep",
+  "version": "0.2.0",
+  "released": "2026-10-17",
+  "notes": "test bundle",
+  "payloads": [
+    {
+      "name": "payload.bin",
+      "sha256": "da9d442364da3f3f8066d6eab3f608fb2025fdf9d82950e200d9c0707c6718de",
+      "size": 21,
+      "url": null
+    }
+  ],
+  "payload_bytes_b64": "T0VQLVBBWUxPQUQtVjItTUFSS0VS",
+  "signature_b64": "eHEG/ZuxrDkoiey1Mbx9PnesPhCGKbCxPmLo5e46BgKOxgslDkg0hMf6nL0WMZ3jxH+GXSgXjlsPF62wX+ArAw=="
+}

@@ -53,9 +53,15 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
                        compare view (P10-M1-T01 integrates it onto the P9
                        assembly; graph + viewer surfaces via oep_pdm::graph
                        RelationshipGraph, re-exported from oep-pdm)
+- P10 oep-update    -- P10-M5-T01 update checker (decision #11): advisory,
+                       NON-BLOCKING update check against a configurable source
+                       (remote URL / on-site mirror / offline signed bundle);
+                       signed manifest verified before any download; runs
+                       identically with no source reachable; disable-able and
+                       non-phoning by default (off).
 
 Not yet materialized as crates (laid out when their workstream starts):
-P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI, P14 integration.
+P1 corpus tooling (python), P12 QA/CI, P14 integration.
 
 ## Conventions
 

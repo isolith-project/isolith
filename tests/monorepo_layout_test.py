@@ -33,8 +33,9 @@ EXPECTED_CRATES = {
     "oep-fairshare": "P9", # fair share / quota (P9-M2-T02)
     "oep-opsdash": "P9", # ops dashboard (P9-M5-T01)
     "oep-gate": "P9",  # P9-M5-T02 GA gate (wave driver + node agent)
+    "oep-update": "P10", # P10-M5-T01 update checker (decision #11)
 }
-WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8", "P9"}
+WORKSTREAMS = {"P2", "P3", "P4", "P6", "P8", "P9", "P10"}
 CRATE_PREFIX = "oep-"
 
 _failures = []
