@@ -69,7 +69,7 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
                        non-phoning by default (off).
 
 Not yet materialized as crates (laid out when their workstream starts):
-P1 corpus tooling (python), P12 QA/CI, P14 integration.
+P1 corpus tooling (python), P10 hybrid cloud, P14 integration.
 
 P10 hybrid cloud / self-hosted delivery to date ships as tooling + scripts, not
 new crates (the PDM server that carries TLS is P8 `oep-pdm`):
@@ -83,6 +83,14 @@ new crates (the PDM server that carries TLS is P8 `oep-pdm`):
 - `scripts/dr/backup-vault.sh` `scripts/dr/drill-restore.sh` -- DR lane (P10-M3-T01),
   consuming the same `keelworks-vault-backup/` bundle contract
 - docs: `P10-M1/` (lane docs + proof), `P10-M3/` (DR runbook + proof)
+
+## P12 release engineering
+
+- `P12/release-train.md` -- release train, versioning, freeze, canary staging
+  and patch policy (P12-T05)
+- `python/oep_tooling/release_train.py` -- freeze / verify / release-cut tooling
+- `P12/freeze-manifests/` -- frozen commit set manifest per candidate
+- `P12/proof/` -- verified dry-run train cut record
 
 ## Conventions
 

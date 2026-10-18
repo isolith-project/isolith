@@ -1,0 +1,11 @@
+task/p10m5t02-ga-gate-1018a
+e67b8fcc28ede7caadb68f530191fb3e9f1e2d80
+# Keelworks release-train trunk pointer (P12-T05).
+#
+# Resolved by `python/oep_tooling/release_train.py release-cut` when a concrete
+# trunk is not given. Steady state: `main`. Current (wave-3, pre-consolidation):
+# the program integration head, because main still carries only the P0 bootstrap
+# and the real integrated state lives in the stacked task branches. When the
+# wave-3 consolidation lane merges the backlog into main, change this file to
+# `main` <main sha> and the policy in release-train.md section 7 applies
+# unchanged.
