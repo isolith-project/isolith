@@ -38,6 +38,83 @@ pub mod error_code {
     pub const METHOD_NOT_ALLOWED: &str = "method_not_allowed";
     pub const UNSUPPORTED_MEDIA: &str = "unsupported_media";
     pub const INTERNAL: &str = "internal_error";
+    // ---- P8-M6-T03 additive gate surface (never used by the v1 verbs) ----
+    /// A working-set lock cannot be acquired (another principal holds it).
+    pub const LOCK_CONFLICT: &str = "lock_conflict";
+    /// A lock-token check failed: not held, wrong token, or lease expired.
+    pub const LOCK_TOKEN: &str = "lock_token";
+    /// The audit log is not available (no persist dir / audit root).
+    pub const AUDIT_UNAVAILABLE: &str = "audit_unavailable";
+}
+
+// ---------------------------------------------------------------------------
+// P8-M6-T03 additive gate surface (lock / transition / audit). These are NEW
+// paths and types, additive to the v1 contract -- the existing verbs and their
+// byte-exact behavior do not change (P8-M6/openapi-v1.yaml stays the same for
+// them). The gate surface makes the real P8-M1-T03 / P8-M2-T01 / P8-M3-T03
+// lifecycle layers observable and testable over the same base URL.
+// ---------------------------------------------------------------------------
+
+/// `POST /api/v1/items/{item_id}/lock` request: who wants the lock.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct LockAcquireRequest {
+    /// Principal (user / workbench / agent) acquiring the lock.
+    pub holder: String,
+}
+
+/// A granted working-set lock (response payload).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct LockView {
+    /// The locked vault object (item id).
+    pub object: String,
+    /// Who holds the lock.
+    pub holder: String,
+    /// Server-minted one-time token proving ownership (opaque).
+    pub token: String,
+    /// Lease expiry in unix milliseconds.
+    pub expires_ms: u64,
+}
+
+/// `DELETE /api/v1/items/{item_id}/lock` request: the token to release.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct LockReleaseRequest {
+    /// The one-time token granted at acquire (or steal).
+    pub token: String,
+}
+
+/// `POST /api/v1/items/{item_id}/revisions/{rev}/transition` request.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TransitionRequest {
+    /// The destination lifecycle state (working/under_review/released/obsolete).
+    pub to: String,
+    /// The working-set lock token. Required for every hop (the lock is the
+    /// publish serialization point, P8-M1-T03).
+    pub token: String,
+}
+
+/// The audit view returned by `GET /api/v1/audit`.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct AuditView {
+    /// All entries, oldest first (seq asc).
+    pub entries: Vec<crate::audit::Entry>,
+    /// Number of entries.
+    pub count: usize,
+    /// Storage is append-only by construction (P8-M3-T03).
+    pub append_only: bool,
+}
+
+/// Result of `GET /api/v1/audit/verify`.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct AuditVerifyReply {
+    /// True when the whole chain re-verifies (no tamper detected).
+    pub ok: bool,
+    /// Number of entries in the verified chain.
+    pub count: usize,
+    /// Chained hash of the last entry (head checkpoint).
+    pub head_hash: String,
+    /// Human detail when `ok` is false (tamper evidence).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub detail: Option<String>,
 }
 
 /// `GET /api/v1/health` response.

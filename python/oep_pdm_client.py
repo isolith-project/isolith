@@ -13,7 +13,7 @@ from typing import List, Optional
 API_BASE = "/api/v1"
 API_VERSION = "1.0.0"
 # SHA-256 of the P8-M6/openapi-v1.yaml bytes this client was generated from.
-SPEC_SHA256 = "911fa2454d80fe9e1aa8a37f55586a271f472c3b10cfb7a9e08ecdca1056fffa"
+SPEC_SHA256 = "cd26418539ddfd717ab88ae5f74955b454104246d8e1c9d4c9fad5ea1597e4fb"
 
 @dataclass
 class Health:
@@ -221,6 +221,36 @@ class PdmClient:
             blob_sha256=headers.get("x-blob-sha256", ""),
             bytes=raw,
         )
+
+    def acquire_lock(self, item_id, body):
+        # Acquire the working-set lock on an item (P8-M1-T03).
+        import urllib.parse as _up
+        path = "" + "/items" + "/" + _up.quote(str(item_id)) + "/lock"
+        return self._json("POST", path, body)
+
+    def release_lock(self, item_id, body):
+        # Release the working-set lock by its token.
+        import urllib.parse as _up
+        path = "" + "/items" + "/" + _up.quote(str(item_id)) + "/lock"
+        return self._json("DELETE", path, body)
+
+    def transition_revision(self, item_id, rev, body):
+        # Apply a lock-gated lifecycle transition (P8-M2-T01 state machine). Releasing requires the live lock token.
+        import urllib.parse as _up
+        path = "" + "/items" + "/" + _up.quote(str(item_id)) + "/revisions" + "/" + _up.quote(str(rev)) + "/transition"
+        return self._json("POST", path, body)
+
+    def list_audit(self):
+        # View the append-only, tamper-evident audit log (P8-M3-T03).
+        import urllib.parse as _up
+        path = "/audit"
+        return self._json("GET", path)
+
+    def verify_audit(self):
+        # Re-derive the tamper-evident audit chain from disk and confirm it is intact (head checkpoint matches the log).
+        import urllib.parse as _up
+        path = "/audit/verify"
+        return self._json("GET", path)
 
     def save_revision(self, item_id, filename, format, content, *,
                         state="working", comment=None, created_by=None,

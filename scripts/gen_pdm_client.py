@@ -51,6 +51,12 @@ OPERATION_METHODS: Dict[str, str] = {
     "createRevision": "create_revision",
     "getRevision": "get_revision",
     "openRevisionFile": "open_revision_file",
+    # P8-M6-T03 additive gate surface (lock / transition / audit).
+    "acquireLock": "acquire_lock",
+    "releaseLock": "release_lock",
+    "transitionRevision": "transition_revision",
+    "listAudit": "list_audit",
+    "verifyAudit": "verify_audit",
 }
 
 # Schemas whose wire shape the client models as dataclasses, in emit order.
@@ -281,7 +287,13 @@ def emit_client(
             w.write(", %s" % p)
         for p in query_params:
             w.write(", %s=None" % p)
-        if has_body and py_name in ("create_item", "create_revision"):
+        if has_body and py_name in (
+            "create_item",
+            "create_revision",
+            "acquire_lock",
+            "release_lock",
+            "transition_revision",
+        ):
             w.write(", body")
         w.write("):\n")
         w.write('        # %s\n' % (op.get("summary") or op_id))
@@ -314,7 +326,13 @@ def emit_client(
             w.write("        )\n")
         else:
             verb_upper = verb.upper()
-            if has_body and py_name in ("create_item", "create_revision"):
+            if has_body and py_name in (
+                "create_item",
+                "create_revision",
+                "acquire_lock",
+                "release_lock",
+                "transition_revision",
+            ):
                 w.write('        return self._json("%s", path, body)\n' % verb_upper)
             else:
                 w.write('        return self._json("%s", path)\n' % verb_upper)

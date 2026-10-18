@@ -201,6 +201,110 @@ paths:
           $ref: '#/components/responses/FileBytes'
         '404':
           $ref: '#/components/responses/Error'
+  # ---------------------------------------------------------------------------
+  # P8-M6-T03 additive gate surface (lock / transition / audit). These are NEW
+  # paths, additive to the v1 contract: the existing verbs and their byte-exact
+  # behavior are unchanged. They expose the real P8-M1-T03 / P8-M2-T01 /
+  # P8-M3-T03 lifecycle layers that the P8 GA gate drives over real sockets.
+  # ---------------------------------------------------------------------------
+  /items/{item_id}/lock:
+    post:
+      tags: [gate]
+      summary: Acquire the working-set lock on an item (P8-M1-T03).
+      operationId: acquireLock
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LockAcquireRequest' }
+      responses:
+        '200':
+          description: Lock granted (one-time token + lease expiry).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LockView' }
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+    delete:
+      tags: [gate]
+      summary: Release the working-set lock by its token.
+      operationId: releaseLock
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LockReleaseRequest' }
+      responses:
+        '200':
+          description: Lock released.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LockView' }
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+  /items/{item_id}/revisions/{rev}/transition:
+    post:
+      tags: [gate]
+      summary: >-
+        Apply a lock-gated lifecycle transition (P8-M2-T01 state machine).
+        Releasing requires the live lock token.
+      operationId: transitionRevision
+      parameters:
+        - { $ref: '#/components/parameters/ItemId' }
+        - { $ref: '#/components/parameters/Rev' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TransitionRequest' }
+      responses:
+        '200':
+          description: Revision transitioned to the requested state.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Revision' }
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+  /audit:
+    get:
+      tags: [gate]
+      summary: View the append-only, tamper-evident audit log (P8-M3-T03).
+      operationId: listAudit
+      responses:
+        '200':
+          description: Audit entries (oldest first).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuditView' }
+        '409':
+          $ref: '#/components/responses/Error'
+  /audit/verify:
+    get:
+      tags: [gate]
+      summary: >-
+        Re-derive the tamper-evident audit chain from disk and confirm it is
+        intact (head checkpoint matches the log).
+      operationId: verifyAudit
+      responses:
+        '200':
+          description: Chain verification result.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuditVerifyReply' }
+        '409':
+          $ref: '#/components/responses/Error'
 components:
   parameters:
     ItemId:
@@ -356,3 +460,57 @@ components:
       properties:
         code: { type: string, example: not_found }
         message: { type: string }
+    # ---- P8-M6-T03 additive gate surface schemas (lock / transition / audit) ----
+    LockAcquireRequest:
+      type: object
+      required: [holder]
+      properties:
+        holder: { type: string, minLength: 1, description: Principal acquiring the lock. }
+    LockView:
+      type: object
+      required: [object, holder, token, expires_ms]
+      properties:
+        object: { type: string }
+        holder: { type: string }
+        token: { type: string, description: Opaque one-time lock token. }
+        expires_ms: { type: integer, description: Lease expiry in unix ms. }
+    LockReleaseRequest:
+      type: object
+      required: [token]
+      properties:
+        token: { type: string, description: The token granted at acquire. }
+    TransitionRequest:
+      type: object
+      required: [to, token]
+      properties:
+        to: { type: string, enum: [working, under_review, released, obsolete] }
+        token: { type: string, description: The working-set lock token. }
+    AuditEntry:
+      type: object
+      required: [seq, actor, action, target, at_unix, prev_hash, hash]
+      properties:
+        seq: { type: integer, description: 1-based sequence number. }
+        actor: { type: string, description: Who acted. }
+        action: { type: string, enum: [read, change, release] }
+        target: { type: string, description: What was acted on. }
+        detail: { type: string, nullable: true }
+        at_unix: { type: integer, description: Wall-clock unix seconds. }
+        prev_hash: { type: string, description: Hash of the previous entry. }
+        hash: { type: string, description: This entry's chained SHA-256. }
+    AuditView:
+      type: object
+      required: [entries, count, append_only]
+      properties:
+        entries:
+          type: array
+          items: { $ref: '#/components/schemas/AuditEntry' }
+        count: { type: integer }
+        append_only: { type: boolean }
+    AuditVerifyReply:
+      type: object
+      required: [ok, count, head_hash]
+      properties:
+        ok: { type: boolean, description: Whole chain re-verifies. }
+        count: { type: integer }
+        head_hash: { type: string, description: Chained hash of the last entry. }
+        detail: { type: string, nullable: true, description: Tamper evidence when ok is false. }

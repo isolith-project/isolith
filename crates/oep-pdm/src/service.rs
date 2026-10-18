@@ -26,7 +26,7 @@ use axum::extract::{Path, Query, State};
 use axum::http::header::{self, HeaderMap};
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
-use axum::routing::get;
+use axum::routing::{get, post};
 use axum::{Json, Router};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
@@ -153,9 +153,112 @@ pub fn build_router(store: Store) -> Router<()> {
             "/api/v1/items/{item_id}/revisions/{rev}/file",
             get(open_revision_file),
         )
+        // ---- P8-M6-T03 additive gate surface (lock / transition / audit) ----
+        .route(
+            "/api/v1/items/{item_id}/lock",
+            post(acquire_lock).delete(release_lock),
+        )
+        .route(
+            "/api/v1/items/{item_id}/revisions/{rev}/transition",
+            post(transition_revision),
+        )
+        .route("/api/v1/audit", get(get_audit))
+        .route("/api/v1/audit/verify", get(verify_audit))
         .method_not_allowed_fallback(method_not_allowed)
         .fallback(not_found)
         .with_state(store)
+}
+
+/// `POST /api/v1/items/{item_id}/lock` -- acquire the working-set lock.
+async fn acquire_lock(
+    State(store): State<Store>,
+    Path(item_id): Path<String>,
+    headers: HeaderMap,
+    body: Bytes,
+) -> Response {
+    let body = match json_body::<crate::api::LockAcquireRequest>(&headers, &body) {
+        Ok(b) => b,
+        Err(resp) => return *resp,
+    };
+    match store.lock() {
+        Ok(mut g) => match g.acquire_lock(&item_id, &body.holder) {
+            Ok(view) => json_response(StatusCode::OK, &view),
+            Err(e) => error_response(&e),
+        },
+        Err(_) => internal("store lock poisoned"),
+    }
+}
+
+/// `DELETE /api/v1/items/{item_id}/lock` -- release a lock by its token.
+async fn release_lock(
+    State(store): State<Store>,
+    Path(item_id): Path<String>,
+    headers: HeaderMap,
+    body: Bytes,
+) -> Response {
+    let body = match json_body::<crate::api::LockReleaseRequest>(&headers, &body) {
+        Ok(b) => b,
+        Err(resp) => return *resp,
+    };
+    match store.lock() {
+        Ok(mut g) => match g.release_lock(&item_id, &body.token) {
+            Ok(view) => json_response(StatusCode::OK, &view),
+            Err(e) => error_response(&e),
+        },
+        Err(_) => internal("store lock poisoned"),
+    }
+}
+
+/// `POST /api/v1/items/{item_id}/revisions/{rev}/transition` -- apply a
+/// lock-gated lifecycle hop (P8-M2-T01 state machine behind the wire).
+async fn transition_revision(
+    State(store): State<Store>,
+    Path((item_id, rev)): Path<(String, String)>,
+    headers: HeaderMap,
+    body: Bytes,
+) -> Response {
+    let body = match json_body::<crate::api::TransitionRequest>(&headers, &body) {
+        Ok(b) => b,
+        Err(resp) => return *resp,
+    };
+    match store.lock() {
+        Ok(mut g) => match g.transition(&item_id, &rev, &body.to, &body.token) {
+            Ok(r) => json_response(StatusCode::OK, &r),
+            Err(e) => error_response(&e),
+        },
+        Err(_) => internal("store lock poisoned"),
+    }
+}
+
+/// `GET /api/v1/audit` -- all audit entries (oldest first).
+async fn get_audit(State(store): State<Store>) -> Response {
+    match store.lock() {
+        Ok(g) => match g.audit_view() {
+            Ok(view) => json_response(StatusCode::OK, &view),
+            Err(e) => audit_unavailable(&e),
+        },
+        Err(_) => internal("store lock poisoned"),
+    }
+}
+
+/// `GET /api/v1/audit/verify` -- re-derive and verify the tamper-evident chain.
+async fn verify_audit(State(store): State<Store>) -> Response {
+    match store.lock() {
+        Ok(g) => match g.audit_verify() {
+            Ok(reply) => json_response(StatusCode::OK, &reply),
+            Err(e) => audit_unavailable(&e),
+        },
+        Err(_) => internal("store lock poisoned"),
+    }
+}
+
+/// Audit endpoints when the service has no audit log: honest 409
+/// `audit_unavailable` (never a fabricated PASS).
+fn audit_unavailable(e: &crate::store::StoreError) -> Response {
+    error_json(
+        StatusCode::CONFLICT,
+        crate::api::ErrorEnvelope::new(crate::api::error_code::AUDIT_UNAVAILABLE, e.to_string()),
+    )
 }
 
 /// `GET /api/v1/health` -- service liveness + contract identity.
@@ -217,8 +320,15 @@ async fn get_item(State(store): State<Store>, Path(item_id): Path<String>) -> Re
 /// `GET /api/v1/items/{item_id}/file/latest` -- open-from-PDM, latest bytes.
 async fn open_latest_file(State(store): State<Store>, Path(item_id): Path<String>) -> Response {
     match store.lock() {
-        Ok(g) => match g.open_latest(&item_id) {
-            Ok((rev, file, bytes)) => file_response(&item_id, &rev, &file, bytes),
+        Ok(mut g) => match g.open_latest(&item_id) {
+            Ok((ref rev, ref file, bytes)) => {
+                g.record_audit(
+                    "pdm",
+                    crate::audit::Action::Read,
+                    &format!("{item_id}/rev:{rev}"),
+                );
+                file_response(&item_id, rev, file, bytes)
+            }
             Err(e) => error_response(&e),
         },
         Err(_) => internal("store lock poisoned"),
@@ -276,8 +386,15 @@ async fn open_revision_file(
     Path((item_id, rev)): Path<(String, String)>,
 ) -> Response {
     match store.lock() {
-        Ok(g) => match g.open_revision(&item_id, &rev) {
-            Ok((rrev, file, bytes)) => file_response(&item_id, &rrev, &file, bytes),
+        Ok(mut g) => match g.open_revision(&item_id, &rev) {
+            Ok((rrev, file, bytes)) => {
+                g.record_audit(
+                    "pdm",
+                    crate::audit::Action::Read,
+                    &format!("{item_id}/rev:{rrev}"),
+                );
+                file_response(&item_id, &rrev, &file, bytes)
+            }
             Err(e) => error_response(&e),
         },
         Err(_) => internal("store lock poisoned"),
@@ -428,6 +545,20 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
                 eprintln!("{service_name}: cannot use persistence dir: {e}");
                 return 1;
             }
+        }
+        // P8-M6-T03: a persisted vault also carries the tamper-evident audit
+        // log (P8-M3-T03), so the multi-user gate's "everything verifiable via
+        // the audit log" runs against the real file-backed chain. Refusing to
+        // start without audit on a persisted vault is NOT done: an operator who
+        // runs with --persist-dir but wants no audit gets a live but
+        // un-audited store (GET /api/v1/audit then honestly reports
+        // audit_unavailable). Audit is enabled here because the gate uses it.
+        match store.enable_audit() {
+            Ok(()) => eprintln!(
+                "{service_name}: audit log enabled under {}/audit",
+                dir.display()
+            ),
+            Err(e) => eprintln!("{service_name}: audit enable failed (continuing): {e}"),
         }
     }
 

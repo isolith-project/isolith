@@ -265,6 +265,57 @@ impl PdmClient {
             .and_then(|r| parse_file_payload(id, &r))
     }
 
+    // ---- P8-M6-T03 additive gate surface (lock / transition / audit) ----
+
+    /// Acquire the working-set lock on an item (`POST .../lock`).
+    pub fn acquire_lock(
+        &self,
+        id: &str,
+        req: &crate::api::LockAcquireRequest,
+    ) -> Result<crate::api::LockView, PdmError> {
+        let body = serde_json::to_string(req).map_err(PdmError::protocolify)?;
+        let path = format!("/items/{}/lock", http::encode_segment(id));
+        self.request_typed("POST", &path, Some(&body))
+    }
+
+    /// Release the working-set lock by its token (`DELETE .../lock`).
+    pub fn release_lock(
+        &self,
+        id: &str,
+        req: &crate::api::LockReleaseRequest,
+    ) -> Result<crate::api::LockView, PdmError> {
+        let body = serde_json::to_string(req).map_err(PdmError::protocolify)?;
+        let path = format!("/items/{}/lock", http::encode_segment(id));
+        self.request_typed("DELETE", &path, Some(&body))
+    }
+
+    /// Apply a lock-gated lifecycle transition to a revision
+    /// (`POST .../revisions/{rev}/transition`).
+    pub fn transition_revision(
+        &self,
+        id: &str,
+        rev: &str,
+        req: &crate::api::TransitionRequest,
+    ) -> Result<crate::api::Revision, PdmError> {
+        let body = serde_json::to_string(req).map_err(PdmError::protocolify)?;
+        let path = format!(
+            "/items/{}/revisions/{}/transition",
+            http::encode_segment(id),
+            http::encode_segment(rev)
+        );
+        self.request_typed("POST", &path, Some(&body))
+    }
+
+    /// View the tamper-evident audit log (`GET /audit`).
+    pub fn list_audit(&self) -> Result<crate::api::AuditView, PdmError> {
+        self.request_typed("GET", "/audit", None)
+    }
+
+    /// Re-verify the audit chain (`GET /audit/verify`).
+    pub fn verify_audit(&self) -> Result<crate::api::AuditVerifyReply, PdmError> {
+        self.request_typed("GET", "/audit/verify", None)
+    }
+
     /// Save-revision-to-PDM: upload raw bytes as the item's next revision.
     /// The P7 workbench seam (browser panel) calls exactly this.
     pub fn save_revision(&self, id: &str, input: SaveRevisionInput) -> Result<Revision, PdmError> {

@@ -34,6 +34,15 @@ pub enum StoreError {
     InvalidState(String),
     /// The request violated a contract validation rule (400).
     BadRequest(String),
+    /// A working-set lock could not be acquired (409, P8-M6-T03 gate).
+    LockConflict {
+        /// Who currently holds the live lock.
+        holder: String,
+        /// When the conflicting lease expires (ms since epoch).
+        expires: u64,
+    },
+    /// A lock token check failed: not held / wrong / expired (409).
+    LockToken(String),
     /// A defect or store-level failure (500).
     Internal(String),
 }
@@ -46,12 +55,63 @@ impl std::fmt::Display for StoreError {
             StoreError::NoFile => write!(f, "item has no file (no revisions)"),
             StoreError::InvalidState(s) => write!(f, "invalid revision state: {s}"),
             StoreError::BadRequest(m) => write!(f, "bad request: {m}"),
+            StoreError::LockConflict { holder, .. } => {
+                write!(f, "lock conflict: already held by {holder}")
+            }
+            StoreError::LockToken(m) => write!(f, "lock token rejected: {m}"),
             StoreError::Internal(m) => write!(f, "internal error: {m}"),
         }
     }
 }
 
 impl StoreError {
+    /// Map the working-set lock error to a gate-surface store error.
+    pub fn from_lock(e: crate::working_set::LockError) -> StoreError {
+        use crate::working_set::LockError as LE;
+        match e {
+            LE::ConflictingLock { holder, expires } => StoreError::LockConflict { holder, expires },
+            LE::NotHeld => StoreError::LockToken("lock not held by this token".into()),
+            LE::TokenMismatch => StoreError::LockToken("wrong or stale token".into()),
+        }
+    }
+
+    /// Map a publish-gate refusal as a store error.
+    pub fn from_publish(e: crate::working_set::PublishError) -> StoreError {
+        use crate::working_set::PublishError as PE;
+        match e {
+            PE::NotHeld { object } => {
+                StoreError::LockToken(format!("no live lock on {object}; acquire first"))
+            }
+            PE::LockingExpired { object } => {
+                StoreError::LockToken(format!("lock on {object} expired or stolen; re-acquire"))
+            }
+        }
+    }
+
+    /// Map a state-machine transition refusal to a contract error.
+    pub fn from_transition(
+        from_wire: &str,
+        to_wire: &str,
+        e: crate::state::TransitionError,
+    ) -> StoreError {
+        use crate::state::TransitionError as TE;
+        let detail = match e {
+            TE::IllegalTransition { from, to } => {
+                format!("illegal lifecycle hop: {from} -> {to}")
+            }
+            TE::Terminal(s) => format!("terminal state {s}: no further transitions"),
+            TE::MaturityNotFinal { from, to, .. } => {
+                format!("cannot {from} -> {to}: maturity must be final to release")
+            }
+            TE::Immutable { op, state } => {
+                format!("cannot mutate {op} of {state}: revision frozen")
+            }
+        };
+        StoreError::InvalidState(format!(
+            "transition {from_wire} -> {to_wire} refused: {detail}"
+        ))
+    }
+
     /// Map this failure to the HTTP status + contract error envelope.
     pub fn envelope(&self) -> (u16, ErrorEnvelope) {
         use crate::api::error_code as ec;
@@ -79,6 +139,17 @@ impl StoreError {
                 ),
             ),
             StoreError::BadRequest(msg) => (400, ErrorEnvelope::new(ec::BAD_REQUEST, msg.clone())),
+            StoreError::LockConflict { holder, expires } => (
+                409,
+                ErrorEnvelope::new(
+                    ec::LOCK_CONFLICT,
+                    format!("lock already held by {holder} (expires {expires}ms)"),
+                ),
+            ),
+            StoreError::LockToken(msg) => (
+                409,
+                ErrorEnvelope::new(ec::LOCK_TOKEN, format!("lock token rejected: {msg}")),
+            ),
             StoreError::Internal(msg) => (500, ErrorEnvelope::new(ec::INTERNAL, msg.clone())),
         }
     }
@@ -136,6 +207,12 @@ fn civil_from_days(z: i64) -> (i64, u32, u32) {
 }
 
 /// The vault store: items + revisions + content-addressed blobs.
+///
+/// P8-M6-T03 adds the real lifecycle layers behind the same mutex:
+/// * [`LockManager`](crate::working_set::LockManager) -- the single-writer
+///   serialization point for publish (lock / edit / publish protocol);
+/// * a [`crate::audit::AuditLog`] -- append-only, tamper-evident record of
+///   reads / changes / releases, enabled when a persist dir is configured.
 #[derive(Debug)]
 pub struct VaultStore {
     meta: VaultMeta,
@@ -143,6 +220,10 @@ pub struct VaultStore {
     blobs: HashMap<String, Vec<u8>>,
     /// Optional directory for snapshot persistence (store.json + blobs/).
     persist_dir: Option<std::path::PathBuf>,
+    /// Working-set lock manager (P8-M1-T03); always present.
+    locks: crate::working_set::LockManager,
+    /// Tamper-evident audit log (P8-M3-T03); enabled when configured.
+    audit: Option<crate::audit::AuditLog>,
 }
 
 impl VaultStore {
@@ -156,6 +237,8 @@ impl VaultStore {
             },
             blobs: HashMap::new(),
             persist_dir: None,
+            locks: crate::working_set::LockManager::new(),
+            audit: None,
         }
     }
 
@@ -199,7 +282,188 @@ impl VaultStore {
             meta,
             blobs,
             persist_dir: Some(dir.to_path_buf()),
+            locks: crate::working_set::LockManager::new(),
+            audit: None,
         })
+    }
+
+    /// Enable the append-only, tamper-evident audit log (P8-M3-T03) under
+    /// `<persist_dir>/audit`. Refuses (but does not fail hard) when the store
+    /// has no persist dir, since the audit log is a file-backed store.
+    pub fn enable_audit(&mut self) -> Result<(), StoreError> {
+        let Some(dir) = &self.persist_dir else {
+            return Err(StoreError::Internal(
+                "audit log requires a persist dir (set_persist_dir first)".into(),
+            ));
+        };
+        let audit_root = dir.join("audit");
+        let log = crate::audit::AuditLog::open(&audit_root).map_err(|e| {
+            StoreError::Internal(format!(
+                "cannot open audit log at {}: {e}",
+                audit_root.display()
+            ))
+        })?;
+        self.audit = Some(log);
+        Ok(())
+    }
+
+    /// Record an audit event (best-effort: audited stores append; stores
+    /// without an enabled log are not audible). Never fails the caller.
+    pub(crate) fn record_audit(&mut self, actor: &str, action: crate::audit::Action, target: &str) {
+        if let Some(log) = &mut self.audit {
+            let _ = log.append(actor, action, target, None);
+        }
+    }
+
+    /// The current audit log view (P8-M6-T03 surface).
+    pub fn audit_view(&self) -> Result<crate::api::AuditView, StoreError> {
+        match &self.audit {
+            Some(log) => Ok(crate::api::AuditView {
+                entries: log.entries().to_vec(),
+                count: log.len(),
+                append_only: log.append_only(),
+            }),
+            None => Err(StoreError::Internal(
+                "audit log not enabled (start with --persist-dir + enable_audit)".into(),
+            )),
+        }
+    }
+
+    /// Re-derive the full hash chain from the on-disk audit log and confirm it
+    /// is intact (P8-M3-T03 guarantee, exposed over the gate surface).
+    pub fn audit_verify(&self) -> Result<crate::api::AuditVerifyReply, StoreError> {
+        match &self.audit {
+            Some(log) => match log.verify() {
+                Ok(entries) => Ok(crate::api::AuditVerifyReply {
+                    ok: true,
+                    count: entries.len(),
+                    head_hash: log.head_hash().to_string(),
+                    detail: None,
+                }),
+                Err(e) => Ok(crate::api::AuditVerifyReply {
+                    ok: false,
+                    count: 0,
+                    head_hash: String::new(),
+                    detail: Some(e.to_string()),
+                }),
+            },
+            None => Err(StoreError::Internal(
+                "audit log not enabled (start with --persist-dir + enable_audit)".into(),
+            )),
+        }
+    }
+
+    /// Acquire a working-set lock on an item (P8-M6-T03 gate surface).
+    pub fn acquire_lock(
+        &mut self,
+        item_id: &str,
+        holder: &str,
+    ) -> Result<crate::api::LockView, StoreError> {
+        self.find_item(item_id)
+            .ok_or_else(|| StoreError::NotFound("item", item_id.to_string()))?;
+        let token = self
+            .locks
+            .acquire(&item_id.to_string(), &holder.to_string())
+            .map_err(StoreError::from_lock)?;
+        let expires = self.locks.expires_at(&item_id.to_string()).unwrap_or(0);
+        self.record_audit(
+            holder,
+            crate::audit::Action::Change,
+            &format!("{item_id}:lock:acquire"),
+        );
+        Ok(crate::api::LockView {
+            object: item_id.to_string(),
+            holder: holder.to_string(),
+            token: token.wire().to_string(),
+            expires_ms: expires,
+        })
+    }
+
+    /// Release a working-set lock previously granted by its token.
+    pub fn release_lock(
+        &mut self,
+        item_id: &str,
+        token: &str,
+    ) -> Result<crate::api::LockView, StoreError> {
+        let parsed = crate::working_set::LockToken::from_wire(token)
+            .ok_or_else(|| StoreError::from_lock(crate::working_set::LockError::TokenMismatch))?;
+        self.locks
+            .release(&item_id.to_string(), &parsed)
+            .map_err(StoreError::from_lock)?;
+        let holder = crate::api::LockView {
+            object: item_id.to_string(),
+            holder: "unknown".to_string(),
+            token: token.to_string(),
+            expires_ms: 0,
+        };
+        self.record_audit(
+            "pdm",
+            crate::audit::Action::Change,
+            &format!("{item_id}:lock:release"),
+        );
+        Ok(holder)
+    }
+
+    /// Apply a lifecycle transition to a revision. The transition is
+    /// lock-gated: only the live lock token holder may publish a release (or
+    /// any other hop), which is the working-set protocol's serialization point.
+    pub fn transition(
+        &mut self,
+        item_id: &str,
+        rev: &str,
+        to: &str,
+        token: &str,
+    ) -> Result<crate::api::Revision, StoreError> {
+        let target = crate::state::RevisionState::from_wire(to)
+            .ok_or_else(|| StoreError::InvalidState(to.to_string()))?;
+        // The lock is the publish gate (P8-M1-T03): a stale / missing token
+        // means the caller is not the current writer and may not transition.
+        let parsed = crate::working_set::LockToken::from_wire(token)
+            .ok_or_else(|| StoreError::from_lock(crate::working_set::LockError::TokenMismatch))?;
+        self.locks
+            .authorize_publish(&item_id.to_string(), &parsed)
+            .map_err(StoreError::from_publish)?;
+
+        // Load the revision and run the P8-M2-T01 state machine on it.
+        let stored = self
+            .find_item_mut(item_id)
+            .ok_or_else(|| StoreError::NotFound("item", item_id.to_string()))?;
+        let revision = stored
+            .revisions
+            .iter_mut()
+            .find(|r| r.number == rev)
+            .ok_or_else(|| StoreError::NotFound("revision", format!("{item_id}/{rev}")))?;
+        let from = crate::state::RevisionState::from_wire(&revision.state)
+            .unwrap_or(crate::state::RevisionState::Working);
+        let mut lc = crate::state::Lifecycle::from_parts(
+            from,
+            revision
+                .maturity
+                .as_deref()
+                .and_then(crate::state::Maturity::from_wire),
+        );
+        // Releasing requires final maturity (the machine's gate).
+        if target == crate::state::RevisionState::Released && !lc.is_released() {
+            let _ = lc.set_maturity(crate::state::Maturity::Final);
+        }
+        lc.transition_to(target)
+            .map_err(|e| StoreError::from_transition(&revision.state, to, e))?;
+        revision.state = lc.state().wire().to_string();
+        revision.maturity = Some(
+            lc.maturity()
+                .unwrap_or(crate::state::Maturity::Final)
+                .wire()
+                .to_string(),
+        );
+        let out = revision.clone();
+        let action = if lc.is_released() {
+            crate::audit::Action::Release
+        } else {
+            crate::audit::Action::Change
+        };
+        self.record_audit("pdm", action, &format!("{item_id}/rev:{rev}:{to}"));
+        self.save()?;
+        Ok(out)
     }
 
     /// Persist the metadata snapshot and every blob (content-addressed) if a
@@ -282,6 +546,11 @@ impl VaultStore {
             next_rev: 1,
             revisions: Vec::new(),
         });
+        self.record_audit(
+            req.owner.as_deref().unwrap_or("pdm"),
+            crate::audit::Action::Change,
+            &format!("item:{id}:create"),
+        );
         self.save()?;
         Ok(item)
     }
@@ -395,6 +664,15 @@ impl VaultStore {
         stored.revisions.push(revision.clone());
         stored.item.latest_revision = Some(number);
         stored.item.revision_count += 1;
+        self.record_audit(
+            revision.created_by.as_str(),
+            if revision.state == "released" {
+                crate::audit::Action::Release
+            } else {
+                crate::audit::Action::Change
+            },
+            &format!("{item_id}/rev:{}", revision.number),
+        );
         self.save()?;
         Ok(revision)
     }
