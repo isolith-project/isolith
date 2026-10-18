@@ -10,6 +10,8 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P2 oep-cgr        -- CGR reader (geometry/tessellation)
 - P3 oep-3dxml      -- 3DXML reader/writer
 - P6 oep-geo        -- geometry core + model representation
+- P6 oep-viewer     -- P6-M5 preview viewer (render seam, camera/select/clip)
+- P9 oep-render-worker -- headless oep-geo render worker (P9-M3-T01)
 - P9 oep-farm       -- beam/farm-style checkpoint + resume for long jobs (P9-M4-T02)
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton

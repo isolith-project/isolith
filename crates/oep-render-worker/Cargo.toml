@@ -1,0 +1,26 @@
+[package]
+name = "oep-render-worker"
+description = "P9-M3-T01: headless oep-geo render worker - renders a real oep-geo model to a PNG image behind the P6-M5-T01 render seam, at parameterized resolution and fidelity, and registers with the P9 scheduler as render/oep-geo-render."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[lib]
+name = "oep_render_worker"
+path = "src/lib.rs"
+
+[[bin]]
+name = "oep-render-worker"
+path = "src/main.rs"
+
+[dependencies]
+oep-geo = { path = "../oep-geo" }
+oep-viewer = { path = "../oep-viewer" }
+
+# std-only by design: the worker function is deterministic CPU rendering over
+# the oep-viewer reference backend (the P6-M5-T01 ADR escape hatch), so it
+# runs on the GPU-less CI container and produces real pixels there.
+
+[dev-dependencies]
+serde_json = "1"
