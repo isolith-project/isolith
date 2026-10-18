@@ -1,0 +1,17 @@
+# oep-airgap-target — an "air-gapped machine" for the P10-M2-T02 proof.
+# Built on the CONNECTED host (so package install works), then RUN with
+# `--network none` so the target itself has zero internet. It carries the
+# docker CLI + compose plugin (host copies) so it can drive the shared daemon
+# over the unix socket for `docker load` + `compose up`, while never having a
+# route out. This is the honest machine-with-no-network-installs-the-stack
+# acceptance, minus kernel-level namespace trickery.
+FROM debian:bookworm-slim
+RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
+        bash ca-certificates coreutils gnupg python3 tar wget \
+    && rm -rf /var/lib/apt/lists/*
+COPY docker /usr/local/bin/docker
+COPY docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+RUN mkdir -p /usr/local/lib/docker/cli-plugins \
+    && chmod +x /usr/local/bin/docker /usr/local/lib/docker/cli-plugins/docker-compose
+WORKDIR /opt
+CMD ["bash"]

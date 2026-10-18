@@ -1,0 +1,19 @@
+# Keelworks PDM service image (real component, air-gap proof subject).
+# Multi-stage: build the oep-pdm binary from this repo, ship the slim runtime.
+# This is a real Keelworks component container used as the offline-bundle
+# proof subject for P10-M2-T02. When the P10-M1-T01 compose stack lands,
+# the same signed-bundle tooling wraps those images unchanged.
+FROM rust:1.98.1-slim-bookworm AS build
+WORKDIR /src
+COPY . .
+RUN cargo build --release -p oep-pdm
+
+FROM debian:bookworm-slim
+# wget powers the compose healthcheck; static, tiny.
+RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends wget \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=build /src/target/release/oep-pdm /usr/local/bin/oep-pdm
+RUN mkdir -p /data
+EXPOSE 8787
+ENTRYPOINT ["/usr/local/bin/oep-pdm"]
+CMD ["--addr", "0.0.0.0:8787", "--persist-dir", "/data"]

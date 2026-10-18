@@ -1,0 +1,53 @@
+# Keelworks air-gap proof stack — real components at this commit.
+# PDM service (oep-pdm, built from repo source by the air-gap lane's own
+# Dockerfile) + NATS message bus (the P9-adopted self-hosted bus,
+# P9-M1/T02 message-bus-adr.md). Used both as the bundle content AND as the
+# online-equivalent stack the air-gap install must match health-for-health.
+#
+# When the P10-M1-T01 one-command compose stack lands (unmerged as of this
+# card), it replaces/supersedes this file; the signed bundle tooling takes any
+# compose file via --compose and wraps it unchanged.
+#
+# Air-gap faithfulness: the stack is placed on an INTERNAL docker network —
+# no gateway, no default route, no egress to the internet. Only the host-side
+# published health port (8791) is reachable by the operator/healthcheck; the
+# NATS bus is internal-only. Docker cannot pull here even if asked.
+#
+# Port note: 8787 is used by the M1-T01 lane on the reference host; this proof
+# stack publishes PDM on a distinct 8791 so lanes never collide on one box.
+services:
+  pdm:
+    image: keelworks/oep-pdm:airgap-proof-src
+    container_name: oep-airgap-pdm
+    ports:
+      - "8791:8787"
+    volumes:
+      - pdm-data:/data
+    networks:
+      - oep-internal
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qSO - http://127.0.0.1:8787/api/v1/health >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+
+  bus:
+    image: nats:2-alpine
+    container_name: oep-airgap-bus
+    # No host port publication: the bus is only reachable inside the compose
+    # network, matching an air-gapped LAN where services talk to each other.
+    command: ["-p", "4222", "-m", "8222"]
+    networks:
+      - oep-internal
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qSO - http://127.0.0.1:8222/healthz >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+
+volumes:
+  pdm-data:
+
+networks:
+  oep-internal:
+    internal: true
