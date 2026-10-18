@@ -26,6 +26,13 @@ use std::collections::{BinaryHeap, HashMap, HashSet};
 use super::{
     CycleError, DeadLetter, DeadLetterReason, DepGraph, Priority, RetryPolicy, UnknownDependency,
 };
+use crate::gpu::NodeResources;
+use crate::placement::{GpuRequest, NodePool, Placement, PlacementPolicy};
+
+/// Default nominal CPU node id used when a placement policy is asked where a
+/// CPU job goes and no node has been registered in the pool yet. The real
+/// fleet wiring (P9-M1-T02 node heartbeats) replaces this at runtime.
+const DEFAULT_CPU_NODE: &str = "cpu-default";
 
 /// A unique job identifier.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -80,6 +87,11 @@ pub struct JobSpec {
     /// job with this key can dedupe against the same key, which is how
     /// at-least-once delivery (P9-M2-T03) becomes exactly-once effect.
     pub idempotency_key: Option<String>,
+    /// Optional GPU request (P9-M4-T01). `None` = CPU-only job. When
+    /// `Some`, the placement policy sends the job to a GPU node holding a
+    /// matching free device; `required: false` requests fall back to a CPU
+    /// node cleanly when no GPU is free.
+    pub gpu: Option<GpuRequest>,
     /// Opaque payload. P9-M1-T01 defines the real job payload (vault refs,
     /// executor, resource caps, output refs); the scheduler treats it as an
     /// opaque string so the two crates stay decoupled until the importer-hub
@@ -95,6 +107,7 @@ impl JobSpec {
             deps: Vec::new(),
             retry: RetryPolicy::default(),
             idempotency_key: None,
+            gpu: None,
             payload: payload.into(),
         }
     }
@@ -120,6 +133,13 @@ impl JobSpec {
     /// Chainable idempotency key setter.
     pub fn with_idempotency(mut self, key: impl Into<String>) -> Self {
         self.idempotency_key = Some(key.into());
+        self
+    }
+
+    /// Chainable GPU-request setter (P9-M4-T01). Set the layout this job needs
+    /// before enqueue; the placement policy maps it onto a real node pool.
+    pub fn with_gpu(mut self, gpu: GpuRequest) -> Self {
+        self.gpu = Some(gpu);
         self
     }
 }
@@ -154,6 +174,11 @@ pub struct Dispatch {
     /// Dispatch generation: each handoff (including redelivery after a lease
     /// expiry) carries a fresh generation.
     pub generation: u64,
+    /// Placement decision (P9-M4-T01): which node the job must run on, and
+    /// which GPU devices (if any) are reserved for it. For a scheduler built
+    /// without a node pool this is [`Placement::unplaced`] (the P9-M2-T01
+    /// baseline: no node assignment).
+    pub placement: Placement,
 }
 
 impl Dispatch {
@@ -282,6 +307,21 @@ pub struct Scheduler {
     lease_ms: u64,
     next_seq: u64,
     next_id: u64,
+    /// Node pool for GPU-aware placement (P9-M4-T01). `None` = the P9-M2-T01
+    /// baseline (no placement decisions; every dispatch returns
+    /// [`Placement::unplaced`]).
+    pool: Option<NodePool>,
+    /// Placement policy used when `pool` is attached.
+    policy: PlacementPolicy,
+    /// Jobs that are ready (deps satisfied, no retry backoff) but *parked*
+    /// because they require a GPU device that no node currently has free.
+    /// They are kept out of the ready heap so they cannot head-of-line block
+    /// other work, and are re-promoted when a device is released or a node
+    /// registers.
+    parked: Vec<JobId>,
+    /// GPU devices currently reserved per dispatched job (node + indices),
+    /// so a release on ack/fail/poison/reclaim hands them back to the pool.
+    reservations: HashMap<JobId, Placement>,
 }
 
 impl Default for Scheduler {
@@ -308,7 +348,51 @@ impl Scheduler {
             lease_ms,
             next_seq: 0,
             next_id: 0,
+            pool: None,
+            policy: PlacementPolicy::default(),
+            parked: Vec::new(),
+            reservations: HashMap::new(),
         }
+    }
+
+    /// A scheduler with a node pool attached (P9-M4-T01), so dispatch makes
+    /// GPU-aware placement decisions.
+    ///
+    /// When a pool is attached, a job carrying a GPU request dispatches only
+    /// onto a node that has a matching free device; a required request parks
+    /// when no device is free (without blocking other ready work) and a
+    /// preferred request falls back to a CPU node.
+    pub fn with_pool(pool: NodePool) -> Self {
+        Scheduler {
+            pool: Some(pool),
+            ..Scheduler::new()
+        }
+    }
+
+    /// Register discovered nodes into the attached node pool (replacing any
+    /// earlier registration of the same node ids), then re-promote any parked
+    /// GPU jobs that now have capacity. No-op when no pool is attached.
+    pub fn add_nodes(&mut self, nodes: Vec<NodeResources>) {
+        let Some(pool) = self.pool.as_mut() else {
+            return;
+        };
+        for n in nodes {
+            pool.add(n);
+        }
+        self.promote_parked();
+    }
+
+    /// Number of jobs currently parked on missing GPU capacity (P9-M4-T01).
+    /// These are `Ready` in status but intentionally kept out of the ready
+    /// heap so they cannot head-of-line block other work.
+    pub fn parked_count(&self) -> usize {
+        self.parked.len()
+    }
+
+    /// Attach a node pool to a scheduler created without one (use before
+    /// enqueueing GPU-tagged work).
+    pub fn attach_pool(&mut self, pool: NodePool) {
+        self.pool = Some(pool);
     }
 
     /// Enqueue a job with an auto-assigned id (monotonically increasing from
@@ -367,24 +451,69 @@ impl Scheduler {
 
     /// Dispatch the next runnable job at `now_ms`, or `None` if nothing is
     /// ready. The returned job is marked `Running` with a fresh lease and a
-    /// new dispatch generation.
+    /// new dispatch generation, and carries the placement decision
+    /// (P9-M4-T01: which node + reserved GPU devices, CPU fallback flag).
+    ///
+    /// When a node pool is attached, a *required* GPU job that currently has
+    /// no matching free device is parked (kept `Ready` but moved out of the
+    /// ready heap so it cannot head-of-line block other jobs) and dispatch
+    /// continues with the next ready job; a *preferred* GPU job dispatches to
+    /// a CPU node when no GPU is free.
     pub fn dispatch(&mut self, now_ms: u64) -> Option<Dispatch> {
         self.promote_delayed(now_ms);
+        // If a node registered or a device was released since the last call
+        // (and no ack/fail/reclaim ran), re-admit parked jobs that now fit.
+        self.promote_parked();
         while let Some(entry) = self.ready.pop() {
-            let job = self.jobs.get_mut(&entry.id)?;
-            if job.status != JobStatus::Ready {
+            // Snapshot the fields we need without holding a &mut into
+            // `self.jobs` across the placement call (which borrows self).
+            let (status, spec) = {
+                let job = self.jobs.get_mut(&entry.id)?;
+                (job.status, job.spec.clone())
+            };
+            if status != JobStatus::Ready {
                 continue; // stale heap entry (already dispatched/dead-lettered)
+            }
+
+            // Placement decision (P9-M4-T01). Pool-less schedulers keep the
+            // P9-M2-T01 baseline: unplaced dispatch.
+            let placement = match self.pool.as_mut() {
+                None => Placement::unplaced(),
+                Some(pool) => {
+                    match self.policy.place(pool, spec.gpu.as_ref(), DEFAULT_CPU_NODE) {
+                        Some(p) => p,
+                        None => {
+                            // Required GPU job, no matching free device:
+                            // park it (out of the heap) and keep looking.
+                            self.parked.push(entry.id);
+                            continue;
+                        }
+                    }
+                }
+            };
+
+            let id = entry.id;
+            let job = self.jobs.get_mut(&id)?;
+            if job.status != JobStatus::Ready {
+                continue;
             }
             job.status = JobStatus::Running;
             job.generation += 1;
             job.lease_deadline_ms = Some(now_ms + self.lease_ms);
-            let id = entry.id;
-            let spec = job.spec.clone();
+
+            // Record the reservation so releasing on ack/fail/reclaim hands
+            // devices back to the pool (recorded only once the job is truly
+            // Running, so a stale entry cannot leak a device).
+            if !placement.gpu_devices.is_empty() {
+                self.reservations.insert(id, placement.clone());
+            }
+
             return Some(Dispatch {
                 job: id,
                 payload: spec.payload,
                 idempotency_key: spec.idempotency_key,
                 generation: job.generation,
+                placement,
             });
         }
         None
@@ -408,6 +537,9 @@ impl Scheduler {
         job_rec.status = JobStatus::Succeeded;
         job_rec.lease_deadline_ms = None;
         self.succeeded.insert(job);
+
+        // A GPU device a running job held is now free (P9-M4-T01).
+        self.release_reservation(job);
 
         // Release dependents whose deps are now satisfied.
         let dependents: Vec<JobId> = self.graph.dependents_of(job).to_vec();
@@ -483,12 +615,18 @@ impl Scheduler {
             .map(|(id, _)| *id)
             .collect();
         for id in expired {
-            if let Some(j) = self.jobs.get_mut(&id) {
-                j.status = JobStatus::Ready;
-                j.lease_deadline_ms = None;
-                self.push_ready(id);
-                reclaimed.push(id);
+            {
+                let j = self.jobs.get_mut(&id);
+                if let Some(j) = j {
+                    j.status = JobStatus::Ready;
+                    j.lease_deadline_ms = None;
+                }
             }
+            // A lost worker's GPU device returns to the pool (P9-M4-T01);
+            // the redelivered job re-reserves on its next dispatch.
+            self.release_reservation(id);
+            self.push_ready(id);
+            reclaimed.push(id);
         }
         reclaimed
     }
@@ -573,6 +711,52 @@ impl Scheduler {
         }
     }
 
+    /// Re-examine parked GPU jobs: any that now have a matching free device
+    /// (a device was released or a node registered) move back into the ready
+    /// heap. Jobs that still have no capacity stay parked.
+    fn promote_parked(&mut self) {
+        if self.parked.is_empty() || self.pool.is_none() {
+            return;
+        }
+        let mut still_parked = Vec::new();
+        let mut now_ready = Vec::new();
+        for &id in &self.parked {
+            let can_run = {
+                let j = match self.jobs.get(&id) {
+                    Some(j) => j,
+                    None => continue, // unknown; drop from parked
+                };
+                let pool = self.pool.as_ref().expect("checked above");
+                let req = j.spec.gpu.as_ref();
+                let placeable = match req {
+                    None => true, // a CPU job never parks; defensive only
+                    Some(r) => pool.has_capacity(r.count, r.model.as_deref()),
+                };
+                placeable
+            };
+            if can_run {
+                now_ready.push(id);
+            } else {
+                still_parked.push(id);
+            }
+        }
+        self.parked = still_parked;
+        for id in now_ready {
+            self.push_ready(id);
+        }
+    }
+
+    /// Release any device reservation a job currently holds back into the
+    /// pool (on ack, fail, poison, dead-letter, or lease reclaim).
+    fn release_reservation(&mut self, id: JobId) {
+        if let Some(p) = self.reservations.remove(&id) {
+            if let Some(pool) = self.pool.as_mut() {
+                pool.release(&p.node_id, &p.gpu_devices);
+            }
+        }
+        self.promote_parked();
+    }
+
     /// Shared failure path. `generation == u64::MAX` bypasses the lease check
     /// (manual dead-lettering).
     fn fail_inner(&mut self, job: JobId, generation: u64, now_ms: u64) -> Result<(), FailError> {
@@ -589,13 +773,18 @@ impl Scheduler {
             job_rec.failures = failures;
             job_rec.ready_at_ms = now_ms + delay;
             job_rec.lease_deadline_ms = None;
+            let seq = job_rec.seq;
+            // The running job no longer owns its GPU device during backoff
+            // (P9-M4-T01); it re-reserves when it next dispatches.
+            self.release_reservation(job);
             self.delayed.push(DelayedEntry {
-                ready_at_ms: job_rec.ready_at_ms,
-                seq: job_rec.seq,
+                ready_at_ms: now_ms + delay,
+                seq,
                 id: job,
             });
             Ok(())
         } else {
+            // resolve_failure releases any held reservation inside.
             self.resolve_failure(
                 job,
                 generation,
@@ -641,6 +830,9 @@ impl Scheduler {
             dead_at_ms: now_ms,
             attempts_used: failures,
         });
+
+        // The dead job no longer owns its GPU device (P9-M4-T01).
+        self.release_reservation(job);
 
         // Cascade **transitively** to every dependent that is still Waiting:
         // a job whose (transitive) dependency dead-lettered can never be

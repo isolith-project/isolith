@@ -14,6 +14,8 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite (reserved)
 - P9 oep-lane       -- P2P compute lane: scheduler (queue, priorities, DAG,
                        retries, dead-letter) + the at-least-once seam
+                       + GPU discovery & placement (P9-M4-T01: node pool,
+                       GPU requests, exclusive device reservation, CPU fallback)
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P12 QA/CI,
