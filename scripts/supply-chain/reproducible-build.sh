@@ -29,6 +29,15 @@ PROBE_HOME="${PROBE_HOME:-/tmp/keel-cargo-probe-home}"
 
 echo "== P11-T06 reproducible build: $VERSION (source: $SRC) =="
 cd "$SRC"
+# Cargo may not be on PATH in a bare container shell (rust:1-slim puts it in
+# /usr/local/cargo/bin and rustup in /root/.cargo/bin); the act runner does set
+# it, but resolve here so the script is also runnable by hand in the image.
+if ! command -v cargo >/dev/null 2>&1; then
+  for d in /usr/local/cargo/bin /root/.cargo/bin "$HOME/.cargo/bin"; do
+    [ -x "$d/cargo" ] && export PATH="$d:$PATH" && break
+  done
+fi
+command -v cargo >/dev/null 2>&1 || { echo "FATAL: cargo not found" >&2; exit 127; }
 
 det_build() { # $1 = target dir  $2 = label
   local tgt="$1" label="$2"
@@ -82,7 +91,10 @@ N_ART="$(printf '%s\n' "$ROWS" | wc -l)"
 echo "== byte-identity result =="
 [ "$MISMATCH" -eq 0 ] && echo "REPRODUCIBLE: $N_ART artifacts byte-identical" \
                      || echo "NON-DETERMINISTIC: differences found"
-printf '%s\n' "$ROWS" | column -t -s'|'
+# plain tab-aligned report (no `column` dependency; rust:1-slim lacks it)
+printf '%s\n' "$ROWS" | while IFS='|' read -r b ha hb id; do
+  printf '%-20s  %s  %s\n' "$b" "$ha" "$id"
+done
 
 # SHA256SUMS manifest from build A (the P11-T04 signing input).
 {
