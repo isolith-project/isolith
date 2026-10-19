@@ -293,10 +293,10 @@ fn egress_opted_in_is_not_permission_denied() {
 ///
 /// Outcomes on egress=false:
 ///   - URING_BLOCKED (exit 0)       -> hardened filter or outer profile denied
-///                                     io_uring_setup: bypass closed.
+///     io_uring_setup: bypass closed.
 ///   - URING_UNAVAILABLE (exit 1)   -> kernel has no io_uring: nothing to bypass.
 ///   - URING_OK (exit 2)            -> io_uring reachable => the egress bypass
-///                                     is open; the sandbox FAILED to block egress.
+///     is open; the sandbox FAILED to block egress.
 #[test]
 fn escape_via_io_uring_socket_fails() {
     let limits = SandboxLimits::conservative_default();

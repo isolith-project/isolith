@@ -632,7 +632,12 @@ def base_images_from_dockerfiles(repo: Path):
     in the runbook, not guessed here."""
     hits = {}
     for df in sorted(repo.glob("**/Dockerfile*")):
-        if "/target/" in str(df) or "/.git" in str(df) or "/.worktrees/" in str(df):
+        # Skip build/.git mounts and OTHER worktrees, but only when they sit
+        # INSIDE the scan root (a repo checked out under .worktrees/ must still
+        # see its own Dockerfiles). Relative-path check keeps this true whether
+        # the scan root is a canonical checkout or a git worktree.
+        rel = str(df.relative_to(repo))
+        if "/target/" in rel or "/.git" in rel or "/.worktrees/" in rel:
             continue
         try:
             text = df.read_text()

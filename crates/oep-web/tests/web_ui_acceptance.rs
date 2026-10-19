@@ -162,9 +162,7 @@ fn cyclic_bom_document() -> String {
             instances: vec![oep_geo::assembly::Instance {
                 id: "i-root".into(),
                 name: "to-A".into(),
-                source: oep_geo::assembly::InstanceSource::Assembly {
-                    id: "asm-a".into(),
-                },
+                source: oep_geo::assembly::InstanceSource::Assembly { id: "asm-a".into() },
                 transform: identity.clone(),
                 visible: true,
             }],
@@ -175,9 +173,7 @@ fn cyclic_bom_document() -> String {
             instances: vec![oep_geo::assembly::Instance {
                 id: "i-a".into(),
                 name: "to-B".into(),
-                source: oep_geo::assembly::InstanceSource::Assembly {
-                    id: "asm-b".into(),
-                },
+                source: oep_geo::assembly::InstanceSource::Assembly { id: "asm-b".into() },
                 transform: identity.clone(),
                 visible: true,
             }],
@@ -188,9 +184,7 @@ fn cyclic_bom_document() -> String {
             instances: vec![oep_geo::assembly::Instance {
                 id: "i-b".into(),
                 name: "back-to-A".into(),
-                source: oep_geo::assembly::InstanceSource::Assembly {
-                    id: "asm-a".into(),
-                },
+                source: oep_geo::assembly::InstanceSource::Assembly { id: "asm-a".into() },
                 transform: identity.clone(),
                 visible: true,
             }],

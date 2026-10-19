@@ -90,7 +90,10 @@ fn tampered_blob_file_fails_load_with_integrity() {
     let (_store, _iid, sha) = persisted_seeded_vault(&dir);
 
     let path = blob_file(&dir, &sha);
-    assert!(path.is_file(), "blob must exist on disk under its content hash");
+    assert!(
+        path.is_file(),
+        "blob must exist on disk under its content hash"
+    );
     let mut bytes = std::fs::read(&path).expect("read blob");
     let pos = bytes.len() / 2;
     bytes[pos] ^= 0xFF;

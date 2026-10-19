@@ -1019,7 +1019,10 @@ fn file_response(item_id: &str, rev: &str, file: &FileRef, bytes: Vec<u8>) -> Re
         .header("X-Content-Type-Options", "nosniff")
         .header(
             header::CONTENT_DISPOSITION,
-            format!("attachment; filename=\"{}\"", sanitize_filename(&file.filename)),
+            format!(
+                "attachment; filename=\"{}\"",
+                sanitize_filename(&file.filename)
+            ),
         )
         .header("X-Oep-Item", item_id)
         .header("X-Oep-Rev", rev)
@@ -1039,8 +1042,7 @@ fn sanitize_filename(name: &str) -> String {
     name.chars()
         .filter(|c| !c.is_control())
         .collect::<String>()
-        .replace('\\', "_")
-        .replace('"', "_")
+        .replace(['\\', '"'], "_")
 }
 
 /// Shared standalone-binary entrypoint: parse the CLI args, load the store

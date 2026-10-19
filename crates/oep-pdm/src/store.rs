@@ -159,9 +159,7 @@ impl StoreError {
                 ErrorEnvelope::new(ec::LOCK_TOKEN, format!("lock token rejected: {msg}")),
             ),
             StoreError::Internal(msg) => (500, ErrorEnvelope::new(ec::INTERNAL, msg.clone())),
-            StoreError::Integrity(msg) => {
-                (500, ErrorEnvelope::new(ec::INTEGRITY, msg.clone()))
-            }
+            StoreError::Integrity(msg) => (500, ErrorEnvelope::new(ec::INTEGRITY, msg.clone())),
         }
     }
 }

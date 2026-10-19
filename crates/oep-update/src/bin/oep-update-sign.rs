@@ -43,7 +43,8 @@ fn usage() -> String {
   oep-update-sign --out OUT.json --version X.Y.Z --secret HEX64 \\
       [--payload FILE | (--inline-payload MANIFEST [--item 'name:sha256:size[:url]'] ...)] \\
       [--product oep] [--notes ...] [--released DATE]
-  oep-update-sign --gen-key DIR".to_string()
+  oep-update-sign --gen-key DIR"
+        .to_string()
 }
 
 fn parse_hex64(s: &str) -> Result<[u8; 32], String> {
@@ -107,7 +108,9 @@ fn parse_item(spec: &str, cwd: &std::path::Path) -> Result<Item, String> {
                 url,
             })
         }
-        _ => Err(format!("--item must be 'name' or 'name:sha256:size[:url]', got: {spec}")),
+        _ => Err(format!(
+            "--item must be 'name' or 'name:sha256:size[:url]', got: {spec}"
+        )),
     }
 }
 
@@ -182,11 +185,10 @@ fn main() {
         let pubkey = signing_public_key(&seed);
         let secret_hex = hex_encode(&seed);
         let _ = std::fs::create_dir_all(&dir);
-        std::fs::write(dir.join("secret.hex"), format!("{secret_hex}\n"))
-            .unwrap_or_else(|e| {
-                eprintln!("cannot write secret.hex: {e}");
-                std::process::exit(2);
-            });
+        std::fs::write(dir.join("secret.hex"), format!("{secret_hex}\n")).unwrap_or_else(|e| {
+            eprintln!("cannot write secret.hex: {e}");
+            std::process::exit(2);
+        });
         std::fs::write(dir.join("public.hex"), format!("{}\n", hex_encode(&pubkey)))
             .unwrap_or_else(|e| {
                 eprintln!("cannot write public.hex: {e}");
@@ -235,9 +237,8 @@ fn main() {
         });
     }
 
-    if payload_path.is_some() {
+    if let Some(p) = payload_path {
         // Legacy single-payload mode.
-        let p = payload_path.unwrap();
         let bytes = std::fs::read(&p).unwrap_or_else(|e| {
             eprintln!("cannot read payload {}: {e}", p.display());
             std::process::exit(2);

@@ -315,7 +315,7 @@ pub unsafe fn install_egress_block() -> io::Result<()> {
         // outer profile the same precedence) proves io_uring is unreachable,
         // which is exactly the property we need: the bypass is closed.
         Some(libc::EPERM) | Some(libc::EACCES) => {}
-        Some(libc::ENOSYS) => {}         // kernel has no io_uring: bypass impossible
+        Some(libc::ENOSYS) => {} // kernel has no io_uring: bypass impossible
         _ => {
             return Err(io::Error::new(
                 io::ErrorKind::PermissionDenied,
@@ -437,4 +437,3 @@ mod tests {
         assert_eq!(action, SECCOMP_RET_KILL_PROCESS);
     }
 }
-
