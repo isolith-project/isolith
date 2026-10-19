@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "tool": "p1-m1-t06/privacy-itar-sweep",
+  "generated": "2026-10-15",
+  "generated_by": "keelworks worker (default profile)",
+  "policy": "Public/open-licensed samples only. Detector flags ITAR/USML/ECCN, classified/CUI/FOUO markers, and personal contact data. HIGH findings must carry a disposition note before a sample may enter the shared repo.",
+  "files": [
+    {
+      "relative_path": "nist_ctc_01_asme1_rd_ct5290_ra.CATPart",
+      "size": 1089645,
+      "sha256": "3f19cc5350b8ca45ade6035d16ab4e1362243ac7e614a1dd9d658efd85a19e00",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ctc_02_asme1_rc_ct5290_ra.CATPart",
+      "size": 3996974,
+      "sha256": "2c5ae50c5672ca640e620c5dad239e07212b9478621573404e20b6d542d04f68",
+      "verdict": "REVIEW",
+      "findings": [
+        {
+          "severity": "HIGH",
+          "match": "uz@5o.wH",
+          "kind": "EMAIL",
+          "context": "binary-ascii",
+          "disposition": "AUDITED 2026-10-16 (P5-M2-T01): binary tessellation/float noise, not PII. The match 'uz@5o.wH' occurs at byte offset 1656961 inside a NIST ASME PMI conformance CATPart, surrounded by non-printable bytes (Xh@\\x81\\x8a... pattern); it is a false positive of the EMAIL rule on an ASCII printable run in binary geometry data. Source is a public-domain US Government NIST conformance model with no embedded contact data. CLEARED."
+        }
+      ]
+    },
+    {
+      "relative_path": "nist_ctc_03_asme1_rc_ct5290_ra.CATPart",
+      "size": 1139724,
+      "sha256": "4dc28d14a8cabeefb040b709016ff87a1766e8b620a63e8932d6bc003ed4845f",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ctc_04_asme1_rd_ct5290_ra.CATPart",
+      "size": 2771869,
+      "sha256": "ea28a43e981ba54e06bbbbfcceeff21dbca78694826329acae336ca797cee49f",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ctc_05_asme1_rd_ct5290_ra.CATPart",
+      "size": 1444966,
+      "sha256": "0bfd9c14be1e0169a9f062ba8843e9e46965549c6042033f9b3cfd52e8f0402b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_06_asme1_ct5315_rd.CATPart",
+      "size": 2857607,
+      "sha256": "db5e646a3faa81d6a2bf3eeb9bec5b57e90df7cbadacbfaaa4b14aee0b56d630",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_06_asme1_rd_ct5290_ra.CATPart",
+      "size": 2836702,
+      "sha256": "13f2d9780204b45f81d4fd823589f84020ec0ac4f2374a2e0c8dd1815badad2a",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_07_asme1_rd_ct5290_ra.CATPart",
+      "size": 1524108,
+      "sha256": "ee49a27b5f3ad414eb088d94375b1f324ec91124a31ffc361af6f50cbc2492a4",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_08_asme1_rc_ct5290_ra.CATPart",
+      "size": 1947383,
+      "sha256": "43f2acaac4f9cb8f8ac8557748ec86b6eedb25a7d9a2e48088ba0843c9e2627c",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_09_asme1_rd_ct5290_ra.CATPart",
+      "size": 1825402,
+      "sha256": "80d1f6b1226807be22df795ae682fd31a599a5c54ab1e36fda06b36f5c0c5e93",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_10_asme1_ct5315_rb.CATPart",
+      "size": 2190399,
+      "sha256": "c18f19a15a06a8dfec49a65aae56d2b50e5b81de6ac0d8a58029521e09ebc25b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_10_asme1_rb_ct5290_ra.CATPart",
+      "size": 1865490,
+      "sha256": "aa41c914ca1ee2ee70b5b9a66acfcbad7b82b34d09279244cf2ccab81dda2452",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_11_asme1_ct5315_rb.CATPart",
+      "size": 627895,
+      "sha256": "3c0758fd30945f8121d24f595ba5229dd9f89cd6ab7e58b194db44d0452b6f85",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_ftc_11_asme1_rb_ct5290_ra.CATPart",
+      "size": 569878,
+      "sha256": "62922f3fa28632265ec00470d706641525854b06baf65d11cb120d5692e70a14",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_stc_06_asme1_V56R2023.CATPart",
+      "size": 2550648,
+      "sha256": "5c7dfddbb95f9ef1c2e5768d8710fdc142b784c6c77629497c20acaf28734073",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_stc_07_asme1_V56R2023.CATPart",
+      "size": 1376769,
+      "sha256": "3725676abe769b604080180b34488e7bafcb449e82782f2124334399b5cabb6a",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_stc_08_asme1_V56R2023.CATPart",
+      "size": 1926000,
+      "sha256": "2098718c064c76f8620dc32cb0bdc277c07a953a02fde559546d6457ad99bf4f",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_stc_09_asme1_V5R2023.CATPart",
+      "size": 1779385,
+      "sha256": "102e798f1774f38503e5c8b1012c4331eff629c64db103ac93c016f7cf05fea6",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "nist_stc_10_asme1_V56R2023.CATPart",
+      "size": 1718333,
+      "sha256": "243a87b1f9290ea2b93b6ec5258ab135872d4b10a393e890a5ebda51d3e077ac",
+      "verdict": "CLEAN",
+      "findings": []
+    }
+  ],
+  "reference_sweeps": [],
+  "summary": {
+    "total": 19,
+    "clean": 18,
+    "review": 1,
+    "high_findings": 1,
+    "gate": "PASS"
+  }
+}

@@ -1,10 +1,12 @@
 # CATPart vs CATProduct container: differences and reference-graph discovery
 
 Format: Hex-level reverse-engineering observation notebook
-Task: P1-M2-T03 (Keelworks wave 1, P1 format reconnaissance)
-Version: 1.0
-Date: 2026-10-15
-Status: verified on real material (121 real files, see "Verification record")
+Task: P1-M2-T03 (Keelworks wave 1, P1 format reconnaissance) + P5-M1-T01 (wave-2
+full-corpus re-run and schema-drift notes, section 9)
+Version: 1.1
+Date: 2026-10-15 (v1.0), extended 2026-10-16 (v1.1)
+Status: verified on real material (121 real files wave-1; 131 native rows
+re-run 2026-10-16, see section 9)
 
 Owner: Keelworks P1 corpus / RE lane. Companion notebook: docs/re-notes/cgr-hex-notebook.md (P1-M2-T01, CGR). Shape-record hypothesis carryover: P1-M2-T05.
 
@@ -309,6 +311,123 @@ Acceptance test (TDD, written before the notebook):
     edges.
   - ALL CHECKS PASSED.
 
-## 9. Version history
+## 9. Drift notes (P5-M1-T01): full-corpus re-run, R2026 vs older eras
 
+Format note: this section extends the notebook to the wave-2 full corpus and to
+the schema-drift question. Every number below is byte-observed on real files
+resolved through the P1-M1-T04 registry (corpus/manifest.json) and sha256-
+verified 131/131 against it. Tooling: python/oep_tooling/catpart_drift.py
+(full-corpus re-run, era census, claim matrix, R2026-leg status); acceptance:
+tests/test_catpart_drift_acceptance.py.
+
+### 9.1 Corpus growth: what re-running against "the full CATPart corpus" means
+
+- v1.0 observed 121 blob-rows in the wave-1 registry (114 .CATPart + 7
+  .CATProduct), the mohanevs/solid-modeling-catia-v6 MIT pack.
+- The wave-2 registry (P1-M4-T01, PR #85) now resolves 131 native rows:
+  123 catpart-v5 + 8 catproduct-v5. 121 of those rows are the object-store
+  blobs from wave 1; the other 10 are the repo-flattened files under
+  corpus/data/catpart/ and are byte-identical to 10 of the object-store blobs
+  (the 131 rows map to 121 unique sha256; the 10 duplicates are
+  3DM016/hex-nut/kj-*/star/square-thread/knuckle-joint). No new writer
+  generation was introduced by the corpus mirror -- an important fact for the
+  drift question below. [high, byte-observed: resolve + sha256 compare]
+
+### 9.2 Era census (the whole corpus is ONE writer generation)
+
+Read the writer provenance block of every resolved row:
+
+    marker                      count    value
+    writer marker               131/131  "V5R29SP0HF0" (CATIA V5 R29 SP0 HF0)
+    CATBuildLevel block         131/131  "10-11-2018.20.00" (V5R29 build, 2018-11-11)
+    MinimalVersionToRead        131/131  "CATIAV5R29"
+    R2026 / V5-6R2026 / 3DEXPERIENCE
+    marker hits                 0/131    none
+
+So every CATPart/CATProduct the corpus can justifiably speak about is a V5 R29
+(2018) file -- the "older era" by the P1-M2-T02 definition (R2026 =
+V5-6R2026 / 3DEXPERIENCE). There is no R2026-era native sample in the corpus.
+
+### 9.3 Drift verdict (confidence-tagged)
+
+1. Within the observed (V5 R29 / older) era there is NO container-schema
+   drift: every v1.0 claim re-verifies at 131/131 except where the count
+   itself grew (see 9.4). [high]
+2. Cross-era R2026-vs-older: cannot be measured from this corpus -- the R2026
+   leg has zero real samples. Per the P1-M2-T02 honesty rule this leg is
+   reported blocked_on_sample, NOT "no drift". A reader must not assume the
+   R29 header layout transfers to an R2026 file until a license-clean V5-6R2026
+   CATPart/CATProduct is procured and fingerprinted. [uncertain what R2026
+   changes; the absence is corpus coverage, not proof of stability]
+3. The only intra-era variance in the whole corpus is the 5-file motor-blower
+   part batch, re-examined in 9.5 with a correction to v1.0 section 6. [high]
+
+### 9.4 v1.0 claims re-verified on the full corpus (updated counts)
+
+    claim                                             v1.0       full corpus
+    magic V5_CFV2\0                                   121/121    131/131  [high]
+    writer marker V5R29SP0HF0                         121/121    131/131  [high]
+    MechanicalPart in every CATPart                   114/114    123/123  [high]
+    CATMechProdCont in every CATProduct                7/7        8/8     [high]
+    CATPart/CATProduct class exclusivity              121/121    131/131  [high]
+    product u32@0x54 == 3                               7/7        8/8     [high]
+    part u32@0x54 in {30, 0x5B00}                     114/114    123/123  [high]
+       (30 standard, 0x5B00 = preview-batch parts)                (118,5)
+    u32@0x48 == 0xF0 (240) standard batch             116/121    126/131  [high]
+    ASMPRODUCT root token                              121/121    131/131  [high]
+    length-prefixed root name (strlen+1 idiom)         121/121    131/131  [high]
+    catalogLinks / catalog registry block              121/121    131/131  [high]
+    product: _InstanceName + CtorToProd/ProdToRep +
+      Coincidence constraints                           7/7        8/8     [high]
+    product: no drive-letter path, no ".CATPart"        7/7        8/8     [high]
+    part incidental asset/install paths                 2 found    2 found  [high]
+       (3DM055 image asset @0x59e7f; sphere install dir @0x10cce4)
+
+Header-band values observed across the 131 files (116->126 standard batch,
+5 motor-blower preview batch, unchanged v1.0 conclusions):
+
+    u32@0x40: 0x01ACF45E on 126/131; 0x00 on the 5 preview-batch parts
+    u32@0x54: products 3 (8/8); parts 30 (118/123) and 0x5B00 (5/123)
+    u32@0x64: parts {148,160,172,7670}; products {1779,1864,2098,2437,2812,
+              2999,5009} -- matches v1.0 section 5.2's candidate [uncertain]
+
+### 9.5 Correction: the "motor blower batch" is an embedded JPEG preview
+
+v1.0 section 6 described a "motor blower batch (5)" of header tokens and
+tabulated two u32 words as 0xE10DFFFF (at 0x44) and 0x83FFFFFF (at 0x58).
+Re-reading those five real files byte-by-byte shows those are NOT opaque u32
+tokens at all -- a JPEG stream (preview thumbnail) begins at 0x44:
+
+    offset  bytes (Assembly__7.motor blower__blower.CATPart)
+    0x40    00 00 00 00                       <-- 0x40 is genuinely 0x00
+    0x44    FF D8 FF E0                       JPEG SOI + APP0
+    0x48    00 10 4A 46 49 46 00              APP0 len 0x10 + "JFIF\0"
+    0x58    FF DB 00 84                       JPEG DQT (len 0x84)
+
+Reading that stream as LE u32 gives 0xE0FFD8FF at 0x44 and 0x8400DBFF at 0x58,
+NOT the 0xE10DFFFF / 0x83FFFFFF v1.0 printed. Those two cells are
+mis-transcriptions and should be read as "embedded JPEG at 0x44+", not as a
+token vocabulary. Still same writer (V5R29SP0HF0, build 10-11-2018.20.00), so
+the v1.0 conclusion stands -- per-save/state variance, not era or
+container-type -- but the mechanism is a preview image in the header band, not
+opaque words. Consequence for a P5 reader: detect FF D8 FF E0 at ~0x44 and skip
+the preview region before trusting any u32 token in the 0x44..0x5B band. [high
+for the bytes: verified on all 5 files; the interpretation "thumbnail" is
+[uncertain] -- it is a JPEG stream, its role as preview is inferred]
+
+### 9.6 Closing the R2026 leg (blocked list)
+
+To earn a real R2026-vs-older drift verdict (instead of blocked_on_sample):
+procure one license-clean CATPart and one CATProduct saved by V5-6R2026 /
+3DEXPERIENCE R2026x, run them through python/oep_tooling/catpart_drift.py, and
+diff against this section's baseline: magic, the 0x40..0x58 band (does the
+preview/JPEG field move or change), class strings, the ASMPRODUCT idiom, and
+u32@0x54. This corpus cannot answer on real bytes today and does not pretend
+to.
+
+## 10. Version history
+
+- 1.1 2026-10-16 drift notes for the full 131-row corpus (P5-M1-T01): era
+  census all-V5R29, R2026 leg blocked_on_sample, JPEG-preview correction to
+  section 6, every v1.0 claim re-verified at 131/131.
 - 1.0 2026-10-15 initial observation notebook (P1-M2-T03).

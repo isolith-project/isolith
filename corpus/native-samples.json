@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "task": "P5-M2-T01",
+  "description": "Native CATPart/CATProduct submission registry (P5-M2 contribution pipeline). Entries here are user/developer-contributed native CATParts, license-noted dev-only, entered through corpus/tools/build_manifest.py and gated by the P1-M1-T06 privacy/ITAR sweep before any byte enters the shared repo or NAS mirror. 2026-10-16 Don posture: corpus is dev-only reference material, never shipped; do NOT over-filter on redistributability (samples that cannot be redistributed are fine for development); the privacy/ITAR sweep stays a hard line.",
+  "license_posture": "dev-only reference material, never shipped; do NOT over-filter on redistributability; ITAR/privacy sweep (P1-M1-T06) is a hard line.",
+  "entries": [
+    {
+      "id": "nist_ctc_01_asme1_rd_ct5290_ra.CATPart",
+      "path": "data/native/nist_ctc_01_asme1_rd_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1089645,
+      "sha256": "3f19cc5350b8ca45ade6035d16ab4e1362243ac7e614a1dd9d658efd85a19e00",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "04-14-2011.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); CTC PMI test part"
+    },
+    {
+      "id": "nist_ctc_02_asme1_rc_ct5290_ra.CATPart",
+      "path": "data/native/nist_ctc_02_asme1_rc_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 3996974,
+      "sha256": "2c5ae50c5672ca640e620c5dad239e07212b9478621573404e20b6d542d04f68",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "04-14-2011.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); CTC PMI test part"
+    },
+    {
+      "id": "nist_ctc_03_asme1_rc_ct5290_ra.CATPart",
+      "path": "data/native/nist_ctc_03_asme1_rc_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1139724,
+      "sha256": "4dc28d14a8cabeefb040b709016ff87a1766e8b620a63e8932d6bc003ed4845f",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "04-14-2011.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); CTC PMI test part"
+    },
+    {
+      "id": "nist_ctc_04_asme1_rd_ct5290_ra.CATPart",
+      "path": "data/native/nist_ctc_04_asme1_rd_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 2771869,
+      "sha256": "ea28a43e981ba54e06bbbbfcceeff21dbca78694826329acae336ca797cee49f",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "04-14-2011.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); CTC PMI test part"
+    },
+    {
+      "id": "nist_ctc_05_asme1_rd_ct5290_ra.CATPart",
+      "path": "data/native/nist_ctc_05_asme1_rd_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1444966,
+      "sha256": "0bfd9c14be1e0169a9f062ba8843e9e46965549c6042033f9b3cfd52e8f0402b",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "04-14-2011.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); CTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_06_asme1_ct5315_rd.CATPart",
+      "path": "data/native/nist_ftc_06_asme1_ct5315_rd.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 2857607,
+      "sha256": "db5e646a3faa81d6a2bf3eeb9bec5b57e90df7cbadacbfaaa4b14aee0b56d630",
+      "writer_markers": [
+        "V5R31SP5HF0"
+      ],
+      "catiav5r": "CATIAV5R31",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "02-25-2022.22.30"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_06_asme1_rd_ct5290_ra.CATPart",
+      "path": "data/native/nist_ftc_06_asme1_rd_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 2836702,
+      "sha256": "13f2d9780204b45f81d4fd823589f84020ec0ac4f2374a2e0c8dd1815badad2a",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_07_asme1_rd_ct5290_ra.CATPart",
+      "path": "data/native/nist_ftc_07_asme1_rd_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1524108,
+      "sha256": "ee49a27b5f3ad414eb088d94375b1f324ec91124a31ffc361af6f50cbc2492a4",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "03-06-2019.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_08_asme1_rc_ct5290_ra.CATPart",
+      "path": "data/native/nist_ftc_08_asme1_rc_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1947383,
+      "sha256": "43f2acaac4f9cb8f8ac8557748ec86b6eedb25a7d9a2e48088ba0843c9e2627c",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_09_asme1_rd_ct5290_ra.CATPart",
+      "path": "data/native/nist_ftc_09_asme1_rd_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1825402,
+      "sha256": "80d1f6b1226807be22df795ae682fd31a599a5c54ab1e36fda06b36f5c0c5e93",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_10_asme1_ct5315_rb.CATPart",
+      "path": "data/native/nist_ftc_10_asme1_ct5315_rb.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 2190399,
+      "sha256": "c18f19a15a06a8dfec49a65aae56d2b50e5b81de6ac0d8a58029521e09ebc25b",
+      "writer_markers": [
+        "V5R31SP6HF0"
+      ],
+      "catiav5r": "CATIAV5R31",
+      "build_dates": [
+        "03-06-2019.20.00",
+        "04-08-2022.22.30"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_10_asme1_rb_ct5290_ra.CATPart",
+      "path": "data/native/nist_ftc_10_asme1_rb_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1865490,
+      "sha256": "aa41c914ca1ee2ee70b5b9a66acfcbad7b82b34d09279244cf2ccab81dda2452",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "03-06-2019.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_11_asme1_ct5315_rb.CATPart",
+      "path": "data/native/nist_ftc_11_asme1_ct5315_rb.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 627895,
+      "sha256": "3c0758fd30945f8121d24f595ba5229dd9f89cd6ab7e58b194db44d0452b6f85",
+      "writer_markers": [
+        "V5R31SP5HF0"
+      ],
+      "catiav5r": "CATIAV5R31",
+      "build_dates": [
+        "02-25-2022.22.30",
+        "03-06-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_ftc_11_asme1_rb_ct5290_ra.CATPart",
+      "path": "data/native/nist_ftc_11_asme1_rb_ct5290_ra.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST FTC/CTC PMI CAD models v2 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - FTC 06..11 + CTC 01..05 ASME Y14.5/Y14.41 PMI conformance test cases; V5-6R2019 (ct5290) + V5-6R2021 (ct5315) native saves (US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 569878,
+      "sha256": "62922f3fa28632265ec00470d706641525854b06baf65d11cb120d5692e70a14",
+      "writer_markers": [
+        "V5R29SP3HF0"
+      ],
+      "catiav5r": "CATIAV5R29",
+      "build_dates": [
+        "03-06-2019.20.00",
+        "06-20-2019.20.00"
+      ],
+      "geometry_notes": "R2019-era writer (ct5290, V5R29SP3HF0); FTC PMI test part"
+    },
+    {
+      "id": "nist_stc_06_asme1_V56R2023.CATPart",
+      "path": "data/native/nist_stc_06_asme1_V56R2023.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST STC PMI CAD models v4 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - STC_06..10 ASME Y14.41 PMI conformance test cases, CATIA V5-6R2023 native saves (STC v4 = US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 2550648,
+      "sha256": "5c7dfddbb95f9ef1c2e5768d8710fdc142b784c6c77629497c20acaf28734073",
+      "writer_markers": [
+        "V5R32SP0HF0",
+        "V5R33SP0HF0"
+      ],
+      "catiav5r": "CATIAV5R33",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "10-13-2022.18.00"
+      ],
+      "geometry_notes": "R2023-era writer (V5R33SP0HF0); STC simplified FTC PMI test part (ASME Y14.41)"
+    },
+    {
+      "id": "nist_stc_07_asme1_V56R2023.CATPart",
+      "path": "data/native/nist_stc_07_asme1_V56R2023.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST STC PMI CAD models v4 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - STC_06..10 ASME Y14.41 PMI conformance test cases, CATIA V5-6R2023 native saves (STC v4 = US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1376769,
+      "sha256": "3725676abe769b604080180b34488e7bafcb449e82782f2124334399b5cabb6a",
+      "writer_markers": [
+        "V5R32SP0HF0",
+        "V5R33SP0HF0"
+      ],
+      "catiav5r": "CATIAV5R33",
+      "build_dates": [
+        "03-06-2019.20.00",
+        "10-13-2022.18.00"
+      ],
+      "geometry_notes": "R2023-era writer (V5R33SP0HF0); STC simplified FTC PMI test part (ASME Y14.41)"
+    },
+    {
+      "id": "nist_stc_08_asme1_V56R2023.CATPart",
+      "path": "data/native/nist_stc_08_asme1_V56R2023.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST STC PMI CAD models v4 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - STC_06..10 ASME Y14.41 PMI conformance test cases, CATIA V5-6R2023 native saves (STC v4 = US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1926000,
+      "sha256": "2098718c064c76f8620dc32cb0bdc277c07a953a02fde559546d6457ad99bf4f",
+      "writer_markers": [
+        "V5R32SP0HF0",
+        "V5R33SP0HF0"
+      ],
+      "catiav5r": "CATIAV5R33",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "10-13-2022.18.00"
+      ],
+      "geometry_notes": "R2023-era writer (V5R33SP0HF0); STC simplified FTC PMI test part (ASME Y14.41)"
+    },
+    {
+      "id": "nist_stc_09_asme1_V5R2023.CATPart",
+      "path": "data/native/nist_stc_09_asme1_V5R2023.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST STC PMI CAD models v4 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - STC_06..10 ASME Y14.41 PMI conformance test cases, CATIA V5-6R2023 native saves (STC v4 = US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1779385,
+      "sha256": "102e798f1774f38503e5c8b1012c4331eff629c64db103ac93c016f7cf05fea6",
+      "writer_markers": [
+        "V5R32SP0HF0",
+        "V5R33SP0HF0"
+      ],
+      "catiav5r": "CATIAV5R33",
+      "build_dates": [
+        "01-15-2014.20.00",
+        "10-13-2022.18.00"
+      ],
+      "geometry_notes": "R2023-era writer (V5R33SP0HF0); STC simplified FTC PMI test part (ASME Y14.41)"
+    },
+    {
+      "id": "nist_stc_10_asme1_V56R2023.CATPart",
+      "path": "data/native/nist_stc_10_asme1_V56R2023.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "NIST STC PMI CAD models v4 (NIST MBE PMI Validation dataset, https://www.nist.gov/programs-projects/model-based-enterprise-mbe-0 ) - STC_06..10 ASME Y14.41 PMI conformance test cases, CATIA V5-6R2023 native saves (STC v4 = US Government work, NIST open license / public domain).",
+      "license": "public-domain",
+      "license_usage": "dev-only reference material; never shipped (US Gov public-domain work; mirror on private NAS only)",
+      "dev_only": true,
+      "redistributable": true,
+      "size": 1718333,
+      "sha256": "243a87b1f9290ea2b93b6ec5258ab135872d4b10a393e890a5ebda51d3e077ac",
+      "writer_markers": [
+        "V5R32SP0HF0",
+        "V5R33SP0HF0"
+      ],
+      "catiav5r": "CATIAV5R33",
+      "build_dates": [
+        "03-06-2019.20.00",
+        "10-13-2022.18.00"
+      ],
+      "geometry_notes": "R2023-era writer (V5R33SP0HF0); STC simplified FTC PMI test part (ASME Y14.41)"
+    }
+  ]
+}

@@ -22,6 +22,7 @@
 pub mod error;
 pub mod export;
 pub mod facets;
+pub mod jt;
 pub mod pmi;
 
 pub use error::Error;

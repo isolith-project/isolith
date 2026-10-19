@@ -38,3 +38,5 @@ pub mod mesh;
 pub mod tessellate;
 /// Internal mesh -> 3DXML ASCII writer (P3-M4-T01).
 pub mod ascii;
+/// `.3DRep` markup document parse (P3-M1-T02, carried by the JT-reader stack).
+pub mod rep;

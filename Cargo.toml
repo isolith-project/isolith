@@ -11,6 +11,7 @@ resolver = "2"
 members = [
     "crates/oep-cgr",
     "crates/oep-3dxml",
+    "crates/oep-import",
     "crates/oep-geo",
     "crates/oep-viewer",
     "crates/oep-render-worker",

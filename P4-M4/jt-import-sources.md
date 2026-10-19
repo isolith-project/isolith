@@ -51,3 +51,40 @@ and https://docs.techsoft3d.com/hoops/exchange/start/format/jt_reader.html
   formats (CGR, 3DXML binary) the program builds its own readers; documented
   interoperable formats (STEP) are wrapped from OSS. JT is documented, so it
   falls in the documented/wrap-or-build-on-spec family.
+
+## P4-M4-T03 wedge delivery facts (2026-10-16)
+
+- The JT reader visualization-first wedge is delivered on branch
+  task/jt-reader-1016a as an oep-step `jt` module behind the same
+  vendor-neutral seam as the STEP lane (oep_step::jt::parse -> JtModel ->
+  to_document -> oep_geo Document).
+- Implementation is clean-room, spec-driven: every layout is cited to the
+  Siemens JT v10 reference Rev-B / JTIAP PSI 14-1 V3 sections in
+  docs/re-notes/oep-jt-container-and-lsg.md and P4-M4/jt-reader-plan.md.
+  The decode notes are the living spec-to-code map for this workstream.
+- In scope and GREEN: file header (version, byte order, block-directory
+  offset, root reference), block directory walk, block headers, element
+  stream walk (compressed form + plain form), LSG traversal (partition,
+  part nodes, string + late-loaded property atoms, property table), shape
+  decode for the documented uncompressed Primitive Set Box path, the
+  Bitlength CODEC prefix-code core, and mapping onto the canonical
+  oep-geo Document (one part / one Solid body / ImportJt feature).
+- Golden: corpus/jt/golden-box-a.jt is a license-clean synthesized fixture
+  written from the documented byte layout by
+  python/oep_tooling/jt_fixtures.py (no third-party JT file is
+  redistributed; decision-7 dev-only posture). crates/oep-step/tests/
+  jt_golden.rs pins 8 vertices / 12 triangles and bounding volume 6.0
+  within tolerance through both the vendor-neutral model and the canonical
+  document.
+- Corrupt corpus (7 variants: empty, junk, truncated header, bad byte
+  order, out-of-range directory offset, block overrun, non-LSG root)
+  returns typed errors and never panics, under std::panic::catch_unwind.
+- Gate scans (tests/test_p4m4_jt_reader.py, run in CI): (a) vendor-neutral
+  seam - no JT container/codec vocabulary on public items; (b) no-vendored
+  foreign source - TKJT / JT Assistant / PyOpenJt / Voyager / JTConvert
+  identifiers fail the build if present in code.
+- Documented-but-deferred (typed UnsupportedFeature, never fabricated):
+  LZMA, arithmetic and Deering codec payloads, the bitlength nibble bias,
+  topologically compressed shapes (v9/v10 TriStrip/Polygon), lossy
+  quantized primitives, non-identity orientations, and PMI/Meta Data
+  (ADR's gated second milestone).

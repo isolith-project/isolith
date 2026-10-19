@@ -1,0 +1,275 @@
+{
+  "task": "P5-M1-T01",
+  "method": "byte-observed, clean-room; era labels from in-file writer markers",
+  "corpus": {
+    "manifest_entries_native": 131,
+    "resolved": 131,
+    "parts": 123,
+    "products": 8,
+    "unresolved": 0,
+    "unresolved_detail": [],
+    "unique_sha256": 121
+  },
+  "era_census": {
+    "V5R29": 131
+  },
+  "era_files": {
+    "V5R29": [
+      "3DM016.CATPart",
+      "hex-nut.CATPart",
+      "kj-collar.CATPart",
+      "kj-eye-end.CATPart",
+      "kj-fork-end.CATPart",
+      "kj-pin.CATPart",
+      "kj-taper-pin.CATPart",
+      "knuckle-joint.CATProduct",
+      "square-thread.CATPart",
+      "star.CATPart",
+      "3D Models__3DM001.CATPart",
+      "3D Models__3DM002.CATPart",
+      "3D Models__3DM003.CATPart",
+      "3D Models__3DM004.CATPart",
+      "3D Models__3DM005.CATPart",
+      "3D Models__3DM006.CATPart",
+      "3D Models__3DM007.CATPart",
+      "3D Models__3DM008.CATPart",
+      "3D Models__3DM009.CATPart",
+      "3D Models__3DM010.CATPart",
+      "3D Models__3DM011.CATPart",
+      "3D Models__3DM012.CATPart",
+      "3D Models__3DM013.CATPart",
+      "3D Models__3DM014.CATPart",
+      "3D Models__3DM015.CATPart",
+      "3D Models__3DM016.CATPart",
+      "3D Models__3DM017.CATPart",
+      "3D Models__3DM018.CATPart",
+      "3D Models__3DM019.CATPart",
+      "3D Models__3DM020.CATPart",
+      "3D Models__3DM021.CATPart",
+      "3D Models__3DM022.CATPart",
+      "3D Models__3DM023.CATPart",
+      "3D Models__3DM024.CATPart",
+      "3D Models__3DM025.CATPart",
+      "3D Models__3DM026.CATPart",
+      "3D Models__3DM027.CATPart",
+      "3D Models__3DM028.CATPart",
+      "3D Models__3DM029.CATPart",
+      "3D Models__3DM030.CATPart",
+      "3D Models__3DM031.CATPart",
+      "3D Models__3DM032.CATPart",
+      "3D Models__3DM033.CATPart",
+      "3D Models__3DM034.CATPart",
+      "3D Models__3DM035.CATPart",
+      "3D Models__3DM036.CATPart",
+      "3D Models__3DM037.CATPart",
+      "3D Models__3DM038.CATPart",
+      "3D Models__3DM039.CATPart",
+      "3D Models__3DM040.CATPart",
+      "3D Models__3DM041.CATPart",
+      "3D Models__3DM042.CATPart",
+      "3D Models__3DM043.CATPart",
+      "3D Models__3DM044.CATPart",
+      "3D Models__3DM045.CATPart",
+      "3D Models__3DM046.CATPart",
+      "3D Models__3DM047.CATPart",
+      "3D Models__3DM048.CATPart",
+      "3D Models__3DM049.CATPart",
+      "3D Models__3DM050.CATPart",
+      "3D Models__3DM051.CATPart",
+      "3D Models__3DM052.CATPart",
+      "3D Models__3DM053.CATPart",
+      "3D Models__3DM054.CATPart",
+      "3D Models__3DM055.CATPart",
+      "3D Models__3DM056.CATPart",
+      "3D Models__3DM057.CATPart",
+      "Assembly__1.screw jack__@screw jack assmbled.CATProduct",
+      "Assembly__1.screw jack__body.CATPart",
+      "Assembly__1.screw jack__cup.CATPart",
+      "Assembly__1.screw jack__nut.CATPart",
+      "Assembly__1.screw jack__screw.CATPart",
+      "Assembly__1.screw jack__screwSpindle.CATPart",
+      "Assembly__1.screw jack__tommyBar.CATPart",
+      "Assembly__1.screw jack__washer.CATPart",
+      "Assembly__2.knuckle joint__@knuckle joint assembled.CATProduct",
+      "Assembly__2.knuckle joint__collar.CATPart",
+      "Assembly__2.knuckle joint__eye end.CATPart",
+      "Assembly__2.knuckle joint__fork end.CATPart",
+      "Assembly__2.knuckle joint__pin.CATPart",
+      "Assembly__2.knuckle joint__taper pin.CATPart",
+      "Assembly__3.pipe vice__@pipe vice assembled.CATProduct",
+      "Assembly__3.pipe vice__base.CATPart",
+      "Assembly__3.pipe vice__handle screw.CATPart",
+      "Assembly__3.pipe vice__handle.CATPart",
+      "Assembly__3.pipe vice__movable jaw.CATPart",
+      "Assembly__3.pipe vice__screw.CATPart",
+      "Assembly__4.plummer block__@plummer block assembled.CATProduct",
+      "Assembly__4.plummer block__bolt.CATPart",
+      "Assembly__4.plummer block__brasses.CATPart",
+      "Assembly__4.plummer block__cap.CATPart",
+      "Assembly__4.plummer block__casting.CATPart",
+      "Assembly__4.plummer block__lock nut.CATPart",
+      "Assembly__4.plummer block__nut.CATPart",
+      "Assembly__5.press tool__@press tool assembled.CATProduct",
+      "Assembly__5.press tool__bottom plate.CATPart",
+      "Assembly__5.press tool__guide bush.CATPart",
+      "Assembly__5.press tool__guide pillar.CATPart",
+      "Assembly__5.press tool__top Plate.CATPart",
+      "Assembly__6.tool head of shaper__@tool head of shaper assembled.CATProduct",
+      "Assembly__6.tool head of shaper__back plate.CATPart",
+      "Assembly__6.tool head of shaper__bush washer.CATPart",
+      "Assembly__6.tool head of shaper__clamping screw.CATPart",
+      "Assembly__6.tool head of shaper__drag plate.CATPart",
+      "Assembly__6.tool head of shaper__handle br.CATPart",
+      "Assembly__6.tool head of shaper__handle.CATPart",
+      "Assembly__6.tool head of shaper__nut.CATPart",
+      "Assembly__6.tool head of shaper__pivot pin.CATPart",
+      "Assembly__6.tool head of shaper__small washer.CATPart",
+      "Assembly__6.tool head of shaper__space bush.CATPart",
+      "Assembly__6.tool head of shaper__swivel plate.CATPart",
+      "Assembly__6.tool head of shaper__swivel screw pin.CATPart",
+      "Assembly__6.tool head of shaper__tool fixing screw.CATPart",
+      "Assembly__6.tool head of shaper__tool holder.CATPart",
+      "Assembly__6.tool head of shaper__vertical slide.CATPart",
+      "Assembly__6.tool head of shaper__washer.CATPart",
+      "Assembly__7.motor blower__@motor blower assemled.CATProduct",
+      "Assembly__7.motor blower__blower.CATPart",
+      "Assembly__7.motor blower__cover.CATPart",
+      "Assembly__7.motor blower__lower housing.CATPart",
+      "Assembly__7.motor blower__motor.CATPart",
+      "Assembly__7.motor blower__shaft.CATPart",
+      "Assembly__7.motor blower__upper housing.CATPart",
+      "SM Application__TRIANGULAR BRACKET.CATPart",
+      "SM Application__boat.CATPart",
+      "SM Application__classicPlane.CATPart",
+      "SM Application__hex nut.CATPart",
+      "SM Application__robotic arm.CATPart",
+      "SM Application__sphere.CATPart",
+      "SM Application__squareThread.CATPart",
+      "SM Application__star.CATPart"
+    ]
+  },
+  "r2026_leg": {
+    "status": "blocked_on_sample",
+    "samples": 0
+  },
+  "writer_provenance": {
+    "writer_markers_all": [
+      "V5R29SP0HF0"
+    ],
+    "catiav5r_all": [
+      "CATIAV5R29"
+    ],
+    "build_dates_all": [
+      "10-11-2018.20.00"
+    ]
+  },
+  "notebook_claims_confirmed": {
+    "magic V5_CFV2": true,
+    "writer marker V5R..SP..HF..": true,
+    "MechanicalPart in every part": true,
+    "CATMechProdCont in every product": true,
+    "part never labels CATProduct": true,
+    "product never labels CATPart": true,
+    "product u32@0x54 == 3": true,
+    "part u32@0x54 in {30, 0x5B00}": true,
+    "ASMPRODUCT present": true,
+    "catalogLinks present": true,
+    "product carries _InstanceName": true,
+    "product carries CtorToProd/ProdToRep": true,
+    "product never contains child .CATPart filename": true,
+    "product no drive-letter path": true
+  },
+  "header_histograms": {
+    "parts": {
+      "0x40": {
+        "0x1acf45e": 118,
+        "0x0": 5
+      },
+      "0x44": {
+        "0x1": 118,
+        "0xe0ffd8ff": 5
+      },
+      "0x48": {
+        "0xf0": 118,
+        "0x464a1000": 5
+      },
+      "0x4c": {
+        "0x2": 118,
+        "0x1004649": 5
+      },
+      "0x50": {
+        "0x2": 118,
+        "0x5b000100": 5
+      },
+      "0x54": {
+        "0x1e": 118,
+        "0x5b00": 5
+      },
+      "0x58": {
+        "0x620": 118,
+        "0x8400dbff": 5
+      },
+      "0x5c": {
+        "0x0": 118,
+        "0x6060800": 5
+      },
+      "0x60": {
+        "0x0": 118,
+        "0x8050607": 5
+      },
+      "0x64": {
+        "0x94": 112,
+        "0xa0": 3,
+        "0x1df6": 1,
+        "0x9070707": 5,
+        "0xac": 2
+      }
+    },
+    "products": {
+      "0x40": {
+        "0x1acf45e": 8
+      },
+      "0x44": {
+        "0x1": 8
+      },
+      "0x48": {
+        "0xf0": 8
+      },
+      "0x4c": {
+        "0x2": 8
+      },
+      "0x50": {
+        "0x2": 8
+      },
+      "0x54": {
+        "0x3": 8
+      },
+      "0x58": {
+        "0x620": 8
+      },
+      "0x5c": {
+        "0x0": 8
+      },
+      "0x60": {
+        "0x0": 8
+      },
+      "0x64": {
+        "0x6f3": 2,
+        "0x832": 1,
+        "0x748": 1,
+        "0xafc": 1,
+        "0xbb7": 1,
+        "0x1391": 1,
+        "0x985": 1
+      }
+    }
+  },
+  "jpeg_preview_batch": [
+    "Assembly__7.motor blower__blower.CATPart",
+    "Assembly__7.motor blower__cover.CATPart",
+    "Assembly__7.motor blower__lower housing.CATPart",
+    "Assembly__7.motor blower__motor.CATPart",
+    "Assembly__7.motor blower__shaft.CATPart"
+  ],
+  "jpeg_preview_n": 5
+}

@@ -15,6 +15,7 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-farm       -- beam/farm-style checkpoint + resume for long jobs (P9-M4-T02)
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
 - P4 oep-step-pmi   -- STEP AP242 semantic-PMI import into oep-pmi (P4-M2-T01)
+- P4 oep-import     -- importer hub: P2/P3/P4 adapters feed the canonical oep-geo model (P6-M4-T02)
 - P6 oep-pmi        -- PMI model schema: GD&T, datums, notes, tolerances (P6-M1-T02)
 - P4 oep-qif        -- QIF (Quality Information Framework) MBD quality data import/export (P4-M4-T01)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton

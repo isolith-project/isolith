@@ -25,6 +25,7 @@ crates/oep-render-worker/.* @don
 crates/oep-web/.* @don
 crates/oep-step/.* @don
 crates/oep-step-pmi/.* @don
+crates/oep-import/.* @don
 crates/oep-pmi/.* @don
 crates/oep-qif/.* @don
 crates/oep-pdm/.* @don

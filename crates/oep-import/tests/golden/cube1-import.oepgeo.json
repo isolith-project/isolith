@@ -1,0 +1,77 @@
+{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-1",
+      "name": "Abaqus_Model",
+      "body_ids": [],
+      "feature_ids": []
+    },
+    {
+      "id": "oep-part-2",
+      "name": "Abaqus_Geometry",
+      "body_ids": [
+        "oep-body-5"
+      ],
+      "feature_ids": []
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-5",
+      "name": "Abaqus_RepReference",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          6.146689884189982e-6,
+          0.00003046930032724049,
+          -0.0002237900043837726
+        ],
+        "max": [
+          9.999990463256836,
+          9.999970436096191,
+          10.0
+        ]
+      },
+      "feature_ids": []
+    }
+  ],
+  "features": [],
+  "assemblies": [
+    {
+      "id": "oep-assembly-1",
+      "name": "Abaqus_Model",
+      "instances": [
+        {
+          "id": "oep-inst-3",
+          "name": "Abaqus_Geometry",
+          "source": {
+            "kind": "part",
+            "id": "oep-part-2"
+          },
+          "transform": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
