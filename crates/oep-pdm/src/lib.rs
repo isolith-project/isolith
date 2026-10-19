@@ -75,6 +75,7 @@ pub mod web;
 pub mod working_set;
 /// Content digest + local in-memory PDM stub (P7-M2-T01 workbench surface).
 pub mod digest;
+pub mod foldersync;
 pub mod local;
 
 pub use api::API_VERSION;
