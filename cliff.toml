@@ -1,0 +1,127 @@
+# Keelworks changelog configuration for git-cliff (P12-T07).
+#
+# Generates release notes from conventional commits (the repo's commit
+# discipline), grouped into categories. Consumed by:
+#   * scripts/release/changelog.sh             (local + release-train dry run)
+#   * .gitea/workflows/release-changelog.yaml  (CI, on each release cut tag)
+#
+# Versioning follows the P0-M5-T03 decision: calendar trains (vYYYY.N,
+# vYYYY.N.P) for releases, strict semver per crate. git-cliff never computes
+# the release version here: scripts/release/changelog.sh passes --tag
+# explicitly, and P12-T05 owns tag creation and the release branch.
+#
+# Schema notes (git-cliff 2.14): header/body/footer templates render the
+# changelog; category labels come from [git].commit_parsers below. The body
+# template renders the categories in the fixed order defined here (git-cliff
+# otherwise sorts group keys lexically), filters merge commits out, and a
+# trailing loop picks up any category a future commit_parser adds so nothing
+# is silently dropped.
+
+[changelog]
+header = """# Keelworks Changelog
+
+All notable changes to Keelworks are documented here, grouped by category from
+conventional commit messages. Releases follow the P0-M5-T03 calendar train +
+semver decision. This changelog is generated, never hand-written: edit
+scripts/release/changelog.sh, this config, or the commit messages, not this
+file's output.
+"""
+body = """## {{ version | trim_start_matches(pat="v") }}
+
+{% set commits = commits | filter(attribute="merge_commit", value=false) %}
+{% if commits | filter(attribute="group", value="Features") | length > 0 %}
+### Features
+{% for commit in commits | filter(attribute="group", value="Features") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Bug Fixes") | length > 0 %}
+### Bug Fixes
+{% for commit in commits | filter(attribute="group", value="Bug Fixes") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Performance") | length > 0 %}
+### Performance
+{% for commit in commits | filter(attribute="group", value="Performance") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Refactoring") | length > 0 %}
+### Refactoring
+{% for commit in commits | filter(attribute="group", value="Refactoring") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Documentation") | length > 0 %}
+### Documentation
+{% for commit in commits | filter(attribute="group", value="Documentation") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Tests") | length > 0 %}
+### Tests
+{% for commit in commits | filter(attribute="group", value="Tests") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Continuous Integration") | length > 0 %}
+### Continuous Integration
+{% for commit in commits | filter(attribute="group", value="Continuous Integration") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Chores") | length > 0 %}
+### Chores
+{% for commit in commits | filter(attribute="group", value="Chores") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% if commits | filter(attribute="group", value="Build") | length > 0 %}
+### Build
+{% for commit in commits | filter(attribute="group", value="Build") %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% for group, group_commits in commits | group_by(attribute="group") %}
+{% if group != "Features" and group != "Bug Fixes" and group != "Performance" and group != "Refactoring" and group != "Documentation" and group != "Tests" and group != "Continuous Integration" and group != "Chores" and group != "Build" %}
+### {{ group }}
+{% for commit in group_commits %}
+- {% if commit.breaking %}**BREAKING:** {% endif %}{{ commit.id | truncate(length=7, end="") }} **{{ commit.message | split(pat="\\n") | first }}**
+{%- endfor %}
+{% endif %}
+{% endfor %}
+"""
+footer = """
+---
+Generated by git-cliff from the Keelworks conventional commit history.
+"""
+trim = true
+
+[git]
+conventional_commits = true
+# Keep unconventional commits too: nothing is silently dropped, they land in
+# "Other" via the catch-all parser below.
+filter_unconventional = false
+split_commits = false
+commit_parsers = [
+  { message = "^feat",     group = "Features" },
+  { message = "^fix",      group = "Bug Fixes" },
+  { message = "^perf",     group = "Performance" },
+  { message = "^refactor", group = "Refactoring" },
+  { message = "^docs?",    group = "Documentation" },
+  { message = "^test",     group = "Tests" },
+  { message = "^ci",       group = "Continuous Integration" },
+  { message = "^chore",    group = "Chores" },
+  { message = "^build",    group = "Build" },
+  # Merge commits are dropped in the template (merge_commit filter); this
+  # extra guard keeps any merge-shaped subject out of "Other".
+  { message = "^Merge",    skip = true },
+  { message = ".*",        group = "Other" },
+]
+# Honor the repo's tag shape (calendar trains + prereleases). git-cliff uses
+# the most recent tag as the lower bound for "--unreleased"; the release
+# tooling passes an explicit release tag so the rendered version is correct.
+tag_pattern = "v[0-9]+\\.[0-9]+(\\.[0-9]+)?(-[A-Za-z0-9.]+)*"
+topo_order = true
+sort_commits = "oldest"
