@@ -26,6 +26,7 @@ members = [
     "crates/oep-kinematics",
     "crates/oep-rules",
     "crates/oep-sketch",
+    "crates/oep-assem",
     "crates/oep-job",
     "crates/oep-lane",
     "crates/oep-farm",

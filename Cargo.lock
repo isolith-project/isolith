@@ -738,6 +738,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "oep-assem"
+version = "0.1.0"
+dependencies = [
+ "oep-geo",
+ "oep-kinematics",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "oep-cgr"
 version = "0.1.0"
 
