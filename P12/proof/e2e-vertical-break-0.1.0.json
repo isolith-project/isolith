@@ -1,0 +1,73 @@
+{
+  "task": "P12-T09",
+  "title": "E2E scenario suite (reference vertical: import -> model -> release PDM -> render/convert P2P -> share)",
+  "version": "0.1.0",
+  "timestamp": "2026-10-19T00:32:35Z",
+  "exit_code": 1,
+  "schema_version": 1,
+  "summary": {
+    "total": 8,
+    "PASS": 7,
+    "FAIL": 1,
+    "SKIP": 0
+  },
+  "rows": [
+    {
+      "id": "stack-boot",
+      "leg": "BOOT",
+      "status": "PASS",
+      "detail": "packaged stack image keelworks/oep-stack:0.1.0 (oep-web) on http://127.0.0.1:38095",
+      "class": ""
+    },
+    {
+      "id": "import-step",
+      "leg": "IMPORT",
+      "status": "PASS",
+      "detail": "STEP item item-0-04f32c384cb5 rev1 blob sha-verified and re-read byte-identical",
+      "class": ""
+    },
+    {
+      "id": "import-cgr",
+      "leg": "IMPORT",
+      "status": "PASS",
+      "detail": "CGR item item-1-fdb4dcf99343 rev1 seeded and blob-sha verified",
+      "class": ""
+    },
+    {
+      "id": "model-geo",
+      "leg": "MODEL",
+      "status": "PASS",
+      "detail": "oep-geo model item item-2-694d50495b0d rev1 format oep-geo, sha-verified",
+      "class": ""
+    },
+    {
+      "id": "model-convert",
+      "leg": "MODEL",
+      "status": "PASS",
+      "detail": "step2mesh convert ok=1 hash_verified=1 (mesh item item-0-04f32c384cb5-mesh)",
+      "class": ""
+    },
+    {
+      "id": "release",
+      "leg": "RELEASE",
+      "status": "FAIL",
+      "detail": "deliberate-break: PDM refused the release (corrupt token)",
+      "class": "deliberate-break"
+    },
+    {
+      "id": "render",
+      "leg": "RENDER",
+      "status": "PASS",
+      "detail": "oep-render-worker produced a real PNG (1229438 bytes)",
+      "class": ""
+    },
+    {
+      "id": "share",
+      "leg": "SHARE",
+      "status": "PASS",
+      "detail": "model item-2-694d50495b0d shareable: explorer 200, item page 200, preview PNG drawn=3254",
+      "class": ""
+    }
+  ],
+  "report": "e2e-vertical-break-0.1.0.json"
+}

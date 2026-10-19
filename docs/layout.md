@@ -80,6 +80,19 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P14 integration.
 
+## P12 QA / CI (release engineering)
+
+- Rationed per-milestone GA gates live under `.gitea/workflows/` (one workflow
+  per GA-lane feature + the lane gate; the P12 lane gate is the release
+  drill). The E2E scenario suite (`P12/e2e-vertical.md`,
+  `python/oep_tooling/e2e_vertical.py`, `scripts/e2e-vertical.sh`,
+  `.gitea/workflows/ga-gate-p12e2e.yaml`) scripts the reference vertical
+  (import CGR/STEP -> model -> release via PDM -> render/convert via P2P ->
+  share) headlessly and asserts each stage; its pass is a release-blocking CI
+  check (`ga-gate-p12e2e.yaml`) alongside the GA gates, and the
+  deliberate-failure repro (`--break-stage release`) proves a broken stage
+  blocks. Recorded proofs: `P12/proof/e2e-vertical-<ver>.{json,md}`.
+
 P10 hybrid cloud / self-hosted delivery to date ships as tooling + scripts, not
 new crates (the PDM server that carries TLS is P8 `oep-pdm`):
 
