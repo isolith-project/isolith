@@ -1,0 +1,72 @@
+{
+  "format": "oep-knowledge",
+  "version": 1,
+  "units": "mm",
+  "parameters": [
+    { "name": "safe_factor", "type": "number", "value": 2.0 },
+    { "name": "min_thickness", "type": "number", "value": 4.0 },
+    { "name": "max_thickness", "type": "number", "value": 12.0 },
+    { "name": "min_fillet_required", "type": "number", "value": 3.0 },
+    { "name": "material", "type": "string", "value": "AL6061-T6" },
+    { "name": "deburr_status", "type": "string", "value": "UNKNOWN" },
+    { "name": "sheet_thickness",
+      "type": "formula",
+      "expr": "part.bbox.depth" },
+    { "name": "sheet_area",
+      "type": "formula",
+      "expr": "part.bbox.width * part.bbox.length" },
+    { "name": "edge_fillet",
+      "type": "formula",
+      "expr": "part.features[\"oep-feature-bracket-fillet\"].parameters[\"radius\"]" },
+    { "name": "hole_diameter",
+      "type": "formula",
+      "expr": "part.features[\"oep-feature-bracket-hole\"].parameters[\"diameter\"]" },
+    { "name": "hole_depth",
+      "type": "formula",
+      "expr": "part.features[\"oep-feature-bracket-hole\"].parameters[\"depth\"]" },
+    { "name": "max_safe_hole",
+      "type": "formula",
+      "expr": "safe_factor * sheet_thickness" }
+  ],
+  "checks": [
+    {
+      "name": "sheet_min_thickness",
+      "condition": "sheet_thickness >= min_thickness",
+      "message": "Bracket sheet {sheet_thickness} mm is below minimum {min_thickness} mm"
+    },
+    {
+      "name": "sheet_max_thickness",
+      "condition": "sheet_thickness <= max_thickness",
+      "message": "Bracket sheet {sheet_thickness} mm exceeds family maximum {max_thickness} mm"
+    },
+    {
+      "name": "mount_hole_safe",
+      "condition": "hole_diameter <= max_safe_hole",
+      "message": "Mount hole diameter {hole_diameter} mm exceeds safe limit {max_safe_hole} mm for a {sheet_thickness} mm {material} sheet"
+    },
+    {
+      "name": "through_hole",
+      "condition": "abs(hole_depth - sheet_thickness) < 0.001",
+      "message": "Mount hole depth {hole_depth} mm is not through the {sheet_thickness} mm sheet"
+    },
+    {
+      "name": "edge_fillet_deburr",
+      "condition": "edge_fillet >= min_fillet_required",
+      "message": "Edge fillet radius {edge_fillet} mm is below required {min_fillet_required} mm for deburred edges"
+    }
+  ],
+  "rules": [
+    {
+      "name": "thick_sheet_uses_tight_factor",
+      "if": "sheet_thickness >= 6",
+      "then": [ { "op": "set", "parameter": "safe_factor", "value": "1.5" } ],
+      "else": [ { "op": "set", "parameter": "safe_factor", "value": "2.0" } ]
+    },
+    {
+      "name": "auto_deburr_escalate",
+      "if": "edge_fillet < min_fillet_required",
+      "then": [ { "op": "set", "parameter": "deburr_status", "value": "\"ACT\"" } ],
+      "else": [ { "op": "set", "parameter": "deburr_status", "value": "\"OK\"" } ]
+    }
+  ]
+}

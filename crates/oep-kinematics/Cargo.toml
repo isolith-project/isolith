@@ -1,0 +1,17 @@
+[package]
+name = "oep-kinematics"
+description = "P7-M3-T02: own DMU-like mates/kinematics semantics over the oep-geo assembly model (demo solver, no vendor libraries)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+oep-geo = { path = "../oep-geo" }
+
+[dev-dependencies]
+serde_json = "1"
+
+[[bin]]
+name = "oep-kinematics-demo"
+path = "src/bin/oep-kinematics-demo.rs"

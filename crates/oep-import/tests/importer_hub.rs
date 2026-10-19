@@ -24,13 +24,15 @@
 //!    from the real Abaqus cube1 3DXML) is byte-locked: with the corpus the
 //!    live import must reproduce it byte-for-byte; the static lock always runs
 //!    so CI (no corpus) still asserts the canonical structure independently.
-//! 5. P4 STEP adapter (`step::import_bytes`): registered, but returns a typed
-//!    `Reserved` — `oep-step` is an empty skeleton in wave 1 (P4-M1-T01 not
-//!    started); honest reserved seam, never a panic, never fabricated output.
+//! 5. P4 STEP adapter (`step::import_bytes`): the P4 read lane (P4-M1-T01) is
+//!    wired into the hub (seam closed P7-M2-T01) - real STEP bytes import as
+//!    canonical documents that byte-lock a committed golden; junk and
+//!    geometry-less STEP are typed `Skipped` (never panic, never fabricated).
 //! 6. Errors are typed (never panic) on any bytes: junk, truncated, unknown.
 
 use oep_geo::{BodyKind, Document, InstanceSource, Transform};
 use oep_import::{adapters, ImportOutcome, SourceKind};
+use std::path::PathBuf;
 
 // ---------------------------------------------------------------------------
 // helpers
@@ -88,6 +90,12 @@ fn detect_cgr_3dxml_step_bytes() {
         0x4F,
     ]);
     assert_eq!(SourceKind::detect(&cgr), Some(SourceKind::Cgr));
+
+    // Modern CGR/V5 family container: V5_CFV2\0 magic (P2-M7-T01 latch).
+    let mut modern = Vec::new();
+    modern.extend_from_slice(b"V5_CFV2\0");
+    modern.extend_from_slice(&[0u8; 32]);
+    assert_eq!(SourceKind::detect(&modern), Some(SourceKind::Cgr));
 
     // 3DXML ZIP archive.
     let zip_head = b"PK\x03\x04rest-of-file";
@@ -246,20 +254,147 @@ fn p3_live_import_reproduces_committed_golden() {
 }
 
 // ---------------------------------------------------------------------------
-// 5. P4 STEP adapter — reserved seam, honest
+// 4b. P2 modern CGR adapter - real latched mesh through the hub (P7-M2-T01)
 // ---------------------------------------------------------------------------
 
-#[test]
-fn p4_step_import_is_reserved_seam() {
-    let outcome = adapters::step::import_bytes(b"ISO-10303-21;\nHEADER;whatever");
-    match outcome {
-        Ok(ImportOutcome::Reserved { source, .. }) => {
-            assert_eq!(source, SourceKind::Step, "reserved source is Step");
+const MODERN_CGR_GOLDEN_REL: &str = "tests/golden/cgr-modern-stc06-import.oepgeo.json";
+const MODERN_SAMPLE_NAME: &str = "nist_stc_06_asme1_V56R2023.CATPart";
+
+fn modern_cgr_sample() -> Option<PathBuf> {
+    let Ok(env) = std::env::var("OEP_CGR_SAMPLES") else {
+        return None;
+    };
+    for chunk in env.split([':', ',']) {
+        let chunk = chunk.trim();
+        if chunk.is_empty() {
+            continue;
         }
-        other => panic!("STEP must be a typed Reserved outcome, got {other:?}"),
+        let cand = PathBuf::from(chunk).join(MODERN_SAMPLE_NAME);
+        if cand.is_file() {
+            return Some(cand);
+        }
     }
-    // Junk STEP bytes also never panic.
-    let _ = adapters::step::import_bytes(b"junk");
+    None
+}
+
+#[test]
+fn p2_modern_cgr_golden_static_structural() {
+    // Always runs (no corpus): the committed golden is the canonical Document
+    // the real NIST STC-06 material produced through the modern CGR lane, with
+    // the exact measured counts from the P2-M7-T01 latch.
+    let text = std::fs::read_to_string(
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(MODERN_CGR_GOLDEN_REL),
+    )
+    .expect("committed golden");
+    let doc = Document::from_json_pretty(&text).expect("golden reparses");
+    is_canonical(&doc);
+    assert_eq!(doc.parts.len(), 1);
+    assert_eq!(doc.bodies.len(), 1);
+    let feat = &doc.features[0];
+    let param = |k: &str| feat.parameters.get(k).and_then(|v| v.as_u64());
+    assert_eq!(param("records"), Some(18));
+    assert_eq!(param("triangle_count"), Some(1389));
+    assert_eq!(param("index_count"), Some(2003));
+    assert_eq!(param("vertex_count"), Some(1037));
+    assert_eq!(param("max_index"), Some(1990));
+}
+
+#[test]
+fn p2_modern_cgr_live_import_reproduces_committed_golden() {
+    // Real-material leg: with the corpus, the live modern import MUST reproduce
+    // the committed golden byte-for-byte. SKIPs in CI when OEP_CGR_SAMPLES is
+    // absent (repo convention).
+    let Some(sample) = modern_cgr_sample() else {
+        eprintln!("SKIP: no modern NIST sample (set OEP_CGR_SAMPLES)");
+        return;
+    };
+    let bytes = std::fs::read(&sample).expect("readable");
+    assert_eq!(SourceKind::detect(&bytes), Some(SourceKind::Cgr));
+    let outcome = oep_import::import_bytes(SourceKind::Cgr, &bytes).expect("no panic");
+    let ImportOutcome::Imported { document, .. } = outcome else {
+        panic!("STC-06 must import through the modern CGR lane, got {outcome:?}");
+    };
+    // Structural + determinism gate (NOT a strict parse round trip): the bbox
+    // min z is an f32-widened value (-247.64999389648438) that serde_json's
+    // decimal parser reconstructs 1 ULP off, a pre-existing oep-geo/serde
+    // property unrelated to this card. The REAL verification here is the byte
+    // lock below: the live serialization must equal the committed golden.
+    assert_eq!(document.format(), "oep-geo");
+    assert_eq!(document.version(), 1);
+    assert!(
+        document.validate().is_empty(),
+        "STC-06 document must validate: {:?}",
+        document.validate()
+    );
+    let live = document.to_json_pretty().expect("serialize");
+    let golden = std::fs::read_to_string(
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(MODERN_CGR_GOLDEN_REL),
+    )
+    .expect("committed golden");
+    assert_eq!(live, golden, "live modern import byte-matches the golden");
+}
+
+// ---------------------------------------------------------------------------
+// 5. P4 STEP adapter - real read lane (seam closed P7-M2-T01)
+// ---------------------------------------------------------------------------
+
+const STEP_GOLDEN_REL: &str = "tests/golden/box-reference-import.oepgeo.json";
+const STEP_FIXTURE_REL: &str = "../oep-step/tests/golden/box-reference.step";
+
+fn step_fixture_path() -> std::path::PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(STEP_FIXTURE_REL)
+}
+
+#[test]
+fn p4_step_import_lives_and_byte_locks_committed_golden() {
+    // The real committed STEP part imports through the hub as a canonical
+    // document that byte-matches the committed golden (generated by the same
+    // real fixture via examples/gen_step_golden.rs).
+    let bytes = std::fs::read(step_fixture_path()).expect("committed STEP fixture");
+    assert_eq!(SourceKind::detect(&bytes), Some(SourceKind::Step));
+    let outcome = oep_import::import_bytes(SourceKind::Step, &bytes).expect("no panic");
+    let ImportOutcome::Imported { document, report } = outcome else {
+        panic!("box-reference.step must import (seam closed), got {outcome:?}");
+    };
+    is_canonical(&document);
+    assert!(
+        report.parts >= 1 && report.bodies >= 1,
+        "mapped a shell body"
+    );
+    let live = document.to_json_pretty().expect("serialize");
+    let golden =
+        std::fs::read_to_string(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(STEP_GOLDEN_REL))
+            .expect("committed STEP golden");
+    assert_eq!(live, golden, "live STEP import byte-matches the golden");
+}
+
+#[test]
+fn p4_step_static_golden_is_canonical() {
+    // Always runs (no corpus): independent structural re-parse of the committed
+    // STEP golden (unit box: 1 part / 1 solid body at [0,0,0]-[1,1,1]).
+    let text =
+        std::fs::read_to_string(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(STEP_GOLDEN_REL))
+            .expect("committed golden");
+    let doc = Document::from_json_pretty(&text).expect("golden reparses");
+    is_canonical(&doc);
+    assert_eq!(doc.parts.len(), 1);
+    assert_eq!(doc.bodies.len(), 1);
+    let bb = doc.bodies[0].bbox.expect("solid bbox");
+    assert_eq!(bb.min, [0.0, 0.0, 0.0]);
+    assert_eq!(bb.max, [1.0, 1.0, 1.0]);
+}
+
+#[test]
+fn p4_step_junk_is_typed_skip_never_panic() {
+    // Junk STEP bytes: typed Skipped (not a reserved seam anymore, still no
+    // panic and no fabricated geometry).
+    let outcome = adapters::step::import_bytes(b"not-a-step-at-all").expect("no panic");
+    assert!(matches!(outcome, ImportOutcome::Skipped { .. }));
+    // STEP-looking header but no faceted geometry: typed skip.
+    let outcome =
+        adapters::step::import_bytes(b"ISO-10303-21;\nHEADER;\nENDSEC;\nEND-ISO-10303-21;")
+            .expect("no panic");
+    assert!(matches!(outcome, ImportOutcome::Skipped { .. }));
 }
 
 // ---------------------------------------------------------------------------

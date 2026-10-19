@@ -28,6 +28,9 @@ crates/oep-step-pmi/.* @don
 crates/oep-import/.* @don
 crates/oep-pmi/.* @don
 crates/oep-qif/.* @don
+crates/oep-shell/.* @don
+crates/oep-kinematics/.* @don
+crates/oep-rules/.* @don
 crates/oep-pdm/.* @don
 crates/oep-job/.* @don
 crates/oep-lane/.* @don

@@ -1,0 +1,12 @@
+[package]
+name = "oep-rules"
+description = "P7-M4-T02: Rules/checks sandbox - knowledge-light formulas + checks engine over oep-geo parts (documented not-parity with V5 Knowledgeware)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+oep-geo = { path = "../oep-geo" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

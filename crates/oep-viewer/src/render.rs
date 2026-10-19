@@ -19,6 +19,7 @@
 use crate::camera::Camera;
 use crate::clip::ClipPlane;
 use crate::scene::{Primitive, Scene};
+use crate::theme;
 use oep_geo::math::{Mat4, Vec3};
 
 /// Width of the rendered frame.
@@ -56,44 +57,6 @@ impl RgbaImage {
     }
 }
 
-/// Stable per-part color from a simple string hash (fixed across runs, no
-/// std HashMap randomness involved).
-fn part_color(part_id: &str) -> [u8; 4] {
-    let mut h: u32 = 2166136261;
-    for b in part_id.bytes() {
-        h ^= b as u32;
-        h = h.wrapping_mul(16777619);
-    }
-    let hue = (h >> 8) % 360;
-    let (r, g, b) = hsv_to_rgb(hue as f64, 0.65, 0.9);
-    [r, g, b, 255]
-}
-
-/// Convert HSV to RGB, all channels in [0,1] -> [0,255].
-fn hsv_to_rgb(h: f64, s: f64, v: f64) -> (u8, u8, u8) {
-    let c = v * s;
-    let x = c * (1.0 - ((h / 60.0) % 2.0 - 1.0).abs());
-    let m = v - c;
-    let (r, g, b) = if h < 60.0 {
-        (c, x, 0.0)
-    } else if h < 120.0 {
-        (x, c, 0.0)
-    } else if h < 180.0 {
-        (0.0, c, x)
-    } else if h < 240.0 {
-        (0.0, x, c)
-    } else if h < 300.0 {
-        (x, 0.0, c)
-    } else {
-        (c, 0.0, x)
-    };
-    (
-        ((r + m) * 255.0).round() as u8,
-        ((g + m) * 255.0).round() as u8,
-        ((b + m) * 255.0).round() as u8,
-    )
-}
-
 /// A projected, clipped face: normalized device coordinates + depth.
 struct FaceNdc {
     /// NDC triangle(s) to fill, plus per-vertex z (unused for painter, kept for
@@ -124,11 +87,11 @@ pub fn render(
         height,
         data: vec![0; (width * height * 4) as usize],
     };
-    // Background: dark neutral.
+    // Background: dark neutral from the theme single source.
     for i in (0..img.data.len()).step_by(4) {
-        img.data[i] = 28;
-        img.data[i + 1] = 30;
-        img.data[i + 2] = 34;
+        img.data[i] = theme::BACKGROUND_RGB[0];
+        img.data[i + 1] = theme::BACKGROUND_RGB[1];
+        img.data[i + 2] = theme::BACKGROUND_RGB[2];
         img.data[i + 3] = 255;
     }
     if scene.primitives.is_empty() {
@@ -144,7 +107,7 @@ pub fn render(
     // Collect faces, frustum/clip culled, transformed to NDC with view depth.
     let mut faces: Vec<FaceNdc> = Vec::new();
     for prim in &scene.primitives {
-        let color = part_color(&prim.part_id);
+        let color = theme::part_color(&prim.part_id);
         for face in box_faces(prim) {
             // Clip against every enabled clip plane.
             let mut clipped: Vec<Vec3> = face.to_vec();
@@ -453,6 +416,14 @@ mod tests {
         let cam = Camera::default();
         let img = render(&scene, &cam, &[], 32, 32);
         assert_eq!(img.data.len(), 32 * 32 * 4);
-        assert_eq!(img.pixel(0, 0), [28, 30, 34, 255]);
+        assert_eq!(
+            img.pixel(0, 0),
+            [
+                theme::BACKGROUND_RGB[0],
+                theme::BACKGROUND_RGB[1],
+                theme::BACKGROUND_RGB[2],
+                255
+            ]
+        );
     }
 }

@@ -1,0 +1,56 @@
+{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-step-1",
+      "name": "box-reference",
+      "body_ids": [
+        "oep-body-step-1"
+      ],
+      "feature_ids": [
+        "oep-feature-step-import"
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-step-1",
+      "name": "step-shell-1",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "feature_ids": [
+        "oep-feature-step-import"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "oep-feature-step-import",
+      "name": "step-import",
+      "kind": "ImportStep",
+      "parameters": {
+        "face_count": 12.0,
+        "shell_count": 1.0,
+        "triangle_count": 12.0,
+        "vertex_count": 8.0
+      },
+      "body_ids": [
+        "oep-body-step-1"
+      ]
+    }
+  ],
+  "assemblies": []
+}

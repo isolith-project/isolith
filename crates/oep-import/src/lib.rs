@@ -35,23 +35,29 @@ pub use oep_geo::{
 /// The three source formats an adapter can feed into `oep-geo`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SourceKind {
-    /// P2 — CGR (Dassault geometry/tessellation container).
+    /// P2 - CGR (Dassault geometry/tessellation container, both eras).
     Cgr,
-    /// P3 — 3DXML (ZIP archive or standalone XML model document).
+    /// P3 - 3DXML (ZIP archive or standalone XML model document).
     ThreeDXml,
-    /// P4 — STEP (ISO 10303-21); reader reserved in wave 1.
+    /// P4 - STEP (ISO 10303-21 faceted read lane; seam closed P7-M2-T01).
     Step,
 }
 
 impl SourceKind {
     /// Classify raw bytes into a source kind by observed signatures.
     ///
-    /// - CGR: u32 LE == 1 at 0x00 (observed magic, hex notebook P1-M2-T01).
+    /// - CGR: classic u32 LE == 1 at 0x00 (observed magic, hex notebook
+    ///   P1-M2-T01) or the modern `V5_CFV2\0` container magic (P2-M7-T01
+    ///   real-material latch).
     /// - 3DXML: ZIP local header `PK\x03\x04` or standalone `<?xm`.
     /// - STEP: `ISO-10303-21` (the exchange-structure header).
     ///
     /// `None` (never an error/panic) for anything else, including short input.
     pub fn detect(bytes: &[u8]) -> Option<SourceKind> {
+        // Modern CGR/V5 family container (V5_CFV2\0, spec §3.1).
+        if bytes.len() >= 8 && &bytes[..8] == b"V5_CFV2\0" {
+            return Some(SourceKind::Cgr);
+        }
         if bytes.len() >= 4 {
             let head = [bytes[0], bytes[1], bytes[2], bytes[3]];
             // CGR magic u32 LE == 1.

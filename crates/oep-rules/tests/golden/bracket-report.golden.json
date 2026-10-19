@@ -1,0 +1,127 @@
+{
+  "format": "oep-rules-report",
+  "version": 1,
+  "units": "mm",
+  "part": {
+    "id": "oep-part-bracket",
+    "name": "bracket",
+    "part_number": "KW-BKT-001"
+  },
+  "parameters": [
+    {
+      "name": "safe_factor",
+      "value": 1.5,
+      "source": "rule",
+      "rule": "thick_sheet_uses_tight_factor"
+    },
+    {
+      "name": "min_thickness",
+      "value": 4.0,
+      "source": "literal"
+    },
+    {
+      "name": "max_thickness",
+      "value": 12.0,
+      "source": "literal"
+    },
+    {
+      "name": "min_fillet_required",
+      "value": 3.0,
+      "source": "literal"
+    },
+    {
+      "name": "material",
+      "value": "AL6061-T6",
+      "source": "literal"
+    },
+    {
+      "name": "deburr_status",
+      "value": "ACT",
+      "source": "rule",
+      "rule": "auto_deburr_escalate"
+    },
+    {
+      "name": "sheet_thickness",
+      "value": 6.0,
+      "source": "formula"
+    },
+    {
+      "name": "sheet_area",
+      "value": 3200.0,
+      "source": "formula"
+    },
+    {
+      "name": "edge_fillet",
+      "value": 2.0,
+      "source": "formula"
+    },
+    {
+      "name": "hole_diameter",
+      "value": 6.0,
+      "source": "formula"
+    },
+    {
+      "name": "hole_depth",
+      "value": 6.0,
+      "source": "formula"
+    },
+    {
+      "name": "max_safe_hole",
+      "value": 9.0,
+      "source": "formula"
+    }
+  ],
+  "checks": [
+    {
+      "name": "sheet_min_thickness",
+      "passed": true,
+      "message": "Bracket sheet 6 mm is below minimum 4 mm"
+    },
+    {
+      "name": "sheet_max_thickness",
+      "passed": true,
+      "message": "Bracket sheet 6 mm exceeds family maximum 12 mm"
+    },
+    {
+      "name": "mount_hole_safe",
+      "passed": true,
+      "message": "Mount hole diameter 6 mm exceeds safe limit 9 mm for a 6 mm AL6061-T6 sheet"
+    },
+    {
+      "name": "through_hole",
+      "passed": true,
+      "message": "Mount hole depth 6 mm is not through the 6 mm sheet"
+    },
+    {
+      "name": "edge_fillet_deburr",
+      "passed": false,
+      "message": "Edge fillet radius 2 mm is below required 3 mm for deburred edges"
+    }
+  ],
+  "rules": [
+    {
+      "name": "thick_sheet_uses_tight_factor",
+      "branch": "then",
+      "actions": [
+        {
+          "op": "set",
+          "parameter": "safe_factor",
+          "value": 1.5,
+          "changed": true
+        }
+      ]
+    },
+    {
+      "name": "auto_deburr_escalate",
+      "branch": "then",
+      "actions": [
+        {
+          "op": "set",
+          "parameter": "deburr_status",
+          "value": "ACT",
+          "changed": true
+        }
+      ]
+    }
+  ]
+}

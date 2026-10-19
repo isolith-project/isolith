@@ -2,8 +2,8 @@
 //!
 //! Each adapter maps ONE source format into the canonical [`oep_geo::Document`].
 //! The registry is deliberately small and total: every [`SourceKind`] has an
-//! adapter today (CGR, 3DXML) or a typed reserved seam (STEP), so the hub's
-//! `import_bytes` dispatch never panics on a missing handler.
+//! adapter today (CGR both eras, 3DXML, STEP via the P4 read lane), so the
+//! hub's `import_bytes` dispatch never panics on a missing handler.
 
 pub mod cgr;
 pub mod step;

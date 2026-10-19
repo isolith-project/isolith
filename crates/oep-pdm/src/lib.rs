@@ -61,8 +61,13 @@ pub mod store;
 pub mod stub;
 pub mod sync;
 pub mod working_set;
+/// Content digest + local in-memory PDM stub (P7-M2-T01 workbench surface).
+pub mod digest;
+pub mod local;
 
 pub use api::API_VERSION;
+pub use api::{PdmClient, PdmError, PdmWriteRequest, RevisionSummary};
+pub use local::LocalPdmVault;
 pub use state::{Maturity, RevisionState};
 pub use sync::{EditStatus, LocalEdit, OfflineWorkingSet, SyncEngine, SyncError, SyncReport};
 

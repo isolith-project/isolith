@@ -115,16 +115,42 @@ m.push_triangle(a, b, c).unwrap();
 assert!(m.validate().is_ok());
 ```
 
-## 6. Open items
+## 6. Open items — updated by P2-M7-T01 (2026-10-16, fresh pairing + modern latch)
 
-- Land P2-M1-T03 (block walker) and P2-M1-T06 (diff harness), then extend
-  `extract` with their per-record grammar; flip the 11 `MeshNotFound` skips
-  to `Ok(mesh)` as facts permit, one sample at a time.
-- Procure a modern-era (V5-6R2015+/3DEXPERIENCE) license-clean CGR and re-run
-  the same probes; the old-era corpus may simply predate the geometry layout
-  that modern CGRs use (P1-M2-T02 §6 blocked-on-sample).
-- P2-M2-T04 will add the fidelity budget (vertex/triangle counts vs native)
-  once a real extraction exists.
+The P2-M7-T01 fresh pairing attempt (docs/re-notes/oep-cgr-real-material-locate.md)
+resolved the prior *"triangle-stream offset unknown"* state into a measured
+three-part number:
+
+- **Piston (2007-era) family: triangle-stream RECORDS are now LOCATED.**
+  The payload is a polygon-soup of `[u16BE N][N x u16BE counts][S x u16BE
+  handles]` records where every handle is `3 * vertex_index`; 21 records
+  (31 at `S>=20`) with exact offsets and scale counts are committed, and a
+  numeric-epsilon (1e-6) golden anchors the @0xA0DC record
+  (face 6 / index 35 / vertex 27 / triangle 23 / max-index 246).
+- **Coordinate pool of this corpus is NOT contiguous f32** (measured: no f32
+  lattice of >=247 vertices exists in piston; quantized 3-byte blobs exist but
+  their scale/offset coding is unresolved), so a spatial `Mesh` on the
+  old-era corpus is honestly still NOT fabricated.
+- **R19-era cfysa family carries zero counts/handles records** — a different
+  payload family; its probes stay as recorded in §3.
+- **Modern-era (V5-6R2015+/3DEXPERIENCE) latch: DONE on real material.**
+  Via the public-domain NIST STC/FTC/CTC archives (V5-6R2019 + V5-6R2023,
+  US Government test data, no login), `modern.rs` + the Python reference
+  decode the embedded CGR-family visualization stream by the documented
+  container + trim grammar (cadmpeg §5.3/§5.4.2): genuine `0x4x` packets
+  satisfying `N == 3*A + sum(K)`, a `ff ff 02 00 01 ff` indexed
+  visualization-point f32 pool, and — on the STC-06 anchor — a spatial mesh
+  with golden counts records=18 / triangle=1389 / index=2003 / vertex=1037 /
+  max_index=1990, committed numeric-epsilon (1e-6) and verified by two
+  independent readers. This flips this card's `MeshNotFound` to `Ok(mesh)`
+  for real modern material.
+
+Remaining honestly-open corners:
+- old-era (piston) coordinate coding (quantized 3-byte blobs) — a 2007-era
+  quantization family with no public reader; unchanged.
+- a literal standalone modern `.cgr` cache file (as opposed to the modern
+  container's embedded CGR-family stream) requires a CATIA cache dump or an
+  account-gated sample; neither provisioned.
 
 ## 7. Clean-room statement
 

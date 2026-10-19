@@ -31,6 +31,9 @@ pub mod modern;
 /// Clean-room byte-level CGR header spine parser (P2-M1-T01).
 pub mod header;
 
+/// Real-material modern-era CGR locate latch (P2-M7-T01, P7-M2-T01 importer).
+pub mod locate;
+
 /// Central table-of-blocks walker with bounds checks (P2-M1-T03).
 pub mod blocks;
 
