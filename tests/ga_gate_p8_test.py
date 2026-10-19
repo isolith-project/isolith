@@ -103,7 +103,7 @@ def test_multiuser_leg_runs_real_cycle():
     with tempfile.TemporaryDirectory() as td:
         port = _free_port()
         proc = subprocess.Popen(
-            [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", td],
+            [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", td, "--no-auth"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
         try:
@@ -138,7 +138,7 @@ def test_locks_leg_respected():
     with tempfile.TemporaryDirectory() as td:
         port = _free_port()
         proc = subprocess.Popen(
-            [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", td],
+            [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", td, "--no-auth"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
             time.sleep(0.8)
@@ -171,7 +171,7 @@ def test_run_gate_report_and_exit_code():
     with tempfile.TemporaryDirectory() as td:
         port = _free_port()
         proc = subprocess.Popen(
-            [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", td],
+            [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", td, "--no-auth"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
             time.sleep(0.8)

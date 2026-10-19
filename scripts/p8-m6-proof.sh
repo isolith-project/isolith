@@ -20,7 +20,9 @@ if [ ! -x "$BIN" ]; then
   cargo build -p oep-pdm --bin oep-pdm-stub
 fi
 
-"$BIN" --addr "127.0.0.1:$PORT" > /tmp/pdm_stub_m6.log 2>&1 &
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
+"$BIN" --addr "127.0.0.1:$PORT" --no-auth > /tmp/pdm_stub_m6.log 2>&1 &
 PID=$!
 trap 'kill "$PID" 2>/dev/null || true' EXIT
 

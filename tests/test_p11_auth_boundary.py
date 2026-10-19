@@ -31,6 +31,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOC = os.path.join(ROOT, "P11", "auth-boundary.md")
 WORKFLOW = os.path.join(ROOT, ".gitea", "workflows", "ga-gate-p11.yaml")
 SUITE = os.path.join(ROOT, "crates", "oep-pdm", "tests", "auth_boundary.rs")
+SERVICE_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "service.rs")
 
 # Every artifact the card's acceptance/layout depends on existing.
 ARTIFACTS = [
@@ -77,6 +78,9 @@ DOC_MARKERS = [
     "ManageSystem (admin only",
     "permissive-stub",
     "permissive_authorizer",
+    "| D6 ",
+    "SEC-AUTHZ-DEFAULT",
+    "--no-auth",
 ]
 
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -121,6 +125,20 @@ def main():
             "TcpStream::connect" in suite,
             "auth_boundary.rs must exercise the suite over real sockets",
         )
+        # SEC-AUTHZ-DEFAULT: the suite must re-run the attack matrix against
+        # the shipped DEFAULT binary and prove the --no-auth opt-out warns.
+        check(
+            "default_binary_denies_the_attack_matrix" in suite,
+            "auth_boundary.rs must run the attack matrix against the default binary",
+        )
+        check(
+            "no_auth_optout_warns_and_opens_the_contract" in suite,
+            "auth_boundary.rs must prove the --no-auth opt-out warns and opens",
+        )
+        check(
+            "CARGO_BIN_EXE_oep-pdm" in suite,
+            "auth_boundary.rs must boot the real shipped oep-pdm binary",
+        )
 
     # --- doc invariants ----------------------------------------------------
     if os.path.isfile(DOC):
@@ -145,6 +163,26 @@ def main():
             )
     else:
         failures.append("P11/auth-boundary.md missing")
+
+    # --- default wiring (SEC-AUTHZ-DEFAULT) --------------------------------
+    if os.path.isfile(SERVICE_SRC):
+        svc = read(SERVICE_SRC)
+        check(
+            "strict_boundary_authorizer" in svc and "--no-auth" in svc,
+            "service.rs must wire the strict boundary into the default start "
+            "path with an explicit --no-auth opt-out",
+        )
+        check(
+            "start_with_store_tls_and_authorizer" in svc,
+            "service.rs must combine TLS with the auth gate for the binary path",
+        )
+        for m in ("AUTHORIZATION IS DISABLED", "authorization: ENFORCED"):
+            check(
+                m in svc,
+                "service.rs must announce the auth state and warn on the opt-out",
+            )
+    else:
+        failures.append("crates/oep-pdm/src/service.rs missing")
 
     # --- ci ----------------------------------------------------------------
     if os.path.isfile(WORKFLOW):

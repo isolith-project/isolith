@@ -72,7 +72,7 @@ class Stub:
         _ensure_binary()
         self.port = _free_port()
         self.addr = f"127.0.0.1:{self.port}"
-        cmd = [STUB_BIN, "--addr", self.addr]
+        cmd = [STUB_BIN, "--addr", self.addr, "--no-auth"]
         if persist_dir is not None:
             cmd += ["--persist-dir", str(persist_dir)]
         self.proc = subprocess.Popen(

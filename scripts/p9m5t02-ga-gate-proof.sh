@@ -56,7 +56,9 @@ PY
 # 4. Boot the shared vault on 0.0.0.0 (LAN-reachable so remote nodes hit it).
 echo "[4/5] booting shared P8 vault on 0.0.0.0:$PORT..."
 PERSIST=$(mktemp -d -t p9ga-proof-XXXXXX)
-"$CARGO_TARGET_DIR/debug/oep-pdm" --addr "0.0.0.0:$PORT" --persist-dir "$PERSIST" \
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
+"$CARGO_TARGET_DIR/debug/oep-pdm" --addr "0.0.0.0:$PORT" --persist-dir "$PERSIST" --no-auth \
     > /tmp/p9ga-proof-vault.log 2>&1 &
 VPID=$!
 trap 'kill $VPID 2>/dev/null || true; rm -rf "$PERSIST"' EXIT

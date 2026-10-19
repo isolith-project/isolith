@@ -18,7 +18,15 @@
 #
 # All service ports are configurable via OEP_* vars (defaults below); the
 # bind is deliberately 127.0.0.1 on the host side so nothing is exposed to
-# the LAN without the operator publishing it (on-prem posture, decision #10).
+# the LAN until the operator publishes it (decision #10).
+#
+# SEC-AUTHZ-DEFAULT (SEC-AUTHZ-DEFAULT, 2026-10-18): the pdm service now runs
+# behind the P11-T03 RBAC boundary by default. The REST API v1 requires the
+# identity headers X-Oep-User / X-Oep-Roles / X-Oep-Tenant (authorization-
+# grade; the P8-M3-T01 identity layer will replace them with a verified
+# passport). To run the open contract, add "--no-auth" to the pdm command
+# below -- for controlled test / air-gap use ONLY; the binary prints a loud
+# warning when authorization is disabled.
 
 name: keelworks
 

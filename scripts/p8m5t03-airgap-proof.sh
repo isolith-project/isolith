@@ -30,7 +30,9 @@ if [ ! -x "$BIN" ]; then
 fi
 
 echo "air-gap role boot (loopback-only, telemetry off, no relay)"
-"$BIN" --addr "127.0.0.1:$PORT" > /tmp/p8m5t03_pdm.log 2>&1 &
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
+"$BIN" --addr "127.0.0.1:$PORT" --no-auth > /tmp/p8m5t03_pdm.log 2>&1 &
 PID=$!
 trap 'kill "$PID" 2>/dev/null || true' EXIT
 

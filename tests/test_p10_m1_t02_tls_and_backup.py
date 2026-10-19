@@ -126,7 +126,8 @@ def test_tls_terminates_over_https():
         port = _free_port()
         proc = subprocess.Popen(
             [str(BIN), "--addr", "127.0.0.1:%d" % port, "--persist-dir",
-             str(td / "vault"), "--tls-cert", str(cert), "--tls-key", str(key)],
+             str(td / "vault"), "--tls-cert", str(cert), "--tls-key", str(key),
+             "--no-auth"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
             time.sleep(1.0)
@@ -217,7 +218,7 @@ def test_install_schedule_and_restore_round_trip():
 
         port = _free_port()
         proc = subprocess.Popen(
-            [str(BIN), "--addr", "127.0.0.1:%d" % port, "--persist-dir", str(vault)],
+            [str(BIN), "--addr", "127.0.0.1:%d" % port, "--persist-dir", str(vault), "--no-auth"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
             time.sleep(1.0)

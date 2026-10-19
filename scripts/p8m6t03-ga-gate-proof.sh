@@ -21,7 +21,9 @@ if [ ! -x "$BIN" ]; then
   exit 2
 fi
 
-"$BIN" --addr "127.0.0.1:$PORT" --persist-dir "$PERSIST" > /tmp/p8m6t03_ga.log 2>&1 &
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
+"$BIN" --addr "127.0.0.1:$PORT" --persist-dir "$PERSIST" --no-auth > /tmp/p8m6t03_ga.log 2>&1 &
 PID=$!
 trap 'kill "$PID" 2>/dev/null || true; rm -rf "$PERSIST"' EXIT
 

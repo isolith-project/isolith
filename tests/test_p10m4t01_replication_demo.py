@@ -91,7 +91,7 @@ def _start_service(port, persist_dir):
     if not bin_p.is_file():
         return None
     proc = subprocess.Popen(
-        [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", persist_dir],
+        [str(bin_p), "--addr", "127.0.0.1:%d" % port, "--persist-dir", persist_dir, "--no-auth"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return proc
 

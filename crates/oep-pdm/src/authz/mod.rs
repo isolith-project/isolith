@@ -24,14 +24,21 @@
 //!   split the card's acceptance names as "403/404".
 //! * Endpoints outside the mapped contract surface: `404` (no oracle either).
 //!
-//! ## Opt-in wiring
+//! ## Default wiring (SEC-AUTHZ-DEFAULT)
 //!
-//! The boundary is intentionally opt-in. `PdmService::start` / the shipped
-//! binaries keep today's open behavior; the security suite and the future
-//! identity-landing path use `PdmService::start_with_authorizer`, which layers
-//! the same handlers behind this gate. When the P8-M3-T01 identity layer
-//! lands, the header-carried principal here is replaced by a verified
-//! passport; the decision path stays exactly the same.
+//! SECURE BY DEFAULT: the shipped binaries (`oep-pdm`, `oep-pdm-stub`)
+//! boot through this gate on every start (see `service::serve_from_args`,
+//! which builds `policy::strict_boundary_authorizer` unless the operator
+//! explicitly passes `--no-auth`). The open contract is therefore the
+//! opt-OUT, available only for controlled test / air-gap use, and opting
+//! out prints a loud startup warning that authorization is disabled.
+//!
+//! The library serve paths (`PdmService::start*` with no authorizer) remain
+//! open for embedders and in-process tests, which is why the security suite
+//! boots the real binary for its default-path assertions. When the
+//! P8-M3-T01 identity layer lands, the header-carried principal here is
+//! replaced by a verified passport; the decision path stays exactly the
+//! same.
 
 pub mod endpoints;
 pub mod gate;
