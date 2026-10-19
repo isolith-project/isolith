@@ -837,6 +837,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "oep-sketch"
+version = "0.1.0"
+dependencies = [
+ "oep-geo",
+ "serde",
+ "serde_json",
+ "vcad-kernel-constraints",
+]
+
+[[package]]
 name = "oep-state"
 version = "0.1.0"
 dependencies = [
@@ -915,6 +925,12 @@ name = "once_cell"
 version = "1.21.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50"
+
+[[package]]
+name = "paste"
+version = "1.0.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
 name = "percent-encoding"
@@ -997,6 +1013,12 @@ dependencies = [
  "untrusted",
  "windows-sys 0.52.0",
 ]
+
+[[package]]
+name = "robust"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4e27ee8bb91ca0adcf0ecb116293afa12d393f9c2b9b9cd54d33e8078fe19839"
 
 [[package]]
 name = "rustc_version"
@@ -1173,6 +1195,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5"
 
 [[package]]
+name = "slotmap"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bdd58c3c93c3d278ca835519292445cb4b0d4dc59ccfdf7ceadaab3f8aeb4038"
+dependencies = [
+ "version_check",
+]
+
+[[package]]
 name = "smallvec"
 version = "1.16.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1230,6 +1261,54 @@ name = "sync_wrapper"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0bf256ce5efdfa370213c1dabab5935a12e49f2c58d15e9eac2870d3b4f27263"
+
+[[package]]
+name = "tang"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "01222e2be85bd48a1b129975a3b4045f425adaceb6ecda6e7a97cdb8dd96a75a"
+dependencies = [
+ "paste",
+ "robust",
+]
+
+[[package]]
+name = "tang-expr"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f1fdb85a4a0335eb38eac4635d080d54f2cb093e66ef54ce0c5460d35457e90"
+dependencies = [
+ "tang",
+]
+
+[[package]]
+name = "tang-la"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "32a1cf961cd2968a09fb079624db1eae07390acbe238fe61f075555b5302009d"
+dependencies = [
+ "tang",
+]
+
+[[package]]
+name = "thiserror"
+version = "2.0.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09e52cb86a36cede5cb101bf8908837b3e4c6e5e59fe7fd85c23fb56200d189e"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "2.0.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fe5197923287db20a58125f0bc85c062f7f2c892de97b18c356f9efb14b28524"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 3.0.9",
+]
 
 [[package]]
 name = "tokio"
@@ -1352,6 +1431,74 @@ name = "untrusted"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ecb6da28b8a351d773b68d5825ac39017e680750f980f3a1a85cd8dd28a47c1"
+
+[[package]]
+name = "vcad-kernel-constraints"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "22707aca1db91e2f30f4016f5909b7fcc6ed97653154cc716528e1edee1eec80"
+dependencies = [
+ "slotmap",
+ "tang",
+ "tang-expr",
+ "tang-la",
+ "thiserror",
+ "vcad-kernel-math",
+ "vcad-kernel-sketch",
+]
+
+[[package]]
+name = "vcad-kernel-geom"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e644f69de0cdc1a5206e962d0f5228557eb22ab533f0015c41a0b444f522982b"
+dependencies = [
+ "tang",
+ "vcad-kernel-math",
+]
+
+[[package]]
+name = "vcad-kernel-math"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ccd3c99901cdeb3e3660431717478a377f90d2501b4c747daf8d981018443481"
+dependencies = [
+ "tang",
+]
+
+[[package]]
+name = "vcad-kernel-primitives"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "46f7a1259f7433df55e7460277e92f1cbc7088b9721cb2a9835432ed7e226482"
+dependencies = [
+ "vcad-kernel-geom",
+ "vcad-kernel-math",
+ "vcad-kernel-topo",
+]
+
+[[package]]
+name = "vcad-kernel-sketch"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "303d403dc48b60c15fa78e229d8c367d715c5e580485958bd56dd5d9a6026c75"
+dependencies = [
+ "thiserror",
+ "vcad-kernel-geom",
+ "vcad-kernel-math",
+ "vcad-kernel-primitives",
+ "vcad-kernel-topo",
+]
+
+[[package]]
+name = "vcad-kernel-topo"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0ccb839ee0efb80e7343449442d0806ae057beb076da0a88da55b03ae6f879eb"
+dependencies = [
+ "slotmap",
+ "vcad-kernel-math",
+]
 
 [[package]]
 name = "version_check"
