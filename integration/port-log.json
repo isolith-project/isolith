@@ -34,5 +34,244 @@
    "crates/oep-geo/src/lib.rs"
   ],
   "lib_rs_needs_merge": false
+ },
+ "32": {
+  "pr": 32,
+  "branch": "task/oep-cgr-header-1015a",
+  "title": "P2-M1-T01: oep-cgr header spine parser with golden-sample TDD test",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/header.rs",
+   "crates/oep-cgr/tests/golden_header.rs",
+   "docs/re-notes/oep-cgr-header-parse.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "38": {
+  "pr": 38,
+  "branch": "task/fuzz-round2-1015a",
+  "title": "P2-M6-T01: Fuzz campaign round 2 (structure depth, huge files, truncated tails)",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/examples/fuzz_campaign.rs",
+   "crates/oep-cgr/fuzz/Cargo.toml",
+   "crates/oep-cgr/fuzz/README.md",
+   "crates/oep-cgr/fuzz/fuzz_targets/round2.rs",
+   "crates/oep-cgr/src/fuzz.rs",
+   "crates/oep-cgr/src/structure.rs",
+   "crates/oep-cgr/tests/fuzz_campaign_acceptance.rs",
+   "docs/re-notes/oep-cgr-fuzz-round2.md"
+  ],
+  "skipped_existing": [
+   "Cargo.toml",
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "41": {
+  "pr": 41,
+  "branch": "task/stl-export-1015a",
+  "title": "P2-M2-T02: STL export w/ golden-file test vs reference tessellation",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/stl.rs",
+   "crates/oep-cgr/tests/golden/box-reference.bin.stl",
+   "crates/oep-cgr/tests/golden_stl.rs",
+   "crates/oep-cgr/tools/gen_golden_box.py",
+   "docs/re-notes/oep-cgr-stl-export.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "42": {
+  "pr": 42,
+  "branch": "task/color-material-gltf-1015a",
+  "title": "feat(cgr): P2-M4-T01 color/material table parse + glTF materials export",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/examples/dump_recs.rs",
+   "crates/oep-cgr/src/material.rs",
+   "crates/oep-cgr/tests/golden_material.rs",
+   "docs/re-notes/cgr-color-material-observation.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "43": {
+  "pr": 43,
+  "branch": "task/topology-reconstruct-1015a",
+  "title": "P2-M3-T02: Face/edge topology reconstruction (open/unclosed boundary flags)",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/topology.rs",
+   "crates/oep-cgr/tests/topology_reconstruct.rs",
+   "docs/re-notes/oep-cgr-topology-reconstruction.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "44": {
+  "pr": 44,
+  "branch": "task/normal-vertex-attrs-1015b",
+  "title": "P2-M3-T01: normal/vertex-attribute recovery where present (oep-cgr)",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/attributes.rs",
+   "crates/oep-cgr/tests/golden_attributes.rs",
+   "docs/re-notes/oep-cgr-mesh-extraction.md",
+   "docs/re-notes/oep-cgr-vertex-attributes.md",
+   "python/oep_tooling/cgr_attributes.py",
+   "tests/test_cgr_attributes_acceptance.py"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs",
+   "crates/oep-cgr/src/mesh.rs",
+   "crates/oep-cgr/tests/golden_mesh.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "45": {
+  "pr": 45,
+  "branch": "task/transform-instance-1015a",
+  "title": "P2-M4-T02: Transform/instance hierarchy (assembly CGR inside part) with matrix stack",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/assembly.rs",
+   "crates/oep-cgr/src/instance.rs",
+   "crates/oep-cgr/tests/golden_instance.rs",
+   "docs/re-notes/oep-cgr-instance-transforms.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "46": {
+  "pr": 46,
+  "branch": "task/table-of-blocks-walker-1015a",
+  "title": "P2-M1-T03: Central table-of-blocks walker (observed structure) with bounds checks",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/blocks.rs",
+   "crates/oep-cgr/tests/table_of_blocks.rs",
+   "docs/re-notes/oep-cgr-table-of-blocks-walker.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "48": {
+  "pr": 48,
+  "branch": "task/oep-cgr2step-1015a",
+  "title": "P2-M5-T02: oep-cgr2step CLI - tessellated mesh -> STEP B-Rep passthrough (marked tessellated, NOT exact)",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/bin/oep-cgr2step.rs",
+   "crates/oep-cgr/src/step.rs",
+   "crates/oep-cgr/tests/step_writer.rs",
+   "docs/p2-m5-oep-cgr2step.md",
+   "docs/re-notes/oep-cgr-mesh-extraction.md",
+   "tests/test_oep_cgr2step_acceptance.py"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs",
+   "crates/oep-cgr/src/mesh.rs",
+   "crates/oep-cgr/tests/golden_mesh.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "49": {
+  "pr": 49,
+  "branch": "task/section-planes-1015a",
+  "title": "P2-M3-T03: Section/view extraction (planar cuts) -- computed cut over internal mesh",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/section.rs",
+   "crates/oep-cgr/tests/section_cut.rs",
+   "docs/re-notes/oep-cgr-section-extraction.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "50": {
+  "pr": 50,
+  "branch": "task/oep-cgr-cli-1015a",
+  "title": "P2-M5-T01: CLI oep-cgr2gltf; docs with exit codes",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/src/bin/oep-cgr2gltf.rs",
+   "crates/oep-cgr/tests/cli_acceptance.rs",
+   "docs/re-notes/oep-cgr-mesh-extraction.md",
+   "docs/re-notes/oep-cgr2gltf-cli.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs",
+   "crates/oep-cgr/src/mesh.rs",
+   "crates/oep-cgr/tests/golden_mesh.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "53": {
+  "pr": 53,
+  "branch": "task/header-fuzz-1015a",
+  "title": "P2-M1-T05: Fuzz harness (cargo fuzz) on header parser; zero panics on corpus",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/examples/fuzz_campaign.rs",
+   "crates/oep-cgr/fuzz/Cargo.toml",
+   "crates/oep-cgr/fuzz/README.md",
+   "crates/oep-cgr/fuzz/fuzz_targets/header_parse.rs",
+   "crates/oep-cgr/src/fuzz_round1.rs",
+   "crates/oep-cgr/src/header.rs",
+   "crates/oep-cgr/tests/golden_header.rs",
+   "crates/oep-cgr/tests/header_fuzz_acceptance.rs",
+   "docs/re-notes/oep-cgr-fuzz-harness-round1.md",
+   "docs/re-notes/oep-cgr-header-parse.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "54": {
+  "pr": 54,
+  "branch": "task/fidelity-budget-1015a",
+  "title": "P2-M2-T04: quantized/lossy geometry fidelity-budget note + tool + TDD test",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/oep-cgr-fidelity-budget.md",
+   "python/oep_tooling/cgr_fidelity.py",
+   "tests/test_cgr_fidelity_budget_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "52": {
+  "pr": 52,
+  "branch": "task/streaming-perf-1015a",
+  "title": "P2-M6-T02: streaming parse for large assemblies (100k+ parts)",
+  "class": "b",
+  "copied": [
+   "crates/oep-cgr/examples/stream_bench.rs",
+   "crates/oep-cgr/src/stream.rs",
+   "crates/oep-cgr/tests/streaming_parse.rs",
+   "docs/re-notes/oep-cgr-streaming-parse.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-cgr/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
  }
 }
