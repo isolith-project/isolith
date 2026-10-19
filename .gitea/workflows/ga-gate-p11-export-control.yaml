@@ -1,0 +1,65 @@
+# P11-T05: export-control classification gate (the release pipeline checkbox).
+#
+# Two jobs enforce the P11/export-control.md rule -- "a release may not be cut
+# or published while its export-control classification file is missing or
+# non-conforming":
+#
+# 1) export-control-selfcheck: on EVERY push and pull_request. Parses the
+#    template and every committed <V>.classification.toml under
+#    P11/export-control/ using the pure-stdlib gate. Any malformed file, any
+#    non-UNCLASSIFIED status, or any tripped ITAR/ECCN/data-locality assertion
+#    fails CI. This is the static release-content scan.
+#
+# 2) export-control-release-required: gated to the RELEASE BRANCH line
+#    (release/* pushes and pull_requests targeting release/*, plus
+#    workflow_dispatch). Runs the gate with --release set to the train's
+#    candidate version that a release must clear. A push to release/* without
+#    the matching classification file is a HARD CI FAILURE -- absence fails
+#    the release, so nothing can be tagged or published from the release
+#    branch until the checkbox is checked.
+name: Export-control classification gate (P11-T05)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  export-control-selfcheck:
+    name: export-control-selfcheck
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Export-control selfcheck (all committed classification files)
+        run: bash scripts/export-control/verify-classification.sh --selfcheck
+
+  export-control-release-required:
+    name: export-control-release-required
+    # Release-branch line + manual dispatch: this is the absence-fails-the-
+    # release gate that blocks tagging/publishing from the release branch
+    # until the classification file for the candidate is present and valid.
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/release/') || startsWith(github.base_ref, 'release/')
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Require export-control classification file for the release
+        # The release candidate version follows P12-T05 (e.g. 2027.1.0-rc1);
+        # if this ever differs the drill card bumps it here.
+        run: bash scripts/export-control/verify-classification.sh verify --release 2027.1.0-rc1

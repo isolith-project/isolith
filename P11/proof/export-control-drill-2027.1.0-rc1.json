@@ -1,0 +1,41 @@
+{
+  "schema": "keelworks.export-control-drill.v1",
+  "card": "P11-T05",
+  "release": "2027.1.0-rc1",
+  "train": "2027.1",
+  "date": "2026-10-18",
+  "host": "promaxgb10-83f1",
+  "gate": "python/oep_tooling/export_control_gate.py",
+  "wrapper": "scripts/export-control/verify-classification.sh",
+  "command_present": "bash scripts/export-control/verify-classification.sh verify --release 2027.1.0-rc1",
+  "command_removed": "same command after removing P11/export-control/2027.1.0-rc1.classification.toml",
+  "command_flagged": "same command after setting restricted_content.contains_itar_technical_data = true",
+  "legs": [
+    {
+      "leg": "drill-present",
+      "expectation": "PASS - the release is cleared to proceed because the classification file is present and clean",
+      "exit_code": 0,
+      "result": "PASS",
+      "detail": "2027.1.0-rc1.classification.toml: UNCLASSIFIED, data-locality asserted, no ITAR/ECCN-restricted content. RESULT: PASS - release cleared to proceed."
+    },
+    {
+      "leg": "drill-removed",
+      "expectation": "FAIL - absence fails the release (the export-control checkbox is unchecked)",
+      "exit_code": 1,
+      "result": "FAIL",
+      "detail": "FAIL classification file for 2027.1.0-rc1: ...2027.1.0-rc1.classification.toml does not exist -- release BLOCKED (export-control checkbox unchecked). RESULT: FAIL - release blocked."
+    },
+    {
+      "leg": "drill-flagged",
+      "expectation": "FAIL - restricted content flagged blocks the release even though the file exists",
+      "exit_code": 1,
+      "result": "FAIL",
+      "detail": "FAIL content: [restricted_content].contains_itar_technical_data=true -- restricted content FLAGGED. RESULT: FAIL - release blocked."
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "pass_expected": 1,
+    "fail_expected": 2
+  }
+}
