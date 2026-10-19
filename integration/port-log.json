@@ -273,5 +273,171 @@
    "crates/oep-cgr/src/lib.rs"
   ],
   "lib_rs_needs_merge": false
+ },
+ "56": {
+  "pr": 56,
+  "branch": "task/oep-3dxml-zip-bom-1015a",
+  "title": "P3-M1-T01: oep-3dxml crate skeleton - parse outer ZIP + BOM",
+  "class": "b",
+  "copied": [
+   "crates/oep-3dxml/src/bom.rs",
+   "crates/oep-3dxml/src/container.rs",
+   "crates/oep-3dxml/src/manifest.rs",
+   "crates/oep-3dxml/tests/bom_zip_parse.rs",
+   "docs/re-notes/oep-3dxml-container-bom.md"
+  ],
+  "skipped_existing": [
+   "Cargo.lock",
+   "crates/oep-3dxml/Cargo.toml",
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "57": {
+  "pr": 57,
+  "branch": "task/3drep-header-1015a",
+  "title": "P3-M3-T01: Binary .3drep branch: V5_CFV3 header/format documentation (full parse as follow-on)",
+  "class": "b",
+  "copied": [
+   "crates/oep-3dxml/src/v5rep.rs",
+   "crates/oep-3dxml/tests/golden_v5rep.rs",
+   "docs/re-notes/3dxml-binary-3drep-format.md"
+  ],
+  "skipped_existing": [
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "59": {
+  "pr": 59,
+  "branch": "task/p3m4-3dxml-writer-1015a",
+  "title": "P3-M4-T01: writer \u2014 internal mesh -> 3DXML ASCII (license-compliant, internal-use spec)",
+  "class": "b",
+  "copied": [
+   "crates/oep-3dxml/examples/write_box.rs",
+   "crates/oep-3dxml/src/ascii.rs",
+   "crates/oep-3dxml/tests/golden/box-reference.3dxml",
+   "crates/oep-3dxml/tests/writer_ascii.rs",
+   "crates/oep-3dxml/tools/gen_golden_box_3dxml.py",
+   "docs/re-notes/oep-3dxml-ascii-writer.md",
+   "tests/test_oep_3dxml_writer_acceptance.py"
+  ],
+  "skipped_existing": [
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "60": {
+  "pr": 60,
+  "branch": "task/gregory-decode-nurbs-1015a",
+  "title": "P3-M2-T01: Gregory-patch surface decode to NURBS (own math)",
+  "class": "b",
+  "copied": [
+   "corpus/data/3dxml/surface/README.md",
+   "corpus/data/3dxml/surface/WEB3D-LICENSE.txt",
+   "corpus/data/3dxml/surface/XvlShellAttributeAll.x3d",
+   "corpus/data/3dxml/surface/XvlShellAttributeEdgeRound.x3d",
+   "corpus/data/3dxml/surface/XvlShellAttributeEdgeVector.x3d",
+   "corpus/data/3dxml/surface/XvlShellAttributeVertexRound.x3d",
+   "corpus/data/3dxml/surface/XvlShellModelBaby.x3d",
+   "corpus/data/3dxml/surface/XvlShellModelDolphin.x3d",
+   "corpus/data/3dxml/surface/XvlShellModelHand.x3d",
+   "corpus/data/3dxml/surface/XvlShellModelOctopus.x3d",
+   "corpus/data/3dxml/surface/XvlShellModelStar.x3d",
+   "corpus/data/3dxml/surface/XvlShellProtoDeclare.x3d",
+   "crates/oep-3dxml/src/gregory.rs",
+   "crates/oep-3dxml/src/lattice.rs",
+   "crates/oep-3dxml/src/vec3.rs",
+   "crates/oep-3dxml/tests/gregory_decode.rs",
+   "docs/p3-m2-oep-3dxml-gregory.md",
+   "docs/re-notes/gregory-patch-decode.md",
+   "tests/test_gregory_decode_acceptance.py"
+  ],
+  "skipped_existing": [
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "61": {
+  "pr": 61,
+  "branch": "task/regression-3dxml-1015b",
+  "title": "P3-M5-T01: shared regression runner opens 3DXML containers (TDD)",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/p2-m5-t03-regression-matrix.md",
+   "docs/re-notes/p3-m5-t01-3dxml-regression.md",
+   "python/oep_tooling/regression.py",
+   "tests/corpus_regression_test.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "62": {
+  "pr": 62,
+  "branch": "task/roundtrip-stability-1015a",
+  "title": "P3-M4-T02: Round-trip stability test - read our own output, byte-class compare",
+  "class": "b",
+  "copied": [
+   "crates/oep-3dxml/examples/write_box.rs",
+   "crates/oep-3dxml/src/ascii.rs",
+   "crates/oep-3dxml/tests/golden/box-reference.3dxml",
+   "crates/oep-3dxml/tests/roundtrip_stability.rs",
+   "crates/oep-3dxml/tests/writer_ascii.rs",
+   "crates/oep-3dxml/tools/gen_golden_box_3dxml.py",
+   "docs/re-notes/oep-3dxml-ascii-writer.md",
+   "docs/re-notes/oep-3dxml-roundtrip-stability.md",
+   "tests/test_oep_3dxml_roundtrip_stability.py",
+   "tests/test_oep_3dxml_writer_acceptance.py"
+  ],
+  "skipped_existing": [
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "66": {
+  "pr": 66,
+  "branch": "task/tessellate-3dxml-1015a",
+  "title": "P3-M2-T02: surface->mesh tessellation with quality control; golden compare",
+  "class": "b",
+  "copied": [
+   "crates/oep-3dxml/src/tessellate.rs",
+   "crates/oep-3dxml/tests/tessellate_golden.rs"
+  ],
+  "skipped_existing": [
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "69": {
+  "pr": 69,
+  "branch": "task/mesh-rep-internal-1015a",
+  "title": "P3-M1-T03: mesh rep -> internal mesh; verify against known-good geometry",
+  "class": "b",
+  "copied": [
+   "crates/oep-3dxml/src/mesh.rs",
+   "crates/oep-3dxml/tests/mesh_rep.rs",
+   "docs/re-notes/oep-3dxml-mesh-rep.md",
+   "tests/test_oep_3dxml_mesh_rep_acceptance.py"
+  ],
+  "skipped_existing": [
+   "Cargo.lock",
+   "crates/oep-3dxml/Cargo.toml",
+   "crates/oep-3dxml/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "70": {
+  "pr": 70,
+  "branch": "task/3dxml-ga-gate-1016a",
+  "title": "P3-M5-T02: P3 GA gate \u2014 corpus of 3DXML opens; surfaces tessellate; round-trip stable",
+  "class": "b",
+  "copied": [
+   ".gitea/workflows/ga-gate-3dxml.yaml",
+   "docs/re-notes/p3-m5-t02-ga-gate.md",
+   "python/oep_tooling/ga_gate_3dxml.py",
+   "tests/ga_gate_3dxml_test.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
  }
 }
