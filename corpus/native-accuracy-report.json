@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "generated": "2026-10-17T03:24:58.690512+00:00",
+  "description": "P5-M3-T02 geometry accuracy harness vs external converter reference (test-only). measured = real geometry on both sides; every skip carries a closed-taxonomy class + reason. Reference output is test-only ground truth, never shipped/claimed. No number is ever fabricated.",
+  "summary": {
+    "total": 4,
+    "measured": 1,
+    "skipped": 3,
+    "skipped_by_class": {
+      "reference-unavailable": 3
+    }
+  },
+  "rows": [
+    {
+      "id": "keelworks-native-box",
+      "status": "measured",
+      "class": "",
+      "reason": "",
+      "geometry_class": "prism",
+      "metrics": {
+        "native_vertices": 8,
+        "reference_vertices": 8,
+        "native_triangles": 12,
+        "reference_triangles": 12,
+        "reference_provenance": {
+          "converter": "FreeCAD",
+          "freecad_version": "26.3",
+          "freecad_executable": "freecadcmd (micromamba envs/freecad)",
+          "input": "box.stl",
+          "method": "Mesh.read() independent OCCT-backed importer; vertices normalized to 9 dp",
+          "role": "external-converter reference, test-only ground truth (P5-M3-T02); never shipped, never claimed as product",
+          "clean_room": "converter output used strictly as test reference; not a source of format internals"
+        },
+        "symmetric_hausdorff": 0.0,
+        "hausdorff_forward": 0.0,
+        "hausdorff_reverse": 0.0,
+        "hausdorff_method": "vertex",
+        "tolerance_distribution": {
+          "method": "vertex",
+          "na": 8,
+          "nb": 8,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p99": 0.0,
+          "p100": 0.0,
+          "bbox_diag": 1.7320508075688772,
+          "bins_relative_to_bbox_diag": [
+            1e-06,
+            1e-05,
+            0.0001,
+            0.001,
+            0.01,
+            0.1,
+            1.0
+          ],
+          "fraction_within": [
+            {
+              "bin": 1e-06,
+              "epsilon": 1.7320508075688771e-06,
+              "fraction": 1.0
+            },
+            {
+              "bin": 1e-05,
+              "epsilon": 1.7320508075688774e-05,
+              "fraction": 1.0
+            },
+            {
+              "bin": 0.0001,
+              "epsilon": 0.00017320508075688773,
+              "fraction": 1.0
+            },
+            {
+              "bin": 0.001,
+              "epsilon": 0.0017320508075688772,
+              "fraction": 1.0
+            },
+            {
+              "bin": 0.01,
+              "epsilon": 0.017320508075688773,
+              "fraction": 1.0
+            },
+            {
+              "bin": 0.1,
+              "epsilon": 0.17320508075688773,
+              "fraction": 1.0
+            },
+            {
+              "bin": 1.0,
+              "epsilon": 1.7320508075688772,
+              "fraction": 1.0
+            }
+          ]
+        },
+        "native_volume": -0.3333333333333333,
+        "reference_volume": -0.3333333333333333,
+        "volume_delta": 0.0,
+        "volume_rel_error": 0.0
+      }
+    },
+    {
+      "id": "native-hex-nut",
+      "status": "skip",
+      "class": "reference-unavailable",
+      "reason": "no external-converter reference mapped for this row",
+      "geometry_class": "prism",
+      "metrics": {}
+    },
+    {
+      "id": "native-kj-pin",
+      "status": "skip",
+      "class": "reference-unavailable",
+      "reason": "no external-converter reference mapped for this row",
+      "geometry_class": "prism",
+      "metrics": {}
+    },
+    {
+      "id": "native-square-thread",
+      "status": "skip",
+      "class": "reference-unavailable",
+      "reason": "no external-converter reference mapped for this row",
+      "geometry_class": "prism",
+      "metrics": {}
+    }
+  ]
+}

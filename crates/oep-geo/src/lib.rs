@@ -21,15 +21,29 @@
 //! - [`transform`]: the 4x4 row-major [`Transform`].
 //! - [`validate`]: structural invariant rules as [`ValidationError`]s.
 //! - [`math`]: vendored std-only f64 math core (P6-M2-T01).
+//! - [`nurbs`]: NURBS/B-spline curve and surface math (P6-M2-T02).
+//! - [`predicates`]: geometric predicates, tolerance and containment (P6-M2-T03).
+//! - [`units`]/[`tolerance`]: units and accuracy discipline (P6-M1-T03).
+//! - [`history`]/[`topology_state`]: serializable undo/redo topology stack (P6-M3-T02).
+//! - [`feature_graph`]: feature-graph (history) model with replay (P6-M3-T03).
+//! - [`export`]: STL/glTF/OBJ/SVG/PDF/STEP exporters on the model (P6-M4-T01).
 #![deny(missing_docs)]
 
 pub mod assembly;
 pub mod body;
 pub mod document;
+pub mod export;
 pub mod feature;
+pub mod feature_graph;
+pub mod history;
 pub mod math;
+pub mod nurbs;
 pub mod part;
+pub mod predicates;
+pub mod tolerance;
+pub mod topology_state;
 pub mod transform;
+pub mod units;
 pub mod validate;
 
 /// [`Assembly`]: tree frame over [`Instance`] placements.
@@ -40,6 +54,13 @@ pub use body::{Body, BodyKind, BoundingBox};
 pub use document::Document;
 /// [`Feature`]: a modelling operation in a part's history.
 pub use feature::Feature;
+/// P6-M3-T03 feature-graph model with replay.
+pub use feature_graph::{
+    BBox, Evaluator, FeatureGraph, FeatureNode, GraphError, MiniBoxEvaluator, ParamValue,
+    ReplayError, ReplayResult, ReplayStep,
+};
+/// [`History`]/[`HistoryState`]: serializable topology undo/redo stack (P6-M3-T02).
+pub use history::{History, HistoryState};
 /// [`Part`]: engineering part owning bodies and a feature history.
 pub use part::Part;
 /// [`Transform`]: 4x4 row-major instance placement matrix.

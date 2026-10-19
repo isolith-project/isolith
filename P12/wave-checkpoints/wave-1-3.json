@@ -1,0 +1,86 @@
+{
+  "base": "main",
+  "base_sha": "d22800bf2d345533fe07caf66f45d189122b2e08",
+  "branch": "wave/1-3",
+  "cards": [],
+  "counts": {
+    "cards": 0,
+    "commits": 15,
+    "uncarded": 15,
+    "ported_items": 96
+  },
+  "ported": {
+    "items_in_worklist": 96,
+    "ported_or_covered": 95,
+    "waived_resolved": 1,
+    "record": "integration/port-log.json",
+    "record_prs": "integration/port-record.md"
+  },
+  "host": "promaxgb10-83f1",
+  "schema": "keelworks.wave-checkpoint.v1",
+  "tip_sha": "0acde1e6ab450cd78c7496c51e45c201fb9ab03c",
+  "tip_tree": "638a68501ac027bf3cb592accbd432ad99509eba",
+  "uncarded_commits": [
+    {
+      "sha": "301f5a73bcda9e34c1dcf305a777071cdf9af2bb",
+      "subject": "INTEGRATION-T02: port oep-geo P6 math foundation (PRs 72,73,74,75,76,80)"
+    },
+    {
+      "sha": "805fe45988be3de130a082cf3c7f1a223853daed",
+      "subject": "INTEGRATION-T02: port oep-cgr reader modules (PRs 32,38,41-46,48-50,52-54)"
+    },
+    {
+      "sha": "3c1a20a1cc6d88078ce7e9d0b1d580a03083061c",
+      "subject": "INTEGRATION-T02: port oep-3dxml reader/writer modules (PRs 56,57,59,60,61,62,66,69,70)"
+    },
+    {
+      "sha": "2557c0a10db2949d712e47e1df71607567253948",
+      "subject": "INTEGRATION-T02: port P4 PMI/QIF/MBD lane (PRs 71,87-94,98)"
+    },
+    {
+      "sha": "44f17d57a36329857fee2f0fbc4fad60f0476a8b",
+      "subject": "INTEGRATION-T02: port P0/P1/P2 docs, tools, corpus waves (PRs 3,11,13,19-21,25-27,29,30,33-37,51,58,79,85)"
+    },
+    {
+      "sha": "6db841cf022d491f9a53ab8e74caa0efa3aca3d8",
+      "subject": "INTEGRATION-T02: port P5 research lane + JT reader (PRs 96,97,100,101,102,105,106,108)"
+    },
+    {
+      "sha": "5cb69575e2da940b2573b7168a55168e99d3d1e1",
+      "subject": "INTEGRATION-T02: port P7 modeler crates (PRs 103,104,110,111,113,114)"
+    },
+    {
+      "sha": "23b6ca124dfdaa326c366a4e82f0ecee44fb2532",
+      "subject": "INTEGRATION-T02: port P7-M2-T01 workbench + P7-M4-T01 sketcher (PRs 107,112)"
+    },
+    {
+      "sha": "978934f3a54177828961d62fdcc615ca50128fe7",
+      "subject": "INTEGRATION-T02: port P8 PDM + P10 lane (PRs 116,118,123,125,129,148,149)"
+    },
+    {
+      "sha": "a00d2b3b17cc68b07b4f5bef97dca1a821ec60ac",
+      "subject": "INTEGRATION-T02: (c)-item dispositions + P8-M5-T01 folder-sync client"
+    },
+    {
+      "sha": "d57768923069ca54d942226c253ec0b3b999211c",
+      "subject": "INTEGRATION-T02: complete port log + record; P1 report (PR 31) + P1-M3 sources"
+    },
+    {
+      "sha": "d97c7e9e6917ce44c81d4de2cd7f2fb1da65ff22",
+      "subject": "feat(P12-T06): release install rehearsal (fresh clean machine per release)"
+    },
+    {
+      "sha": "790db6a9a83be15a9df8e34775b9a8ae68912666",
+      "subject": "INTEGRATION-T03: fix union gate defects + rustfmt normalize"
+    },
+    {
+      "sha": "201d0160122e0408b16bde9fe06ae7c9b1b2902d",
+      "subject": "SOLVER-REPLACE: permissive bounded solver behind the unchanged oep-assem seam"
+    },
+    {
+      "sha": "0acde1e6ab450cd78c7496c51e45c201fb9ab03c",
+      "subject": "INTEGRATION-T03: union verification proof - all gates green on integrated main"
+    }
+  ],
+  "wave": "1-3"
+}

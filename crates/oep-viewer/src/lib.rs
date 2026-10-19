@@ -26,6 +26,8 @@ pub mod clip;
 pub mod pick;
 pub mod render;
 pub mod scene;
+/// Theme tokens for the accessibility/theme pass (P7-M5-T02).
+pub mod theme;
 
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P6-VIEWER";

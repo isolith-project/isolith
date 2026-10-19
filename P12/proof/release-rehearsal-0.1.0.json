@@ -1,0 +1,17 @@
+{
+  "task": "P12-T06",
+  "title": "Install rehearsal (fresh clean machine per release)",
+  "version": "0.1.0",
+  "timestamp": "2026-10-19T05:08:04Z",
+  "schema_version": 1,
+  "summary": {
+    "total": 4, "PASS": 4, "FAIL": 0, "SKIP": 0
+  },
+  "exit_code": 0,
+  "rows": [
+    {"leg":"RELEASE","id":"version","status":"PASS","detail":"rehearsing release 0.1.0: install.sh + compose + .env.example all pin OEP_VERSION=0.1.0"},
+    {"leg":"DOCS","id":"runbook","status":"PASS","detail":"runbook present, names 3 health surfaces + 2 approved host classes"},
+    {"leg":"INSTALL-A","id":"install-A","status":"PASS","detail":"clean-state one-command install on A (LOCAL) -> pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present in image"},
+    {"leg":"INSTALL-B","id":"install-B","status":"PASS","detail":"clean-state one-command install on B (op@127.0.0.1) -> pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present in image"}
+  ]
+}

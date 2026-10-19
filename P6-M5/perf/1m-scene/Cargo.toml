@@ -1,0 +1,21 @@
+[package]
+name = "oep-1m-scene-perf"
+version = "0.1.0"
+edition = "2021"
+description = "Keelworks P6-M5-T03: measure whether a 1M-triangle scene renders at an interactive cadence headless on U1-class hardware (wgpu + WGSL)."
+license = "Apache-2.0"
+
+# Standalone benchmark crate. Deliberately NOT a root workspace member: CI
+# (rust:1-slim-bookworm, no GPU) must not build or run it. It is built and run
+# on the reference host (U1) where a GPU and Vulkan exist, same shape as the
+# P6-M5-T01 spike.
+[workspace]
+
+[dependencies]
+wgpu = "24"
+image = "0.25"
+pollster = "0.4"
+
+[profile.release]
+# Keep the timing loop honest: no debug assertions overhead, full speed.
+opt-level = 3

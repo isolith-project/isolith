@@ -1,0 +1,13 @@
+{
+  "program": "P7-M3-T02",
+  "task": "mates-kinematics-demo",
+  "cleanroom": "own implementation; no vendor libraries (see tests/cleanroom.rs)",
+  "frames": 90,
+  "worst_residual_max": 3.480e-11,
+  "worst_translation_error_mm": 7.434e-11,
+  "worst_orientation_error_rad": 1.064e-12,
+  "free_dof_undriven": 1,
+  "trace": "demos/p7-m3-t02/trace.json",
+  "frame_dir": "demos/p7-m3-t02/frames",
+  "ppm_frame_count": 90
+}

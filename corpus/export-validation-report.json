@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "generated": "2026-10-16T21:15:51.433085+00:00",
+  "description": "P4-M3-T02 STEP export golden-diff gate report. measured = independent-reader recovery matches the committed golden; drift = recovery changed (classified, needs re-blessing); skip = closed-taxonomy (never fabricated). Values always come from the independent reader, never from our own parsers/writers.",
+  "summary": {
+    "total": 2,
+    "measured": 2,
+    "drifted": 0,
+    "skipped": 0,
+    "skipped_by_class": {},
+    "drift_by_class": {}
+  },
+  "rows": [
+    {
+      "id": "keelworks-box-export",
+      "status": "measured",
+      "class": "",
+      "reason": "",
+      "current": {
+        "read_status": 1,
+        "roots": 1,
+        "shape_type": "NULL",
+        "transfer": false
+      },
+      "golden": {
+        "transfer": false,
+        "shape_type": "NULL",
+        "read_status": 1,
+        "roots": 1,
+        "reason": "OCC parses the SHELL_BASED_SURFACE_MODEL export (status Done, 1 root) but transfers no shape: the exporter wires geometry via SHAPE_REPRESENTATION + SHAPE_REPRESENTATION_RELATIONSHIP; OCCT's STEPControl_Reader does not route that wiring to a TopoDS_Shape. Same geometry re-wired AP214-conventionally transfers (see keelworks-box-conformance)."
+      },
+      "tolerance": {
+        "faces": 0,
+        "area": 1e-06
+      }
+    },
+    {
+      "id": "keelworks-box-conformance",
+      "status": "measured",
+      "class": "",
+      "reason": "",
+      "current": {
+        "read_status": 1,
+        "roots": 1,
+        "shape_type": "0",
+        "transfer": true,
+        "solids": 0,
+        "shells": 12,
+        "faces": 12,
+        "edges": 36,
+        "vertices": 72,
+        "volume": 2.7755575615628914e-17,
+        "area": 6.0,
+        "bbox_min": [
+          -1e-07,
+          -1e-07,
+          -1e-07
+        ],
+        "bbox_max": [
+          1.0000001,
+          1.0000001,
+          1.0000001
+        ]
+      },
+      "golden": {
+        "transfer": true,
+        "shape_type": 0,
+        "read_status": 1,
+        "roots": 1,
+        "solids": 0,
+        "shells": 12,
+        "faces": 12,
+        "edges": 36,
+        "vertices": 72,
+        "volume": 2.7755575615628914e-17,
+        "area": 6.0
+      },
+      "tolerance": {
+        "faces": 0,
+        "area": 1e-06,
+        "counts": 1
+      }
+    }
+  ]
+}

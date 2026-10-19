@@ -430,3 +430,139 @@ pub struct SyncResolveRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub merged: Option<FileUpload>,
 }
+
+// ===========================================================================
+// P7-M2-T01 workbench client contract (ported from task/p7m5t01-velocity-1016a)
+//
+// The typed seam the OEP interchange workbench's PDM load/save surface calls.
+// Additive to the REST v1 contract above: the same `state::RevisionState` is
+// reused (not a second enum), so the workbench stub and the REST server agree
+// on revision states.
+// ===========================================================================
+
+/// Metadata record for one stored revision (P7-M2-T01 workbench client).
+/// The content itself is addressed separately by [`Self::blob_digest`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RevisionSummary {
+    /// The item this revision belongs to (e.g. a part number or document id).
+    pub item_id: String,
+    /// The revision identifier (e.g. "A" or "C.2"). Flat, ordered per item.
+    pub revision: String,
+    /// Current maturity state.
+    pub state: crate::state::RevisionState,
+    /// Content address of the stored blob (`digest::content_digest`), when a
+    /// blob was supplied.
+    pub blob_digest: Option<String>,
+    /// Free-form human summary attached at save time.
+    pub summary: Option<String>,
+    /// Unix-seconds timestamp recorded when the revision was saved.
+    pub created_at: u64,
+}
+
+/// A save request: the content to store plus the item/revision identity.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PdmWriteRequest {
+    /// Item identifier (part number / document id).
+    pub item_id: String,
+    /// Revision identifier.
+    pub revision: String,
+    /// Optional free-form summary.
+    pub summary: Option<String>,
+    /// The blob bytes to store, content-addressed by the vault.
+    pub content: Vec<u8>,
+    /// State the new revision should start in (almost always `Working`).
+    pub state: crate::state::RevisionState,
+}
+
+impl PdmWriteRequest {
+    /// Builder-ish convenience: a Working-state write request.
+    pub fn new(item_id: impl Into<String>, revision: impl Into<String>, content: Vec<u8>) -> Self {
+        Self {
+            item_id: item_id.into(),
+            revision: revision.into(),
+            summary: None,
+            content,
+            state: crate::state::RevisionState::Working,
+        }
+    }
+
+    /// Set the summary on this request (builder style).
+    pub fn with_summary(mut self, summary: impl Into<String>) -> Self {
+        self.summary = Some(summary.into());
+        self
+    }
+}
+
+/// Typed, non-panicking PDM errors. Every failure is a variant with a
+/// documented meaning; the stub and the future server share this surface.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PdmError {
+    /// The item does not exist in the vault.
+    ItemNotFound {
+        /// The missing item id.
+        item_id: String,
+    },
+    /// The item exists but the named revision does not.
+    RevisionNotFound {
+        /// The item id.
+        item_id: String,
+        /// The requested revision.
+        revision: String,
+    },
+    /// The revision record references a blob the vault cannot locate.
+    BlobMissing {
+        /// The missing content address.
+        digest: String,
+    },
+    /// The vault reached an internally inconsistent state (should not happen).
+    InconsistentState {
+        /// Human-readable detail.
+        message: String,
+    },
+    /// An underlying filesystem operation failed (persisted stub).
+    Io {
+        /// Human-readable detail.
+        message: String,
+    },
+}
+
+impl std::fmt::Display for PdmError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PdmError::ItemNotFound { item_id } => write!(f, "PDM item not found: {item_id}"),
+            PdmError::RevisionNotFound { item_id, revision } => {
+                write!(f, "PDM revision not found: {item_id}@{revision}")
+            }
+            PdmError::BlobMissing { digest } => write!(f, "PDM blob missing: {digest}"),
+            PdmError::InconsistentState { message } => write!(f, "PDM inconsistent: {message}"),
+            PdmError::Io { message } => write!(f, "PDM I/O error: {message}"),
+        }
+    }
+}
+
+impl std::error::Error for PdmError {}
+
+/// The P8 API contract: every PDM operation the OEP workbench (and later the
+/// P7-M2-T02 browser integration) performs goes through this trait.
+///
+/// Implementations must be non-panicking and typed-error on every input path
+/// (tolerant-failure doctrine, P2-M1-T04).
+pub trait PdmClient {
+    /// Store a new revision's content and return its record. Overwrites an
+    /// identical item+revision (idempotent re-save keeps the same blob digest).
+    fn save_revision(&mut self, request: &PdmWriteRequest) -> Result<RevisionSummary, PdmError>;
+
+    /// Read back a revision's stored blob bytes.
+    fn open_revision(&mut self, item_id: &str, revision: &str) -> Result<Vec<u8>, PdmError>;
+
+    /// List all revisions of an item, newest first. `ItemNotFound` when the
+    /// item has never been saved.
+    fn list_revisions(&mut self, item_id: &str) -> Result<Vec<RevisionSummary>, PdmError>;
+
+    /// The latest (head) revision of an item. `ItemNotFound` when absent.
+    fn head_revision(&mut self, item_id: &str) -> Result<RevisionSummary, PdmError>;
+
+    /// The content digest the vault recorded for a stored revision
+    /// (`crate::digest::content_digest` of the blob), when any.
+    fn digest_of(&self, item_id: &str, revision: &str) -> Option<String>;
+}

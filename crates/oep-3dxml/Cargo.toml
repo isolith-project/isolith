@@ -1,7 +1,19 @@
 [package]
 name = "oep-3dxml"
-description = "P3: 3DXML reader/writer skeleton."
+description = "P3: 3DXML reader/writer (ZIP/BOM container, rep models, surface decode, writer)."
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 repository.workspace = true
+
+[dependencies]
+# P3-M1-T01 (outer ZIP + BOM): the ZIP container is the public PKWARE
+# APPNOTE format, not Dassault IP. We take exactly the audited pure-Rust
+# deflate path (flate2/miniz_oxide) and leave aes/bzip2/lzma/zstd out of the
+# build (lean + supply-chain minimal, P11-T06). 3DXML members in every
+# observed sample are DEFLATE (method 8), see docs/re-notes/3dxml-hex-notebook.md.
+zip = { version = "9", default-features = false, features = ["deflate"] }
+# P3-M1-T03 (mesh rep -> internal mesh): pure-Rust streaming XML reader for the
+# tessellated-ASCII `.3DRep` markup (supply-chain posture P11-T06). Same pin as
+# the sibling P3-M1-T02 rep-parse card so the identical line auto-merges.
+quick-xml = { version = "0.39", default-features = false }

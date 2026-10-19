@@ -1,0 +1,42 @@
+{
+  "format": "oep-import-report",
+  "version": 1,
+  "imported_at": "2026-10-18T06:46:44Z",
+  "tool": {
+    "name": "oep-archive",
+    "version": "0.1.0"
+  },
+  "archive": "/home/r1a/keelworks-main/.worktrees/p10m3t02-export-all-1017a/crates/oep-archive/../../docs/P10-M3/proof/archive",
+  "vault": {
+    "items_rebuilt": 3,
+    "revisions_rebuilt": 3,
+    "files": 3,
+    "ok": true
+  },
+  "documents": [
+    {
+      "source": "geometry/box-part-a/1/box-part.step",
+      "parts": 1,
+      "bodies": 1,
+      "features": 1,
+      "valid": true,
+      "status": "reimported"
+    },
+    {
+      "source": "geometry/box-mini-b/1/box-mini.step",
+      "parts": 0,
+      "bodies": 0,
+      "features": 0,
+      "valid": false,
+      "status": "skipped",
+      "reason": "classified skip (no faceted Document): no faceted geometry in STEP part: part contains no shell-based surface model (faceted geometry) this reader maps"
+    }
+  ],
+  "summary": {
+    "total_step": 2,
+    "reimported": 1,
+    "skipped": 1,
+    "failed": 0,
+    "ok": true
+  }
+}

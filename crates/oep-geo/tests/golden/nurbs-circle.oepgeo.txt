@@ -1,0 +1,21 @@
+OEP-NURBS-GOLDEN 1
+# Our own NURBS golden format (P6-M2-T02). Whitespace tokens only so BOTH the
+# Rust crate (std-only, no serde on main) and the stdlib Python gate can parse
+# it with trivial split logic. kind=curve|surface; each spot is an evaluated
+# point at a parameter, generated from the ANALYTIC construction (not from any
+# implementation under test) and re-verified against cos/sin in the gate.
+kind curve
+degree 2
+knots 0 0 0 0.25 0.25 0.5 0.5 0.75 0.75 1 1 1
+ncontrol 9
+ctrl 1 0 0 1 1 0 0 1 0 -1 1 0 -1 0 0 -1 -1 0 0 -1 0 1 -1 0 1 0 0
+weights 1.0 0.707106781186548 1.0 0.707106781186548 1.0 0.707106781186548 1.0 0.707106781186548 1.0
+spot 0.0 1.0 0.0 0.0
+spot 0.125 0.707106781186547 0.707106781186547 0.0
+spot 0.25 0.0 1.0 0.0
+spot 0.375 -0.707106781186547 0.707106781186547 0.0
+spot 0.5 -1.0 0.0 0.0
+spot 0.625 -0.707106781186547 -0.707106781186547 0.0
+spot 0.75 0.0 -1.0 0.0
+spot 0.875 0.707106781186547 -0.707106781186547 0.0
+spot 1.0 1.0 0.0 0.0

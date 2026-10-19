@@ -1,0 +1,390 @@
+{
+  "format": "oep-pmi",
+  "version": 1,
+  "units": "MILLIMETRE",
+  "datums": [
+    {
+      "id": "datum_D",
+      "label": "D",
+      "feature_ids": [],
+      "body_ids": []
+    },
+    {
+      "id": "datum_A",
+      "label": "A",
+      "feature_ids": [],
+      "body_ids": []
+    },
+    {
+      "id": "datum_B",
+      "label": "B",
+      "feature_ids": [],
+      "body_ids": []
+    },
+    {
+      "id": "datum_C",
+      "label": "C",
+      "feature_ids": [],
+      "body_ids": []
+    },
+    {
+      "id": "datum_E",
+      "label": "E",
+      "feature_ids": [],
+      "body_ids": []
+    },
+    {
+      "id": "datum_F",
+      "label": "F",
+      "feature_ids": [],
+      "body_ids": []
+    }
+  ],
+  "frames": [
+    {
+      "id": "drf_a",
+      "name": "A",
+      "refs": []
+    },
+    {
+      "id": "drf_ab",
+      "name": "A-B",
+      "refs": []
+    },
+    {
+      "id": "drf_dbc",
+      "name": "D-B-C",
+      "refs": []
+    },
+    {
+      "id": "drf_d",
+      "name": "D",
+      "refs": []
+    },
+    {
+      "id": "drf_cab",
+      "name": "C-A-B",
+      "refs": []
+    },
+    {
+      "id": "drf_abc",
+      "name": "A-B-C",
+      "refs": []
+    },
+    {
+      "id": "drf_eab",
+      "name": "E-A-B",
+      "refs": []
+    },
+    {
+      "id": "drf_bc",
+      "name": "B-C",
+      "refs": []
+    },
+    {
+      "id": "drf_f",
+      "name": "F",
+      "refs": []
+    }
+  ],
+  "tolerances": [
+    {
+      "id": "gt_1",
+      "characteristic": "flatness",
+      "value": 0.01,
+      "diameter_zone": false,
+      "feature_ids": [
+        "step-feature-DatumFeature(DatumFeatureId(0))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (23)"
+    },
+    {
+      "id": "gt_2",
+      "characteristic": "flatness",
+      "value": 0.01,
+      "diameter_zone": false,
+      "feature_ids": [
+        "step-feature-DatumFeature(DatumFeatureId(1))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (28)"
+    },
+    {
+      "id": "gt_3",
+      "characteristic": "flatness",
+      "value": 0.01,
+      "diameter_zone": false,
+      "feature_ids": [
+        "step-feature-DatumFeature(DatumFeatureId(3))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (39)"
+    },
+    {
+      "id": "gt_4",
+      "characteristic": "perpendicularity",
+      "value": 0.012,
+      "diameter_zone": false,
+      "frame_id": "drf_a",
+      "feature_ids": [],
+      "body_ids": [],
+      "note": "Feature Control Frame (34)"
+    },
+    {
+      "id": "gt_5",
+      "characteristic": "perpendicularity",
+      "value": 0.012,
+      "diameter_zone": false,
+      "frame_id": "drf_ab",
+      "feature_ids": [
+        "step-feature-DatumFeature(DatumFeatureId(2))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (37)"
+    },
+    {
+      "id": "gt_6",
+      "characteristic": "profile-of-surface",
+      "value": 0.05,
+      "diameter_zone": false,
+      "frame_id": "drf_dbc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(11))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (49)"
+    },
+    {
+      "id": "gt_7",
+      "characteristic": "profile-of-surface",
+      "value": 0.01,
+      "diameter_zone": false,
+      "frame_id": "drf_d",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(11))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (49)"
+    },
+    {
+      "id": "gt_8",
+      "characteristic": "profile-of-surface",
+      "value": 0.05,
+      "diameter_zone": false,
+      "frame_id": "drf_dbc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(12))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (51)"
+    },
+    {
+      "id": "gt_9",
+      "characteristic": "profile-of-surface",
+      "value": 0.01,
+      "diameter_zone": false,
+      "frame_id": "drf_d",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(12))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (51)"
+    },
+    {
+      "id": "gt_10",
+      "characteristic": "position",
+      "value": 0.015,
+      "diameter_zone": true,
+      "frame_id": "drf_cab",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(6))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (14)"
+    },
+    {
+      "id": "gt_11",
+      "characteristic": "position",
+      "value": 0.025,
+      "diameter_zone": true,
+      "material_condition": "mmc",
+      "frame_id": "drf_cab",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(13))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (15)"
+    },
+    {
+      "id": "gt_12",
+      "characteristic": "profile-of-surface",
+      "value": 0.02,
+      "diameter_zone": false,
+      "frame_id": "drf_abc",
+      "feature_ids": [
+        "step-feature-DatumFeature(DatumFeatureId(0))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (21)"
+    },
+    {
+      "id": "gt_13",
+      "characteristic": "profile-of-surface",
+      "value": 0.02,
+      "diameter_zone": false,
+      "frame_id": "drf_abc",
+      "feature_ids": [
+        "step-feature-DatumFeature(DatumFeatureId(3))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (41)"
+    },
+    {
+      "id": "gt_14",
+      "characteristic": "profile-of-surface",
+      "value": 0.05,
+      "diameter_zone": false,
+      "frame_id": "drf_dbc",
+      "feature_ids": [
+        "step-feature-CompositeShapeAspect(CompositeShapeAspectId(2))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (46)"
+    },
+    {
+      "id": "gt_15",
+      "characteristic": "profile-of-surface",
+      "value": 0.01,
+      "diameter_zone": false,
+      "frame_id": "drf_d",
+      "feature_ids": [
+        "step-feature-CompositeShapeAspect(CompositeShapeAspectId(2))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (46)"
+    },
+    {
+      "id": "gt_16",
+      "characteristic": "profile-of-surface",
+      "value": 0.04,
+      "diameter_zone": false,
+      "frame_id": "drf_abc",
+      "feature_ids": [
+        "step-feature-ShapeAspect(ShapeAspectId(64))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (47)"
+    },
+    {
+      "id": "gt_17",
+      "characteristic": "profile-of-surface",
+      "value": 0.05,
+      "diameter_zone": false,
+      "frame_id": "drf_dbc",
+      "feature_ids": [
+        "step-feature-CompositeShapeAspect(CompositeShapeAspectId(3))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (48)"
+    },
+    {
+      "id": "gt_18",
+      "characteristic": "profile-of-surface",
+      "value": 0.01,
+      "diameter_zone": false,
+      "frame_id": "drf_d",
+      "feature_ids": [
+        "step-feature-CompositeShapeAspect(CompositeShapeAspectId(3))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (48)"
+    },
+    {
+      "id": "gt_19",
+      "characteristic": "position",
+      "value": 0.015,
+      "diameter_zone": true,
+      "frame_id": "drf_eab",
+      "feature_ids": [],
+      "body_ids": [],
+      "note": "Feature Control Frame (18)"
+    },
+    {
+      "id": "gt_20",
+      "characteristic": "position",
+      "value": 0.025,
+      "diameter_zone": true,
+      "frame_id": "drf_dbc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(14))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (19)"
+    },
+    {
+      "id": "gt_21",
+      "characteristic": "position",
+      "value": 0.025,
+      "diameter_zone": true,
+      "material_condition": "mmc",
+      "frame_id": "drf_abc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(15))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (17)"
+    },
+    {
+      "id": "gt_22",
+      "characteristic": "position",
+      "value": 0.025,
+      "diameter_zone": false,
+      "frame_id": "drf_bc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(9))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (62)"
+    },
+    {
+      "id": "gt_23",
+      "characteristic": "position",
+      "value": 0.025,
+      "diameter_zone": false,
+      "frame_id": "drf_bc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(10))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (63)"
+    },
+    {
+      "id": "gt_24",
+      "characteristic": "position",
+      "value": 0.015,
+      "diameter_zone": true,
+      "frame_id": "drf_abc",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(2))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (74)"
+    },
+    {
+      "id": "gt_25",
+      "characteristic": "position",
+      "value": 0.02,
+      "diameter_zone": true,
+      "material_condition": "mmc",
+      "frame_id": "drf_f",
+      "feature_ids": [
+        "step-feature-CompositeGroupShapeAspect(CompositeGroupShapeAspectId(3))"
+      ],
+      "body_ids": [],
+      "note": "Feature Control Frame (77)"
+    }
+  ],
+  "notes": []
+}
+

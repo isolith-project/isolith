@@ -1,0 +1,1 @@
+hello from an opaque vault blob (customer owns it)

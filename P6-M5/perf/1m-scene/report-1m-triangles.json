@@ -1,0 +1,23 @@
+{
+  "benchmark": "oep-1m-scene-perf",
+  "card": "P6-M5-T03",
+  "host": "u1",
+  "adapter": "NVIDIA GB10",
+  "driver": "NVIDIA",
+  "driver_info": "580.178.04",
+  "backend": "Vulkan",
+  "triangles": 1002528,
+  "vertices": 502681,
+  "indices": 3007584,
+  "width": 1280,
+  "height": 720,
+  "warmup_frames": 10,
+  "measured_frames": 120,
+  "min_frame_ms": 0.162079,
+  "mean_frame_ms": 0.312604,
+  "p95_frame_ms": 0.520926,
+  "max_frame_ms": 0.734958,
+  "fps_mean": 3198.933,
+  "budget_mean_frame_ms": 33.33,
+  "budget_p95_frame_ms": 50.0
+}

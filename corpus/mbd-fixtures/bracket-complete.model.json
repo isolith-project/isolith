@@ -1,0 +1,7 @@
+{
+  "format": "oep-model-facts",
+  "version": 1,
+  "units": "mm",
+  "feature_ids": ["oep-feature-bracket-extrude", "oep-feature-bracket-hole"],
+  "body_ids": []
+}

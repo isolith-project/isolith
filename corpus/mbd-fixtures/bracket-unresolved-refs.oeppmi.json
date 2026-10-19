@@ -1,0 +1,30 @@
+{
+  "format": "oep-pmi",
+  "version": 1,
+  "units": "mm",
+  "datums": [
+    {"id": "datum_A", "label": "A", "feature_ids": ["oep-feature-bracket-extrude"], "body_ids": []}
+  ],
+  "frames": [
+    {
+      "id": "drf_z",
+      "name": "A-Z",
+      "refs": [
+        {"datum_id": "datum_A", "precedence": 1},
+        {"datum_id": "datum_Z", "precedence": 2}
+      ]
+    }
+  ],
+  "tolerances": [
+    {
+      "id": "gt_x",
+      "characteristic": "position",
+      "value": 0.1,
+      "diameter_zone": true,
+      "frame_id": "drf_missing",
+      "feature_ids": ["oep-feature-bracket-hole"],
+      "body_ids": []
+    }
+  ],
+  "notes": []
+}

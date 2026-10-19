@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "description": "Public CATPart/CATProduct corpus, P1-M1-T03. MIT-licensed samples located from github.com/mohanevs/solid-modeling-catia-v6 (121 files total; this compact repo-backed subset = 10 files). Identity: every file verified to start with the Dassault V5 container magic V5_CFV2 (hex 56 35 5f 43 46 56 32), per PRONOM x-fmt/439. Full located-source inventory (incl. City University education pack) lives in corpus/catpart-located-sources.md. Downstream: P1-M1-T04 folds these entries into corpus/manifest.json; P1-M1-T05 syncs full sets to the NAS object store. Geometry class for parts is a best-effort label from set context; confirm on real read in P1-M2.",
+  "entries": [
+    {
+      "id": "3DM016.CATPart",
+      "path": "data/catpart/3DM016.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 CAx 3DM016 mechanical part (engineering-drawing textbook style)",
+      "license": "MIT",
+      "size": 128348,
+      "sha256": "03f5acd78dc32be43d077a84f991c5edfe98cd8a1ad6e8ed6ca9d61cc602cef1",
+      "backend": "repo"
+    },
+    {
+      "id": "hex-nut.CATPart",
+      "path": "data/catpart/hex-nut.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Hexagonal nut (SM Application)",
+      "license": "MIT",
+      "size": 231893,
+      "sha256": "28cd2250ab0417585e090c2383e8c8a88c332c92ad6c361508f153a979f8637b",
+      "backend": "repo"
+    },
+    {
+      "id": "kj-collar.CATPart",
+      "path": "data/catpart/kj-collar.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Knuckle joint collar",
+      "license": "MIT",
+      "size": 131437,
+      "sha256": "e51ba83bcc866533091e3eb6b29dc2571e81b9980085bbc75e1554a8dfe0eaa3",
+      "backend": "repo"
+    },
+    {
+      "id": "kj-eye-end.CATPart",
+      "path": "data/catpart/kj-eye-end.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Knuckle joint eye end",
+      "license": "MIT",
+      "size": 177340,
+      "sha256": "58e7ae6a8494d4713c7467d69e4d4a36eb1ee2135e3659a98b1aa3a62ef24e47",
+      "backend": "repo"
+    },
+    {
+      "id": "kj-fork-end.CATPart",
+      "path": "data/catpart/kj-fork-end.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Knuckle joint fork end",
+      "license": "MIT",
+      "size": 317760,
+      "sha256": "b66e7e049611e25111b3ccf5a90acd1e90f93ae4b810cbb12bb8d2e9d721a763",
+      "backend": "repo"
+    },
+    {
+      "id": "kj-pin.CATPart",
+      "path": "data/catpart/kj-pin.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Knuckle joint pin",
+      "license": "MIT",
+      "size": 154371,
+      "sha256": "cbdaf0289f5d30472cff86b5c962296d917fc4e2416db212ca53dd3923d67849",
+      "backend": "repo"
+    },
+    {
+      "id": "kj-taper-pin.CATPart",
+      "path": "data/catpart/kj-taper-pin.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Knuckle joint taper pin",
+      "license": "MIT",
+      "size": 77163,
+      "sha256": "0573ec6059a4122a49ad4b89fc1314ee0d1a11ee9a8f84d46c7185875b83649d",
+      "backend": "repo"
+    },
+    {
+      "id": "knuckle-joint.CATProduct",
+      "path": "data/catpart/knuckle-joint.CATProduct",
+      "format": "catproduct-v5",
+      "geometry_class": "assembly",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Knuckle joint assembly (CATProduct)",
+      "license": "MIT",
+      "size": 53941,
+      "sha256": "c44761ed4d31daf71e43c42f93aa6410c091c02951a23d83964d1e5f018496f3",
+      "backend": "repo"
+    },
+    {
+      "id": "square-thread.CATPart",
+      "path": "data/catpart/square-thread.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Square thread / leadscrew (SM Application)",
+      "license": "MIT",
+      "size": 563685,
+      "sha256": "69d8f1a272648fa0ea732234466144434f1f78344e41185a1b8469027b8cd720",
+      "backend": "repo"
+    },
+    {
+      "id": "star.CATPart",
+      "path": "data/catpart/star.CATPart",
+      "format": "catpart-v5",
+      "geometry_class": "prism",
+      "source": "github.com/mohanevs/solid-modeling-catia-v6 (MIT) \u2014 Star part (SM Application)",
+      "license": "MIT",
+      "size": 112308,
+      "sha256": "45de7652e4dcdabb3ff6eae52564965aeb2cf90ee64e42a2bd2567250fc5bd71",
+      "backend": "repo"
+    }
+  ]
+}

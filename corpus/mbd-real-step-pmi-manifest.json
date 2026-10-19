@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "task": "P4-M5-T03",
+  "description": "Real STEP PMI corpus rows for the MBD validator demo. Each row is a NIST MBE PMI AP242 STEP file (public NIST test material, already committed as fixtures under crates/oep-step-pmi/fixtures on the P4-M2-T01 branch) imported to the oep-pmi schema v1 by the P4-M2-T01 oep-step-pmi semantic importer (real material, provenance kept; importer binary = the real crate, step-io 0.2.5).",
+  "fixtures": [
+    {"id": "nist-ftc-06", "file": "mbd-real-step-pmi/nist_ftc_06_asme1_ap242-e2.oeppmi.json",
+     "pmi_extracted": true,
+     "source": "real NIST ftc_06 AP242-e2 STEP imported by oep-step-pmi (28 tolerances, 10 datums)"},
+    {"id": "nist-ftc-08", "file": "mbd-real-step-pmi/nist_ftc_08_asme1_ap242-e4-tg.oeppmi.json",
+     "pmi_extracted": null,
+     "source": "real NIST ftc_08 AP242-e4-tg STEP imported by oep-step-pmi; importer report pmi_present=false -> extraction status UNVERIFIED (honest), demo of the no-fabrication branch"},
+    {"id": "nist-stc-06", "file": "mbd-real-step-pmi/nist_stc_06_asme1_ap242-e3.oeppmi.json",
+     "pmi_extracted": true,
+     "source": "real NIST stc_06 AP242-e3 STEP imported by oep-step-pmi"}
+  ]
+}

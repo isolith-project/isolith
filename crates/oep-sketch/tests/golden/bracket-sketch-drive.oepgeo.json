@@ -1,0 +1,156 @@
+{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-bracket",
+      "name": "bracket-profile",
+      "body_ids": [
+        "oep-body-oep-part-bracket"
+      ],
+      "feature_ids": [
+        "oep-feature-sketch-bracket-profile",
+        "oep-feature-varset-height"
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-oep-part-bracket",
+      "name": "bracket-profile solid",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          80.0000000000002,
+          40.00000000000082,
+          1.0
+        ]
+      },
+      "feature_ids": [
+        "oep-feature-sketch-bracket-profile",
+        "oep-feature-varset-height"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "oep-feature-sketch-bracket-profile",
+      "name": "bracket-profile",
+      "kind": "Sketch",
+      "parameters": {
+        "sketch": {
+          "constraints": [
+            {
+              "Fixed": {
+                "point": "p0",
+                "x": 0.0,
+                "y": 0.0
+              }
+            },
+            {
+              "Horizontal": {
+                "line": "l0"
+              }
+            },
+            {
+              "Horizontal": {
+                "line": "l2"
+              }
+            },
+            {
+              "Vertical": {
+                "line": "l1"
+              }
+            },
+            {
+              "Vertical": {
+                "line": "l3"
+              }
+            },
+            {
+              "Length": {
+                "expr": {
+                  "Variable": "width"
+                },
+                "line": "l0"
+              }
+            },
+            {
+              "Length": {
+                "expr": {
+                  "Variable": "height"
+                },
+                "line": "l1"
+              }
+            }
+          ],
+          "id": "bracket-profile",
+          "lines": {
+            "l0": {
+              "end": "p1",
+              "id": "l0",
+              "start": "p0"
+            },
+            "l1": {
+              "end": "p2",
+              "id": "l1",
+              "start": "p1"
+            },
+            "l2": {
+              "end": "p3",
+              "id": "l2",
+              "start": "p2"
+            },
+            "l3": {
+              "end": "p0",
+              "id": "l3",
+              "start": "p3"
+            }
+          },
+          "points": {
+            "p0": {
+              "id": "p0",
+              "x": 0.0,
+              "y": 0.0
+            },
+            "p1": {
+              "id": "p1",
+              "x": 3.0,
+              "y": 1.0
+            },
+            "p2": {
+              "id": "p2",
+              "x": 4.0,
+              "y": 4.0
+            },
+            "p3": {
+              "id": "p3",
+              "x": 1.0,
+              "y": 5.0
+            }
+          }
+        }
+      },
+      "body_ids": []
+    },
+    {
+      "id": "oep-feature-varset-height",
+      "name": "height",
+      "kind": "VariableSet",
+      "parameters": {
+        "variables": {
+          "height": 40.0,
+          "width": 80.0
+        }
+      },
+      "body_ids": []
+    }
+  ],
+  "assemblies": []
+}

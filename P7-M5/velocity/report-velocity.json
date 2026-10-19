@@ -1,0 +1,310 @@
+{
+  "binary": "workbench",
+  "built_from": "38ada34",
+  "host": "promaxgb10-83f1",
+  "measured_at": "2026-10-17T06:01:17Z",
+  "ops": [
+    {
+      "behavior": "ok",
+      "id": "VEL-01",
+      "max_seconds": 0.000974,
+      "mean_seconds": 0.000939,
+      "min_seconds": 0.000888,
+      "p95_seconds": 0.000954,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-02",
+      "max_seconds": 0.000607,
+      "mean_seconds": 0.000584,
+      "min_seconds": 0.000577,
+      "p95_seconds": 0.000581,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-03",
+      "max_seconds": 0.003447,
+      "mean_seconds": 0.00337,
+      "min_seconds": 0.003289,
+      "p95_seconds": 0.003437,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-04",
+      "max_seconds": 0.003382,
+      "mean_seconds": 0.003304,
+      "min_seconds": 0.00321,
+      "p95_seconds": 0.003364,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-05",
+      "max_seconds": 0.005262,
+      "mean_seconds": 0.005223,
+      "min_seconds": 0.005175,
+      "p95_seconds": 0.005248,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-06",
+      "max_seconds": 0.250012,
+      "mean_seconds": 0.242493,
+      "min_seconds": 0.233163,
+      "p95_seconds": 0.248392,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-07",
+      "max_seconds": 0.001678,
+      "mean_seconds": 0.000944,
+      "min_seconds": 0.000653,
+      "p95_seconds": 0.001023,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-08",
+      "max_seconds": 0.002859,
+      "mean_seconds": 0.00166,
+      "min_seconds": 0.001339,
+      "p95_seconds": 0.001385,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-09",
+      "max_seconds": 0.001464,
+      "mean_seconds": 0.001445,
+      "min_seconds": 0.001432,
+      "p95_seconds": 0.001448,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-10",
+      "max_seconds": 0.001328,
+      "mean_seconds": 0.001295,
+      "min_seconds": 0.001269,
+      "p95_seconds": 0.001306,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-11",
+      "max_seconds": 0.011629,
+      "mean_seconds": 0.011563,
+      "min_seconds": 0.011479,
+      "p95_seconds": 0.011623,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-12",
+      "max_seconds": 0.197148,
+      "mean_seconds": 0.196702,
+      "min_seconds": 0.195848,
+      "p95_seconds": 0.197138,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-13",
+      "max_seconds": 0.545693,
+      "mean_seconds": 0.536017,
+      "min_seconds": 0.531925,
+      "p95_seconds": 0.53453,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-14",
+      "max_seconds": 0.049268,
+      "mean_seconds": 0.044175,
+      "min_seconds": 0.036337,
+      "p95_seconds": 0.049196,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-15",
+      "max_seconds": 0.039972,
+      "mean_seconds": 0.032753,
+      "min_seconds": 0.027712,
+      "p95_seconds": 0.039393,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-16",
+      "max_seconds": 0.001425,
+      "mean_seconds": 0.001051,
+      "min_seconds": 0.000839,
+      "p95_seconds": 0.001268,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-17",
+      "max_seconds": 0.00686,
+      "mean_seconds": 0.004043,
+      "min_seconds": 0.003269,
+      "p95_seconds": 0.003389,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-18",
+      "max_seconds": 0.003362,
+      "mean_seconds": 0.003319,
+      "min_seconds": 0.00328,
+      "p95_seconds": 0.003334,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-19",
+      "max_seconds": 0.00642,
+      "mean_seconds": 0.005769,
+      "min_seconds": 0.003932,
+      "p95_seconds": 0.006227,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-20",
+      "max_seconds": 0.0016,
+      "mean_seconds": 0.001229,
+      "min_seconds": 0.000966,
+      "p95_seconds": 0.001289,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-21",
+      "max_seconds": 0.00698,
+      "mean_seconds": 0.006036,
+      "min_seconds": 0.003867,
+      "p95_seconds": 0.00656,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-22",
+      "max_seconds": 0.001358,
+      "mean_seconds": 0.001118,
+      "min_seconds": 0.000751,
+      "p95_seconds": 0.001236,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-23",
+      "max_seconds": 0.006158,
+      "mean_seconds": 0.006027,
+      "min_seconds": 0.005895,
+      "p95_seconds": 0.006072,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-24",
+      "max_seconds": 0.00615,
+      "mean_seconds": 0.004242,
+      "min_seconds": 0.003669,
+      "p95_seconds": 0.003917,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-25",
+      "max_seconds": 0.006134,
+      "mean_seconds": 0.004613,
+      "min_seconds": 0.00351,
+      "p95_seconds": 0.00602,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-26",
+      "max_seconds": 0.001343,
+      "mean_seconds": 0.001095,
+      "min_seconds": 0.00079,
+      "p95_seconds": 0.00133,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-27",
+      "max_seconds": 0.00614,
+      "mean_seconds": 0.00423,
+      "min_seconds": 0.003563,
+      "p95_seconds": 0.003857,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-28",
+      "max_seconds": 0.00184,
+      "mean_seconds": 0.001489,
+      "min_seconds": 0.001005,
+      "p95_seconds": 0.001739,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-29",
+      "max_seconds": 0.001641,
+      "mean_seconds": 0.001434,
+      "min_seconds": 0.000996,
+      "p95_seconds": 0.001608,
+      "runs": 5,
+      "status": "measured"
+    },
+    {
+      "behavior": "ok",
+      "id": "VEL-30",
+      "max_seconds": 0.00147,
+      "mean_seconds": 0.001191,
+      "min_seconds": 0.000827,
+      "p95_seconds": 0.001467,
+      "runs": 5,
+      "status": "measured"
+    }
+  ],
+  "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+  "purpose": "P7-M5-T01 power-user velocity: 30 common ops under budget"
+}

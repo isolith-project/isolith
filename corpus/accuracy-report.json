@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "generated": "2026-10-16T16:58:16.688965+00:00",
+  "description": "P4-M1-T03 STEP accuracy harness fidelity report. measured = real geometry on both sides; every skip carries a closed-taxonomy class + reason. No number is ever fabricated.",
+  "summary": {
+    "total": 1,
+    "measured": 1,
+    "skipped": 0,
+    "skipped_by_class": {}
+  },
+  "rows": [
+    {
+      "id": "keelworks-box",
+      "status": "measured",
+      "class": "",
+      "reason": "",
+      "geometry_class": "prism",
+      "metrics": {
+        "native_vertices": 8,
+        "step_vertices": 8,
+        "native_triangles": 12,
+        "step_triangles": 12,
+        "symmetric_hausdorff": 0.0,
+        "hausdorff_forward": 0.0,
+        "hausdorff_reverse": 0.0,
+        "hausdorff_method": "vertex",
+        "native_volume": -0.3333333333333333,
+        "step_volume": -0.3333333333333333,
+        "volume_delta": 0.0,
+        "volume_rel_error": 0.0
+      }
+    }
+  ]
+}

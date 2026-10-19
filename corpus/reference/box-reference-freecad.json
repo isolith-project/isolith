@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "format": "mesh-reference",
+  "provenance": {
+    "converter": "FreeCAD",
+    "freecad_version": "26.3",
+    "freecad_executable": "freecadcmd (micromamba envs/freecad)",
+    "input": "box.stl",
+    "method": "Mesh.read() independent OCCT-backed importer; vertices normalized to 9 dp",
+    "role": "external-converter reference, test-only ground truth (P5-M3-T02); never shipped, never claimed as product",
+    "clean_room": "converter output used strictly as test reference; not a source of format internals"
+  },
+  "mesh": {
+    "positions": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "triangles": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        3,
+        1
+      ],
+      [
+        4,
+        5,
+        6
+      ],
+      [
+        5,
+        7,
+        6
+      ],
+      [
+        2,
+        6,
+        4
+      ],
+      [
+        2,
+        0,
+        6
+      ],
+      [
+        3,
+        5,
+        7
+      ],
+      [
+        3,
+        1,
+        5
+      ],
+      [
+        5,
+        1,
+        2
+      ],
+      [
+        5,
+        2,
+        4
+      ],
+      [
+        0,
+        7,
+        3
+      ],
+      [
+        0,
+        6,
+        7
+      ]
+    ]
+  }
+}

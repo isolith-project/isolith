@@ -1,0 +1,57 @@
+{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-cgr-1",
+      "name": "cgr-mesh-part",
+      "body_ids": [
+        "oep-body-cgr-1"
+      ],
+      "feature_ids": [
+        "oep-feature-cgr-import"
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-cgr-1",
+      "name": "cgr-mesh-body",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          -152.39999389648438,
+          0.0,
+          -247.64999389648438
+        ],
+        "max": [
+          152.39999389648438,
+          97.79000091552734,
+          0.0
+        ]
+      },
+      "feature_ids": [
+        "oep-feature-cgr-import"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "oep-feature-cgr-import",
+      "name": "import-mesh",
+      "kind": "ImportedMesh",
+      "parameters": {
+        "index_count": 2003,
+        "max_index": 1990,
+        "records": 18,
+        "triangle_count": 1389,
+        "vertex_count": 1037
+      },
+      "body_ids": [
+        "oep-body-cgr-1"
+      ]
+    }
+  ],
+  "assemblies": []
+}

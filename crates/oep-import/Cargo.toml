@@ -1,0 +1,17 @@
+[package]
+name = "oep-import"
+description = "P6-M4-T02: Importer hub — P2/P3/P4 adapters feed the canonical oep-geo model (one internal format)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# First cross-crate path deps in the workspace (docs/layout.md: defined by
+# the P6 importer hub, P6-M4-T02). oep-geo stays the dependency-free canonical
+# model; the readers stay leaf crates; this crate is the composition root that
+# adapts reader output into the ONE canonical internal format (oep_geo::Document).
+oep-geo = { path = "../oep-geo" }
+oep-cgr = { path = "../oep-cgr" }
+oep-3dxml = { path = "../oep-3dxml" }
+oep-step = { path = "../oep-step" }

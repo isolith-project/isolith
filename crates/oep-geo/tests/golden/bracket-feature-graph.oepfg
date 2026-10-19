@@ -1,0 +1,73 @@
+format oep-feature-graph
+version 1
+nodes 5
+node 0
+id oep-feature-bracket-body
+name bracket-body
+kind Extrude
+parent -
+refs 0
+params 3
+height=6
+length=80
+width=40
+node 1
+id oep-feature-side-shelf
+name side-shelf
+kind Offset
+parent oep-feature-bracket-body
+refs 1
+oep-feature-bracket-body
+params 3
+dx=80
+dy=0
+dz=0
+node 2
+id oep-feature-body-union
+name body-union
+kind Union
+parent oep-feature-bracket-body
+refs 2
+oep-feature-bracket-body
+oep-feature-side-shelf
+params 0
+node 3
+id oep-feature-top-trim
+name top-trim
+kind Trim
+parent oep-feature-body-union
+refs 1
+oep-feature-body-union
+params 1
+dz=3
+node 4
+id oep-feature-hub-mirror
+name hub-mirror
+kind Mirror
+parent oep-feature-top-trim
+refs 1
+oep-feature-top-trim
+params 2
+at=90
+axis=str:x
+trace 5
+step 0
+id oep-feature-bracket-body
+kind Extrude
+box 0;0;0;80;40;6
+step 1
+id oep-feature-side-shelf
+kind Offset
+box 80;0;0;160;40;6
+step 2
+id oep-feature-body-union
+kind Union
+box 0;0;0;160;40;6
+step 3
+id oep-feature-top-trim
+kind Trim
+box 0;0;0;160;40;3
+step 4
+id oep-feature-hub-mirror
+kind Mirror
+box 20;0;0;180;40;3

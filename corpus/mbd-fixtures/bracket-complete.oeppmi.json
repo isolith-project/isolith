@@ -1,0 +1,81 @@
+{
+  "format": "oep-pmi",
+  "version": 1,
+  "units": "mm",
+  "datums": [
+    {
+      "id": "datum_A",
+      "label": "A",
+      "feature_ids": ["oep-feature-bracket-extrude"],
+      "body_ids": []
+    },
+    {
+      "id": "datum_B",
+      "label": "B",
+      "feature_ids": ["oep-feature-bracket-hole"],
+      "body_ids": []
+    },
+    {
+      "id": "datum_C",
+      "label": "C",
+      "feature_ids": ["oep-feature-bracket-hole"],
+      "body_ids": []
+    }
+  ],
+  "frames": [
+    {
+      "id": "drf_abc",
+      "name": "A-B-C",
+      "refs": [
+        {"datum_id": "datum_A", "precedence": 1, "modifier": "rfs"},
+        {"datum_id": "datum_B", "precedence": 2, "modifier": "rfs"},
+        {"datum_id": "datum_C", "precedence": 3}
+      ]
+    }
+  ],
+  "tolerances": [
+    {
+      "id": "gt_1",
+      "characteristic": "position",
+      "value": 0.2,
+      "diameter_zone": true,
+      "material_condition": "mmc",
+      "frame_id": "drf_abc",
+      "feature_ids": ["oep-feature-bracket-hole"],
+      "body_ids": []
+    },
+    {
+      "id": "gt_flat",
+      "characteristic": "flatness",
+      "value": 0.05,
+      "diameter_zone": false,
+      "feature_ids": ["oep-feature-bracket-extrude"],
+      "body_ids": []
+    },
+    {
+      "id": "gt_perp",
+      "characteristic": "perpendicularity",
+      "value": 0.1,
+      "diameter_zone": false,
+      "material_condition": "rfs",
+      "frame_id": "drf_abc",
+      "feature_ids": ["oep-feature-bracket-hole"],
+      "body_ids": []
+    }
+  ],
+  "notes": [
+    {
+      "id": "note_holes",
+      "text": "4X \u00d86.00 THRU",
+      "feature_ids": ["oep-feature-bracket-hole"],
+      "body_ids": [],
+      "position": [40.0, 20.0, 0.0]
+    },
+    {
+      "id": "note_units",
+      "text": "ALL DIMENSIONS IN MM",
+      "feature_ids": [],
+      "body_ids": []
+    }
+  ]
+}

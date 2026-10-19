@@ -27,3 +27,46 @@ pub mod gltf;
 /// old-era (2007-era) sample spine; modern material (e.g. NIST V5-6R2023
 /// STC-06) decodes through [`modern::extract_modern`].
 pub mod modern;
+
+/// Clean-room byte-level CGR header spine parser (P2-M1-T01).
+pub mod header;
+
+/// Real-material modern-era CGR locate latch (P2-M7-T01, P7-M2-T01 importer).
+pub mod locate;
+
+/// Central table-of-blocks walker with bounds checks (P2-M1-T03).
+pub mod blocks;
+
+/// Color/material table parse + glTF materials export (P2-M4-T01).
+pub mod material;
+
+/// Normal/vertex-attribute recovery where present (P2-M3-T01).
+pub mod attributes;
+
+/// Face/edge topology reconstruction from the extracted mesh (P2-M3-T02).
+pub mod topology;
+
+/// Section/view extraction via planar cuts over the internal mesh (P2-M3-T03).
+pub mod section;
+
+pub mod assembly;
+/// Transform/instance hierarchy (assembly CGR inside part) with matrix stack (P2-M4-T02).
+pub mod instance;
+
+/// Binary STL mesh export (P2-M2-T02).
+pub mod stl;
+
+/// STEP B-Rep passthrough for a tessellated mesh, honestly marked tessellated (P2-M5-T02).
+pub mod step;
+
+/// True streaming parse for large assemblies (100k+ parts) (P2-M6-T02).
+pub mod stream;
+
+/// Tolerant, bounds-checked, depth-limited CGR record walker (P2-M6-T01 fuzz round 2).
+pub mod structure;
+
+/// Deterministic round-2 fuzz campaign over the record walker (P2-M6-T01).
+pub mod fuzz;
+
+/// Deterministic round-1 fuzz campaign over the header parser (P2-M1-T05).
+pub mod fuzz_round1;

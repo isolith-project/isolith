@@ -105,13 +105,13 @@ fn accept_tls_terminates_with_trusted_handshake() {
     std::fs::create_dir_all(&dir).unwrap();
     let (cert, key) = make_self_signed_cert(&dir);
 
-    let tls = TlsConfig { cert: cert.clone(), key };
-    let server = PdmService::start_with_store_and_tls(
-        "127.0.0.1:0",
-        oep_pdm::store::VaultStore::new(),
-        tls,
-    )
-    .expect("TLS server starts");
+    let tls = TlsConfig {
+        cert: cert.clone(),
+        key,
+    };
+    let server =
+        PdmService::start_with_store_and_tls("127.0.0.1:0", oep_pdm::store::VaultStore::new(), tls)
+            .expect("TLS server starts");
     assert!(server.tls_enabled(), "service reports TLS enabled");
     assert!(
         server.base_url().starts_with("https://"),
@@ -145,14 +145,17 @@ fn accept_tls_terminates_with_trusted_handshake() {
             );
             let mut buf = [0u8; 256];
             match std::io::Read::read(&mut s, &mut buf) {
-                Err(_) => true,                       // rejected outright
-                Ok(0) => true,                        // clean EOF, nothing served
+                Err(_) => true, // rejected outright
+                Ok(0) => true,  // clean EOF, nothing served
                 Ok(n) => !buf[..n].starts_with(b"HTTP/1.1 200"),
             }
         }
         Err(_) => true, // connection rejected outright is also correct
     };
-    assert!(not_plain_http, "plain HTTP must not be served on the TLS listener");
+    assert!(
+        not_plain_http,
+        "plain HTTP must not be served on the TLS listener"
+    );
 }
 
 #[test]
@@ -164,13 +167,13 @@ fn accept_tls_serves_the_same_contract() {
     let dir = std::env::temp_dir().join(format!("oep-tls-c{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     let (cert, key) = make_self_signed_cert(&dir);
-    let tls = TlsConfig { cert: cert.clone(), key };
-    let server = PdmService::start_with_store_and_tls(
-        "127.0.0.1:0",
-        oep_pdm::store::VaultStore::new(),
-        tls,
-    )
-    .expect("TLS server starts");
+    let tls = TlsConfig {
+        cert: cert.clone(),
+        key,
+    };
+    let server =
+        PdmService::start_with_store_and_tls("127.0.0.1:0", oep_pdm::store::VaultStore::new(), tls)
+            .expect("TLS server starts");
 
     // Create an item over TLS (contract verbatim, transport only differs).
     let req = serde_json::to_string(&oep_pdm::api::CreateItemRequest {
@@ -191,7 +194,10 @@ fn accept_tls_serves_the_same_contract() {
             req
         ),
     );
-    assert!(body.contains("\"name\":\"TlsBox\""), "create item over TLS: {body}");
+    assert!(
+        body.contains("\"name\":\"TlsBox\""),
+        "create item over TLS: {body}"
+    );
 
     // Upload a revision (the save-revision verb) over TLS, then fetch it back
     // and confirm the content-addressed blob round-trips.
@@ -227,7 +233,10 @@ fn accept_tls_serves_the_same_contract() {
             up
         ),
     );
-    assert!(body.contains("\"number\":\"1\""), "revision over TLS: {body}");
+    assert!(
+        body.contains("\"number\":\"1\""),
+        "revision over TLS: {body}"
+    );
 
     let re_fetch = https_body(
         "127.0.0.1",

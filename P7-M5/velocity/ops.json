@@ -1,0 +1,242 @@
+[
+  {
+    "id": "VEL-01",
+    "category": "discovery",
+    "description": "help: print the workbench command usage",
+    "cli": "help",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-02",
+    "category": "discovery",
+    "description": "journal: print the operation journal of a fresh session",
+    "cli": "journal",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-03",
+    "category": "discovery",
+    "description": "journal after a load: show the session trace accumulated so far",
+    "cli": "load:step:@box-reference journal",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-04",
+    "category": "step-load",
+    "description": "load a real committed STEP part (unit box, faceted)",
+    "cli": "load:step:@box-reference",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-05",
+    "category": "step-load",
+    "description": "load a real STEP assembly golden (multi-part, honest skip when no faceted geometry maps)",
+    "cli": "load:step:@assembly-step",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-06",
+    "category": "step-load",
+    "description": "load a real NIST MBD STEP file (AP242)",
+    "cli": "load:step:@nist-ap242-step",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-07",
+    "category": "step-load",
+    "description": "load a missing file path (typed failure, no hang)",
+    "cli": "load:step:/no/such/metric-block.step",
+    "expected": "failure",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-08",
+    "category": "3dxml-load",
+    "description": "load a real single-part 3DXML (cube1)",
+    "cli": "load:3dxml:@cube1-3dxml",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-09",
+    "category": "3dxml-load",
+    "description": "load a real small quad 3DXML",
+    "cli": "load:3dxml:@quad-3dxml",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-10",
+    "category": "3dxml-load",
+    "description": "load a real blocks 3DXML assembly",
+    "cli": "load:3dxml:@blocks-3dxml",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-11",
+    "category": "3dxml-load",
+    "description": "load a real machinist part 3DXML",
+    "cli": "load:3dxml:@machinist-3dxml",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-12",
+    "category": "3dxml-load",
+    "description": "load a real cycloidal gear 3DXML",
+    "cli": "load:3dxml:@cycloidal-3dxml",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-13",
+    "category": "3dxml-load",
+    "description": "load a real large FM1 satellite 3DXML (72 parts, the large-assembly leg)",
+    "cli": "load:3dxml:@fm1-3dxml",
+    "expected": "success",
+    "budget_s": 10.0
+  },
+  {
+    "id": "VEL-14",
+    "category": "cgr-load",
+    "description": "load a real modern CGR latch (NIST STC-06 V5-6R2023 CATPart)",
+    "cli": "load:cgr:@modern-stc06",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-15",
+    "category": "cgr-load",
+    "description": "load a real modern CGR latch (NIST STC-08 V5-6R2023 CATPart, second real leg)",
+    "cli": "load:cgr:@modern-stc08",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-16",
+    "category": "cgr-load",
+    "description": "load a real classic-era CGR container (VALVE.cgr, honest skip path on foreign spine)",
+    "cli": "load:cgr:@valve-cgr",
+    "expected": "success",
+    "budget_s": 5.0
+  },
+  {
+    "id": "VEL-17",
+    "category": "pdm",
+    "description": "save a new revision to the PDM vault (local stub)",
+    "cli": "load:step:@box-reference save-pdm:BOX-01:A:initial",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-18",
+    "category": "pdm",
+    "description": "save a second revision of identical content (content-addressed dedup)",
+    "cli": "load:step:@box-reference save-pdm:BOX-01:A:initial save-pdm:BOX-01:B:second",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-19",
+    "category": "pdm",
+    "description": "open the saved revision back (round trip restore)",
+    "cli": "load:step:@box-reference save-pdm:BOX-01:A:roundtrip open-pdm:BOX-01:A",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-20",
+    "category": "pdm",
+    "description": "open a missing PDM item (typed failure, no hang)",
+    "cli": "open-pdm:NO-SUCH-ITEM:A",
+    "expected": "failure",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-21",
+    "category": "pdm",
+    "description": "open a missing revision of a known item (typed failure)",
+    "cli": "load:step:@box-reference save-pdm:BOX-01:A:roundtrip open-pdm:BOX-01:ZZ",
+    "expected": "failure",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-22",
+    "category": "pdm",
+    "description": "save to PDM with no document loaded (typed failure)",
+    "cli": "save-pdm:EMPTY:A:",
+    "expected": "failure",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-23",
+    "category": "save",
+    "description": "request a CGR interchange save (honest pending: writer is not delivered yet)",
+    "cli": "load:step:@box-reference save:cgr",
+    "expected": "pending",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-24",
+    "category": "save",
+    "description": "request a 3DXML interchange save (honest pending: writer is P3-M4)",
+    "cli": "load:step:@box-reference save:3dxml",
+    "expected": "pending",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-25",
+    "category": "save",
+    "description": "request a STEP interchange save (honest pending: writer is P6-M4)",
+    "cli": "load:step:@box-reference save:step",
+    "expected": "pending",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-26",
+    "category": "error",
+    "description": "unknown command (typed failure with usage)",
+    "cli": "frobnicate",
+    "expected": "failure",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-27",
+    "category": "error",
+    "description": "unknown save format (typed failure)",
+    "cli": "load:step:@box-reference save:obj",
+    "expected": "failure",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-28",
+    "category": "error",
+    "description": "junk bytes to the CGR lane (typed skip, no panic)",
+    "cli": "load:cgr:@junk-cgr",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-29",
+    "category": "error",
+    "description": "junk bytes to the STEP lane (typed skip, no panic)",
+    "cli": "load:step:@junk-step",
+    "expected": "success",
+    "budget_s": 1.0
+  },
+  {
+    "id": "VEL-30",
+    "category": "error",
+    "description": "junk bytes to the 3DXML lane (typed skip, no panic)",
+    "cli": "load:3dxml:@junk-3dxml",
+    "expected": "success",
+    "budget_s": 1.0
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "description": "Keelworks nightly stress/regression job registry (P0-M4-T03). Run with: python3 ci/stress/stress_runner.py --jobs ci/stress/jobs.json. Adding a lane: add it here AND to REQUIRED_JOBS in tests/stress_suite_test.py.",
+  "jobs": [
+    {
+      "name": "cargo-build-workspace",
+      "category": "regression",
+      "command": ["cargo", "build", "--workspace"],
+      "timeout_seconds": 600,
+      "doc": "Real Rust workspace build (workspace contract from P0-M3-T01)."
+    },
+    {
+      "name": "cargo-test-workspace",
+      "category": "regression",
+      "command": ["cargo", "test", "--workspace"],
+      "timeout_seconds": 600,
+      "doc": "Real Rust workspace unit tests."
+    },
+    {
+      "name": "python-layout-acceptance",
+      "category": "regression",
+      "command": ["python3", "tests/monorepo_layout_test.py"],
+      "timeout_seconds": 300,
+      "doc": "Existing monorepo layout acceptance test against the real tree."
+    },
+    {
+      "name": "text-file-integrity",
+      "category": "regression",
+      "command": ["python3", "ci/stress/text_file_integrity.py"],
+      "timeout_seconds": 300,
+      "doc": "Scan all repo text files: strict UTF-8, no NUL/C0 control bytes, LF-only line endings."
+    },
+    {
+      "name": "fuzz-status-page",
+      "category": "stress",
+      "command": ["python3", "ci/stress/stress_fuzz_report.py", "--iterations", "3000"],
+      "timeout_seconds": 600,
+      "doc": "Long fuzz of the status-page/report serializers with hostile bytes: garbage-in-safe-out, no crash, valid HTML + JSON always. Future P2/P3 parser fuzz harnesses plug in here the same way."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+# P11 gates (Wave-3 security lane). Job:
+#   ga-gate-p11t03  P11-T03 auth-boundary suite (RBAC bypass attempts and IDOR
+#                   on vault objects via the PDM REST API). Runs the strict +
+#                   permissive two-mode suite over real sockets and asserts
+#                   denial (403/404) passes on the P8-M3 RBAC implementation;
+#                   then the acceptance test checks the committed artifacts.
+# Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
+# branch under validation (same pattern as ga-gate-p8.yaml and the P12 gate).
+name: P11 gates (auth boundary)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ga-gate-p11t03:
+    name: ga-gate-p11t03
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Build oep-pdm (with the authz module + RBAC core)
+        run: cargo build -p oep-pdm 2>&1 | tail -5
+      - name: P11-T03 auth-boundary suite (strict + permissive mutation proof)
+        run: |
+          if [ ! -f crates/oep-pdm/tests/auth_boundary.rs ]; then
+            echo "P11-T03 suite not present on this ref; skipping"
+            exit 0
+          fi
+          cargo test -p oep-pdm --test auth_boundary 2>&1 | tail -15
+      - name: P11-T03 authz unit tests + RBAC core
+        run: |
+          cargo test -p oep-pdm --lib authz 2>&1 | tail -5
+          cargo test -p oep-pdm --test rbac_abac --test rbac_default_deny --test rbac_role_matrix 2>&1 | tail -5
+      - name: P11-T03 acceptance (committed artifacts + doc invariants)
+        run: |
+          if [ ! -f tests/test_p11_auth_boundary.py ]; then
+            echo "P11-T03 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p11_auth_boundary.py

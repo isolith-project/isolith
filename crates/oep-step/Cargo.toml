@@ -13,6 +13,10 @@ step-io = { version = "=0.2.5" }
 # The canonical native model (dependency-free). oep-step is a leaf reader that
 # maps parsed facets onto it (P4 feed for the P6 importer hub).
 oep-geo = { path = "../oep-geo" }
+# P4-M2-T02: AP242 semantic-PMI round-trip re-export (writer + over-and-back
+# reader) into the oep-pmi model. Ported from task/p4m2t02-ap242-export-1016a;
+# merged against main's vendor-neutral oep-geo/step-io reader deps.
+oep-pmi = { path = "../oep-pmi" }
 
 [dev-dependencies]
 serde_json = "1"

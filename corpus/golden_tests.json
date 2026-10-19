@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "description": "P2-M7-T01 numeric-epsilon golden spec on REAL material (committed). piston.cgr is a dev-only reference sample (never shipped, per 2026-10-16 licensing posture); nist_stc_06_asme1_V56R2023.CATPart is the public-domain NIST V5-6R2023 modern-era anchor (US Government test data, source recorded in docs/re-notes). When present under the corpus root / OEP_CGR_SAMPLES the golden must PASS within tolerance 1e-6, otherwise the row SKIPs (tolerant, never crashes). compare=numeric so any measured-count drift (even 1e-6) is a FAIL, not a silent pass.",
+  "tests": [
+    {
+      "id": "cgr-piston-located-anchor-counts",
+      "corpus_id": "piston.cgr",
+      "command": [
+        "python3", "python/oep_tooling/cgr_locate_reference.py", "{input}"
+      ],
+      "golden": "corpus/golden/cgr-piston-anchor-counts.golden",
+      "compare": "numeric",
+      "tolerance": 1e-06
+    },
+    {
+      "id": "cgr-modern-stc06-spatial-mesh-counts",
+      "corpus_id": "nist_stc_06_asme1_V56R2023.CATPart",
+      "command": [
+        "python3", "python/oep_tooling/cgr_modern_reference.py", "{input}"
+      ],
+      "golden": "corpus/golden/cgr-modern-stc06-spatial-mesh-counts.golden",
+      "compare": "numeric",
+      "tolerance": 1e-06
+    }
+  ]
+}

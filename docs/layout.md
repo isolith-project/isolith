@@ -14,6 +14,15 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-render-worker -- headless oep-geo render worker (P9-M3-T01)
 - P9 oep-farm       -- beam/farm-style checkpoint + resume for long jobs (P9-M4-T02)
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
+- P4 oep-step-pmi   -- STEP AP242 semantic-PMI import into oep-pmi (P4-M2-T01)
+- P4 oep-import     -- importer hub: P2/P3/P4 adapters feed the canonical oep-geo model (P6-M4-T02)
+- P6 oep-pmi        -- PMI model schema: GD&T, datums, notes, tolerances (P6-M1-T02)
+- P4 oep-qif        -- QIF (Quality Information Framework) MBD quality data import/export (P4-M4-T01)
+- P7 oep-shell      -- modeler shell: OEP interchange workbench command surface (P7-M2-T01)
+- P7 oep-kinematics -- mates/kinematics demo, own DMU-ish semantics over oep-geo (P7-M3-T02)
+- P7 oep-rules      -- rules/checks sandbox, Knowledgeware-lite documented not-parity (P7-M4-T02)
+- P7 oep-sketch     -- 2D sketcher + parametric variable sets, adopted OSS solver via seam (P7-M4-T01)
+- P10 oep-archive   -- export-all interop escape hatch: neutral STEP/3DXML/glTF/STL + JSON archive (P10-M3-T02)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per P8-M1/web-stack-adr.md, AGPL-3.0; retained
   P7-M2-T02 StubServer identity + PdmClient), contract: P8-M6/openapi-v1.yaml,

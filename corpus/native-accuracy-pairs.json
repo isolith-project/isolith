@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "description": "P5-M3-T02 corpus pair list: (native sample, external-converter reference) pairs. The REFERENCE is the output of an external, independent converter (FreeCAD / Open CASCADE kernel via corpus/tools/gen_freecad_reference.py) reading the SAME native file. It is test-only ground truth for our own testing only: never a source of format internals (P5-M1-T03 clean-room line), never shipped, never claimed as the product. The harness measures a pair only when real geometry resolves on BOTH sides; a native CATPart whose external-converter reference is not yet mapped is an honest `reference-unavailable` skip, never a fabricated number.",
+  "task": "P5-M3-T02",
+  "pairs": [
+    {
+      "id": "keelworks-native-box",
+      "geometry_class": "prism",
+      "source": "CC0-1.0 keelworks unit box (P0-M4-T02 fixture, 8 verts / 12 tris)",
+      "native": "data/box.stl",
+      "reference": "reference/box-reference-freecad.json",
+      "reference_producer": "FreeCAD 26.3 (OCC kernel) via freecadcmd Mesh.read"
+    },
+    {
+      "id": "native-hex-nut",
+      "geometry_class": "prism",
+      "source": "committed native CATPart sample (corpus/data/catpart/hex-nut.CATPart); external-converter reference not yet materialized",
+      "native": "data/catpart/hex-nut.CATPart",
+      "reference": ""
+    },
+    {
+      "id": "native-kj-pin",
+      "geometry_class": "prism",
+      "source": "committed native CATPart sample (corpus/data/catpart/kj-pin.CATPart); external-converter reference not yet materialized",
+      "native": "data/catpart/kj-pin.CATPart",
+      "reference": ""
+    },
+    {
+      "id": "native-square-thread",
+      "geometry_class": "prism",
+      "source": "committed native CATPart sample (corpus/data/catpart/square-thread.CATPart); external-converter reference not yet materialized",
+      "native": "data/catpart/square-thread.CATPart",
+      "reference": ""
+    }
+  ]
+}
