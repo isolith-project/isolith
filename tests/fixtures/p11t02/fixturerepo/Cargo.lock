@@ -1,0 +1,40 @@
+# Fixture Cargo.lock for the P11-T02 hermetic acceptance tests.
+#
+# Version 4 lockfile shape (matches Cargo >= 1.78). Intentionally tiny so the
+# tests assert exact counts. keelworks-fixture-unsafe is the SEEDED critical
+# vulnerability: this crate@version matches the fixture critical advisory and
+# MUST make the gate fail until waivered. keelworks-fixture-unmaintained
+# exercises a non-blocking informational advisory. In the real workspace a
+# dev-dependency that carries a vulnerable version lands in Cargo.lock the
+# same way (dev-deps are resolved into the lockfile), which is the test-
+# dependency seed this card requires.
+version = 4
+
+[[package]]
+name = "keelworks-fixture-app"
+version = "0.1.0"
+dependencies = [
+ "serde_fixture",
+]
+
+[[package]]
+name = "keelworks-fixture-unsafe"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[[package]]
+name = "keelworks-fixture-unmaintained"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+
+[[package]]
+name = "serde_fixture"
+version = "1.0.100"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+dependencies = [
+ "keelworks-fixture-unsafe",
+ "keelworks-fixture-unmaintained",
+]

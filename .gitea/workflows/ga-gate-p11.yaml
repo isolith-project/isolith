@@ -1,12 +1,30 @@
-# P11 gates (Wave-3 security lane). Job:
+# P11 gates (Wave-3 security lane). Two jobs on every push/PR (incl. release/*
+# and v-tag refs):
 #   ga-gate-p11t03  P11-T03 auth-boundary suite (RBAC bypass attempts and IDOR
 #                   on vault objects via the PDM REST API). Runs the strict +
 #                   permissive two-mode suite over real sockets and asserts
 #                   denial (403/404) passes on the P8-M3 RBAC implementation;
 #                   then the acceptance test checks the committed artifacts.
+#                   Includes the SEC-AUTHZ-RESIDUAL oep-web default-binary leg
+#                   and the P11-T01 threat-model acceptance.
+#   p11t02-sbom-cve P11-T02 dependency SBOM + CVE scanning in CI:
+#                   1. runs the hermetic TDD acceptance suite, then the real
+#                      green-scan check (real Cargo.lock vs real rustsec DB),
+#                   2. emits SPDX + CycloneDX BOMs (Rust crate tree from the
+#                      committed Cargo.lock + the container base images),
+#                   3. scans Cargo.lock against the advisory-db and GATES the
+#                      ref (job fails iff any unfixed critical/high finding is
+#                      outside the committed waiver file P11/waivers.toml),
+#                   4. uploads the BOMs + scan report as a per-build artifact,
+#                   5. runs the deliberate-failure repro (seeded critical vuln
+#                      MUST fail the gate).
+#   An OSV cross-check leg and the container-image leg (real trivy scan on the
+#   release host) are recorded under P11/proof/; CI classifies those SKIP under
+#   the closed taxonomy exactly like the P8/P9/P10/P12 gates classify their
+#   live-LAN legs.
 # Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
 # branch under validation (same pattern as ga-gate-p8.yaml and the P12 gate).
-name: P11 gates (auth boundary)
+name: P11 gates (auth boundary + SBOM/CVE)
 on:
   push:
   pull_request:
@@ -61,3 +79,52 @@ jobs:
             exit 0
           fi
           python3 tests/test_p11_threat_model.py
+
+  p11t02-sbom-cve:
+    name: p11t02-sbom-cve
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: P11-T02 acceptance (TDD, hermetic fixtures + live green scan)
+        run: |
+          if [ ! -f tests/test_p11t02_sbom_cve.py ]; then
+            echo "P11-T02 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          # the live green-scan check inside the suite needs the real
+          # advisory-db; bring it in first (shallow), like the gate driver does
+          if [ ! -d P11/.advisory-db/crates ]; then
+            git clone -q --depth 1 https://github.com/rustsec/advisory-db.git P11/.advisory-db
+          fi
+          python3 tests/test_p11t02_sbom_cve.py
+      - name: P11-T02 SBOM + CVE release gate (lockfile gate authoritative)
+        env:
+          OEP_REF: "${{ (startsWith(github.ref, 'refs/tags/') && github.ref_name) || (startsWith(github.ref, 'refs/heads/release/') && format('{0}-{1}', github.ref_name, github.sha)) || github.sha }}"
+        run: |
+          if [ ! -f scripts/sbom-cve-gate.sh ]; then
+            echo "P11-T02 gate driver not present on this ref; skipping"
+            exit 0
+          fi
+          ./scripts/sbom-cve-gate.sh --repo "$PWD" --ref "$OEP_REF" --out /tmp/p11out --osv
+      - name: P11-T02 deliberate-failure repro (seeded critical vuln fails the gate)
+        run: |
+          if [ ! -f scripts/sbom-cve-fail-repro.sh ]; then
+            echo "P11-T02 fail-repro script not present on this ref; skipping"
+            exit 0
+          fi
+          bash scripts/sbom-cve-fail-repro.sh
+      - name: Upload SBOM + scan report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: p11-sbom-cve-${{ github.sha }}
+          path: /tmp/p11out
+          if-no-files-found: error
