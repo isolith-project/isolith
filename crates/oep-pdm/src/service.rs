@@ -926,10 +926,22 @@ fn internal(msg: &str) -> Response {
 
 /// The file-download response: raw bytes plus the contract's `X-Oep-*` /
 /// `X-Blob-Sha256` headers.
+///
+/// P11-T07 P2T-03-FS: uploaded `Content-Type` is stored as given and bytes can
+/// be arbitrary HTML/script, so downloads are sent as `attachment` with
+/// `X-Content-Type-Options: nosniff`. That stops a browser from rendering an
+/// attacker-placed HTML blob inside the PDM/web origin (a stored-script-at-
+/// origin vector); callers that want inline display must opt into it on the
+/// client side.
 fn file_response(item_id: &str, rev: &str, file: &FileRef, bytes: Vec<u8>) -> Response {
     let rb = Response::builder()
         .status(StatusCode::OK)
         .header(header::CONTENT_TYPE, file.content_type.clone())
+        .header("X-Content-Type-Options", "nosniff")
+        .header(
+            header::CONTENT_DISPOSITION,
+            format!("attachment; filename=\"{}\"", sanitize_filename(&file.filename)),
+        )
         .header("X-Oep-Item", item_id)
         .header("X-Oep-Rev", rev)
         .header("X-Oep-Filename", &file.filename)
@@ -940,6 +952,16 @@ fn file_response(item_id: &str, rev: &str, file: &FileRef, bytes: Vec<u8>) -> Re
         Ok(r) => r,
         Err(e) => internal(&format!("cannot build file response: {e}")),
     }
+}
+
+/// Strip CR/LF and control characters from a filename before embedding it in a
+/// `Content-Disposition` header (header-injection guard, P11-T07 P2T-03-FS).
+fn sanitize_filename(name: &str) -> String {
+    name.chars()
+        .filter(|c| !c.is_control())
+        .collect::<String>()
+        .replace('\\', "_")
+        .replace('"', "_")
 }
 
 /// Shared standalone-binary entrypoint: parse the CLI args, load the store

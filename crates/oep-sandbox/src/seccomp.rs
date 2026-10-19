@@ -3,10 +3,18 @@
 //! The filter denies `socket(2)` for every address family except `AF_UNIX`
 //! (local IPC that never leaves the host). Because a fresh worker process
 //! inherits no sockets at `exec`, blocking *creation* of non-`AF_UNIX`
-//! sockets closes every egress path: there is no way to obtain an
+//! sockets closes every ordinary egress path: there is no way to obtain an
 //! `AF_INET`/`AF_INET6`/`AF_PACKET` descriptor, so `connect`/`sendto`/`bind`
 //! cannot reach the network. Breach attempts return `EPERM` (testable: the
 //! worker sees a permission error, not a hang or a success).
+//!
+//! The filter ALSO denies the io_uring subsystem (`io_uring_setup`,
+//! `io_uring_enter`, `io_uring_register`). This closes a class of egress
+//! bypass that no amount of `socket(2)` coverage stops: `IORING_OP_SOCKET`
+//! creates a real `AF_INET` descriptor through the io_uring machinery, which
+//! seccomp never sees because it is not the `socket(2)` syscall. A worker
+//! that cannot call `sock_create` either directly or through io_uring has no
+//! path to a network descriptor at all (P11-T07 pen-test finding P2T-01-SB).
 //!
 //! Installed in the child before `exec` with `PR_SET_NO_NEW_PRIVS` (so the
 //! filter survives `exec` and cannot be dropped by a setuid binary), then
@@ -75,29 +83,61 @@ fn jump(code: u16, jt: u8, jf: u8, k: u32) -> BpfInsn {
 
 /// The compiled egress-blocking program, as a list of BPF instructions.
 ///
-/// Public so tests and tooling can inspect it (acceptance: the filter is
-/// *testable* — see `tests/sandbox_limits.rs` for the behavioural probe).
+/// Decision table (instruction stream the kernel runs; verified by
+/// [`simulate`], and the layout below is pinned by index so every jump target
+/// is exact):
+///
+/// ```text
+///  0  LD arch
+///  1  JEQ AUDIT_ARCH  jt->3 (skip KILL), jf->2
+///  2  KILL_PROCESS                      (foreign arch: unreachable)
+///  3  LD syscall nr
+///  4  JEQ __NR_socket jt->10 (family check), jf->5
+///  5  JEQ io_uring_setup  jt->9 (DENY), jf->6
+///  6  JEQ io_uring_enter  jt->9 (DENY), jf->7
+///  7  JEQ io_uring_register jt->9 (DENY), jf->8
+///  8  ALLOW                            (any other syscall)
+///  9  ERRNO(EPERM)                     (io_uring syscalls denied)
+/// 10  LD args[0]                       (socket family)
+/// 11  JEQ AF_UNIX jt->13 (allow), jf->12
+/// 12  ERRNO(EPERM)                     (non-AF_UNIX socket denied)
+/// 13  ALLOW                            (AF_UNIX socket allowed)
+/// ```
+///
+/// `io_uring_*` are denied outright because a worker has no legitimate need
+/// for them and every one of their socket-creating operations would bypass a
+/// filter that only watches `socket(2)`.
 pub fn egress_filter_instructions() -> Vec<BpfInsn> {
     let sysnr_socket = socket_syscall_nr();
+    let io_setup = io_uring_setup_syscall_nr();
+    let io_enter = io_uring_enter_syscall_nr();
+    let io_register = io_uring_register_syscall_nr();
     vec![
         // 0: load arch
         stmt(BPF_LD | BPF_W | BPF_ABS, SECCOMP_OFF_ARCH),
-        // 1: if arch == AUDIT_ARCH -> next (2 instrs), else KILL_PROCESS
+        // 1: if arch == AUDIT_ARCH -> insn 3 (skip the KILL), else insn 2
         jump(BPF_JMP | BPF_JEQ | BPF_K, 1, 0, AUDIT_ARCH),
+        // 2: unknown arch: kill
         stmt(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
         // 3: load syscall nr
         stmt(BPF_LD | BPF_W | BPF_ABS, SECCOMP_OFF_NR),
-        // 4: if nr == __NR_socket -> fall through to the family check (insn 6
-        //     loads args[0]); non-socket syscalls skip to the ALLOW below.
-        jump(BPF_JMP | BPF_JEQ | BPF_K, 1, 0, sysnr_socket),
+        // 4: if nr == socket -> insn 10 (family check); else next (5)
+        jump(BPF_JMP | BPF_JEQ | BPF_K, 5, 0, sysnr_socket),
+        // 5..7: if nr is any io_uring syscall -> insn 9 (EPERM); else next
+        jump(BPF_JMP | BPF_JEQ | BPF_K, 3, 0, io_setup),
+        jump(BPF_JMP | BPF_JEQ | BPF_K, 2, 0, io_enter),
+        jump(BPF_JMP | BPF_JEQ | BPF_K, 1, 0, io_register),
+        // 8: any other syscall is allowed
         stmt(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
-        // 6: socket(): load args[0] (family)
-        stmt(BPF_LD | BPF_W | BPF_ABS, SECCOMP_OFF_ARGS0),
-        // 7: if family == AF_UNIX -> allow (skip 1 to insn 9)
-        jump(BPF_JMP | BPF_JEQ | BPF_K, 1, 0, AF_UNIX),
-        // 8: non-AF_UNIX socket -> EPERM
+        // 9: io_uring syscalls denied (closes IORING_OP_SOCKET egress bypass)
         stmt(BPF_RET | BPF_K, SECCOMP_RET_ERRNO | libc::EPERM as u32),
-        // 9: AF_UNIX socket -> allow
+        // 10: socket(): load args[0] (family)
+        stmt(BPF_LD | BPF_W | BPF_ABS, SECCOMP_OFF_ARGS0),
+        // 11: if family == AF_UNIX -> insn 13 (allow), else insn 12
+        jump(BPF_JMP | BPF_JEQ | BPF_K, 1, 0, AF_UNIX),
+        // 12: non-AF_UNIX socket -> EPERM
+        stmt(BPF_RET | BPF_K, SECCOMP_RET_ERRNO | libc::EPERM as u32),
+        // 13: AF_UNIX socket -> allow
         stmt(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
     ]
 }
@@ -105,6 +145,21 @@ pub fn egress_filter_instructions() -> Vec<BpfInsn> {
 /// The `__NR_socket` value for the host, via libc's target-arch table.
 fn socket_syscall_nr() -> u32 {
     libc::SYS_socket as u32
+}
+
+/// The `__NR_io_uring_setup` value for the host.
+fn io_uring_setup_syscall_nr() -> u32 {
+    libc::SYS_io_uring_setup as u32
+}
+
+/// The `__NR_io_uring_enter` value for the host.
+fn io_uring_enter_syscall_nr() -> u32 {
+    libc::SYS_io_uring_enter as u32
+}
+
+/// The `__NR_io_uring_register` value for the host.
+fn io_uring_register_syscall_nr() -> u32 {
+    libc::SYS_io_uring_register as u32
 }
 
 // ---------------------------------------------------------------------------
@@ -173,9 +228,11 @@ pub fn simulated_action(insns: &[BpfInsn], syscall: u32, args0: u64) -> u32 {
 
 /// Install the egress-blocking filter on the calling thread (child pre-exec)
 /// and verify it took effect: creation of an `AF_INET` socket must now fail
-/// with `EPERM`. If the environment forbids installing filters (Docker's
-/// default profile, locked-down sandboxes) the call fails with an error —
-/// the caller's fail-closed contract then refuses to run the worker uncaged.
+/// with `EPERM`, and the io_uring syscalls must be denied (closing the
+/// `IORING_OP_SOCKET` egress bypass). If the environment forbids installing
+/// filters (Docker's default profile, locked-down sandboxes) the call fails
+/// with an error — the caller's fail-closed contract then refuses to run the
+/// worker uncaged.
 ///
 /// # Safety
 ///
@@ -230,6 +287,39 @@ pub unsafe fn install_egress_block() -> io::Result<()> {
             "egress filter verification failed: socket(AF_INET) not denied with EPERM",
         ));
     }
+    // Self-verify: io_uring_setup must be denied too (the IORING_OP_SOCKET
+    // egress bypass). Fail closed if it is reachable and NOT denied. A kernel
+    // without CONFIG_IO_URING returns ENOSYS — that is also fine (no io_uring
+    // machinery exists, so the bypass is impossible). Only a reachable,
+    // un-denied io_uring is a failure.
+    // SAFETY: raw syscall in the throwaway child; the filter denies it with
+    // EPERM before the kernel ever runs io_uring setup code. The params arg is
+    // a 128-byte buffer io_uring fills on success (never reached under the
+    // filter, which denies the syscall).
+    let mut params = [0u8; 128];
+    let ring = libc::syscall(
+        libc::SYS_io_uring_setup,
+        8 as libc::c_uint,
+        params.as_mut_ptr() as *mut libc::c_void,
+    );
+    if ring > 0 {
+        // The fd was returned: the filter did not block io_uring. Close it.
+        let _ = libc::close(ring as libc::c_int);
+        return Err(io::Error::new(
+            io::ErrorKind::PermissionDenied,
+            "egress filter installed but io_uring_setup still permitted (IORING_OP_SOCKET bypass)",
+        ));
+    }
+    match io::Error::last_os_error().raw_os_error() {
+        Some(libc::EPERM) => {}          // filtered: denied, exactly as intended
+        Some(libc::ENOSYS) => {}         // kernel has no io_uring: bypass impossible
+        _ => {
+            return Err(io::Error::new(
+                io::ErrorKind::PermissionDenied,
+                "egress filter verification failed: io_uring_setup not denied with EPERM",
+            ))
+        }
+    }
     Ok(())
 }
 
@@ -257,16 +347,36 @@ mod tests {
     #[test]
     fn filter_structure_is_sane() {
         let f = egress_filter_instructions();
-        assert!(f.len() >= 8, "filter too small: {}", f.len());
-        // First op loads the arch; an ePERM-denial RET and an ALLOW RET exist.
+        assert!(f.len() >= 13, "filter too small: {}", f.len());
+        // First op loads the arch; EPERM-denial RETs and an ALLOW RET exist.
         assert_eq!(f[0].code, BPF_LD | BPF_W | BPF_ABS);
         let rets: Vec<u32> = f
             .iter()
             .filter(|i| i.code == (BPF_RET | BPF_K))
             .map(|i| i.k)
             .collect();
-        assert!(rets.contains(&(SECCOMP_RET_ERRNO | libc::EPERM as u32)));
+        let eperm = SECCOMP_RET_ERRNO | libc::EPERM as u32;
+        assert!(rets.contains(&eperm));
         assert!(rets.contains(&SECCOMP_RET_ALLOW));
+        // More than one denial path exists (socket + io_uring).
+        assert!(rets.iter().filter(|k| **k == eperm).count() >= 2);
+    }
+
+    #[test]
+    fn filter_denies_io_uring_syscalls() {
+        let f = egress_filter_instructions();
+        let eperm = SECCOMP_RET_ERRNO | libc::EPERM as u32;
+        for nr in [
+            libc::SYS_io_uring_setup as u32,
+            libc::SYS_io_uring_enter as u32,
+            libc::SYS_io_uring_register as u32,
+        ] {
+            let action = simulated_action(&f, nr, 0);
+            assert_eq!(
+                action, eperm,
+                "io_uring syscall {nr} must be denied (IORING_OP_SOCKET egress bypass)"
+            );
+        }
     }
 
     // The filter's decision table, executed by the mini-interpreter over the
@@ -315,7 +425,7 @@ mod tests {
         let action = simulate(
             &f,
             SeccompData {
-                syscall: libc::SYS_socket as u32,
+                syscall: socket_syscall_nr(),
                 arch: 0xDEAD_0000,
                 args0: 0,
             },
@@ -324,3 +434,4 @@ mod tests {
         assert_eq!(action, SECCOMP_RET_KILL_PROCESS);
     }
 }
+
