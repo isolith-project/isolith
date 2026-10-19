@@ -1,19 +1,13 @@
 {
-  "canary": {
-    "branch": "canary/2027.1.0-rc1",
-    "repo": "keelworks/keelworks-canary",
-    "tag": "v2027.1.0-rc1"
-  },
-  "created_utc": "2026-10-18T16:55:48.961683+00:00",
-  "cut_branch": "release/2027.1",
+  "created_utc": "2026-10-19T07:14:23.980077+00:00",
   "cut_from": {
-    "ref": "task/p10m5t02-ga-gate-1018a",
-    "sha": "e67b8fcc28ede7caadb68f530191fb3e9f1e2d80"
+    "ref": "HEAD",
+    "sha": "7dd10b2fcee611b9541417f792f3c04d68f55d29"
   },
-  "cut_tree": "a846b80de38216c68b74ae0d568531240b02ea62",
-  "frozen_commits_first_parent": 41,
-  "frozen_commits_full": 99,
-  "frozen_newest": "e67b8fcc28ede7caadb68f530191fb3e9f1e2d80",
+  "cut_tree": "aa47e432b99e6199c887ed0d105370c9277e2b85",
+  "frozen_commits_first_parent": 61,
+  "frozen_commits_full": 150,
+  "frozen_newest": "7dd10b2fcee611b9541417f792f3c04d68f55d29",
   "frozen_oldest": "98a899bfa908809daec4d22a07c89eb2bda7ed22",
   "host": "promaxgb10-83f1",
   "schema": "keelworks.release-freeze.v1",
