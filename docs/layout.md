@@ -81,6 +81,11 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
                        signed manifest verified before any download; runs
                        identically with no source reachable; disable-able and
                        non-phoning by default (off).
+- P13 oep-docs      -- P13-T03 docs server on the delivery stack: std-only
+                       static file server for docs-site/ (getting-started,
+                       admin guide, honest format matrix), same image + compose
+                       as the PDM/viewer/P2P stack ("no separate infra").
+                       Zero external deps; serves committed docs-site/ only.
 
 Not yet materialized as crates (laid out when their workstream starts):
 P1 corpus tooling (python), P10 hybrid cloud, P14 integration.

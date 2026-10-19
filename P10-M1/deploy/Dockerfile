@@ -29,7 +29,8 @@ RUN set -eux; \
         -p oep-opsdash \
         -p oep-worker \
         -p oep-gate \
-        -p oep-render-worker
+        -p oep-render-worker \
+        -p oep-docs
 
 FROM debian:bookworm-slim AS runtime
 LABEL org.opencontainers.image.title="keelworks/oep-stack" \
@@ -49,6 +50,11 @@ COPY --from=builder /src/target/release/oep-batch-convert   /usr/local/bin/oep-b
 COPY --from=builder /src/target/release/oep-ga-gate         /usr/local/bin/oep-ga-gate
 COPY --from=builder /src/target/release/oep-ga-node         /usr/local/bin/oep-ga-node
 COPY --from=builder /src/target/release/oep-render-worker   /usr/local/bin/oep-render-worker
+COPY --from=builder /src/target/release/oep-docs            /usr/local/bin/oep-docs
+
+# The P13-T03 docs site ships in the image ("docs from the sum, no separate
+# infra"); the docs service serves these files from /srv/docs.
+COPY docs-site /srv/docs
 
 # No CMD: docker-compose.yml sets the run command per service.
 WORKDIR /srv

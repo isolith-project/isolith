@@ -1,0 +1,91 @@
+/* OEP docs site (P13-T03). Self-contained, no external assets, renders in an
+   air-gapped browser. Keep it plain and honest: high contrast, no branding
+   that claims anything the product is not. */
+
+:root {
+  --bg: #fafafa;
+  --fg: #1c1c1c;
+  --muted: #5c5c5c;
+  --rule: #d9d9d9;
+  --accent: #0b5c8a;
+  --accent-soft: #e7f1f7;
+  --pass: #0a6b2c;
+  --pass-bg: #e8f5ec;
+  --gap: #8a4b0a;
+  --gap-bg: #fdf1e2;
+  --fail: #8a150a;
+  --fail-bg: #fdebe8;
+  --skip: #4a4a4a;
+  --skip-bg: #f0f0f0;
+  --mono: "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font: 16px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.wrap { max-width: 62rem; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+
+header.site {
+  border-bottom: 1px solid var(--rule);
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+}
+header.site .wrap { padding: 0; max-width: 62rem; }
+header.site .brand a { font-weight: 600; color: var(--fg); text-decoration: none; font-size: 1.05rem; }
+header.site .brand small { color: var(--muted); margin-left: 0.5rem; }
+nav.site { margin-top: 0.6rem; }
+nav.site a { color: var(--accent); text-decoration: none; margin-right: 1.1rem; font-size: 0.95rem; }
+nav.site a:hover { text-decoration: underline; }
+
+footer.site {
+  border-top: 1px solid var(--rule);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+h1 { font-size: 1.8rem; line-height: 1.2; margin: 0 0 0.25rem; }
+h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.25rem; }
+h3 { font-size: 1.05rem; margin: 1.4rem 0 0.4rem; }
+p { margin: 0.5rem 0; }
+ul, ol { margin: 0.5rem 0 0.75rem; padding-left: 1.4rem; }
+li { margin: 0.25rem 0; }
+code { font-family: var(--mono); font-size: 0.9em; background: #f0f0f0; border-radius: 3px; padding: 0.1em 0.35em; }
+pre {
+  font-family: var(--mono); font-size: 0.86rem; background: #16181d; color: #dfe5ec;
+  padding: 0.9rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.5;
+}
+pre code { background: none; color: inherit; padding: 0; }
+
+table { border-collapse: collapse; width: 100%; margin: 0.75rem 0 1rem; font-size: 0.92rem; }
+th, td { border: 1px solid var(--rule); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+th { background: #fff; font-weight: 600; }
+tr:nth-child(even) td { background: #f6f6f6; }
+
+.tag { font-family: var(--mono); font-weight: 700; font-size: 0.85em; padding: 0.05em 0.45em; border-radius: 4px; white-space: nowrap; }
+.tag.pass  { color: var(--pass); background: var(--pass-bg); }
+.tag.gap   { color: var(--gap);  background: var(--gap-bg); }
+.tag.fail  { color: var(--fail); background: var(--fail-bg); }
+.tag.skip  { color: var(--skip); background: var(--skip-bg); }
+.tag.plain { color: var(--muted); background: #eee; }
+
+.kicker { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; }
+.lead { font-size: 1.08rem; color: #333; max-width: 52rem; }
+.note { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 0.6rem 0.9rem; border-radius: 4px; margin: 0.75rem 0; }
+.note.warn { background: var(--gap-bg); border-left-color: var(--gap); }
+.muted { color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+.card { border: 1px solid var(--rule); border-radius: 8px; padding: 0.85rem 1rem; background: #fff; }
+.card h3 { margin-top: 0; font-size: 1rem; }
+.card a { color: var(--accent); text-decoration: none; }
+.card a:hover { text-decoration: underline; }
+a { color: var(--accent); }
+a:hover { text-decoration: underline; }

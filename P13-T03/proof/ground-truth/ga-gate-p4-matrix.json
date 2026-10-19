@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "generated": "2026-10-16T16:46:11",
+  "task": "P4-M5-T03",
+  "summary": {
+    "total": 6,
+    "pass": 6,
+    "open": 0,
+    "fail": 0,
+    "skip": 0,
+    "by_leg": {
+      "fidelity": 2,
+      "mbd": 4
+    }
+  },
+  "rows": [
+    {
+      "id": "pmi-fidelity-matrix",
+      "leg": "fidelity",
+      "status": "PASS",
+      "detail": "matrix schema ok; cells=64 (PASS 14 / FAIL 2 / SKIP 48); FAIL cells are documented step-io capability gaps, not gate FAILs",
+      "reader": "matrix",
+      "class": ""
+    },
+    {
+      "id": "keelworks-box",
+      "leg": "fidelity",
+      "status": "PASS",
+      "detail": "hausdorff=0 vol_rel_err=0 eps=1.0e-09",
+      "reader": "probe",
+      "class": ""
+    },
+    {
+      "id": "nist-ftc-06",
+      "leg": "mbd",
+      "status": "PASS",
+      "detail": "r=y4141 fail=2 warn=1 unverified=2 pass=12; r=prime fail=2 warn=1 unverified=2 pass=12",
+      "reader": "mbd-validate",
+      "class": ""
+    },
+    {
+      "id": "nist-ftc-08",
+      "leg": "mbd",
+      "status": "PASS",
+      "detail": "r=y4141 fail=0 warn=1 unverified=3 pass=13; r=prime fail=0 warn=1 unverified=3 pass=13",
+      "reader": "mbd-validate",
+      "class": ""
+    },
+    {
+      "id": "nist-stc-06",
+      "leg": "mbd",
+      "status": "PASS",
+      "detail": "r=y4141 fail=3 warn=1 unverified=2 pass=11; r=prime fail=3 warn=1 unverified=2 pass=11",
+      "reader": "mbd-validate",
+      "class": ""
+    },
+    {
+      "id": "mbd-report",
+      "leg": "mbd",
+      "status": "PASS",
+      "detail": "wrote ga-gate-p4-mbd-report.json and ga-gate-p4-mbd-report.md; summary rollup == granular (inputs=6 findings=102 pass=72 fail=10 warn=6 unverified=14)",
+      "reader": "mbd-validate",
+      "class": ""
+    }
+  ]
+}

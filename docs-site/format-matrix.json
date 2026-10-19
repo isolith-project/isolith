@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "task": "P13-T03",
+  "generated": "2026-10-18",
+  "description": "OEP honest format capability matrix. Machine-checkable copy of docs-site/format-matrix.html. Every row's fidelity must be a token from the closed set; every evidence.gate must be a GA report id; no claim may exceed what the cited GA report verified (enforced by scripts/p13t03-format-matrix-check.py against the committed P2/P3/P4 GA matrices).",
+  "fidelity_classes": [
+    "mesh-approximate",
+    "mesh-golden",
+    "container-bom",
+    "surfaces-to-mesh",
+    "roundtrip-byte-fixed",
+    "writer-framing-limit",
+    "header-parse",
+    "brep-topology",
+    "pmi-semantic",
+    "pmi-reader-gap",
+    "accuracy-within-eps",
+    "mbd-checked",
+    "qif-basic",
+    "jt-visualization",
+    "internal-canonical",
+    "classified-skip"
+  ],
+  "truth_anchors": [
+    {
+      "id": "p4-matrix-cells",
+      "gate": "P4-M5-T03",
+      "source": "corpus/ga-gate-p4-matrix.json",
+      "assert": {"cells": 64, "pass": 14, "fail": 2, "skip": 48},
+      "match": "rows[0].detail contains cells=64 (PASS 14 / FAIL 2 / SKIP 48)"
+    },
+    {
+      "id": "p4-matrix-fail-cells",
+      "gate": "P4-M5-T03",
+      "source": "corpus/ga-gate-p4-matrix.json",
+      "assert": {"fail_topics": ["circular runout", "tolerance modifiers"]},
+      "match": "the 2 FAIL cells are the documented step-io capability gaps"
+    },
+    {
+      "id": "p4-pmi-fail-topics",
+      "gate": "P4-M2-T03",
+      "source": "docs/p4-m2-t03-pmi-fidelity/pmi-fidelity-matrix.md",
+      "assert": {"fail_topics": ["circular-runout", "modifiers"]},
+      "match": "capability matrix records Circular runout FAIL and Tolerance modifiers FAIL under stepio"
+    },
+    {
+      "id": "p4-accuracy-within-eps",
+      "gate": "P4-M5-T03",
+      "source": "corpus/ga-gate-p4-matrix.json",
+      "assert": {"row": "keelworks-box", "status": "PASS", "hausdorff": 0.0, "vol_rel_err": 0.0, "eps": "1.0e-09"},
+      "match": "fidelity leg keelworks-box PASS hausdorff=0 vol_rel_err=0 eps=1.0e-09"
+    },
+    {
+      "id": "p3-gate-summary",
+      "gate": "P3-M5-T02",
+      "source": "docs/re-notes/p3-m5-t02-ga-gate.md",
+      "assert": {"total": 18, "pass": 9, "open": 7, "fail": 0, "skip": 2},
+      "match": "P3 GA gate summary line"
+    },
+    {
+      "id": "p2-gate-summary",
+      "gate": "P2-M6-T03",
+      "source": "docs/re-notes/p2-m6-t03-ga-gate.md",
+      "assert": {"total": 24, "pass": 1, "open": 11, "fail": 0, "skip": 12},
+      "match": "P2 GA gate summary line"
+    }
+  ],
+  "rows": [
+    {
+      "id": "cgr-read",
+      "format": "CGR",
+      "extension": [".cgr"],
+      "module": "oep-cgr",
+      "lane": "P2",
+      "direction": "read",
+      "opens": "triangle tessellation (vertices/index triangles): approximate geometry, no B-Rep, no design intent; modern-era real spatial-mesh decode with numeric-epsilon golden (NIST STC-06, two readers agree)",
+      "fidelity": ["mesh-approximate", "mesh-golden"],
+      "evidence": {
+        "gate": "P2-M6-T03",
+        "artifact": "docs/re-notes/p2-m6-t03-ga-gate.md",
+        "detail": "LOAD leg 11 real meshes OPEN + 11 truncated-head SKIP, 0 FAIL; P2-M7-T01 numeric-epsilon golden"
+      },
+      "gap": "old-era embedded payloads with un-locked triangle-stream offset return reasoned MeshNotFound skip - documented wall, never invented geometry"
+    },
+    {
+      "id": "cgr-export-gltf",
+      "format": "CGR to glTF/GLB",
+      "extension": [".gltf", ".glb"],
+      "module": "oep-cgr + oep-worker",
+      "lane": "P2",
+      "direction": "write",
+      "opens": "export of the read mesh (color/material) to glTF/GLB; cgr2gltf convert worker with hash-verified outputs in the vault",
+      "fidelity": ["mesh-golden"],
+      "evidence": {
+        "gate": "P2-M2-T02",
+        "artifact": "docs/P9-M3/proof/stc06.glb",
+        "detail": "P2 glTF export lane; P9-M3-T02 convert worker golden committed (stc06.glb)"
+      },
+      "gap": "output fidelity is that of the input mesh - not a surface or B-Rep"
+    },
+    {
+      "id": "3dxml-read",
+      "format": "3DXML",
+      "extension": [".3dxml", ".3DXML"],
+      "module": "oep-3dxml",
+      "lane": "P3",
+      "direction": "read",
+      "opens": "3DXML container (coherent ZIP + Manifest BOM or standalone ASCII), XML rep nodes/references/instances, surface decoding (Gregory patch to NURBS), tessellation to mesh with quality control vs topology goldens",
+      "fidelity": ["container-bom", "surfaces-to-mesh", "mesh-golden"],
+      "evidence": {
+        "gate": "P3-M5-T02",
+        "artifact": "docs/re-notes/p3-m5-t02-ga-gate.md",
+        "detail": "OPEN 7/7 (6 real corpus + writer golden); TESSELLATE 9 real XvlShell with goldens (Star/Dolphin/Baby/Hand/Octopus/AttributeAll); 0 FAIL"
+      },
+      "gap": "prototype-declaration XvlShell and truncated blobs classify SKIP (no-mesh-found / truncated); never a fabricated open"
+    },
+    {
+      "id": "3dxml-write",
+      "format": "3DXML (write)",
+      "extension": [".3dxml", ".3DXML"],
+      "module": "oep-3dxml",
+      "lane": "P3",
+      "direction": "write",
+      "opens": "deterministic encoder: internal mesh to 3DXML package (manifest, model doc, representation); write->read->write byte-class fixed point for our own encoder",
+      "fidelity": ["roundtrip-byte-fixed"],
+      "evidence": {
+        "gate": "P3-M5-T02",
+        "artifact": "docs/re-notes/p3-m5-t02-ga-gate.md",
+        "detail": "ROUNDTRIP leg; own-encoder fixed point pinned by acceptance test"
+      },
+      "gap": "foreign-writer archive with identical member bytes but different low-level ZIP framing classifies SKIP 'writer byte-layout differs' - valid, not a pass/fail"
+    },
+    {
+      "id": "3drep-header",
+      "format": "3DRep",
+      "extension": [".3DRep"],
+      "module": "oep-3dxml",
+      "lane": "P3",
+      "direction": "read",
+      "opens": "binary .3DRep container and record header decode",
+      "fidelity": ["header-parse"],
+      "evidence": {
+        "gate": "P3-M3-T01",
+        "artifact": "docs/re-notes/3dxml-binary-3drep-format.md",
+        "detail": "header/format RE note"
+      },
+      "gap": "header/record decode only; full geometry reconstruction from .3DRep not claimed"
+    },
+    {
+      "id": "step-read",
+      "format": "STEP AP203/AP214/AP242",
+      "extension": [".step", ".stp"],
+      "module": "oep-step",
+      "lane": "P4",
+      "direction": "read",
+      "opens": "exact B-Rep topology (MANIFOLD_SOLID_BREP) and product structure; syntax/AP-scheme/structure parity on 12 real NIST/CAx suite files; read lane walks MSBRep for round trip with goldens",
+      "fidelity": ["brep-topology"],
+      "evidence": {
+        "gate": "P4-M1-T02",
+        "artifact": "docs/P4/p4-m1-t02-parity-matrix.md",
+        "detail": "parity matrix 12/12; P4-M3-T01 read lane + goldens; P4-M3-T02 independent-reader golden diff (OCC 7.6 probe + FreeCAD cross-check)"
+      },
+      "gap": "PMI semantics separate lane; exactness is B-Rep topology within the accuracy harness"
+    },
+    {
+      "id": "step-write",
+      "format": "STEP AP242 (write)",
+      "extension": [".step", ".stp"],
+      "module": "oep-step",
+      "lane": "P4",
+      "direction": "write",
+      "opens": "parts and assemblies to AP242 MSBRep with real topology OCCT/FreeCAD can build; honest tessellated marking; PMI re-export to AP242 over-and-back",
+      "fidelity": ["brep-topology"],
+      "evidence": {
+        "gate": "P4-M3-T01",
+        "artifact": "P4-M3-T02 golden diff",
+        "detail": "export lane + round trip + committed golden diffs vs independent reader; P4-M2-T02 PMI re-export correctness"
+      },
+      "gap": "PMI export tracked honestly; not all PMI semantics claimed on write"
+    },
+    {
+      "id": "step-accuracy",
+      "format": "STEP accuracy",
+      "extension": [".step", ".stp"],
+      "module": "oep-step probe",
+      "lane": "P4",
+      "direction": "read",
+      "opens": "measured geometry fidelity on real corpus: symmetric Hausdorff and volume error both within epsilon",
+      "fidelity": ["accuracy-within-eps"],
+      "evidence": {
+        "gate": "P4-M5-T03",
+        "artifact": "corpus/ga-gate-p4-matrix.json",
+        "detail": "keelworks-box row PASS: hausdorff=0 vol_rel_err=0 eps=1.0e-09 (P4-M1-T03 measured row)"
+      },
+      "gap": "a measured row out of epsilon is a hard gate FAIL - geometry drift never relabeled"
+    },
+    {
+      "id": "step-pmi",
+      "format": "STEP AP242 PMI",
+      "extension": [".step", ".stp"],
+      "module": "oep-pmi",
+      "lane": "P4",
+      "direction": "read",
+      "opens": "semantic GD&T, datums, tolerances import through the step-io reference path; published honest PMI fidelity matrix over 17 real NIST AP242 files (64 cells)",
+      "fidelity": ["pmi-semantic", "pmi-reader-gap"],
+      "evidence": {
+        "gate": "P4-M5-T03",
+        "artifact": "corpus/ga-gate-p4-matrix.json",
+        "detail": "fidelity leg PASS; cells=64 (PASS 14 / FAIL 2 / SKIP 48); FAIL cells are documented step-io gaps"
+      },
+      "gap": "FAIL cells: circular runout dropped (nist_ctc_05) and tolerance-modifier semantics empty on every file under step-io 0.2.5 - findings, not hidden"
+    },
+    {
+      "id": "step-mbd",
+      "format": "STEP MBD validation",
+      "extension": [".step", ".stp"],
+      "module": "oep-pmi + oep_tooling.mbd_validate",
+      "lane": "P4",
+      "direction": "read",
+      "opens": "MBD validator runs Y14.41 and prime rule sets over real STEP PMI corpus; inputs never dropped; UNVERIFIED never counts as PASS",
+      "fidelity": ["mbd-checked"],
+      "evidence": {
+        "gate": "P4-M5-T03",
+        "artifact": "corpus/ga-gate-p4-matrix.json",
+        "detail": "MBD leg: nist-ftc-06/08, nist-stc-06 all PASS (checked reports under both rule sets); report rollup equals granular"
+      },
+      "gap": "validator surfaces real STEP-seam gaps (floating datums, unknown unit symbols) as findings - the demo working"
+    },
+    {
+      "id": "qif",
+      "format": "QIF",
+      "extension": [".qif"],
+      "module": "oep-qif",
+      "lane": "P4",
+      "direction": "read/write",
+      "opens": "QIF basic cut: real NIST MBD files round-trip; output XSD-valid",
+      "fidelity": ["qif-basic"],
+      "evidence": {
+        "gate": "P4-M4-T01",
+        "artifact": "P4-M4-T01 (oep-qif)",
+        "detail": "real NIST MBD round-trip, XSD-syntax tests"
+      },
+      "gap": "basic cut scope only"
+    },
+    {
+      "id": "jt",
+      "format": "JT",
+      "extension": [".jt"],
+      "module": "P4",
+      "lane": "P4",
+      "direction": "read",
+      "opens": "JT visualization-first wedge: mesh / modern-era geometry for viewing",
+      "fidelity": ["jt-visualization"],
+      "evidence": {
+        "gate": "P4-M4-T03",
+        "artifact": "P4-M4-T03 jt-reader wedge",
+        "detail": "visualization-first wedge, license-clean JT corpus"
+      },
+      "gap": "visualization only; JT B-Rep/PMI not claimed"
+    },
+    {
+      "id": "internal-canonical",
+      "format": "OEP canonical",
+      "extension": [".oepgeo.json", ".oepmesh"],
+      "module": "oep-geo / oep-cgr",
+      "lane": "P6",
+      "direction": "read/write",
+      "opens": "our own canonical model representation (our-own-format serde) and mesh carrier: the single internal format readers/writers map into",
+      "fidelity": ["internal-canonical"],
+      "evidence": {
+        "gate": "P6-M1-T01",
+        "artifact": "docs/p6-m1-oep-geo-model-schema.md",
+        "detail": "model schema + our-own-format serde; P2 mesh carrier golden validated"
+      },
+      "gap": "internal format; not a promised third-party exchange format"
+    },
+    {
+      "id": "stl",
+      "format": "STL",
+      "extension": [".stl"],
+      "module": "corpus/golden",
+      "lane": "P2",
+      "direction": "read",
+      "opens": "mesh record read with golden-count checks (box: 12 facets, 36 vertices within tolerance)",
+      "fidelity": ["mesh-golden"],
+      "evidence": {
+        "gate": "P2-M6-T03",
+        "artifact": "docs/re-notes/p2-m6-t03-ga-gate.md",
+        "detail": "golden leg box-triangle-count PASS within tolerance"
+      },
+      "gap": "facet/vertex counts within epsilon; no general-purpose STL reconstruction claim"
+    }
+  ]
+}

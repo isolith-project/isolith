@@ -752,6 +752,10 @@ name = "oep-cgr"
 version = "0.1.0"
 
 [[package]]
+name = "oep-docs"
+version = "0.1.0"
+
+[[package]]
 name = "oep-fairshare"
 version = "0.1.0"
 dependencies = [

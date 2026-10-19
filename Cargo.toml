@@ -37,6 +37,7 @@ members = [
     "crates/oep-opsdash",
     "crates/oep-gate",
     "crates/oep-update",
+    "crates/oep-docs",
 ]
 
 [workspace.package]
