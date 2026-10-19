@@ -2,40 +2,76 @@
   "schema": "oep-update-manifest/1",
   "product": "oep",
   "version": "2027.1.0-rc1",
-  "released": "2026-10-18",
+  "released": "2026-10-19",
   "notes": null,
   "payloads": [
     {
       "name": "RELEASE-MANIFEST.json",
-      "sha256": "528061eb27e06625484050add33dbc3f10d280b19f4ea589ab4f0843bede6ad4",
-      "size": 1302,
+      "sha256": "f981c572a92cdeec7f0df848560a370cd8ca9762b51275c50a0ee5a1fb435ade",
+      "size": 1884,
       "url": null
     },
     {
-      "name": "keelworks-oep-pdm-x86_64-pc-windows-gnu-0.1.0.msi",
-      "sha256": "1f2903d15e33d0318986c1f2f889dbe7962f5e272578978bc3f27f0f1b336e33",
-      "size": 4356096,
-      "url": "https://updates.customer.example/keelworks/keelworks-oep-pdm-x86_64-pc-windows-gnu-0.1.0.msi"
+      "name": "oep-batch-convert",
+      "sha256": "b675b098ff592d0c085b63fb8deb5ee23038152ee923e073eed76b33c9515b1a",
+      "size": 6552080,
+      "url": null
     },
     {
-      "name": "keelworks-oep-update-check-x86_64-pc-windows-gnu-0.1.0.msi",
-      "sha256": "6f43617828c8afa269043af1e788aa5949fc0b41de1b013035e4d5c61d7b3e7f",
-      "size": 813568,
-      "url": "https://updates.customer.example/keelworks/keelworks-oep-update-check-x86_64-pc-windows-gnu-0.1.0.msi"
+      "name": "oep-opsdash",
+      "sha256": "f0ae01e2c4f6ffc9febfc43ee2c4b586328b07d6ef2afd8976f5dbb3de8baa12",
+      "size": 1030360,
+      "url": null
+    },
+    {
+      "name": "oep-pdm",
+      "sha256": "ecbfba94da2effba1ff721c3ad97f91ff38642f7ae4f4c1ff4e2a63c636305f5",
+      "size": 7492168,
+      "url": null
     },
     {
       "name": "oep-pdm-keelworks-oep-aarch64.AppImage",
-      "sha256": "404520769a18e6771a4d8c71428ae9b1208f6a41ad749ed346ab4180ac1a6226",
-      "size": 2937216,
-      "url": "https://updates.customer.example/keelworks/oep-pdm-keelworks-oep-aarch64.AppImage"
+      "sha256": "fdac88215d0e78a4266d97b5225b6745fec745bc95be24ad0343291afcb8ebdc",
+      "size": 3006848,
+      "url": null
+    },
+    {
+      "name": "oep-pdm-stub",
+      "sha256": "30c11b407fdb7017a2a56d684a52ad387c45c8b92b62ad5f641d5ed36168eca0",
+      "size": 7492192,
+      "url": null
+    },
+    {
+      "name": "oep-render-worker",
+      "sha256": "6e8d1128746797f5fcd99ccf4324f9cdd78b6beea22ce9b2c9b9675b3788e1e8",
+      "size": 844096,
+      "url": null
+    },
+    {
+      "name": "oep-update-check",
+      "sha256": "a8b3c75c9522c51ac2fab302b3d9222a99cf9be37d9bde7b28c5f8145bf6cc5f",
+      "size": 813216,
+      "url": null
+    },
+    {
+      "name": "oep-update-sign",
+      "sha256": "268aedbe74d5c015281f57ee2b530209e54ce48b3167990d434b030278eb3791",
+      "size": 640544,
+      "url": null
+    },
+    {
+      "name": "oep-web",
+      "sha256": "7dbddce20fa56731389aa98b338148fab3fd4e3d4164c206953477ba999ecd90",
+      "size": 4883856,
+      "url": null
     },
     {
       "name": "oep-web-keelworks-oep-aarch64.AppImage",
-      "sha256": "b4ab6896d3a332f41ab696caa3244624ec62b882f7352d006ed903fbcb2804d3",
-      "size": 1741184,
-      "url": "https://updates.customer.example/keelworks/oep-web-keelworks-oep-aarch64.AppImage"
+      "sha256": "e82c723081ae17ec69664abbf9d54962254f0070c9541ba2d23273451f1cc708",
+      "size": 1819008,
+      "url": null
     }
   ],
-  "payload_bytes_b64": "ewogICJhcnRpZmFjdHMiOiBbCiAgICB7CiAgICAgICJuYW1lIjogImtlZWx3b3Jrcy1vZXAtcGRtLXg4Nl82NC1wYy13aW5kb3dzLWdudS0wLjEuMC5tc2kiLAogICAgICAic2hhMjU2IjogIjFmMjkwM2QxNWUzM2QwMzE4OTg2YzFmMmY4ODlkYmU3OTYyZjVlMjcyNTc4OTc4YmMzZjI3ZjBmMWIzMzZlMzMiLAogICAgICAic2l6ZSI6IDQzNTYwOTYsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly91cGRhdGVzLmN1c3RvbWVyLmV4YW1wbGUva2VlbHdvcmtzL2tlZWx3b3Jrcy1vZXAtcGRtLXg4Nl82NC1wYy13aW5kb3dzLWdudS0wLjEuMC5tc2kiCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJrZWVsd29ya3Mtb2VwLXVwZGF0ZS1jaGVjay14ODZfNjQtcGMtd2luZG93cy1nbnUtMC4xLjAubXNpIiwKICAgICAgInNoYTI1NiI6ICI2ZjQzNjE3ODI4YzhhZmEyNjkwNDNhZjFlNzg4YWE1OTQ5ZmMwYjQxZGUxYjAxMzAzNWU0ZDVjNjFkN2IzZTdmIiwKICAgICAgInNpemUiOiA4MTM1NjgsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly91cGRhdGVzLmN1c3RvbWVyLmV4YW1wbGUva2VlbHdvcmtzL2tlZWx3b3Jrcy1vZXAtdXBkYXRlLWNoZWNrLXg4Nl82NC1wYy13aW5kb3dzLWdudS0wLjEuMC5tc2kiCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvZXAtcGRtLWtlZWx3b3Jrcy1vZXAtYWFyY2g2NC5BcHBJbWFnZSIsCiAgICAgICJzaGEyNTYiOiAiNDA0NTIwNzY5YTE4ZTY3NzFhNGQ4YzcxNDI4YWU5YjEyMDhmNmE0MWFkNzQ5ZWQzNDZhYjQxODBhYzFhNjIyNiIsCiAgICAgICJzaXplIjogMjkzNzIxNiwKICAgICAgInVybCI6ICJodHRwczovL3VwZGF0ZXMuY3VzdG9tZXIuZXhhbXBsZS9rZWVsd29ya3Mvb2VwLXBkbS1rZWVsd29ya3Mtb2VwLWFhcmNoNjQuQXBwSW1hZ2UiCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvZXAtd2ViLWtlZWx3b3Jrcy1vZXAtYWFyY2g2NC5BcHBJbWFnZSIsCiAgICAgICJzaGEyNTYiOiAiYjRhYjY4OTZkM2EzMzJmNDFhYjY5NmNhYTMyNDQ2MjRlYzYyYjg4MmY3MzUyZDAwNmVkOTAzZmJjYjI4MDRkMyIsCiAgICAgICJzaXplIjogMTc0MTE4NCwKICAgICAgInVybCI6ICJodHRwczovL3VwZGF0ZXMuY3VzdG9tZXIuZXhhbXBsZS9rZWVsd29ya3Mvb2VwLXdlYi1rZWVsd29ya3Mtb2VwLWFhcmNoNjQuQXBwSW1hZ2UiCiAgICB9CiAgXSwKICAibWFuaWZlc3QiOiAia2VlbHdvcmtzLXJlbGVhc2UtdjEiLAogICJwcm9kdWN0IjogIm9lcCIsCiAgInJlbGVhc2UiOiAiMjAyNy4xLjAtcmMxIiwKICAicmVsZWFzZWQiOiAiMjAyNi0xMC0xOFQyMToyMzoxMVoiCn0K",
-  "signature_b64": "EzCZ4ELBXpUR34qT825Zmn5StGH0UNZQWtW9Ud6oLU9Nz8WVI1L6BXSzAWOeUqDlVjHvtHju4t3dsM37PX14DQ=="
+  "payload_bytes_b64": "ewogICJhcnRpZmFjdHMiOiBbCiAgICB7CiAgICAgICJuYW1lIjogIm9lcC1iYXRjaC1jb252ZXJ0IiwKICAgICAgInNoYTI1NiI6ICJiNjc1YjA5OGZmNTkyZDBjMDg1YjYzZmI4ZGViNWVlMjMwMzgxNTJlZTkyM2UwNzNlZWQ3NmIzM2M5NTE1YjFhIiwKICAgICAgInNpemUiOiA2NTUyMDgwLAogICAgICAidXJsIjogbnVsbAogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAib2VwLW9wc2Rhc2giLAogICAgICAic2hhMjU2IjogImYwYWUwMWUyYzRmNmZmYzlmZWJmYzQzZWUyYzRiNTg2MzI4YjA3ZDZlZjJhZmQ4OTc2ZjVkYmIzZGU4YmFhMTIiLAogICAgICAic2l6ZSI6IDEwMzAzNjAsCiAgICAgICJ1cmwiOiBudWxsCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvZXAtcGRtIiwKICAgICAgInNoYTI1NiI6ICJlY2JmYmE5NGRhMmVmZmJhMWZmNzIxYzNhZDk3ZjkxZmYzODY0MmY3YWU0ZjRjMWZmNGUyYTYzYzYzNjMwNWY1IiwKICAgICAgInNpemUiOiA3NDkyMTY4LAogICAgICAidXJsIjogbnVsbAogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAib2VwLXBkbS1rZWVsd29ya3Mtb2VwLWFhcmNoNjQuQXBwSW1hZ2UiLAogICAgICAic2hhMjU2IjogImZkYWM4ODIxNWQwZTc4YTQyNjZkOTdiNTIyNWI2NzQ1ZmVjNzQ1YmM5NWJlMjRhZDAzNDMyOTFhZmNiOGViZGMiLAogICAgICAic2l6ZSI6IDMwMDY4NDgsCiAgICAgICJ1cmwiOiBudWxsCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvZXAtcGRtLXN0dWIiLAogICAgICAic2hhMjU2IjogIjMwYzExYjQwN2ZkYjcwMTdhMmE1NmQ2ODRhNTJhZDM4N2M0NWM4YjkyYjYyYWQ1ZjY0MWQ1ZWQzNjE2OGVjYTAiLAogICAgICAic2l6ZSI6IDc0OTIxOTIsCiAgICAgICJ1cmwiOiBudWxsCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvZXAtcmVuZGVyLXdvcmtlciIsCiAgICAgICJzaGEyNTYiOiAiNmU4ZDExMjg3NDY3OTdmNWZjZDk5Y2NmNDMyNGY5Y2RkNzhiNmJlZWEyMmNlOWIyYzliOTY3NWIzNzg4ZTFlOCIsCiAgICAgICJzaXplIjogODQ0MDk2LAogICAgICAidXJsIjogbnVsbAogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAib2VwLXVwZGF0ZS1jaGVjayIsCiAgICAgICJzaGEyNTYiOiAiYThiM2M3NWM5NTIyYzUxYWMyZmFiMzAyYjNkOTIyMmE5OWNmOWJlMzdkOWJkZTdiMjhjNWY4MTQ1YmY2Y2M1ZiIsCiAgICAgICJzaXplIjogODEzMjE2LAogICAgICAidXJsIjogbnVsbAogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAib2VwLXVwZGF0ZS1zaWduIiwKICAgICAgInNoYTI1NiI6ICIyNjhhZWRiZTc0ZDVjMDE1MjgxZjU3ZWUyYjUzMDIwOWU1NGNlNDhiMzE2Nzk5MGQ0MzRiMDMwMjc4ZWIzNzkxIiwKICAgICAgInNpemUiOiA2NDA1NDQsCiAgICAgICJ1cmwiOiBudWxsCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJvZXAtd2ViIiwKICAgICAgInNoYTI1NiI6ICI3ZGJkZGNlMjBmYTU2NzMxMzg5YWE5OGIzMzgxNDhmYWIzZmQ0ZTNkNDE2NGMyMDY5NTM0NzdiYTk5OWVjZDkwIiwKICAgICAgInNpemUiOiA0ODgzODU2LAogICAgICAidXJsIjogbnVsbAogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAib2VwLXdlYi1rZWVsd29ya3Mtb2VwLWFhcmNoNjQuQXBwSW1hZ2UiLAogICAgICAic2hhMjU2IjogImU4MmM3MjMwODFhZTE3ZWM2OTY2NGFiYmY5ZDU0OTYyMjU0ZjAwNzBjOTU0MWJhMmQyMzI3MzQ1MWYxY2M3MDgiLAogICAgICAic2l6ZSI6IDE4MTkwMDgsCiAgICAgICJ1cmwiOiBudWxsCiAgICB9CiAgXSwKICAibWFuaWZlc3QiOiAia2VlbHdvcmtzLXJlbGVhc2UtdjEiLAogICJwcm9kdWN0IjogIm9lcCIsCiAgInJlbGVhc2UiOiAiMjAyNy4xLjAtcmMxIiwKICAicmVsZWFzZWQiOiAiMjAyNi0xMC0xOVQxMDozMToxNFoiCn0K",
+  "signature_b64": "5hdUIO72cz7nLiujYyrh9t/sxnImLPmkFN3RXNGlL42sao33CwfMWVYJq1I3HDzaz9k1EIBAA7FUTLOrZnU9Aw=="
 }
