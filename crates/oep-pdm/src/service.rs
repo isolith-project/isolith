@@ -37,6 +37,7 @@ use crate::api::{
     CreateItemRequest, CreateRevisionRequest, ErrorEnvelope, FileRef, ITEMS_PATH, SYNC_PUSH_PATH,
 };
 use crate::authz::gate::{authz_middleware, AuthState};
+use crate::authz::policy::strict_boundary_authorizer;
 use crate::rbac::Authorizer;
 use crate::store::{StoreError, VaultStore};
 
@@ -101,16 +102,32 @@ impl PdmService {
     ///
     /// `authorizer` answers every request before the contract handlers run:
     /// denial is `403` (unauthenticated / cross-role) or `404` (cross-tenant,
-    /// IDOR-masked). Existing `start*` paths and the shipped binaries keep
-    /// today's open behavior; this opt-in serve path is what the security
-    /// suite and the identity-landing path use (see
+    /// IDOR-masked). This is the SECURE BY DEFAULT serve path: the shipped
+    /// binaries boot through it (unless `--no-auth` is explicitly given).
+    /// It layers the same contract behind the auth gate (see
     /// `crates/oep-pdm/src/authz` and `P11/auth-boundary.md`).
     pub fn start_with_authorizer(
         addr: &str,
         store: VaultStore,
         authorizer: Authorizer,
     ) -> io::Result<PdmService> {
-        Self::start_inner(addr, store, TlsConfig::default(), Some(authorizer))
+        Self::start_with_store_tls_and_authorizer(addr, store, TlsConfig::default(), authorizer)
+    }
+
+    /// Start behind the auth boundary AND terminate TLS (binary path).
+    ///
+    /// Combines `start_with_store_and_tls` (P10-M1-T02 native HTTPS) with the
+    /// P11-T03 auth gate, which is what the shipped `oep-pdm` /
+    /// `oep-pdm-stub` binaries use by default: the RBAC boundary is enforced
+    /// regardless of transport, and `--no-auth` is the only way to opt out
+    /// (explicit, loudly warned).
+    pub fn start_with_store_tls_and_authorizer(
+        addr: &str,
+        store: VaultStore,
+        tls: TlsConfig,
+        authorizer: Authorizer,
+    ) -> io::Result<PdmService> {
+        Self::start_inner(addr, store, tls, Some(authorizer))
     }
 
     /// Shared start: bind, wrap the store, and (when `authorizer` is given)
@@ -1007,8 +1024,16 @@ fn file_response(item_id: &str, rev: &str, file: &FileRef, bytes: Vec<u8>) -> Re
 /// Shared standalone-binary entrypoint: parse the CLI args, load the store
 /// (optionally from a persistence dir), and serve until killed.
 ///
+/// SECURE BY DEFAULT (SEC-AUTHZ-DEFAULT): the service always runs behind the
+/// P11-T03 RBAC boundary unless `--no-auth` is explicitly given, in which
+/// case it prints a loud startup warning that authorization is disabled.
+///
 /// Usage: `oep-pdm [--addr 127.0.0.1:8787] [--persist-dir DIR]
-///                 [--tls-cert CERT.pem --tls-key KEY.pem]`
+///                 [--tls-cert CERT.pem --tls-key KEY.pem] [--no-auth]`
+///
+/// `--no-auth` is the explicit opt-out to today's open contract, reserved
+/// for controlled test / air-gap use. Remove it to restore the default
+/// boundary.
 ///
 /// `service_name` only affects the banner/help text (`oep-pdm` vs the retained
 /// `oep-pdm-stub` compat binary); both serve the same contract and report the
@@ -1019,6 +1044,8 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
     // P10-M1-T02: optional native TLS termination (both files are required).
     let mut tls_cert: Option<std::path::PathBuf> = None;
     let mut tls_key: Option<std::path::PathBuf> = None;
+    // SEC-AUTHZ-DEFAULT: authorization is ON unless explicitly disabled.
+    let mut no_auth = false;
 
     let mut i = 0;
     while i < args.len() {
@@ -1044,6 +1071,10 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
                 tls_key = Some(std::path::PathBuf::from(
                     args.get(i).cloned().unwrap_or_default(),
                 ));
+            }
+            "--no-auth" => {
+                no_auth = true;
+                // Consume this flag (no value follows).
             }
             "--help" | "-h" => {
                 print_help(service_name);
@@ -1095,16 +1126,49 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
         }
     }
 
-    let server = match PdmService::start_with_store_and_tls(&addr, store, tls) {
-        Ok(s) => s,
-        Err(e) => {
-            eprintln!("{service_name}: cannot bind {addr}: {e}");
-            return 1;
+    // SEC-AUTHZ-DEFAULT: the default start path enforces the P11-T03 RBAC
+    // boundary. The open contract is reachable ONLY through the explicit
+    // `--no-auth` opt-out, and opting out prints a loud, unmistakable
+    // startup warning that authorization is disabled.
+    let server = if no_auth {
+        eprintln!("{service_name}: **************** WARNING ****************");
+        eprintln!("{service_name}: * AUTHORIZATION IS DISABLED (--no-auth). *");
+        eprintln!("{service_name}: * The REST API is OPEN: any client on the   *");
+        eprintln!("{service_name}: * network can read and write vault data.   *");
+        eprintln!("{service_name}: * This is for CONTROLLED TEST / AIR-GAP use *");
+        eprintln!("{service_name}: * only. Remove --no-auth to restore the     *");
+        eprintln!("{service_name}: * default RBAC boundary.                    *");
+        eprintln!("{service_name}: ********************************************");
+        match PdmService::start_with_store_and_tls(&addr, store, tls) {
+            Ok(s) => s,
+            Err(e) => {
+                eprintln!("{service_name}: cannot bind {addr}: {e}");
+                return 1;
+            }
+        }
+    } else {
+        let authorizer = strict_boundary_authorizer();
+        match PdmService::start_with_store_tls_and_authorizer(&addr, store, tls, authorizer) {
+            Ok(s) => s,
+            Err(e) => {
+                eprintln!("{service_name}: cannot bind {addr}: {e}");
+                return 1;
+            }
         }
     };
 
-    // Contract-anchored, machine-readable first line for scripts/tests.
-    println!("{service_name} listening: {}", server.base_url());
+    // Contract-anchored, machine-readable first line for scripts/tests. The
+    // authorization state is spelled out so an operator can see at a glance
+    // whether this instance is enforcing the boundary.
+    let auth_status = if no_auth {
+        "authorization: DISABLED (--no-auth open contract)"
+    } else {
+        "authorization: ENFORCED (P11-T03 RBAC boundary; disable ONLY with --no-auth)"
+    };
+    println!(
+        "{service_name} listening: {} ({auth_status})",
+        server.base_url()
+    );
 
     loop {
         std::thread::sleep(Duration::from_secs(3600));
@@ -1112,14 +1176,16 @@ pub fn serve_from_args(args: &[String], service_name: &str) -> i32 {
 }
 
 fn print_help(service_name: &str) {
-    eprintln!(
-        "{service_name} -- P8 REST API v1 service skeleton (axum)\n\n\
-         usage: {service_name} [--addr 127.0.0.1:8787] [--persist-dir DIR]\n\
-         \t[--tls-cert CERT.pem --tls-key KEY.pem]\n\n\
-         --addr        listen address (default 127.0.0.1:8787)\n\
-         --persist-dir keep a snapshot + content-addressed blobs in DIR\n\
-         --tls-cert    PEM cert chain for native HTTPS (P10-M1-T02)\n\
-         --tls-key     PEM private key for native HTTPS (P10-M1-T02)\n\
-         --help        this message"
-    );
+    eprintln!("{service_name} -- P8 REST API v1 service skeleton (axum)");
+    eprintln!("usage: {service_name} [--addr 127.0.0.1:8787] [--persist-dir DIR]");
+    eprintln!("        [--tls-cert CERT.pem --tls-key KEY.pem] [--no-auth]");
+    eprintln!();
+    eprintln!("--addr        listen address (default 127.0.0.1:8787)");
+    eprintln!("--persist-dir keep a snapshot + content-addressed blobs in DIR");
+    eprintln!("--tls-cert    PEM cert chain for native HTTPS (P10-M1-T02)");
+    eprintln!("--tls-key     PEM private key for native HTTPS (P10-M1-T02)");
+    eprintln!("--no-auth     DISABLE authorization (SECURITY WARNING): serve the");
+    eprintln!("              open contract for controlled test / air-gap use only.");
+    eprintln!("              The default serves the P11-T03 RBAC boundary.");
+    eprintln!("--help        this message");
 }

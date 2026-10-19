@@ -46,3 +46,10 @@ jobs:
             exit 0
           fi
           python3 tests/test_p11_auth_boundary.py
+      - name: P11-T01 threat-model acceptance (no-orphan + posture in sync)
+        run: |
+          if [ ! -f tests/test_p11_threat_model.py ]; then
+            echo "P11-T01 threat-model test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p11_threat_model.py

@@ -228,7 +228,7 @@ def run_gate(args):
     proc = None
     if os.path.exists(pdm_bin):
         proc = subprocess.Popen(
-            [pdm_bin, "--addr", f"0.0.0.0:{args.port}", "--persist-dir", persist],
+            [pdm_bin, "--addr", f"0.0.0.0:{args.port}", "--persist-dir", persist, "--no-auth"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
         ok = False

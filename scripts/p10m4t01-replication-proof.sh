@@ -87,7 +87,9 @@ echo "[2/6] start LAN vault (oep-pdm) on U1 bound to 0.0.0.0:$PORT"
 # LAN-only, telemetry off, no relay. The demo vault binds the LAN interface and
 # does no internet egress; the airgap_leg asserts clients never leave the
 # bound LAN host.
-"$BIN" --addr "0.0.0.0:$PORT" --persist-dir "$PROOF_DIR/.vault-live" \
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
+"$BIN" --addr "0.0.0.0:$PORT" --persist-dir "$PROOF_DIR/.vault-live" --no-auth \
   > "$PROOF_DIR/.pdm-live.log" 2>&1 &
 PID=$!
 trap 'kill "$PID" 2>/dev/null || true' EXIT

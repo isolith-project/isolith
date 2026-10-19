@@ -1,7 +1,7 @@
 ---
 title: P11-T03 Auth Boundary (RBAC bypass attempts, IDOR on vault objects)
 status: Ratified (Wave-3 P11-T03)
-version: 1.0.0
+version: 1.1.0
 date: 2026-10-18
 owner: Keelworks program governance, P11 security lane
 applies_to: the oep-pdm REST API v1 surface (items, revisions, files, audit log, lock/transition, sync), served behind the P8-M3 RBAC authorizer
@@ -67,15 +67,27 @@ Request
 The P8-M3-T02 RBAC core (`crates/oep-pdm/src/rbac/`) is the current RBAC
 implementation the suite must pass on: a static role matrix plus an
 attribute-based (ABAC) rule layer with default-deny semantics. This card
-contributes the REST wiring the RBAC module always anticipated, as an opt-in
-service path (`PdmService::start_with_authorizer`, `build_authorized_router`).
-The shipped binaries and `PdmService::start*` keep today's open behavior
-until the identity layer (P8-M3-T01) lands and production flips to the
-authorized path.
+contributes the REST wiring the RBAC module always anticipated: the gate is
+served by `PdmService::start_with_authorizer` / `build_authorized_router`
+and, SECURE BY DEFAULT (SEC-AUTHZ-DEFAULT), the shipped `oep-pdm` /
+`oep-pdm-stub` binaries boot through it on every start
+(`service::serve_from_args` builds `strict_boundary_authorizer` unless the
+operator passes the explicit `--no-auth` opt-out). The open contract is
+therefore the opt-OUT, reserved for controlled test / air-gap use, and
+opting out prints a loud startup warning. The library `PdmService::start*`
+paths (no authorizer) remain open for embedders and in-process tests, which
+is why the acceptance's default-path leg boots the real binary.
 
 Wiring principle: the gate is layered on the SAME handlers and route table
 (`service::shared_router`). Nothing is rewritten per-route; classification
 is the only difference.
+
+Scope note (SEC-AUTHZ-DEFAULT): this card's secure-by-default wiring covers
+the shipped PDM control plane (`oep-pdm`, `oep-pdm-stub`). The `oep-web`
+browser workbench (P8-M4-T01) merges the same REST v1 router onto its UI
+surface and remains open until the identity layer lands; it is a separately
+tracked residual (its loopback-bind default keeps it LAN-off per decision
+#10) and must adopt the same gate before any public exposure.
 
 ## 4. Endpoint to action map
 
@@ -123,10 +135,11 @@ never grant a release.
 | D3 | Reading/verifying the audit log is ManageSystem (admin only), not Read. | The audit trail records every principal's reads and changes (sovereignty reads, P8-M3-T03). Granting all readers the audit log would itself leak cross-role access patterns. Admins, and only admins, may page through or verify it. |
 | D4 | Cross-tenant responses are 404 (existence masked); cross-role denials are 403. | Separates IDOR-masking (hide the object) from authorization failure (the object is visible but the action is not permitted). Both are in the acceptance's "403/404" set. |
 | D5 | Identity headers are client-declared in this card. | Authentication (who you are) is P8-M3-T01's job; authorization (what you may do) is this card's job. The suite pins the decision path; the identity layer will replace the header principal with a verified passport and keep the decision path byte-for-byte. Until then the boundary must be understood as authorization-grade only. |
+| D6 | Authorization is ON by default (SEC-AUTHZ-DEFAULT): the shipped binaries enforce the RBAC boundary on every start; the open contract is only reachable by explicitly passing `--no-auth`, which prints a loud startup warning that authorization is disabled. | Defense customers review "secure when configured" as not secure; an unauthenticated control-plane API is the classic lateral-movement foothold even inside the customer network (decision #10 reduces but does not remove exposure: insider, misconfiguration, co-tenant LAN). Making the open path the explicit, warned opt-out keeps controlled test/air-gap use possible while the default denies. The acceptance measures the suite against the DEFAULT binary, not an opt-in path. |
 
 ## 6. How the suite proves it asserts (the permissive-stub test)
 
-`crates/oep-pdm/tests/auth_boundary.rs` runs the SAME attack probes in two
+`crates/oep-pdm/tests/auth_boundary.rs` runs the SAME attack probes in three
 modes against real sockets:
 
 1. Strict mode (`strict_boundary_authorizer`): every cross-role,
@@ -135,6 +148,13 @@ modes against real sockets:
 2. Permissive mode (`permissive_authorizer`, the default-permissive stub):
    the exact same attack list must NOT be denied, and the strict/permissive
    denial counts must differ.
+3. Default-binary mode (SEC-AUTHZ-DEFAULT, the acceptance's measured leg):
+   the suite is re-run against the SHIPPED `oep-pdm` binary started with no
+   flags at all. Every cross-role / cross-tenant / unauthenticated probe must
+   be denied (403/404), legitimate same-tenant use must stay green, and the
+   `--no-auth` opt-out must both print a loud startup warning and serve the
+   open contract (zero denials), so the default is measurable as strictly
+   more protective.
 
 `strict_mode_denies_what_permissive_allows` therefore fails if the boundary
 stops asserting (a permissive authorizer grants, the strict leg's denials
@@ -156,9 +176,10 @@ re-exported or referenced anywhere in this card's code or tests.
 Run the whole gate the same way CI does:
 
 ```
-cargo test -p oep-pdm --test auth_boundary        # strict + permissive + mutation proof
+cargo test -p oep-pdm --test auth_boundary        # strict + permissive + DEFAULT-BINARY legs
 cargo test -p oep-pdm --lib authz                 # unit: map, principal, resource, policy, gate
 python3 tests/test_p11_auth_boundary.py           # acceptance: committed artifacts + invariants
+python3 tests/test_p11_threat_model.py            # threat model (P11-T01): no-orphan + posture in sync
 ```
 
 CI runs `ga-gate-p11t03` (`.gitea/workflows/ga-gate-p11.yaml`) on every push
@@ -166,6 +187,16 @@ and every pull request to the repo.
 
 ## 9. Change log
 
+- 1.1.0 (2026-10-18): SEC-AUTHZ-DEFAULT. The shipped `oep-pdm` /
+  `oep-pdm-stub` binaries now enforce the RBAC boundary on every start
+  (decision D6); the open contract is the explicit, loudly-warned `--no-auth`
+  opt-out for controlled test / air-gap use. The suite gained the
+  default-binary leg: the attack matrix is re-run against the real default
+  binary (denied 403/404, legit use green) and `--no-auth` is proven to warn
+  and open. Open-contract harnesses (P8/P10 pytest legs, GA-gate tooling,
+  one-shot proof scripts) now pass `--no-auth` explicitly. P11/threat-model.md
+  C1 + M-RBAC updated to the wired, default-on posture so both documents
+  agree.
 - 1.0.0 (2026-10-18): first ratification. Enforcement layer, denial contract
   (403 cross-role / 404 cross-tenant), endpoint map, decisions D1-D5, and the
   two-mode mutation-proof suite, on top of the P8-M3-T02 RBAC core. Written

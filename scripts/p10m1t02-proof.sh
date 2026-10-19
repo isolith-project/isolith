@@ -24,8 +24,10 @@ echo "== P10-M1-T02 proof on $(hostname) =="
 # ---- 1. TLS terminate ------------------------------------------------------
 CERT_DIR="$(mktemp -d /tmp/p10m1-certs-XXXX)"
 bash "$WT/scripts/gen-stack-certs.sh" "$CERT_DIR" >/dev/null 2>&1
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
 "$BIN" --addr "127.0.0.1:$PORT" --persist-dir "$VAULT_DIR" \
-  --tls-cert "$CERT_DIR/cert.pem" --tls-key "$CERT_DIR/key.pem" \
+  --tls-cert "$CERT_DIR/cert.pem" --tls-key "$CERT_DIR/key.pem" --no-auth \
   >/tmp/p10m1-tls-proof.log 2>&1 &
 SRV=$!
 sleep 1.5

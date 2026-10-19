@@ -12,7 +12,9 @@ PORT=18787
 PROOF="$WT/P8-M1/proof/health.json"
 mkdir -p "$(dirname "$PROOF")"
 
-"$BIN" --addr "127.0.0.1:$PORT" > /tmp/pdm_service.log 2>&1 &
+# Proof harness drives the OPEN contract (controlled test use): explicit
+# opt-out of the default P11-T03 boundary (SEC-AUTHZ-DEFAULT).
+"$BIN" --addr "127.0.0.1:$PORT" --no-auth > /tmp/pdm_service.log 2>&1 &
 PID=$!
 trap 'kill "$PID" 2>/dev/null || true' EXIT
 
