@@ -1,0 +1,3 @@
+=== oep-pdm AppImage run (acceptance #2) ===
+probe: GET /api/v1/health -> HTTP 200 {"status":"ok","service":"oep-pdm","version":"1.0.0"}
+serve log: oep-pdm listening http://127.0.0.1:8793/api/v1

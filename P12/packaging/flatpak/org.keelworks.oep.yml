@@ -1,0 +1,51 @@
+# P12-T04 Flatpak manifest (Linux desktop alternate path).
+# Usage: bash P12/packaging/build-flatpak.sh <binary>
+#
+# Runtime: org.freedesktop.Platform 24.08 (flathub). The OEP binaries are
+# headless rust services; the manifest runs a single binary from
+# /app/bin. Finish args keep the sandbox local-first (no full network, no
+# filesystem escape: home+runtime writable for the vault, nodev for the
+# injected plain files). A desktop file + icon seed the app grid; the
+# companion build-flatpak.sh wraps flatpak-builder.
+#
+# NOTE: building a flatpak requires the FDO runtime + SDK and flatpak-builder
+# on the build host. On the FUSE-less U1 acceptance host the AppImage path
+# (build-appimage.sh) is the verified desktop package; this manifest is the
+# reviewer/release-train alternate fed through P12-T05.
+
+id: org.keelworks.oep.{BIN}
+branch: '0.1'
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.freedesktop.Platform
+base-version: '24.08'
+
+command: oep-{BIN}
+
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --device=dri
+  - --share=network          # local: reserved for viewer/PDM web ports
+  - --filesystem=home        # persist-dir default lives under $HOME
+  - --filesystem=xdg-run
+  - --talk-name=org.freedesktop.FileManager1
+
+modules:
+  - name: oep-{BIN}
+    buildsystem: simple
+    build-commands:
+      - install -Dm0755 oep-{BIN} /app/bin/oep-{BIN}
+      - install -Dm0644 oep-{BIN}.desktop /app/share/applications/org.keelworks.oep.{BIN}.desktop
+      - install -Dm0644 oep-icon.svg /app/share/icons/hicolor/scalable/apps/org.keelworks.oep.{BIN}.svg
+    sources:
+      - type: file
+        path: ../oep-{BIN}
+        dest: .
+      - type: file
+        path: ../oep-{BIN}.desktop
+        dest: .
+      - type: file
+        path: ../oep-icon.svg
+        dest: .
