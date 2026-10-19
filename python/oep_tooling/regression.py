@@ -267,7 +267,7 @@ def classify_file(abs_path: str, fmt: str, reader_prog: list) -> Row:
             try:
                 r = subprocess.run(
                     reader_prog + [abs_path],
-                    capture_output=True, timeout=300,
+                    capture_output=True, text=True, timeout=300,
                 )
                 code = r.returncode
                 if code == 0:
