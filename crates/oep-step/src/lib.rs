@@ -13,7 +13,7 @@
 //!
 //! The underlying library is a private implementation detail (vendor-neutral
 //! seam). Library choice and the Fidelity / AP242 semantic-PMI path
-//! (Open CASCADE) are recorded in `P4-M1/step-library-adr.md`.
+//! (Open CASCADE) are recorded in `workstreams/P4-M1/step-library-adr.md`.
 //!
 //! Tolerant-failure: any byte input yields a typed [`Error`] or a
 //! [`ReadOutcome`], never a panic and never fabricated geometry.

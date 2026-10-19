@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # P8-M1-T01 verification probe: boot the axum oep-pdm service on a fixed
 # port, hit the contract endpoints with Python's stdlib urllib (no shell curl),
-# write the health proof to P8-M1/proof/health.json, and exercise the core
+# write the health proof to workstreams/P8-M1/proof/health.json, and exercise the core
 # open/save round trip. Real material for the ADR + service skeleton.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -9,7 +9,7 @@ WT=$(pwd)
 CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-$WT/target}"
 BIN="$CARGO_TARGET_DIR/debug/oep-pdm"
 PORT=18787
-PROOF="$WT/P8-M1/proof/health.json"
+PROOF="$WT/workstreams/P8-M1/proof/health.json"
 mkdir -p "$(dirname "$PROOF")"
 
 # Proof harness drives the OPEN contract (controlled test use): explicit

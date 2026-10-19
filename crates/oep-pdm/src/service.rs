@@ -1,9 +1,9 @@
 //! P8-M1-T01: the oep-pdm service skeleton, served on the ratified web stack.
 //!
-//! The web-stack decision lives in `P8-M1/web-stack-adr.md` (Rust axum). This
+//! The web-stack decision lives in `workstreams/P8-M1/web-stack-adr.md` (Rust axum). This
 //! module is the real service skeleton: an axum [Router] over the vault store
 //! ([`crate::store::VaultStore`]) speaking the P8 REST API v1 contract
-//! (`P8-M6/openapi-v1.yaml`, base `/api/v1`) exactly as the P7-M2-T02 stub
+//! (`workstreams/P8-M6/openapi-v1.yaml`, base `/api/v1`) exactly as the P7-M2-T02 stub
 //! did, so the P7 browser/modeler client keeps working unchanged.
 //!
 //! The P7-M2-T02 stub is not a throwaway: its stable symbols ([`StubServer`]
@@ -11,7 +11,7 @@
 //! retained and now back onto this axum skeleton, and the P7 contract test
 //! suites drive this service over real sockets.
 //!
-//! AGPL-3.0-or-later (see `P8-M1/web-stack-adr.md` section 3): this is the
+//! AGPL-3.0-or-later (see `workstreams/P8-M1/web-stack-adr.md` section 3): this is the
 //! PDM server, which the program license posture (decision 3) licenses AGPL.
 
 use std::io;
@@ -105,7 +105,7 @@ impl PdmService {
     /// IDOR-masked). This is the SECURE BY DEFAULT serve path: the shipped
     /// binaries boot through it (unless `--no-auth` is explicitly given).
     /// It layers the same contract behind the auth gate (see
-    /// `crates/oep-pdm/src/authz` and `P11/auth-boundary.md`).
+    /// `crates/oep-pdm/src/authz` and `workstreams/P11/auth-boundary.md`).
     pub fn start_with_authorizer(
         addr: &str,
         store: VaultStore,
@@ -314,7 +314,7 @@ pub fn build_router(store: Store) -> Router<()> {
 /// The exact same endpoints and handlers as [`build_router`], with the
 /// `authz_middleware` layered in front: every request is decided against
 /// `state`'s authorizer before the handler runs (see
-/// [`crate::authz`] and `P11/auth-boundary.md`).
+/// [`crate::authz`] and `workstreams/P11/auth-boundary.md`).
 pub fn build_authorized_router(store: Store, state: Arc<AuthState>) -> Router<()> {
     shared_router(store, Some(state))
 }

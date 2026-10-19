@@ -8,7 +8,7 @@
 //! Usage:
 //!   oep-update-check [--config PATH] [--version X.Y.Z] [--json]
 //!
-//! Config file shape matches P10-M5/update-check.sample.json. With no config
+//! Config file shape matches workstreams/P10-M5/update-check.sample.json. With no config
 //! file (the default deployment) the checker performs NO I/O and reports
 //! "off".
 
@@ -73,7 +73,7 @@ fn load_config(opts: &Opts) -> UpdateConfig {
     cfg
 }
 
-/// Mirrors P10-M5/update-check.sample.json.
+/// Mirrors workstreams/P10-M5/update-check.sample.json.
 #[derive(serde::Deserialize, Default)]
 struct ConfigFile {
     #[serde(default)]

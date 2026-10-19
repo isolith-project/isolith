@@ -175,7 +175,7 @@ the nested-container header token (u32@+0x40 = 0x71faffa3 vs outer 0x01ACF45E).
 ## 8. Alpha-target recommendation input (decision support only)
 
 This report was consumed by P5-M1-T03, which ratified the alpha-target ADR
-(P5-M1/alpha-target-brep-first-adr.md, version 1.0.0, 2026-10-16): the native
+(workstreams/P5-M1/alpha-target-brep-first-adr.md, version 1.0.0, 2026-10-16): the native
 reader alpha targets **B-Rep and exact geometry first** from the "Shape 1"
 bag, with feature-tree semantics deferred to the P5-M4 research lane. The byte
 evidence in this report supports that ratification on every relevant axis and

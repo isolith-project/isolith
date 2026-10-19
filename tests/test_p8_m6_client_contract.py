@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """P8-M6-T01 acceptance: the P8 REST API v1 contract, exercised by the
 GENERATED python client (python/oep_pdm_client.py, produced by
-scripts/gen_pdm_client.py from P8-M6/openapi-v1.yaml) against the retained
+scripts/gen_pdm_client.py from workstreams/P8-M6/openapi-v1.yaml) against the retained
 P7-M2-T02 `oep-pdm-stub` binary over a real socket.
 
 Why this test exists (the stub becomes the contract test): the stub is the

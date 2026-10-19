@@ -1,6 +1,6 @@
 //! SOLVER-REPLACE license clean-room invariant test.
 //!
-//! Program decision #16 (`P7-M3/solver-adr.md`) replaced the vendored
+//! Program decision #16 (`workstreams/P7-M3/solver-adr.md`) replaced the vendored
 //! GPL-3.0 SolveSpace engine with a permissive engine behind this crate's
 //! vendor-neutral seam. This test turns the license consequence into an
 //! executable gate so no GPL-3.0 dependency can silently return:

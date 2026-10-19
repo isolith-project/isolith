@@ -1,8 +1,8 @@
 //! oep-pdm -- P8: self-hosted PDM / ENOVIA-lite.
 //!
-//! Serves the P8 REST API v1 contract (`P8-M6/openapi-v1.yaml`) on base path
+//! Serves the P8 REST API v1 contract (`workstreams/P8-M6/openapi-v1.yaml`) on base path
 //! `/api/v1` via the P8-M1-T01 service skeleton, whose web-stack decision is
-//! recorded in `P8-M1/web-stack-adr.md` (Rust axum, AGPL-3.0):
+//! recorded in `workstreams/P8-M1/web-stack-adr.md` (Rust axum, AGPL-3.0):
 //!
 //! * [`api`]     -- the contract types (Rust projection of the OpenAPI spec).
 //! * [`store`]   -- the vault object model subset (item/revision/file) with
@@ -42,10 +42,10 @@
 //! The gate's additive REST surface is documented in the OpenAPI spec as new
 //! paths (lock / transition / audit) — additive, never a change to the
 //! existing v1 wire. The full acceptance harness is `python/oep_tooling/
-//! ga_gate_p8.py` (see `P8-M6/ga-gate.md`, card P8-M6-T03).
+//! ga_gate_p8.py` (see `workstreams/P8-M6/ga-gate.md`, card P8-M6-T03).
 //!
-//! Integration points: `P7-M2/pdm-integration.md` and
-//! `P8-M6/integration-adapters.md`.
+//! Integration points: `workstreams/P7-M2/pdm-integration.md` and
+//! `workstreams/P8-M6/integration-adapters.md`.
 #![deny(missing_docs)]
 
 pub mod adapter;

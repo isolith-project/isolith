@@ -4,18 +4,18 @@
 # hash-verified in the P8 vault.
 #
 # Usage: scripts/p9m5t02-ga-gate-proof.sh <fleet.json>
-#   fleet.json         real fleet (default P9-M5/fleet.example.json)
+#   fleet.json         real fleet (default workstreams/P9-M5/fleet.example.json)
 #
 # Stages: builds the gate binaries, deploys the node agent to the remote
 # fleet members (SSH), boots the shared vault on the coordinator reachable on
 # the LAN, generates the 100-job wave, runs the driver, verifies hashes, and
-# writes P9-M5/proof/ga-gate-p9.{json,md} + ga-gate-p9-wave.json.
+# writes workstreams/P9-M5/proof/ga-gate-p9.{json,md} + ga-gate-p9-wave.json.
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
 WT=$(pwd)
-FLT="${1:-$WT/P9-M5/fleet.example.json}"
-PROOF_DIR="$WT/P9-M5/proof"
+FLT="${1:-$WT/workstreams/P9-M5/fleet.example.json}"
+PROOF_DIR="$WT/workstreams/P9-M5/proof"
 mkdir -p "$PROOF_DIR"
 PORT="${PORT:-28913}"
 CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-$WT/target}"

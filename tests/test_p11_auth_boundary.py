@@ -7,7 +7,7 @@ P11-T01 threat-model test checks its own artifact. It verifies:
   artifacts => every committed artifact the card's acceptance names exists on
                this ref: the authz enforcement module, the P8-M3 RBAC core it
                builds on, the security suite, the boundary doc and the CI job.
-  doc       => P11/auth-boundary.md contains the enforcement contract the card
+  doc       => workstreams/P11/auth-boundary.md contains the enforcement contract the card
                promises: the denial contract (403 cross-role / 404 cross-
                tenant), the endpoint to action map, the decisions D1-D5, the
                permissive-stub mutation proof, the clean-room note, and a
@@ -28,14 +28,14 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOC = os.path.join(ROOT, "P11", "auth-boundary.md")
+DOC = os.path.join(ROOT, "workstreams/P11", "auth-boundary.md")
 WORKFLOW = os.path.join(ROOT, ".gitea", "workflows", "ga-gate-p11.yaml")
 SUITE = os.path.join(ROOT, "crates", "oep-pdm", "tests", "auth_boundary.rs")
 SERVICE_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "service.rs")
 
 # Every artifact the card's acceptance/layout depends on existing.
 ARTIFACTS = [
-    "P11/auth-boundary.md",
+    "workstreams/P11/auth-boundary.md",
     "crates/oep-pdm/tests/auth_boundary.rs",
     "crates/oep-pdm/src/authz/mod.rs",
     "crates/oep-pdm/src/authz/endpoints.rs",
@@ -190,25 +190,25 @@ def main():
     if os.path.isfile(DOC):
         doc = read(DOC)
         for marker in DOC_MARKERS:
-            check(marker in doc, f"P11/auth-boundary.md missing marker: {marker!r}")
+            check(marker in doc, f"workstreams/P11/auth-boundary.md missing marker: {marker!r}")
         check(
             any(ch in doc for ch in (EM_DASH, EN_DASH)) is False,
-            "P11/auth-boundary.md contains a banned dash",
+            "workstreams/P11/auth-boundary.md contains a banned dash",
         )
         check(
             any(ch in doc for ch in CURLY) is False,
-            "P11/auth-boundary.md contains curly quotes",
+            "workstreams/P11/auth-boundary.md contains curly quotes",
         )
         # Version rule: any material doc change bumps the change-log version.
         ver = re.search(r"version: (\d+\.\d+\.\d+)", doc)
-        check(ver is not None, "P11/auth-boundary.md has no front-matter version")
+        check(ver is not None, "workstreams/P11/auth-boundary.md has no front-matter version")
         if ver:
             check(
                 ver.group(1) in ("1.0.0",) or re.search(r"- (\S+) \(20", doc),
-                "P11/auth-boundary.md change log must list the current version",
+                "workstreams/P11/auth-boundary.md change log must list the current version",
             )
     else:
-        failures.append("P11/auth-boundary.md missing")
+        failures.append("workstreams/P11/auth-boundary.md missing")
 
     # --- default wiring (SEC-AUTHZ-DEFAULT) --------------------------------
     if os.path.isfile(SERVICE_SRC):

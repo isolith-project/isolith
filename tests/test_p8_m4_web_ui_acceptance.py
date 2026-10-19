@@ -26,7 +26,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEB = os.path.join(ROOT, "crates", "oep-web")
 SRC = os.path.join(WEB, "src")
-PROOF = os.path.join(ROOT, "P8-M4", "proof")
+PROOF = os.path.join(ROOT, "workstreams", "P8-M4", "proof")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 EM_DASH = "\u2014"
 
@@ -110,7 +110,7 @@ def run_checks():
 
     # 6. Docs describe the card.
     note = os.path.join(ROOT, "docs", "P8-M4", "p8m4t01-web-ui.md")
-    check(os.path.isfile(note), "missing docs/P8-M4/p8m4t01-web-ui.md")
+    check(os.path.isfile(note), "missing P8-M4/p8m4t01-web-ui.md")
 
     # 7. The build/test path passes on this host (real material execution).
     try:

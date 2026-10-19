@@ -22,7 +22,7 @@ import os
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REGISTRY_JSON = os.path.join(REPO, "P1-M1", "cgr-sample-registry.json")
+REGISTRY_JSON = os.path.join(REPO, "workstreams/P1-M1", "cgr-sample-registry.json")
 
 _failures = []
 

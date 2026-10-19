@@ -204,7 +204,7 @@ fn main() {
         std::process::exit(2);
     }
     if secret_hex.is_empty() {
-        eprintln!("--secret is required (build-host secret; see P11/crypto-integrity.md)");
+        eprintln!("--secret is required (build-host secret; see workstreams/P11/crypto-integrity.md)");
         std::process::exit(2);
     }
     if payload_path.is_none() && inline_payload.is_none() && items.is_empty() {

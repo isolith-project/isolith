@@ -40,7 +40,7 @@ data pins down: vertex interpolation and the boundary cubics from edge tangent
 vectors. The CATIA/Lattice rounding-weight-to-interior stencil is proprietary;
 v1 uses a documented harmonic-equilibrium interior and marks the parity
 `[uncertain]`, deferred until the licensed 3DXML XSD is in hand
-(P1-M1/3dxml-spec-process.md).
+(workstreams/P1-M1/3dxml-spec-process.md).
 
 ## Base / stack
 

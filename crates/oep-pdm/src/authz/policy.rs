@@ -30,7 +30,7 @@ pub const RULE_CROSS_TENANT: &str = "no-cross-tenant";
 ///
 /// It applies to every action (`None` scope), so no role, not even Admin,
 /// may cross a tenant boundary through this gate. This is decision D1 in
-/// `P11/auth-boundary.md`: tenant isolation is absolute here; a scoped
+/// `workstreams/P11/auth-boundary.md`: tenant isolation is absolute here; a scoped
 /// cross-tenant grant for the support role would be added as an explicit
 /// Allow rule once the identity layer lands.
 pub fn strict_boundary_rules() -> Vec<Rule> {

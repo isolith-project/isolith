@@ -10,7 +10,7 @@
 //!
 //! On a host with no nvidia-smi it reports zero devices (a CPU-only node)
 //! rather than failing, matching the "discovery never wedges the lane" rule.
-//! The recorded reference-host measurement lives in `P9-M4/spike/run-log.json`.
+//! The recorded reference-host measurement lives in `workstreams/P9-M4/spike/run-log.json`.
 
 use oep_lane::gpu::{parse_smi_csv, GpuProbe, NodeResources, StaticProbe};
 

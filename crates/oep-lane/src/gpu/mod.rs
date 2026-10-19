@@ -13,7 +13,7 @@
 //!   (node id + memory + GPU devices). Deterministic tests use
 //!   [`StaticProbe`]; live hosts use the `gpu_discover` example, which shells
 //!   out to `nvidia-smi`, parses it through [`parse_smi_csv`] and records the
-//!   result to `P9-M4/spike/run-log.json`.
+//!   result to `workstreams/P9-M4/spike/run-log.json`.
 //!
 //! Deliberately std-only (matching the scheduler crate): discovery is
 //! I/O-to-nothing that must be testable in CI without any GPU present. The

@@ -36,11 +36,11 @@ folder-tree -> context tree, the idempotent `imports` ledger and
 Tree-shape **metadata** mapping only, observe-don't-copy. Extension-based
 classification, no proprietary byte parsing, and no synthesized `composed_of`
 BOM edges -- component resolution needs the CATProduct reader lane (P5/P6).
-Full rationale + limits in `P10-M1/p10m1t03-migration-tooling.md`.
+Full rationale + limits in `workstreams/P10-M1/p10m1t03-migration-tooling.md`.
 
 ## Measured result (real material, live on U1)
 
-`P10-M1/proof/migration-proof.json`: 19 legs, 19 PASS, 0 FAIL, exit 0.
+`workstreams/P10-M1/proof/migration-proof.json`: 19 legs, 19 PASS, 0 FAIL, exit 0.
 Representative tree (fake CATPart/CATProduct/txt/pdf bytes + an empty Archive
 folder): 6 files -> 7 Contexts (root + nested folders, incl. the empty
 folder), 6 items/revisions/files, every `blob_sha256` recomputed here equals

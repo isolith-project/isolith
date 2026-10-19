@@ -2,7 +2,7 @@
 //! workbench command surface meets the accessibility items that are checkable
 //! on a headless keyboard/CLI surface.
 //!
-//! Asserted here (each maps to a row in P7-M5/p7m5t02-accessibility-checklist.md):
+//! Asserted here (each maps to a row in workstreams/P7-M5/p7m5t02-accessibility-checklist.md):
 //!
 //! - WB-A11Y-01 registry covers every dispatchable command (help discoverability),
 //! - WB-A11Y-02 every command is documented (summary, args, examples) and the

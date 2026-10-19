@@ -4,7 +4,7 @@
 //! P8-M3-T02 action space. Every contract route is mapped here by
 //! (method, path); anything not mapped is `Unknown` and the gate returns a
 //! uniform `404` (never an existence oracle). The acceptance suite in
-//! `tests/auth_boundary.rs` and the cross-check in `P11/auth-boundary.md` pin
+//! `tests/auth_boundary.rs` and the cross-check in `workstreams/P11/auth-boundary.md` pin
 //! this table to the routes `service::build_router` actually serves.
 
 use crate::rbac::Action;
@@ -123,7 +123,7 @@ pub fn classify(method: &str, path: &str, body: Option<&[u8]>) -> Classified {
             Some(id),
         ),
 
-        // Audit log: system-management visibility (see P11/auth-boundary.md,
+        // Audit log: system-management visibility (see workstreams/P11/auth-boundary.md,
         // decision D3: the audit trail records every principal's reads and
         // changes, so reading it is a ManageSystem action, not a Read).
         ("GET", ["audit"]) => target(Action::ManageSystem, None),

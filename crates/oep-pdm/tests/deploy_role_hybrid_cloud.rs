@@ -1,7 +1,7 @@
 //! P8-M5-T03 acceptance (Rust side): the hybrid cloud role model.
 //!
 //! Mirrors the Python acceptance test `tests/test_p8m5t03_hybrid_cloud_role.py`
-//! and the ADR `P8-M5/hybrid-cloud-role-adr.md` v1.0.0 on real material: the
+//! and the ADR `workstreams/P8-M5/hybrid-cloud-role-adr.md` v1.0.0 on real material: the
 //! `DeploymentRole` type, the two-role deployment model, and the posture matrix
 //! (telemetry off, egress bounded, no foreign key custody, no 126.1 touch).
 

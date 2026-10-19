@@ -19,9 +19,9 @@ Key facts:
   sha256; the real-read check compares the served file hash to the manifest.
 - Cadence: quarterly (next 2027-01-17), plus off-cycle on any vault schema /
   backup contract / install flow change or release train.
-- Evidence committed to P10-M3/proof/dr-drill-<ts>.{json,md} (TDR, health,
+- Evidence committed to workstreams/P10-M3/proof/dr-drill-<ts>.{json,md} (TDR, health,
   item count, verified blob sha256, audit verify, targets).
 
-2026-10-17 drill (Q4-2026): PASS. Recorded in P10-M3/dr-runbook.md and
-P10-M3/proof/. Live source vault: /tmp/p9ga-probe-vault (the P9 GA gate vault,
+2026-10-17 drill (Q4-2026): PASS. Recorded in workstreams/P10-M3/dr-runbook.md and
+workstreams/P10-M3/proof/. Live source vault: /tmp/p9ga-probe-vault (the P9 GA gate vault,
 100 gate-out items, 12 content-addressed blobs, audit ok).

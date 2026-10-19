@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """P8-M6-T01: self-contained OpenAPI 3.0.3 contract validator for the P8 REST
-API v1 spec (P8-M6/openapi-v1.yaml).
+API v1 spec (workstreams/P8-M6/openapi-v1.yaml).
 
 The repo doctrine is stdlib-only python tooling, and the CI gate cannot pip
 install openapi-spec-validator on every push. This checker implements the
@@ -37,7 +37,7 @@ import sys
 from typing import Any, Dict, List
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPEC_PATH = os.path.join(REPO, "P8-M6", "openapi-v1.yaml")
+SPEC_PATH = os.path.join(REPO, "workstreams/P8-M6", "openapi-v1.yaml")
 
 try:
     import yaml

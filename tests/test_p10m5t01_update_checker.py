@@ -1,8 +1,8 @@
 """P10-M5-T01 acceptance: the update checker feature (decision #11).
 
 The card builds a REAL component (the `oep-update` crate + two CLI binaries),
-so the design note (P10-M5/update-checker.md) and the sample config
-(P10-M5/update-check.sample.json) are the doc layer this test pins, and the
+so the design note (workstreams/P10-M5/update-checker.md) and the sample config
+(workstreams/P10-M5/update-check.sample.json) are the doc layer this test pins, and the
 Rust integration suite (crates/oep-update/tests/update_checker_acceptance.rs)
 is the executable layer. This Python test makes sure the doc and the shipped
 config cannot drift away from the acceptance items: advisory + non-blocking,
@@ -15,8 +15,8 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DOC = REPO_ROOT / "P10-M5" / "update-checker.md"
-SAMPLE = REPO_ROOT / "P10-M5" / "update-check.sample.json"
+DOC = REPO_ROOT / "workstreams/P10-M5" / "update-checker.md"
+SAMPLE = REPO_ROOT / "workstreams/P10-M5" / "update-check.sample.json"
 ACCEPTANCE_RS = REPO_ROOT / "crates" / "oep-update" / "tests" / "update_checker_acceptance.rs"
 
 

@@ -2,7 +2,7 @@
 
 P7-M1-T01 assigned the sketcher solver choice to "a P7-M3-T01 / P7-M4-T01
 deliverable with its own ADR"; P7-M3-T01 has not shipped one, so this card
-owns the 2D sketch solver record (P7-M4/sketch-solver-adr.md). This gate
+owns the 2D sketch solver record (workstreams/P7-M4/sketch-solver-adr.md). This gate
 verifies the record shape so the decision is reviewable and durable:
 
   - front matter: versioned (semver), status, date, owner, applies_to,
@@ -22,7 +22,7 @@ import os
 import re
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(REPO, "P7-M4", "sketch-solver-adr.md")
+ADR = os.path.join(REPO, "workstreams/P7-M4", "sketch-solver-adr.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 failures = []
@@ -65,7 +65,7 @@ def run_checks():
     print("P7-M4-T01 sketcher solver ADR acceptance")
     print("adr: %s" % ADR)
     print("=" * 66)
-    check(os.path.isfile(ADR), "missing: P7-M4/sketch-solver-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/P7-M4/sketch-solver-adr.md")
     if not os.path.isfile(ADR):
         return 1
     text = read(ADR)

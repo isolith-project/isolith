@@ -110,7 +110,7 @@ def test_live_gate_local_only():
         check("live gate (local-only)", False, "driver or module absent (SKIP scope)")
         return
     # fleet with the coordinator only
-    fleet = os.path.join(ROOT, "P9-M5", "fleet.local.json")
+    fleet = os.path.join(ROOT, "workstreams/P9-M5", "fleet.local.json")
     if not os.path.exists(fleet):
         with open(fleet, "w") as fh:
             json.dump({

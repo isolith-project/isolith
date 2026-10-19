@@ -1,6 +1,6 @@
 """GENERATED FILE. Do not edit by hand.
-Auto-generated from P8-M6/openapi-v1.yaml by scripts/gen_pdm_client.py.
-The OpenAPI spec at P8-M6/openapi-v1.yaml is THE contract for the P8
+Auto-generated from workstreams/P8-M6/openapi-v1.yaml by scripts/gen_pdm_client.py.
+The OpenAPI spec at workstreams/P8-M6/openapi-v1.yaml is THE contract for the P8
 REST API v1. The client is a derived artifact: regenerate it whenever
 the spec changes (python3 scripts/gen_pdm_client.py). A mismatch with
 the spec is caught by tests/test_p8_m6_spec_contract.py.
@@ -12,7 +12,7 @@ from typing import List, Optional
 # The contract root served by every oep-pdm binary.
 API_BASE = "/api/v1"
 API_VERSION = "1.0.0"
-# SHA-256 of the P8-M6/openapi-v1.yaml bytes this client was generated from.
+# SHA-256 of the workstreams/P8-M6/openapi-v1.yaml bytes this client was generated from.
 SPEC_SHA256 = "205fce896a60a217997092a4ee7c202565c15893b3bcf5679a50d1b25a88bb39"
 
 @dataclass

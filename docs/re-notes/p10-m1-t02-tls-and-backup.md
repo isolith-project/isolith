@@ -21,7 +21,7 @@ Key facts:
   (`.gitea/workflows/p10-m1-t02.yaml`, rust:1-slim container with openssl):
   TLS handshake chains+hostname-verifies, health rides HTTPS, plain HTTP not
   served on the TLS listener, backup schedule installed, restore round-trips.
-- Evidence: `P10-M1/tls-and-backup.md`, `P10-M1/proof/p10-m1-t02-proof.json`,
+- Evidence: `workstreams/P10-M1/tls-and-backup.md`, `workstreams/P10-M1/proof/p10-m1-t02-proof.json`,
   `tests/test_p10_m1_t02_tls_and_backup.py`, `crates/oep-pdm/tests/
   tls_acceptance.rs`.
 - DR handoff: the P10-M3-T01 drill consumes this exact bundle layout, so

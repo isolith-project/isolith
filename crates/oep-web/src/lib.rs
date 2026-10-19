@@ -21,7 +21,7 @@
 //! `docs/P8-M4/p8m4t01-web-ui.md`.
 //!
 //! AGPL-3.0-or-later: this is part of the PDM server surface (program decision
-//! 3: server/PDM is AGPL-3.0; see `P8-M1/web-stack-adr.md` section 3).
+//! 3: server/PDM is AGPL-3.0; see `workstreams/P8-M1/web-stack-adr.md` section 3).
 #![deny(missing_docs)]
 
 use std::io;

@@ -2,7 +2,7 @@
 # P10-M1-T02: capture a machine-readable proof of the card's acceptance on the
 # current host (U1/VM-class). Runs the real binary, real cert tooling, real
 # backup + restore round-trip, and records the results as JSON under
-# P10-M1/proof/. This is the durable, committed evidence the lane ships.
+# workstreams/P10-M1/proof/. This is the durable, committed evidence the lane ships.
 #
 # Usage:
 #   scripts/p10m1t02-proof.sh [VAULT_DIR] [ARCHIVE_DIR] [OUT_JSON]
@@ -12,7 +12,7 @@ WT=$(pwd)
 
 VAULT_DIR="${1:-$(mktemp -d /tmp/p10m1-vault-XXXX)}"
 ARCHIVE_DIR="${2:-$(mktemp -d /tmp/p10m1-archive-XXXX)}"
-OUT_JSON="${3:-$WT/P10-M1/proof/p10-m1-t02-proof.json}"
+OUT_JSON="${3:-$WT/workstreams/P10-M1/proof/p10-m1-t02-proof.json}"
 PROOF_DIR="$(dirname "$OUT_JSON")"
 mkdir -p "$PROOF_DIR" "$VAULT_DIR" "$ARCHIVE_DIR"
 BIN="$WT/target/debug/oep-pdm"

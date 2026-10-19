@@ -1,7 +1,7 @@
 //! P11-T03: the auth boundary -- RBAC enforcement over the REST v1 contract.
 //!
 //! This module is the enforcement layer the threat model's M-RBAC closure
-//! (P11/auth-boundary.md) stands on. It sits in front of the real contract
+//! (workstreams/P11/auth-boundary.md) stands on. It sits in front of the real contract
 //! handlers and answers one question per request: may this principal perform
 //! the action this endpoint requires, on this vault object, in this tenant?
 //!
@@ -9,7 +9,7 @@
 //! ([`crate::rbac`]): a static role matrix plus an attribute-based (ABAC)
 //! rule layer, evaluated by the default-deny [`crate::rbac::Authorizer`].
 //! This module contributes the REST wiring the RBAC design note always
-//! anticipated (P8-M3/p8m3t02-rbac.md): endpoint to action mapping
+//! anticipated (workstreams/P8-M3/p8m3t02-rbac.md): endpoint to action mapping
 //! ([`endpoints`]), header principal resolution ([`principal`]), tenant
 //! scoping of vault objects ([`resource`]), the strict boundary policy
 //! ([`policy`]) and the axum gate that turns decisions into HTTP statuses

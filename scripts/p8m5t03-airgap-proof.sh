@@ -12,7 +12,7 @@
 #     content-addressed by the binary's sha-256, then verify it back by hash.
 #     NAS-unreachable is classified SKIP, not FAIL (tolerant-failure doctrine,
 #     P2-M1-T04); a live NAS answers with a hash-verified PASS on real material.
-#  4. Write P8-M5/proof/p8m5t03-airgap-proof.json from the real results.
+#  4. Write workstreams/P8-M5/proof/p8m5t03-airgap-proof.json from the real results.
 #
 # Stdlib-only Python for all HTTP (no curl); bash only to boot the binary.
 set -euo pipefail
@@ -21,7 +21,7 @@ WT=$(pwd)
 CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-$WT/target}"
 BIN="${1:-$CARGO_TARGET_DIR/debug/oep-pdm}"
 PORT="${PORT:-18789}"
-PROOF="$WT/P8-M5/proof/p8m5t03-airgap-proof.json"
+PROOF="$WT/workstreams/P8-M5/proof/p8m5t03-airgap-proof.json"
 mkdir -p "$(dirname "$PROOF")"
 
 if [ ! -x "$BIN" ]; then
@@ -185,7 +185,7 @@ with open(proof_path, "w", encoding="utf-8") as fh:
     json.dump({
         "card": "P8-M5-T03",
         "role": "airgap",
-        "decision": "P8-M5/hybrid-cloud-role-adr.md v1.0.0",
+        "decision": "workstreams/P8-M5/hybrid-cloud-role-adr.md v1.0.0",
         "result": "PASS" if all(v == "PASS" for v in checks.values()) else "FAIL",
         "checks": checks,
         "bin_sha256": bin_sha,

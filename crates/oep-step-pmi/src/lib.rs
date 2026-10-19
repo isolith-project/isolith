@@ -7,7 +7,7 @@
 //! vendor-neutral seam of an OSS STEP library and maps the semantic PMI onto
 //! the oep-pmi model.
 //!
-//! Seam doctrine (P4-M1 ADR, `P4-M1/step-library-adr.md`): the wrapped OSS
+//! Seam doctrine (P4-M1 ADR, `workstreams/P4-M1/step-library-adr.md`): the wrapped OSS
 //! library's types live ONLY inside this crate's private walk
 //! ([`import`] module) and never appear on the public surface. The public API
 //! exposes only oep-pmi types and coined neutral types ([`PmiImport`],

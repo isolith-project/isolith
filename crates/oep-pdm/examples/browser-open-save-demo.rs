@@ -6,7 +6,7 @@
 //!
 //! Run: `cargo run -p oep-pdm --example browser-open-save-demo`.
 //! The same calls are what the P7-M2-T01/OEP workbench browser buttons will make;
-//! integration points are documented in `P7-M2/pdm-integration.md`.
+//! integration points are documented in `workstreams/P7-M2/pdm-integration.md`.
 
 use std::io::Write as _;
 

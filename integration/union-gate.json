@@ -41,13 +41,13 @@
     {"id": "ga-p9", "gate": "P9 GA gate (100-job render/convert wave)", "status": "PASS",
      "detail": "Local-only degraded wave with REAL oep-ga-gate driver + REAL worker functions + REAL oep-pdm vault: p9-wave 100/100 ok / 100 hash-verified / 0 failed; all 100 outputs re-hashed in the vault; tamper-evident audit chain re-verified; 5/6 PASS 1 SKIP (real CGR corpus is dev-only), exit 0."},
     {"id": "ga-p10", "gate": "P10 GA gate (fresh install walkthrough)", "status": "PASS",
-     "detail": "CI-safe mode total=6 PASS=2 SKIP=4 FAIL=0 exit 0 (DOCS + UPDATE legs PASS; live machine legs SKIP under closed taxonomy). Committed live proof P10-M5/proof/ga-gate-p10-m5t02.json: 6/6 PASS including clean-state installs on A+B + full stack + airgap."},
+     "detail": "CI-safe mode total=6 PASS=2 SKIP=4 FAIL=0 exit 0 (DOCS + UPDATE legs PASS; live machine legs SKIP under closed taxonomy). Committed live proof workstreams/P10-M5/proof/ga-gate-p10-m5t02.json: 6/6 PASS including clean-state installs on A+B + full stack + airgap."},
     {"id": "ga-p11", "gate": "P11 GA gate (wave-3 auth-boundary)", "status": "PASS",
      "detail": "auth_boundary suite 3/3 (strict denies cross-role 403 / cross-tenant 404, strict-vs-permissive mutation proof); authz lib 19/19; RBAC core 3/3; acceptance tests/test_p11_auth_boundary.py PASS. SEE open finding P2T-04-AZ."},
     {"id": "ga-p12", "gate": "P12 GA gate (wave-3 install rehearsal)", "status": "PASS",
      "detail": "P12-T06 ported onto the union by THIS card (scripts/install-rehearsal.sh + ga-gate-p12.yaml + runbook + test). Acceptance 5/5 PASS; --selfcheck 2 PASS / 2 SKIP / 0 FAIL exit 0; LIVE two-machine rehearsal below is the real gate."},
     {"id": "install-rehearsal-live", "gate": "P10-P12 two-machine install rehearsal (decision #9, U1 + keelwb2)", "status": "PASS",
-     "detail": "Fresh clean-state one-command install of the INTEGRATED stack on both approved hosts: total=4 PASS=4 FAIL=0 SKIP=0 exit_code 0. install-A (U1): pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present. install-B (keelwb2 VM): same. Proof P12/proof/release-rehearsal-0.1.0.{json,md} regenerated on the integrated head."}
+     "detail": "Fresh clean-state one-command install of the INTEGRATED stack on both approved hosts: total=4 PASS=4 FAIL=0 SKIP=0 exit_code 0. install-A (U1): pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present. install-B (keelwb2 VM): same. Proof workstreams/P12/proof/release-rehearsal-0.1.0.{json,md} regenerated on the integrated head."}
   ],
   "open_findings": [
     {"id": "P2T-04-AZ", "severity": "HIGH", "owner": "P11 lane (P11-T03 continuation)",
@@ -69,8 +69,8 @@
   "deliverables": [
     "integration/union-gate.json",
     "integration/union-gate.md",
-    "P12/proof/release-rehearsal-0.1.0.json",
-    "P12/proof/release-rehearsal-0.1.0.md",
+    "workstreams/P12/proof/release-rehearsal-0.1.0.json",
+    "workstreams/P12/proof/release-rehearsal-0.1.0.md",
     "corpus/ga-gate-p4-mbd-report.json",
     "corpus/ga-gate-p4-mbd-report.md"
   ],

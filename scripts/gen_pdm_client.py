@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """P8-M6-T01 codegen: generate the OEP PDM Python client from the OpenAPI spec.
 
-Reads `P8-M6/openapi-v1.yaml` (the P8 REST API v1 contract) and emits
+Reads `workstreams/P8-M6/openapi-v1.yaml` (the P8 REST API v1 contract) and emits
 `python/oep_pdm_client.py`: a stdlib-only (urllib) typed client whose models
 and methods are derived field-for-field from the spec. This is what makes the
 OpenAPI spec THE contract for P8-M6-T01: the client is generated from it, and
@@ -37,7 +37,7 @@ except ImportError:  # pragma: no cover - author-machine only
     yaml = None
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPEC_PATH = os.path.join(REPO, "P8-M6", "openapi-v1.yaml")
+SPEC_PATH = os.path.join(REPO, "workstreams/P8-M6", "openapi-v1.yaml")
 OUT_PATH = os.path.join(REPO, "python", "oep_pdm_client.py")
 
 # Python-level method name for each operationId the contract exposes.
@@ -420,8 +420,8 @@ def generate(spec: Dict[str, Any]) -> str:
     w = io.StringIO()
     w.write(
         '"""GENERATED FILE. Do not edit by hand.\n'
-        "Auto-generated from P8-M6/openapi-v1.yaml by scripts/gen_pdm_client.py.\n"
-        "The OpenAPI spec at P8-M6/openapi-v1.yaml is THE contract for the P8\n"
+        "Auto-generated from workstreams/P8-M6/openapi-v1.yaml by scripts/gen_pdm_client.py.\n"
+        "The OpenAPI spec at workstreams/P8-M6/openapi-v1.yaml is THE contract for the P8\n"
         "REST API v1. The client is a derived artifact: regenerate it whenever\n"
         "the spec changes (python3 scripts/gen_pdm_client.py). A mismatch with\n"
         "the spec is caught by tests/test_p8_m6_spec_contract.py.\n"
@@ -434,7 +434,7 @@ def generate(spec: Dict[str, Any]) -> str:
         '# The contract root served by every oep-pdm binary.\n'
         'API_BASE = "/api/v1"\n'
         'API_VERSION = "%s"\n'
-        '# SHA-256 of the P8-M6/openapi-v1.yaml bytes this client was generated from.\n'
+        '# SHA-256 of the workstreams/P8-M6/openapi-v1.yaml bytes this client was generated from.\n'
         'SPEC_SHA256 = "%s"\n' % (spec["info"]["version"], sha)
     )
     emit_models(w, spec["components"]["schemas"])
@@ -461,7 +461,7 @@ def main() -> int:
         with open(OUT_PATH, "r", encoding="utf-8") as fh:
             current = fh.read()
         if current != rendered:
-            print("DRIFT: python/oep_pdm_client.py does not match P8-M6/openapi-v1.yaml; "
+            print("DRIFT: python/oep_pdm_client.py does not match workstreams/P8-M6/openapi-v1.yaml; "
                   "run python3 scripts/gen_pdm_client.py")
             return 1
         print("OK: generated client matches the OpenAPI contract spec")

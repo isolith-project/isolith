@@ -273,7 +273,7 @@ def main():
     report = {
         "schema_version": 1,
         "generated": None,
-        "task": "P13-T03",
+        "task": "workstreams/P13-T03",
         "exit": 0 if not fail_rows else 1,
         "summary": summary,
         "rows": rows,

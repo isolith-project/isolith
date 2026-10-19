@@ -180,6 +180,6 @@ cards own their semantics without renegotiating the format:
   address + re-hash; the 100-job wave ships these specs.
 
 See also `docs/layout.md` (crate map) and the P8 contract docs
-(`docs/P8-M1/vault-object-model.md`, `P8-M6/openapi-v1.yaml`, both on the
+(`docs/P8-M1/vault-object-model.md`, `workstreams/P8-M6/openapi-v1.yaml`, both on the
 unmerged P8 PR branches at the time of writing — `oep-job` pins the same ref
 shapes by value, so it stacks on the P8 wave regardless of merge order).

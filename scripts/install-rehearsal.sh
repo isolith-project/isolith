@@ -3,7 +3,7 @@
 #
 # Before a release ships, rehearse the one-command install on a fresh clean
 # machine. For every release this runs the P10-M1-T01 one-command install
-# (`P10-M1/deploy/install.sh`) from a clean state on the two approved hosts
+# (`workstreams/P10-M1/deploy/install.sh`) from a clean state on the two approved hosts
 # (decision #9): machine A = U1 (the local host), machine B = a U1/VM-class
 # host reached over SSH (default: the keelwb2 QEMU/KVM VM on U1; set
 # MACHINE_B_HOST/PORT to point at any approved second host, e.g. the garage PC
@@ -14,14 +14,14 @@
 #   Viewer  GET /               -> HTTP 200 (explorer HTML)
 #   P2P     GET /healthz        -> HTTP 200 {"status":"ok"}
 # plus the worker binaries (oep-batch-convert, oep-render-worker) present in
-# the installed image. The run is recorded to P12/proof/release-rehearsal-
+# the installed image. The run is recorded to workstreams/P12/proof/release-rehearsal-
 # <ver>.{json,md} with a strict exit-code contract: exit 0 iff no FAIL row.
 #
 # A fresh clean machine per release (the r1a-release-workflow rule) means the
 # rehearsal never reuses a previous install: this script tears down all
 # keelworks containers, volumes and the stack image and removes the generated
 # .env before each install leg, so every run starts from the same clean state
-# the checklist in P12/install-rehearsal.md tells an operator to start from.
+# the checklist in workstreams/P12/install-rehearsal.md tells an operator to start from.
 #
 # Usage:
 #   ./install-rehearsal.sh                             # rehearse the .env.example version
@@ -41,7 +41,7 @@ VERSION_ARGS=""
 SELFCHECK=false
 MACHINE_B_HOST="${MACHINE_B_HOST:-op@127.0.0.1}"
 MACHINE_B_PORT="${MACHINE_B_PORT:-2229}"
-OUT_BASE="P12/proof/release-rehearsal"
+OUT_BASE="workstreams/P12/proof/release-rehearsal"
 
 usage() {
     sed -n '1,40p' "${BASH_SOURCE[0]}" | sed -n 's/^# \{0,1\}//p'
@@ -151,7 +151,7 @@ on_target() { # host port cmd  (host == LOCAL runs locally, else over ssh)
 }
 
 # --- version derivation -------------------------------------------------------
-ENV_EXAMPLE_VERSION="$(sed -n 's/^OEP_VERSION=//p' "$ROOT/P10-M1/deploy/.env.example" | head -1)"
+ENV_EXAMPLE_VERSION="$(sed -n 's/^OEP_VERSION=//p' "$ROOT/workstreams/P10-M1/deploy/.env.example" | head -1)"
 ENV_EXAMPLE_VERSION="${ENV_EXAMPLE_VERSION:-0.1.0}"
 VERSION="${VERSION_ARGS:-$ENV_EXAMPLE_VERSION}"
 if [[ "$OUT_BASE" == /* ]]; then
@@ -161,10 +161,10 @@ else
 fi
 
 # --- release leg: version consistency -----------------------------------------
-COMPOSE="$ROOT/P10-M1/deploy/docker-compose.yml"
-if [[ ! -f "$ROOT/P10-M1/deploy/install.sh" || ! -f "$ROOT/P10-M1/deploy/.env.example" || ! -f "$COMPOSE" ]]; then
+COMPOSE="$ROOT/workstreams/P10-M1/deploy/docker-compose.yml"
+if [[ ! -f "$ROOT/workstreams/P10-M1/deploy/install.sh" || ! -f "$ROOT/workstreams/P10-M1/deploy/.env.example" || ! -f "$COMPOSE" ]]; then
     row "RELEASE" "version" "FAIL" \
-        "P10-M1/deploy install surface missing (need install.sh + .env.example + docker-compose.yml)"
+        "workstreams/P10-M1/deploy install surface missing (need install.sh + .env.example + docker-compose.yml)"
 elif [[ "$VERSION" != "$ENV_EXAMPLE_VERSION" ]]; then
     row "RELEASE" "version" "FAIL" \
         "requested version $VERSION != deploy .env.example OEP_VERSION=$ENV_EXAMPLE_VERSION"
@@ -177,9 +177,9 @@ else
 fi
 
 # --- runbook leg (self-consistency, docker-free) ------------------------------
-RUNBOOK="$ROOT/P12/install-rehearsal.md"
+RUNBOOK="$ROOT/workstreams/P12/install-rehearsal.md"
 if [[ ! -f "$RUNBOOK" ]]; then
-    row "DOCS" "runbook" "FAIL" "P12/install-rehearsal.md missing"
+    row "DOCS" "runbook" "FAIL" "workstreams/P12/install-rehearsal.md missing"
 elif ! grep -q "curl -fsS http://127.0.0.1:8787/api/v1/health" "$RUNBOOK" \
   || ! grep -q "http://127.0.0.1:8790/" "$RUNBOOK" \
   || ! grep -q "curl -fsS http://127.0.0.1:8080/healthz" "$RUNBOOK"; then
@@ -223,7 +223,7 @@ else
 docker volume ls -q --filter name=pdm_data | xargs -r docker volume rm; \
 docker volume ls -q --filter name=viewer_data | xargs -r docker volume rm; \
 docker image rm -f keelworks/oep-stack:$VERSION 2>/dev/null; \
-rm -f P10-M1/deploy/.env; true"
+rm -f workstreams/P10-M1/deploy/.env; true"
         local prep_rc=0 prep_out
         prep_out="$(on_target "$host" "$port" "$pre$clean_cmd" 2>&1)" || prep_rc=$? || true
         if [[ "$prep_rc" != 0 ]]; then
@@ -233,7 +233,7 @@ rm -f P10-M1/deploy/.env; true"
         # reproduce the docs' one-command install
         local inst_rc=0 inst
         # note: install.sh builds/loads + waits for all 3 compose healthchecks
-        inst="$(on_target "$host" "$port" "$pre cd P10-M1/deploy && ./install.sh" 2>&1)" || inst_rc=$? || true
+        inst="$(on_target "$host" "$port" "$pre cd workstreams/P10-M1/deploy && ./install.sh" 2>&1)" || inst_rc=$? || true
         if [[ "$inst_rc" != 0 ]]; then
             row "$leg" "$id" "FAIL" "install.sh exited $inst_rc: ${inst: -200}"
             return
@@ -271,7 +271,7 @@ rm -f P10-M1/deploy/.env; true"
             -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -p $MACHINE_B_PORT" \
             --exclude '.git/' --exclude 'target/' --exclude '.worktrees/' \
             --exclude '*.qcow2' --exclude '*.typescript' --exclude '*.timing' \
-            --exclude '*.mp4' --exclude 'P10-M5/proof/video/' \
+            --exclude '*.mp4' --exclude 'workstreams/P10-M5/proof/video/' \
             "$ROOT/" "$MACHINE_B_HOST:~/keelworks/"
         B_REACHABLE=true
     else

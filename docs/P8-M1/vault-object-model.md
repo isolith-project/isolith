@@ -287,5 +287,5 @@ acceptance test.
   `Item`/`Revision`/`FileRef` shapes; this model is the storage-side schema the
   service maps onto (blob addresses already match the contract's `blob_sha256`).
 
-See also `docs/layout.md` (crate map) and `P7-M2/pdm-integration.md` (the P8
+See also `docs/layout.md` (crate map) and `workstreams/P7-M2/pdm-integration.md` (the P8
 swap contract).

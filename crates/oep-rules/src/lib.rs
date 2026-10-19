@@ -8,7 +8,7 @@
 //! extracted from the canonical [`oep_geo::Document`] model) and produces a
 //! deterministic [`Report`].
 //!
-//! Deliberate scope border (full statement in `P7-M4/rules-checks-sandbox.md`):
+//! Deliberate scope border (full statement in `workstreams/P7-M4/rules-checks-sandbox.md`):
 //! parameters, formulas, checks, and single-pass if-then-else rules only. No
 //! design tables, no reactive/event-driven management, no geometry
 //! regeneration, no units engine, no UDF/powerCopy/generics, no Knowledge

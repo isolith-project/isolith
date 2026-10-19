@@ -655,7 +655,7 @@ if __name__ == "__main__":
                     help="base URL of the live oep-pdm service")
     ap.add_argument("--binary", default="",
                     help="oep-pdm binary to stage on the NAS (default: built binary)")
-    ap.add_argument("--out", default="P8-M6/proof", help="report output dir")
+    ap.add_argument("--out", default="workstreams/P8-M6/proof", help="report output dir")
     ap.add_argument("--n", default=4, type=int, help="number of concurrent clients")
     ap.add_argument("--nas", default="http://192.168.0.101:3200",
                     help="NAS object store base (Gitea)")

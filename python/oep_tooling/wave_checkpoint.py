@@ -2,7 +2,7 @@
 """Keelworks wave checkpoint tooling (P12 wave integration policy).
 
 Companion to python/oep_tooling/release_train.py and to
-P12/wave-integration-and-checkpoint-policy.md. A wave integrates onto a single
+workstreams/P12/wave-integration-and-checkpoint-policy.md. A wave integrates onto a single
 branch (wave/N) and closes with one documented checkpoint commit onto main.
 
 Subcommands:
@@ -12,7 +12,7 @@ Subcommands:
   manifest   --wave N --branch wave/N [--base main] [--out PATH]
              Compute the wave checkpoint manifest (schema
              keelworks.wave-checkpoint.v1) and print or write it.
-  checkpoint --wave N --branch wave/N [--base main] [--dir P12/wave-checkpoints]
+  checkpoint --wave N --branch wave/N [--base main] [--dir workstreams/P12/wave-checkpoints]
              Emit the manifest JSON and the human wave report MD.
   verify     --manifest PATH
              Re-verify a manifest against its repository.
@@ -34,8 +34,8 @@ import urllib.error
 import urllib.request
 
 SCHEMA = "keelworks.wave-checkpoint.v1"
-POLICY = "P12/wave-integration-and-checkpoint-policy.md"
-DEFAULT_DIR = "P12/wave-checkpoints"
+POLICY = "workstreams/P12/wave-integration-and-checkpoint-policy.md"
+DEFAULT_DIR = "workstreams/P12/wave-checkpoints"
 # Policy section 6: the program has exactly these repositories and no others.
 ALLOWED_REPOS = {"keelworks", "keelworks-canary"}
 # Grandfathered legacy repo (wave-1 kickoff). No new work; archive pending Don.

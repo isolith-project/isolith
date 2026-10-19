@@ -20,7 +20,7 @@ The card allows "`nalgebra` or vendored". Vendored was chosen:
   (a) avoids a merge collision with the concurrently-running P6-M1-T01 card
   (which adds `serde`/`serde_json` to this same crate) and (b) removes the
   crates.io fetch risk on CI that the sibling P6-M1 plan flagged (403s).
-- Clean-room posture (P0-M2/M3 doctrine): the most central numeric code is our
+- Clean-room posture (workstreams/P0-M2/M3 doctrine): the most central numeric code is our
   own, auditable line-by-line, and integrates directly with the P6-M1-T01
   instance `transform: [f64;16]` contract.
 - Property tests are written with a deterministic seeded PRNG (xorshift64*)

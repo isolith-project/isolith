@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Acceptance test for Keelworks P6-M3-T01: B-Rep boolean operations decision.
 
-Written FIRST (TDD). The ADR at P6-M3/boolean-ops-occ-adr.md must make this
+Written FIRST (TDD). The ADR at workstreams/P6-M3/boolean-ops-occ-adr.md must make this
 test pass. It verifies the real material, not mocks:
   decision      => bind/tie Open CASCADE (OCCT) for B-Rep boolean ops
   default       => adopt OCC for parity of effort, keep a clean interface
@@ -25,7 +25,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "P6-M3", "boolean-ops-occ-adr.md")
+ADR = os.path.join(ROOT, "workstreams/P6-M3", "boolean-ops-occ-adr.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -75,7 +75,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: P6-M3/boolean-ops-occ-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/P6-M3/boolean-ops-occ-adr.md")
     if not os.path.isfile(ADR):
         return failures
 
@@ -182,7 +182,7 @@ def run_checks():
               "guardrails must require a test gate")
 
     # 10. Cross-references: it must live in the P6 geometry-core web.
-    check("P6-M3" in text or "P6-M3-T01" in text, "must cite its own card P6-M3-T01")
+    check("workstreams/P6-M3" in text or "P6-M3-T01" in text, "must cite its own card P6-M3-T01")
     check("oep-geo" in low, "must name the adopting crate oep-geo")
     check("P6-M2" in low or "math" in low, "must tie to the P6 math/NURBS lane")
 

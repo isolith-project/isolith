@@ -9,7 +9,7 @@
 //! vocabulary. Anything the spec documents but this wedge does not decode yet
 //! yields a typed [`Error`], never a panic and never fabricated geometry.
 //!
-//! Layouts implemented follow the plans in `P4-M4/jt-reader-plan.md` and the
+//! Layouts implemented follow the plans in `workstreams/P4-M4/jt-reader-plan.md` and the
 //! decode notes in `docs/re-notes/oep-jt-container-and-lsg.md`, all cited to
 //! spec sections there.
 

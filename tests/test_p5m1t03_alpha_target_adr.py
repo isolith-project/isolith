@@ -3,7 +3,7 @@
 CATPart/CATProduct reader - B-Rep/geometry first, feature-tree semantics
 deferred (documented).
 
-Written FIRST (TDD). The ADR at P5-M1/alpha-target-brep-first-adr.md must make
+Written FIRST (TDD). The ADR at workstreams/P5-M1/alpha-target-brep-first-adr.md must make
 this test pass. It verifies the real decision record, not mocks:
 
   decision    => the card question is answered: the native reader alpha
@@ -34,7 +34,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "P5-M1", "alpha-target-brep-first-adr.md")
+ADR = os.path.join(ROOT, "workstreams/P5-M1", "alpha-target-brep-first-adr.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -84,7 +84,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: P5-M1/alpha-target-brep-first-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/P5-M1/alpha-target-brep-first-adr.md")
     if not os.path.isfile(ADR):
         return failures
 

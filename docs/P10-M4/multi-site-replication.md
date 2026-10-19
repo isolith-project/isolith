@@ -2,7 +2,7 @@
 
 Version: 1.0.0 — 2026-10-17
 Owner: P10 hybrid-cloud / multi-site mesh delivery lane
-Baseline: P8-M5/hybrid-cloud-role-adr.md v1.0.0 (airgap default, hybrid opt-in)
+Baseline: workstreams/P8-M5/hybrid-cloud-role-adr.md v1.0.0 (airgap default, hybrid opt-in)
 Run targets (decision #9): U1 (LAN node) + garage PC (remote node, WoL), NOT NAS
 
 ## Card (verbatim)
@@ -20,7 +20,7 @@ The demo replicates one Keelworks vault between two nodes inside a single
 trust boundary (decision #10: everything customer-hosted, LAN default):
 
 - **LAN node (node A)** — the authoritative vault: one `oep-pdm` service
-  (axum, AGPL-3.0) speaking the P8 REST API v1 contract at `P8-M6/openapi-v1
+  (axum, AGPL-3.0) speaking the P8 REST API v1 contract at `workstreams/P8-M6/openapi-v1
   .yaml`. Runs under the P8-M5-T03 default `DeploymentRole::Airgap`:
   loopback/LAN only, telemetry forced off, no relay, no internet egress.
 - **Remote node (node B)** — a sync client replica: the generated
@@ -83,7 +83,7 @@ Resolution is **ours / theirs / client-merged-document** — it is NOT an
 automatic hunk-level text merge, and there is no diff3 column view in this
 milestone. When the client picks `merged`, it supplies the merged document
 itself; the server commits what it is given, hash-verified. A diff3 column view
-is a natural P8-M4/T05 follow-up; the data model (three immutable,
+is a natural workstreams/P8-M4/T05 follow-up; the data model (three immutable,
 hash-verifiable snapshots) already supports it. The demo's "deterministic
 resolution" is: divergence detection is deterministic (D1), the three-way
 snapshots are deterministic and hash-frozen (D2), and a resolution commits a
@@ -116,7 +116,7 @@ two divergent text files are auto-merged without a human decision.
   `python/oep_tooling/replication_demo.py`.
 - Live two-host proof (UI LAN node + garage PC remote node, decision #9):
   `scripts/p10m4t01-replication-proof.sh` →
-  `P10-M4/proof/p10m4t01-replication.json` / `.md`. The garage PC is woken
+  `workstreams/P10-M4/proof/p10m4t01-replication.json` / `.md`. The garage PC is woken
   via WoL (see the garage-pc-power-wake skill) and runs the remote-node sync
   client against the U1 vault; the LAN node edits appear on the garage PC and
   a garage-PC offline edit syncs back to U1, plus a concurrent-edit conflict

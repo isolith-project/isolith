@@ -24,7 +24,9 @@ delivery and no per-seat paywall.
                oep-pdm, oep-web, oep-docs, and the rest of the workspace)
 - `docs-site/` static documentation site served by the oep-docs service
 - `docs/`      milestone / workstream notes and the repo layout map
-- `P*/`        workstream documentation, ADRs, and per-milestone evidence
+- `workstreams/`  workstream documentation, ADRs, and per-milestone evidence
+               (the P0-Mx / P11 / P12 style directories live here, one level
+               deep so the repo root stays clean)
 - `assets/brand/` Isolith identity kit
 - `corpus/`    dev-only reference geometry corpus (never shipped)
 - `standards/` adopted public standards reference material

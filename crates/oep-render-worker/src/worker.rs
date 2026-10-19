@@ -6,7 +6,7 @@
 //! a rendered frame (PNG bytes). The implementation renders entirely
 //! offscreen through the [`oep_viewer`] surface, so it is headless by
 //! construction: no window, no display, no swapchain is ever involved, which
-//! is the ADR's headless contract (P6-M5/renderer-backend-wgpu-adr.md, §3).
+//! is the ADR's headless contract (workstreams/P6-M5/renderer-backend-wgpu-adr.md, §3).
 //!
 //! Fidelity is a supersample factor: we render the scene at `resolution *
 //! factor` internally, then box-downsample to the requested output size. Low

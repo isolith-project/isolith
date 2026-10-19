@@ -19,7 +19,7 @@
 #        AIRGAP   signed offline bundle install on a --network none target
 #                 (sig + checksums verified, docker load only, update off)
 #        UPDATE   update checker off by default / non-blocking / no phone-home
-#   4. writes P10-M5/proof/ga-gate-p10-m5t02.{json,md}.
+#   4. writes workstreams/P10-M5/proof/ga-gate-p10-m5t02.{json,md}.
 #
 # Exit code 0 iff the gate reports no FAIL row (same contract as P2/P3/P4/P8/P9).
 
@@ -55,7 +55,7 @@ rsync -az --delete \
   -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -p $MACHINE_B_PORT" \
   --exclude '.git/' --exclude 'target/' --exclude '.worktrees/' \
   --exclude 'keelworksb2.qcow2' --exclude '*.typescript' --exclude '*.timing' \
-  --exclude '*.mp4' --exclude 'P10-M5/proof/video/' \
+  --exclude '*.mp4' --exclude 'workstreams/P10-M5/proof/video/' \
   "$src" "$MACHINE_B_HOST:~/keelworks/"
 
 # 2. run the measured gate
@@ -63,7 +63,7 @@ echo "[proof] running ga_gate_p10 (docker + machine A + machine B)"
 set +e
 PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.ga_gate_p10 \
   --repo "$ROOT" \
-  --report "$ROOT/P10-M5/proof/ga-gate-p10-m5t02" \
+  --report "$ROOT/workstreams/P10-M5/proof/ga-gate-p10-m5t02" \
   --docker \
   --machine-b-host "$MACHINE_B_HOST" \
   --machine-b-port "$MACHINE_B_PORT"
@@ -71,6 +71,6 @@ rc=$?
 set -e
 
 echo "[proof] -------- P10 GA gate report --------"
-sed -n '1,40p' "$ROOT/P10-M5/proof/ga-gate-p10-m5t02.md"
+sed -n '1,40p' "$ROOT/workstreams/P10-M5/proof/ga-gate-p10-m5t02.md"
 echo "[proof] gate exit code: $rc"
 exit "$rc"

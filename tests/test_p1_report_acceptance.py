@@ -25,12 +25,12 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REPORT = os.path.join(ROOT, "P1-M3", "p1-report.md")
-SOURCES = os.path.join(ROOT, "P1-M3", "p1-report-sources.md")
-REGISTRY = os.path.join(ROOT, "P1-M1", "cgr-sample-registry.json")
+REPORT = os.path.join(ROOT, "workstreams/P1-M3", "p1-report.md")
+SOURCES = os.path.join(ROOT, "workstreams/P1-M3", "p1-report-sources.md")
+REGISTRY = os.path.join(ROOT, "workstreams/P1-M1", "cgr-sample-registry.json")
 HEXNOTE = os.path.join(ROOT, "docs", "re-notes", "cgr-hex-notebook.md")
-OSS_AUDIT = os.path.join(ROOT, "P1-M3", "oss-readers-audit.md")
-COMM_AUDIT = os.path.join(ROOT, "P1-M3", "commercial-readers-audit.md")
+OSS_AUDIT = os.path.join(ROOT, "workstreams/P1-M3", "oss-readers-audit.md")
+COMM_AUDIT = os.path.join(ROOT, "workstreams/P1-M3", "commercial-readers-audit.md")
 
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
 
@@ -116,7 +116,7 @@ def load_registry():
         env = os.environ.get("OEP_CGR_REGISTRY")
         if env:
             cands.append(env)
-        # sibling worktrees: <root-of-main>/.worktrees/*/P1-M1/cgr-sample-registry.json
+        # sibling worktrees: <root-of-main>/.worktrees/*/workstreams/P1-M1/cgr-sample-registry.json
         roots = [os.path.normpath(p) for p in (
             os.path.join(ROOT, "..", ".."),                     # main repo root
             os.path.join(ROOT, "..", "..", ".."),               # one level up
@@ -127,7 +127,7 @@ def load_registry():
             if not os.path.isdir(wt):
                 continue
             for name in sorted(os.listdir(wt)):
-                p = os.path.join(wt, name, "P1-M1", "cgr-sample-registry.json")
+                p = os.path.join(wt, name, "workstreams/P1-M1", "cgr-sample-registry.json")
                 if p not in seen and os.path.isfile(p):
                     seen.add(p)
                     cands.append(p)
@@ -152,7 +152,7 @@ def main():
     report = read_text(REPORT)
     sources = read_text(SOURCES, required=False)
     if not os.path.isfile(REPORT):
-        print("[FAIL] P1-M3/p1-report.md missing; nothing further to verify")
+        print("[FAIL] workstreams/P1-M3/p1-report.md missing; nothing further to verify")
         print("FAIL count: %d" % len(failures))
         return 1
 

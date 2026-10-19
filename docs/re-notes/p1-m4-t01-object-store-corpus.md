@@ -39,7 +39,7 @@ golden runner + P2/P3 regression runner resolve entries from it end to end.
   SKIP (exit 0) when the store is unreachable — tolerant doctrine.
 - **P1-M1-T06 privacy/ITAR sweep kept**: re-run over all 139 full-corpus bytes
   (121 upstream + repo data) on 2026-10-16 → 139/139 clean, 0 HIGH, gate PASS.
-  Evidence: `P1-M1/privacy-itar-sweep-report-full-2026-10-16.json`.
+  Evidence: `workstreams/P1-M1/privacy-itar-sweep-report-full-2026-10-16.json`.
 
 ## How to re-run
 
@@ -86,6 +86,6 @@ golden runner + P2/P3 regression runner resolve entries from it end to end.
 - corpus/object-store-index.json (full 122-entry mirror proof)
 - corpus/regression-matrix.json + .md (published matrix with backend counts)
 - tests/corpus_object_mirror_test.py (new acceptance test)
-- P1-M1/privacy-itar-sweep-report-full-2026-10-16.json (+ md note)
+- workstreams/P1-M1/privacy-itar-sweep-report-full-2026-10-16.json (+ md note)
 - docs/re-notes/p1-m4-t01-object-store-corpus.md (this note), corpus/README.md,
   docs/layout.md (seam note)

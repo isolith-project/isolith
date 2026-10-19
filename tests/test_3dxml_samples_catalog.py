@@ -23,10 +23,10 @@ import re
 import unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CATALOG = os.path.join(ROOT, "P1-M1", "3dxml-samples.md")
-SPEC_PROCESS = os.path.join(ROOT, "P1-M1", "3dxml-spec-process.md")
-SOURCES = os.path.join(ROOT, "P1-M1", "sources.md")
-VERIFICATION = os.path.join(ROOT, "P1-M1", "verification.md")
+CATALOG = os.path.join(ROOT, "workstreams/P1-M1", "3dxml-samples.md")
+SPEC_PROCESS = os.path.join(ROOT, "workstreams/P1-M1", "3dxml-spec-process.md")
+SOURCES = os.path.join(ROOT, "workstreams/P1-M1", "sources.md")
+VERIFICATION = os.path.join(ROOT, "workstreams/P1-M1", "verification.md")
 SAMPLE_DIR = os.path.join(ROOT, "corpus", "data", "3dxml")
 
 # Real-material anchor: files committed to the corpus, with their sha256 as

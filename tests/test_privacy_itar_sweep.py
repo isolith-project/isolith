@@ -6,7 +6,7 @@ sweep tool exists under python/oep_tooling/, every sample that is destined for
 the shared keelworks repo has been swept on its real bytes (sha256-anchored),
 the sweep detects planted ITAR/PII markers on synthetic fixtures (positive
 control) while ignoring binary float noise (negative control), and a committed
-evidence report (P1-M1/privacy-itar-sweep-report.json) documents the verdict
+evidence report (workstreams/P1-M1/privacy-itar-sweep-report.json) documents the verdict
 per sample with no unexplained HIGH finding.
 
 Run: python3 -m pytest -q tests/test_privacy_itar_sweep.py
@@ -21,7 +21,7 @@ import unittest
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "python"))
 
-REPORT = os.path.join(REPO, "P1-M1", "privacy-itar-sweep-report.json")
+REPORT = os.path.join(REPO, "workstreams/P1-M1", "privacy-itar-sweep-report.json")
 CORPUS = os.path.join(REPO, "corpus", "data")
 
 # Ground truth of the repo-destined shared-repo corpus (sha256 of the exact

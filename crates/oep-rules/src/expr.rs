@@ -1,7 +1,7 @@
 //! The `oep-rules` expression engine: our own documented grammar.
 //!
 //! This is deliberately our own language, NOT CATIA V5 formula syntax
-//! (documented not parity in `P7-M4/rules-checks-sandbox.md`). It is a small
+//! (documented not parity in `workstreams/P7-M4/rules-checks-sandbox.md`). It is a small
 //! recursive-descent parser and evaluator with no external dependencies.
 //!
 //! Grammar (loosest to tightest binding):

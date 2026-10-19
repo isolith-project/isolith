@@ -1,7 +1,7 @@
 //! P6-M5-T02: preview viewer (desktop app shell) for `oep-geo` models.
 //!
 //! This crate is the interactive surface of the P6 renderer seam (see
-//! `P6-M5/renderer-backend-wgpu-adr.md`, "Clean interface"): callers build a
+//! `workstreams/P6-M5/renderer-backend-wgpu-adr.md`, "Clean interface"): callers build a
 //! [`Scene`] from a real [`oep_geo::Document`], drive an orbit [`Camera`],
 //! pick geometry with screen-space rays ([`pick`]), slice the view with
 //! world-space [`clip`] planes, and ask a [`render`] target for pixels. The

@@ -7,7 +7,7 @@
 #                                       scripts/airgap/keys/oep-airgap-signing.pub.asc)
 #   * Ed25519 key oep-update-signing   (secret hex held under
 #                                       $OEP_UPDATE_SIGN_KEYFILE or $OEP_UPDATE_SIGN_KEY;
-#                                       pubkey committed at P11/keys/oep-update-signing.pub)
+#                                       pubkey committed at workstreams/P11/keys/oep-update-signing.pub)
 #
 # It produces, per release version, in the output dir:
 #   <artifact>          (unchanged release binary/asset)
@@ -172,7 +172,7 @@ out = {"schema": "keelworks.release-signatures.v1", "version": version,
        "checksums": checksums,
        "public_keys": {
            "gpg_artifact": "scripts/airgap/keys/oep-airgap-signing.pub.asc",
-           "ed25519_update": "P11/keys/oep-update-signing.pub"}}
+           "ed25519_update": "workstreams/P11/keys/oep-update-signing.pub"}}
 json.dump(out, open("release-signatures.json", "w"), indent=2, sort_keys=True)
 PY
 

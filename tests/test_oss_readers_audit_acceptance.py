@@ -9,7 +9,7 @@ PASS (GREEN) once the audit lands.
 
 'Done' for P1-M3-T01 means this test passes against the real audit report and
 its cited source list, and every claim enforced here was checked against a
-reachable primary source on 2026-10-15 (see P1-M3/oss-readers-sources.md for
+reachable primary source on 2026-10-15 (see workstreams/P1-M3/oss-readers-sources.md for
 the citation list).
 
 The task's specific audit targets (from the card) are each required here:
@@ -27,8 +27,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REPORT = os.path.join(ROOT, "P1-M3", "oss-readers-audit.md")
-SOURCES = os.path.join(ROOT, "P1-M3", "oss-readers-sources.md")
+REPORT = os.path.join(ROOT, "workstreams/P1-M3", "oss-readers-audit.md")
+SOURCES = os.path.join(ROOT, "workstreams/P1-M3", "oss-readers-sources.md")
 
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
 
@@ -90,8 +90,8 @@ def read_text(path):
 
 def main():
     # --- 1. Deliverables exist -------------------------------------------------
-    check(os.path.isfile(REPORT), "P1-M3/oss-readers-audit.md exists")
-    check(os.path.isfile(SOURCES), "P1-M3/oss-readers-sources.md exists")
+    check(os.path.isfile(REPORT), "workstreams/P1-M3/oss-readers-audit.md exists")
+    check(os.path.isfile(SOURCES), "workstreams/P1-M3/oss-readers-sources.md exists")
     if not os.path.isfile(REPORT):
         print("[FAIL] audit report missing; nothing further to verify")
         print("FAIL count: %d" % len(failures))

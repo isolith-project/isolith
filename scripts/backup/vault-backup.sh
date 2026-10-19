@@ -6,7 +6,7 @@
 # manifest and a machine-readable meta record. This is the OTHER half of the
 # DR lane: the P10-M3-T01 drill (scripts/dr/drill-restore.sh) restores from
 # EXACTLY this layout, so the contract below must not change without a
-# matching runbook-change (see P10-M3/dr-runbook.md).
+# matching runbook-change (see workstreams/P10-M3/dr-runbook.md).
 #
 # Layout (interchange contract, shared with P10-M3-T01):
 #   <BK_TARGET>/keelworks-vault-backup/

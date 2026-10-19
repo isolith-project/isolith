@@ -13,7 +13,7 @@ supersedes: nothing (first contributing guide)
 Keelworks (working title: Open Engineering Platform, OEP) is an open,
 self-hosted, interoperable engineering suite. This guide tells you how to
 contribute to it. It implements the contributor rules decided in
-`P0-M1/contributor-rules-decision.md` (P0-M1-T04). If you have not read the
+`workstreams/P0-M1/contributor-rules-decision.md` (P0-M1-T04). If you have not read the
 charter yet, start there: `charter.md` covers mission, non-goals, the clean-room
 invariant, and the license posture. Read `docs/layout.md` for where workstreams
 live in this repository.
@@ -126,7 +126,7 @@ verify against real material, then hand off for review. Concretely:
 - `charter.md`       program mission, non-goals, license posture
 - `docs/layout.md`   monorepo layout, the workstream -> crate/module map
 - `CONTRIBUTING.md`  this guide
-- `P0-M1/`, `P0-M2/`, `P0-M5/`  governance decision records and memos
+- `workstreams/P0-M1/`, `workstreams/P0-M2/`, `workstreams/P0-M5/`  governance decision records and memos
 - `crates/oep-*`     Rust workstreams (P2 CGR, P3 3DXML, P6 geometry, ...)
 - `python/`          Python tooling and corpus scripts
 - `tests/`           acceptance tests; each P0 deliverable ships one

@@ -6,7 +6,7 @@ committed Cargo.lock) and for the container images the release embeds (base
 images declared in the repo's Dockerfiles), then scan the lockfile against
 the RustSec advisory database (source of truth for `cargo audit`) and GATE
 the release on no unfixed critical/high vulnerabilities unless explicitly
-waived in P11/waivers.toml.
+waived in workstreams/P11/waivers.toml.
 
 Design notes (clean-room invariant: scanning is lawful inventory/analysis,
 never copying):
@@ -22,7 +22,7 @@ never copying):
     derived from a content hash so re-running on the same ref emits
     byte-identical BOMs.
   * Gate policy is explicit and in-repo. Unfixed critical/high findings
-    block (exit 1) unless they carry a committed waiver in P11/waivers.toml.
+    block (exit 1) unless they carry a committed waiver in workstreams/P11/waivers.toml.
   * CI-safe degraded legs. The authoritative lockfile gate always runs.
     An optional OSV cross-check and a trivy pass over built images are
     reported when their prerequisites are reachable; if not, their leg is
@@ -787,14 +787,14 @@ def build_report(ref, findings, waivers, block_severities, legs, sbom_files, gat
         "blocking": [dict(b) for b in blockers],
         "legs": legs,
         "sbom_artifacts": sbom_files,
-        "waivers_file": str(waivers_path) if waivers_path else "P11/waivers.toml",
+        "waivers_file": str(waivers_path) if waivers_path else "workstreams/P11/waivers.toml",
     }
 
 
 def waivers_path_of(repo):
     if repo is None:
-        return Path("P11/waivers.toml")
-    return Path(repo) / "P11" / "waivers.toml"
+        return Path("workstreams/P11/waivers.toml")
+    return Path(repo) / "workstreams/P11" / "waivers.toml"
 
 
 def _resolve_waivers(args, repo: Path) -> Path:
@@ -835,7 +835,7 @@ def _out_dir(repo: Path, out: str | None, ref: str) -> Path:
     if out:
         d = Path(out)
     else:
-        d = repo / "P11" / "artifacts" / (ref.split("-", 1)[0])
+        d = repo / "workstreams/P11" / "artifacts" / (ref.split("-", 1)[0])
     d.mkdir(parents=True, exist_ok=True)
     return d
 
@@ -862,10 +862,10 @@ def cmd_scan(args):
     repo = Path(args.repo).resolve()
     ref = _resolve_ref(repo, args.ref)
     lock_txt, pkgs = _parse_lockfile_and_pkgs(repo)
-    db = Path(args.advisory_db).resolve() if args.advisory_db else (repo / "P11" / ".advisory-db")
+    db = Path(args.advisory_db).resolve() if args.advisory_db else (repo / "workstreams/P11" / ".advisory-db")
     ensure_advisory_db(db, offline=args.offline, refresh=args.refresh)
     findings = scan_lockfile(pkgs, db)
-    outdir = _out_dir(repo, args.out, ref) if args.out or True else repo / "P11" / "artifacts" / ref
+    outdir = _out_dir(repo, args.out, ref) if args.out or True else repo / "workstreams/P11" / "artifacts" / ref
     waivers = load_waivers(_resolve_waivers(args, repo))
     blocks = (args.block_severities or ",".join(_default_blocks())).replace(" ", "").split(",")
     legs = [{"name": "rustsec-advisory-db", "state": "ok", "note": f"advisory db: {db}"}]
@@ -906,7 +906,7 @@ def cmd_gate(args):
     (outdir / "rust.spdx.json").write_text(json.dumps(spdx, indent=2))
     (outdir / "images.cdx.json").write_text(json.dumps(imgs, indent=2))
     # 2) scan
-    db = Path(args.advisory_db).resolve() if args.advisory_db else (repo / "P11" / ".advisory-db")
+    db = Path(args.advisory_db).resolve() if args.advisory_db else (repo / "workstreams/P11" / ".advisory-db")
     ensure_advisory_db(db, offline=args.offline, refresh=args.refresh)
     findings = scan_lockfile(pkgs, db)
     legs = [{"name": "rustsec-advisory-db", "state": "ok", "note": f"advisory db: {db}"}]
@@ -949,7 +949,7 @@ def cmd_trivy_image(args):
       trivy-image-findings.json  findings normalised into gate schema
     The gate consumes the normalised findings via --trivy-scan so a critical/
     high OS CVE in the shipped image BLOCKS unless it carries a committed
-    waiver (P11/waivers.toml). Exit 0 even when trivy is absent: the leg is
+    waiver (workstreams/P11/waivers.toml). Exit 0 even when trivy is absent: the leg is
     then SKIP and the lockfile gate stays the authorizer."""
     outdir = Path(args.out)
     outdir.mkdir(parents=True, exist_ok=True)
@@ -987,9 +987,9 @@ def main(argv=None):
     def _common(sp):
         sp.add_argument("--repo", default=".", help="repo root (default cwd)")
         sp.add_argument("--ref", default=None, help="release/ref label (default git describe)")
-        sp.add_argument("--out", default=None, help="artifact out dir (default P11/artifacts/<ref>)")
-        sp.add_argument("--advisory-db", default=None, help="path to a rustsec advisory-db clone (default P11/.advisory-db)")
-        sp.add_argument("--waivers", default=None, help="waivers file (default P11/waivers.toml)")
+        sp.add_argument("--out", default=None, help="artifact out dir (default workstreams/P11/artifacts/<ref>)")
+        sp.add_argument("--advisory-db", default=None, help="path to a rustsec advisory-db clone (default workstreams/P11/.advisory-db)")
+        sp.add_argument("--waivers", default=None, help="waivers file (default workstreams/P11/waivers.toml)")
         sp.add_argument("--block-severities", default=None, help="comma list, default critical,high")
         sp.add_argument("--offline", action="store_true", help="never clone; require local advisory-db")
         sp.add_argument("--refresh", action="store_true", help="git pull the advisory-db before scanning")
@@ -1007,7 +1007,7 @@ def main(argv=None):
     _common(sp)
     sp = sub.add_parser("trivy-image", help="host-side trivy image scan proof leg")
     sp.add_argument("--image", required=True)
-    sp.add_argument("--out", default="P11/proof")
+    sp.add_argument("--out", default="workstreams/P11/proof")
 
     args = p.parse_args(argv)
     if args.cmd == "sbom":

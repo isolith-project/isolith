@@ -1,6 +1,6 @@
 [package]
 name = "oep-pdm"
-description = "P8: self-hosted PDM / ENOVIA-lite. P8-M1-T01 service skeleton on the ratified web stack (Rust axum, ADR P8-M1/web-stack-adr.md): contract types, vault store, axum service (binary oep-pdm), retained P7-M2-T02 StubServer identity + PdmClient speaking the same OpenAPI v1 contract."
+description = "P8: self-hosted PDM / ENOVIA-lite. P8-M1-T01 service skeleton on the ratified web stack (Rust axum, ADR workstreams/P8-M1/web-stack-adr.md): contract types, vault store, axum service (binary oep-pdm), retained P7-M2-T02 StubServer identity + PdmClient speaking the same OpenAPI v1 contract."
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -16,7 +16,7 @@ sha2 = "0.10"
 # Contract wire encoding for uploads (base64 file content in JSON body).
 base64 = "0.22"
 
-# Web stack (P8-M1-T01 decision: P8-M1/web-stack-adr.md, Rust axum).
+# Web stack (P8-M1-T01 decision: workstreams/P8-M1/web-stack-adr.md, Rust axum).
 # Pinned major; the exact resolutions live in the workspace Cargo.lock.
 axum = "0.8"
 # Single-binary self-hosted server: multi-thread runtime + net (TcpListener)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """P10-M1-T03 live proof runner: `oep-vault-migrate` end-to-end on a
 representative V5-era folder tree, capturing every acceptance leg into
-`P10-M1/proof/migration-proof.json`.
+`workstreams/P10-M1/proof/migration-proof.json`.
 
 Runs the REAL compiled binary against real bytes in a temporary tree and
 re-verifies the vault output independently (stdlib hashlib re-computes every
@@ -20,7 +20,7 @@ import tempfile
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BIN = os.path.join(REPO, "target", "debug", "oep-vault-migrate")
-PROOF = os.path.join(REPO, "P10-M1", "proof", "migration-proof.json")
+PROOF = os.path.join(REPO, "workstreams/P10-M1", "proof", "migration-proof.json")
 T0 = "2026-10-17T00:00:00Z"
 
 TREE = {

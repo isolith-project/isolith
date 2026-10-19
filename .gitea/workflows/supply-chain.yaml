@@ -44,7 +44,7 @@ jobs:
 
   reproducible-build:
     name: reproducible-build
-    # Release-branch line + manual dispatch. See doc P11/supply-chain.md
+    # Release-branch line + manual dispatch. See doc workstreams/P11/supply-chain.md
     # section 5: release branches accept no direct feature pushes (P12-T05),
     # so changes enter by merge/cherry-pick and this gate runs on the branch
     # head before anything ships.
@@ -65,5 +65,5 @@ jobs:
         run: bash scripts/supply-chain/reproducible-build.sh
       - name: Keep the byte-identity proof in CI
         run: |
-          ls -l P11/proof/ | tail -5
+          ls -l workstreams/P11/proof/ | tail -5
           echo "reproducible build proof recorded on this ref"

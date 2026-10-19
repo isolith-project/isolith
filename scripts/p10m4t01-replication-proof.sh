@@ -17,7 +17,7 @@
 #     deterministically, hash-verified on the wire.
 #  4. Also run the CI-safe single-host legs against the same live vault for the
 #     in-repo report.
-#  5. Aggregate both into P10-M4/proof/p10m4t01-replication.{json,md}, exit 0
+#  5. Aggregate both into workstreams/P10-M4/proof/p10m4t01-replication.{json,md}, exit 0
 #     iff no FAIL row.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -29,7 +29,7 @@ U1_IP="${U1_IP:-192.168.0.67}"
 GARAGE_IP="${GARAGE_IP:-192.168.0.43}"
 GARAGE_MAC="24:4B:FE:58:92:90"
 GARAGE_USER="${GARAGE_USER:-allen}"
-PROOF_DIR="$WT/P10-M4/proof"
+PROOF_DIR="$WT/workstreams/P10-M4/proof"
 mkdir -p "$PROOF_DIR"
 AGG="$PROOF_DIR/p10m4t01-replication.json"
 AGG_MD="$PROOF_DIR/p10m4t01-replication.md"
@@ -185,7 +185,7 @@ report = {
     "binary": bin_path,
     "hosts": {"lan_node": "U1 (oep-pdm vault)", "remote_node": "garage PC "
               "(sync client replica, WoL)"},
-    "deployment_role": "Airgap (P8-M5/hybrid-cloud-role-adr.md)",
+    "deployment_role": "Airgap (workstreams/P8-M5/hybrid-cloud-role-adr.md)",
     "decisions": ["#9 run targets: U1 + garage PC (WoL), NOT NAS",
                   "#10 on-prem/LAN default, no internet egress"],
     "summary": summary,

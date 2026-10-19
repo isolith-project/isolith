@@ -12,7 +12,7 @@
 //! The golden fixture exercises the documented uncompressed primitive path,
 //! so this codec layer is not yet reachable from `parse()`; it is kept as the
 //! test-verified foundation for the compressed vertex-index milestone (next
-//! wedge), exactly per the plan in `P4-M4/jt-reader-plan.md`.
+//! wedge), exactly per the plan in `workstreams/P4-M4/jt-reader-plan.md`.
 #![allow(dead_code)] // exercised by unit tests until the compressed path lands
 
 use super::Error;

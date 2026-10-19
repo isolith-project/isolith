@@ -10,7 +10,7 @@ This test pins the committed deliverable on real material (the files in the
 repo): the four scripts, the public verification key, the update-checker
 defaults, and the fact that the installer is pull-free (never touches a
 registry). The live docker run is recorded as the committed proof in
-P10-M2/proof/ (U1, network disabled); CI holds these contract facts.
+workstreams/P10-M2/proof/ (U1, network disabled); CI holds these contract facts.
 """
 
 from pathlib import Path
@@ -19,7 +19,7 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AIRGAP = REPO_ROOT / "scripts" / "airgap"
-DOC = REPO_ROOT / "P10-M2" / "air-gap-install.md"
+DOC = REPO_ROOT / "workstreams/P10-M2" / "air-gap-install.md"
 
 SCRIPTS = [
     "build-offline-bundle.sh",

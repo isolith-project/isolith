@@ -82,7 +82,7 @@ inflates ~33%). Raised to 512 MiB in `oep_pdm::service` (`BODY_LIMIT_BYTES`),
 documented as a P8-M6 seam the compute lane needs. Bodies are still decoded and
 content-hashed before anything is stored.
 
-## Proof (committed under `P9-M3/proof/`)
+## Proof (committed under `workstreams/P9-M3/proof/`)
 
 A live run on 2026-10-17 against a real `oep-pdm` vault (`--persist-dir`),
 seeded from the seed manifest and driven by the batch manifest:

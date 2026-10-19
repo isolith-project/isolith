@@ -35,7 +35,7 @@ pub const WORKER_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const WORKER_ARGS: [&str; 2] = ["--resolution", "--fidelity"];
 
 /// Fidelity level vocabulary this worker advertises (supersample factors),
-/// in the canonical P9-M1/GUI order. Low = 1x, Medium = 2x, High = 4x.
+/// in the canonical workstreams/P9-M1/GUI order. Low = 1x, Medium = 2x, High = 4x.
 pub const FIDELITY_LEVELS: [&str; 3] = ["low", "medium", "high"];
 
 /// A single worker registration record.

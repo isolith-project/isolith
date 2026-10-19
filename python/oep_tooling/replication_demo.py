@@ -41,12 +41,12 @@ The demo proves, over the real wire:
 
 Honesty boundary (card: "conflict semantics documented and honest"): the
 resolution surface is ours/theirs/client-merged-document, NOT an automatic
-hunk-level text merge (a diff3 column view is a P8-M4/T05 follow-up). This
+hunk-level text merge (a diff3 column view is a workstreams/P8-M4/T05 follow-up). This
 module never simulates a node: every leg is a real socket against a real
 binary. A leg that cannot reach its base (binary missing, service down) is
 classified SKIP against the closed taxonomy, never invented as PASS, never a
 crash — exactly the P8/P9 gate doctrine. The live two-host (U1 LAN + garage PC
-remote) proof is scripts/p10m4t01-replication-proof.sh -> P10-M4/proof/*.
+remote) proof is scripts/p10m4t01-replication-proof.sh -> workstreams/P10-M4/proof/*.
 """
 from __future__ import annotations
 
@@ -352,7 +352,7 @@ def build_report(rows: list, binary: str, base_url: str) -> dict:
         "topology": {
             "lan_node": "oep-pdm service (authoritative vault)",
             "remote_node": "sync client replica (generated PdmClient)",
-            "deployment_role": "Airgap (P8-M5/hybrid-cloud-role-adr.md)",
+            "deployment_role": "Airgap (workstreams/P8-M5/hybrid-cloud-role-adr.md)",
             "decisions": ["#9 run targets: U1 + garage PC (WoL), NOT NAS",
                           "#10 on-prem/LAN default, no internet egress"],
         },

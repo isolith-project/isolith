@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # P8-M6-T01 verification probe: boot the retained oep-pdm-stub binary, drive
 # the GENERATED python client (python/oep_pdm_client.py, produced from
-# P8-M6/openapi-v1.yaml) through open-from-PDM / save-revisions-to-PDM, and
-# write a real-material proof to P8-M6/proof/client-proof.json.
+# workstreams/P8-M6/openapi-v1.yaml) through open-from-PDM / save-revisions-to-PDM, and
+# write a real-material proof to workstreams/P8-M6/proof/client-proof.json.
 #
 # This is the "stub promoted to a contract test" demonstration: the same
 # contract the P7-M2-T02 stub established is exercised by the generated client
@@ -13,7 +13,7 @@ WT=$(pwd)
 CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-$WT/target}"
 BIN="$CARGO_TARGET_DIR/debug/oep-pdm-stub"
 PORT=18886
-PROOF="$WT/P8-M6/proof/client-proof.json"
+PROOF="$WT/workstreams/P8-M6/proof/client-proof.json"
 mkdir -p "$(dirname "$PROOF")"
 
 if [ ! -x "$BIN" ]; then
@@ -73,7 +73,7 @@ status, items = c.list_items()
 assert status == 200 and len(items["items"]) == 1, items
 
 proof = {
-    "contract": "P8-M6/openapi-v1.yaml",
+    "contract": "workstreams/P8-M6/openapi-v1.yaml",
     "spec_sha256": SPEC_SHA256,
     "base_url": "/api/v1",
     "client": "python/oep_pdm_client.py (generated)",

@@ -56,7 +56,7 @@ tests/.* @don
 standards/.* @don
 
 # P0 governance decision records.
-P0-M1/.* @don
-P0-M2/.* @don
+workstreams/P0-M1/.* @don
+workstreams/P0-M2/.* @don
 P0-M4/.* @don
-P0-M5/.* @don
+workstreams/P0-M5/.* @don

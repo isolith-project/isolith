@@ -10,13 +10,13 @@ mutating the real Keelworks checkout.
 Checks
 ------
 1. Version scheme (YYYY.N.P[-pre]) accepts/rejects the right strings.
-2. P12/release-train.md exists with the required policy content and front
+2. workstreams/P12/release-train.md exists with the required policy content and front
    matter (feature freeze, canary staging, patch-vs-next-train triggers).
 3. Freeze manifest generation + verify round-trip on a real temp git repo.
 4. verify detects a tampered manifest.
 5. release-cut performs the full mechanical cut (manifest, release branch,
    annotated tag, canary push of canary/<v> + tag) against a bare canary repo.
-6. Any committed P12/freeze-manifests/*.json conforms to the schema.
+6. Any committed workstreams/P12/freeze-manifests/*.json conforms to the schema.
 """
 import json
 import os
@@ -87,8 +87,8 @@ def test_version_scheme():
 
 
 def test_doc_present_and_covers_policy():
-    doc = os.path.join(REPO, "P12", "release-train.md")
-    check("release-train doc exists at P12/release-train.md", os.path.isfile(doc), doc)
+    doc = os.path.join(REPO, "workstreams/P12", "release-train.md")
+    check("release-train doc exists at workstreams/P12/release-train.md", os.path.isfile(doc), doc)
     if not os.path.isfile(doc):
         return
     text = open(doc).read()
@@ -163,10 +163,10 @@ def test_release_cut_end_to_end_hermetic():
 
 
 def test_committed_manifests_conform():
-    mdir = os.path.join(REPO, "P12", "freeze-manifests")
+    mdir = os.path.join(REPO, "workstreams/P12", "freeze-manifests")
     if not os.path.isdir(mdir):
         check("no committed freeze manifests to validate",
-              True, "P12/freeze-manifests empty or absent")
+              True, "workstreams/P12/freeze-manifests empty or absent")
         return
     files = sorted(f for f in os.listdir(mdir) if f.endswith(".json"))
     if not files:

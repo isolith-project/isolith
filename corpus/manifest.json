@@ -7,7 +7,7 @@
   "policy": "Redistribution granted only under explicit open licenses (MIT/Apache-2.0/CC0-1.0). backend=repo files are committed under corpus/data/. The 121 MIT CATPart blobs + fixture mirror use backend=object-store (NAS Gitea generic package registry, content-addressed by sha256) and are uploaded by P1-M1-T05.",
   "geometry_classes": "prism|surface|assembly|dataset|text",
   "inputs": [
-    "P1-M1/cgr-sample-registry.json (P1-M1-T01)",
+    "workstreams/P1-M1/cgr-sample-registry.json (P1-M1-T01)",
     "corpus/catpart-samples.json + corpus/catpart-source-full-registry.json (P1-M1-T03)",
     "corpus/tools/3dxml-catalog.json (P1-M1-T02)",
     "corpus/data/ real bytes (size+sha256 computed here)"

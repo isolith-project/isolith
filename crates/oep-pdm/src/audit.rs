@@ -594,7 +594,7 @@ fn write_head(path: &Path, state: &HeadState) -> Result<(), AuditError> {
 ///        || [ detail_len(4 BE) || detail ]              only when detail set )
 /// ```
 ///
-/// This byte layout is deliberate and versioned in `P8-M3/audit-log.md` so a
+/// This byte layout is deliberate and versioned in `workstreams/P8-M3/audit-log.md` so a
 /// future format revision can migrate the chain without guessing. It is
 /// independent of the JSON line encoding, so verification can recompute the
 /// hash from the parsed entry fields alone.

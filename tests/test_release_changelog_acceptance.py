@@ -9,10 +9,10 @@ Written FIRST (TDD). Verifies the real material, not mocks:
                fires on calendar-train tag pushes, fetches full history, and
                attaches the changelog as release notes; a per-delivery lane
                (p12-t07-changelog.yaml) runs this test in CI
-  doc       => P12/release-changelog.md records the contract, cross-referenced
+  doc       => workstreams/P12/release-changelog.md records the contract, cross-referenced
                to the P0-M5-T03 versioning decision and P12-T05 train policy
   proof     => a changelog generated from the ACTUAL commit history of the
-               dry-run release tag is committed under P12/proof/, with a
+               dry-run release tag is committed under workstreams/P12/proof/, with a
                sha256 that git-cliff output reproduces; if a git-cliff binary
                is available the test REGENERATES that changelog and compares
 
@@ -165,7 +165,7 @@ def run_checks():
               "%s must run this acceptance test" % lane)
 
     # 5. Ops/decision doc.
-    doc = "P12/release-changelog.md"
+    doc = "workstreams/P12/release-changelog.md"
     check(os.path.isfile(os.path.join(ROOT, doc)), "missing %s" % doc)
     if os.path.isfile(os.path.join(ROOT, doc)):
         dc = read(doc)
@@ -181,7 +181,7 @@ def run_checks():
               "%s must reference the P12-T05 release train" % doc)
 
     # 6. Proof: a changelog generated from the actual dry-run release history.
-    proof_dir = os.path.join(ROOT, "P12", "proof")
+    proof_dir = os.path.join(ROOT, "workstreams/P12", "proof")
     proofs = []
     if os.path.isdir(proof_dir):
         proofs = sorted(
@@ -190,11 +190,11 @@ def run_checks():
         )
     check(
         bool(proofs),
-        "no generated changelog proof (P12/proof/changelog-v<tag>.md) committed",
+        "no generated changelog proof (workstreams/P12/proof/changelog-v<tag>.md) committed",
     )
     for pname in proofs:
         text = read(os.path.join(proof_dir, pname))
-        no_em_dash(text, os.path.join("P12/proof", pname))
+        no_em_dash(text, os.path.join("workstreams/P12/proof", pname))
         headings = re.findall(r"^### (.+)$", text, re.M)
         bullets = len(re.findall(r"^\- ", text, re.M))
         check(

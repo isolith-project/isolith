@@ -91,7 +91,7 @@ document id space all validate against `Document::validate`.
 - `crates/oep-kinematics/*` -- the crate (lib + bin + tests)
 - `tests/test_p7_m3_t02_acceptance.py` -- independent pytest acceptance
 - `docs/p7-m3-t02-mates-kinematics-demo.md` -- this file
-- `P7-M3/mates-kinematics-demo-memo.md` -- decision-style memo (front matter)
+- `workstreams/P7-M3/mates-kinematics-demo-memo.md` -- decision-style memo (front matter)
 - `scripts/p7-m3-t02-record.sh` -- reproduce the recording
 - `demos/p7-m3-t02/{trace.json,manifest.json,crank-slider-demo.{mp4,gif}}` -- recorded demo
 

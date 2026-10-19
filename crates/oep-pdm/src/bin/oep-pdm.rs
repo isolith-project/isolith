@@ -1,8 +1,8 @@
 //! `oep-pdm` -- the P8 PDM service skeleton (Rust axum), stand-alone.
 //!
-//! Speaks the OpenAPI v1 contract at `P8-M6/openapi-v1.yaml` on base path
+//! Speaks the OpenAPI v1 contract at `workstreams/P8-M6/openapi-v1.yaml` on base path
 //! `/api/v1`. This is the real P8 service skeleton decided by
-//! `P8-M1/web-stack-adr.md` (Rust axum, AGPL-3.0). The P7 workbench browser
+//! `workstreams/P8-M1/web-stack-adr.md` (Rust axum, AGPL-3.0). The P7 workbench browser
 //! points at the P7-M2-T02 stub today and can point here without any client
 //! change (same contract, same base URL).
 //!

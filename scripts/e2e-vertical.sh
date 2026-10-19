@@ -27,7 +27,7 @@ MODE="local"
 BIN_DIR="${BIN_DIR:-}"
 CGR=""
 BREAK=""
-OUT_BASE="P12/proof/e2e-vertical"
+OUT_BASE="workstreams/P12/proof/e2e-vertical"
 SELFCHECK=false
 
 usage() { sed -n '1,30p' "${BASH_SOURCE[0]}" | sed -n 's/^# \{0,1\}//p'; }
@@ -47,7 +47,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -z "$VERSION" ]; then
-    V0="$(sed -n 's/^OEP_VERSION=//p' P10-M1/deploy/.env.example 2>/dev/null | head -1)"
+    V0="$(sed -n 's/^OEP_VERSION=//p' workstreams/P10-M1/deploy/.env.example 2>/dev/null | head -1)"
     VERSION="${V0:-0.1.0}"
 fi
 

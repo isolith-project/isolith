@@ -16,7 +16,7 @@
 //!
 //! The principal (by + role) is carried in the form until the P8-M3-T01
 //! identity layer and P8-M6-T01 REST surface bind real sessions; that seam
-//! is documented in P8-M4/approval-flows.md.
+//! is documented in workstreams/P8-M4/approval-flows.md.
 
 use std::io::{Read, Write};
 use std::net::TcpStream;

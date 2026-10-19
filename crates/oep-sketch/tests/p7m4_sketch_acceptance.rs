@@ -7,7 +7,7 @@
 //! implements them in the chosen shell's semantics - a declarative [`Sketch`]
 //! and a [`VariableSet`] (FreeCAD-v1-variable-set-like named parameters)
 //! stored as `oep-geo` features, solved by the ADOPTED OSS constraint solver
-//! behind the `crate::solver` seam (solver choice: P7-M4/sketch-solver-adr.md).
+//! behind the `crate::solver` seam (solver choice: workstreams/P7-M4/sketch-solver-adr.md).
 //!
 //! Acceptance (the card's exact bar): "a sketch parametrically drives a model
 //! dimension; repeats for the chosen shell's semantics."

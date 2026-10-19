@@ -10,7 +10,7 @@ repository.workspace = true
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 # P7-M4-T01: adopted OSS 2D constraint-solver library (MIT stack, pure Rust),
-# pinned per supply-chain doctrine. Choice + license posture: P7-M4/sketch-solver-adr.md.
+# pinned per supply-chain doctrine. Choice + license posture: workstreams/P7-M4/sketch-solver-adr.md.
 # Reached only through crate::solver - a hidden implementation detail, like
 # oep-step wraps step-io. Program posture: Apache-2.0 libraries MAY link a
 # permissive library under its own license with notice; no FreeCAD source is

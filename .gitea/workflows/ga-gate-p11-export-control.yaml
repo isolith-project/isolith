@@ -1,12 +1,12 @@
 # P11-T05: export-control classification gate (the release pipeline checkbox).
 #
-# Two jobs enforce the P11/export-control.md rule -- "a release may not be cut
+# Two jobs enforce the workstreams/P11/export-control.md rule -- "a release may not be cut
 # or published while its export-control classification file is missing or
 # non-conforming":
 #
 # 1) export-control-selfcheck: on EVERY push and pull_request. Parses the
 #    template and every committed <V>.classification.toml under
-#    P11/export-control/ using the pure-stdlib gate. Any malformed file, any
+#    workstreams/P11/export-control/ using the pure-stdlib gate. Any malformed file, any
 #    non-UNCLASSIFIED status, or any tripped ITAR/ECCN/data-locality assertion
 #    fails CI. This is the static release-content scan.
 #

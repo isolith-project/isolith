@@ -2,13 +2,13 @@
 """Acceptance test for Keelworks P11-T01: the stack threat model.
 
 Written FIRST (TDD), mirroring the ADR-test convention. The document at
-P11/threat-model.md must make this test pass. It verifies the committed real
+workstreams/P11/threat-model.md must make this test pass. It verifies the committed real
 material, not mocks:
 
   sections  => the card's acceptance list: assets, trust boundaries, threat
                actors, and mitigations mapped to the stack must each be a
                documented section
-  risk map  => the risk register (P11/threat-model.md section 6) and the
+  risk map  => the risk register (workstreams/P11/threat-model.md section 6) and the
                mitigation inventory (section 7) form THE mapping table; the
                table must have NO ORPHAN RISKS:
                  1. every risk names at least one mitigation, and every named
@@ -30,7 +30,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOC = os.path.join(ROOT, "P11", "threat-model.md")
+DOC = os.path.join(ROOT, "workstreams/P11", "threat-model.md")
 
 # The eight committed Wave-3 P11 cards (master plan P11 section).
 P11_CARDS = {
@@ -99,7 +99,7 @@ def run_checks():
     print("=" * 66)
 
     # 0. The document exists.
-    check(os.path.isfile(DOC), "missing: P11/threat-model.md")
+    check(os.path.isfile(DOC), "missing: workstreams/P11/threat-model.md")
     if not os.path.isfile(DOC):
         return failures
 

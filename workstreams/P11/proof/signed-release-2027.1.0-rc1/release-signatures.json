@@ -1,0 +1,36 @@
+{
+  "artifacts": 10,
+  "checksums": {
+    "oep-batch-convert": "b675b098ff592d0c085b63fb8deb5ee23038152ee923e073eed76b33c9515b1a",
+    "oep-opsdash": "f0ae01e2c4f6ffc9febfc43ee2c4b586328b07d6ef2afd8976f5dbb3de8baa12",
+    "oep-pdm": "ecbfba94da2effba1ff721c3ad97f91ff38642f7ae4f4c1ff4e2a63c636305f5",
+    "oep-pdm-keelworks-oep-aarch64.AppImage": "fdac88215d0e78a4266d97b5225b6745fec745bc95be24ad0343291afcb8ebdc",
+    "oep-pdm-stub": "30c11b407fdb7017a2a56d684a52ad387c45c8b92b62ad5f641d5ed36168eca0",
+    "oep-render-worker": "6e8d1128746797f5fcd99ccf4324f9cdd78b6beea22ce9b2c9b9675b3788e1e8",
+    "oep-update-check": "a8b3c75c9522c51ac2fab302b3d9222a99cf9be37d9bde7b28c5f8145bf6cc5f",
+    "oep-update-sign": "268aedbe74d5c015281f57ee2b530209e54ce48b3167990d434b030278eb3791",
+    "oep-web": "7dbddce20fa56731389aa98b338148fab3fd4e3d4164c206953477ba999ecd90",
+    "oep-web-keelworks-oep-aarch64.AppImage": "e82c723081ae17ec69664abbf9d54962254f0070c9541ba2d23273451f1cc708"
+  },
+  "detached_signatures": [
+    "SHA256SUMS.sig",
+    "oep-batch-convert.sig",
+    "oep-opsdash.sig",
+    "oep-pdm-keelworks-oep-aarch64.AppImage.sig",
+    "oep-pdm-stub.sig",
+    "oep-pdm.sig",
+    "oep-render-worker.sig",
+    "oep-update-check.sig",
+    "oep-update-sign.sig",
+    "oep-web-keelworks-oep-aarch64.AppImage.sig",
+    "oep-web.sig"
+  ],
+  "public_keys": {
+    "ed25519_update": "workstreams/P11/keys/oep-update-signing.pub",
+    "gpg_artifact": "scripts/airgap/keys/oep-airgap-signing.pub.asc"
+  },
+  "schema": "keelworks.release-signatures.v1",
+  "signed": "2026-10-19T10:31:14Z",
+  "update_bundle": "signed",
+  "version": "2027.1.0-rc1"
+}

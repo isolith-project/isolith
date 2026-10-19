@@ -19,7 +19,7 @@ behavior over the REST contract:
 - Added five additive REST verbs (new paths only -- the existing v1 wire is
   byte-identical): `POST/DELETE /api/v1/items/{id}/lock`, `POST
   /api/v1/items/{id}/revisions/{rev}/transition`, `GET /api/v1/audit`,
-  `GET /api/v1/audit/verify`. Declared in `P8-M6/openapi-v1.yaml`; the
+  `GET /api/v1/audit/verify`. Declared in `workstreams/P8-M6/openapi-v1.yaml`; the
   generated python client (M6-T01 deliverable) exposes them.
 - The store now audits every mutating + read verb; the transition verb is the
   publish gate (lock token required to release) and enforces the state machine
@@ -27,8 +27,8 @@ behavior over the REST contract:
 - New harness `python/oep_tooling/ga_gate_p8.py` + acceptance test
   `tests/ga_gate_p8_test.py` (TDD RED -> GREEN) + proof script
   `scripts/p8m6t03-ga-gate-proof.sh` + committed evidence
-  `P8-M6/proof/p8m6t03-ga-gate-proof.json` and
-  `P8-M6/proof/ga-gate-p8-multiuser.{json,md}`.
+  `workstreams/P8-M6/proof/p8m6t03-ga-gate-proof.json` and
+  `workstreams/P8-M6/proof/ga-gate-p8-multiuser.{json,md}`.
 - Separate CI gate job `.gitea/workflows/ga-gate-p8.yaml` (no ci.yaml
   collision, the P2/P3/P4 convention).
 

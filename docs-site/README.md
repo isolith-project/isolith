@@ -18,11 +18,11 @@ the PDM, viewer and P2P services - "docs from the sum, no separate infra".
 
 ## How it is served
 
-`P10-M1/deploy/docker-compose.yml` defines the `docs` service:
+`workstreams/P10-M1/deploy/docker-compose.yml` defines the `docs` service:
 
     docs  ->  oep-docs --root /srv/docs --addr 0.0.0.0:8792   (OEP_DOCS_PORT=8792)
 
-The site is copied into the stack image under `/srv/docs` (`P10-M1/deploy/Dockerfile`)
+The site is copied into the stack image under `/srv/docs` (`workstreams/P10-M1/deploy/Dockerfile`)
 and served with a health surface `GET /healthz`. Host binds default to
 127.0.0.1; an operator who wants `docs.openengineeringplatform.example` maps
 that vhost to the docs port on their own network (admin/local decision).

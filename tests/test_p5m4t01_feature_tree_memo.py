@@ -3,7 +3,7 @@
 decision memo with an options matrix (full recovery vs imported-dumb-solid vs
 PMI-only) and a recommendation.
 
-Written FIRST (TDD). The memo at P5-M4/feature-tree-recoverability-memo.md
+Written FIRST (TDD). The memo at workstreams/P5-M4/feature-tree-recoverability-memo.md
 must make this test pass. It verifies the real decision record:
 
   assessment  => the memo assesses feature-tree recoverability against
@@ -32,7 +32,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEMO = os.path.join(ROOT, "P5-M4", "feature-tree-recoverability-memo.md")
+MEMO = os.path.join(ROOT, "workstreams/P5-M4", "feature-tree-recoverability-memo.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"
@@ -79,7 +79,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The memo exists.
-    check(os.path.isfile(MEMO), "missing: P5-M4/feature-tree-recoverability-memo.md")
+    check(os.path.isfile(MEMO), "missing: workstreams/P5-M4/feature-tree-recoverability-memo.md")
     if not os.path.isfile(MEMO):
         return failures
 

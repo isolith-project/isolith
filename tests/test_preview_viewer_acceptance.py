@@ -39,7 +39,7 @@ VIEWER = os.path.join(ROOT, "crates", "oep-viewer")
 SRC = os.path.join(VIEWER, "src")
 GOLDEN = os.path.join(ROOT, "crates", "oep-geo", "tests", "golden",
                       "example-bracket.oepgeo.json")
-PROOF_DIR = os.path.join(ROOT, "P6-M5", "proof")
+PROOF_DIR = os.path.join(ROOT, "workstreams/P6-M5", "proof")
 PROOF_FULL = os.path.join(PROOF_DIR, "preview-full.png")
 PROOF_CLIPPED = os.path.join(PROOF_DIR, "preview-clipped.png")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"

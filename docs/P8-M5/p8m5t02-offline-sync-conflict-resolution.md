@@ -145,7 +145,7 @@ still speak the envelope, e.g. resolving an already-resolved conflict).
 - P2P/hybrid cloud relay (P8-M5-T03).
 - Rich P8-M4 web UI (item explorer, BOM tree, viewer embed).
 - Automatic hunk-level three-way text merge: resolution here is
-  ours/theirs/client-merged-document. A diff3 column view is a natural P8-M4/T05
+  ours/theirs/client-merged-document. A diff3 column view is a natural workstreams/P8-M4/T05
   follow-up; the data model (three immutable, hash-verifiable snapshots) already
   supports it.
 

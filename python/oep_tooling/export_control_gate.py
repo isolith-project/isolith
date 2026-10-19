@@ -2,11 +2,11 @@
 """Keelworks export-control classification gate (P11-T05).
 
 The release-pipeline checkbox: every release <V> must carry a committed
-classification file P11/export-control/<V>.classification.toml asserting
+classification file workstreams/P11/export-control/<V>.classification.toml asserting
 UNCLASSIFIED status, data locality, and the absence of ITAR/ECCN-restricted
 content. Absence of the file FAILS the release (exit non-zero) -- that is the
 "export-control checkbox" wired into the pipeline, building on the P0-M2-T04
-memo (P0-M2/export-control-itar-eccn.md).
+memo (workstreams/P0-M2/export-control-itar-eccn.md).
 
 Pure stdlib (tomllib + argparse), no runtime deps, hermetic: it reads only
 the repo path it is given and never writes unless --emit is used.
@@ -14,18 +14,18 @@ the repo path it is given and never writes unless --emit is used.
 Subcommands
 -----------
   verify --release <V> [--repo DIR]
-      Exit 0 iff P11/export-control/<V>.classification.toml exists AND
+      Exit 0 iff workstreams/P11/export-control/<V>.classification.toml exists AND
       passes schema + content validation (status UNCLASSIFIED, no negative
       assertions tripped, data_locality present). Exit 1 with a clear
       message otherwise. A MISSING file exits 1 with "release blocked".
 
   selfcheck [--repo DIR]
       CI-safe: parse the template and every committed
-      *.<V>.classification.toml under P11/export-control/. Requires no
+      *.<V>.classification.toml under workstreams/P11/export-control/. Requires no
       particular release. Exit 1 on any malformed / non-conforming file.
 
   emit --release <V> --train <T> [--date YYYY-MM-DD] [--repo DIR]
-      Copy the template into place at P11/export-control/<V>.classification
+      Copy the template into place at workstreams/P11/export-control/<V>.classification
       .toml with release/train/date filled. A convenience for the release
       engineer; verify is the gate.
 """
@@ -40,10 +40,10 @@ import tomllib
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-DEFAULT_REL_DIR = Path("P11/export-control")
+DEFAULT_REL_DIR = Path("workstreams/P11/export-control")
 TEMPLATE_NAME = "classification.template.toml"
 
-# Hard gate rules (mirror P11/export-control.md section 2):
+# Hard gate rules (mirror workstreams/P11/export-control.md section 2):
 #  - status must be exactly UNCLASSIFIED
 #  - [classification.itar].subject and [classification.ear].subject must be
 #    false (not subject to ITAR / not subject to the EAR)

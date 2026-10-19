@@ -35,7 +35,7 @@ explicitly allowed either path.
   layout byte-for-byte, or whether real CATIA surface data lands in the binary
   `V5_CFV3` branch (as observed on the Imagine & Shape gallery sample, see
   docs/re-notes/3dxml-hex-notebook.md): NOT proven from the licensed XSD (not
-  yet obtained; see P1-M1/3dxml-spec-process.md). The math and the decode
+  yet obtained; see workstreams/P1-M1/3dxml-spec-process.md). The math and the decode
   pipeline here are format-independent; the parser covers the public
   `XvlShell` spelling of the lattice, and the identical field set is what the
   3DXML binary branch is expected to serialize once P3-M3 decodes it.
@@ -101,7 +101,7 @@ curves is proprietary and NOT reproduced in v1. `vertexRound` is parsed and
 carried on the model but does not yet alter the v1 interior; weight-vs-vector
 interactions beyond the documented scaling are deferred. Anyone needing exact
 CATIA parity must first obtain the licensed 3DXML XSD/user's guide
-(P1-M1/3dxml-spec-process.md) and port its rounding formulas; the decode
+(workstreams/P1-M1/3dxml-spec-process.md) and port its rounding formulas; the decode
 pipeline and the exact Gregory->NURBS step will not change.
 
 ## 6. Verification (real material)

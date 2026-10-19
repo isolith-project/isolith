@@ -174,7 +174,7 @@ def ssh_run(host, port, cmd, timeout=900):
 # ---------------------------------------------------------------------------
 
 def check_docs(root: Path, report: GateReport):
-    wt = root / "P10-M5" / "install-walkthrough.md"
+    wt = root / "workstreams/P10-M5" / "install-walkthrough.md"
     ok = wt.is_file()
     detail = f"walkthrough present: {wt.relative_to(root)}" if ok else f"missing: {wt}"
     if not ok:
@@ -199,13 +199,13 @@ def check_docs(root: Path, report: GateReport):
         return
     # The files the walkthrough tells an operator to run must exist.
     scripts = [
-        root / "P10-M1" / "deploy" / "install.sh",
-        root / "P10-M1" / "deploy" / "docker-compose.yml",
-        root / "P10-M1" / "deploy" / ".env.example",
+        root / "workstreams/P10-M1" / "deploy" / "install.sh",
+        root / "workstreams/P10-M1" / "deploy" / "docker-compose.yml",
+        root / "workstreams/P10-M1" / "deploy" / ".env.example",
         root / "scripts" / "airgap" / "airgap-install.sh",
         root / "scripts" / "airgap" / "airgap-verify.sh",
         root / "scripts" / "airgap" / "build-offline-bundle.sh",
-        root / "P10-M2" / "air-gap-install.md",
+        root / "workstreams/P10-M2" / "air-gap-install.md",
     ]
     gone = [str(p.relative_to(root)) for p in scripts if not p.exists()]
     if gone:
@@ -220,10 +220,10 @@ def check_docs(root: Path, report: GateReport):
 
 def check_update_off(root: Path, report: GateReport):
     """Decision #11: off by default, advisory/non-blocking, no phone-home."""
-    upd_doc = root / "P10-M5" / "update-checker.md"
+    upd_doc = root / "workstreams/P10-M5" / "update-checker.md"
     if not upd_doc.is_file():
         report.add(LegRow("update-doc", "UPDATE", "FAIL",
-                          "P10-M5/update-checker.md missing", "doc-missing"))
+                          "workstreams/P10-M5/update-checker.md missing", "doc-missing"))
         return
     upd_text = upd_doc.read_text(encoding="utf-8")
     if "NON-BLOCKING" not in upd_text.upper() or "OFF" not in upd_text.upper():
@@ -239,7 +239,7 @@ def check_update_off(root: Path, report: GateReport):
     # Off by default in the air-gap generated .env (decision #11, M2-T02).
     lib = root / "scripts" / "airgap" / "airgap-lib.sh"
     lib_text = lib.read_text(encoding="utf-8") if lib.is_file() else ""
-    env_ex = (root / "P10-M1" / "deploy" / ".env.example").read_text(encoding="utf-8")
+    env_ex = (root / "workstreams/P10-M1" / "deploy" / ".env.example").read_text(encoding="utf-8")
     if "OEP_UPDATE_CHECK=off" not in lib_text:
         report.add(LegRow("update-env", "UPDATE", "FAIL",
                           "airgap lib does not default OEP_UPDATE_CHECK=off",
@@ -290,13 +290,13 @@ def check_install_machine(name, host, port, root, report, docker_available):
               "docker volume ls -q --filter name=pdm_data | xargs -r docker volume rm; "
               "docker volume ls -q --filter name=viewer_data | xargs -r docker volume rm; "
               "docker image rm -f keelworks/oep-stack:0.1.0 2>/dev/null; "
-              "rm -f P10-M1/deploy/.env; true")
+              "rm -f workstreams/P10-M1/deploy/.env; true")
     if clean.returncode != 0:
         report.add(LegRow(f"install-{name}", "INSTALL", "FAIL",
                           f"clean-state prep failed: {clean.stderr[-300:]}"))
         return
     # 1. reproduce the docs' one-command install.
-    inst = x("cd P10-M1/deploy && ./install.sh")
+    inst = x("cd workstreams/P10-M1/deploy && ./install.sh")
     if inst.returncode != 0:
         report.add(LegRow(f"install-{name}", "INSTALL", "FAIL",
                           f"install.sh exited {inst.returncode}: {inst.stdout[-500:]}"))
@@ -508,7 +508,7 @@ def run_gate(args):
 def parse_args(argv):
     p = argparse.ArgumentParser(description=CARD)
     p.add_argument("--repo", default=".")
-    p.add_argument("--report", default="P10-M5/proof/ga-gate-p10-m5t02")
+    p.add_argument("--report", default="workstreams/P10-M5/proof/ga-gate-p10-m5t02")
     p.add_argument("--docker", action="store_true",
                    help="a docker daemon is available (CI container has none)")
     p.add_argument("--machine-b-host", default=None,

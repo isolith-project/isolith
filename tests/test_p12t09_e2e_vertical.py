@@ -3,7 +3,7 @@
 The full vertical (import CGR/STEP -> model -> release via PDM ->
 render/convert via P2P -> share) runs headlessly against the real stack via
 scripts/e2e-vertical.sh (python/oep_tooling/e2e_vertical.py), per release, and
-is recorded under P12/proof/e2e-vertical-<ver>.{json,md}. Its pass is a
+is recorded under workstreams/P12/proof/e2e-vertical-<ver>.{json,md}. Its pass is a
 release-blocking CI check (ga-gate-p12e2e.yaml) alongside the GA gates.
 
 CI has no docker daemon and no second host (decision #9), and cannot stage real
@@ -29,11 +29,11 @@ import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-RUNBOOK = REPO_ROOT / "P12" / "e2e-vertical.md"
+RUNBOOK = REPO_ROOT / "workstreams/P12" / "e2e-vertical.md"
 DRIVER = REPO_ROOT / "scripts" / "e2e-vertical.sh"
 MODULE = REPO_ROOT / "python" / "oep_tooling" / "e2e_vertical.py"
-PROOF_DIR = REPO_ROOT / "P12" / "proof"
-ENV_EXAMPLE = REPO_ROOT / "P10-M1" / "deploy" / ".env.example"
+PROOF_DIR = REPO_ROOT / "workstreams/P12" / "proof"
+ENV_EXAMPLE = REPO_ROOT / "workstreams/P10-M1" / "deploy" / ".env.example"
 
 # Primary row id per stage of the reference vertical (each must be PASS in the
 # committed green proof). Sub-rows (audit under RELEASE, cgr under IMPORT) may

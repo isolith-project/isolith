@@ -30,8 +30,8 @@ import sys
 import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOC = os.path.join(ROOT, "P11", "crypto-integrity.md")
-PUBKEY = os.path.join(ROOT, "P11", "keys", "oep-update-signing.pub")
+DOC = os.path.join(ROOT, "workstreams/P11", "crypto-integrity.md")
+PUBKEY = os.path.join(ROOT, "workstreams/P11", "keys", "oep-update-signing.pub")
 SIGN_SH = os.path.join(ROOT, "scripts", "release", "sign-release.sh")
 VERIFY_SH = os.path.join(ROOT, "scripts", "release", "verify-release.sh")
 WORKFLOW = os.path.join(ROOT, ".gitea", "workflows", "crypto-integrity.yaml")
@@ -39,7 +39,7 @@ STORE_RS = os.path.join(ROOT, "crates", "oep-pdm", "src", "store.rs")
 API_RS = os.path.join(ROOT, "crates", "oep-pdm", "src", "api.rs")
 BLOB_INT = os.path.join(ROOT, "crates", "oep-pdm", "tests", "blob_integrity.rs")
 SIGNER_RS = os.path.join(ROOT, "crates", "oep-update", "src", "bin", "oep-update-sign.rs")
-PROOF_DIR = os.path.join(ROOT, "P11", "proof")
+PROOF_DIR = os.path.join(ROOT, "workstreams/P11", "proof")
 
 EM_DASH = "\u2014"
 EN_DASH = "\u2013"
@@ -127,14 +127,14 @@ def machine_checks():
               "verify-release.sh does not drive oep-update-check")
 
     # --- Committed key posture -------------------------------------------------
-    check(os.path.isfile(PUBKEY), "missing: P11/keys/oep-update-signing.pub")
+    check(os.path.isfile(PUBKEY), "missing: workstreams/P11/keys/oep-update-signing.pub")
     if os.path.isfile(PUBKEY):
         pub = read(PUBKEY).strip()
         check(len(pub) == 64 and all(c in "0123456789abcdef" for c in pub),
-              "P11/keys/oep-update-signing.pub must be a 64-hex Ed25519 pubkey, got %r" % pub)
+              "workstreams/P11/keys/oep-update-signing.pub must be a 64-hex Ed25519 pubkey, got %r" % pub)
 
     # --- Doctrine doc -----------------------------------------------------------
-    check(os.path.isfile(DOC), "missing: P11/crypto-integrity.md")
+    check(os.path.isfile(DOC), "missing: workstreams/P11/crypto-integrity.md")
     if os.path.isfile(DOC):
         text = read(DOC)
         check("P11-T04" in text, "doc does not claim P11-T04")
@@ -165,7 +165,7 @@ def machine_checks():
     if os.path.isdir(PROOF_DIR):
         proofs = [f for f in os.listdir(PROOF_DIR)
                   if f.startswith("signed-release-roundtrip-") and f.endswith(".json")]
-    check(len(proofs) >= 1, "no P11/proof/signed-release-roundtrip-*.json proof recorded")
+    check(len(proofs) >= 1, "no workstreams/P11/proof/signed-release-roundtrip-*.json proof recorded")
     for pf in proofs:
         try:
             data = json.load(open(os.path.join(PROOF_DIR, pf), encoding="utf-8"))

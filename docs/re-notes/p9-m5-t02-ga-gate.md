@@ -31,8 +31,8 @@ as every GA gate before it:
   FAIL).
 - **`tests/ga_gate_p9_test.py`** -- TDD acceptance (module present, binaries
   present, report self-consistency, live local-only gate).
-- **`scripts/p9m5t02-ga-gate-proof.sh`** + **`P9-M5/fleet.example.json`**
-  (real fleet) / **`fleet.local.json`** (CI-safe) / **`P9-M5/proof/*`** (the
+- **`scripts/p9m5t02-ga-gate-proof.sh`** + **`workstreams/P9-M5/fleet.example.json`**
+  (real fleet) / **`fleet.local.json`** (CI-safe) / **`workstreams/P9-M5/proof/*`** (the
   measured proof).
 - **`.gitea/workflows/ga-gate-p9.yaml`** -- separate CI gate workflow
   (P2/P3/P4/P8 convention) running the real vault + driver local-only on the
@@ -44,7 +44,7 @@ as every GA gate before it:
 
 ## 3. Real-material verification transcript (2026-10-17 live)
 
-`bash scripts/p9m5t02-ga-gate-proof.sh P9-M5/fleet.example.json`
+`bash scripts/p9m5t02-ga-gate-proof.sh workstreams/P9-M5/fleet.example.json`
 
 ```
 P9 GA gate: total=100 ok=100 skip=0 fail=0 hash_verified=100 rehash_mismatch=0
@@ -55,7 +55,7 @@ per-node: u1=34 u2=33 u3=33 | gate report total=5 PASS=5 FAIL=0 SKIP=0 exit 0
 Every wave output was re-opened from the real P8 vault and re-hashed to its
 `FileRef.blob_sha256` (independent of the worker's own check). The audit chain
 (P8-M3-T03) re-verifies. Run timestamps and per-job rows are in
-`P9-M5/proof/ga-gate-p9-wave.json` / `.md`.
+`workstreams/P9-M5/proof/ga-gate-p9-wave.json` / `.md`.
 
 CI-safe degraded run (`--local-only`, single node, committed STEP + oep-geo
 corpus): same real scheduler/workers/vault/verification path, one node;
@@ -80,8 +80,8 @@ corpus): same real scheduler/workers/vault/verification path, one node;
 
 Owns: `crates/oep-gate/**`, `python/oep_tooling/ga_gate_p9.py`,
 `tests/ga_gate_p9_test.py`, `scripts/p9m5t02-ga-gate-proof.sh`,
-`.gitea/workflows/ga-gate-p9.yaml`, `P9-M5/ga-gate.md`, `P9-M5/proof/ga-gate-p9.*`
-+ `ga-gate-p9-wave.*`, `P9-M5/fleet.*.json`, docs/layout.md + monorepo test
+`.gitea/workflows/ga-gate-p9.yaml`, `workstreams/P9-M5/ga-gate.md`, `workstreams/P9-M5/proof/ga-gate-p9.*`
++ `ga-gate-p9-wave.*`, `workstreams/P9-M5/fleet.*.json`, docs/layout.md + monorepo test
 registration of oep-gate, and the additive PDM adapter catalogue-pagination
 seam. Does not edit sibling-owned paths (oep-worker/oep-render-worker/oep-job/
 oep-lane test surfaces, P8-M6 proof files). `pending-corpus/` stays gitignored

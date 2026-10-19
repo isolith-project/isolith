@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Acceptance test for Keelworks P6-M5-T01: renderer backend decision.
 
-Written FIRST (TDD). The decision record at P6-M5/renderer-backend-wgpu-adr.md
+Written FIRST (TDD). The decision record at workstreams/P6-M5/renderer-backend-wgpu-adr.md
 must make this test pass. It verifies the real material, not mocks:
   decision      => WGSL/wgpu as the renderer backend
   scope         => offline renderer for BOTH previews (P6-M5-T02 viewer)
@@ -19,7 +19,7 @@ must make this test pass. It verifies the real material, not mocks:
                    clean-room violation
   guardrails    => version pin, escape hatch to a software/fallback backend,
                    headless CI-reproducible test gate
-  real material => the committed headless spike (P6-M5/spike/headless-render/)
+  real material => the committed headless spike (workstreams/P6-M5/spike/headless-render/)
                    with a generated proof image, plus the ADR citing the
                    verified GPU result
 
@@ -33,8 +33,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "P6-M5", "renderer-backend-wgpu-adr.md")
-SPIKE_DIR = os.path.join(ROOT, "P6-M5", "spike", "headless-render")
+ADR = os.path.join(ROOT, "workstreams/P6-M5", "renderer-backend-wgpu-adr.md")
+SPIKE_DIR = os.path.join(ROOT, "workstreams/P6-M5", "spike", "headless-render")
 SPIKE_SRC = os.path.join(SPIKE_DIR, "src", "main.rs")
 PROOF_PNG = os.path.join(SPIKE_DIR, "proof.png")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
@@ -87,7 +87,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: P6-M5/renderer-backend-wgpu-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/P6-M5/renderer-backend-wgpu-adr.md")
     if not os.path.isfile(ADR):
         return failures
 
@@ -202,7 +202,7 @@ def run_checks():
 
     # 11. Real material: the committed headless spike + proof image.
     spike_ok = os.path.isfile(SPIKE_SRC)
-    check(spike_ok, "missing spike source: P6-M5/spike/headless-render/src/main.rs")
+    check(spike_ok, "missing spike source: workstreams/P6-M5/spike/headless-render/src/main.rs")
     if spike_ok:
         spike = open(SPIKE_SRC, encoding="utf-8").read()
         slow = spike.lower()
@@ -212,7 +212,7 @@ def run_checks():
               and "get_current_texture" not in slow and "swapchain_descriptor" not in slow,
               "spike must not use any surface/swapchain API (headless proof)")
     png_ok = os.path.isfile(PROOF_PNG)
-    check(png_ok, "missing proof image: P6-M5/spike/headless-render/proof.png")
+    check(png_ok, "missing proof image: workstreams/P6-M5/spike/headless-render/proof.png")
     if png_ok:
         with open(PROOF_PNG, "rb") as fh:
             head = fh.read(8)
@@ -221,13 +221,13 @@ def run_checks():
               "proof.png is implausibly small; expected a real render")
     check("nvidia" in low and ("gb10" in low or "proof" in low or "verified" in low),
           "ADR must cite the verified GPU result (real material)")
-    check("P6-M5/spike" in text or "spike/headless-render" in text,
+    check("workstreams/P6-M5/spike" in text or "spike/headless-render" in text,
           "ADR must reference the committed spike path")
 
     # 12. Cross-references: it lives in the P6 geometry-core web.
     check("P6-M5-T01" in text, "must cite its own card P6-M5-T01")
     check("P6-M5-T02" in text, "must tie to the preview viewer card P6-M5-T02")
-    check("P9-M3" in text or "P9-M3-T01" in text,
+    check("workstreams/P9-M3" in text or "P9-M3-T01" in text,
           "must tie to the P2P render worker card P9-M3-T01")
     check("oep-geo" in low, "must name the adopting surface oep-geo")
 

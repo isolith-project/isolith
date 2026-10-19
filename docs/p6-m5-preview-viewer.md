@@ -6,7 +6,7 @@ Platform (OEP), P6 geometry core, renderer backend lane.
 
 Reference implementation: `crates/oep-viewer` (Rust, std-only, deterministic).
 Real-material gate: `crates/oep-geo/tests/golden/example-bracket.oepgeo.json`,
-rendered to `P6-M5/proof/preview-full.png` and `preview-clipped.png`, and
+rendered to `workstreams/P6-M5/proof/preview-full.png` and `preview-clipped.png`, and
 verified by `tests/test_preview_viewer_acceptance.py`.
 
 ## 1. What this milestone delivers
@@ -112,8 +112,8 @@ crates/oep-viewer/
   src/render.rs         reference rasterizer + dependency-free PNG encoder
   tests/viewer_contract.rs   contract test on the REAL golden document
 tests/test_preview_viewer_acceptance.py   acceptance gate (TDD, written first)
-P6-M5/proof/preview-full.png              real-material render (full assembly)
-P6-M5/proof/preview-clipped.png           real-material render (x<=40 kept)
+workstreams/P6-M5/proof/preview-full.png              real-material render (full assembly)
+workstreams/P6-M5/proof/preview-clipped.png           real-material render (x<=40 kept)
 docs/p6-m5-preview-viewer.md              this record
 ```
 

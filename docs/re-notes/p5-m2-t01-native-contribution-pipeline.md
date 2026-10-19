@@ -75,7 +75,7 @@ privacy/ITAR sweep stays the hard line.
    CLEAN; the single HIGH (an EMAIL-pattern hit `uz@5o.wH` at byte offset
    1656961, binary tessellation noise) was audited and dispositioned in the
    evidence; gate PASS.
-   `P1-M1/privacy-itar-sweep-report-p5m2-native-2026-10-16.json`.
+   `workstreams/P1-M1/privacy-itar-sweep-report-p5m2-native-2026-10-16.json`.
 6. **Determinism:** `build_manifest.py --check` byte-identical.
 
 ## Files changed
@@ -88,7 +88,7 @@ privacy/ITAR sweep stays the hard line.
 - corpus/tools/mirror_object_store.py (expected-count now derived from manifest)
 - python/oep_tooling/regression.py (matrix task label, P1-M4-T01 / P5-M2-T01)
 - corpus/README.md, corpus/manifest-README.md (contribution pipeline docs)
-- P1-M1/privacy-itar-sweep.md + P1-M1/privacy-itar-sweep-report-p5m2-native-2026-10-16.json
+- workstreams/P1-M1/privacy-itar-sweep.md + workstreams/P1-M1/privacy-itar-sweep-report-p5m2-native-2026-10-16.json
 - tests/manifest_test.py (native contribution coverage; counts 139/122 -> 158/141)
 - tests/corpus_object_mirror_test.py (counts 139/122 -> 158/141)
 

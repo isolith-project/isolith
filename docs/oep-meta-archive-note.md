@@ -8,7 +8,7 @@ lives, so archiving loses nothing.
 ## Why it was archived
 
 Decision #15 (2026-10-18, the wave integration and checkpoint policy,
-`P12/wave-integration-and-checkpoint-policy.md` section 6) bounds the program to
+`workstreams/P12/wave-integration-and-checkpoint-policy.md` section 6) bounds the program to
 exactly two repositories: `keelworks/keelworks` (the single canonical
 development repo) and `keelworks/keelworks-canary` (the one canary for staged
 rollout). Per-workstream repositories are superseded: workstreams are

@@ -3,7 +3,7 @@
 //! P9-M1-T01 is designed so **P8 object refs are the input currency** (the
 //! card's contract note points at P8-M6-T01, the REST API v1 vertex). This
 //! module nails that seam: each [`VaultObjectRef`] a job declares corresponds
-//! to exactly one resource of the P8-M6-T01 OpenAPI v1 contract (`P8-M6/
+//! to exactly one resource of the P8-M6-T01 OpenAPI v1 contract (`workstreams/P8-M6/
 //! openapi-v1.yaml`, base `/api/v1`), and each output [`OutputTarget`]
 //! corresponds to the vault write the GA gate verifies.
 //!

@@ -14,7 +14,7 @@ gate must do, then go GREEN against the shippable tool:
      like a normal one, which is the seeded-critical-vuln-in-a-test-
      dependency acceptance) BLOCKS the gate (exit 1). Moderate/low/
      informational findings do NOT block.
-  3. Waivers   - a committed waiver (P11/waivers.toml semantics) that matches
+  3. Waivers   - a committed waiver (workstreams/P11/waivers.toml semantics) that matches
      the finding lifts the block (exit 0) and is surfaced in the report as
      waived; a revoked/absent waiver blocks again. Waivers live in a committed
      file, so the release carries an auditable record.
@@ -206,9 +206,9 @@ def test_real_workspace_scan_green_or_skip():
     """The release-branch gate must be green. Runs only when the real
     advisory-db is present (the CI job clones it first); otherwise hermetic
     SKIP - pytest must pass offline."""
-    db = ROOT / "P11" / ".advisory-db"
+    db = ROOT / "workstreams/P11" / ".advisory-db"
     if not (db / "crates").exists():
-        pytest.skip("real rustsec advisory-db not present (P11/.advisory-db); CI clones it first")
+        pytest.skip("real rustsec advisory-db not present (workstreams/P11/.advisory-db); CI clones it first")
     rc, out = _run([
         "gate", "--repo", str(ROOT), "--ref", "scan-test", "--out", "{outdir}",
         "--advisory-db", str(db), "--offline",

@@ -42,7 +42,7 @@
 
   <h2>2. Online install (one command)</h2>
   <pre><code>git clone http://gitea/keelworks/keelworks.git keelworks
-cd keelworks/P10-M1/deploy
+cd keelworks/workstreams/P10-M1/deploy
 ./install.sh</code></pre>
   <p>
     The script preflights Docker/Compose/disk, writes <code>.env</code> from
@@ -114,8 +114,8 @@ sudo ./airgap-install.sh \
     For a zero-config LAN identity, generate a local CA + leaf and point the
     PDM at it:
   </p>
-  <pre><code>scripts/gen-stack-certs.sh P10-M1/certs    # ca.pem, cert.pem, key.pem (+chain)
-oep-pdm --persist-dir &lt;vault&gt; --tls-cert P10-M1/certs/cert.pem --tls-key P10-M1/certs/key.pem</code></pre>
+  <pre><code>scripts/gen-stack-certs.sh workstreams/P10-M1/certs    # ca.pem, cert.pem, key.pem (+chain)
+oep-pdm --persist-dir &lt;vault&gt; --tls-cert workstreams/P10-M1/certs/cert.pem --tls-key workstreams/P10-M1/certs/key.pem</code></pre>
   <ul>
     <li><code>--tls-cert</code> and <code>--tls-key</code> must be given
         together; otherwise the server refuses to start (exit 2). Plain HTTP is
@@ -146,7 +146,7 @@ scripts/backup/vault-restore-check.sh          # restore round-trip proof</code>
     The quarterly DR runbook restores the full vault from the P10-M1 backup to
     a fresh U1/VM-class machine in under 60 minutes, verified by health checks
     and a real vault read. Run <code>scripts/dr/drill-restore.sh</code> or the
-    manual procedure in <code>P10-M3/dr-runbook.md</code>. Schedule an off-cycle
+    manual procedure in <code>workstreams/P10-M3/dr-runbook.md</code>. Schedule an off-cycle
     drill whenever the vault schema, backup layout, restore procedure, or a
     release train changes.
   </p>

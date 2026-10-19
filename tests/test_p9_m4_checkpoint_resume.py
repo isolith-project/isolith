@@ -38,7 +38,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FARM = os.path.join(ROOT, "crates", "oep-farm")
 SRC = os.path.join(FARM, "src")
-PROOF_DIR = os.path.join(ROOT, "P9-M4", "proof")
+PROOF_DIR = os.path.join(ROOT, "workstreams/P9-M4", "proof")
 PROOF_JSON = os.path.join(PROOF_DIR, "checkpoint-resume-proof.json")
 PROOF_CLEAN = os.path.join(PROOF_DIR, "clean.bin")
 PROOF_RESUMED = os.path.join(PROOF_DIR, "resumed.bin")
@@ -189,7 +189,7 @@ def run_checks():
     # 10. Surface-language rule on THIS card's files (no em dashes, no curly
     #     quotes) across the crate source and the committed docs.
     for base in (SRC, os.path.join(FARM, "tests"), PROOF_DIR,
-                 os.path.join(ROOT, "P9-M4")):
+                 os.path.join(ROOT, "workstreams/P9-M4")):
         if not os.path.isdir(base):
             continue
         for dirpath, _dirs, names in os.walk(base):

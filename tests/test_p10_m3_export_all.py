@@ -4,7 +4,7 @@ internally consistent, re-imports into oep-geo, and carries the documented
 retention policy defaults.
 
 Pure stdlib + hashlib (mirrors tests/test_p9_m3_export_workers.py). Verifies
-the committed proof under docs/P10-M3/proof WITHOUT re-running Rust:
+the committed proof under workstreams/P10-M3/proof WITHOUT re-running Rust:
   1. manifest.json  -- oep-archive v1, tool identity, summary rollups,
      every written geometry/model artifact carries a matching sha-256 whose
      on-disk file re-hashes to it; every skip carries a reason.
@@ -29,7 +29,7 @@ import struct
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROOF = os.path.join(REPO, "docs", "P10-M3", "proof")
+PROOF = os.path.join(REPO, "docs", "workstreams/P10-M3", "proof")
 ARCHIVE = os.path.join(PROOF, "archive")
 
 failures = []

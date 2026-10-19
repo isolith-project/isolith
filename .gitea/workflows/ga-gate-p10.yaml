@@ -4,14 +4,14 @@
 #   ga-gate-p10-m5t02       P10-M5-T02 P10 GA gate (CI-safe degraded mode:
 #                           DOCS + UPDATE legs PASS, live-machine legs SKIP
 #                           under the closed taxonomy; the recorded two-machine
-#                           proof is committed under P10-M5/proof/).
+#                           proof is committed under workstreams/P10-M5/proof/).
 # Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
 # branch under validation.
 #
 # CI has no second approved host and no docker daemon (decision #9: U1 +
 # VM/garage PC are live-LAN actions), so the live legs are classified SKIP -
 # exactly how the P8/P9 gates treat their live-LAN legs. The measured PASS
-# rows live in the committed P10-M5/proof/ga-gate-p10-m5t02.{json,md}, produced
+# rows live in the committed workstreams/P10-M5/proof/ga-gate-p10-m5t02.{json,md}, produced
 # by scripts/p10m5t02-ga-gate-proof.sh on U1 + the keelwb2 VM.
 name: P10 gates (replication demo + P10 GA gate)
 on:
