@@ -1,9 +1,14 @@
-# Keelworks Monorepo Layout
+# Isolith Monorepo Layout
 
-Keelworks / Open Engineering Platform (OEP) is a monorepo at `don/keelworks`
-(NAS Gitea). One crate per code workstream, under `crates/`; Python tooling
-lives under `python/`. This file is the machine-verifiable contract checked by
+Isolith (public brand for the Open Engineering Platform, OEP) is a monorepo at
+`don/keelworks` on NAS Gitea; `keelworks` is the internal-only codename.
+One crate per code workstream, under `crates/`; Python tooling lives under
+`python/`. This file is the machine-verifiable contract checked by
 `tests/monorepo_layout_test.py`.
+
+Public identity: the Isolith brand kit lives in `assets/brand/` (mark, palette
+tokens, usage rules, trademark evidence). Any public-facing surface uses it
+(the docs site P13-T03 consumes `assets/brand/` - see its README).
 
 Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Isolith">
+  <rect width="64" height="64" rx="12" fill="#0F2A43"/>
+  <polygon points="32,8 10,21 32,34 54,21" fill="#1D5B9E"/>
+  <polygon points="32,12.5 14.5,23 32,33.5 49.5,23" fill="none" stroke="#F6F4EF" stroke-opacity="0.4" stroke-width="1.4"/>
+  <polygon points="10,21 32,34 32,50 10,37" fill="#0A1C31"/>
+  <polygon points="54,21 32,34 32,50 54,37" fill="#7C94AD"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" role="img" aria-labelledby="t0 d1">
+  <title id="t0">Isolith lockup</title>
+  <desc id="d1">The Isolith isometric cube followed by the wordmark "isolith" in lowercase Space Grotesk.</desc>
+  <g>
+    <polygon points="54,16 22,36 54,56 86,36" fill="#1D5B9E"/>
+    <polygon points="54,21.5 27,38 54,54.5 81,38" fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="1.5"/>
+    <polygon points="54,27 32,38 54,49 76,38" fill="none" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="1.2"/>
+    <polygon points="22,36 54,56 54,80 22,60" fill="#0F2A43"/>
+    <polygon points="86,36 54,56 54,80 86,60" fill="#7C94AD"/>
+    <text x="110" y="63" fill="#0F2A43" font-family="'Space Grotesk','IBM Plex Sans','Helvetica Neue',Arial,sans-serif" font-size="52" font-weight="600" letter-spacing="0.5">isolith</text>
+  </g>
+</svg>
