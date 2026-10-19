@@ -1,0 +1,17 @@
+[package]
+name = "oep-qif"
+description = "P4: QIF (Quality Information Framework) MBD quality-data import/export basic cut (XML/XSD)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# P4-M4-T01: QIF 3.0 documents are XML/XSD (namespace
+# http://qifstandards.org/xsd/qif3) with strict element order and keyrefs —
+# a real streaming XML engine belongs here. quick-xml is the house parser
+# (same crate as oep-3dxml P3-M1-T02): pure-Rust, memory-safe, dependency-
+# light, pinned per supply-chain doctrine (P11-T06). No serde features.
+quick-xml = { version = "0.39", default-features = false }
+
+[dev-dependencies]

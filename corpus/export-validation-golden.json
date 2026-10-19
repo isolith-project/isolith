@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "description": "P4-M3-T02 golden expectations: what the independent reader (Open CASCADE 7.6 STEPControl_Reader via corpus/tools/occ_probe) MUST recover from each STEP export fixture. Values were measured on real material on U1 on 2026-10-16 and committed here; the gate compares CURRENT independent recovery against these within the per-pair tolerance. transfer=false + shape_type NULL means OCC parsed the file but built no transferable shape.",
+  "task": "P4-M3-T02",
+  "independent_reader": "Open CASCADE Technology 7.6.3 (Debian libocct-*), STEPControl_Reader; cross-checked with FreeCAD 1.1 (snap freecad.cmd) on 2026-10-16",
+  "pairs": {
+    "keelworks-box-export": {
+      "transfer": false,
+      "shape_type": "NULL",
+      "read_status": 1,
+      "roots": 1,
+      "reason": "OCC parses the SHELL_BASED_SURFACE_MODEL export (status Done, 1 root) but transfers no shape: the exporter wires geometry via SHAPE_REPRESENTATION + SHAPE_REPRESENTATION_RELATIONSHIP; OCCT's STEPControl_Reader does not route that wiring to a TopoDS_Shape. Same geometry re-wired AP214-conventionally transfers (see keelworks-box-conformance)."
+    },
+    "keelworks-box-conformance": {
+      "transfer": true,
+      "shape_type": 0,
+      "read_status": 1,
+      "roots": 1,
+      "solids": 0,
+      "shells": 12,
+      "faces": 12,
+      "edges": 36,
+      "vertices": 72,
+      "volume": 2.7755575615628914e-17,
+      "area": 6.0
+    }
+  }
+}

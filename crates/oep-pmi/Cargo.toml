@@ -1,0 +1,14 @@
+[package]
+name = "oep-pmi"
+description = "P6: PMI model schema (GD&T types, datums, notes) — our-own-format serde model, the import destination for STEP AP242 PMI (P4)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+serde_json = "1"

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QIFDocument xmlns="http://qifstandards.org/xsd/qif3" versionQIF="3.0.0" idMax="2194">
+  <QPId>6e206109-f027-4a5e-8138-99308066435b</QPId>
+  <StandardsDefinitions n="1">
+    <Standard id="2193">
+      <Organization>
+        <StandardsOrganizationEnum>ASME</StandardsOrganizationEnum>
+      </Organization>
+      <Designator>Y14.5 2009</Designator>
+    </Standard>
+  </StandardsDefinitions>
+  <FileUnits>
+    <PrimaryUnits>
+      <LinearUnit>
+        <SIUnitName>meter</SIUnitName>
+        <UnitName>mm</UnitName>
+        <UnitConversion>
+          <Factor>0.001</Factor>
+        </UnitConversion>
+      </LinearUnit>
+    </PrimaryUnits>
+  </FileUnits>
+  <DatumDefinitions n="3">
+    <DatumDefinition id="1432">
+      <DatumLabel>A</DatumLabel>
+    </DatumDefinition>
+    <DatumDefinition id="1435">
+      <DatumLabel>B</DatumLabel>
+    </DatumDefinition>
+    <DatumDefinition id="1438">
+      <DatumLabel>C</DatumLabel>
+    </DatumDefinition>
+  </DatumDefinitions>
+  <DatumReferenceFrames n="2">
+    <DatumReferenceFrame id="1440">
+      <Datums n="3">
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>1432</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>PRIMARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>1435</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>SECONDARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>1438</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>TERTIARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+      </Datums>
+    </DatumReferenceFrame>
+    <DatumReferenceFrame id="1459">
+      <Datums n="1">
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>1432</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>PRIMARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+      </Datums>
+    </DatumReferenceFrame>
+  </DatumReferenceFrames>
+  <Product>
+    <PartSet n="1">
+      <Part id="2">
+        <ModelNumber>NIST Complex Test Case 1</ModelNumber>
+      </Part>
+    </PartSet>
+    <RootPart>
+      <Id>2</Id>
+    </RootPart>
+  </Product>
+  <Characteristics>
+    <FormalStandardId>2193</FormalStandardId>
+    <CharacteristicDefinitions n="14">
+      <PositionCharacteristicDefinition id="1442">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">
+        0.75
+        </ToleranceValue>
+        <DatumReferenceFrameId>1440</DatumReferenceFrameId>
+        <MaterialCondition>NONE</MaterialCondition>
+        <ZoneShape>
+          <NonDiametricalZone/>
+        </ZoneShape>
+      </PositionCharacteristicDefinition>
+      <PositionCharacteristicDefinition id="1449">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">
+        0.75
+        </ToleranceValue>
+        <DatumReferenceFrameId>1440</DatumReferenceFrameId>
+        <MaterialCondition>NONE</MaterialCondition>
+        <ZoneShape>
+          <NonDiametricalZone/>
+        </ZoneShape>
+      </PositionCharacteristicDefinition>
+      <SurfaceProfileCharacteristicDefinition id="1456">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">
+        1.25
+        </ToleranceValue>
+        <DatumReferenceFrameId>1440</DatumReferenceFrameId>
+        <Extent>
+          <ExtentEnum>UNDEFINED</ExtentEnum>
+        </Extent>
+      </SurfaceProfileCharacteristicDefinition>
+      <SurfaceProfileCharacteristicDefinition id="1461">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">
+        0.5
+        </ToleranceValue>
+        <DatumReferenceFrameId>1459</DatumReferenceFrameId>
+        <Extent>
+          <ExtentEnum>ALL_AROUND</ExtentEnum>
+        </Extent>
+      </SurfaceProfileCharacteristicDefinition>
+      <PerpendicularityCharacteristicDefinition id="1466">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">
+        1.5
+        </ToleranceValue>
+        <DatumReferenceFrameId>1459</DatumReferenceFrameId>
+        <MaterialCondition>NONE</MaterialCondition>
+        <ZoneShape>
+          <PlanarZone/>
+        </ZoneShape>
+      </PerpendicularityCharacteristicDefinition>
+      <FlatnessCharacteristicDefinition id="1469">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">
+        0.2
+        </ToleranceValue>
+      </FlatnessCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1472">
+        <Tolerance>
+          <MaxValue decimalPlaces="1" linearUnit="mm">
+          0
+          </MaxValue>
+          <MinValue decimalPlaces="1" linearUnit="mm">
+          -0.2
+          </MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1475">
+        <Tolerance>
+          <MaxValue decimalPlaces="1" linearUnit="mm">
+          0.2
+          </MaxValue>
+          <MinValue decimalPlaces="1" linearUnit="mm">
+          0
+          </MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1478">
+        <Tolerance>
+          <MaxValue decimalPlaces="2" linearUnit="mm">
+          0.05
+          </MaxValue>
+          <MinValue decimalPlaces="2" linearUnit="mm">
+          -0.1
+          </MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1481">
+        <Tolerance>
+          <MaxValue decimalPlaces="2" linearUnit="mm">
+          0.1
+          </MaxValue>
+          <MinValue decimalPlaces="2" linearUnit="mm">
+          -0.05
+          </MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1484">
+        <Tolerance>
+          <MaxValue decimalPlaces="2" linearUnit="mm">
+          35.2
+          </MaxValue>
+          <MinValue decimalPlaces="2" linearUnit="mm">
+          34.8
+          </MinValue>
+          <DefinedAsLimit>true</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1487">
+        <Tolerance>
+          <MaxValue decimalPlaces="2" linearUnit="mm">
+          35.2
+          </MaxValue>
+          <MinValue decimalPlaces="2" linearUnit="mm">
+          34.8
+          </MinValue>
+          <DefinedAsLimit>true</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <AngleCharacteristicDefinition id="1490">
+        <Tolerance>
+          <MaxValue decimalPlaces="1">
+          0.5
+          </MaxValue>
+          <MinValue decimalPlaces="1">
+          -0.5
+          </MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </AngleCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="1493">
+        <Tolerance>
+          <MaxValue decimalPlaces="2" linearUnit="mm">
+          0.15
+          </MaxValue>
+          <MinValue decimalPlaces="2" linearUnit="mm">
+          -0.15
+          </MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+    </CharacteristicDefinitions>
+    <CharacteristicNominals n="14">
+      <PositionCharacteristicNominal id="1443">
+        <CharacteristicDefinitionId>1442</CharacteristicDefinitionId>
+        <Name>Position.1</Name>
+        <CharacteristicDesignator>
+          <Designator>14</Designator>
+        </CharacteristicDesignator>
+      </PositionCharacteristicNominal>
+      <PositionCharacteristicNominal id="1450">
+        <CharacteristicDefinitionId>1449</CharacteristicDefinitionId>
+        <Name>Position.2</Name>
+        <CharacteristicDesignator>
+          <Designator>9</Designator>
+        </CharacteristicDesignator>
+      </PositionCharacteristicNominal>
+      <SurfaceProfileCharacteristicNominal id="1457">
+        <CharacteristicDefinitionId>1456</CharacteristicDefinitionId>
+        <Name>Position surfacic profile.3</Name>
+        <CharacteristicDesignator>
+          <Designator>7</Designator>
+        </CharacteristicDesignator>
+      </SurfaceProfileCharacteristicNominal>
+      <SurfaceProfileCharacteristicNominal id="1462">
+        <CharacteristicDefinitionId>1461</CharacteristicDefinitionId>
+        <Name>Position surfacic profile.2</Name>
+        <CharacteristicDesignator>
+          <Designator>13</Designator>
+        </CharacteristicDesignator>
+      </SurfaceProfileCharacteristicNominal>
+      <PerpendicularityCharacteristicNominal id="1467">
+        <CharacteristicDefinitionId>1466</CharacteristicDefinitionId>
+        <Name>Perpendicularity.1</Name>
+        <CharacteristicDesignator>
+          <Designator>10</Designator>
+        </CharacteristicDesignator>
+      </PerpendicularityCharacteristicNominal>
+      <FlatnessCharacteristicNominal id="1470">
+        <CharacteristicDefinitionId>1469</CharacteristicDefinitionId>
+        <Name>Flatness.1</Name>
+        <CharacteristicDesignator>
+          <Designator>2</Designator>
+        </CharacteristicDesignator>
+      </FlatnessCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1473">
+        <CharacteristicDefinitionId>1472</CharacteristicDefinitionId>
+        <Name>Linear Size.1</Name>
+        <CharacteristicDesignator>
+          <Designator>5</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>35</TargetValue>
+      </DiameterCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1476">
+        <CharacteristicDefinitionId>1475</CharacteristicDefinitionId>
+        <Name>Linear Size.2</Name>
+        <CharacteristicDesignator>
+          <Designator>8</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>35</TargetValue>
+      </DiameterCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1479">
+        <CharacteristicDefinitionId>1478</CharacteristicDefinitionId>
+        <Name>Linear Size.3</Name>
+        <CharacteristicDesignator>
+          <Designator>3</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>20</TargetValue>
+      </DiameterCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1482">
+        <CharacteristicDefinitionId>1481</CharacteristicDefinitionId>
+        <Name>Linear Size.4</Name>
+        <CharacteristicDesignator>
+          <Designator>4</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>20</TargetValue>
+      </DiameterCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1485">
+        <CharacteristicDefinitionId>1484</CharacteristicDefinitionId>
+        <Name>Linear Size.7</Name>
+        <CharacteristicDesignator>
+          <Designator>11</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>35</TargetValue>
+      </DiameterCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1488">
+        <CharacteristicDefinitionId>1487</CharacteristicDefinitionId>
+        <Name>Linear Size.8</Name>
+        <CharacteristicDesignator>
+          <Designator>1</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>35</TargetValue>
+      </DiameterCharacteristicNominal>
+      <AngleCharacteristicNominal id="1491">
+        <CharacteristicDefinitionId>1490</CharacteristicDefinitionId>
+        <Name>Angular Size.1</Name>
+        <CharacteristicDesignator>
+          <Designator>6</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>60</TargetValue>
+      </AngleCharacteristicNominal>
+      <DiameterCharacteristicNominal id="1494">
+        <CharacteristicDefinitionId>1493</CharacteristicDefinitionId>
+        <Name>Linear Size.9</Name>
+        <CharacteristicDesignator>
+          <Designator>12</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>25</TargetValue>
+      </DiameterCharacteristicNominal>
+    </CharacteristicNominals>
+  </Characteristics>
+</QIFDocument>

@@ -1,0 +1,863 @@
+{
+  "report_format": "oep-mbd-validate",
+  "report_version": 1,
+  "generated": null,
+  "tool": {
+    "name": "mbd_validate",
+    "version": "0.1.0"
+  },
+  "task": "P4-M5-T03",
+  "rule_sets": [
+    "prime",
+    "y4141"
+  ],
+  "honesty": {
+    "scope": [
+      "This report is NOT a certificate of conformance to ASME Y14.41 or to any single defense-prime requirement for a manufactured part.",
+      "It certifies only what the supplied PMI/model data demonstrates. Gaps in the supplied data are reported UNVERIFIED, never silently as PASS.",
+      "UNVERIFIED findings are NOT PASS findings; they must be resolved by the requester (more data or a confirmed extraction status) before this report can support acceptance."
+    ],
+    "limits": [
+      "Model geometry legality, feature size, and manufacturing feasibility are NOT checked by this pass.",
+      "PMI semantics are judged against the supplied oep-pmi data; an import gap on the source side is surfaced as UNVERIFIED, never as a fabricated PASS or FAIL."
+    ]
+  },
+  "summary": {
+    "inputs": 6,
+    "findings": 102,
+    "pass": 72,
+    "fail": 10,
+    "warn": 6,
+    "unverified": 14
+  },
+  "inputs": [
+    {
+      "id": "nist-ftc-06",
+      "rule_set": "prime",
+      "source": {
+        "origin": "real NIST ftc_06 AP242-e2 STEP imported by oep-step-pmi (28 tolerances, 10 datums)",
+        "file": "mbd-real-step-pmi/nist_ftc_06_asme1_ap242-e2.oeppmi.json",
+        "provenance": null
+      },
+      "status": "checked",
+      "summary": {
+        "pass": 12,
+        "fail": 2,
+        "warn": 1,
+        "unverified": 2,
+        "total": 17
+      },
+      "findings": [
+        {
+          "rule": "s01-pmi-format",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "format tag is 'oep-pmi'",
+          "detail": null
+        },
+        {
+          "rule": "s02-pmi-version",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "schema version is 1",
+          "detail": null
+        },
+        {
+          "rule": "s03-unique-ids",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all ids unique across the PMI document",
+          "detail": null
+        },
+        {
+          "rule": "s04-unique-labels",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "datum labels unique and non-blank",
+          "detail": null
+        },
+        {
+          "rule": "s05-refs-unique",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "no duplicate ids in any single reference list",
+          "detail": null
+        },
+        {
+          "rule": "s06-datum-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all frame datum refs resolve with valid precedence",
+          "detail": null
+        },
+        {
+          "rule": "s07-tolerance-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all tolerance frame refs resolve",
+          "detail": null
+        },
+        {
+          "rule": "s08-tolerance-values",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "tolerance values finite and non-negative",
+          "detail": null
+        },
+        {
+          "rule": "s09-note-position",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "note positions well-formed",
+          "detail": null
+        },
+        {
+          "rule": "y01-pmi-present",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "model carries PMI (38 datum/tolerance/note annotation(s))",
+          "detail": null
+        },
+        {
+          "rule": "y02-datum-anchored",
+          "status": "fail",
+          "severity": "error",
+          "evidence": "datum feature(s) with no designated feature/body: datum_D, datum_B, datum_C, datum_A, datum_E, datum_F, datum_H, datum_G, datum_J, datum_K",
+          "detail": null
+        },
+        {
+          "rule": "y03-tolerance-anchored",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every tolerance attaches to a feature or body",
+          "detail": null
+        },
+        {
+          "rule": "y04-datum-used",
+          "status": "fail",
+          "severity": "error",
+          "evidence": "dangling datum(s) defined but referenced by no frame: datum_D, datum_B, datum_C, datum_A, datum_E, datum_F, datum_H, datum_G, datum_J, datum_K",
+          "detail": null
+        },
+        {
+          "rule": "y05-frame-used",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every datum reference frame is used by a tolerance",
+          "detail": null
+        },
+        {
+          "rule": "u01-units-declared",
+          "status": "warn",
+          "severity": "error",
+          "evidence": "units symbol 'MILLIMETRE' is not a recognized length unit (known: cm, feet, foot, ft, in, inch, inches, m, mm, um, \u00b5m, \u03bcm)",
+          "detail": null
+        },
+        {
+          "rule": "u02-units-consistent",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "no model units supplied to compare against; unit consistency is UNVERIFIED, not assumed",
+          "detail": null
+        },
+        {
+          "rule": "c01-model-ref-resolution",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "no model facts supplied; resolution of PMI refs into the model is UNVERIFIED, not assumed",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "id": "nist-ftc-06",
+      "rule_set": "y4141",
+      "source": {
+        "origin": "real NIST ftc_06 AP242-e2 STEP imported by oep-step-pmi (28 tolerances, 10 datums)",
+        "file": "mbd-real-step-pmi/nist_ftc_06_asme1_ap242-e2.oeppmi.json",
+        "provenance": null
+      },
+      "status": "checked",
+      "summary": {
+        "pass": 12,
+        "fail": 2,
+        "warn": 1,
+        "unverified": 2,
+        "total": 17
+      },
+      "findings": [
+        {
+          "rule": "s01-pmi-format",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "format tag is 'oep-pmi'",
+          "detail": null
+        },
+        {
+          "rule": "s02-pmi-version",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "schema version is 1",
+          "detail": null
+        },
+        {
+          "rule": "s03-unique-ids",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all ids unique across the PMI document",
+          "detail": null
+        },
+        {
+          "rule": "s04-unique-labels",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "datum labels unique and non-blank",
+          "detail": null
+        },
+        {
+          "rule": "s05-refs-unique",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "no duplicate ids in any single reference list",
+          "detail": null
+        },
+        {
+          "rule": "s06-datum-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all frame datum refs resolve with valid precedence",
+          "detail": null
+        },
+        {
+          "rule": "s07-tolerance-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all tolerance frame refs resolve",
+          "detail": null
+        },
+        {
+          "rule": "s08-tolerance-values",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "tolerance values finite and non-negative",
+          "detail": null
+        },
+        {
+          "rule": "s09-note-position",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "note positions well-formed",
+          "detail": null
+        },
+        {
+          "rule": "y01-pmi-present",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "model carries PMI (38 datum/tolerance/note annotation(s))",
+          "detail": null
+        },
+        {
+          "rule": "y02-datum-anchored",
+          "status": "fail",
+          "severity": "warning",
+          "evidence": "datum feature(s) with no designated feature/body: datum_D, datum_B, datum_C, datum_A, datum_E, datum_F, datum_H, datum_G, datum_J, datum_K",
+          "detail": null
+        },
+        {
+          "rule": "y03-tolerance-anchored",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every tolerance attaches to a feature or body",
+          "detail": null
+        },
+        {
+          "rule": "y04-datum-used",
+          "status": "fail",
+          "severity": "warning",
+          "evidence": "dangling datum(s) defined but referenced by no frame: datum_D, datum_B, datum_C, datum_A, datum_E, datum_F, datum_H, datum_G, datum_J, datum_K",
+          "detail": null
+        },
+        {
+          "rule": "y05-frame-used",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every datum reference frame is used by a tolerance",
+          "detail": null
+        },
+        {
+          "rule": "u01-units-declared",
+          "status": "warn",
+          "severity": "warning",
+          "evidence": "units symbol 'MILLIMETRE' is not a recognized length unit (known: cm, feet, foot, ft, in, inch, inches, m, mm, um, \u00b5m, \u03bcm)",
+          "detail": null
+        },
+        {
+          "rule": "u02-units-consistent",
+          "status": "unverified",
+          "severity": "warning",
+          "evidence": "no model units supplied to compare against; unit consistency is UNVERIFIED, not assumed",
+          "detail": null
+        },
+        {
+          "rule": "c01-model-ref-resolution",
+          "status": "unverified",
+          "severity": "warning",
+          "evidence": "no model facts supplied; resolution of PMI refs into the model is UNVERIFIED, not assumed",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "id": "nist-ftc-08",
+      "rule_set": "prime",
+      "source": {
+        "origin": "real NIST ftc_08 AP242-e4-tg STEP imported by oep-step-pmi; importer report pmi_present=false -> extraction status UNVERIFIED (honest), demo of the no-fabrication branch",
+        "file": "mbd-real-step-pmi/nist_ftc_08_asme1_ap242-e4-tg.oeppmi.json",
+        "provenance": null
+      },
+      "status": "checked",
+      "summary": {
+        "pass": 13,
+        "fail": 0,
+        "warn": 1,
+        "unverified": 3,
+        "total": 17
+      },
+      "findings": [
+        {
+          "rule": "s01-pmi-format",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "format tag is 'oep-pmi'",
+          "detail": null
+        },
+        {
+          "rule": "s02-pmi-version",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "schema version is 1",
+          "detail": null
+        },
+        {
+          "rule": "s03-unique-ids",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all ids unique across the PMI document",
+          "detail": null
+        },
+        {
+          "rule": "s04-unique-labels",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "datum labels unique and non-blank",
+          "detail": null
+        },
+        {
+          "rule": "s05-refs-unique",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "no duplicate ids in any single reference list",
+          "detail": null
+        },
+        {
+          "rule": "s06-datum-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all frame datum refs resolve with valid precedence",
+          "detail": null
+        },
+        {
+          "rule": "s07-tolerance-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all tolerance frame refs resolve",
+          "detail": null
+        },
+        {
+          "rule": "s08-tolerance-values",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "tolerance values finite and non-negative",
+          "detail": null
+        },
+        {
+          "rule": "s09-note-position",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "note positions well-formed",
+          "detail": null
+        },
+        {
+          "rule": "y01-pmi-present",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "model carries no PMI in the supplied data, but the source did not confirm a complete PMI pass; cannot distinguish 'no PMI on part' from 'PMI not extractable' - UNVERIFIED, not a finding of missing PMI",
+          "detail": null
+        },
+        {
+          "rule": "y02-datum-anchored",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every datum designates a feature or body",
+          "detail": null
+        },
+        {
+          "rule": "y03-tolerance-anchored",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every tolerance attaches to a feature or body",
+          "detail": null
+        },
+        {
+          "rule": "y04-datum-used",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every datum participates in a datum reference frame",
+          "detail": null
+        },
+        {
+          "rule": "y05-frame-used",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every datum reference frame is used by a tolerance",
+          "detail": null
+        },
+        {
+          "rule": "u01-units-declared",
+          "status": "warn",
+          "severity": "error",
+          "evidence": "units symbol 'MILLIMETRE' is not a recognized length unit (known: cm, feet, foot, ft, in, inch, inches, m, mm, um, \u00b5m, \u03bcm)",
+          "detail": null
+        },
+        {
+          "rule": "u02-units-consistent",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "no model units supplied to compare against; unit consistency is UNVERIFIED, not assumed",
+          "detail": null
+        },
+        {
+          "rule": "c01-model-ref-resolution",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "no model facts supplied; resolution of PMI refs into the model is UNVERIFIED, not assumed",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "id": "nist-ftc-08",
+      "rule_set": "y4141",
+      "source": {
+        "origin": "real NIST ftc_08 AP242-e4-tg STEP imported by oep-step-pmi; importer report pmi_present=false -> extraction status UNVERIFIED (honest), demo of the no-fabrication branch",
+        "file": "mbd-real-step-pmi/nist_ftc_08_asme1_ap242-e4-tg.oeppmi.json",
+        "provenance": null
+      },
+      "status": "checked",
+      "summary": {
+        "pass": 13,
+        "fail": 0,
+        "warn": 1,
+        "unverified": 3,
+        "total": 17
+      },
+      "findings": [
+        {
+          "rule": "s01-pmi-format",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "format tag is 'oep-pmi'",
+          "detail": null
+        },
+        {
+          "rule": "s02-pmi-version",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "schema version is 1",
+          "detail": null
+        },
+        {
+          "rule": "s03-unique-ids",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all ids unique across the PMI document",
+          "detail": null
+        },
+        {
+          "rule": "s04-unique-labels",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "datum labels unique and non-blank",
+          "detail": null
+        },
+        {
+          "rule": "s05-refs-unique",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "no duplicate ids in any single reference list",
+          "detail": null
+        },
+        {
+          "rule": "s06-datum-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all frame datum refs resolve with valid precedence",
+          "detail": null
+        },
+        {
+          "rule": "s07-tolerance-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all tolerance frame refs resolve",
+          "detail": null
+        },
+        {
+          "rule": "s08-tolerance-values",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "tolerance values finite and non-negative",
+          "detail": null
+        },
+        {
+          "rule": "s09-note-position",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "note positions well-formed",
+          "detail": null
+        },
+        {
+          "rule": "y01-pmi-present",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "model carries no PMI in the supplied data, but the source did not confirm a complete PMI pass; cannot distinguish 'no PMI on part' from 'PMI not extractable' - UNVERIFIED, not a finding of missing PMI",
+          "detail": null
+        },
+        {
+          "rule": "y02-datum-anchored",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every datum designates a feature or body",
+          "detail": null
+        },
+        {
+          "rule": "y03-tolerance-anchored",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every tolerance attaches to a feature or body",
+          "detail": null
+        },
+        {
+          "rule": "y04-datum-used",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every datum participates in a datum reference frame",
+          "detail": null
+        },
+        {
+          "rule": "y05-frame-used",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every datum reference frame is used by a tolerance",
+          "detail": null
+        },
+        {
+          "rule": "u01-units-declared",
+          "status": "warn",
+          "severity": "warning",
+          "evidence": "units symbol 'MILLIMETRE' is not a recognized length unit (known: cm, feet, foot, ft, in, inch, inches, m, mm, um, \u00b5m, \u03bcm)",
+          "detail": null
+        },
+        {
+          "rule": "u02-units-consistent",
+          "status": "unverified",
+          "severity": "warning",
+          "evidence": "no model units supplied to compare against; unit consistency is UNVERIFIED, not assumed",
+          "detail": null
+        },
+        {
+          "rule": "c01-model-ref-resolution",
+          "status": "unverified",
+          "severity": "warning",
+          "evidence": "no model facts supplied; resolution of PMI refs into the model is UNVERIFIED, not assumed",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "id": "nist-stc-06",
+      "rule_set": "prime",
+      "source": {
+        "origin": "real NIST stc_06 AP242-e3 STEP imported by oep-step-pmi",
+        "file": "mbd-real-step-pmi/nist_stc_06_asme1_ap242-e3.oeppmi.json",
+        "provenance": null
+      },
+      "status": "checked",
+      "summary": {
+        "pass": 11,
+        "fail": 3,
+        "warn": 1,
+        "unverified": 2,
+        "total": 17
+      },
+      "findings": [
+        {
+          "rule": "s01-pmi-format",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "format tag is 'oep-pmi'",
+          "detail": null
+        },
+        {
+          "rule": "s02-pmi-version",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "schema version is 1",
+          "detail": null
+        },
+        {
+          "rule": "s03-unique-ids",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all ids unique across the PMI document",
+          "detail": null
+        },
+        {
+          "rule": "s04-unique-labels",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "datum labels unique and non-blank",
+          "detail": null
+        },
+        {
+          "rule": "s05-refs-unique",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "no duplicate ids in any single reference list",
+          "detail": null
+        },
+        {
+          "rule": "s06-datum-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all frame datum refs resolve with valid precedence",
+          "detail": null
+        },
+        {
+          "rule": "s07-tolerance-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all tolerance frame refs resolve",
+          "detail": null
+        },
+        {
+          "rule": "s08-tolerance-values",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "tolerance values finite and non-negative",
+          "detail": null
+        },
+        {
+          "rule": "s09-note-position",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "note positions well-formed",
+          "detail": null
+        },
+        {
+          "rule": "y01-pmi-present",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "model carries PMI (31 datum/tolerance/note annotation(s))",
+          "detail": null
+        },
+        {
+          "rule": "y02-datum-anchored",
+          "status": "fail",
+          "severity": "error",
+          "evidence": "datum feature(s) with no designated feature/body: datum_D, datum_A, datum_B, datum_C, datum_E, datum_F",
+          "detail": null
+        },
+        {
+          "rule": "y03-tolerance-anchored",
+          "status": "fail",
+          "severity": "error",
+          "evidence": "tolerance(s) with no toleranced feature/body: gt_4, gt_19",
+          "detail": null
+        },
+        {
+          "rule": "y04-datum-used",
+          "status": "fail",
+          "severity": "error",
+          "evidence": "dangling datum(s) defined but referenced by no frame: datum_D, datum_A, datum_B, datum_C, datum_E, datum_F",
+          "detail": null
+        },
+        {
+          "rule": "y05-frame-used",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "every datum reference frame is used by a tolerance",
+          "detail": null
+        },
+        {
+          "rule": "u01-units-declared",
+          "status": "warn",
+          "severity": "error",
+          "evidence": "units symbol 'MILLIMETRE' is not a recognized length unit (known: cm, feet, foot, ft, in, inch, inches, m, mm, um, \u00b5m, \u03bcm)",
+          "detail": null
+        },
+        {
+          "rule": "u02-units-consistent",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "no model units supplied to compare against; unit consistency is UNVERIFIED, not assumed",
+          "detail": null
+        },
+        {
+          "rule": "c01-model-ref-resolution",
+          "status": "unverified",
+          "severity": "error",
+          "evidence": "no model facts supplied; resolution of PMI refs into the model is UNVERIFIED, not assumed",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "id": "nist-stc-06",
+      "rule_set": "y4141",
+      "source": {
+        "origin": "real NIST stc_06 AP242-e3 STEP imported by oep-step-pmi",
+        "file": "mbd-real-step-pmi/nist_stc_06_asme1_ap242-e3.oeppmi.json",
+        "provenance": null
+      },
+      "status": "checked",
+      "summary": {
+        "pass": 11,
+        "fail": 3,
+        "warn": 1,
+        "unverified": 2,
+        "total": 17
+      },
+      "findings": [
+        {
+          "rule": "s01-pmi-format",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "format tag is 'oep-pmi'",
+          "detail": null
+        },
+        {
+          "rule": "s02-pmi-version",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "schema version is 1",
+          "detail": null
+        },
+        {
+          "rule": "s03-unique-ids",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all ids unique across the PMI document",
+          "detail": null
+        },
+        {
+          "rule": "s04-unique-labels",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "datum labels unique and non-blank",
+          "detail": null
+        },
+        {
+          "rule": "s05-refs-unique",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "no duplicate ids in any single reference list",
+          "detail": null
+        },
+        {
+          "rule": "s06-datum-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all frame datum refs resolve with valid precedence",
+          "detail": null
+        },
+        {
+          "rule": "s07-tolerance-frame-resolution",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "all tolerance frame refs resolve",
+          "detail": null
+        },
+        {
+          "rule": "s08-tolerance-values",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "tolerance values finite and non-negative",
+          "detail": null
+        },
+        {
+          "rule": "s09-note-position",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "note positions well-formed",
+          "detail": null
+        },
+        {
+          "rule": "y01-pmi-present",
+          "status": "pass",
+          "severity": "error",
+          "evidence": "model carries PMI (31 datum/tolerance/note annotation(s))",
+          "detail": null
+        },
+        {
+          "rule": "y02-datum-anchored",
+          "status": "fail",
+          "severity": "warning",
+          "evidence": "datum feature(s) with no designated feature/body: datum_D, datum_A, datum_B, datum_C, datum_E, datum_F",
+          "detail": null
+        },
+        {
+          "rule": "y03-tolerance-anchored",
+          "status": "fail",
+          "severity": "warning",
+          "evidence": "tolerance(s) with no toleranced feature/body: gt_4, gt_19",
+          "detail": null
+        },
+        {
+          "rule": "y04-datum-used",
+          "status": "fail",
+          "severity": "warning",
+          "evidence": "dangling datum(s) defined but referenced by no frame: datum_D, datum_A, datum_B, datum_C, datum_E, datum_F",
+          "detail": null
+        },
+        {
+          "rule": "y05-frame-used",
+          "status": "pass",
+          "severity": "warning",
+          "evidence": "every datum reference frame is used by a tolerance",
+          "detail": null
+        },
+        {
+          "rule": "u01-units-declared",
+          "status": "warn",
+          "severity": "warning",
+          "evidence": "units symbol 'MILLIMETRE' is not a recognized length unit (known: cm, feet, foot, ft, in, inch, inches, m, mm, um, \u00b5m, \u03bcm)",
+          "detail": null
+        },
+        {
+          "rule": "u02-units-consistent",
+          "status": "unverified",
+          "severity": "warning",
+          "evidence": "no model units supplied to compare against; unit consistency is UNVERIFIED, not assumed",
+          "detail": null
+        },
+        {
+          "rule": "c01-model-ref-resolution",
+          "status": "unverified",
+          "severity": "warning",
+          "evidence": "no model facts supplied; resolution of PMI refs into the model is UNVERIFIED, not assumed",
+          "detail": null
+        }
+      ]
+    }
+  ]
+}

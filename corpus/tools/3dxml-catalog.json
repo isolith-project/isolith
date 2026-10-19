@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "description": "Machine catalog of the P1-M1-T02 3DXML samples (input to P1-M1-T04 build_manifest.py). Six redistributable files are committed under corpus/data/3dxml/; two are reference-only (no redistribution grant) and are NOT committed. Size/sha256 are NOT stored here on purpose: the builder derives them from the real on-disk bytes for committed files, which is the integrity anchor.",
+  "samples": [
+    {
+      "id": "cube1.3dxml",
+      "format": "3dxml-zip",
+      "geometry_class": "prism",
+      "source": "trimesh models (github.com/mikedh/trimesh, MIT) - loading fixture",
+      "license": "MIT",
+      "redistributable": true,
+      "geometry_notes": "single cube part, ZIP 3DXML schema 4.0, one tessellated part rep (Abaqus_Geometry.3DRep)"
+    },
+    {
+      "id": "blocks.3dxml",
+      "format": "3dxml-zip",
+      "geometry_class": "prism",
+      "source": "trimesh models (github.com/mikedh/trimesh, MIT) - loading fixture",
+      "license": "MIT",
+      "redistributable": true,
+      "geometry_notes": "single placed part ('blocks'), ZIP 3DXML schema 4.0, tessellated mesh rep; 1 Instance3D / 1 ReferenceRep"
+    },
+    {
+      "id": "cycloidal.3DXML",
+      "format": "3dxml-zip",
+      "geometry_class": "assembly",
+      "source": "trimesh models (github.com/mikedh/trimesh, MIT) - loading fixture",
+      "license": "MIT",
+      "redistributable": true,
+      "geometry_notes": "cycloidal gear train assembly, ZIP 3DXML schema 4.2; 17 Reference3D / 67 Instance3D / 25 .3DRep tessellated parts"
+    },
+    {
+      "id": "FM1_satellite.3DXML",
+      "format": "3dxml-zip",
+      "geometry_class": "assembly",
+      "source": "trimesh models (github.com/mikedh/trimesh, MIT) - loading fixture",
+      "license": "MIT",
+      "redistributable": true,
+      "geometry_notes": "satellite assembly, ZIP 3DXML schema 4.2; 72 Reference3D / 94 Instance3D / 66 .3DRep parts + MaterialDef/NameSetTree"
+    },
+    {
+      "id": "machinist.3DXML",
+      "format": "3dxml-zip",
+      "geometry_class": "prism",
+      "source": "trimesh models (github.com/mikedh/trimesh, MIT) - loading fixture",
+      "license": "MIT",
+      "redistributable": true,
+      "geometry_notes": "single part (1 Reference3D) with 6 tessellated reps; ZIP 3DXML schema 4.2"
+    },
+    {
+      "id": "quad.3dxml",
+      "format": "3dxml-ascii",
+      "geometry_class": "dataset",
+      "source": "i2e-haw-hamburg/cad-in-unity (Apache-2.0), 3D XML Example/",
+      "license": "Apache-2.0",
+      "redistributable": true,
+      "geometry_notes": "pure ASCII 3DXML schema 4.3 (CATIA V5 2009); ProductStructure + material only, no embedded geometry rep observed in the file - structural/loader sample"
+    },
+    {
+      "id": "press_rink_axe_fta.3dxml",
+      "format": "3dxml-zip",
+      "geometry_class": "assembly",
+      "source": "Dassault Systemes 3D XML Gallery (https://www.3ds.com/fileadmin/PRODUCTS/3DVIA/3DXML/gallery/3dxml_models/press_rink_axe_fta.3dxml)",
+      "license": "Dassault-hosted demo, no stated redistribution license - reference-only",
+      "redistributable": false,
+      "geometry_notes": "transmission assembly (Press Rink Axe) with tessellated .3DRep parts + FTA annotations rep; authored 2009 in CATIA V5 Imagine & Shape; NOT committed (P1-M1-T02 verdict)"
+    },
+    {
+      "id": "landinggear.3dxml",
+      "format": "3dxml-zip",
+      "geometry_class": "assembly",
+      "source": "DMG-Lib (Digital Mechanism and Gear Library, www.dmg-lib.org, caxfi=5563053)",
+      "license": "private non-commercial single download (29 CA - German) - reference-only",
+      "redistributable": false,
+      "geometry_notes": "aircraft landing gear academic sample (~508 KB); NOT committed (P1-M1-T02 verdict)"
+    }
+  ]
+}

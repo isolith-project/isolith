@@ -1,0 +1,20 @@
+{
+  "format": "oep-pmi",
+  "version": 1,
+  "units": "mm",
+  "datums": [
+    {"id": "datum_F", "label": "F", "feature_ids": [], "body_ids": []}
+  ],
+  "frames": [],
+  "tolerances": [
+    {
+      "id": "gt_float",
+      "characteristic": "flatness",
+      "value": 0.1,
+      "diameter_zone": false,
+      "feature_ids": [],
+      "body_ids": []
+    }
+  ],
+  "notes": []
+}

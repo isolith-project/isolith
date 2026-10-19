@@ -1,0 +1,40 @@
+# P4-M5-T03: the P4 GA gate -- STEP fidelity matrix published; MBD validator
+# demo on real corpus material. New workflow file (NOT ci.yaml) so it cannot
+# collide with the P2-M6-T03 gate job that edits ci.yaml on its own open
+# branch (same convention as the P3-M5-T02 gate). Checkout uses the TRIGGERING
+# ref (same pattern as the precommit-gate workflow) so the gate tests the
+# branch/pull under validation, not the default branch.
+name: P4 GA gate (STEP fidelity + MBD)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ga-gate-p4:
+    name: ga-gate-p4
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: P4 GA gate acceptance (TDD)
+        run: |
+          if [ ! -f tests/ga_gate_p4_test.py ]; then
+            echo "P4 gate acceptance test not present on this ref (pre-gate main); skipping"
+            exit 0
+          fi
+          python3 tests/ga_gate_p4_test.py
+      - name: P4 GA gate run (tolerant on absent sibbing material, fail on mismatch)
+        run: |
+          if [ ! -f python/oep_tooling/ga_gate_p4.py ]; then
+            echo "P4 gate module not present on this ref; skipping"
+            exit 0
+          fi
+          PYTHONPATH=python python3 -m oep_tooling.ga_gate_p4 --out corpus || exit 1

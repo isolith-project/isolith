@@ -14,6 +14,9 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P9 oep-render-worker -- headless oep-geo render worker (P9-M3-T01)
 - P9 oep-farm       -- beam/farm-style checkpoint + resume for long jobs (P9-M4-T02)
 - P4 oep-step       -- STEP AP242/QIF/JT interop (reserved)
+- P4 oep-step-pmi   -- STEP AP242 semantic-PMI import into oep-pmi (P4-M2-T01)
+- P6 oep-pmi        -- PMI model schema: GD&T, datums, notes, tolerances (P6-M1-T02)
+- P4 oep-qif        -- QIF (Quality Information Framework) MBD quality data import/export (P4-M4-T01)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per P8-M1/web-stack-adr.md, AGPL-3.0; retained
   P7-M2-T02 StubServer identity + PdmClient), contract: P8-M6/openapi-v1.yaml,

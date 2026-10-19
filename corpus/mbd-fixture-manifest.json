@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "task": "P4-M5-T01",
+  "description": "MBD validator corpus fixtures: oep-pmi (schema v1) documents authored for the P4-M5-T01 rule engine, grounded on the committed real-material golden example-bracket.oeppmi.json (P6-M1-T02). bracket-complete is that golden's content; the others are intentionally broken variants exercising each rule category. The engine NEVER reads the expect blocks - they exist for the acceptance test and for human review.",
+  "honesty_note": "bracket-no-pmi.oeppmi.json is listed twice with different pmi_extracted flags: the identical bytes are a FAIL for missing PMI when a complete PMI pass is confirmed, and a honest UNVERIFIED when extraction status is unknown.",
+  "fixtures": [
+    {
+      "id": "bracket-complete",
+      "file": "mbd-fixtures/bracket-complete.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-complete.model.json",
+      "pmi_extracted": true,
+      "model_present": true,
+      "source": "authored clean-room: grounded verbatim on the oep-pmi golden example-bracket.oeppmi.json (P6-M1-T02 real-material gate)",
+      "provenance": "oep-pmi schema v1 golden bracket (mm)",
+      "expect": {
+        "y4141": {"fail_rules": [], "warn_rules": [], "unverified_rules": [], "pass_rules": []},
+        "prime": {"fail_rules": [], "warn_rules": [], "unverified_rules": []}
+      }
+    },
+    {
+      "id": "bracket-no-pmi",
+      "file": "mbd-fixtures/bracket-no-pmi.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-complete.model.json",
+      "pmi_extracted": true,
+      "source": "authored clean-room: valid oep-pmi document with zero annotations",
+      "expect": {
+        "y4141": {"fail_rules": ["y01-pmi-present"]},
+        "prime": {"fail_rules": ["y01-pmi-present"]}
+      }
+    },
+    {
+      "id": "bracket-no-pmi-unknown",
+      "file": "mbd-fixtures/bracket-no-pmi.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-complete.model.json",
+      "pmi_extracted": null,
+      "source": "authored clean-room: same bytes as bracket-no-pmi, extraction status unknown",
+      "expect": {
+        "y4141": {"unverified_rules": ["y01-pmi-present"]},
+        "prime": {"unverified_rules": ["y01-pmi-present"]}
+      }
+    },
+    {
+      "id": "bracket-dangling-datum",
+      "file": "mbd-fixtures/bracket-dangling-datum.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-complete.model.json",
+      "pmi_extracted": true,
+      "source": "authored clean-room: datum_A defined but referenced by no frame (dangling), datum_B used",
+      "expect": {
+        "y4141": {"fail_rules": ["y04-datum-used"]},
+        "prime": {"fail_rules": ["y04-datum-used"]}
+      }
+    },
+    {
+      "id": "bracket-floating-frame",
+      "file": "mbd-fixtures/bracket-floating-frame.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-complete.model.json",
+      "pmi_extracted": true,
+      "source": "authored clean-room: datum_F and tolerance gt_float float without feature/body references",
+      "expect": {
+        "y4141": {"fail_rules": ["y02-datum-anchored", "y03-tolerance-anchored"]},
+        "prime": {"fail_rules": ["y02-datum-anchored", "y03-tolerance-anchored"]}
+      }
+    },
+    {
+      "id": "bracket-unit-mismatch",
+      "file": "mbd-fixtures/bracket-unit-mismatch.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-unit-mismatch.model.json",
+      "pmi_extracted": true,
+      "source": "authored clean-room: PMI in mm annotated onto a model whose facts declare inches (unit error)",
+      "expect": {
+        "y4141": {"fail_rules": ["u02-units-consistent"]},
+        "prime": {"fail_rules": ["u02-units-consistent"]}
+      }
+    },
+    {
+      "id": "bracket-unknown-units",
+      "file": "mbd-fixtures/bracket-unknown-units.oeppmi.json",
+      "pmi_extracted": true,
+      "source": "authored clean-room: units symbol is not a recognized length unit (warning, honest)",
+      "expect": {
+        "y4141": {"warn_rules": ["u01-units-declared"]},
+        "prime": {"warn_rules": ["u01-units-declared"]}
+      }
+    },
+    {
+      "id": "bracket-unresolved-refs",
+      "file": "mbd-fixtures/bracket-unresolved-refs.oeppmi.json",
+      "model_file": "mbd-fixtures/bracket-complete.model.json",
+      "pmi_extracted": true,
+      "source": "authored clean-room: frame refs unknown datum_Z; tolerance refs unknown frame drf_missing",
+      "expect": {
+        "y4141": {"fail_rules": ["s06-datum-frame-resolution", "s07-tolerance-frame-resolution"]},
+        "prime": {"fail_rules": ["s06-datum-frame-resolution", "s07-tolerance-frame-resolution"]}
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "description": "P4-M1-T03 corpus pair list: (native source sample, STEP representation) pairs where BOTH sides are present in the corpus. The accuracy harness diffs STEP geometry against the native geometry of the same part, honestly: a pair is measured only when both sides yield real geometry, else a classified skip.",
+  "task": "P4-M1-T03",
+  "pairs": [
+    {
+      "id": "keelworks-box",
+      "geometry_class": "prism",
+      "source": "CC0-1.0 keelworks unit box (P0-M4-T02 fixture, 8 verts / 12 tris)",
+      "native": "data/box.stl",
+      "step": "../crates/oep-geo/tests/golden/box-reference.step"
+    }
+  ]
+}

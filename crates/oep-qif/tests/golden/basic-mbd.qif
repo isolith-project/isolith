@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QIFDocument xmlns="http://qifstandards.org/xsd/qif3" versionQIF="3.0.0" idMax="60">
+  <QPId>6e206109-f027-4a5e-8138-99308066435b</QPId>
+  <Header>
+    <Application>
+      <Name>keelworks-basic-mbd</Name>
+    </Application>
+    <Author>
+      <Name>keelworks</Name>
+      <Organization>keelworks</Organization>
+    </Author>
+  </Header>
+  <StandardsDefinitions n="1">
+    <Standard id="1">
+      <Organization>
+        <StandardsOrganizationEnum>ASME</StandardsOrganizationEnum>
+      </Organization>
+      <Designator>Y14.5 2009</Designator>
+    </Standard>
+  </StandardsDefinitions>
+  <FileUnits>
+    <PrimaryUnits>
+      <LinearUnit>
+        <SIUnitName>meter</SIUnitName>
+        <UnitName>mm</UnitName>
+        <UnitConversion>
+          <Factor>0.001</Factor>
+        </UnitConversion>
+      </LinearUnit>
+    </PrimaryUnits>
+  </FileUnits>
+  <DatumDefinitions n="3">
+    <DatumDefinition id="10">
+      <DatumLabel>A</DatumLabel>
+    </DatumDefinition>
+    <DatumDefinition id="11">
+      <DatumLabel>B</DatumLabel>
+    </DatumDefinition>
+    <DatumDefinition id="12">
+      <DatumLabel>C</DatumLabel>
+    </DatumDefinition>
+  </DatumDefinitions>
+  <DatumReferenceFrames n="1">
+    <DatumReferenceFrame id="20">
+      <Datums n="3">
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>10</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>PRIMARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>11</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>SECONDARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+        <Datum>
+          <SimpleDatum>
+            <DatumDefinitionId>12</DatumDefinitionId>
+            <MaterialModifier>NONE</MaterialModifier>
+            <ReferencedComponent>NOMINAL</ReferencedComponent>
+          </SimpleDatum>
+          <Precedence>
+            <PrecedenceEnum>TERTIARY</PrecedenceEnum>
+          </Precedence>
+        </Datum>
+      </Datums>
+    </DatumReferenceFrame>
+  </DatumReferenceFrames>
+  <Product>
+    <Header>
+      <Application>
+        <Name>keelworks-basic-mbd</Name>
+      </Application>
+    </Header>
+    <PartSet n="1">
+      <Part id="30">
+        <ModelNumber>PART-001</ModelNumber>
+      </Part>
+    </PartSet>
+    <RootPart>
+      <Id>30</Id>
+    </RootPart>
+  </Product>
+  <Characteristics>
+    <FormalStandardId>1</FormalStandardId>
+    <CharacteristicDefinitions n="6">
+      <PositionCharacteristicDefinition id="31">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">0.5</ToleranceValue>
+        <DatumReferenceFrameId>20</DatumReferenceFrameId>
+        <MaterialCondition>NONE</MaterialCondition>
+        <ZoneShape>
+          <NonDiametricalZone>
+          </NonDiametricalZone>
+        </ZoneShape>
+      </PositionCharacteristicDefinition>
+      <SurfaceProfileCharacteristicDefinition id="32">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">0.2</ToleranceValue>
+        <DatumReferenceFrameId>20</DatumReferenceFrameId>
+        <Extent>
+          <ExtentEnum>ALL_AROUND</ExtentEnum>
+        </Extent>
+      </SurfaceProfileCharacteristicDefinition>
+      <PerpendicularityCharacteristicDefinition id="33">
+        <StatisticalCharacteristic>false</StatisticalCharacteristic>
+        <ToleranceValue linearUnit="mm">0.1</ToleranceValue>
+        <DatumReferenceFrameId>20</DatumReferenceFrameId>
+        <MaterialCondition>NONE</MaterialCondition>
+        <ZoneShape>
+          <PlanarZone>
+          </PlanarZone>
+        </ZoneShape>
+      </PerpendicularityCharacteristicDefinition>
+      <FlatnessCharacteristicDefinition id="34">
+        <ToleranceValue linearUnit="mm">0.05</ToleranceValue>
+      </FlatnessCharacteristicDefinition>
+      <DiameterCharacteristicDefinition id="35">
+        <Tolerance>
+          <MaxValue decimalPlaces="2" linearUnit="mm">10.05</MaxValue>
+          <MinValue decimalPlaces="2" linearUnit="mm">9.95</MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </DiameterCharacteristicDefinition>
+      <AngleCharacteristicDefinition id="36">
+        <Tolerance>
+          <MaxValue decimalPlaces="1">60.5</MaxValue>
+          <MinValue decimalPlaces="1">59.5</MinValue>
+          <DefinedAsLimit>false</DefinedAsLimit>
+        </Tolerance>
+      </AngleCharacteristicDefinition>
+    </CharacteristicDefinitions>
+    <CharacteristicNominals n="6">
+      <PositionCharacteristicNominal id="41">
+        <CharacteristicDefinitionId>31</CharacteristicDefinitionId>
+        <Name>Position.1</Name>
+        <CharacteristicDesignator>
+          <Designator>P1</Designator>
+        </CharacteristicDesignator>
+      </PositionCharacteristicNominal>
+      <SurfaceProfileCharacteristicNominal id="42">
+        <CharacteristicDefinitionId>32</CharacteristicDefinitionId>
+        <Name>Profile.1</Name>
+        <CharacteristicDesignator>
+          <Designator>SP1</Designator>
+        </CharacteristicDesignator>
+      </SurfaceProfileCharacteristicNominal>
+      <PerpendicularityCharacteristicNominal id="43">
+        <CharacteristicDefinitionId>33</CharacteristicDefinitionId>
+        <Name>Perp.1</Name>
+        <CharacteristicDesignator>
+          <Designator>PERP1</Designator>
+        </CharacteristicDesignator>
+      </PerpendicularityCharacteristicNominal>
+      <FlatnessCharacteristicNominal id="44">
+        <CharacteristicDefinitionId>34</CharacteristicDefinitionId>
+        <Name>Flatness.1</Name>
+        <CharacteristicDesignator>
+          <Designator>FLT1</Designator>
+        </CharacteristicDesignator>
+      </FlatnessCharacteristicNominal>
+      <DiameterCharacteristicNominal id="45">
+        <CharacteristicDefinitionId>35</CharacteristicDefinitionId>
+        <Name>Dia.1</Name>
+        <CharacteristicDesignator>
+          <Designator>DIA1</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>10</TargetValue>
+      </DiameterCharacteristicNominal>
+      <AngleCharacteristicNominal id="46">
+        <CharacteristicDefinitionId>36</CharacteristicDefinitionId>
+        <Name>Angle.1</Name>
+        <CharacteristicDesignator>
+          <Designator>ANG1</Designator>
+        </CharacteristicDesignator>
+        <TargetValue>60</TargetValue>
+      </AngleCharacteristicNominal>
+    </CharacteristicNominals>
+  </Characteristics>
+</QIFDocument>

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "description": "Keelworks golden-file test spec. Each test runs a command against a corpus entry and compares stdout with a golden file. compare modes: text | bytes | numeric (tolerance for numeric). Missing corpus entry or failed command = SKIP (tolerant, never crashes).",
+  "tests": [
+    {
+      "id": "box-triangle-count",
+      "corpus_id": "box.stl",
+      "command": ["python3", "-c",
+        "import sys; s=open(sys.argv[-1]).read(); f=s.count('endfacet'); v=s.count('vertex'); print('triangle_count %d' % f); print('vertex_count %d' % v)",
+        "{input}"],
+      "golden": "corpus/golden/box-triangles.golden",
+      "compare": "text",
+      "tolerance": 0.0
+    },
+    {
+      "id": "box-domain-object",
+      "corpus_id": "box.stl.object",
+      "command": ["python3", "-c",
+        "import sys; s=open(sys.argv[-1]).read(); f=s.count('endfacet'); v=s.count('vertex'); print('triangle_count %d' % f); print('vertex_count %d' % v)",
+        "{input}"],
+      "golden": "corpus/golden/box-triangles.golden",
+      "compare": "text",
+      "tolerance": 0.0
+    }
+  ]
+}

@@ -22,6 +22,7 @@
 pub mod error;
 pub mod export;
 pub mod facets;
+pub mod pmi;
 
 pub use error::Error;
 pub use facets::{FacetBbox, FacetedModel, ReadOutcome, ReadReport, ShellFacts};

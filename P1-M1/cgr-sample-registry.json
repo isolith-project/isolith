@@ -1,0 +1,385 @@
+{
+  "meta": {
+    "format": "CGR (CATIA Graphical Representation, Dassault Systemes)",
+    "task": "P1-M1-T01",
+    "generated": "2026-10-15",
+    "generated_by": "keelworks worker (default profile)",
+    "clean_room": true,
+    "policy": "No proprietary redistribution. Real CGR binaries verified locally are NOT committed to the repo; the registry records source + license + verification evidence. Redistribution is only permitted under an explicitly permissive/open license.",
+    "identity_note": "Observed 8-byte prefix 0x0100000000000000 across all 11 verified samples; later R-era samples are denser binary with no string table in the first 64 KiB. Full hex-level analysis is P1-M2-T01 scope; this task only records identity evidence.",
+    "references": [
+      "http://justsolve.archiveteam.org/wiki/Cgr",
+      "https://www.spatial.com/glossary/cgr-file",
+      "https://resources.rand3d.com/insights-from-within/extracting-geometry-from-cgr-files"
+    ]
+  },
+  "samples": [
+    {
+      "id": "dassault-dmu-space-analysis-atomizer",
+      "file": "ATOMIZER.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "25ccd19384e317e6fdc7da5924debdb057b7906d5ba058f57e9cea95384cb8e3",
+      "size_bytes": 73728,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-body1",
+      "file": "BODY1.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "93830e4992cad3223e1c576c8ab8b62c668cc483ec5ec66966a3b3b89e9e0c83",
+      "size_bytes": 40960,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-body2",
+      "file": "BODY2.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "7c324fc7ed97484155a12b1d31b95357a5344aa34b0c30dcb7778909d010deab",
+      "size_bytes": 69632,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-lock",
+      "file": "LOCK.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "16092715b2b595ca39a02b5995b01f096ee8aa77272dcb8631476c12dea19dc8",
+      "size_bytes": 45056,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-nozzle1",
+      "file": "NOZZLE1.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "48815c9bdd0144aa54e152612f9a1f316b86f14395cb1537237ed5af8530eb94",
+      "size_bytes": 36864,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-nozzle2",
+      "file": "NOZZLE2.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "c3894a2d88d44d3363369b92149d129e4e010c0edf24f3493eb9e23477cc3f16",
+      "size_bytes": 36864,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-regulation_command",
+      "file": "REGULATION_COMMAND.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "7bf2724eff177d6e1c4eb2d5886a84a3312aca9551c83533211c241570cfc99e",
+      "size_bytes": 36864,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-regulator",
+      "file": "REGULATOR.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "0c6e7ddeac4a2257947c404ca9f5b2e0b3d583789d86763121192cb423b8ca9b",
+      "size_bytes": 61440,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-trigger",
+      "file": "TRIGGER.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "e70d21b8657f3c9a81eb93d1bcc96cba110c6ad768e5599d796de01dfc79ad6b",
+      "size_bytes": 98304,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "dassault-dmu-space-analysis-valve",
+      "file": "VALVE.cgr",
+      "source_type": "oem",
+      "source_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm (cfysa.zip, CATIA V5 R11 DMU Space Analysis tutorial samples)",
+      "source_mirrors": [
+        "http://ps-2.kev009.com/CATIA-B18/cfyugspa_C2/cfyugspabt0104.htm (CATIA V5 R18 doc mirror references cfysm/samples)",
+        "https://www.staff.city.ac.uk/~ra600/ME2105/Catia%20course/ (academic mirror of CATIA V5 doc sample tree)",
+        "https://catia-v5-help.anarkia333data.center/online/cfyugspa_C2/cfyugspabt0104.htm",
+        "http://catiadoc.free.fr/online/cfyugspa_C2/cfyugspabt0208.htm (doc reference to cfysm/samples)"
+      ],
+      "license": "Dassault Systemes proprietary tutorial/documentation sample bundled with CATIA V5 online documentation. Free to download/use for learning the documented workflows; redistribution into an OSS repo is NOT granted without Dassault consent.",
+      "license_evidence_url": "https://sual.narod.ru/CATIA/CATIAv5r11/ProdSynth/SpaceAnal/SpaceAnal.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Dassault proprietary tutorial sample; redistribution of the binary into an OSS repo not granted. Locate + observe only; record evidence; do not commit binary.",
+        "license_verdict": "proprietary-tutorial-sample"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [],
+        "note": "dense binary; no ASCII string table in first 64 KiB (R18-era DMU cache-style CGR)"
+      },
+      "sha256": "43cc0cb474b5fe10a4d0bf1b8c61f48d952a8bba849aa8b116e12b490d7dcbd6",
+      "size_bytes": 176128,
+      "geometry_class": "mechanical-part (DMU Space Analysis tutorial hardware: atomizer/valve assembly)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    },
+    {
+      "id": "5axes-piston",
+      "file": "piston.cgr",
+      "source_type": "author",
+      "source_url": "http://5axes.free.fr/Format_Echange.htm",
+      "source_mirrors": [
+        "http://5axes.free.fr/Format_Echange/piston_cgr.zip"
+      ],
+      "license": "Author (5axes, personal CAD/CNC tutorial site) publishes the piston model in CGR for free download as a format-evaluation sample. Site terms allow personal non-commercial/educational use with attribution; no explicit redistribution grant to a shared repo.",
+      "license_evidence_url": "http://5axes.free.fr/deni.htm",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Author-published educational sample without an explicit OSS redistribution license; format itself is Dassault-proprietary. Keep as locate/reference; request permission before syncing.",
+        "license_verdict": "author-published-no-oss-license"
+      },
+      "identity": {
+        "observed_header": "010000000000000000000000000000000000000000000000",
+        "internal_types": [
+          "CAT3DBagRep",
+          "CATSurfacicRep",
+          "CATSurfacic",
+          "BagRep"
+        ],
+        "note": "R11-era CGR with CAT3DBagRep/CATSurfacicRep internal type strings; shares the 8-byte 0100000000000000 prefix with all other samples"
+      },
+      "sha256": "b052f8f69c94f22b269c280a05ca9b0dd8e2a3426ff61fc8036199bb7919c112",
+      "size_bytes": 192512,
+      "geometry_class": "prism/mechanical-part (piston)",
+      "verified": true,
+      "verified_at": "2026-10-15"
+    }
+  ],
+  "located": [
+    {
+      "id": "caa-cubes-cgr",
+      "file": "CUBES.cgr",
+      "source_type": "oem",
+      "source_url": "http://www.maruf.ca/files/caadoc/CAAVisUseCases/CAAVisSampleDisplayCgr.htm",
+      "license": "Referenced by Dassault CAA V5 documentation (CAAVisBasics use case); the binary ships only inside the licensed CAA RADE / CAAVisualization.edu install (resources/graphic/cgr/CUBES.cgr).",
+      "redistribution": {
+        "allowed": false,
+        "reason": "CAA V5 installer-bundled proprietary sample; not independently downloadable; requires a licensed CAA install to obtain."
+      }
+    },
+    {
+      "id": "grabcad-cgr-tag",
+      "file": "various .cgr",
+      "source_type": "other",
+      "source_url": "https://grabcad.com/library/tag/cgr",
+      "license": "GrabCAD community library; per-model terms set by each uploader, mostly without an explicit redistribution grant; download requires an account.",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Per-uploader terms vary and are not auditable at scale; do not bulk-redistribute. Pick specific models only with uploader consent."
+      }
+    },
+    {
+      "id": "transmagic-sample-pack",
+      "file": "CATIA V6 3DXML/CGR demo files",
+      "source_type": "sample-pack",
+      "source_url": "https://transmagic.com/free-sample-cad-files",
+      "license": "TransMagic ships CATIA-family sample files (incl. CGR capability) inside its install for testing; not published as redistributable OSS data.",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Vendor test/eval sample pack, not an open redistribution grant."
+      }
+    },
+    {
+      "id": "github-catia-practice-repos",
+      "file": "CATPart/CATProduct (no CGR found)",
+      "source_type": "other",
+      "source_url": "https://github.com/topics/catia-v5",
+      "license": "GitHub CATIA practice repos (e.g. mariodetoro/CATIA-Projects, mohanevs/solid-modeling-catia-v6, tammana-saisrinivas/CatiaV5_Designs) host CATPart/CATProduct study models; license fields often absent (all-rights-reserved by default); none contained a CGR in tree scan.",
+      "redistribution": {
+        "allowed": false,
+        "reason": "Mostly no license fields; format-family relevance goes to P1-M1-T03 (CATPart/CATProduct). No CGR binaries located."
+      }
+    }
+  ]
+}

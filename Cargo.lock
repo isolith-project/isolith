@@ -771,6 +771,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "oep-pmi"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "oep-qif"
+version = "0.1.0"
+dependencies = [
+ "quick-xml",
+]
+
+[[package]]
 name = "oep-render-worker"
 version = "0.1.0"
 dependencies = [
@@ -799,6 +814,16 @@ name = "oep-step"
 version = "0.1.0"
 dependencies = [
  "oep-geo",
+ "oep-pmi",
+ "serde_json",
+ "step-io",
+]
+
+[[package]]
+name = "oep-step-pmi"
+version = "0.1.0"
+dependencies = [
+ "oep-pmi",
  "serde_json",
  "step-io",
 ]

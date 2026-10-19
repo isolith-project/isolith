@@ -1,0 +1,16 @@
+[package]
+name = "oep-step-pmi"
+description = "P4-M2-T01: STEP AP242 semantic PMI import (GD&T, datums, tolerances) into the oep-pmi model, the P4 STEP-PMI wedge."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+oep-pmi = { path = "../oep-pmi" }
+step-io = "=0.2.5"
+serde_json = "1"
+
+[dev-dependencies]
+oep-pmi = { path = "../oep-pmi" }
+serde_json = "1"

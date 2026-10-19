@@ -1,0 +1,3534 @@
+{
+  "generated_at": "2026-10-16T18:55:45Z",
+  "host": "promaxgb10-83f1",
+  "matrix_schema": "keelworks/pmi-fidelity-matrix/v1",
+  "probe_reports": [
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 1,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 18,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 3,
+        "datum_feature": 3,
+        "datum_reference": 0,
+        "datum_system": 2,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 2,
+        "dimensional_size": 9,
+        "flatness_tolerance": 1,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 1,
+        "plus_minus_tolerance": 6,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 51,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 44,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 6,
+        "tolerance_zone": 0,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ctc_01_asme1_ap242-e1.stp",
+      "input_entities": 4350,
+      "kept_entities": 4350,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_01_asme1_ap242-e1.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 3,
+        "dimensions": {
+          "AngularLocation": 1,
+          "Location": 2,
+          "Size": 9
+        },
+        "tolerances": {
+          "Flatness": 1,
+          "Perpendicularity": 1,
+          "Position": 2,
+          "SurfaceProfile": 2
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 21,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 10,
+        "datum_feature": 6,
+        "datum_reference": 0,
+        "datum_system": 14,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 0,
+        "dimensional_size": 7,
+        "flatness_tolerance": 1,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 2,
+        "plus_minus_tolerance": 7,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 87,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 69,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 1,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 7,
+        "tolerance_zone": 7,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ctc_02_asme1_ap242-e2.stp",
+      "input_entities": 22304,
+      "kept_entities": 22304,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_02_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 10,
+        "dimensions": {
+          "Size": 7
+        },
+        "tolerances": {
+          "Flatness": 1,
+          "LineProfile": 1,
+          "Perpendicularity": 3,
+          "Position": 4,
+          "SurfaceProfile": 13
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 1,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 23,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 6,
+        "datum_feature": 6,
+        "datum_reference": 0,
+        "datum_system": 6,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 1,
+        "dimensional_size": 9,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 2,
+        "plus_minus_tolerance": 8,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 74,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 71,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 1,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 8,
+        "tolerance_zone": 7,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ctc_03_asme1_ap242-e2.stp",
+      "input_entities": 5920,
+      "kept_entities": 5920,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_03_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 6,
+        "dimensions": {
+          "Location": 1,
+          "Size": 9
+        },
+        "tolerances": {
+          "Angularity": 1,
+          "Flatness": 1,
+          "Perpendicularity": 2,
+          "Position": 6,
+          "SurfaceProfile": 3
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 1,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 74,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 8,
+        "datum_feature": 6,
+        "datum_reference": 0,
+        "datum_system": 5,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 3,
+        "dimensional_size": 6,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 0,
+        "plus_minus_tolerance": 7,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 243,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 306,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 7,
+        "tolerance_zone": 4,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ctc_04_asme1_ap242-e1.stp",
+      "input_entities": 20456,
+      "kept_entities": 20456,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_04_asme1_ap242-e1.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 8,
+        "dimensions": {
+          "AngularSize": 1,
+          "Location": 3,
+          "Size": 6
+        },
+        "tolerances": {
+          "Position": 4,
+          "SurfaceProfile": 3
+        }
+      }
+    },
+    {
+      "dropped": 12,
+      "dropped_by_type": {
+        "required reference is missing": 4,
+        "via-dangling": 8
+      },
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 0,
+        "concentricity_tolerance": 1,
+        "cylindricity_tolerance": 0,
+        "datum": 4,
+        "datum_feature": 2,
+        "datum_reference": 0,
+        "datum_system": 4,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 5,
+        "dimensional_size": 1,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 2,
+        "plus_minus_tolerance": 2,
+        "position_tolerance": 0,
+        "roundness_tolerance": 1,
+        "shape_aspect": 48,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 4,
+        "straightness_tolerance": 1,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 2,
+        "tolerance_zone": 1,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 2,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ctc_05_asme1_ap242-e1.stp",
+      "input_entities": 13394,
+      "kept_entities": 13382,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_05_asme1_ap242-e1.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 4,
+        "dimensions": {
+          "Location": 5,
+          "Size": 1
+        },
+        "tolerances": {
+          "Concentricity": 1,
+          "Perpendicularity": 2,
+          "Roundness": 1,
+          "Straightness": 1,
+          "TotalRunout": 2
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 49,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 10,
+        "datum_feature": 6,
+        "datum_reference": 0,
+        "datum_system": 12,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 10,
+        "dimensional_size": 14,
+        "flatness_tolerance": 3,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 2,
+        "plus_minus_tolerance": 19,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 272,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 237,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 19,
+        "tolerance_zone": 9,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_06_asme1_ap242-e2.stp",
+      "input_entities": 10034,
+      "kept_entities": 10034,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_06_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 10,
+        "dimensions": {
+          "Location": 10,
+          "Size": 14
+        },
+        "tolerances": {
+          "Flatness": 3,
+          "Perpendicularity": 2,
+          "Position": 11,
+          "SurfaceProfile": 12
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 36,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 5,
+        "datum_feature": 0,
+        "datum_reference": 0,
+        "datum_system": 5,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 5,
+        "dimensional_size": 12,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 1,
+        "perpendicularity_tolerance": 1,
+        "plus_minus_tolerance": 16,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 152,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 218,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 1,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 16,
+        "tolerance_zone": 13,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_07_asme1_ap242-e2.stp",
+      "input_entities": 17010,
+      "kept_entities": 17010,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_07_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 5,
+        "dimensions": {
+          "Location": 5,
+          "Size": 12
+        },
+        "tolerances": {
+          "Flatness": 1,
+          "Parallelism": 1,
+          "Perpendicularity": 1,
+          "Position": 12,
+          "SurfaceProfile": 12
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 0,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 0,
+        "datum_feature": 0,
+        "datum_reference": 0,
+        "datum_system": 0,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 0,
+        "dimensional_size": 0,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 0,
+        "plus_minus_tolerance": 0,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 128,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 0,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 0,
+        "tolerance_zone": 0,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_08_asme1_ap242-e1-tg.stp",
+      "input_entities": 12630,
+      "kept_entities": 12630,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_08_asme1_ap242-e1-tg.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 0,
+        "dimensions": {},
+        "tolerances": {}
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 0,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 11,
+        "datum_feature": 11,
+        "datum_reference": 0,
+        "datum_system": 9,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 1,
+        "dimensional_size": 9,
+        "flatness_tolerance": 2,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 2,
+        "perpendicularity_tolerance": 0,
+        "plus_minus_tolerance": 9,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 108,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 144,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 9,
+        "tolerance_zone": 14,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_08_asme1_ap242-e2.stp",
+      "input_entities": 10072,
+      "kept_entities": 10072,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_08_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 11,
+        "dimensions": {
+          "Location": 1,
+          "Size": 9
+        },
+        "tolerances": {
+          "Flatness": 3,
+          "Parallelism": 5,
+          "Perpendicularity": 1,
+          "Position": 13,
+          "SurfaceProfile": 11
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 47,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 8,
+        "datum_feature": 8,
+        "datum_reference": 0,
+        "datum_system": 8,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 8,
+        "dimensional_size": 14,
+        "flatness_tolerance": 1,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 4,
+        "plus_minus_tolerance": 21,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 143,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 189,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 21,
+        "tolerance_zone": 17,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_09_asme1_ap242-e1.stp",
+      "input_entities": 11662,
+      "kept_entities": 11662,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_09_asme1_ap242-e1.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 8,
+        "dimensions": {
+          "Location": 8,
+          "Size": 14
+        },
+        "tolerances": {
+          "Flatness": 1,
+          "Perpendicularity": 4,
+          "Position": 23,
+          "SurfaceProfile": 3
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 42,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 2,
+        "datum": 11,
+        "datum_feature": 2,
+        "datum_reference": 0,
+        "datum_system": 12,
+        "datum_target": 4,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 7,
+        "dimensional_size": 19,
+        "flatness_tolerance": 1,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 6,
+        "plus_minus_tolerance": 23,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 158,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 245,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 1,
+        "tolerance_value": 20,
+        "tolerance_zone": 22,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_10_asme1_ap242-e2.stp",
+      "input_entities": 21230,
+      "kept_entities": 21230,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_10_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 11,
+        "dimensions": {
+          "Location": 7,
+          "Size": 19
+        },
+        "tolerances": {
+          "Cylindricity": 2,
+          "Flatness": 1,
+          "Perpendicularity": 6,
+          "Position": 19,
+          "Straightness": 1,
+          "SurfaceProfile": 10,
+          "Symmetry": 1
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 0,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 2,
+        "datum_feature": 2,
+        "datum_reference": 0,
+        "datum_system": 1,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 1,
+        "dimensional_size": 5,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 0,
+        "plus_minus_tolerance": 4,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 11,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 12,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 4,
+        "tolerance_zone": 0,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_ftc_11_asme1_ap242-e2.stp",
+      "input_entities": 2032,
+      "kept_entities": 2032,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_11_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 2,
+        "dimensions": {
+          "Location": 1,
+          "Size": 5
+        },
+        "tolerances": {
+          "CircularRunout": 1,
+          "Flatness": 1,
+          "Roundness": 1,
+          "SurfaceProfile": 1
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 8,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 6,
+        "datum_feature": 4,
+        "datum_reference": 0,
+        "datum_system": 9,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 3,
+        "dimensional_size": 14,
+        "flatness_tolerance": 3,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 2,
+        "plus_minus_tolerance": 16,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 73,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 94,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 16,
+        "tolerance_zone": 7,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_stc_06_asme1_ap242-e3.stp",
+      "input_entities": 11780,
+      "kept_entities": 11780,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_06_asme1_ap242-e3.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 4 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 6,
+        "dimensions": {
+          "Location": 3,
+          "Size": 14
+        },
+        "tolerances": {
+          "Flatness": 3,
+          "Perpendicularity": 2,
+          "Position": 9,
+          "SurfaceProfile": 11
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 0,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 5,
+        "datum_feature": 0,
+        "datum_reference": 0,
+        "datum_system": 5,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 0,
+        "dimensional_size": 39,
+        "flatness_tolerance": 0,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 1,
+        "perpendicularity_tolerance": 1,
+        "plus_minus_tolerance": 13,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 328,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 136,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 1,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 13,
+        "tolerance_zone": 22,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_stc_07_asme1_ap242-e3.stp",
+      "input_entities": 17470,
+      "kept_entities": 17470,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_07_asme1_ap242-e3.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF  {1 0 10303 442 4 1 4}\"])) }",
+      "surfaced": {
+        "datums": 5,
+        "dimensions": {
+          "Size": 39
+        },
+        "tolerances": {
+          "Flatness": 1,
+          "Parallelism": 1,
+          "Perpendicularity": 1,
+          "Position": 9,
+          "SurfaceProfile": 10
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 20,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 8,
+        "datum_feature": 8,
+        "datum_reference": 0,
+        "datum_system": 9,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 0,
+        "dimensional_size": 7,
+        "flatness_tolerance": 2,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 2,
+        "perpendicularity_tolerance": 0,
+        "plus_minus_tolerance": 7,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 222,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 203,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 7,
+        "tolerance_zone": 10,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_stc_08_asme1_ap242-e3.stp",
+      "input_entities": 11548,
+      "kept_entities": 11548,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_08_asme1_ap242-e3.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 4 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 8,
+        "dimensions": {
+          "Size": 7
+        },
+        "tolerances": {
+          "Flatness": 3,
+          "Parallelism": 5,
+          "Perpendicularity": 1,
+          "Position": 9,
+          "SurfaceProfile": 12
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 19,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 0,
+        "datum": 8,
+        "datum_feature": 8,
+        "datum_reference": 0,
+        "datum_system": 8,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 0,
+        "dimensional_size": 22,
+        "flatness_tolerance": 1,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 4,
+        "plus_minus_tolerance": 20,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 213,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 116,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 0,
+        "tolerance_value": 20,
+        "tolerance_zone": 17,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_stc_09_asme1_ap242-e3.stp",
+      "input_entities": 10393,
+      "kept_entities": 10393,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_09_asme1_ap242-e3.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF  { 1 0 10303 442 4 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 8,
+        "dimensions": {
+          "Size": 22
+        },
+        "tolerances": {
+          "Flatness": 1,
+          "Perpendicularity": 4,
+          "Position": 19,
+          "SurfaceProfile": 3
+        }
+      }
+    },
+    {
+      "dropped": 0,
+      "dropped_by_type": {},
+      "entities": {
+        "angular_location": 0,
+        "angular_size": 0,
+        "angularity_tolerance": 0,
+        "circular_runout_tolerance": 0,
+        "coaxiality_tolerance": 0,
+        "common_datum": 0,
+        "composite_shape_aspect": 0,
+        "concentricity_tolerance": 0,
+        "cylindricity_tolerance": 2,
+        "datum": 9,
+        "datum_feature": 9,
+        "datum_reference": 0,
+        "datum_system": 12,
+        "datum_target": 0,
+        "derived_shape_aspect": 0,
+        "dimensional_location": 2,
+        "dimensional_size": 25,
+        "flatness_tolerance": 1,
+        "geometric_tolerance": 0,
+        "geometric_tolerance_with_datum_reference": 0,
+        "geometric_tolerance_with_modifiers": 0,
+        "line_profile_tolerance": 0,
+        "modified_geometric_tolerance": 0,
+        "parallelism_tolerance": 0,
+        "perpendicularity_tolerance": 6,
+        "plus_minus_tolerance": 21,
+        "position_tolerance": 0,
+        "roundness_tolerance": 0,
+        "shape_aspect": 126,
+        "shape_aspect_associativity": 0,
+        "shape_aspect_relationship": 233,
+        "straightness_tolerance": 0,
+        "surface_profile_tolerance": 0,
+        "symmetry_tolerance": 1,
+        "tolerance_value": 18,
+        "tolerance_zone": 20,
+        "tolerance_zone_definition": 0,
+        "total_runout_tolerance": 0,
+        "unequally_disposed_geometric_tolerance": 0
+      },
+      "file": "nist_stc_10_asme1_ap242-e2.stp",
+      "input_entities": 12073,
+      "kept_entities": 12073,
+      "parse_ok": true,
+      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_10_asme1_ap242-e2.stp",
+      "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
+      "surfaced": {
+        "datums": 9,
+        "dimensions": {
+          "Location": 2,
+          "Size": 25
+        },
+        "tolerances": {
+          "Cylindricity": 2,
+          "Flatness": 1,
+          "Perpendicularity": 6,
+          "Position": 17,
+          "Straightness": 1,
+          "SurfaceProfile": 9,
+          "Symmetry": 1
+        }
+      }
+    }
+  ],
+  "runner": {
+    "generated_at": "2026-10-16T18:55:45Z",
+    "script": "oep_tooling/pmi_fidelity.py",
+    "probe_source": "crates/oep-step/examples/pmi_probe.rs",
+    "step_io_version": "0.2.5",
+    "step_io_pin": "=0.2.5",
+    "probe_sha256": "20f1f114b3bfd984b26a9669c15718fec511439440710428c139e6a64f41cdd3",
+    "corpus_dir": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files",
+    "corpus_file_count": 17,
+    "probe_reports": 17
+  },
+  "gd_t_types": [
+    "straightness",
+    "flatness",
+    "circularity",
+    "cylindricity",
+    "profile-of-line",
+    "profile-of-surface",
+    "angularity",
+    "perpendicularity",
+    "parallelism",
+    "position",
+    "concentricity",
+    "symmetry",
+    "circular-runout",
+    "total-runout",
+    "datums",
+    "modifiers"
+  ],
+  "gd_t_labels": {
+    "straightness": {
+      "label": "Straightness",
+      "category": "form"
+    },
+    "flatness": {
+      "label": "Flatness",
+      "category": "form"
+    },
+    "circularity": {
+      "label": "Circularity / roundness",
+      "category": "form"
+    },
+    "cylindricity": {
+      "label": "Cylindricity",
+      "category": "form"
+    },
+    "profile-of-line": {
+      "label": "Profile of a line",
+      "category": "profile"
+    },
+    "profile-of-surface": {
+      "label": "Profile of a surface",
+      "category": "profile"
+    },
+    "angularity": {
+      "label": "Angularity",
+      "category": "orientation"
+    },
+    "perpendicularity": {
+      "label": "Perpendicularity",
+      "category": "orientation"
+    },
+    "parallelism": {
+      "label": "Parallelism",
+      "category": "orientation"
+    },
+    "position": {
+      "label": "Position",
+      "category": "location"
+    },
+    "concentricity": {
+      "label": "Concentricity",
+      "category": "location"
+    },
+    "symmetry": {
+      "label": "Symmetry",
+      "category": "location"
+    },
+    "circular-runout": {
+      "label": "Circular runout",
+      "category": "runout"
+    },
+    "total-runout": {
+      "label": "Total runout",
+      "category": "runout"
+    },
+    "datums": {
+      "label": "Datums & datum reference frames",
+      "category": "supporting"
+    },
+    "modifiers": {
+      "label": "Tolerance modifiers (MMC/LMC/RFS, unequally-disposed)",
+      "category": "supporting"
+    }
+  },
+  "apps": [
+    {
+      "id": "stepio",
+      "label": "step-io 0.2.5 (pure-Rust OSS STEP reader via oep-step)",
+      "kind": "oss",
+      "available": true,
+      "version": "0.2.5",
+      "evidence": "probe binary /home/r1a/keelworks-main/.worktrees/p4m2t03-pmi-fidelity-1016a/target/debug/examples/pmi_probe sha256=20f1f114b3bfd984"
+    },
+    {
+      "id": "occt",
+      "label": "Open CASCADE Technology (OCCT) via pythonocc/OCP bindings",
+      "kind": "oss",
+      "available": false,
+      "version": "?",
+      "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed"
+    },
+    {
+      "id": "freecad",
+      "label": "FreeCAD (OCCT-based independent OSS CAD app)",
+      "kind": "oss",
+      "available": false,
+      "version": "?",
+      "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP"
+    },
+    {
+      "id": "commercial-readers",
+      "label": "Commercial STEP PMI readers (CAD Exchanger SDK / Spatial HOOPS / TransMagic / NX / CATIA / SolidWorks)",
+      "kind": "commercial",
+      "available": false,
+      "version": "n/a",
+      "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy"
+    }
+  ],
+  "cells": {
+    "straightness": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Straightness (1 instance(s) via scene-surface) on nist_ctc_05_asme1_ap242-e1.stp; same verdict on all 3 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "flatness": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Flatness (1 instance(s) via scene-surface) on nist_ctc_01_asme1_ap242-e1.stp; same verdict on all 14 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "circularity": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Circularity / roundness (1 instance(s) via scene-surface) on nist_ctc_05_asme1_ap242-e1.stp; same verdict on all 2 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "cylindricity": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Cylindricity (2 instance(s) via scene-surface) on nist_ftc_10_asme1_ap242-e2.stp; same verdict on all 2 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "profile-of-line": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Profile of a line (1 instance(s) via scene-surface) on nist_ctc_02_asme1_ap242-e2.stp; same verdict on all 1 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "profile-of-surface": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Profile of a surface (2 instance(s) via scene-surface) on nist_ctc_01_asme1_ap242-e1.stp; same verdict on all 15 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 13,
+              "arena": 0,
+              "surfaced": 13,
+              "probe_surfaced": 13,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 12,
+              "arena": 0,
+              "surfaced": 12,
+              "probe_surfaced": 12,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 12,
+              "arena": 0,
+              "surfaced": 12,
+              "probe_surfaced": 12,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 11,
+              "arena": 0,
+              "surfaced": 11,
+              "probe_surfaced": 11,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 10,
+              "arena": 0,
+              "surfaced": 10,
+              "probe_surfaced": 10,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 11,
+              "arena": 0,
+              "surfaced": 11,
+              "probe_surfaced": 11,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 10,
+              "arena": 0,
+              "surfaced": 10,
+              "probe_surfaced": 10,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 12,
+              "arena": 0,
+              "surfaced": 12,
+              "probe_surfaced": 12,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 9,
+              "arena": 0,
+              "surfaced": 9,
+              "probe_surfaced": 9,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "angularity": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Angularity (1 instance(s) via scene-surface) on nist_ctc_03_asme1_ap242-e2.stp; same verdict on all 1 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "perpendicularity": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Perpendicularity (1 instance(s) via scene-surface) on nist_ctc_01_asme1_ap242-e1.stp; same verdict on all 14 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 4,
+              "probe_surfaced": 4,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 6,
+              "arena": 0,
+              "surfaced": 6,
+              "probe_surfaced": 6,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 4,
+              "probe_surfaced": 4,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 6,
+              "arena": 0,
+              "surfaced": 6,
+              "probe_surfaced": 6,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "parallelism": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Parallelism (1 instance(s) via scene-surface) on nist_ftc_07_asme1_ap242-e2.stp; same verdict on all 4 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 5,
+              "arena": 0,
+              "surfaced": 5,
+              "probe_surfaced": 5,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 5,
+              "arena": 0,
+              "surfaced": 5,
+              "probe_surfaced": 5,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "position": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Position (2 instance(s) via scene-surface) on nist_ctc_01_asme1_ap242-e1.stp; same verdict on all 14 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 4,
+              "probe_surfaced": 4,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 6,
+              "arena": 0,
+              "surfaced": 6,
+              "probe_surfaced": 6,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 4,
+              "probe_surfaced": 4,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 11,
+              "arena": 0,
+              "surfaced": 11,
+              "probe_surfaced": 11,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 12,
+              "arena": 0,
+              "surfaced": 12,
+              "probe_surfaced": 12,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 13,
+              "arena": 0,
+              "surfaced": 13,
+              "probe_surfaced": 13,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 23,
+              "arena": 0,
+              "surfaced": 23,
+              "probe_surfaced": 23,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 19,
+              "arena": 0,
+              "surfaced": 19,
+              "probe_surfaced": 19,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 9,
+              "arena": 0,
+              "surfaced": 9,
+              "probe_surfaced": 9,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 9,
+              "arena": 0,
+              "surfaced": 9,
+              "probe_surfaced": 9,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 9,
+              "arena": 0,
+              "surfaced": 9,
+              "probe_surfaced": 9,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 19,
+              "arena": 0,
+              "surfaced": 19,
+              "probe_surfaced": 19,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 17,
+              "arena": 0,
+              "surfaced": 17,
+              "probe_surfaced": 17,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "concentricity": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Concentricity (1 instance(s) via scene-surface) on nist_ctc_05_asme1_ap242-e1.stp; same verdict on all 1 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "symmetry": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Symmetry (1 instance(s) via scene-surface) on nist_ftc_10_asme1_ap242-e2.stp; same verdict on all 2 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "circular-runout": {
+      "stepio": {
+        "verdict": "FAIL",
+        "evidence": "present in the corpus but NOT preserved by step-io 0.2.5: nist_ctc_05_asme1_ap242-e1.stp carries 3 but step-io surfaces 0. Passed elsewhere: nist_ftc_11_asme1_ap242-e2.stp surfaces 1.",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 1,
+              "arena": 0,
+              "surfaced": 1,
+              "probe_surfaced": 1,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "total-runout": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Total runout (2 instance(s) via scene-surface) on nist_ctc_05_asme1_ap242-e1.stp; same verdict on all 1 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-surface"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "datums": {
+      "stepio": {
+        "verdict": "PASS",
+        "evidence": "step-io 0.2.5 preserved and classified Datums & datum reference frames (3 instance(s) via scene-datums) on nist_ctc_01_asme1_ap242-e1.stp; same verdict on all 16 carrying file(s).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 8,
+              "arena": 3,
+              "surfaced": 3,
+              "probe_surfaced": 3,
+              "kind": "scene-datums"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 30,
+              "arena": 10,
+              "surfaced": 10,
+              "probe_surfaced": 10,
+              "kind": "scene-datums"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 18,
+              "arena": 6,
+              "surfaced": 6,
+              "probe_surfaced": 6,
+              "kind": "scene-datums"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 21,
+              "arena": 8,
+              "surfaced": 8,
+              "probe_surfaced": 8,
+              "kind": "scene-datums"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 11,
+              "arena": 4,
+              "surfaced": 4,
+              "probe_surfaced": 4,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 28,
+              "arena": 10,
+              "surfaced": 10,
+              "probe_surfaced": 10,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 15,
+              "arena": 5,
+              "surfaced": 5,
+              "probe_surfaced": 5,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 31,
+              "arena": 11,
+              "surfaced": 11,
+              "probe_surfaced": 11,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 24,
+              "arena": 8,
+              "surfaced": 8,
+              "probe_surfaced": 8,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 34,
+              "arena": 11,
+              "surfaced": 11,
+              "probe_surfaced": 11,
+              "kind": "scene-datums"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 5,
+              "arena": 2,
+              "surfaced": 2,
+              "probe_surfaced": 2,
+              "kind": "scene-datums"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 21,
+              "arena": 6,
+              "surfaced": 6,
+              "probe_surfaced": 6,
+              "kind": "scene-datums"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 13,
+              "arena": 5,
+              "surfaced": 5,
+              "probe_surfaced": 5,
+              "kind": "scene-datums"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 25,
+              "arena": 8,
+              "surfaced": 8,
+              "probe_surfaced": 8,
+              "kind": "scene-datums"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 24,
+              "arena": 8,
+              "surfaced": 8,
+              "probe_surfaced": 8,
+              "kind": "scene-datums"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 30,
+              "arena": 9,
+              "surfaced": 9,
+              "probe_surfaced": 9,
+              "kind": "scene-datums"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    },
+    "modifiers": {
+      "stepio": {
+        "verdict": "FAIL",
+        "evidence": "present in the corpus but NOT preserved by step-io 0.2.5: nist_ctc_02_asme1_ap242-e2.stp carries 7 but step-io surfaces 0; nist_ctc_03_asme1_ap242-e2.stp carries 2 but step-io surfaces 0; nist_ftc_06_asme1_ap242-e2.stp carries 4 but step-io surfaces 0; nist_ftc_07_asme1_ap242-e2.stp carries 5 but step-io surfaces 0; nist_ftc_08_asme1_ap242-e2.stp carries 17 but step-io surfaces 0; nist_ftc_09_asme1_ap242-e1.stp carries 6 but step-io surfaces 0; nist_ftc_10_asme1_ap242-e2.stp carries 3 but step-io surfaces 0; nist_ftc_11_asme1_ap242-e2.stp carries 4 but step-io surfaces 0; nist_stc_06_asme1_ap242-e3.stp carries 3 but step-io surfaces 0; nist_stc_07_asme1_ap242-e3.stp carries 4 but step-io surfaces 0; nist_stc_08_asme1_ap242-e3.stp carries 13 but step-io surfaces 0; nist_stc_09_asme1_ap242-e3.stp carries 5 but step-io surfaces 0; nist_stc_10_asme1_ap242-e2.stp carries 3 but step-io surfaces 0. Passed elsewhere: none. step-io's PMI surface exposes no modifier semantics (MMC/LMC/unequally-disposed) and its three modifier arenas are empty on every corpus file; the base characteristics the modifiers attach to DO surface (see their rows).",
+        "counts": {
+          "files": {
+            "nist_ctc_01_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ctc_02_asme1_ap242-e2.stp": {
+              "lexical": 7,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ctc_03_asme1_ap242-e2.stp": {
+              "lexical": 2,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ctc_04_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ctc_05_asme1_ap242-e1.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_06_asme1_ap242-e2.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_07_asme1_ap242-e2.stp": {
+              "lexical": 5,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_08_asme1_ap242-e1-tg.stp": {
+              "lexical": 0,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_08_asme1_ap242-e2.stp": {
+              "lexical": 17,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_09_asme1_ap242-e1.stp": {
+              "lexical": 6,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_10_asme1_ap242-e2.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_ftc_11_asme1_ap242-e2.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_stc_06_asme1_ap242-e3.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_stc_07_asme1_ap242-e3.stp": {
+              "lexical": 4,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_stc_08_asme1_ap242-e3.stp": {
+              "lexical": 13,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_stc_09_asme1_ap242-e3.stp": {
+              "lexical": 5,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            },
+            "nist_stc_10_asme1_ap242-e2.stp": {
+              "lexical": 3,
+              "arena": 0,
+              "surfaced": 0,
+              "probe_surfaced": 0,
+              "kind": "structural-arena"
+            }
+          }
+        }
+      },
+      "occt": {
+        "verdict": "SKIP",
+        "evidence": "no OSS OCCT binding with an aarch64 wheel for this python on PyPI (OCP has no aarch64 wheel); source build out of scope for this audit \u2014 cell SKIP is honest, not assumed \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "freecad": {
+        "verdict": "SKIP",
+        "evidence": "FreeCAD not installed on this host (no deb/snap candidate in apt sources) \u2014 SKIP \u2014 no cell probed for this host.",
+        "counts": {}
+      },
+      "commercial-readers": {
+        "verdict": "SKIP",
+        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "counts": {}
+      }
+    }
+  }
+}
