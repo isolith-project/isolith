@@ -44,6 +44,7 @@ pub mod endpoints;
 pub mod gate;
 pub mod policy;
 pub mod principal;
+pub mod probes;
 pub mod resource;
 
 pub use endpoints::{classify, Classified, Target};

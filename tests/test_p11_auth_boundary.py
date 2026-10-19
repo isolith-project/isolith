@@ -43,6 +43,13 @@ ARTIFACTS = [
     "crates/oep-pdm/src/authz/policy.rs",
     "crates/oep-pdm/src/authz/principal.rs",
     "crates/oep-pdm/src/authz/resource.rs",
+    # SEC-AUTHZ-RESIDUAL: the shared probe matrix both suites run.
+    "crates/oep-pdm/src/authz/probes.rs",
+    # SEC-AUTHZ-RESIDUAL: the oep-web default-binary leg.
+    "crates/oep-web/tests/web_auth_boundary.rs",
+    "crates/oep-web/src/bin/oep-web.rs",
+    "crates/oep-web/src/web/mod.rs",
+    "crates/oep-web/src/lib.rs",
     # The P8-M3 RBAC core the suite must pass on.
     "crates/oep-pdm/src/rbac/mod.rs",
     "crates/oep-pdm/src/rbac/roles.rs",
@@ -81,6 +88,11 @@ DOC_MARKERS = [
     "| D6 ",
     "SEC-AUTHZ-DEFAULT",
     "--no-auth",
+    # SEC-AUTHZ-RESIDUAL: the oep-web residual is closed in v1.2.0.
+    "| D7 ",
+    "SEC-AUTHZ-RESIDUAL",
+    "web_auth_boundary.rs",
+    "authorization: ENFORCED",
 ]
 
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -138,6 +150,40 @@ def main():
         check(
             "CARGO_BIN_EXE_oep-pdm" in suite,
             "auth_boundary.rs must boot the real shipped oep-pdm binary",
+        )
+
+    # --- SEC-AUTHZ-RESIDUAL: oep-web default-binary leg ---------------
+    WEB_SUITE = os.path.join(ROOT, "crates", "oep-web", "tests", "web_auth_boundary.rs")
+    if os.path.isfile(WEB_SUITE):
+        web = read(WEB_SUITE)
+        check(
+            "CARGO_BIN_EXE_oep-web" in web,
+            "web_auth_boundary.rs must boot the real shipped oep-web binary",
+        )
+        check(
+            "default_binary_denies_the_attack_matrix" in web,
+            "web_auth_boundary.rs must run the attack matrix against the"
+            " default oep-web binary",
+        )
+        check(
+            "no_auth_optout_warns_and_opens_the_contract" in web,
+            "web_auth_boundary.rs must prove the --no-auth opt-out warns and opens",
+        )
+        check(
+            "probes::" in web or "attack_probes" in web,
+            "web_auth_boundary.rs must reuse the shared P11-T03 probe matrix",
+        )
+    OEP_WEB_BIN = os.path.join(ROOT, "crates", "oep-web", "src", "bin", "oep-web.rs")
+    if os.path.isfile(OEP_WEB_BIN):
+        wb = read(OEP_WEB_BIN)
+        check(
+            "strict_boundary_authorizer" in wb and "--no-auth" in wb,
+            "oep-web binary must enforce the strict boundary by default with an"
+            " explicit --no-auth opt-out",
+        )
+        check(
+            "start_with_authorizer" in wb,
+            "oep-web binary must boot through the authorized server path",
         )
 
     # --- doc invariants ----------------------------------------------------
