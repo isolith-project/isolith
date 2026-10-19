@@ -39,3 +39,7 @@ P10-M4/proof/.vault-live/
 P10-M1/certs/
 *.srl
 server.key
+
+# P11-T02: the rustsec advisory-db is a shallow clone cache, never committed
+# (source of truth is upstream rustsec/advisory-db at scan time).
+P11/.advisory-db/
