@@ -16,4 +16,4 @@ zip = { version = "9", default-features = false, features = ["deflate"] }
 # P3-M1-T03 (mesh rep -> internal mesh): pure-Rust streaming XML reader for the
 # tessellated-ASCII `.3DRep` markup (supply-chain posture P11-T06). Same pin as
 # the sibling P3-M1-T02 rep-parse card so the identical line auto-merges.
-quick-xml = { version = "0.39", default-features = false }
+quick-xml = { version = "0.41", default-features = false }

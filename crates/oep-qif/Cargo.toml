@@ -12,6 +12,6 @@ repository.workspace = true
 # a real streaming XML engine belongs here. quick-xml is the house parser
 # (same crate as oep-3dxml P3-M1-T02): pure-Rust, memory-safe, dependency-
 # light, pinned per supply-chain doctrine (P11-T06). No serde features.
-quick-xml = { version = "0.39", default-features = false }
+quick-xml = { version = "0.41", default-features = false }
 
 [dev-dependencies]

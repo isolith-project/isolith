@@ -1,0 +1,69 @@
+{
+  "ref": "2027.1.0-rc1",
+  "timestamp": "2026-10-19T06:59:19Z",
+  "tool": {
+    "name": "keelworks-oep-sbom",
+    "version": "0.1.0"
+  },
+  "gate": "PASS",
+  "block_severities": [
+    "critical",
+    "high"
+  ],
+  "counts": {
+    "total": 2,
+    "critical": 0,
+    "high": 0,
+    "moderate": 0,
+    "low": 0,
+    "informational": 2,
+    "waived": 0,
+    "blockers": 0
+  },
+  "index": [
+    {
+      "id": "RUSTSEC-2024-0436",
+      "package": "paste",
+      "version": "1.0.15",
+      "summary": "paste - no longer maintained",
+      "severity": "informational",
+      "cvss": "",
+      "cvss_score": null,
+      "aliases": [],
+      "url": "https://github.com/dtolnay/paste",
+      "date": "2024-10-07",
+      "state": "unfixed",
+      "waived": false,
+      "blocking": false
+    },
+    {
+      "id": "RUSTSEC-2025-0007",
+      "package": "ring",
+      "version": "0.17.14",
+      "summary": "*ring* is unmaintained",
+      "severity": "informational",
+      "cvss": "",
+      "cvss_score": null,
+      "aliases": [],
+      "url": "https://github.com/briansmith/ring/discussions/2414",
+      "date": "2025-02-20",
+      "state": "unfixed",
+      "waived": false,
+      "blocking": false
+    }
+  ],
+  "blocking": [],
+  "legs": [
+    {
+      "name": "rustsec-advisory-db",
+      "state": "ok",
+      "note": "advisory db: /home/r1a/keelworks-main/.worktrees/release-drill-ga-1018a/P11/.advisory-db"
+    }
+  ],
+  "sbom_artifacts": [
+    "/tmp/p11gate2/rust.cdx.json",
+    "/tmp/p11gate2/rust.spdx.json",
+    "/tmp/p11gate2/images.cdx.json"
+  ],
+  "waivers_file": "/home/r1a/keelworks-main/.worktrees/release-drill-ga-1018a/P11/waivers.toml"
+}
