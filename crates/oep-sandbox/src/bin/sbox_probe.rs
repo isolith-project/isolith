@@ -157,10 +157,10 @@ fn probe_socket(family: libc::c_int) -> ! {
 ///   1 = io_uring unavailable on this kernel (URING_UNAVAILABLE, ENOSYS)
 ///   2 = got an AF_INET socket via io_uring (URING_OK)  <- filter bypassed!
 fn probe_io_uring_socket() -> ! {
-    // io_uring syscall numbers (aarch64 and x86_64 both use these values,
-    // added by the asm-generic unistd in Linux 5.1+).
+    // io_uring syscall number (aarch64 and x86_64 both use this value, added
+    // by the asm-generic unistd in Linux 5.1+). io_uring_enter/register share
+    // the same removal; denying io_uring_setup blocks every later op.
     const SYS_IO_URING_SETUP: libc::c_long = 425;
-    const SYS_IO_URING_ENTER: libc::c_long = 426;
 
     let mut params = [0u8; 0x80];
     // SAFETY: raw syscall; if the kernel does want to create a ring we hand it
