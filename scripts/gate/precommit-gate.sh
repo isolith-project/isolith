@@ -13,6 +13,10 @@
 # to fetch from the registry at commit time.
 set -u
 cd "${1:-$(pwd)}"
+# Git sets GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE for hooks; scrub them so
+# hermetic tests and tooling never inherit a pointer to the real repo
+# (the incident-120 bug class recurs when a tool skips its own scrub).
+unset "${!GIT_@}" 2>/dev/null || true
 fail=0
 
 echo "== quality gate: $(basename "$(pwd)") =="

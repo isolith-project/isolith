@@ -51,12 +51,20 @@ class ReleaseTrainError(RuntimeError):
 
 
 def git(repo, *args):
-    """Run git in repo; return (rc, stdout, stderr)."""
+    """Run git in repo; return (rc, stdout, stderr).
+
+    Scrub every GIT_* var from the environment: a parent process that sets
+    GIT_DIR (a git hook, a nested pytest run, CI) would override `-C repo`
+    and make these commands operate on the wrong repository, breaking both
+    the hermetic release-cut test and any real nested invocation.
+    """
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
     proc = subprocess.run(
         ["git", "-C", repo] + list(args),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        env=env,
     )
     return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
 
