@@ -1,0 +1,3 @@
+# Standalone benchmark crate build artifacts (not committed; CI has no GPU and
+# never builds this crate anyway).
+/target/

@@ -1,0 +1,298 @@
+{
+  "schema_version": "1.0",
+  "tool": "p1-m1-t06/privacy-itar-sweep",
+  "generated": "2026-10-15",
+  "generated_by": "keelworks worker (default profile)",
+  "policy": "Public/open-licensed samples only. Detector flags ITAR/USML/ECCN, classified/CUI/FOUO markers, and personal contact data. HIGH findings must carry a disposition note before a sample may enter the shared repo.",
+  "files": [
+    {
+      "relative_path": "box.stl",
+      "size": 1421,
+      "sha256": "37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/3DM016.CATPart",
+      "size": 128348,
+      "sha256": "03f5acd78dc32be43d077a84f991c5edfe98cd8a1ad6e8ed6ca9d61cc602cef1",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/hex-nut.CATPart",
+      "size": 231893,
+      "sha256": "28cd2250ab0417585e090c2383e8c8a88c332c92ad6c361508f153a979f8637b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/kj-collar.CATPart",
+      "size": 131437,
+      "sha256": "e51ba83bcc866533091e3eb6b29dc2571e81b9980085bbc75e1554a8dfe0eaa3",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/kj-eye-end.CATPart",
+      "size": 177340,
+      "sha256": "58e7ae6a8494d4713c7467d69e4d4a36eb1ee2135e3659a98b1aa3a62ef24e47",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/kj-fork-end.CATPart",
+      "size": 317760,
+      "sha256": "b66e7e049611e25111b3ccf5a90acd1e90f93ae4b810cbb12bb8d2e9d721a763",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/kj-pin.CATPart",
+      "size": 154371,
+      "sha256": "cbdaf0289f5d30472cff86b5c962296d917fc4e2416db212ca53dd3923d67849",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/kj-taper-pin.CATPart",
+      "size": 77163,
+      "sha256": "0573ec6059a4122a49ad4b89fc1314ee0d1a11ee9a8f84d46c7185875b83649d",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/knuckle-joint.CATProduct",
+      "size": 53941,
+      "sha256": "c44761ed4d31daf71e43c42f93aa6410c091c02951a23d83964d1e5f018496f3",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/square-thread.CATPart",
+      "size": 563685,
+      "sha256": "69d8f1a272648fa0ea732234466144434f1f78344e41185a1b8469027b8cd720",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "catpart/star.CATPart",
+      "size": 112308,
+      "sha256": "45de7652e4dcdabb3ff6eae52564965aeb2cf90ee64e42a2bd2567250fc5bd71",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/FM1_satellite.3DXML",
+      "size": 1763813,
+      "sha256": "7ff05256666d63199ac16aa041b2869acde06df3ee03d839b5c0436eee2663ee",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/README.md",
+      "size": 1741,
+      "sha256": "38894e146cb3802c4d13cced871dcc356a37f5287e1533fa1390812e6c5a382d",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/blocks.3dxml",
+      "size": 2583,
+      "sha256": "14ec76309f176fd5f70428d9f8b766640446b61cab8530c8708069dad4c1ead9",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/cube1.3dxml",
+      "size": 4834,
+      "sha256": "8a4d4daef69baf11f674f41d9e022724f0b5a510bf36f26847479e6df6f04e6b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/cycloidal.3DXML",
+      "size": 742428,
+      "sha256": "007751ab8639097ca146431b0d0c605a2523a269a8dbdc81facd966ddbc0a2de",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/machinist.3DXML",
+      "size": 38849,
+      "sha256": "2203d90f73d47cbb088a9e3b5f4e61780c0f65e575f0f27182c10be3f57c6753",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "3dxml/quad.3dxml",
+      "size": 14317,
+      "sha256": "24459eb1e786451d614c21f6a5cbca3b88eb226479e931b51673481613319d79",
+      "verdict": "CLEAN",
+      "findings": []
+    }
+  ],
+  "reference_sweeps": [
+    {
+      "relative_path": "ATOMIZER.cgr",
+      "size": 73728,
+      "sha256": "25ccd19384e317e6fdc7da5924debdb057b7906d5ba058f57e9cea95384cb8e3",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "BODY1.cgr",
+      "size": 40960,
+      "sha256": "93830e4992cad3223e1c576c8ab8b62c668cc483ec5ec66966a3b3b89e9e0c83",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "BODY2.cgr",
+      "size": 69632,
+      "sha256": "7c324fc7ed97484155a12b1d31b95357a5344aa34b0c30dcb7778909d010deab",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "LOCK.cgr",
+      "size": 45056,
+      "sha256": "16092715b2b595ca39a02b5995b01f096ee8aa77272dcb8631476c12dea19dc8",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "NOZZLE1.cgr",
+      "size": 36864,
+      "sha256": "48815c9bdd0144aa54e152612f9a1f316b86f14395cb1537237ed5af8530eb94",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "NOZZLE2.cgr",
+      "size": 36864,
+      "sha256": "c3894a2d88d44d3363369b92149d129e4e010c0edf24f3493eb9e23477cc3f16",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "REGULATION_COMMAND.cgr",
+      "size": 36864,
+      "sha256": "7bf2724eff177d6e1c4eb2d5886a84a3312aca9551c83533211c241570cfc99e",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "REGULATOR.cgr",
+      "size": 61440,
+      "sha256": "0c6e7ddeac4a2257947c404ca9f5b2e0b3d583789d86763121192cb423b8ca9b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "TRIGGER.cgr",
+      "size": 98304,
+      "sha256": "e70d21b8657f3c9a81eb93d1bcc96cba110c6ad768e5599d796de01dfc79ad6b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "VALVE.cgr",
+      "size": 176128,
+      "sha256": "43cc0cb474b5fe10a4d0bf1b8c61f48d952a8bba849aa8b116e12b490d7dcbd6",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_ATOMIZER",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_BODY1",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_BODY2",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_LOCK",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_NOZZLE1",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_NOZZLE2",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_REGULATION_COMMAND",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_REGULATOR",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_TRIGGER",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_VALVE",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "_head_piston",
+      "size": 24,
+      "sha256": "32edb6022c0921d99aa347e9cda5dc2db413f5574eebaaa8592234308ffebd2b",
+      "verdict": "CLEAN",
+      "findings": []
+    },
+    {
+      "relative_path": "piston.cgr",
+      "size": 192512,
+      "sha256": "b052f8f69c94f22b269c280a05ca9b0dd8e2a3426ff61fc8036199bb7919c112",
+      "verdict": "CLEAN",
+      "findings": []
+    }
+  ],
+  "summary": {
+    "total": 18,
+    "clean": 18,
+    "review": 0,
+    "high_findings": 0,
+    "gate": "PASS"
+  }
+}

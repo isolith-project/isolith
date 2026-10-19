@@ -1,0 +1,54 @@
+# Keelworks CODEOWNERS
+#
+# Policy record for P0-M1-T04 (contributor rules decision). Mirrors
+# docs/layout.md: one owner row per Cargo workspace workstream plus the
+# governance directories, and a catch-all default so nothing falls between
+# rows. Rules are Gitea regexp patterns (golang regexp); last match for a file
+# wins, and rules are composable across a multi-path pull request.
+#
+# Wave 1 is single-maintainer: @don owns every row today. Rows are
+# forward-declared so a workstream lead slots in as a one-line owner edit.
+# Refinement and sync with docs/layout.md lands under P13-T01.
+#
+# Rows track the Cargo workspace member list (INTEGRATION-T02 forward-ported
+# oep-step-pmi / oep-pmi / oep-qif rows in with the P4 lane).
+
+# Catch-all default: the keelworks owners team governs everything below.
+.* @keelworks/Owners
+
+# Per workstream (every Cargo.toml workspace member crate).
+crates/oep-cgr/.* @don
+crates/oep-3dxml/.* @don
+crates/oep-geo/.* @don
+crates/oep-viewer/.* @don
+crates/oep-render-worker/.* @don
+crates/oep-web/.* @don
+crates/oep-step/.* @don
+crates/oep-step-pmi/.* @don
+crates/oep-pmi/.* @don
+crates/oep-qif/.* @don
+crates/oep-pdm/.* @don
+crates/oep-job/.* @don
+crates/oep-lane/.* @don
+crates/oep-farm/.* @don
+crates/oep-worker/.* @don
+crates/oep-sandbox/.* @don
+crates/oep-state/.* @don
+crates/oep-fairshare/.* @don
+crates/oep-opsdash/.* @don
+crates/oep-gate/.* @don
+crates/oep-update/.* @don
+
+# Python tooling and harnesses.
+python/.* @don
+
+# Documentation, tests, and standards material.
+docs/.* @don
+tests/.* @don
+standards/.* @don
+
+# P0 governance decision records.
+P0-M1/.* @don
+P0-M2/.* @don
+P0-M4/.* @don
+P0-M5/.* @don

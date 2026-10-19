@@ -769,5 +769,417 @@
   ],
   "skipped_existing": [],
   "lib_rs_needs_merge": false
+ },
+ "3": {
+  "pr": 3,
+  "branch": "task/standards-082637",
+  "title": "P0-M5-T01: Adopt AP242/QIF/MIL-STD-31000/ASME Y14.41 standards reference materials",
+  "class": "b",
+  "copied": [
+   "standards/README.md",
+   "standards/ap242/README.md",
+   "standards/ap242/keelworks-use.md",
+   "standards/ap242/references.md",
+   "standards/asme-y14.41/README.md",
+   "standards/asme-y14.41/keelworks-use.md",
+   "standards/asme-y14.41/references.md",
+   "standards/mil-std-31000/README.md",
+   "standards/mil-std-31000/keelworks-use.md",
+   "standards/mil-std-31000/references.md",
+   "standards/qif/README.md",
+   "standards/qif/keelworks-use.md",
+   "standards/qif/references.md",
+   "tests/standards_test.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "11": {
+  "pr": 11,
+  "branch": "task/nightly-stress-1015a",
+  "title": "P0-M4-T03: Nightly stress run + status page",
+  "class": "b",
+  "copied": [
+   ".gitea/workflows/nightly-stress.yaml",
+   "ci/stress/jobs.json",
+   "ci/stress/stress_fuzz_report.py",
+   "ci/stress/stress_runner.py",
+   "ci/stress/text_file_integrity.py",
+   "docs/P0-M4-T03-nightly-stress.md",
+   "docs/status/report.json",
+   "docs/status/status.html",
+   "tests/stress_suite_test.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "13": {
+  "pr": 13,
+  "branch": "task/contributor-rules-1015a",
+  "title": "P0-M1-T04: Decide contributor rules (CLA, DCO, CODEOWNERS)",
+  "class": "b",
+  "copied": [
+   "CODEOWNERS",
+   "P0-M1/contributor-rules-decision.md",
+   "tests/test_contributor_rules_decision.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "19": {
+  "pr": 19,
+  "branch": "task/oss-readers-audit-1015a",
+  "title": "P1-M3-T01: Audit OSS readers (GLC_Player, CGR loaders, FreeCAD, OCCT STEP, bob tools) + record gaps",
+  "class": "b",
+  "copied": [
+   "P1-M3/oss-readers-audit.md",
+   "P1-M3/oss-readers-sources.md",
+   "tests/test_oss_readers_audit_acceptance.py"
+  ],
+  "skipped_existing": [
+   "tests/ci_pipeline_test.py"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "20": {
+  "pr": 20,
+  "branch": "task/commercial-readers-audit-1015a",
+  "title": "P1-M3-T02: Audit commercial reader feature lists (CAD Exchanger, Spatial HOOPS, TransMagic, Okino)",
+  "class": "b",
+  "copied": [
+   "P1-M3/commercial-readers-audit.md",
+   "P1-M3/commercial-readers-sources.md",
+   "tests/test_commercial_readers_audit_acceptance.py"
+  ],
+  "skipped_existing": [
+   "tests/ci_pipeline_test.py"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "21": {
+  "pr": 21,
+  "branch": "task/cgr-samples-1015a",
+  "title": "P1-M1-T01: Locate + verify public CGR sample files (license, no redistribution)",
+  "class": "b",
+  "copied": [
+   "P1-M1/cgr-sample-location.md",
+   "P1-M1/cgr-sample-registry.json",
+   "tests/test_cgr_registry_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "25": {
+  "pr": 25,
+  "branch": "task/catpart-samples-1015a",
+  "title": "P1-M1-T03: Locate + verify public CATPart/CATProduct samples (magic V5_CFV2 per file)",
+  "class": "b",
+  "copied": [
+   "corpus/catpart-located-sources.md",
+   "corpus/catpart-samples.json",
+   "corpus/catpart-source-full-registry.json",
+   "corpus/data/catpart/3DM016.CATPart",
+   "corpus/data/catpart/hex-nut.CATPart",
+   "corpus/data/catpart/kj-collar.CATPart",
+   "corpus/data/catpart/kj-eye-end.CATPart",
+   "corpus/data/catpart/kj-fork-end.CATPart",
+   "corpus/data/catpart/kj-pin.CATPart",
+   "corpus/data/catpart/kj-taper-pin.CATPart",
+   "corpus/data/catpart/knuckle-joint.CATProduct",
+   "corpus/data/catpart/square-thread.CATPart",
+   "corpus/data/catpart/star.CATPart",
+   "tests/catpart_samples_test.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "26": {
+  "pr": 26,
+  "branch": "task/3dxml-samples-1015a",
+  "title": "P1-M1-T02: 3DXML public sample catalog + spec-request process",
+  "class": "b",
+  "copied": [
+   "P1-M1/3dxml-samples.md",
+   "P1-M1/3dxml-spec-process.md",
+   "P1-M1/sources.md",
+   "P1-M1/verification.md",
+   "corpus/data/3dxml/FM1_satellite.3DXML",
+   "corpus/data/3dxml/README.md",
+   "corpus/data/3dxml/blocks.3dxml",
+   "corpus/data/3dxml/cube1.3dxml",
+   "corpus/data/3dxml/cycloidal.3DXML",
+   "corpus/data/3dxml/machinist.3DXML",
+   "corpus/data/3dxml/quad.3dxml",
+   "tests/test_3dxml_samples_catalog.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "27": {
+  "pr": 27,
+  "branch": "task/cgr-version-drift-1015b",
+  "title": "P1-M2-T02: CGR version-drift comparison (R18-era vs modern-era)",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/cgr-version-drift.md",
+   "python/oep_tooling/cgr_drift.py",
+   "tests/test_cgr_version_drift_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "29": {
+  "pr": 29,
+  "branch": "task/catpart-product-notebook-1015a",
+  "title": "P1-M2-T03: CATPart vs CATProduct container notebook (differences + reference-graph discovery)",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/catpart-catproduct-container-notebook.md",
+   "tests/test_catpart_product_notebook_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "30": {
+  "pr": 30,
+  "branch": "task/corpus-manifest-1015a",
+  "title": "P1-M1-T04: Corpus manifest - source/license/format/size/geometry class",
+  "class": "b",
+  "copied": [
+   "P1-M1/3dxml-samples.md",
+   "P1-M1/3dxml-spec-process.md",
+   "P1-M1/cgr-sample-location.md",
+   "P1-M1/cgr-sample-registry.json",
+   "P1-M1/sources.md",
+   "P1-M1/verification.md",
+   "corpus/catpart-located-sources.md",
+   "corpus/catpart-samples.json",
+   "corpus/catpart-source-full-registry.json",
+   "corpus/data/3dxml/FM1_satellite.3DXML",
+   "corpus/data/3dxml/README.md",
+   "corpus/data/3dxml/blocks.3dxml",
+   "corpus/data/3dxml/cube1.3dxml",
+   "corpus/data/3dxml/cycloidal.3DXML",
+   "corpus/data/3dxml/machinist.3DXML",
+   "corpus/data/3dxml/quad.3dxml",
+   "corpus/data/box.stl",
+   "corpus/data/catpart/3DM016.CATPart",
+   "corpus/data/catpart/hex-nut.CATPart",
+   "corpus/data/catpart/kj-collar.CATPart",
+   "corpus/data/catpart/kj-eye-end.CATPart",
+   "corpus/data/catpart/kj-fork-end.CATPart",
+   "corpus/data/catpart/kj-pin.CATPart",
+   "corpus/data/catpart/kj-taper-pin.CATPart",
+   "corpus/data/catpart/knuckle-joint.CATProduct",
+   "corpus/data/catpart/square-thread.CATPart",
+   "corpus/data/catpart/star.CATPart",
+   "corpus/golden/box-triangles.golden",
+   "corpus/golden_tests.json",
+   "corpus/inventory.json",
+   "corpus/inventory.md",
+   "corpus/manifest-README.md",
+   "corpus/manifest.json",
+   "corpus/tools/3dxml-catalog.json",
+   "corpus/tools/build_manifest.py",
+   "tests/catpart_samples_test.py",
+   "tests/manifest_test.py",
+   "tests/test_3dxml_samples_catalog.py",
+   "tests/test_cgr_registry_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "33": {
+  "pr": 33,
+  "branch": "task/corpus-object-sync-1015a",
+  "title": "P1-M1-T05: Corpus object-store sync to NAS; checksums verified",
+  "class": "b",
+  "copied": [
+   "corpus/data/box.stl",
+   "corpus/object-store-index.json",
+   "corpus/object-sync-spec.json",
+   "python/oep_tooling/objectstore.py",
+   "tests/corpus_object_sync_test.py"
+  ],
+  "skipped_existing": [
+   "docs/layout.md"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "34": {
+  "pr": 34,
+  "branch": "task/3dxml-hex-notebook-1015a",
+  "title": "P1-M2-T04: 3DXML ASCII vs binary (.3DRep) hex observation notebook",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/3dxml-hex-notebook.md",
+   "python/oep_tooling/3dxml_observe.py",
+   "tests/test_3dxml_hex_notebook_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "35": {
+  "pr": 35,
+  "branch": "task/diff-harness-1015a",
+  "title": "P1-M2-T06: diff harness - save/load/modify in a vendor-free tool, bisect which bytes change",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/diff-harness.md",
+   "python/oep_tooling/diff_harness.py",
+   "tests/test_diff_harness_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "36": {
+  "pr": 36,
+  "branch": "task/shape-record-hypothesis-1015a",
+  "title": "P1-M2-T05: per-format shape-record hypothesis RE note (vault + repo, [uncertain] markers)",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/shape-record-hypothesis.md",
+   "python/oep_tooling/shape_record_observe.py",
+   "tests/test_shape_record_hypothesis_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "37": {
+  "pr": 37,
+  "branch": "task/privacy-itar-sweep-1015a",
+  "title": "P1-M1-T06: Privacy/ITAR sweep on all samples before shared repo",
+  "class": "b",
+  "copied": [
+   "P1-M1/privacy-itar-sweep-report.json",
+   "P1-M1/privacy-itar-sweep.md",
+   "python/oep_tooling/privacy_itar_sweep.py",
+   "tests/test_privacy_itar_sweep.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "51": {
+  "pr": 51,
+  "branch": "task/regression-corpus-1015d",
+  "title": "P2-M5-T03: Regression corpus runner + report matrix (opens or classified skip)",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/p2-m5-t03-regression-matrix.md",
+   "python/oep_tooling/regression.py",
+   "tests/corpus_regression_test.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "58": {
+  "pr": 58,
+  "branch": "task/ga-gate-1015a",
+  "title": "P2-M6-T03: P2 GA gate - all corpus meshes load, 100% golden files match within epsilon",
+  "class": "b",
+  "copied": [
+   "docs/re-notes/p2-m6-t03-ga-gate.md",
+   "python/oep_tooling/ga_gate.py",
+   "tests/ga_gate_test.py"
+  ],
+  "skipped_existing": [
+   ".gitea/workflows/ci.yaml"
+  ],
+  "lib_rs_needs_merge": false
+ },
+ "79": {
+  "pr": 79,
+  "branch": "task/viewer-perf-1m-1016a",
+  "title": "P6-M5-T03: Viewer performance - 1M-triangle scene interactive on U1-class hardware (measured budget)",
+  "class": "b",
+  "copied": [
+   "P6-M5/perf/1m-scene/.gitignore",
+   "P6-M5/perf/1m-scene/Cargo.lock",
+   "P6-M5/perf/1m-scene/Cargo.toml",
+   "P6-M5/perf/1m-scene/frame-proof.png",
+   "P6-M5/perf/1m-scene/report-1m-triangles.json",
+   "P6-M5/perf/1m-scene/src/main.rs",
+   "P6-M5/viewer-perf-1m-budget.md",
+   "tests/test_viewer_perf_1m_acceptance.py"
+  ],
+  "skipped_existing": [],
+  "lib_rs_needs_merge": false
+ },
+ "85": {
+  "pr": 85,
+  "branch": "task/p1m4-object-corpus-1016a",
+  "title": "P1-M4-T01: Object-store corpus mirror materialized + verified (wave-2 prep, flag 3)",
+  "class": "b",
+  "copied": [
+   "P1-M1/3dxml-samples.md",
+   "P1-M1/3dxml-spec-process.md",
+   "P1-M1/cgr-sample-location.md",
+   "P1-M1/cgr-sample-registry.json",
+   "P1-M1/privacy-itar-sweep-report-full-2026-10-16.json",
+   "P1-M1/privacy-itar-sweep-report.json",
+   "P1-M1/privacy-itar-sweep.md",
+   "P1-M1/sources.md",
+   "P1-M1/verification.md",
+   "corpus/README.md",
+   "corpus/catpart-located-sources.md",
+   "corpus/catpart-samples.json",
+   "corpus/catpart-source-full-registry.json",
+   "corpus/data/3dxml/FM1_satellite.3DXML",
+   "corpus/data/3dxml/README.md",
+   "corpus/data/3dxml/blocks.3dxml",
+   "corpus/data/3dxml/cube1.3dxml",
+   "corpus/data/3dxml/cycloidal.3DXML",
+   "corpus/data/3dxml/machinist.3DXML",
+   "corpus/data/3dxml/quad.3dxml",
+   "corpus/data/box.stl",
+   "corpus/data/catpart/3DM016.CATPart",
+   "corpus/data/catpart/hex-nut.CATPart",
+   "corpus/data/catpart/kj-collar.CATPart",
+   "corpus/data/catpart/kj-eye-end.CATPart",
+   "corpus/data/catpart/kj-fork-end.CATPart",
+   "corpus/data/catpart/kj-pin.CATPart",
+   "corpus/data/catpart/kj-taper-pin.CATPart",
+   "corpus/data/catpart/knuckle-joint.CATProduct",
+   "corpus/data/catpart/square-thread.CATPart",
+   "corpus/data/catpart/star.CATPart",
+   "corpus/golden/box-triangles.golden",
+   "corpus/golden_tests.json",
+   "corpus/inventory.json",
+   "corpus/inventory.md",
+   "corpus/manifest-README.md",
+   "corpus/manifest.json",
+   "corpus/object-store-index.json",
+   "corpus/object-sync-spec.json",
+   "corpus/regression-matrix.json",
+   "corpus/regression-matrix.md",
+   "corpus/tools/3dxml-catalog.json",
+   "corpus/tools/build_manifest.py",
+   "corpus/tools/mirror_object_store.py",
+   "docs/re-notes/p1-m4-t01-object-store-corpus.md",
+   "docs/re-notes/p2-m5-t03-regression-matrix.md",
+   "docs/re-notes/p3-m5-t01-3dxml-regression.md",
+   "python/oep_tooling/corpus/__init__.py",
+   "python/oep_tooling/corpus/__main__.py",
+   "python/oep_tooling/corpus/registry.py",
+   "python/oep_tooling/corpus/runner.py",
+   "python/oep_tooling/corpus/store.py",
+   "python/oep_tooling/objectstore.py",
+   "python/oep_tooling/privacy_itar_sweep.py",
+   "python/oep_tooling/regression.py",
+   "tests/catpart_samples_test.py",
+   "tests/corpus_harness_test.py",
+   "tests/corpus_object_mirror_test.py",
+   "tests/corpus_object_sync_test.py",
+   "tests/corpus_regression_test.py",
+   "tests/manifest_test.py",
+   "tests/test_3dxml_samples_catalog.py",
+   "tests/test_cgr_registry_acceptance.py",
+   "tests/test_privacy_itar_sweep.py"
+  ],
+  "skipped_existing": [
+   ".gitignore",
+   "docs/layout.md"
+  ],
+  "lib_rs_needs_merge": false
  }
 }

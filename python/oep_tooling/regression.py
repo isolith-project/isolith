@@ -84,6 +84,7 @@ class Row:
     cls: str = ""          # closed taxonomy code ("" when OPEN)
     detail: str = ""
     reader: str = "probe"  # "probe" | "cli:<name>" | "none"
+    backend: str = ""      # "repo" | "object-store" ("sample" for ad-hoc dirs)
 
     def as_dict(self) -> dict:
         return {
@@ -95,6 +96,7 @@ class Row:
             "class": self.cls,
             "detail": self.detail,
             "reader": self.reader,
+            "backend": self.backend,
         }
 
 
@@ -343,17 +345,21 @@ def _entry_path(corpus_root: str, entry: dict) -> str:
 
 
 def sweep(entries, corpus_root=None, sample_dirs=None, cache_dir=None,
-          reader_prog=None):
+          reader_prog=None, fetch=False):
     """Classify every corpus file. Returns a list of Row (coverage == truth set).
 
     - ``entries``: manifest-style list of dicts (schema v1: id/path/format/
       backend). repo-backed entries resolve under ``corpus_root``; object-store
-      entries become a ``object-store-unresolved`` skip unless a local blob is
-      present under ``cache_dir``.
+      entries unresolved in the local cache are a ``object-store-unresolved``
+      skip unless ``fetch=True``, in which case they are materialized from the
+      NAS object store (P1-M4-T01 end-to-end resolution) before classification.
     - ``sample_dirs``: extra directories whose files (any *.cgr) are swept as
       ad-hoc real-material samples (no manifest entry required).
     - ``reader_prog``: optional external CGR reader argv; default discovers
       ``OEP_CGR_READER`` env or ``oep-cgr2gltf``/``oep-cgr2step`` on PATH.
+    - ``fetch``: resolve object-store entries from the NAS object store when no
+      local cache blob is present (tolerant: an unreachable store yields a
+      classified skip, never a crash).
     """
     if reader_prog is None:
         reader_prog = _external_reader()
@@ -370,26 +376,37 @@ def sweep(entries, corpus_root=None, sample_dirs=None, cache_dir=None,
         fmt = entry.get("format", "unknown")
         backend = entry.get("backend", "repo")
         if backend == "object-store":
-            # object-stream entries: try a local cache blob by sha256/id, else skip.
+            # object-stream entries: try a local cache blob by sha256/id, else
+            # fetch from the NAS object store (end-to-end, P1-M4-T01), else a
+            # classified skip. Never crashes, even when the store is down.
             blob = _find_object_blob(entry, cache_dir)
+            if blob is None and fetch:
+                try:
+                    blob, _err = _store_fetch(entry, cache_dir)
+                except Exception as e:
+                    blob, _err = None, "store fetch raised: %r" % (e,)
             if blob is None:
                 emit(Row(rid, entry.get("path", ""), fmt, 0, "SKIP",
                          "object-store-unresolved",
-                         "object-store entry not materialized locally"))
+                         "object-store entry not materialized locally",
+                         backend=backend))
                 continue
             rows_here = classify_file(blob, fmt, reader_prog)
             rows_here.id = rid
             rows_here.path = entry.get("path", "")
+            rows_here.backend = backend
             emit(rows_here)
         else:
             path = _entry_path(corpus_root or "", entry)
             if not os.path.isfile(path):
                 emit(Row(rid, entry.get("path", ""), fmt, 0, "SKIP",
-                         "missing-on-disk", "manifest path not found: %s" % path))
+                         "missing-on-disk", "manifest path not found: %s" % path,
+                         backend=backend))
                 continue
             r = classify_file(path, fmt, reader_prog)
             r.path = entry.get("path", "")
             r.id = rid
+            r.backend = backend
             emit(r)
 
     for d in sample_dirs or []:
@@ -409,9 +426,21 @@ def sweep(entries, corpus_root=None, sample_dirs=None, cache_dir=None,
             r = classify_file(p, fmt, reader_prog)
             r.id = name
             r.path = p
+            r.backend = "sample"
             emit(r)
 
     return rows
+
+
+def _store_fetch(entry: dict, cache_dir):
+    """Materialize an object-store entry from the NAS object store into the
+    cache, reusing the golden-runner corpus store backend when importable.
+    Returns (local_path, None) or (None, err). Never raises."""
+    try:
+        from oep_tooling.corpus import store as _store
+        return _store.fetch_entry(entry, cache_dir=cache_dir)
+    except Exception as e:
+        return None, "store backend unavailable: %r" % (e,)
 
 
 def _find_object_blob(entry: dict, cache_dir):
@@ -422,6 +451,12 @@ def _find_object_blob(entry: dict, cache_dir):
     candidates = []
     if sha:
         candidates.append(c / sha)
+        # content-addressed cache files are named <sha256>.<suffix>; match by
+        # the sha256 prefix regardless of the suffix the writer chose.
+        for p in c.iterdir() if c.is_dir() else ():
+            if p.is_file() and p.name.startswith(sha + "."):
+                candidates.append(p)
+                break
     candidates.append(c / (entry.get("id") or ""))
     for cand in candidates:
         if cand.is_file():
@@ -442,15 +477,22 @@ def build_matrix(rows) -> dict:
     for r in rows:
         k = r.cls or "open"
         by_class[k] = by_class.get(k, 0) + 1
+    by_backend = {}
+    for r in rows:
+        b = r.backend or "repo"
+        bucket = by_backend.setdefault(b, {"open": 0, "skip": 0, "total": 0})
+        bucket["total"] += 1
+        bucket["open" if r.status == "OPEN" else "skip"] += 1
     return {
         "schema_version": 1,
         "generated": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
-        "task": "P2-M5-T03",
+        "task": "P1-M4-T01",
         "summary": {
             "total": len(rows),
             "open": n_open,
             "skip": n_skip,
             "by_class": dict(sorted(by_class.items())),
+            "by_backend": dict(sorted(by_backend.items())),
         },
         "rows": [r.as_dict() for r in rows],
     }
@@ -463,16 +505,22 @@ def write_matrix(matrix: dict, outdir: str) -> list:
     jp = out / "regression-matrix.json"
     jp.write_text(json.dumps(matrix, indent=2) + "\n", encoding="utf-8")
     mp = out / "regression-matrix.md"
-    lines = ["# Keelworks regression corpus matrix (P2-M5-T03)", ""]
+    lines = ["# Keelworks regression corpus matrix (P1-M4-T01)", ""]
     s = matrix["summary"]
     lines.append("total=%d  open=%d  skip=%d" % (s["total"], s["open"], s["skip"]))
+    lines.append("by_backend: " + ", ".join(
+        "%s(t=%d open=%d skip=%d)" % (b, v["total"], v["open"], v["skip"])
+        for b, v in sorted(s.get("by_backend", {}).items())))
+    lines.append("by_class: " + ", ".join(
+        "%s=%d" % (k, v) for k, v in sorted(s.get("by_class", {}).items())))
     lines.append("")
-    lines.append("| id | format | status | class | reader | detail |")
-    lines.append("|---|--------|--------|-------|--------|--------|")
+    lines.append("| id | format | backend | status | class | reader | detail |")
+    lines.append("|---|--------|---------|--------|-------|--------|--------|")
     for r in matrix["rows"]:
-        lines.append("| %s | %s | %s | %s | %s | %s |" % (
-            r["id"], r["format"], r["status"], r.get("class", ""),
-            r.get("reader", ""), (r.get("detail", "") or "")[:80].replace("|", "/")))
+        lines.append("| %s | %s | %s | %s | %s | %s | %s |" % (
+            r["id"], r["format"], r.get("backend", ""), r["status"],
+            r.get("class", ""), r.get("reader", ""),
+            (r.get("detail", "") or "")[:80].replace("|", "/")))
     lines.append("")
     mp.write_text("\n".join(lines), encoding="utf-8")
     return [str(jp), str(mp)]
@@ -496,6 +544,10 @@ def main(argv=None) -> int:
                          "3DXML via OEP_3DXML_SAMPLES)")
     ap.add_argument("--cache", default=None,
                     help="local cache for object-store blobs")
+    ap.add_argument("--fetch", action="store_true",
+                    help="resolve object-store entries from the NAS object store "
+                         "when no local cache blob is present (end-to-end, "
+                         "P1-M4-T01)")
     ap.add_argument("--out", default="corpus",
                     help="output dir for regression-matrix.{json,md} (default corpus/)")
     ap.add_argument("--reader", default=None,
@@ -525,13 +577,15 @@ def main(argv=None) -> int:
 
     rows = sweep(entries=entries, corpus_root=corpus_root,
                  sample_dirs=sample_dirs, cache_dir=args.cache,
-                 reader_prog=reader_prog)
+                 reader_prog=reader_prog, fetch=args.fetch)
     matrix = build_matrix(rows)
     written = write_matrix(matrix, args.out)
     s = matrix["summary"]
     print("total=%d open=%d skip=%d" % (s["total"], s["open"], s["skip"]))
     for cls, n in s["by_class"].items():
         print("  %s=%d" % (cls, n))
+    bb = s.get("by_backend", {})
+    print("by_backend: " + ", ".join("%s(t=%d o=%d s=%d)" % (b, v["total"], v["open"], v["skip"]) for b, v in sorted(bb.items())))
     for w in written:
         print("wrote %s" % w)
     return exit_code(rows)

@@ -1,0 +1,57 @@
+{
+  "commit": "bc3f57f",
+  "generated_at": "2026-10-15T18:34:49.928541+00:00",
+  "jobs": [
+    {
+      "category": "regression",
+      "duration_s": 0.07,
+      "exit_code": 0,
+      "name": "cargo-build-workspace",
+      "output_tail": "   Compiling oep-3dxml v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml)\n   Compiling oep-cgr v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr)\n   Compiling oep-step v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step)\n   Compiling oep-geo v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo)\n   Compiling oep-pdm v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s\n",
+      "status": "pass"
+    },
+    {
+      "category": "regression",
+      "duration_s": 0.235,
+      "exit_code": 0,
+      "name": "cargo-test-workspace",
+      "output_tail": "\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Compiling oep-step v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step)\n   Compiling oep-cgr v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr)\n   Compiling oep-3dxml v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml)\n   Compiling oep-geo v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo)\n   Compiling oep-pdm v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.14s\n     Running unittests src/lib.rs (target/debug/deps/oep_3dxml-12d903e4f8afbac8)\n     Running unittests src/lib.rs (target/debug/deps/oep_cgr-42f5cd8e664a8ad6)\n     Running unittests src/lib.rs (target/debug/deps/oep_geo-141ede0cc5b16644)\n     Running unittests src/lib.rs (target/debug/deps/oep_pdm-c9f1ca1f3d970add)\n     Running unittests src/lib.rs (target/debug/deps/oep_step-a538c3d48550e233)\n   Doc-tests oep_3dxml\n   Doc-tests oep_cgr\n   Doc-tests oep_geo\n   Doc-tests oep_pdm\n   Doc-tests oep_step\n",
+      "status": "pass"
+    },
+    {
+      "category": "regression",
+      "duration_s": 0.149,
+      "exit_code": 0,
+      "name": "python-layout-acceptance",
+      "output_tail": "p-cgr', 'crates/oep-3dxml', 'crates/oep-geo', 'crates/oep-step', 'crates/oep-pdm']\n[PASS] workspace.resolver = 2 -- '2'\n[PASS] member listed for oep-cgr -- found ['crates/oep-cgr', 'crates/oep-3dxml', 'crates/oep-geo', 'crates/oep-step', 'crates/oep-pdm'] in members\n[PASS] member listed for oep-3dxml -- found ['crates/oep-cgr', 'crates/oep-3dxml', 'crates/oep-geo', 'crates/oep-step', 'crates/oep-pdm'] in members\n[PASS] member listed for oep-geo -- found ['crates/oep-cgr', 'crates/oep-3dxml', 'crates/oep-geo', 'crates/oep-step', 'crates/oep-pdm'] in members\n[PASS] member listed for oep-step -- found ['crates/oep-cgr', 'crates/oep-3dxml', 'crates/oep-geo', 'crates/oep-step', 'crates/oep-pdm'] in members\n[PASS] member listed for oep-pdm -- found ['crates/oep-cgr', 'crates/oep-3dxml', 'crates/oep-geo', 'crates/oep-step', 'crates/oep-pdm'] in members\n[PASS] member crates/oep-cgr uses oep- prefix -- crates/oep-cgr\n[PASS] member crates/oep-3dxml uses oep- prefix -- crates/oep-3dxml\n[PASS] member crates/oep-geo uses oep- prefix -- crates/oep-geo\n[PASS] member crates/oep-step uses oep- prefix -- crates/oep-step\n[PASS] member crates/oep-pdm uses oep- prefix -- crates/oep-pdm\n[PASS] crate dir: oep-cgr\n[PASS] crate Cargo.toml: oep-cgr -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr/Cargo.toml\n[PASS] crate src/lib.rs: oep-cgr -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr/src/lib.rs\n[PASS] package.name == oep-cgr -- 'oep-cgr'\n[PASS] package.name starts with oep-\n[PASS] crate dir: oep-3dxml\n[PASS] crate Cargo.toml: oep-3dxml -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml/Cargo.toml\n[PASS] crate src/lib.rs: oep-3dxml -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml/src/lib.rs\n[PASS] package.name == oep-3dxml -- 'oep-3dxml'\n[PASS] package.name starts with oep-\n[PASS] crate dir: oep-geo\n[PASS] crate Cargo.toml: oep-geo -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo/Cargo.toml\n[PASS] crate src/lib.rs: oep-geo -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo/src/lib.rs\n[PASS] package.name == oep-geo -- 'oep-geo'\n[PASS] package.name starts with oep-\n[PASS] crate dir: oep-step\n[PASS] crate Cargo.toml: oep-step -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step/Cargo.toml\n[PASS] crate src/lib.rs: oep-step -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step/src/lib.rs\n[PASS] package.name == oep-step -- 'oep-step'\n[PASS] package.name starts with oep-\n[PASS] crate dir: oep-pdm\n[PASS] crate Cargo.toml: oep-pdm -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm/Cargo.toml\n[PASS] crate src/lib.rs: oep-pdm -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm/src/lib.rs\n[PASS] package.name == oep-pdm -- 'oep-pdm'\n[PASS] package.name starts with oep-\n[PASS] exists: docs/layout.md -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/docs/layout.md\n[PASS] layout.md mentions oep-cgr\n[PASS] layout.md maps P2 -> oep-cgr\n[PASS] layout.md mentions oep-3dxml\n[PASS] layout.md maps P3 -> oep-3dxml\n[PASS] layout.md mentions oep-geo\n[PASS] layout.md maps P6 -> oep-geo\n[PASS] layout.md mentions oep-step\n[PASS] layout.md maps P4 -> oep-step\n[PASS] layout.md mentions oep-pdm\n[PASS] layout.md maps P8 -> oep-pdm\n[PASS] layout.md anchors workstream P3\n[PASS] layout.md anchors workstream P6\n[PASS] layout.md anchors workstream P8\n[PASS] layout.md anchors workstream P2\n[PASS] layout.md anchors workstream P4\n[PASS] python/oep_tooling/__init__.py -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/python/oep_tooling/__init__.py\n[PASS] exists: .gitignore\n[PASS] .gitignore ignores target/\n[PASS] .gitignore ignores .worktrees/\n[PASS] cargo metadata parses\n[PASS] cargo build --workspace (exit 0)\n[PASS] cargo test --workspace (exit 0)\n============================================================\nALL CHECKS PASSED\n",
+      "status": "pass"
+    },
+    {
+      "category": "regression",
+      "duration_s": 0.008,
+      "exit_code": 0,
+      "name": "text-file-integrity",
+      "output_tail": "Keelworks text-file integrity scan (P0-M4-T03)\nroot: /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a\n------------------------------------------------------------\n------------------------------------------------------------\nINTEGRITY OK files=29\n",
+      "status": "pass"
+    },
+    {
+      "category": "stress",
+      "duration_s": 0.562,
+      "exit_code": 0,
+      "name": "fuzz-status-page",
+      "output_tail": "... 1000 iterations done (mutated 45473 bytes, max page 2079)\n... 2000 iterations done (mutated 91369 bytes, max page 2000)\n... 3000 iterations done (mutated 136288 bytes, max page 2023)\nFUZZ OK iterations=3000 mutations=136288 seed=20261015\n",
+      "status": "pass"
+    }
+  ],
+  "repo": "http://192.168.0.101:3200/keelworks/keelworks.git",
+  "schema_version": 1,
+  "suite_duration_s": 1.024,
+  "summary": {
+    "error": 0,
+    "failed": 0,
+    "passed": 5,
+    "skipped": 0,
+    "timed_out": 0,
+    "total": 5
+  }
+}
