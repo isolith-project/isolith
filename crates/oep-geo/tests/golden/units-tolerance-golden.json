@@ -1,0 +1,21 @@
+{
+  "format": "oep-geo-units-tolerance-golden",
+  "version": 1,
+  "cases": {
+    "to_mm_factors": {
+      "mm": 1.0,
+      "cm": 10.0,
+      "m": 1000.0,
+      "um": 0.001,
+      "in": 25.4,
+      "ft": 304.8
+    },
+    "inch_to_mm": {"src": "in", "val": 1.0, "dst": "mm", "out": 25.4},
+    "ft_to_in": {"src": "ft", "val": 1.0, "dst": "in", "out": 12.000000000000002},
+    "mm25_to_in": {"src": "mm", "val": 25.4, "dst": "in", "out": 1.0},
+    "tolerance_default": {"linear_abs": 0.000000001, "relative": 0.000000001, "angular_rad": 0.000000001},
+    "in_units_um": {"linear_abs": 0.000001},
+    "in_units_m": {"linear_abs": 0.000000000001},
+    "in_units_in": {"linear_abs": 0.000000000039370078740157485}
+  }
+}

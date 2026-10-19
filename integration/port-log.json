@@ -1,0 +1,38 @@
+{
+ "80": {
+  "pr": 80,
+  "branch": "task/p6m4-exporters-1016a",
+  "title": "P6-M4-T01: Exporters (STEP via P4, STL, glTF, OBJ, SVG 2D, PDF drawing path)",
+  "class": "b",
+  "copied": [
+   "crates/oep-geo/src/export/base.rs",
+   "crates/oep-geo/src/export/gltf.rs",
+   "crates/oep-geo/src/export/mod.rs",
+   "crates/oep-geo/src/export/obj.rs",
+   "crates/oep-geo/src/export/pdf.rs",
+   "crates/oep-geo/src/export/step.rs",
+   "crates/oep-geo/src/export/stl.rs",
+   "crates/oep-geo/src/export/svg.rs",
+   "crates/oep-geo/tests/exporters_contract.rs",
+   "crates/oep-geo/tests/golden/box-reference.bin.stl",
+   "crates/oep-geo/tests/golden/box-reference.glb",
+   "crates/oep-geo/tests/golden/box-reference.obj",
+   "crates/oep-geo/tests/golden/box-reference.pdf",
+   "crates/oep-geo/tests/golden/box-reference.step",
+   "crates/oep-geo/tests/golden/box-reference.svg",
+   "crates/oep-geo/tools/box_ref.py",
+   "crates/oep-geo/tools/gen_golden_box_glb.py",
+   "crates/oep-geo/tools/gen_golden_box_obj.py",
+   "crates/oep-geo/tools/gen_golden_box_pdf.py",
+   "crates/oep-geo/tools/gen_golden_box_step.py",
+   "crates/oep-geo/tools/gen_golden_box_stl.py",
+   "crates/oep-geo/tools/gen_golden_box_svg.py",
+   "docs/p6-m4-oep-geo-exporters.md",
+   "tests/test_oep_geo_exporters_acceptance.py"
+  ],
+  "skipped_existing": [
+   "crates/oep-geo/src/lib.rs"
+  ],
+  "lib_rs_needs_merge": false
+ }
+}
