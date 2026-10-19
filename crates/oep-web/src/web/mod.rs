@@ -311,8 +311,9 @@ pub async fn bom_page(
 
     let roots = graph.roots();
     let mut tree = String::new();
+    let mut on_path = std::collections::HashSet::new();
     for root in &roots {
-        render_bom_node(&graph, root, None, &mut tree);
+        render_bom_node(&graph, root, None, &mut on_path, &mut tree);
     }
     if roots.is_empty() {
         tree.push_str("<li>no top-level items in this graph</li>");
@@ -331,10 +332,18 @@ pub async fn bom_page(
 /// Render one node (and its subtree) of the relationship graph as a nested
 /// list item. `edge_qty` is the quantity on the edge that led here (`None`
 /// for a root), so quantity shows on every BOM edge.
+///
+/// `on_path` is the current recursion path (the ancestors of this node). An
+/// item discovered again later *on the same path* is a cycle: rendering
+/// recursed back into an ancestor, which would otherwise recurse forever and
+/// overflow the stack (P11-T07 P2T-02-UI). A fan-in (the same child under two
+/// different parents) is NOT a cycle and stays legal, which is why the guard
+/// tracks the active path only, not all visited items.
 fn render_bom_node(
     graph: &RelationshipGraph,
     item_id: &str,
     edge_qty: Option<u32>,
+    on_path: &mut std::collections::HashSet<String>,
     out: &mut String,
 ) {
     let name = graph
@@ -360,12 +369,21 @@ fn render_bom_node(
         name = esc(&name),
         qty_suffix = qty_suffix,
     ));
+    if !on_path.insert(item_id.to_string()) {
+        // Recursed back into an item already on the current path: a cycles
+        // in the graph. Render a bounded marker and stop (never recurse).
+        out.push_str(&format!(
+            " <span class=\"qty\">(cycle back to {id})</span></li>",
+            id = esc(item_id),
+        ));
+        return;
+    }
     let children = graph.children(item_id);
     if !children.is_empty() {
         out.push_str("<ul>");
         for edge in &children {
             if graph.contains(&edge.child) {
-                render_bom_node(graph, &edge.child, Some(edge.qty), out);
+                render_bom_node(graph, &edge.child, Some(edge.qty), on_path, out);
             } else {
                 // Tolerant: dangling edge renders as a marker, never crashes.
                 out.push_str(&format!(
@@ -377,6 +395,7 @@ fn render_bom_node(
         out.push_str("</ul>");
     }
     out.push_str("</li>");
+    on_path.remove(item_id);
 }
 
 /// `GET /ui/items/{item_id}/preview/{rev}.png` -- viewer embed: render the

@@ -286,6 +286,36 @@ fn egress_opted_in_is_not_permission_denied() {
     );
 }
 
+/// P11-T07 P2T-01-SB regression: the io_uring subsystem must be denied so the
+/// `IORING_OP_SOCKET` egress bypass cannot create an AF_INET descriptor
+/// without ever calling `socket(2)`. A filter that only denies socket(2) is
+/// reachable around; this test pins the hardened decision.
+///
+/// Outcomes on egress=false:
+///   - URING_BLOCKED (exit 0)       -> hardened filter or outer profile denied
+///                                     io_uring_setup: bypass closed.
+///   - URING_UNAVAILABLE (exit 1)   -> kernel has no io_uring: nothing to bypass.
+///   - URING_OK (exit 2)            -> io_uring reachable => the egress bypass
+///                                     is open; the sandbox FAILED to block egress.
+#[test]
+fn escape_via_io_uring_socket_fails() {
+    let limits = SandboxLimits::conservative_default();
+    if seccomp_available() {
+        let out = run_sb(limits, false, &[("OEP_SBOX_PROBE", "io_uring_sock")])
+            .expect("egress-capable sandbox must spawn the worker");
+        assert!(
+            out.stdout.contains("URING_BLOCKED") || out.stdout.contains("URING_UNAVAILABLE"),
+            "io_uring must be denied (bypass closed); got stdout={} stderr={}",
+            out.stdout,
+            out.stderr
+        );
+    } else {
+        let err = run_sb(limits, false, &[("OEP_SBOX_PROBE", "io_uring_sock")])
+            .expect_err("escape attempt must be refused (fail-closed)");
+        eprintln!("SKIP-live-filter (host forbids nested seccomp): spawn refused: {err}");
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Escaping the sandbox FAILS a test
 // ---------------------------------------------------------------------------

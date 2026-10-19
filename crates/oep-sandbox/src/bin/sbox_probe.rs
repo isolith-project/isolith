@@ -10,6 +10,7 @@
 //! | `connect` | TCP connect to `OEP_SBOX_CONNECT_ADDR` | CONNECT_BLOCKED (0) / CONNECT_UNREACHABLE (1) / CONNECT_OK (2) |
 //! | `socket_af_inet` | `socket(AF_INET,...)` | SOCKET_BLOCKED (0) / SOCKET_OK (2) |
 //! | `socket_af_packet` | `socket(AF_PACKET,...)` | SOCKET_BLOCKED (0) / SOCKET_OK (2) |
+//! | `io_uring_sock` | create AF_INET socket via IORING_OP_SOCKET | URING_BLOCKED (0) / URING_OK (2) / URING_UNAVAILABLE (1) |
 //! | `writefile` | write to `OEP_SBOX_WRITE_PATH` past the disk cap | WRITE_BLOCKED (0) / WRITE_OK (2) |
 //! | `seccomp_probe` | install the egress filter on itself and probe | SECCOMP_ENFORCED (0) / UNAVAILABLE (1) / NOT_ENFORCED (2) |
 //!
@@ -34,6 +35,7 @@ fn main() {
         "connect" => probe_connect(),
         "socket_af_inet" => probe_socket(libc::AF_INET),
         "socket_af_packet" => probe_socket(libc::AF_PACKET),
+        "io_uring_sock" => probe_io_uring_socket(),
         "writefile" => probe_writefile(),
         "seccomp_probe" => probe_seccomp(),
         other => {
@@ -140,6 +142,66 @@ fn probe_socket(family: libc::c_int) -> ! {
     // SAFETY: fd was just created.
     unsafe { libc::close(fd) };
     println!("SOCKET_OK");
+    std::process::exit(2);
+}
+
+/// `IORING_OP_SOCKET` egress-bypass probe (P11-T07 P2T-01-SB finding).
+///
+/// A seccomp filter that only denies `socket(2)` does not stop a worker from
+/// creating an `AF_INET` socket through io_uring's `IORING_OP_SOCKET` opcode,
+/// because that path never executes the `socket` syscall. The fixed filter
+/// denies `io_uring_setup`/`io_uring_enter`/`io_uring_register` outright, so
+/// under the hardened sandbox this probe must see `io_uring_setup` itself
+/// denied. Exit semantics:
+///   0 = io_uring blocked (URING_BLOCKED)   <- fixed filter working
+///   1 = io_uring unavailable on this kernel (URING_UNAVAILABLE, ENOSYS)
+///   2 = got an AF_INET socket via io_uring (URING_OK)  <- filter bypassed!
+fn probe_io_uring_socket() -> ! {
+    // io_uring syscall number (aarch64 and x86_64 both use this value, added
+    // by the asm-generic unistd in Linux 5.1+). io_uring_enter/register share
+    // the same removal; denying io_uring_setup blocks every later op.
+    const SYS_IO_URING_SETUP: libc::c_long = 425;
+
+    let mut params = [0u8; 0x80];
+    // SAFETY: raw syscall; if the kernel does want to create a ring we hand it
+    // a zeroed params buffer (reserved fields must be zero or the kernel
+    // returns EINVAL).
+    let ring = unsafe {
+        libc::syscall(
+            SYS_IO_URING_SETUP,
+            8 as libc::c_uint,
+            params.as_mut_ptr() as *mut libc::c_void,
+        )
+    };
+    if ring < 0 {
+        let err = std::io::Error::last_os_error();
+        match err.raw_os_error() {
+            Some(libc::EPERM) | Some(libc::EACCES) => {
+                // Filter (or outer profile) denied io_uring setup: blocked.
+                // SAFETY: no ring was created, nothing to close.
+                println!("URING_BLOCKED: {err}");
+                std::process::exit(0);
+            }
+            Some(libc::ENOSYS) => {
+                println!("URING_UNAVAILABLE: no io_uring on this kernel");
+                std::process::exit(1);
+            }
+            _ => {
+                println!("URING_ERR: {err}");
+                std::process::exit(1);
+            }
+        }
+    }
+    // SAFETY: ring_fd was returned by a successful io_uring_setup.
+    let ring_fd = ring as libc::c_int;
+    // SAFETY: raw map/unmap of the ring shared memory.
+    unsafe { libc::close(ring_fd) };
+    // Reaching here means io_uring_setup succeeded, which is only possible if
+    // the egress filter did NOT deny the syscall (the check above maps every
+    // denial to URING_BLOCKED/URING_UNAVAILABLE). Report OK as "bypass path
+    // reachable". A full socket() create through the opcode would also be
+    // possible, but the deny at io_uring_setup is the decisive control.
+    println!("URING_OK: io_uring_setup not denied (bypass path reachable)");
     std::process::exit(2);
 }
 

@@ -143,6 +143,122 @@ fn bom_tree_walks_relationship_graph() {
     );
 }
 
+/// Build an oep-geo document whose assembly graph contains a cycle reachable
+/// from a root (`asm-root -> asm-a -> asm-b -> asm-a`). Before the P11-T07
+/// P2T-02-UI fix this recurred forever in the BOM renderer and overflowed the
+/// handler stack; the renderer must now bound the cycle and return.
+fn cyclic_bom_document() -> String {
+    // Reuse the golden fixture (valid parts/bodies/features), then replace
+    // its assemblies with a cyclic trio. Build on the real Document type so
+    // the bytes are schema-valid by construction.
+    let identity = oep_geo::Transform([
+        1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+    ]);
+    let mut doc = Document::from_json_pretty(BRACKET_GOLDEN).expect("golden parses");
+    doc.assemblies = vec![
+        oep_geo::assembly::Assembly {
+            id: "asm-root".into(),
+            name: "Root Assembly".into(),
+            instances: vec![oep_geo::assembly::Instance {
+                id: "i-root".into(),
+                name: "to-A".into(),
+                source: oep_geo::assembly::InstanceSource::Assembly {
+                    id: "asm-a".into(),
+                },
+                transform: identity.clone(),
+                visible: true,
+            }],
+        },
+        oep_geo::assembly::Assembly {
+            id: "asm-a".into(),
+            name: "Assembly A".into(),
+            instances: vec![oep_geo::assembly::Instance {
+                id: "i-a".into(),
+                name: "to-B".into(),
+                source: oep_geo::assembly::InstanceSource::Assembly {
+                    id: "asm-b".into(),
+                },
+                transform: identity.clone(),
+                visible: true,
+            }],
+        },
+        oep_geo::assembly::Assembly {
+            id: "asm-b".into(),
+            name: "Assembly B".into(),
+            instances: vec![oep_geo::assembly::Instance {
+                id: "i-b".into(),
+                name: "back-to-A".into(),
+                source: oep_geo::assembly::InstanceSource::Assembly {
+                    id: "asm-a".into(),
+                },
+                transform: identity.clone(),
+                visible: true,
+            }],
+        },
+    ];
+    serde_json::to_string_pretty(&doc).expect("serialize cyclic doc")
+}
+
+#[test]
+fn cyclic_assembly_bom_does_not_overflow_stack() {
+    let mut store = VaultStore::new();
+    let item = store
+        .create_item(&CreateItemRequest {
+            name: "cyclic-bom-item".to_string(),
+            kind: "assembly".to_string(),
+            description: Some("cycle regression fixture".to_string()),
+            owner: Some("p11t07".to_string()),
+            context: None,
+        })
+        .expect("create cyclic item");
+    store
+        .create_revision(
+            &item.id,
+            &CreateRevisionRequest {
+                state: Some("working".to_string()),
+                comment: Some("cyclic rev".to_string()),
+                created_by: Some("p11t07".to_string()),
+                file: FileUpload {
+                    filename: "cyclic.oepgeo.json".to_string(),
+                    format: "oep-geo".to_string(),
+                    content_type: Some("application/json".to_string()),
+                    content: base64::engine::general_purpose::STANDARD
+                        .encode(cyclic_bom_document().as_bytes()),
+                },
+            },
+        )
+        .expect("save cyclic rev");
+    let web = PdmWeb::start_with_store("127.0.0.1:0", store).expect("web server starts");
+    let addr = web.addr();
+
+    // Must return (bounded), NOT hang or crash the handler with a stack
+    // overflow. A read timeout here is a test failure, and so is an empty
+    // body. Use a short read timeout so an unbounded recursion is caught fast.
+    let mut stream = TcpStream::connect(&addr).expect("connect to web server");
+    stream
+        .set_read_timeout(Some(Duration::from_secs(10)))
+        .expect("set timeout");
+    let req = format!(
+        "GET /ui/items/{}/bom HTTP/1.1\r\nHost: {}\r\nConnection: close\r\n\r\n",
+        item.id, addr
+    );
+    stream.write_all(req.as_bytes()).expect("write request");
+    stream.flush().ok();
+    let resp = http::read_response(&mut stream).expect("parse HTTP response");
+
+    assert_eq!(resp.status, 200, "cyclic BOM must still render");
+    let page = String::from_utf8_lossy(&resp.body).into_owned();
+    // The cycle is bounded: the graph shows the root, the cycle members, and
+    // the cycle-back marker instead of recursing forever.
+    assert!(page.contains("Root Assembly"), "root node rendered");
+    assert!(page.contains("Assembly A"), "cycle member A rendered");
+    assert!(page.contains("Assembly B"), "cycle member B rendered");
+    assert!(
+        page.contains("cycle back to asm-a"),
+        "cycle marker emitted (bounded traversal)"
+    );
+}
+
 #[test]
 fn viewer_embed_renders_real_models() {
     let mut store = VaultStore::new();
