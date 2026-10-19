@@ -58,10 +58,14 @@ pub mod blobstore;
 pub mod change;
 pub mod client;
 pub mod deploy_role;
+/// Content digest + local in-memory PDM stub (P7-M2-T01 workbench surface).
+pub mod digest;
+pub mod foldersync;
 pub mod graph;
 pub mod http;
 pub mod identity;
 pub mod legacy;
+pub mod local;
 pub mod model;
 pub mod rbac;
 pub mod revstore;
@@ -73,10 +77,6 @@ pub mod sync;
 pub mod validate;
 pub mod web;
 pub mod working_set;
-/// Content digest + local in-memory PDM stub (P7-M2-T01 workbench surface).
-pub mod digest;
-pub mod foldersync;
-pub mod local;
 
 pub use api::API_VERSION;
 pub use api::{PdmClient, PdmError, PdmWriteRequest, RevisionSummary};

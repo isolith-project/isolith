@@ -71,7 +71,9 @@ impl ReadOnlyView {
         let expected = m
             .get(rel)
             .ok_or_else(|| {
-                crate::foldersync::manifest::ManifestError::PathEscape(format!("no such file: {rel}"))
+                crate::foldersync::manifest::ManifestError::PathEscape(format!(
+                    "no such file: {rel}"
+                ))
             })?
             .sha256
             .clone();
@@ -79,9 +81,9 @@ impl ReadOnlyView {
         let bytes = std::fs::read(&path)?;
         let actual = crate::foldersync::manifest::sha256_hex(&bytes);
         if actual != expected {
-            return Err(crate::foldersync::manifest::ManifestError::PathEscape(format!(
-                "content mismatch for {rel}"
-            )));
+            return Err(crate::foldersync::manifest::ManifestError::PathEscape(
+                format!("content mismatch for {rel}"),
+            ));
         }
         Ok(bytes)
     }

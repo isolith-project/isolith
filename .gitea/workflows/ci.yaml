@@ -51,3 +51,42 @@ jobs:
           git log --oneline -1
       - name: Integration tests
         run: cargo test --workspace --tests 2>&1 | tail -25
+
+  # P2-M6-T03: the P2 GA gate -- every corpus mesh classified (OPEN or SKIP,
+  # zero panics) AND 100% of golden files PASS within epsilon. Restored here by
+  # INTEGRATION-T03 as part of the union verification: the P2 gate runner and
+  # acceptance test were ported to integrated main by INTEGRATION-T02 but the
+  # CI job itself was missing from the union. This job is the gate's home on
+  # main (one workflow per GA gate convention; see ga-gate-p4/p8/p9/p10/p11/p12
+  # for the lane gates). Checkout uses the TRIGGERING ref so the gate tests the
+  # branch/pull under validation. Degrades to a classified SKIP when corpus
+  # material is absent (CI green) while failing hard on any real golden
+  # mismatch.
+  gate:
+    name: gateway
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: GA gate acceptance (TDD)
+        run: |
+          if [ ! -f tests/ga_gate_test.py ]; then
+            echo "gate acceptance test not present on this ref (pre-GA-gate main); skipping"
+            exit 0
+          fi
+          python3 tests/ga_gate_test.py
+      - name: GA gate run (tolerant on absent corpus, fail on mismatch)
+        run: |
+          if [ ! -f python/oep_tooling/ga_gate.py ]; then
+            echo "GA gate module not present on this ref; skipping"
+            exit 0
+          fi
+          PYTHONPATH=python python3 -m oep_tooling.ga_gate --out ./corpus || exit 1

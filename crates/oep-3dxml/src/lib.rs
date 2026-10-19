@@ -18,25 +18,25 @@
 /// Placeholder identity anchored by the monorepo layout test.
 pub const WORKSTREAM: &str = "P3-3DXML";
 
-/// Outer ZIP container opening (P3-M1-T01).
-pub mod container;
-/// 3DXML manifest parsing (P3-M1-T01).
-pub mod manifest;
+/// Internal mesh -> 3DXML ASCII writer (P3-M4-T01).
+pub mod ascii;
 /// Bill-of-materials / reference-listing parse (P3-M1-T01).
 pub mod bom;
+/// Outer ZIP container opening (P3-M1-T01).
+pub mod container;
+/// Gregory-patch surface decode to NURBS (P3-M2-T01, own math).
+pub mod gregory;
+/// Lattice helpers for Gregory-patch decode (P3-M2-T01).
+pub mod lattice;
+/// 3DXML manifest parsing (P3-M1-T01).
+pub mod manifest;
+/// Tessellated mesh rep -> internal mesh (P3-M1-T03).
+pub mod mesh;
+/// `.3DRep` markup document parse (P3-M1-T02, carried by the JT-reader stack).
+pub mod rep;
+/// Surface->mesh tessellation with quality control (P3-M2-T02).
+pub mod tessellate;
 /// Binary `.3DRep` V5_CFV3 header documentation (P3-M3-T01).
 pub mod v5rep;
 /// Minimal 3-vector math for surface decode (P3-M2-T01).
 pub mod vec3;
-/// Lattice helpers for Gregory-patch decode (P3-M2-T01).
-pub mod lattice;
-/// Gregory-patch surface decode to NURBS (P3-M2-T01, own math).
-pub mod gregory;
-/// Tessellated mesh rep -> internal mesh (P3-M1-T03).
-pub mod mesh;
-/// Surface->mesh tessellation with quality control (P3-M2-T02).
-pub mod tessellate;
-/// Internal mesh -> 3DXML ASCII writer (P3-M4-T01).
-pub mod ascii;
-/// `.3DRep` markup document parse (P3-M1-T02, carried by the JT-reader stack).
-pub mod rep;

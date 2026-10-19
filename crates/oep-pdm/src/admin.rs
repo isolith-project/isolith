@@ -46,8 +46,8 @@ use std::sync::RwLock;
 use crate::audit::{self, AuditLog};
 use crate::identity::{AccountStatus, IdentityService};
 use crate::rbac::{Action, Authorizer, Decision, Role, RoleMatrix, RoleSubject};
-use crate::state::{Maturity, RevisionState};
 use crate::revstore::{RevisionStore, StoreError, StoredRevision};
+use crate::state::{Maturity, RevisionState};
 
 /// A storage-quota failure, carrying the numbers the UI can show.
 #[derive(Debug, Clone, PartialEq, Eq)]

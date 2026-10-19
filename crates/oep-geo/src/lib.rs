@@ -40,8 +40,8 @@ pub mod math;
 pub mod nurbs;
 pub mod part;
 pub mod predicates;
-pub mod topology_state;
 pub mod tolerance;
+pub mod topology_state;
 pub mod transform;
 pub mod units;
 pub mod validate;
@@ -54,19 +54,19 @@ pub use body::{Body, BodyKind, BoundingBox};
 pub use document::Document;
 /// [`Feature`]: a modelling operation in a part's history.
 pub use feature::Feature;
+/// P6-M3-T03 feature-graph model with replay.
+pub use feature_graph::{
+    BBox, Evaluator, FeatureGraph, FeatureNode, GraphError, MiniBoxEvaluator, ParamValue,
+    ReplayError, ReplayResult, ReplayStep,
+};
+/// [`History`]/[`HistoryState`]: serializable topology undo/redo stack (P6-M3-T02).
+pub use history::{History, HistoryState};
 /// [`Part`]: engineering part owning bodies and a feature history.
 pub use part::Part;
 /// [`Transform`]: 4x4 row-major instance placement matrix.
 pub use transform::Transform;
 /// [`ValidationError`]: a single documented structural violation.
 pub use validate::ValidationError;
-/// [`History`]/[`HistoryState`]: serializable topology undo/redo stack (P6-M3-T02).
-pub use history::{History, HistoryState};
-/// P6-M3-T03 feature-graph model with replay.
-pub use feature_graph::{
-    BBox, Evaluator, FeatureGraph, FeatureNode, GraphError, MiniBoxEvaluator, ParamValue,
-    ReplayError, ReplayResult, ReplayStep,
-};
 
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P6-GEO";

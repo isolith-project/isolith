@@ -190,6 +190,11 @@ def probe_3dxml_container(data: bytes):
             return "unknown-format"
         m = re.search(r"<Root>([^<]+)</Root>", man)
         if not m:
+            # Real-world Dassault Manifest.xml wraps the root member in a
+            # CDATA section: <Root><![CDATA[name.3dxml]]></Root> (verified on
+            # committed corpus material). Accept that form too.
+            m = re.search(r"<Root>\s*<!\[CDATA\[([^\]]+)\]\]>\s*</Root>", man)
+        if not m:
             return "unknown-format"
         root = m.group(1).strip()
         if root not in names:

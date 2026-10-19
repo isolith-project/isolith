@@ -358,7 +358,7 @@ def golden_leg(spec_path=None, corpus_root=None, cache_dir=None):
     if runner is not None:
         try:
             results, _ = runner.run_spec(spec_path or "corpus/golden_tests.json",
-                                         cache_dir=cache_dir)
+                                         cache_dir=cache_dir, corpus_root=corpus_root)
             out = []
             for r in results:
                 out.append(LegRow(getattr(r, "id", "?"), "golden",

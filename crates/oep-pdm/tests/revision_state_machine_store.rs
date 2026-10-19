@@ -7,8 +7,8 @@ use std::fs;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicU32, Ordering};
 
-use oep_pdm::state::{Maturity, RevisionState};
 use oep_pdm::revstore::{RevisionStore, StoreError};
+use oep_pdm::state::{Maturity, RevisionState};
 
 static COUNTER: AtomicU32 = AtomicU32::new(0);
 

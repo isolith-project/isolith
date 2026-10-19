@@ -49,9 +49,9 @@ pub mod topology;
 /// Section/view extraction via planar cuts over the internal mesh (P2-M3-T03).
 pub mod section;
 
+pub mod assembly;
 /// Transform/instance hierarchy (assembly CGR inside part) with matrix stack (P2-M4-T02).
 pub mod instance;
-pub mod assembly;
 
 /// Binary STL mesh export (P2-M2-T02).
 pub mod stl;

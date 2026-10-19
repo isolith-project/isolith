@@ -13,8 +13,8 @@ use std::sync::atomic::{AtomicU32, Ordering};
 use oep_pdm::admin::{AdminError, AdminService};
 use oep_pdm::identity::{IdentityConfig, IdentityService};
 use oep_pdm::rbac::Role;
-use oep_pdm::state::{Maturity, RevisionState};
 use oep_pdm::revstore::{RevisionStore, StoredRevision};
+use oep_pdm::state::{Maturity, RevisionState};
 
 static COUNTER: AtomicU32 = AtomicU32::new(0);
 

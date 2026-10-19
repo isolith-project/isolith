@@ -67,16 +67,38 @@ def _compare_numeric(actual, expected, tolerance):
     return True, None
 
 
-def run_test(test, manifest=None, cache_dir=None):
+def _resolve_input(test, corpus_root):
+    """Resolve a test's input directly under an explicit corpus root when given.
+
+    Returns (path, None) on success or (None, error). The registry/manifest
+    path stays the fallback for the committed-corpus mode. Supporting both
+    ``<root>/<corpus_id>`` and ``<root>/data/<basename>`` layouts.
+    """
+    cid = test.get("corpus_id", "")
+    if not corpus_root or not cid:
+        return None, None
+    for cand in (
+        os.path.join(corpus_root, cid),
+        os.path.join(corpus_root, "data", cid),
+        os.path.join(corpus_root, "data", os.path.basename(cid)),
+    ):
+        if os.path.isfile(cand):
+            return cand, None
+    return None, "input absent under corpus_root: %s" % cid
+
+
+def run_test(test, manifest=None, cache_dir=None, corpus_root=None):
     """Execute one golden test. Returns GoldenResult."""
     tid = test["id"]
-    m = manifest or registry.load_manifest()
-    entry = registry.find_entry(m, test["corpus_id"])
-    if entry is None:
-        return GoldenResult(tid, "SKIP", "corpus entry not in registry: %s" % test["corpus_id"])
-    in_path, err = registry.resolve_entry(entry, manifest=m, cache_dir=cache_dir)
-    if err:
-        return GoldenResult(tid, "SKIP", "input unresolved: %s" % err)
+    in_path, in_err = _resolve_input(test, corpus_root)
+    if in_path is None and in_err is None:
+        m = manifest or registry.load_manifest()
+        entry = registry.find_entry(m, test["corpus_id"])
+        if entry is None:
+            return GoldenResult(tid, "SKIP", "corpus entry not in registry: %s" % test["corpus_id"])
+        in_path, in_err = registry.resolve_entry(entry, manifest=m, cache_dir=cache_dir)
+    if in_err:
+        return GoldenResult(tid, "SKIP", "input unresolved: %s" % in_err)
     cmd = []
     for a in test.get("command", []):
         cmd.append(a.replace("{input}", in_path))
@@ -121,8 +143,12 @@ def run_test(test, manifest=None, cache_dir=None):
     return GoldenResult(tid, "FAIL", detail or "output differs from golden; see diff")
 
 
-def run_spec(spec_path, manifest=None, cache_dir=None):
-    """Run every test in a golden spec file. Returns (results, exit_code)."""
+def run_spec(spec_path, manifest=None, cache_dir=None, corpus_root=None):
+    """Run every test in a golden spec file. Returns (results, exit_code).
+
+    ``corpus_root`` scopes input resolution to an explicit corpus tree when
+    given (falls through to the registry manifest for the committed corpus).
+    """
     spec_abs = os.path.abspath(spec_path)
     if manifest is None:
         try:
@@ -133,7 +159,8 @@ def run_spec(spec_path, manifest=None, cache_dir=None):
         spec = json.load(fh)
     results = []
     for test in spec.get("tests", []):
-        results.append(run_test(test, manifest=manifest, cache_dir=cache_dir))
+        results.append(run_test(test, manifest=manifest, cache_dir=cache_dir,
+                                corpus_root=corpus_root))
     any_fail = any(r.status == "FAIL" for r in results)
     return results, (1 if any_fail else 0)
 
