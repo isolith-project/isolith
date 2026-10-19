@@ -48,6 +48,19 @@ file's output.
 - 0e595cd **GREEN - native TLS termination in oep-pdm + cert tooling + checksummed vault backup/restore (U1/VM verified, DR handoff to P10-M3-T01)**
 - 51ee7da **TWO-MACHINE GA gate for the P10 fresh-install walkthrough**
 - fa14054 **commit the recorded two-machine proof + install-walkthrough video**
+- 6d69bad **wave integration and checkpoint policy + tooling**
+- d97c7e9 **release install rehearsal (fresh clean machine per release)**
+- aa0ebe1 **PDM authorizes by default; --no-auth is the explicit opt-out**
+- bb37d36 **oep-web serves its merged REST v1 surface behind the RBAC boundary by default**
+- 459553e **packaging matrix + AppImage/Flatpak/Docker/MSI recipes for every shipped binary**
+- 1792b3c **export-control classification gate wired into the release pipeline**
+- ef8003a **release train - cut branch, feature freeze, canary rollout, patch policy**
+- ebf8087 **supply-chain hardening - pinned deps verified, reproducible builds, release-branch CI gates**
+- 431d51f **pen-test day findings + fixes (sandbox egress bypass, BOM cycle DoS, file disposition)**
+- 6220cd8 **crypto hardening - blob content-hash integrity + signed release artifacts and update bundle**
+- 0f1566f **dependency SBOM + CVE release gate (every release)**
+- 14c322a **E2E scenario suite (reference vertical, headless, release-blocking)**
+- 6b9c7d5 **release notes and changelog automation from conventional commits (git-cliff)**
 
 
 ### Bug Fixes
@@ -55,6 +68,10 @@ file's output.
 - c455086 **honor toolchain pin via rust-toolchain.toml, canonical clone URL**
 - 8df9595 **CI gate job creates report dir; harness ensures report dir exists**
 - d951e40 **CI workflow installs curl so the restore-check health/read legs can run in the rust:1-slim container**
+- b592328 **wave_checkpoint repo_root tolerates a bare repo for read-only subcommands**
+- 8f9472f **make supply-chain gates container-proof in CI**
+- 0eccc8c **accept EACCES as io_uring-denial in egress self-verify**
+- bdf5c49 **upgrade quick-xml 0.39.4 -> 0.41.0 to clear RUSTSEC-2026-0194/0195 (tag DoS); SBOM gate green 0 blockers**
 
 
 
@@ -70,6 +87,9 @@ file's output.
 - b09fa9f **register oep-web (P8-M4-T01 web UI + viewer embed) in the crate map**
 - 96b4e46 **record CI-green + PR #151 in the proof manifest**
 - e67b8fc **align walkthrough video layout with the committed recordings**
+- 094bea1 **P6-M3 ADR v1.1.0 - widen OCCT kernel seam to fillet, chamfer, and primitives**
+- 842766d **runbook, waiver register, proof + per-release SBOM artifacts**
+- 7dd10b2 **trunk pointer -> main (post wave-3 consolidation)**
 
 
 ### Tests
@@ -106,6 +126,9 @@ file's output.
 - 98a899b **bootstrap keelworks meta repo (README, gitignore)**
 - 67a44ec **lockfile refresh after oep-job merge**
 - 147986b **drop stray commit-msg.txt from the P9-M3-T01 worker**
+- d22800b **archive oep-meta, preserve its unique artifact, teach the hygiene check**
+- ce8ba7a **drop unused io_uring const in sbox probe**
+- a097932 **gitignore advisory-db cache; commit SBOM scan proof md for 2027.1.0-rc1**
 
 
 
@@ -123,6 +146,24 @@ file's output.
 ### Other
 
 - 6d20399 **DR drill - fresh-machine restore from backup under 60 min**
+- 301f5a7 **port oep-geo P6 math foundation (PRs 72,73,74,75,76,80)**
+- 805fe45 **port oep-cgr reader modules (PRs 32,38,41-46,48-50,52-54)**
+- 3c1a20a **port oep-3dxml reader/writer modules (PRs 56,57,59,60,61,62,66,69,70)**
+- 2557c0a **port P4 PMI/QIF/MBD lane (PRs 71,87-94,98)**
+- 44f17d5 **port P0/P1/P2 docs, tools, corpus waves (PRs 3,11,13,19-21,25-27,29,30,33-37,51,58,79,85)**
+- 6db841c **port P5 research lane + JT reader (PRs 96,97,100,101,102,105,106,108)**
+- 5cb6957 **port P7 modeler crates (PRs 103,104,110,111,113,114)**
+- 23b6ca1 **port P7-M2-T01 workbench + P7-M4-T01 sketcher (PRs 107,112)**
+- 978934f **port P8 PDM + P10 lane (PRs 116,118,123,125,129,148,149)**
+- a00d2b3 **(c)-item dispositions + P8-M5-T01 folder-sync client**
+- d577689 **complete port log + record; P1 report (PR 31) + P1-M3 sources**
+- 790db6a **fix union gate defects + rustfmt normalize**
+- 201d016 **permissive bounded solver behind the unchanged oep-assem seam**
+- 0acde1e **union verification proof - all gates green on integrated main**
+- a356b00 **reformat oep-pdm TLS files to pinned rustfmt 1.98.1**
+- c5c6edc **rustfmt normalization + lint fixes + SBOM image-scan worktree-path fix after 11-PR integration**
+- 5d99f15 **real freeze manifest at integrated main head (supersedes dry-run placeholder at e67b8fc)**
+- 7eefaa5 **freeze manifest records the release tip tree (tag==frozen sha)**
 
 
 
