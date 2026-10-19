@@ -13,6 +13,7 @@ use axum::routing::get;
 use axum::Router;
 
 use oep_geo::Document;
+use oep_pdm::authz::AuthState;
 use oep_pdm::graph::RelationshipGraph;
 use oep_pdm::service::Store;
 
@@ -28,9 +29,27 @@ const VIEW_WIDTH: u32 = 320;
 const VIEW_HEIGHT: u32 = 240;
 
 /// Build the merged router: the oep-pdm REST API v1 router plus the web UI
-/// routes, all over the same store.
+/// routes, all over the same store. This is the OPEN variant (no auth gate);
+/// the shipped binary boots the authorized variant by default.
 pub fn build_router(store: Store) -> Router<()> {
     let api = oep_pdm::service::build_router(store.clone());
+    merged_router(api, store)
+}
+
+/// Build the merged router served behind the P11-T03 auth gate.
+///
+/// The REST API v1 surface is the SAME router oep-pdm serves behind its
+/// `build_authorized_router` (the authz middleware decided per-request before
+/// any contract handler runs); the browser UI routes (`/`, `/ui/*`) stay
+/// reachable as the read-only workbench surface. Merging the authorized API
+/// router with the UI router keeps the gate scoped to the REST surface only.
+pub fn build_authorized_router(store: Store, state: std::sync::Arc<AuthState>) -> Router<()> {
+    let api = oep_pdm::service::build_authorized_router(store.clone(), state);
+    merged_router(api, store)
+}
+
+/// Combine a given API router (open or gated) with the UI route table.
+fn merged_router(api: Router<()>, store: Store) -> Router<()> {
     let ui = Router::new()
         .route("/", get(explorer))
         .route("/ui/items/{item_id}", get(item_page))

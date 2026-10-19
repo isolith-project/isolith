@@ -1,7 +1,7 @@
 ---
 title: P11-T03 Auth Boundary (RBAC bypass attempts, IDOR on vault objects)
 status: Ratified (Wave-3 P11-T03)
-version: 1.1.0
+version: 1.2.0
 date: 2026-10-18
 owner: Keelworks program governance, P11 security lane
 applies_to: the oep-pdm REST API v1 surface (items, revisions, files, audit log, lock/transition, sync), served behind the P8-M3 RBAC authorizer
@@ -82,12 +82,22 @@ Wiring principle: the gate is layered on the SAME handlers and route table
 (`service::shared_router`). Nothing is rewritten per-route; classification
 is the only difference.
 
-Scope note (SEC-AUTHZ-DEFAULT): this card's secure-by-default wiring covers
-the shipped PDM control plane (`oep-pdm`, `oep-pdm-stub`). The `oep-web`
-browser workbench (P8-M4-T01) merges the same REST v1 router onto its UI
-surface and remains open until the identity layer lands; it is a separately
-tracked residual (its loopback-bind default keeps it LAN-off per decision
-#10) and must adopt the same gate before any public exposure.
+Scope note (SEC-AUTHZ-RESIDUAL, resolved in v1.2.0): this card's
+secure-by-default wiring originally covered the shipped PDM control plane
+(`oep-pdm`, `oep-pdm-stub`); the `oep-web` browser workbench (P8-M4-T01)
+merged the same REST v1 router onto its UI surface and remained open. As of
+v1.2.0 the residual is CLOSED: the shipped `oep-web` binary now boots its
+merged REST v1 surface behind the SAME gate (`build_authorized_router` +
+strict boundary), and the P11-T03 attack matrix is proven denied against the
+default `oep-web` boot (`crates/oep-web/tests/web_auth_boundary.rs`,
+mirroring the oep-pdm default-binary leg). The default boot advertises
+`authorization: ENFORCED` on its first line; the explicit opt-out prints
+`authorization: DISABLED` and a loud warning. The browser HTML/PNG workbench
+routes (`/`, `/ui/*`) intentionally stay reachable: they are a read-only
+surface whose gate needs the P8-M3-T01 identity layer (a verified principal),
+and until that lands they are served open but LAN-off by the loopback-bind
+default (decision #10) - recorded as accepted risk with that compensating
+control.
 
 ## 4. Endpoint to action map
 
@@ -136,6 +146,7 @@ never grant a release.
 | D4 | Cross-tenant responses are 404 (existence masked); cross-role denials are 403. | Separates IDOR-masking (hide the object) from authorization failure (the object is visible but the action is not permitted). Both are in the acceptance's "403/404" set. |
 | D5 | Identity headers are client-declared in this card. | Authentication (who you are) is P8-M3-T01's job; authorization (what you may do) is this card's job. The suite pins the decision path; the identity layer will replace the header principal with a verified passport and keep the decision path byte-for-byte. Until then the boundary must be understood as authorization-grade only. |
 | D6 | Authorization is ON by default (SEC-AUTHZ-DEFAULT): the shipped binaries enforce the RBAC boundary on every start; the open contract is only reachable by explicitly passing `--no-auth`, which prints a loud startup warning that authorization is disabled. | Defense customers review "secure when configured" as not secure; an unauthenticated control-plane API is the classic lateral-movement foothold even inside the customer network (decision #10 reduces but does not remove exposure: insider, misconfiguration, co-tenant LAN). Making the open path the explicit, warned opt-out keeps controlled test/air-gap use possible while the default denies. The acceptance measures the suite against the DEFAULT binary, not an opt-in path. |
+| D7 | The oep-web browser workbench serves the same gate on its merged REST v1 surface by default (SEC-AUTHZ-RESIDUAL), while its read-only HTML/PNG UI routes stay open until the identity layer lands. | The residual recorded in v1.1.0 is closed: `oep-web`'s merged REST surface is denied by default (same matrix proven against the shipped boot). The UI routes are a read-only workbench the browser must reach without headers; gating them before P8-M3-T01 (verified principal) would break the workbench for no gain. They stay LAN-off by the loopback-bind default (decision #10), recorded as accepted risk with that compensating control. |
 
 ## 6. How the suite proves it asserts (the permissive-stub test)
 
@@ -187,6 +198,20 @@ and every pull request to the repo.
 
 ## 9. Change log
 
+- 1.2.0 (2026-10-18): SEC-AUTHZ-RESIDUAL. The residual recorded in v1.1.0 is
+  closed: the shipped `oep-web` binary now serves its merged REST v1 surface
+  behind the same gate as oep-pdm (secure by default; `--no-auth` is the
+  explicit, loudly-warned opt-out). A new default-binary leg in
+  `crates/oep-web/tests/web_auth_boundary.rs` re-runs the P11-T03 attack
+  matrix against the shipped `oep-web` boot (every cross-role / cross-tenant /
+  unauthenticated probe denied 403/404, legitimate same-tenant use green, the
+  UI explorer stays browsable, and `--no-auth` provably warns and opens).
+  The browser HTML/PNG UI routes stay open by design until the P8-M3-T01
+  identity layer lands (decision D7), LAN-off via the loopback-bind default
+  (decision #10); that open surface is recorded as accepted risk with that
+  compensating control. Shared probe matrix moved to
+  `crates/oep-pdm/src/authz/probes.rs` so the oep-pdm and oep-web suites use
+  one source of truth. P11/threat-model.md C2 updated to the gated posture.
 - 1.1.0 (2026-10-18): SEC-AUTHZ-DEFAULT. The shipped `oep-pdm` /
   `oep-pdm-stub` binaries now enforce the RBAC boundary on every start
   (decision D6); the open contract is the explicit, loudly-warned `--no-auth`

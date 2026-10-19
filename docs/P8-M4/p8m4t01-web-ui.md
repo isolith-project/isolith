@@ -1,7 +1,7 @@
 # P8-M4-T01: PDM Web UI (item explorer, BOM tree, viewer embed, compare view)
 
 Status: implemented (GREEN, verified on the reference vertical fixture).
-Owner: P8 PDM lane. Version: 1 (2026-10-17).
+Owner: P8 PDM lane. Version: 2 (2026-10-18).
 
 ## 1. What this card delivers
 
@@ -43,6 +43,26 @@ clients keep working against the same server and port.
 
 The `oep-web` binary is the single entry point (`oep-web [--addr ...]
 [--persist-dir ...]`).
+
+## 2.5 Security posture (SEC-AUTHZ-RESIDUAL, v2)
+
+SECURE BY DEFAULT: the shipped `oep-web` binary serves its merged REST API v1
+router behind the same P11-T03 RBAC boundary as the `oep-pdm` binary
+(`oep_web::web::build_authorized_router` wires `oep_pdm::service::
+build_authorized_router` plus the UI routes). Every request to `/api/v1/*` is
+decided against the strict boundary authorizer before a contract handler runs
+(403 cross-role / unauthenticated, 404 cross-tenant masked). The open contract
+is reachable only via the explicit `--no-auth` opt-out, which prints a loud
+startup warning (controlled test / air-gap use only).
+
+The browser UI routes (`/`, `/ui/*`) remain reachable on the authorized boot:
+they are a read-only HTML/PNG workbench surface whose gate awaits the P8-M3-T01
+identity layer (which will carry a verified principal the gate can trust). Until
+then the UI surface is served open but LAN-off by the loopback-bind default
+(decision #10); publishing it is the operator's accepted-risk call. The default
+boot's enforcement is proven by `crates/oep-web/tests/web_auth_boundary.rs`,
+which re-runs the P11-T03 attack matrix against the shipped binary (all probes
+denied 403/404, the UI root stays browsable, and `--no-auth` warns and opens).
 
 ## 3. Reference vertical fixture
 

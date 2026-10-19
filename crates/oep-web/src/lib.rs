@@ -31,8 +31,10 @@ use std::sync::{Arc, Mutex};
 use std::thread::JoinHandle;
 use std::time::Duration;
 
+pub use oep_pdm::authz::AuthState;
+pub use oep_pdm::rbac::Authorizer;
 pub use oep_pdm::service::Store;
-pub use web::{build_router, drawn_pixel_count};
+pub use web::{build_authorized_router, build_router, drawn_pixel_count};
 
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P8-WEB";
@@ -57,17 +59,53 @@ impl PdmWeb {
         Self::start_with_store(addr, oep_pdm::store::VaultStore::new())
     }
 
-    /// Start serving with an already-populated store.
+    /// Start serving with an already-populated store, OPEN (no auth gate).
+    ///
+    /// This is the library/embed path (tests, in-process demos); the shipped
+    /// binary boots via [`Self::start_with_authorizer`] by default so the
+    /// merged REST surface is secure-by-default.
     pub fn start_with_store(addr: &str, store: oep_pdm::store::VaultStore) -> io::Result<PdmWeb> {
+        Self::start_inner(addr, store, None)
+    }
+
+    /// Start serving behind the P11-T03 auth boundary (SEC-AUTHZ-RESIDUAL).
+    ///
+    /// The merged REST API v1 surface is gated by `build_authorized_router`
+    /// with the given authorizer before any contract handler runs, exactly as
+    /// the shipped `oep-pdm` binary does; the browser UI routes stay reachable
+    /// as the read-only workbench surface. This is the DEFAULT boot path of
+    /// the shipped `oep-web` binary (unless `--no-auth` is explicitly passed).
+    pub fn start_with_authorizer(
+        addr: &str,
+        store: oep_pdm::store::VaultStore,
+        authorizer: Authorizer,
+    ) -> io::Result<PdmWeb> {
+        Self::start_inner(addr, store, Some(authorizer))
+    }
+
+    /// Shared start: bind, wrap the store, and (when `authorizer` is given)
+    /// serve the merged REST surface behind the P11-T03 auth gate.
+    fn start_inner(
+        addr: &str,
+        store: oep_pdm::store::VaultStore,
+        authorizer: Option<Authorizer>,
+    ) -> io::Result<PdmWeb> {
         let listener = std::net::TcpListener::bind(addr)?;
         listener.set_nonblocking(true)?;
         let addr = listener.local_addr()?;
         let store = Arc::new(Mutex::new(store));
+        let auth_state = authorizer.map(|a| {
+            Arc::new(AuthState {
+                authorizer: Arc::new(a),
+                store: Arc::clone(&store),
+            })
+        });
         let shutdown = Arc::new(AtomicBool::new(false));
         let handle = {
             let store = Arc::clone(&store);
             let shutdown = Arc::clone(&shutdown);
-            std::thread::spawn(move || run_runtime(listener, store, shutdown))
+            let auth_state = auth_state.clone();
+            std::thread::spawn(move || run_runtime(listener, store, shutdown, auth_state))
         };
         Ok(PdmWeb {
             addr,
@@ -104,7 +142,14 @@ impl Drop for PdmWeb {
 
 /// Boot a tokio runtime for `listener` and serve the merged router until told
 /// to stop. Runs inside the boundary thread; returning here means shutdown.
-fn run_runtime(listener: std::net::TcpListener, store: Store, shutdown: Arc<AtomicBool>) {
+/// When `auth_state` is given, the merged REST surface is served behind the
+/// P11-T03 auth gate instead of open.
+fn run_runtime(
+    listener: std::net::TcpListener,
+    store: Store,
+    shutdown: Arc<AtomicBool>,
+    auth_state: Option<Arc<AuthState>>,
+) {
     let rt = match tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .build()
@@ -116,7 +161,10 @@ fn run_runtime(listener: std::net::TcpListener, store: Store, shutdown: Arc<Atom
         }
     };
     rt.block_on(async move {
-        let app = build_router(store);
+        let app = match &auth_state {
+            Some(state) => build_authorized_router(store, Arc::clone(state)),
+            None => build_router(store),
+        };
         let listener = match tokio::net::TcpListener::from_std(listener) {
             Ok(l) => l,
             Err(e) => {

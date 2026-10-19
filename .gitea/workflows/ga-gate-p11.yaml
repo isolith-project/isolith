@@ -35,6 +35,14 @@ jobs:
             exit 0
           fi
           cargo test -p oep-pdm --test auth_boundary 2>&1 | tail -15
+      - name: SEC-AUTHZ-RESIDUAL oep-web default-binary leg
+        run: |
+          if [ ! -f crates/oep-web/tests/web_auth_boundary.rs ]; then
+            echo "oep-web auth leg not present on this ref; skipping"
+            exit 0
+          fi
+          cargo build -p oep-web 2>&1 | tail -3
+          cargo test -p oep-web --test web_auth_boundary 2>&1 | tail -15
       - name: P11-T03 authz unit tests + RBAC core
         run: |
           cargo test -p oep-pdm --lib authz 2>&1 | tail -5
