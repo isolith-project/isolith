@@ -1,0 +1,136 @@
+{
+  "card": "P10-M1-T03",
+  "tool": "oep-vault-migrate",
+  "run_at": "2026-10-18T06:41:19.281446Z",
+  "tree": "representative V5-era folder tree (fake bytes: CATPart/CATProduct/txt/pdf + empty Archive folder)",
+  "result": "PASS",
+  "facts": {
+    "contexts": 7,
+    "items": 6,
+    "revisions": 6,
+    "files": 6,
+    "import_rows": 1,
+    "blob_addresses_match_source": true,
+    "verify_pass_rows": 7,
+    "import_rows_after_delta": 2
+  },
+  "legs": [
+    {
+      "leg": "plan exit 0",
+      "expected": 0,
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "leg": "plan announces dry-run",
+      "expected": "dry-run in stdout",
+      "actual": "True",
+      "pass": true
+    },
+    {
+      "leg": "dry-run writes nothing",
+      "expected": "vault dir absent",
+      "actual": "False",
+      "pass": true
+    },
+    {
+      "leg": "import exit 0",
+      "expected": 0,
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "leg": "one item per legacy file",
+      "expected": 6,
+      "actual": "6",
+      "pass": true
+    },
+    {
+      "leg": "header oep-vault v1",
+      "expected": [
+        "oep-vault",
+        1
+      ],
+      "actual": "('oep-vault', 1)",
+      "pass": true
+    },
+    {
+      "leg": "deep nesting Driveline->Docs",
+      "expected": "Docs",
+      "actual": "Docs",
+      "pass": true
+    },
+    {
+      "leg": "nested Frame->Chassis",
+      "expected": "Chassis",
+      "actual": "Chassis",
+      "pass": true
+    },
+    {
+      "leg": "empty folder re-materializes",
+      "expected": "folder",
+      "actual": "folder",
+      "pass": true
+    },
+    {
+      "leg": "every blob_sha256 == source sha-256",
+      "expected": "True x6",
+      "actual": "[('BajaChassis.CATProduct', True), ('RearFrame.CATPart', True), ('SkidPlate.CATPart', True), ('DrivelineNotes.txt', True), ('Readme.txt', True), ('SuspensionInfo.pdf', True)]",
+      "pass": true
+    },
+    {
+      "leg": "vault blob bytes == source bytes",
+      "expected": true,
+      "actual": "True",
+      "pass": true
+    },
+    {
+      "leg": "verify exit 0 (clean)",
+      "expected": 0,
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "leg": "re-run is a no-op",
+      "expected": "nothing to import",
+      "actual": "nothing to import: all 6 file(s) already present in the vault ledger (6 skipped)",
+      "pass": true
+    },
+    {
+      "leg": "re-run vault.json byte-identical",
+      "expected": true,
+      "actual": "True",
+      "pass": true
+    },
+    {
+      "leg": "delta import exit 0",
+      "expected": 0,
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "leg": "delta imported once (7 items)",
+      "expected": 7,
+      "actual": "7",
+      "pass": true
+    },
+    {
+      "leg": "one ledger row per run",
+      "expected": 2,
+      "actual": "2",
+      "pass": true
+    },
+    {
+      "leg": "verify fails on tampered source",
+      "expected": "non-zero",
+      "actual": "1",
+      "pass": true
+    },
+    {
+      "leg": "verify fails on tampered stored blob",
+      "expected": "non-zero",
+      "actual": "1",
+      "pass": true
+    }
+  ]
+}

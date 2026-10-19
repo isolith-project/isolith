@@ -22,6 +22,7 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P7 oep-kinematics -- mates/kinematics demo, own DMU-ish semantics over oep-geo (P7-M3-T02)
 - P7 oep-rules      -- rules/checks sandbox, Knowledgeware-lite documented not-parity (P7-M4-T02)
 - P7 oep-sketch     -- 2D sketcher + parametric variable sets, adopted OSS solver via seam (P7-M4-T01)
+- P10 oep-archive   -- export-all interop escape hatch: neutral STEP/3DXML/glTF/STL + JSON archive (P10-M3-T02)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per P8-M1/web-stack-adr.md, AGPL-3.0; retained
   P7-M2-T02 StubServer identity + PdmClient), contract: P8-M6/openapi-v1.yaml,

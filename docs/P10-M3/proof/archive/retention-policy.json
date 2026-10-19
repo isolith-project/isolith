@@ -1,0 +1,50 @@
+{
+  "format": "oep-retention-policy",
+  "version": 1,
+  "scope": "oep-pdm vault revision retention + archive interop",
+  "defaults": true,
+  "rules": [
+    {
+      "state": "working",
+      "rule": {
+        "review_days": 180,
+        "keep_forever": false,
+        "note": "stale in-progress work: archive-review after 180 days"
+      }
+    },
+    {
+      "state": "under_review",
+      "rule": {
+        "review_days": 365,
+        "keep_forever": false,
+        "note": "review collateral is retained a year past its last activity"
+      }
+    },
+    {
+      "state": "released",
+      "rule": {
+        "review_days": null,
+        "keep_forever": true,
+        "note": "released revisions are immutable gold: retained indefinitely"
+      }
+    },
+    {
+      "state": "obsolete",
+      "rule": {
+        "review_days": 365,
+        "keep_forever": false,
+        "note": "obsolete: review for archival after 1 year; purge only after a "
+      }
+    }
+  ],
+  "deletion": {
+    "automatic_deletion_enabled": false,
+    "purge_requires_archive_export": true,
+    "quarantine_after_archive_days": 90,
+    "audit_logged_only": true
+  },
+  "references": [
+    "docs/P10-M3/retention-policy.md",
+    "docs/P10-M3/export-all.md"
+  ]
+}

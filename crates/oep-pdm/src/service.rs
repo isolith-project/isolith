@@ -26,6 +26,7 @@ use axum::body::Bytes;
 use axum::extract::{Path, Query, State};
 use axum::http::header::{self, HeaderMap};
 use axum::http::StatusCode;
+use axum::middleware;
 use axum::response::{IntoResponse, Response};
 use axum::routing::{get, post};
 use axum::{Json, Router};
@@ -35,6 +36,8 @@ use serde::Serialize;
 use crate::api::{
     CreateItemRequest, CreateRevisionRequest, ErrorEnvelope, FileRef, ITEMS_PATH, SYNC_PUSH_PATH,
 };
+use crate::authz::gate::{authz_middleware, AuthState};
+use crate::rbac::Authorizer;
 use crate::store::{StoreError, VaultStore};
 
 /// Shared store handle handed to every handler via axum state.
@@ -91,16 +94,50 @@ impl PdmService {
         store: VaultStore,
         tls: TlsConfig,
     ) -> io::Result<PdmService> {
+        Self::start_inner(addr, store, tls, None)
+    }
+
+    /// Start serving behind the P11-T03 auth boundary.
+    ///
+    /// `authorizer` answers every request before the contract handlers run:
+    /// denial is `403` (unauthenticated / cross-role) or `404` (cross-tenant,
+    /// IDOR-masked). Existing `start*` paths and the shipped binaries keep
+    /// today's open behavior; this opt-in serve path is what the security
+    /// suite and the identity-landing path use (see
+    /// `crates/oep-pdm/src/authz` and `P11/auth-boundary.md`).
+    pub fn start_with_authorizer(
+        addr: &str,
+        store: VaultStore,
+        authorizer: Authorizer,
+    ) -> io::Result<PdmService> {
+        Self::start_inner(addr, store, TlsConfig::default(), Some(authorizer))
+    }
+
+    /// Shared start: bind, wrap the store, and (when `authorizer` is given)
+    /// serve the same contract behind the auth gate.
+    fn start_inner(
+        addr: &str,
+        store: VaultStore,
+        tls: TlsConfig,
+        authorizer: Option<Authorizer>,
+    ) -> io::Result<PdmService> {
         let listener = std::net::TcpListener::bind(addr)?;
         listener.set_nonblocking(true)?;
         let addr = listener.local_addr()?;
         let store = Arc::new(Mutex::new(store));
+        let auth_state = authorizer.map(|a| {
+            Arc::new(AuthState {
+                authorizer: Arc::new(a),
+                store: Arc::clone(&store),
+            })
+        });
         let shutdown = Arc::new(AtomicBool::new(false));
         let handle = {
             let store = Arc::clone(&store);
             let shutdown = Arc::clone(&shutdown);
             let tls = tls.clone();
-            std::thread::spawn(move || run_runtime(listener, store, shutdown, tls))
+            let auth_state = auth_state.clone();
+            std::thread::spawn(move || run_runtime(listener, store, shutdown, tls, auth_state))
         };
         Ok(PdmService {
             addr,
@@ -143,15 +180,18 @@ impl Drop for PdmService {
     }
 }
 
-/// Boot a tokio runtime for `listener` and serve the axum router until told
+/// Boot a tokio runtime for `listener` and serve the router until told
 /// to stop. Runs inside the boundary thread; returning here means shutdown.
 /// When `tls` is enabled, the router is served over HTTPS via axum-server's
 /// rustls acceptor (P10-M1-T02); otherwise it is the plain HTTP `axum::serve`.
+/// When `auth_state` is given, the same contract is served behind the P11-T03
+/// auth gate instead of open.
 fn run_runtime(
     listener: std::net::TcpListener,
     store: Store,
     shutdown: Arc<AtomicBool>,
     tls: TlsConfig,
+    auth_state: Option<Arc<AuthState>>,
 ) {
     let rt = match tokio::runtime::Builder::new_multi_thread()
         .enable_all()
@@ -165,7 +205,10 @@ fn run_runtime(
     };
     let tls = if tls.is_enabled() { Some(tls) } else { None };
     rt.block_on(async move {
-        let app = build_router(store);
+        let app = match &auth_state {
+            Some(state) => build_authorized_router(store, Arc::clone(state)),
+            None => build_router(store),
+        };
         if let Some(tls) = tls {
             serve_tls(listener, app, shutdown, tls).await;
         } else {
@@ -195,19 +238,18 @@ async fn serve_tls(
     shutdown: Arc<AtomicBool>,
     tls: TlsConfig,
 ) {
-    let config = match axum_server::tls_rustls::RustlsConfig::from_pem_file(&tls.cert, &tls.key)
-        .await
-    {
-        Ok(c) => c,
-        Err(e) => {
-            eprintln!(
-                "oep-pdm: cannot load TLS cert/key ({} / {}): {e}",
-                tls.cert.display(),
-                tls.key.display()
-            );
-            return;
-        }
-    };
+    let config =
+        match axum_server::tls_rustls::RustlsConfig::from_pem_file(&tls.cert, &tls.key).await {
+            Ok(c) => c,
+            Err(e) => {
+                eprintln!(
+                    "oep-pdm: cannot load TLS cert/key ({} / {}): {e}",
+                    tls.cert.display(),
+                    tls.key.display()
+                );
+                return;
+            }
+        };
     let handle = axum_server::Handle::new();
     let h2 = handle.clone();
     let shutdown_watch = shutdown.clone();
@@ -247,13 +289,28 @@ pub const BODY_LIMIT_BYTES: usize = 512 * 1024 * 1024;
 /// returned ready-to-serve (`Router<()>`: the store is baked in by
 /// [`Router::with_state`], which is what [`axum::serve`] accepts).
 pub fn build_router(store: Store) -> Router<()> {
+    shared_router(store, None)
+}
+
+/// Build the contract router served behind the P11-T03 auth gate.
+///
+/// The exact same endpoints and handlers as [`build_router`], with the
+/// `authz_middleware` layered in front: every request is decided against
+/// `state`'s authorizer before the handler runs (see
+/// [`crate::authz`] and `P11/auth-boundary.md`).
+pub fn build_authorized_router(store: Store, state: Arc<AuthState>) -> Router<()> {
+    shared_router(store, Some(state))
+}
+
+/// The single route table, optionally wrapped in the auth gate.
+fn shared_router(store: Store, authz: Option<Arc<AuthState>>) -> Router<()> {
     // P9-M3-T02: real CAD uploads exceed axum's 2 MiB default request-body
     // cap (the NIST V5-6R2023 STC-06 CATPart is ~2.5 MiB, and base64-in-JSON
     // inflates by ~33%). The vault must accept real files, so the upload
     // limit is raised to 512 MiB (generous but bounded; bodies are still
     // decoded + content-hashed before anything is stored).
     let body_limit = axum::extract::DefaultBodyLimit::max(BODY_LIMIT_BYTES);
-    Router::new()
+    let mut router = Router::new()
         .route("/api/v1/health", get(health))
         .route(ITEMS_PATH, get(list_items).post(create_item))
         .route("/api/v1/items/{item_id}", get(get_item))
@@ -296,8 +353,13 @@ pub fn build_router(store: Store) -> Router<()> {
         )
         .method_not_allowed_fallback(method_not_allowed)
         .fallback(not_found)
-        .layer(body_limit)
-        .with_state(store)
+        .layer(body_limit);
+    if let Some(state) = authz {
+        // The auth gate runs outermost, before any handler and before the
+        // request body reaches the upload-limit path.
+        router = router.layer(middleware::from_fn_with_state(state, authz_middleware));
+    }
+    router.with_state(store)
 }
 
 /// `POST /api/v1/items/{item_id}/lock` -- acquire the working-set lock.

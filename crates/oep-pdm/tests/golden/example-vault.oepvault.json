@@ -1,0 +1,336 @@
+{
+  "format": "oep-vault",
+  "version": 1,
+  "contexts": [
+    {
+      "id": "ctx-baja",
+      "name": "Baja",
+      "kind": "product",
+      "note": "V5-era folder tree root imported by P10-M1-T03"
+    },
+    {
+      "id": "ctx-chassis",
+      "name": "Chassis",
+      "kind": "folder",
+      "parent_id": "ctx-baja"
+    },
+    {
+      "id": "ctx-frame",
+      "name": "Frame",
+      "kind": "folder",
+      "parent_id": "ctx-chassis"
+    },
+    {
+      "id": "ctx-docs",
+      "name": "Docs",
+      "kind": "folder",
+      "parent_id": "ctx-baja"
+    },
+    {
+      "id": "ctx-driveline",
+      "name": "Driveline",
+      "kind": "folder",
+      "parent_id": "ctx-docs"
+    }
+  ],
+  "items": [
+    {
+      "id": "item-rear-frame",
+      "name": "RearFrame",
+      "kind": "part",
+      "context_id": "ctx-frame",
+      "part_number": "KW-REAR-001",
+      "created_at": "2026-10-17T00:00:00Z",
+      "origin": {
+        "source": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Chassis\\Frame\\RearFrame.CATPart",
+        "collected_at": "2026-10-17T00:00:00Z",
+        "sha256": "464128cdb789e49d87a4b96acc6544422dbc14de8a2f8dba39db2474546cfa6e",
+        "importer": "oep-vault-migrate/0.1"
+      }
+    },
+    {
+      "id": "item-skid-plate",
+      "name": "SkidPlate",
+      "kind": "part",
+      "context_id": "ctx-frame",
+      "part_number": "KW-SKD-002",
+      "created_at": "2026-10-17T00:00:00Z",
+      "origin": {
+        "source": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Chassis\\Frame\\SkidPlate.CATPart",
+        "collected_at": "2026-10-17T00:00:00Z",
+        "sha256": "b430c157a712fa1c5d2935febe34e3f5cbdb8b1765053edcc7d006a2fc4ba347",
+        "importer": "oep-vault-migrate/0.1"
+      }
+    },
+    {
+      "id": "item-baja-chassis",
+      "name": "BajaChassis",
+      "kind": "assembly",
+      "context_id": "ctx-chassis",
+      "part_number": "KW-CHS-003",
+      "created_at": "2026-10-17T00:00:00Z",
+      "origin": {
+        "source": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Chassis\\BajaChassis.CATProduct",
+        "collected_at": "2026-10-17T00:00:00Z",
+        "sha256": "a627626445c2769cbcdb02be31f60798a08145ad7e223c39285beae9d9e7805e",
+        "importer": "oep-vault-migrate/0.1"
+      }
+    },
+    {
+      "id": "item-readme",
+      "name": "Readme",
+      "kind": "document",
+      "context_id": "ctx-docs",
+      "created_at": "2026-10-17T00:00:00Z",
+      "origin": {
+        "source": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Docs\\Readme.txt",
+        "collected_at": "2026-10-17T00:00:00Z",
+        "sha256": "6fd81c36654b123fe11c7ce4073b082c80d02c52f194c0986dd91d19f54f4569",
+        "importer": "oep-vault-migrate/0.1"
+      }
+    },
+    {
+      "id": "item-driveline-notes",
+      "name": "DrivelineNotes",
+      "kind": "document",
+      "context_id": "ctx-driveline",
+      "created_at": "2026-10-17T00:00:00Z",
+      "origin": {
+        "source": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Docs\\Driveline\\DrivelineNotes.txt",
+        "collected_at": "2026-10-17T00:00:00Z",
+        "sha256": "3ec212c2bc1df7543669e5065d74c5084f3d784e4a262ab36052d718c4e4be75",
+        "importer": "oep-vault-migrate/0.1"
+      }
+    }
+  ],
+  "revisions": [
+    {
+      "id": "rev-rear-frame-1",
+      "item_id": "item-rear-frame",
+      "number": "1",
+      "state": "working",
+      "created_at": "2026-10-17T00:00:00Z",
+      "created_by": "oep-vault-migrate/0.1",
+      "file_ids": [
+        "file-rear-frame"
+      ],
+      "origin": {
+        "kind": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Chassis\\Frame\\RearFrame.CATPart"
+      }
+    },
+    {
+      "id": "rev-rear-frame-2",
+      "item_id": "item-rear-frame",
+      "number": "2",
+      "state": "working",
+      "created_at": "2026-10-17T01:02:03Z",
+      "created_by": "oep-modeler",
+      "file_ids": [
+        "file-rear-frame-v2"
+      ],
+      "origin": {
+        "kind": "pdm-save"
+      }
+    },
+    {
+      "id": "rev-skid-plate-1",
+      "item_id": "item-skid-plate",
+      "number": "1",
+      "state": "working",
+      "created_at": "2026-10-17T00:00:00Z",
+      "created_by": "oep-vault-migrate/0.1",
+      "file_ids": [
+        "file-skid-plate"
+      ],
+      "origin": {
+        "kind": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Chassis\\Frame\\SkidPlate.CATPart"
+      }
+    },
+    {
+      "id": "rev-baja-chassis-1",
+      "item_id": "item-baja-chassis",
+      "number": "1",
+      "state": "working",
+      "created_at": "2026-10-17T00:00:00Z",
+      "created_by": "oep-vault-migrate/0.1",
+      "file_ids": [
+        "file-baja-chassis"
+      ],
+      "origin": {
+        "kind": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Chassis\\BajaChassis.CATProduct"
+      }
+    },
+    {
+      "id": "rev-readme-1",
+      "item_id": "item-readme",
+      "number": "1",
+      "state": "working",
+      "created_at": "2026-10-17T00:00:00Z",
+      "created_by": "oep-vault-migrate/0.1",
+      "file_ids": [
+        "file-readme"
+      ],
+      "origin": {
+        "kind": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Docs\\Readme.txt"
+      }
+    },
+    {
+      "id": "rev-driveline-notes-1",
+      "item_id": "item-driveline-notes",
+      "number": "1",
+      "state": "working",
+      "created_at": "2026-10-17T00:00:00Z",
+      "created_by": "oep-vault-migrate/0.1",
+      "file_ids": [
+        "file-driveline-notes"
+      ],
+      "origin": {
+        "kind": "v5-folder-tree",
+        "legacy_path": "W:\\Data\\Baja\\Docs\\Driveline\\DrivelineNotes.txt"
+      }
+    }
+  ],
+  "files": [
+    {
+      "id": "file-rear-frame",
+      "filename": "RearFrame.CATPart",
+      "format": "catpart",
+      "content_type": "application/octet-stream",
+      "size": 35,
+      "blob_sha256": "464128cdb789e49d87a4b96acc6544422dbc14de8a2f8dba39db2474546cfa6e"
+    },
+    {
+      "id": "file-rear-frame-v2",
+      "filename": "RearFrame-v2.CATPart",
+      "format": "catpart",
+      "content_type": "application/octet-stream",
+      "size": 60,
+      "blob_sha256": "096ccc955537e07cff614128f03c263ba93138013decc4100e3a07c159385efb"
+    },
+    {
+      "id": "file-skid-plate",
+      "filename": "SkidPlate.CATPart",
+      "format": "catpart",
+      "content_type": "application/octet-stream",
+      "size": 35,
+      "blob_sha256": "b430c157a712fa1c5d2935febe34e3f5cbdb8b1765053edcc7d006a2fc4ba347"
+    },
+    {
+      "id": "file-baja-chassis",
+      "filename": "BajaChassis.CATProduct",
+      "format": "catproduct",
+      "content_type": "application/octet-stream",
+      "size": 40,
+      "blob_sha256": "a627626445c2769cbcdb02be31f60798a08145ad7e223c39285beae9d9e7805e"
+    },
+    {
+      "id": "file-readme",
+      "filename": "Readme.txt",
+      "format": "txt",
+      "content_type": "application/octet-stream",
+      "size": 36,
+      "blob_sha256": "6fd81c36654b123fe11c7ce4073b082c80d02c52f194c0986dd91d19f54f4569"
+    },
+    {
+      "id": "file-driveline-notes",
+      "filename": "DrivelineNotes.txt",
+      "format": "txt",
+      "content_type": "application/octet-stream",
+      "size": 23,
+      "blob_sha256": "3ec212c2bc1df7543669e5065d74c5084f3d784e4a262ab36052d718c4e4be75"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel-bom-1",
+      "kind": "composed_of",
+      "from": {
+        "class": "item",
+        "id": "item-baja-chassis"
+      },
+      "to": {
+        "class": "item",
+        "id": "item-rear-frame"
+      },
+      "note": "chassis composes the rear frame"
+    },
+    {
+      "id": "rel-bom-2",
+      "kind": "composed_of",
+      "from": {
+        "class": "item",
+        "id": "item-baja-chassis"
+      },
+      "to": {
+        "class": "item",
+        "id": "item-skid-plate"
+      }
+    },
+    {
+      "id": "rel-ref-1",
+      "kind": "references",
+      "from": {
+        "class": "item",
+        "id": "item-readme"
+      },
+      "to": {
+        "class": "item",
+        "id": "item-baja-chassis"
+      },
+      "note": "import notes cite the product"
+    },
+    {
+      "id": "rel-sup-1",
+      "kind": "supersedes",
+      "from": {
+        "class": "revision",
+        "id": "rev-rear-frame-2"
+      },
+      "to": {
+        "class": "revision",
+        "id": "rev-rear-frame-1"
+      }
+    },
+    {
+      "id": "rel-der-1",
+      "kind": "derived_from",
+      "from": {
+        "class": "revision",
+        "id": "rev-driveline-notes-1"
+      },
+      "to": {
+        "class": "revision",
+        "id": "rev-readme-1"
+      },
+      "note": "driveline notes derived from the readme"
+    }
+  ],
+  "imports": [
+    {
+      "kind": "v5-folder-tree",
+      "root_legacy_path": "W:\\Data\\Baja",
+      "imported_at": "2026-10-17T00:00:00Z",
+      "importer": "oep-vault-migrate/0.1",
+      "contexts": 5,
+      "items": 5,
+      "files": 5,
+      "blobs": 5,
+      "keys": [
+        "Chassis/Frame/RearFrame.CATPart",
+        "Chassis/Frame/SkidPlate.CATPart",
+        "Chassis/BajaChassis.CATProduct",
+        "Docs/Readme.txt",
+        "Docs/Driveline/DrivelineNotes.txt"
+      ]
+    }
+  ]
+}

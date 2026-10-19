@@ -1,0 +1,27 @@
+[package]
+name = "oep-archive"
+description = "P10-M3-T02: export-all interop escape hatch - documented neutral archive (STEP/3DXML/glTF/STL geometry + JSON vault metadata) + retention/archive policy defaults."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+# The platform's own exporters/readers this lane composes (P2/P3/P4/P6/P8).
+# This crate is the interop escape hatch: its contract is to dogfood the
+# importer/exporter seams into one neutral archive, so it is a second
+# explicit cross-crate seam (see docs/layout.md "Conventions").
+oep-geo = { path = "../oep-geo" }   # canonical model + own-format JSON
+oep-step = { path = "../oep-step" } # STEP read + AP242 export (P4)
+oep-cgr = { path = "../oep-cgr" }   # CGR mesh + glTF/GLB export (P2)
+oep-3dxml = { path = "../oep-3dxml" } # 3DXML ASCII writer (P3)
+oep-pdm = { path = "../oep-pdm" }   # vault store + object model (P8)
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+base64 = "0.22"
+
+[[bin]]
+name = "oep-archive"
+path = "src/bin/oep-archive.rs"

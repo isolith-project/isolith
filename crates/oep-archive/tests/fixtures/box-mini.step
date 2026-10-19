@@ -1,0 +1,12 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('OEP PDM stub open/save round-trip fixture'),'2;1');
+FILE_NAME('box-mini.step','2026-10-16T00:00:00',('Keelworks'),('Keelworks'),'Keelworks','','');
+FILE_SCHEMA(('AUTOMOTIVE_DESIGN { 1 0 10303 214 1 1 1 1 }'));
+ENDSEC;
+DATA;
+#1=PRODUCT('OPENBOX-001','Open box fixture','miniature open box',(#2));
+#2=PRODUCT_CONTEXT('part',#3,'mechanical');
+#3=APPLICATION_CONTEXT('automotive design');
+ENDSEC;
+END-ISO-10303-21;

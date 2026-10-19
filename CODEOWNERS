@@ -32,6 +32,7 @@ crates/oep-shell/.* @don
 crates/oep-kinematics/.* @don
 crates/oep-rules/.* @don
 crates/oep-sketch/.* @don
+crates/oep-archive/.* @don
 crates/oep-pdm/.* @don
 crates/oep-job/.* @don
 crates/oep-lane/.* @don

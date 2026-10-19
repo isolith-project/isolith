@@ -49,17 +49,29 @@
 #![deny(missing_docs)]
 
 pub mod adapter;
+pub mod admin;
 pub mod api;
+pub mod approval;
 pub mod audit;
+pub mod authz;
+pub mod blobstore;
+pub mod change;
 pub mod client;
 pub mod deploy_role;
 pub mod graph;
 pub mod http;
+pub mod identity;
+pub mod legacy;
+pub mod model;
+pub mod rbac;
+pub mod revstore;
 pub mod service;
 pub mod state;
 pub mod store;
 pub mod stub;
 pub mod sync;
+pub mod validate;
+pub mod web;
 pub mod working_set;
 /// Content digest + local in-memory PDM stub (P7-M2-T01 workbench surface).
 pub mod digest;

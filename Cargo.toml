@@ -21,6 +21,7 @@ members = [
     "crates/oep-pmi",
     "crates/oep-qif",
     "crates/oep-pdm",
+    "crates/oep-archive",
     "crates/oep-shell",
     "crates/oep-kinematics",
     "crates/oep-rules",

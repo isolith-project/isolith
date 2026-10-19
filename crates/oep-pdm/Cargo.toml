@@ -32,9 +32,21 @@ axum-server = { version = "0.8", features = ["tls-rustls"] }
 # documents into the uses/composed-of graph and query where-used / impact.
 oep-geo = { path = "../oep-geo" }
 
+# P8-M3-T01 identity: argon2id password hashing for local accounts, with
+# rand_core/getrandom for salt. OIDC stays a no-dependency feature-gate (off
+# by default). Ported from task/p8m3t01-identity-1017a.
+argon2 = "0.5"
+rand_core = { version = "0.6", features = ["getrandom"] }
+
 [[bin]]
 name = "oep-pdm"
 path = "src/bin/oep-pdm.rs"
+
+# P10-M1-T03: V5-era folder tree -> P8 vault migration CLI (blobstore +
+# legacy reader + vault model mapping).
+[[bin]]
+name = "oep-vault-migrate"
+path = "src/bin/oep-vault-migrate.rs"
 
 # Retained P7-M2-T02 compat binary: same axum service, same contract (see
 # src/stub.rs). Keeps the P7 integration surface and the retained contract

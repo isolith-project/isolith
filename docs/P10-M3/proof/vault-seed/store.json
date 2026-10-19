@@ -1,0 +1,101 @@
+{
+  "owner": "keelworks",
+  "next_item_seq": 3,
+  "items": [
+    {
+      "item": {
+        "id": "item-0-ae94c51dfc70",
+        "name": "Box Part A",
+        "kind": "part",
+        "description": "a real faceted STEP part",
+        "owner": "p10-test",
+        "context": "p10-m3",
+        "created_at": "2026-10-18T06:46:44Z",
+        "latest_revision": "1",
+        "revision_count": 1
+      },
+      "next_rev": 2,
+      "revisions": [
+        {
+          "number": "1",
+          "state": "released",
+          "comment": "rev 1",
+          "created_at": "2026-10-18T06:46:44Z",
+          "created_by": "p10-test",
+          "files": [
+            {
+              "id": "file-item-0-ae94c51dfc70-1",
+              "filename": "box-part.step",
+              "format": "step",
+              "content_type": "application/step",
+              "size": 10757,
+              "blob_sha256": "0a3a57964bb1203353e90a713ebdafcf33a857a3da70c17396573983a2e73e57"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": {
+        "id": "item-1-b972ac9b8111",
+        "name": "Box Mini B",
+        "kind": "part",
+        "description": "a geometry-less STEP (analytic-only)",
+        "owner": "p10-test",
+        "created_at": "2026-10-18T06:46:44Z",
+        "latest_revision": "1",
+        "revision_count": 1
+      },
+      "next_rev": 2,
+      "revisions": [
+        {
+          "number": "1",
+          "state": "working",
+          "created_at": "2026-10-18T06:46:44Z",
+          "created_by": "p10-test",
+          "files": [
+            {
+              "id": "file-item-1-b972ac9b8111-1",
+              "filename": "box-mini.step",
+              "format": "step",
+              "content_type": "application/step",
+              "size": 452,
+              "blob_sha256": "e40bdeea3788ddd14499bc39f5eb90086d49b5d297d2cd71ba6712cc4c4960c2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": {
+        "id": "item-2-f179fec724c2",
+        "name": "Note C",
+        "kind": "document",
+        "description": "a non-CAD vault file",
+        "owner": "p10-test",
+        "created_at": "2026-10-18T06:46:44Z",
+        "latest_revision": "1",
+        "revision_count": 1
+      },
+      "next_rev": 2,
+      "revisions": [
+        {
+          "number": "1",
+          "state": "under_review",
+          "created_at": "2026-10-18T06:46:44Z",
+          "created_by": "p10-test",
+          "files": [
+            {
+              "id": "file-item-2-f179fec724c2-1",
+              "filename": "note.txt",
+              "format": "txt",
+              "content_type": "text/plain",
+              "size": 50,
+              "blob_sha256": "7724e13367068984b72e0d90f6728273ad7e279604754fe4f6f4ec7cd5f87751"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
