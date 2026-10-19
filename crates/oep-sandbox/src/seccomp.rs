@@ -311,7 +311,10 @@ pub unsafe fn install_egress_block() -> io::Result<()> {
         ));
     }
     match io::Error::last_os_error().raw_os_error() {
-        Some(libc::EPERM) => {}          // filtered: denied, exactly as intended
+        // Any denial errno (EPERM from our own filter, or EACCES/EPERM from an
+        // outer profile the same precedence) proves io_uring is unreachable,
+        // which is exactly the property we need: the bypass is closed.
+        Some(libc::EPERM) | Some(libc::EACCES) => {}
         Some(libc::ENOSYS) => {}         // kernel has no io_uring: bypass impossible
         _ => {
             return Err(io::Error::new(
