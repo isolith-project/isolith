@@ -1,13 +1,13 @@
 {
-  "created_utc": "2026-10-19T07:33:33.803175+00:00",
+  "created_utc": "2026-10-19T10:34:55.152593+00:00",
   "cut_from": {
-    "ref": "HEAD",
-    "sha": "5d99f1521f0e21a20b0de11c0ca9e4a5c56a4dac"
+    "ref": "18d24b0",
+    "sha": "18d24b0402681f938b40744ac9f400ce11678478"
   },
-  "cut_tree": "f918d046488cde6bb95a9f8268fd8d65c94af4f5",
-  "frozen_commits_first_parent": 62,
-  "frozen_commits_full": 151,
-  "frozen_newest": "5d99f1521f0e21a20b0de11c0ca9e4a5c56a4dac",
+  "cut_tree": "663c2c344b8b845f32be26b8bca60f44d8f770fe",
+  "frozen_commits_first_parent": 67,
+  "frozen_commits_full": 156,
+  "frozen_newest": "18d24b0402681f938b40744ac9f400ce11678478",
   "frozen_oldest": "98a899bfa908809daec4d22a07c89eb2bda7ed22",
   "host": "promaxgb10-83f1",
   "schema": "keelworks.release-freeze.v1",
