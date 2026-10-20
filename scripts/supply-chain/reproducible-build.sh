@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Keelworks P11-T06: clean-room reproducible release build + artifact manifest.
+# Isolith P11-T06: clean-room reproducible release build + artifact manifest.
 #
 # Builds the full Rust workspace release profile twice, each into its own
 # pristine CARGO_TARGET_DIR (no incremental reuse, no shared cache), under a
@@ -108,7 +108,7 @@ NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 HOST="$(hostname)"
 {
   echo "{"
-  echo "  \"schema\": \"keelworks.reproducible-build.v1\","
+  echo "  \"schema\": \"isolith.reproducible-build.v1\","
   echo "  \"version\": \"$VERSION\","
   echo "  \"toolchain\": \"$(rustc --version)\","
   echo "  \"source_date_epoch\": \"$STAMP\","
@@ -132,7 +132,7 @@ HOST="$(hostname)"
 } > "$SUMMARY.json"
 
 {
-  echo "# Keelworks reproducible build proof -- $VERSION"
+  echo "# Isolith reproducible build proof -- $VERSION"
   echo ""
   echo "Toolchain: $(rustc --version)  |  Source date epoch: $STAMP  |  Host: $HOST  |  Built: $NOW"
   echo ""

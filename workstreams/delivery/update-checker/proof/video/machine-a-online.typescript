@@ -1,17 +1,17 @@
 Script started on 2026-10-18 04:19:18-07:00 [COMMAND="bash /home/r1a/.hermes/cache/scratch/walkthrough-a.sh" <not executed on terminal>]
 
-[1;36m==== Keelworks P10 fresh-install walkthrough on machine A (U1) ====[0m
+[1;36m==== Isolith P10 fresh-install walkthrough on machine A (U1) ====[0m
 promaxgb10-83f1
 aarch64
 
-[1;36m==== 1. Confirm clean state (no keelworks containers / volumes / image / .env) ====[0m
-(purging any previous keelworks artifacts -> clean machine)
+[1;36m==== 1. Confirm clean state (no isolith containers / volumes / image / .env) ====[0m
+(purging any previous isolith artifacts -> clean machine)
 
 [1;36m==== 2. One-command install (docs: ./install.sh) ====[0m
 [0;32m[OEP][0m Preflight... (docker + compose + disk)
 [0;32m[OEP][0m Wrote .env from .env.example (host binds default to 127.0.0.1).
 [0;32m[OEP][0m Preflight ok.
-[0;32m[OEP][0m Building stack image keelworks/oep-stack:0.1.0 (first build fetches crates, minutes)...
+[0;32m[OEP][0m Building stack image isolith/oep-stack:0.1.0 (first build fetches crates, minutes)...
 [1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                         
  => [internal] load local bake definitions                                 0.0s
 [?25h[1A[1A[0G[?25l[+] Building 0.1s (1/2)                                                         
@@ -96,8 +96,8 @@ aarch64
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.2s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.2s
 [?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.5s (24/25)                                                       
  => exporting to image                                                     0.4s
 [34m => => exporting layers                                                    0.0s
@@ -105,8 +105,8 @@ aarch64
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.3s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.3s
 [?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.6s (24/25)                                                       
  => exporting to image                                                     0.6s
 [34m => => exporting layers                                                    0.0s
@@ -114,8 +114,8 @@ aarch64
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.5s
 [?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.7s (24/25)                                                       
  => exporting to image                                                     0.7s
 [34m => => exporting layers                                                    0.0s
@@ -123,8 +123,8 @@ aarch64
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.5s
 [0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (25/25)                                                       
 [34m => exporting to image                                                     0.7s
 [0m[34m => => exporting layers                                                    0.0s
@@ -132,16 +132,16 @@ aarch64
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.5s
 [0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (25/26)                                                       
 [34m => => exporting layers                                                    0.0s
 [0m[34m => => exporting manifest sha256:a2eca707269555a1f6cc4557ffffcfab9d41196e  0.0s
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.5s
 [0m => resolving provenance for metadata file                                 0.0s
 [?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (26/26) FINISHED                                              
 [34m => [internal] load local bake definitions                                 0.0s
@@ -181,47 +181,47 @@ aarch64
 [0m[34m => => exporting config sha256:cedb4e9439797e3b41c2cfe08baff20d23d898f82e  0.0s
 [0m[34m => => exporting attestation manifest sha256:4750daab7c52a6bb99aecab9dc25  0.1s
 [0m[34m => => exporting manifest list sha256:c23822978cc9d6e7b2e000d0ac02202e948  0.0s
-[0m[34m => => naming to docker.io/keelworks/oep-stack:0.1.0                       0.0s
-[0m[34m => => unpacking to docker.io/keelworks/oep-stack:0.1.0                    0.5s
+[0m[34m => => naming to docker.io/isolith/oep-stack:0.1.0                       0.0s
+[0m[34m => => unpacking to docker.io/isolith/oep-stack:0.1.0                    0.5s
 [0m[34m => resolving provenance for metadata file                                 0.0s
 [0m[?25h[?25l[0G[+] build 1/1
- [32m✔[0m Image keelworks/oep-stack:0.1.0 [32mBuilt[0m                                    [34m2.0s[0m
+ [32m✔[0m Image isolith/oep-stack:0.1.0 [32mBuilt[0m                                    [34m2.0s[0m
 [?25h[0;32m[OEP][0m Starting stack (pdm + viewer + p2p)...
 [?25l[0G[+] up 2/4
- [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
- [33m⠋[0m Container keelworks-p2p      Creating                                    [34m0.1s[0m
- [33m⠋[0m Container keelworks-pdm      Creating                                    [34m0.1s[0m
+ [32m✔[0m Volume isolith_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume isolith_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [33m⠋[0m Container isolith-p2p      Creating                                    [34m0.1s[0m
+ [33m⠋[0m Container isolith-pdm      Creating                                    [34m0.1s[0m
 [?25h[?25l[5A[0G[+] up 4/5
- [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Container keelworks-p2p      [32mCreated[0m                                     [34m0.1s[0m
- [32m✔[0m Container keelworks-pdm      [32mCreated[0m                                     [34m0.1s[0m
- [33m⠋[0m Container keelworks-viewer   Creating                                    [34m0.1s[0m
+ [32m✔[0m Volume isolith_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume isolith_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Container isolith-p2p      [32mCreated[0m                                     [34m0.1s[0m
+ [32m✔[0m Container isolith-pdm      [32mCreated[0m                                     [34m0.1s[0m
+ [33m⠋[0m Container isolith-viewer   Creating                                    [34m0.1s[0m
 [?25h[?25l[6A[0G[+] up 3/5
- [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
- [33m⠙[0m Container keelworks-p2p      Starting                                    [34m0.3s[0m
- [33m⠙[0m Container keelworks-pdm      Starting                                    [34m0.3s[0m
- [32m✔[0m Container keelworks-viewer   [32mCreated[0m                                     [34m0.1s[0m
+ [32m✔[0m Volume isolith_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume isolith_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [33m⠙[0m Container isolith-p2p      Starting                                    [34m0.3s[0m
+ [33m⠙[0m Container isolith-pdm      Starting                                    [34m0.3s[0m
+ [32m✔[0m Container isolith-viewer   [32mCreated[0m                                     [34m0.1s[0m
 [?25h[?25l[6A[0G[+] up 3/5
- [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
- [33m⠹[0m Container keelworks-p2p      Starting                                    [34m0.4s[0m
- [32m✔[0m Container keelworks-pdm      [32mStarted[0m                                     [34m0.3s[0m
- [33m⠙[0m Container keelworks-viewer   Starting                                    [34m0.3s[0m
+ [32m✔[0m Volume isolith_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume isolith_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [33m⠹[0m Container isolith-p2p      Starting                                    [34m0.4s[0m
+ [32m✔[0m Container isolith-pdm      [32mStarted[0m                                     [34m0.3s[0m
+ [33m⠙[0m Container isolith-viewer   Starting                                    [34m0.3s[0m
 [?25h[?25l[6A[0G[+] up 4/5
- [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Container keelworks-p2p      [32mStarted[0m                                     [34m0.4s[0m
- [32m✔[0m Container keelworks-pdm      [32mStarted[0m                                     [34m0.3s[0m
- [33m⠹[0m Container keelworks-viewer   Starting                                    [34m0.4s[0m
+ [32m✔[0m Volume isolith_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume isolith_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Container isolith-p2p      [32mStarted[0m                                     [34m0.4s[0m
+ [32m✔[0m Container isolith-pdm      [32mStarted[0m                                     [34m0.3s[0m
+ [33m⠹[0m Container isolith-viewer   Starting                                    [34m0.4s[0m
 [?25h[?25l[6A[0G[+] up 5/5
- [32m✔[0m Volume keelworks_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Volume keelworks_viewer_data [32mCreated[0m                                     [34m0.0s[0m
- [32m✔[0m Container keelworks-p2p      [32mStarted[0m                                     [34m0.4s[0m
- [32m✔[0m Container keelworks-pdm      [32mStarted[0m                                     [34m0.3s[0m
- [32m✔[0m Container keelworks-viewer   [32mStarted[0m                                     [34m0.4s[0m
+ [32m✔[0m Volume isolith_pdm_data    [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Volume isolith_viewer_data [32mCreated[0m                                     [34m0.0s[0m
+ [32m✔[0m Container isolith-p2p      [32mStarted[0m                                     [34m0.4s[0m
+ [32m✔[0m Container isolith-pdm      [32mStarted[0m                                     [34m0.3s[0m
+ [32m✔[0m Container isolith-viewer   [32mStarted[0m                                     [34m0.4s[0m
 [?25h[0;32m[OEP][0m Waiting for health checks to go green (up to 180s)...
 [0;32m[OEP][0m All 3 services healthy.
 [0;32m[OEP][0m Verifying each health endpoint directly...
@@ -233,7 +233,7 @@ aarch64
   Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
   P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
 
-[0;32m[OEP][0m One-command install complete: the full Keelworks stack is up with health checks green.
+[0;32m[OEP][0m One-command install complete: the full Isolith stack is up with health checks green.
 install.sh exit=0
 
 [1;36m==== 3. PDM health  (GET /api/v1/health) ====[0m
@@ -285,9 +285,9 @@ no OEP_UPDATE_CHECK line in .env -> checker stays off (decision #11)
 
 [1;36m==== Containers (all healthy) ====[0m
 NAMES              STATUS
-keelworks-viewer   Up 7 seconds (healthy)
-keelworks-p2p      Up 7 seconds (healthy)
-keelworks-pdm      Up 7 seconds (healthy)
+isolith-viewer   Up 7 seconds (healthy)
+isolith-p2p      Up 7 seconds (healthy)
+isolith-pdm      Up 7 seconds (healthy)
 === WALKTHROUGH A COMPLETE: full stack healthy, update checker off ===
 
 Script done on 2026-10-18 04:19:28-07:00 [COMMAND_EXIT_CODE="0"]

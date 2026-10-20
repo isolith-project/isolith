@@ -1,18 +1,18 @@
 ---
-title: Keelworks Release Notes and Changelog Automation
+title: Isolith Release Notes and Changelog Automation
 decision: git_cliff_conventional_changelog_on_release_cut
 version: 1.0.0
 date: 2026-10-18
 status: Ratified
-owner: Keelworks program governance, P12 release engineering lane
+owner: Isolith program governance, P12 release engineering lane
 applies_to: every release cut (calendar train tags vYYYY.N.P[-PRE] per P0-M5-T03),
   the release/YYYY.N release branches, and the release tooling (P12-T05)
 supersedes: nothing (first changelog-automation decision)
 ---
 
-# Keelworks Release Notes and Changelog Automation
+# Isolith Release Notes and Changelog Automation
 
-This record is the binding decision for how Keelworks generates release notes
+This record is the binding decision for how Isolith generates release notes
 and the changelog, so a user can read one categorized document and know what a
 release contains and why. It is versioned like the charter and the release
 train decision (P0-M5-T03); any material change bumps the version in the front
@@ -23,7 +23,7 @@ implement against this record.
 
 ## 1. Decision
 
-Keelworks generates release notes and the changelog wholly from the
+Isolith generates release notes and the changelog wholly from the
 conventional commit history (the repo's commit discipline) using git-cliff,
 driven by `cliff.toml` at the repository root and the wrapper
 `scripts/release/changelog.sh`. The changelog is never hand-written:

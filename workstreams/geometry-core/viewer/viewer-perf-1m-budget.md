@@ -1,9 +1,9 @@
-# Keelworks Viewer Performance: 1M-Triangle Interactive Budget (P6-M5-T03)
+# Isolith Viewer Performance: 1M-Triangle Interactive Budget (P6-M5-T03)
 
 Status: Measured
 Version: 1.0.0
 Date: 2026-10-16
-Owner: Keelworks program governance, P6-M5 (renderer backend and preview viewer)
+Owner: Isolith program governance, P6-M5 (renderer backend and preview viewer)
 Applies to: oep-render seam (P6-M5-T01 decision), the P6-M5-T02 preview viewer,
 the P9-M3-T01 headless render worker, and any interactive preview surface on
 U1-class hardware.

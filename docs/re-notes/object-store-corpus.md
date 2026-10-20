@@ -11,7 +11,7 @@ golden runner + P2/P3 regression runner resolve entries from it end to end.
 - **Mirror materialized (122/122 blobs on the NAS object store).** Walks
   `corpus/manifest.json` (P1-M1-T04 registry, the single source of truth);
   every `backend=object-store` entry is uploaded to the NAS Gitea generic
-  package registry `don/keelworks-corpus` v1 under the exact object name its
+  package registry `don/isolith-corpus` v1 under the exact object name its
   manifest `object_store` pointer names (`<sha256>.<ext>`), source bytes
   matched by sha256 (never by filename), and GET-back verified against the
   manifest hash. 121 upstream MIT CATPart/CATProduct blobs

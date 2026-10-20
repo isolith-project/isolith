@@ -2,7 +2,7 @@
 name = "oep-1m-scene-perf"
 version = "0.1.0"
 edition = "2021"
-description = "Keelworks P6-M5-T03: measure whether a 1M-triangle scene renders at an interactive cadence headless on U1-class hardware (wgpu + WGSL)."
+description = "Isolith P6-M5-T03: measure whether a 1M-triangle scene renders at an interactive cadence headless on U1-class hardware (wgpu + WGSL)."
 license = "Apache-2.0"
 
 # Standalone benchmark crate. Deliberately NOT a root workspace member: CI

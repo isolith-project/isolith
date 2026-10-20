@@ -6,12 +6,12 @@
 # before the install is the stack that runs again.
 #
 # Usage:
-#   airgap-rollback.sh --install-dir /opt/keelworks --project oep
+#   airgap-rollback.sh --install-dir /opt/isolith --project oep
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./airgap-lib.sh
 
-INSTALL_DIR="/opt/keelworks"
+INSTALL_DIR="/opt/isolith"
 PROJECT="oep"
 
 while [ $# -gt 0 ]; do

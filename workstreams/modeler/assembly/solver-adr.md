@@ -2,7 +2,7 @@
 version: 1.2.0
 status: accepted (supersedes the v1.1.0 replacement decision record)
 date: 2026-10-18
-owner: keelworks-default
+owner: isolith-default
 decision: replace-solvespace-through-the-seam-with-a-permissive-engine (implemented)
 applies_to: P7-M3-T01 (assembly workbench + constraint solver); card SOLVER-REPLACE
 supersedes: version 1.1.0 of this record (replace-solvespace-through-the-seam)

@@ -26,7 +26,7 @@ them, and most recompute).
 
 ## Golden-file test against a reference tessellation
 
-Reference tessellation: `corpus/data/box.stl` — the keelworks-authored
+Reference tessellation: `corpus/data/box.stl` — the isolith-authored
 CC0-1.0 unit-box fixture (P0-M4-T02), 8 vertices / 12 triangles.
 
 The committed golden `crates/oep-cgr/tests/golden/box-reference.bin.stl`

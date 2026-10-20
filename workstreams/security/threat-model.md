@@ -1,16 +1,16 @@
 ---
-title: Keelworks / Open Engineering Platform (OEP) Stack Threat Model
+title: Isolith / Open Engineering Platform (OEP) Stack Threat Model
 status: Ratified (Wave-3 P11-T01)
 version: 1.1.0
 date: 2026-10-18
-owner: Keelworks program governance, P11 security lane
+owner: Isolith program governance, P11 security lane
 applies_to: the integrated delivery stack (oep-pdm REST API, oep-web UI, oep-update checker, the P9 P2P/NATS compute lane, oep-sandbox worker boundary, and the P10 air-gap / TLS / backup tooling)
 supersedes: nothing (first P11 threat model)
 ---
 
-# Keelworks Stack Threat Model
+# Isolith Stack Threat Model
 
-This is the threat model for the Keelworks / Open Engineering Platform (OEP)
+This is the threat model for the Isolith / Open Engineering Platform (OEP)
 stack as it exists at the start of Wave-3 (P11 security lane). It documents
 the assets, trust boundaries, threat actors, and mitigations mapped to the
 stack, per card P11-T01. Every mitigation below ties to a real component
@@ -26,7 +26,7 @@ cluster-trust, air-gap, update-checker, and supply-chain surfaces on top.
 
 ## 1. System of interest
 
-The stack is the integrated, self-hosted Keelworks deployment delivered by
+The stack is the integrated, self-hosted Isolith deployment delivered by
 the P10 wave (P10-M1 one-command compose stack). Everything runs inside a
 customer's network (decision #10); air-gap and on-prem are the default and
 the ITAR sovereignty selling point; remote access is not a product problem.
@@ -59,7 +59,7 @@ Deployment facts that bound the model:
 | A5 Queues and job state | JetStream streams, KV buckets (queue state, node registry, worker registry, scheduler meta) | A high, I high | nats-server JetStream storage |
 | A6 Update/verification keys | Ed25519 update-sign key, air-gap gpg signing key | I critical (key = trust), C high | secret on the offline build host only; public verification keys committed |
 | A7 Signing/public manifest data | Signed release bundles, update.bundle.json, air-gap bundle + sha256 + sig | I high | build host output, shipped on media, consumed by oep-update / airgap scripts |
-| A8 Operator configuration | .env (binds, update-check posture, local secret), TLS certs/keys, backup targets | C high, I high | host filesystem /opt/keelworks, cert dir, second disk |
+| A8 Operator configuration | .env (binds, update-check posture, local secret), TLS certs/keys, backup targets | C high, I high | host filesystem /opt/isolith, cert dir, second disk |
 | A9 Job/content metadata in the ops dashboard | Queue depth, node health, job logs, cost | C low-medium | oep-opsdash served on the mesh |
 
 ## 3. Trust boundaries

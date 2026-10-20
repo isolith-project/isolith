@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P0-M4-T02 acceptance test: Keelworks shared test-data registry + golden-file runner.
+"""P0-M4-T02 acceptance test: Isolith shared test-data registry + golden-file runner.
 
 TDD: this test documents the acceptance criteria BEFORE the harness exists, so it
 must FAIL (RED) when run against a repo with no corpus harness, then PASS (GREEN)
@@ -246,7 +246,7 @@ def test_manifest_object_store_entries_wellformed():
 
 
 def main():
-    print("Keelworks test corpus harness acceptance test")
+    print("Isolith test corpus harness acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_manifest_exists_and_schema()

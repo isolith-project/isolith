@@ -3,7 +3,7 @@
 
 Minimal ANSI terminal emulator (16-color + bold) rendering each distinct
 screen to PNG frames with PIL, then piping frames to ffmpeg/libx264 to make a
-playable MP4 of the recorded Keelworks install walkthrough.
+playable MP4 of the recorded Isolith install walkthrough.
 
 Usage:
   python3 p10m5t02-video-render.py <typescript> <timing> <out.mp4>

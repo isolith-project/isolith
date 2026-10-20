@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# airgap-install.sh — install the full Keelworks stack on an air-gapped machine
+# airgap-install.sh — install the full Isolith stack on an air-gapped machine
 # with NO network access, from a signed offline bundle (P10-M2-T02).
 #
 # Runs ENTIRELY offline: no pulls, no registry, no phone-home, no reach-back.
@@ -14,15 +14,15 @@
 # Rollback is provided separately by scripts/airgap/airgap-rollback.sh.
 #
 # Usage (on the target host, from the USB/ISO copy):
-#   airgap-install.sh --bundle /media/usb/keelworks-offline-0.1.0.tar.gz \
-#       [--compose /opt/keelworks/compose.yaml] [--install-dir /opt/keelworks] \
+#   airgap-install.sh --bundle /media/usb/isolith-offline-0.1.0.tar.gz \
+#       [--compose /opt/isolith/compose.yaml] [--install-dir /opt/isolith] \
 #       [--project oep] [--no-record]
 #
 # Options:
 #   --bundle PATH   the signed offline bundle tarball (required)
 #   --compose PATH  compose file to use (default: the one embedded in the bundle,
 #                   or $INSTALL_DIR/compose.yaml)
-#   --install-dir   where to extract (default: /opt/keelworks)
+#   --install-dir   where to extract (default: /opt/isolith)
 #   --project NAME  docker compose project name (default: oep)
 #   --no-record     skip writing the install record JSON
 set -euo pipefail
@@ -33,7 +33,7 @@ source ./airgap-lib.sh
 import_public_key
 
 BUNDLE=""
-INSTALL_DIR="/opt/keelworks"
+INSTALL_DIR="/opt/isolith"
 COMPOSE=""
 PROJECT="oep"
 RECORD=1
@@ -56,7 +56,7 @@ command -v docker >/dev/null 2>&1 || die "docker required on the target"
 command -v gpg    >/dev/null 2>&1 || die "gpg required to verify the bundle"
 command -v sha256sum >/dev/null 2>&1 || die "sha256sum required"
 
-log "=== Keelworks air-gap install (no-phone-home, signed bundle) ==="
+log "=== Isolith air-gap install (no-phone-home, signed bundle) ==="
 mkdir -p "$INSTALL_DIR"
 
 # --- 1&2. Verify the bundle tarball signature + checksum, then extract. ---
@@ -76,8 +76,8 @@ STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 log "extracting bundle"
 tar xzf "$BUNDLE" -C "$STAGE"
-BUNDLE_DIR="$(find "$STAGE" -maxdepth 1 -type d -name 'keelworks-offline-*' | head -1)"
-[ -n "$BUNDLE_DIR" ] || die "bundle did not contain a keelworks-offline-* directory"
+BUNDLE_DIR="$(find "$STAGE" -maxdepth 1 -type d -name 'isolith-offline-*' | head -1)"
+[ -n "$BUNDLE_DIR" ] || die "bundle did not contain a isolith-offline-* directory"
 log "bundle root: $BUNDLE_DIR"
 
 # --- Verify the signed MANIFEST inside the bundle. ---

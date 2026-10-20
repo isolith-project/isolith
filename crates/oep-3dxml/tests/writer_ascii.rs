@@ -43,7 +43,7 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 
 use oep_3dxml::ascii::{write_package, write_rep_markup, WriteError, WriterOpts};
 
-/// The keelworks CC0-1.0 reference tessellation: the 8-corner unit box (same
+/// The isolith CC0-1.0 reference tessellation: the 8-corner unit box (same
 /// order as `corpus/data/box.stl`, P0-M4-T02 fixture — 0/1 coordinates are
 /// exact in f32, so equality checks are strong).
 fn box_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
@@ -77,7 +77,7 @@ fn box_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
 fn opts() -> WriterOpts<'static> {
     WriterOpts {
         product_name: "box",
-        author: "keelworks",
+        author: "isolith",
         timestamp: "",
     }
 }

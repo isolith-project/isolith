@@ -2,7 +2,7 @@
 //!
 //! A zero-dependency, std-only static file server that serves the committed
 //! `docs-site/` over HTTP. It is one more service in the same
-//! `keelworks/oep-stack` image and compose file as the PDM, viewer and P2P
+//! `isolith/oep-stack` image and compose file as the PDM, viewer and P2P
 //! services -- "docs served from the sum, no separate infra" (P13-T03). It is
 //! deliberately tiny and honest:
 //!

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks export-control classification gate (P11-T05).
+"""Isolith export-control classification gate (P11-T05).
 
 The release-pipeline checkbox: every release <V> must carry a committed
 classification file workstreams/security/export-control/<V>.classification.toml asserting

@@ -5,32 +5,32 @@
   "files": [
     {
       "item_name": "corpus-stc06",
-      "path": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_4c51a021/real-corpus/nist_stc_06_asme1_V56R2023.CATPart",
+      "path": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_4c51a021/real-corpus/nist_stc_06_asme1_V56R2023.CATPart",
       "format": "cgr"
     },
     {
       "item_name": "corpus-valve",
-      "path": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_4c51a021/real-corpus/VALVE.cgr",
+      "path": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_4c51a021/real-corpus/VALVE.cgr",
       "format": "cgr"
     },
     {
       "item_name": "corpus-box-ref",
-      "path": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/box-reference.step",
+      "path": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/box-reference.step",
       "format": "step"
     },
     {
       "item_name": "corpus-box-part",
-      "path": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/box-part.step",
+      "path": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/box-part.step",
       "format": "step"
     },
     {
       "item_name": "corpus-assembly",
-      "path": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/assembly.step",
+      "path": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/assembly.step",
       "format": "step"
     },
     {
       "item_name": "corpus-box-mini",
-      "path": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/box-mini.step",
+      "path": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_4c51a021/wt/crates/oep-worker/tests/fixtures/box-mini.step",
       "format": "step"
     },
     {

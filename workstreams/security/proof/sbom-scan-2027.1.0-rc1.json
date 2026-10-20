@@ -2,7 +2,7 @@
   "ref": "2027.1.0-rc1",
   "timestamp": "2026-10-19T06:59:19Z",
   "tool": {
-    "name": "keelworks-oep-sbom",
+    "name": "isolith-oep-sbom",
     "version": "0.1.0"
   },
   "gate": "PASS",
@@ -57,7 +57,7 @@
     {
       "name": "rustsec-advisory-db",
       "state": "ok",
-      "note": "advisory db: /home/r1a/keelworks-main/.worktrees/release-drill-ga-1018a/workstreams/security/.advisory-db"
+      "note": "advisory db: /home/r1a/isolith-main/.worktrees/release-drill-ga-1018a/workstreams/security/.advisory-db"
     }
   ],
   "sbom_artifacts": [
@@ -65,5 +65,5 @@
     "/tmp/p11gate2/rust.spdx.json",
     "/tmp/p11gate2/images.cdx.json"
   ],
-  "waivers_file": "/home/r1a/keelworks-main/.worktrees/release-drill-ga-1018a/workstreams/security/waivers.toml"
+  "waivers_file": "/home/r1a/isolith-main/.worktrees/release-drill-ga-1018a/workstreams/security/waivers.toml"
 }

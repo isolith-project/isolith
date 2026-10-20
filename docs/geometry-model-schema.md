@@ -2,7 +2,7 @@
 
 Version 1.0, 2026-10-16. Milestone: P6-M1-T01 (`oep-geo` model schema:
 part, body, feature, assembly, instance; serde serialization in our own
-documented format). Program: Keelworks / Open Engineering Platform (OEP),
+documented format). Program: Isolith / Open Engineering Platform (OEP),
 P6 geometry core. Clean-room, our own format — nothing here is a vendor
 format (no 3DXML, STEP, CGR, or Dassault-derived schema is embedded).
 

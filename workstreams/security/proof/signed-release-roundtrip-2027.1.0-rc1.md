@@ -24,7 +24,7 @@ advisory checker consumes (decision #11): signature over the canonical
 manifest, `payloads[0]` = the inline release manifest (verified by the
 checker's inline-integrity gate), `payloads[1..]` = each artifact with its
 sha256 / size / url. Signed with the `oep-update-signing` key (secret only
-under `/home/r1a/keelworks-secrets/`, mode 600; pubkey committed at
+under `/home/r1a/isolith-secrets/`, mode 600; pubkey committed at
 `workstreams/security/keys/oep-update-signing.pub`).
 
 ## What was verified
@@ -35,17 +35,17 @@ With a fresh keyring holding ONLY the committed public keys:
 - all sha256 checksums match (PASS),
 - oep-update-check accepts the bundle and reports an advisory update
   available (PASS),
-- after flipping one byte in `oep-pdm-keelworks-oep-aarch64.AppImage`,
+- after flipping one byte in `oep-pdm-isolith-oep-aarch64.AppImage`,
   verification FAILS (rc 1),
 - after flipping one byte in `update.bundle.json`, verification FAILS
   (rc 1; the checker refuses to report it).
 
 Full output of the fresh-keyring reverify:
 
-    [ok] signature: keelworks-oep-pdm-x86_64-pc-windows-gnu-0.1.0.msi
-    [ok] signature: keelworks-oep-update-check-x86_64-pc-windows-gnu-0.1.0.msi
-    [ok] signature: oep-pdm-keelworks-oep-aarch64.AppImage
-    [ok] signature: oep-web-keelworks-oep-aarch64.AppImage
+    [ok] signature: isolith-oep-pdm-x86_64-pc-windows-gnu-0.1.0.msi
+    [ok] signature: isolith-oep-update-check-x86_64-pc-windows-gnu-0.1.0.msi
+    [ok] signature: oep-pdm-isolith-oep-aarch64.AppImage
+    [ok] signature: oep-web-isolith-oep-aarch64.AppImage
     [ok] signature: SHA256SUMS
     [ok] sha256 checksums
     [ok] update.bundle.json signature verified by oep-update-check (advisory only)

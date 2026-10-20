@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks P1-M1-T06: reusable privacy/ITAR sweep for corpus samples.
+"""Isolith P1-M1-T06: reusable privacy/ITAR sweep for corpus samples.
 
 Pure stdlib, no third-party deps (tooling-workspace discipline). Scans CAD
 sample files -- CATPart/CATProduct, CGR, 3DXML (zip or ASCII), STL, XML, JSON,
@@ -242,7 +242,7 @@ def verdict_for(path):
 
 def main(argv=None):
     import argparse
-    ap = argparse.ArgumentParser(description="Keelworks privacy/ITAR sweep")
+    ap = argparse.ArgumentParser(description="Isolith privacy/ITAR sweep")
     ap.add_argument("--corpus", action="append", required=True,
                     help="corpus dir to sweep (repeatable)")
     ap.add_argument("--out", required=True, help="JSON report output path")
@@ -282,7 +282,7 @@ def main(argv=None):
         "schema_version": args.schema_version,
         "tool": "p1-m1-t06/privacy-itar-sweep",
         "generated": "2026-10-15",
-        "generated_by": "keelworks worker (default profile)",
+        "generated_by": "isolith worker (default profile)",
         "policy": ("Public/open-licensed samples only. Detector flags ITAR/USML/"
                    "ECCN, classified/CUI/FOUO markers, and personal contact data. "
                    "HIGH findings must carry a disposition note before a sample "

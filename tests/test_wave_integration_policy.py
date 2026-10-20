@@ -90,8 +90,8 @@ def test_policy_doc():
         return
     text = open(POLICY, encoding="utf-8").read()
     low = text.lower()
-    for needle in ("wave/n", "keelworks.wave-checkpoint.v1",
-                   "keelworks/keelworks-canary", "definition of done",
+    for needle in ("wave/n", "isolith.wave-checkpoint.v1",
+                   "isolith/isolith-canary", "definition of done",
                    "anti-proliferation", "wave-checkpoints"):
         check(needle in low, "policy missing required content: %r" % needle)
     check("card(<card-id>)" in text or "card(" in text,
@@ -104,8 +104,8 @@ def test_policy_doc():
 
 def test_tool_roundtrip():
     mod = load_tool()
-    check(mod.SCHEMA == "keelworks.wave-checkpoint.v1", "tool schema constant wrong")
-    check(mod.ALLOWED_REPOS == {"keelworks", "keelworks-canary"},
+    check(mod.SCHEMA == "isolith.wave-checkpoint.v1", "tool schema constant wrong")
+    check(mod.ALLOWED_REPOS == {"isolith", "isolith-canary"},
           "tool must bound repos to exactly the canonical pair")
     tmp = tempfile.mkdtemp(prefix="wave-ckpt-")
     try:

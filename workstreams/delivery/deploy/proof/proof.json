@@ -12,7 +12,7 @@
     "catalogue_total": 5,
     "audit_verify_ok": true,
     "blob_count": 5,
-    "bundle_contract": "keelworks-vault-backup/{latest,manifest.sha256,meta.json}"
+    "bundle_contract": "isolith-vault-backup/{latest,manifest.sha256,meta.json}"
   },
   "restore_round_trips_on_this_host": true,
   "scheduled": "cron-ok",

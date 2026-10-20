@@ -1,4 +1,4 @@
-# Keelworks air-gap proof stack — real components at this commit.
+# Isolith air-gap proof stack — real components at this commit.
 # PDM service (oep-pdm, built from repo source by the air-gap lane's own
 # Dockerfile) + NATS message bus (the P9-adopted self-hosted bus,
 # workstreams/compute/spec/T02 message-bus-adr.md). Used both as the bundle content AND as the
@@ -17,7 +17,7 @@
 # stack publishes PDM on a distinct 8791 so lanes never collide on one box.
 services:
   pdm:
-    image: keelworks/oep-pdm:airgap-proof-src
+    image: isolith/oep-pdm:airgap-proof-src
     container_name: oep-airgap-pdm
     ports:
       - "8791:8787"

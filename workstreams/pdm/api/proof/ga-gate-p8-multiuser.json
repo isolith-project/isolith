@@ -3,7 +3,7 @@
   "description": "P8 GA gate: multi-user edit/publish/release + concurrent lock test",
   "generated_at": "2026-10-18T01:04:08.131029+00:00",
   "base_url": "http://127.0.0.1:28893/api/v1",
-  "binary": "/home/r1a/keelworks-main/.worktrees/p8m6t03-ga-gate-1017a/target/debug/oep-pdm",
+  "binary": "/home/r1a/isolith-main/.worktrees/p8m6t03-ga-gate-1017a/target/debug/oep-pdm",
   "nas_base": "http://192.168.0.101:3200",
   "summary": {
     "total": 11,

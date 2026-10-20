@@ -1,11 +1,11 @@
 # P10-M3-T01 -- DR runbook: fresh-machine restore from backup, under 1 hour
 
 Status: implemented + drill recorded on the real U1-class host (GB10, 2026-10-17).
-Owner: Keelworks operations (self-hosted PDM lane). Version: 1.
+Owner: Isolith operations (self-hosted PDM lane). Version: 1.
 
 ## 1. What this is
 
-The disaster-recovery runbook for the Keelworks self-hosted PDM platform
+The disaster-recovery runbook for the Isolith self-hosted PDM platform
 (oep-pdm vault: `store.json` metadata DB + content-addressed blobs + the
 tamper-evident audit chain). The recovery-time objective is:
 
@@ -38,7 +38,7 @@ passive storage and repo host only; it is **never** a restore/drill target.
 ## 3. The backup contract (produced by P10-M1-T02)
 
 The bundle this runbook restores from lives on a **second disk / archive
-target** on the U1/VM host, at `<BK_TARGET>/keelworks-vault-backup/`:
+target** on the U1/VM host, at `<BK_TARGET>/isolith-vault-backup/`:
 
     latest/                    # latest snapshot (rolled)
       store.json               # vault item/revision metadata DB
@@ -65,7 +65,7 @@ before capturing, per the script header.
 4. Integrity gate: the manifest is re-verified inside the fresh host before any
    file is placed. A failure aborts the drill (no partial restore is left).
 5. Restore layout: `store.json` + `blobs/` + `audit/` into
-   `/var/lib/keelworks/vault`; boot `oep-pdm --persist-dir ... --addr ...`.
+   `/var/lib/isolith/vault`; boot `oep-pdm --persist-dir ... --addr ...`.
 6. Acceptance checks, all-or-nothing:
    - `GET /api/v1/health` returns `status: ok`;
    - `GET /api/v1/items` returns the vault's item set (non-empty);

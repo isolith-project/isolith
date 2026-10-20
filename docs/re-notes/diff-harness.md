@@ -1,12 +1,12 @@
 # Diff harness: save/load/modify in a vendor-free tool, bisect which bytes change
 
 Format: reverse-engineering observation notebook
-task: P1-M2-T06 (Keelworks wave 1, P1 format reconnaissance)
+task: P1-M2-T06 (Isolith wave 1, P1 format reconnaissance)
 Version: 1.0
 Date: 2026-10-15
 Status: verified on real material (6 real 3DXML samples, see "Verification record")
 
-Owner: Keelworks P1 corpus / RE lane. Companion notebooks:
+Owner: Isolith P1 corpus / RE lane. Companion notebooks:
 docs/re-notes/cgr-hex-notebook.md (P1-M2-T01, CGR header/block),
 docs/re-notes/cgr-version-drift.md (P1-M2-T02, era drift),
 docs/re-notes/catpart-catproduct-container-notebook.md (P1-M2-T03, containers).

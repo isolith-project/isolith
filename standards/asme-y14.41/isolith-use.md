@@ -1,10 +1,10 @@
-# ASME Y14.41 — Keelworks Use
+# ASME Y14.41 — Isolith Use
 
-## Why Keelworks cares
+## Why Isolith cares
 
 ASME Y14.41 is the *business practice* definition of Model-Based Definition: what
 makes a digital model legally and practically "product definition" instead of just
-geometry. Keelworks' strongest wedge (per the master plan) is the P4-M5 MBD
+geometry. Isolith' strongest wedge (per the master plan) is the P4-M5 MBD
 validator plus honest capability reporting. That validator is only meaningful if its
 rule set encodes Y14.41 expectations. Y14.41 also anchors the PMI model in P6 and the
 MBD fidelity claims in P4.
@@ -29,7 +29,7 @@ MBD fidelity claims in P4.
   presentation requirements**, **model coordinate/datum framing**: these become
   validation rules, expressed in our own words — standard text is not copied.
 - **Exception/additional-requirements pattern** ("where no exception... existing
-  ASME standards shall apply"): Keelworks' validator outputs can mirror this
+  ASME standards shall apply"): Isolith' validator outputs can mirror this
   structure (base rules + exceptions) as a familiar audit format.
 - Secondary public sources (Action Engineering MBE Dictionary term definitions
   citing Y14.41) give snippet-level definitions we can cite under fair use.

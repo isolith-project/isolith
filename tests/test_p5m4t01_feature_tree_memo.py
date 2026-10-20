@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P5-M4-T01: feature-tree recoverability
+"""Acceptance test for Isolith P5-M4-T01: feature-tree recoverability
 decision memo with an options matrix (full recovery vs imported-dumb-solid vs
 PMI-only) and a recommendation.
 

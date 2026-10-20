@@ -233,7 +233,7 @@ def test_pair_list_runner_and_report():
     if acc is None:
         return
     pairs = [
-        {"id": "keelworks-native-box", "geometry_class": "prism",
+        {"id": "isolith-native-box", "geometry_class": "prism",
          "native": NATIVE_BOX, "reference": REF_BOX},
         {"id": "missing-ref", "geometry_class": "prism",
          "native": NATIVE_BOX,
@@ -246,7 +246,7 @@ def test_pair_list_runner_and_report():
     check("no phantom rows, no dropped pairs",
           row_ids == {p["id"] for p in pairs}, detail=str(row_ids))
 
-    box_row = next(r for r in rows if r["id"] == "keelworks-native-box")
+    box_row = next(r for r in rows if r["id"] == "isolith-native-box")
     check("box pair status == measured",
           box_row["status"] == "measured", detail=str(box_row.get("status")))
     m = box_row.get("metrics") or {}

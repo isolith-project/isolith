@@ -36,7 +36,7 @@ fn main() -> std::process::ExitCode {
     ];
     let opts = oep_3dxml::ascii::WriterOpts {
         product_name: "box",
-        author: "keelworks",
+        author: "isolith",
         timestamp: "2026-10-15",
     };
     let mut file = match std::fs::File::create(&out) {

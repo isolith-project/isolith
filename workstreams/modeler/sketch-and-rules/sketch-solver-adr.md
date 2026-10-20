@@ -1,15 +1,15 @@
 ---
-title: Keelworks Sketcher Constraint-Solver Decision (adopt an OSS 2D GCS behind a seam; do not rebuild, do not import FreeCAD)
+title: Isolith Sketcher Constraint-Solver Decision (adopt an OSS 2D GCS behind a seam; do not rebuild, do not import FreeCAD)
 decision: adopt_oss_2d_sketch_constraint_solver_behind_the_solver_seam
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks program governance, P7 modeler lane (P7-M4-T01)
+owner: Isolith program governance, P7 modeler lane (P7-M4-T01)
 applies_to: the P7-M4 sketcher + parametric variable sets work (P7-M4-T01), the oep-sketch crate, and the P7-M4-T02 rules/checks sandbox which consumes solved sketch dimensions
 supersedes: nothing (first P7 sketcher solver record; reads the P7-M1 open modeler shell decision as its parent)
 ---
 
-# Keelworks Sketcher Constraint-Solver Decision
+# Isolith Sketcher Constraint-Solver Decision
 
 The P7-M1 open-modeler-shell decision binds this card twice: the shell is our
 own thin Rust shell around Open CASCADE (FreeCAD was rejected as the shell),

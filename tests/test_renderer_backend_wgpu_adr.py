@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P6-M5-T01: renderer backend decision.
+"""Acceptance test for Isolith P6-M5-T01: renderer backend decision.
 
 Written FIRST (TDD). The decision record at workstreams/geometry-core/viewer/renderer-backend-wgpu-adr.md
 must make this test pass. It verifies the real material, not mocks:

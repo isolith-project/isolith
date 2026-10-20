@@ -120,7 +120,7 @@ def test_emit_sbom_fixture():
     assert len(cdx["components"]) == 4
     assert len(spdx["packages"]) == 4
     purls = {c["purl"] for c in cdx["components"]}
-    assert "pkg:cargo/keelworks-fixture-unsafe@1.5.0" in purls
+    assert "pkg:cargo/isolith-fixture-unsafe@1.5.0" in purls
     assert all(p.startswith("pkg:cargo/") for p in purls)
     assert [i["name"] for i in imgs["components"]] == ["debian:bookworm-slim", "rust:1.98-bookworm"]
     assert len(spdx["relationships"]) == 4
@@ -167,7 +167,7 @@ def test_gate_waiver_lifts_block_and_is_surfaced():
     with tempfile.TemporaryDirectory() as td:
         wf = Path(td) / "waivers.toml"
         wf.write_text(
-            f'[[waiver]]\nid = "{CRIT_ADV}"\npackage = "keelworks-fixture-unsafe"\n'
+            f'[[waiver]]\nid = "{CRIT_ADV}"\npackage = "isolith-fixture-unsafe"\n'
             f'document = "deliberate-failure repro"\nreason = "fixture: waiver mechanism honours committed waivers"\n'
         )
         rc, out = _run([
@@ -186,7 +186,7 @@ def test_gate_revoked_waiver_still_blocks():
     with tempfile.TemporaryDirectory() as td:
         wf = Path(td) / "waivers.toml"
         wf.write_text(
-            f'[[waiver]]\nid = "{CRIT_ADV}"\npackage = "keelworks-fixture-unsafe"\n'
+            f'[[waiver]]\nid = "{CRIT_ADV}"\npackage = "isolith-fixture-unsafe"\n'
             'revoked = true\nreason = "revocation must re-block"\n'
         )
         rc, out = _run([

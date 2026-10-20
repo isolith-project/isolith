@@ -12,10 +12,10 @@
     "external_reachability": "UNREACHABLE (192.168.0.101:3200 did not answer)"
   },
   "bundle": {
-    "file": "keelworks-offline-0.1.0.tar.gz",
+    "file": "isolith-offline-0.1.0.tar.gz",
     "sha256": "b3ddd7903fa47d3eb4d8fb4c86a5901a34e7d67228257db10e9eead56b241ee6",
     "contents": [
-      "images/keelworks_oep-pdm_airgap-proof-src.tar.gz",
+      "images/isolith_oep-pdm_airgap-proof-src.tar.gz",
       "images/nats_2-alpine.tar.gz",
       "MANIFEST.json (+ .sig)",
       "SHA256SUMS (+ .sig)",

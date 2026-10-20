@@ -15,7 +15,7 @@ so anything verified here is verified transitively against the writer):
       <ReferenceRep format="TESSELLATED" associatedFile="urn:3DXML:box.3DRep">;
     - the .3DRep is the tessellated-ASCII branch: XMLRepresentation ->
       BagRep/PolygonalRep -> Faces(strips) + VertexBuffer(Positions);
-    - geometry is EXACTLY the keelworks CC0-1.0 unit box: 8 corners
+    - geometry is EXACTLY the isolith CC0-1.0 unit box: 8 corners
       [1 0 0, 0 1 0, 0 0 0, 1 1 0, 0 0 1, 0 1 1, 1 0 1, 1 1 1] and the
       12 triangle index triples, losslessly.
 

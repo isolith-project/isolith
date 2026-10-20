@@ -1,6 +1,6 @@
 # P8-M2-T03: Where-used + impact query on the relationship graph
 
-Status: implemented as part of task P8-M2-T03 (keelworks card t_7b63c5f9).
+Status: implemented as part of task P8-M2-T03 (isolith card t_7b63c5f9).
 Owner: open-engineering-platform P8 PDM lane.
 
 ## Relationship graph model

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P9-M4-T01: GPU discovery + scheduling with a
+"""Acceptance test for Isolith P9-M4-T01: GPU discovery + scheduling with a
 clean CPU fallback.
 
 Written FIRST (TDD). The discovery layer (crates/oep-lane/src/gpu), the

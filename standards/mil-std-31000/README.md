@@ -70,7 +70,7 @@ design data into the package.
 ## PMI / MBD relevance
 
 - MIL-STD-31000 is how the US DoD specifies **what a deliverable data package must
-  contain**. For Keelworks, it defines the customer-facing packaging contract —
+  contain**. For Isolith, it defines the customer-facing packaging contract —
   which data (design, 3D models, drawings, PMI annotations, specifications) must be
   present and in what form for defense customers.
 - It references ASME Y14.47 (3D model data / 3D PDF interchange) for 3D data formats

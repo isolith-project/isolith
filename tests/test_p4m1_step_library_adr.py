@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P4-M1-T01: oep-step library-choice ADR.
+"""Acceptance test for Isolith P4-M1-T01: oep-step library-choice ADR.
 
 Written FIRST (TDD). The ADR at workstreams/step-interop/library-adr/step-library-adr.md must make this test
 pass. It verifies the real material, not mocks:

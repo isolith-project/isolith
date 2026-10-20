@@ -416,7 +416,7 @@ pub fn write_step<W: Write>(
     )?;
     writeln!(
         w,
-        "FILE_NAME('{}','{ts}',('Keelworks OEP'),(''),'oep-cgr2step {}','Keelworks OEP','');",
+        "FILE_NAME('{}','{ts}',('Isolith OEP'),(''),'oep-cgr2step {}','Isolith OEP','');",
         opts.source_name.replace('\'', "''"),
         env!("CARGO_PKG_VERSION")
     )?;

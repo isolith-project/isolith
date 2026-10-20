@@ -1,6 +1,6 @@
 # CGR Color/Material Table: Observed Record Signature and glTF Export
 
-P2-M4-T01 · Keelworks / OEP P2 CGR Reader
+P2-M4-T01 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15
 Version: 1.0
 

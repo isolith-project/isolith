@@ -1,15 +1,15 @@
 ---
-title: Keelworks Feature-Tree Recoverability Decision Memo (full recovery vs imported-dumb-solid vs PMI-only)
+title: Isolith Feature-Tree Recoverability Decision Memo (full recovery vs imported-dumb-solid vs PMI-only)
 decision: import_b_rep_as_dumb_solid_extract_feature_history_as_honestly_marked_metadata_do_not_promise_full_replay
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks P5 native-reader lane (wave 2), P5-M4-T01
+owner: Isolith P5 native-reader lane (wave 2), P5-M4-T01
 applies_to: the feature-tree recoverability question in the native CATPart/CATProduct reader lane (P5-M4), the B-Rep extraction lane (P5-M3) it sits beside, the oep-geo feature-graph model (P6-M3-T03) that would consume any recovered history, and the P6-M4-T02 importer hub
 supersedes: nothing (first feature-tree recoverability decision memo in the P5 native-reader lane)
 ---
 
-# Keelworks Feature-Tree Recoverability Decision Memo
+# Isolith Feature-Tree Recoverability Decision Memo
 
 This document is the written deliverable for P5-M4-T01: assess whether the
 parametric feature tree of a native CATPart is recoverable from the saved

@@ -1,17 +1,17 @@
 ---
-title: Keelworks Release Train and Versioning Decision
+title: Isolith Release Train and Versioning Decision
 decision: calendar_train_plus_semver_components
 version: 1.0.0
 date: 2026-10-15
 status: Ratified
-owner: Keelworks program governance, P0-M5 (MBD/corpus standards and product policy)
+owner: Isolith program governance, P0-M5 (MBD/corpus standards and product policy)
 applies_to: every shipped artifact (release tags, containers, installers), every component/library crate (oep-cgr, oep-3dxml, oep-geo, oep-step, oep-pdm), the PDM server, P2P workers, CLI and GUI entry points, and all downstream release tooling
 supersedes: nothing (first release engineering decision)
 ---
 
-# Keelworks Release Train and Versioning Decision
+# Isolith Release Train and Versioning Decision
 
-This record is the binding product decision for how Keelworks versions its
+This record is the binding product decision for how Isolith versions its
 releases and its components. It is versioned like the charter and the
 telemetry decision (P0-M5-T02); any material change bumps the version in the
 front matter and adds a line to the change log at the bottom.
@@ -23,7 +23,7 @@ build belongs to, and what API compatibility it promises.
 
 ## 1. Decision
 
-Keelworks uses a HYBRID versioning scheme with two deliberately different
+Isolith uses a HYBRID versioning scheme with two deliberately different
 dimensions:
 
 1. CALENDAR TRAIN for every product release: the user-facing and operational
@@ -31,13 +31,13 @@ dimensions:
    N is the train sequence within that year. The first product train of 2027
    is 2027.1, the second 2027.2. A patch to an already-shipped train appends
    a third segment: 2027.1.1, 2027.1.2. This is the version a user installs,
-   runs `keelworks --version` and sees, and reports when filing a bug.
+   runs `isolith --version` and sees, and reports when filing a bug.
 
 2. SEMANTIC VERSIONING (semver) for every component and library crate: each
    crate in the workspace (oep-cgr, oep-3dxml, oep-geo, oep-step, oep-pdm and
    any future crate) carries an independent semver X.Y.Z that promises API
    compatibility to its consumers. A calendar train does not replace semver;
-   it pins a set of component versions. A concrete example: "Keelworks 2027.1
+   it pins a set of component versions. A concrete example: "Isolith 2027.1
    ships oep-cgr 0.3.2, oep-3dxml 0.2.5, oep-geo 0.1.9".
 
 The two dimensions answer different questions and must not be collapsed into

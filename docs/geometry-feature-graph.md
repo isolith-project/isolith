@@ -1,6 +1,6 @@
 # P6-M3-T03: Feature Graph (History) Model with Replay — Mini Feature Tree
 
-Status: implemented and verified (Keelworks wave 1, P6), PR review pending.
+Status: implemented and verified (Isolith wave 1, P6), PR review pending.
 
 ## Scope
 

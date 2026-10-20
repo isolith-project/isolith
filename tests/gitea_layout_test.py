@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for the Keelworks NAS Gitea org + repo layout (P0-M1-T03).
+"""Acceptance test for the Isolith NAS Gitea org + repo layout (P0-M1-T03).
 
 Checks the live Gitea instance state, not a local copy. Run from anywhere with
 network access to the NAS Gitea (192.168.0.101:3200) and a token.
@@ -18,10 +18,10 @@ import urllib.request
 from urllib.parse import unquote, urlsplit
 
 BASE = os.environ.get("GITEA_BASE", "http://192.168.0.101:3200/api/v1")
-ORG = "keelworks"
+ORG = "isolith"
 META_REPO = "oep-meta"
-CODE_REPO = "keelworks"
-OLD_PATH = "don/keelworks"
+CODE_REPO = "isolith"
+OLD_PATH = "don/isolith"
 
 checks = []
 
@@ -89,26 +89,26 @@ def main():
 
     code, body = api(f"/orgs/{ORG}")
     org_exists = code == 200 and isinstance(body, dict) and body.get("username") == ORG
-    check("G1 org keelworks exists", org_exists)
+    check("G1 org isolith exists", org_exists)
     check("G2 oep-meta repo exists under org", repo_exists(ORG, META_REPO))
-    check("G3 keelworks monorepo exists under org", repo_exists(ORG, CODE_REPO))
+    check("G3 isolith monorepo exists under org", repo_exists(ORG, CODE_REPO))
     check("G4 oep-meta is private", is_private(ORG, META_REPO))
-    check("G5 keelworks repo is private", is_private(ORG, CODE_REPO))
+    check("G5 isolith repo is private", is_private(ORG, CODE_REPO))
     check("G6 oep-meta default branch == main", default_branch_of(ORG, META_REPO) == "main")
-    check("G7 keelworks default branch == main", default_branch_of(ORG, CODE_REPO) == "main")
+    check("G7 isolith default branch == main", default_branch_of(ORG, CODE_REPO) == "main")
 
     markers = ["Cargo.toml", "crates/oep-cgr/Cargo.toml", "docs/layout.md",
                "tests/monorepo_layout_test.py"]
     paths = tree_paths(ORG, CODE_REPO, "main")
     missing = [m for m in markers if m not in paths]
-    check("G8 keelworks monorepo markers on main", not missing,
+    check("G8 isolith monorepo markers on main", not missing,
           "missing: " + ",".join(missing) if missing else "all present")
 
     code, body = api(f"/repos/{OLD_PATH}")  # follows 3xx; a transfer leaves a 301 -> new owner
     moved = (code == 200 and isinstance(body, dict)
              and body.get("owner", {}).get("username") == ORG
              and body.get("name") == CODE_REPO)
-    check("G9 don/keelworks no longer owned by don (redirects to org)", moved,
+    check("G9 don/isolith no longer owned by don (redirects to org)", moved,
           "status " + str(code) + (f" owner={body.get('owner',{}).get('username')}" if isinstance(body, dict) else ""))
 
     meta_paths = tree_paths(ORG, META_REPO, "main")
@@ -117,7 +117,7 @@ def main():
         code, body = api(f"/repos/{ORG}/{META_REPO}/raw/README.md")
         if code == 200:
             low = body.lower()
-            readme_ok = ("oep-meta" in low and "keelworks" in low and "monorepo" in low)
+            readme_ok = ("oep-meta" in low and "isolith" in low and "monorepo" in low)
     check("G10 oep-meta README documents org/repo layout + monorepo", readme_ok)
 
     code, body = api(f"/repos/{ORG}/{CODE_REPO}/pulls?state=all&limit=50")
@@ -128,7 +128,7 @@ def main():
         pr_hist = f"merged PRs: {len(merged)}"
     else:
         pr_hist = "could not read PRs"
-    check("G11 keelworks PR history preserved through transfer", found, pr_hist)
+    check("G11 isolith PR history preserved through transfer", found, pr_hist)
 
     failed = [c for c in checks if not c[1]]
     print()

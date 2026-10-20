@@ -3,7 +3,7 @@
 //! Vendor-neutral public seam. The JT reader is built clean-room from the
 //! published format description (Siemens JT v10 File Format Reference Rev-B
 //! and JTIAP PSI 14-1 V3), behind the same vendor-neutral discipline as the
-//! STEP lane in this crate: the public surface below deals only in Keelworks
+//! STEP lane in this crate: the public surface below deals only in Isolith
 //! concepts (a model made of parts, each with a name, optional bounding box,
 //! optional material and a facet mesh), never in JT container or codec
 //! vocabulary. Anything the spec documents but this wedge does not decode yet

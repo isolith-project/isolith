@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P1-M1-T04 acceptance test: Keelworks corpus manifest.
+"""P1-M1-T04 acceptance test: Isolith corpus manifest.
 
 TDD: this file documents the acceptance criteria BEFORE the manifest exists, so
 it MUST FAIL (RED) when run against a tree with no corpus/manifest.json, then

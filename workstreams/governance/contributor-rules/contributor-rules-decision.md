@@ -1,17 +1,17 @@
 ---
-title: Keelworks Contributor Rules Decision
+title: Isolith Contributor Rules Decision
 decision: dco_sign_off_no_standing_cla_with_codeowners
 version: 1.0.0
 date: 2026-10-15
 status: Ratified
-owner: Keelworks program governance, P0-M1 (program governance and foundations)
-applies_to: every repository under the keelworks org (this monorepo first); all contribution types: code, standards, docs, and decision records
+owner: Isolith program governance, P0-M1 (program governance and foundations)
+applies_to: every repository under the isolith org (this monorepo first); all contribution types: code, standards, docs, and decision records
 supersedes: nothing (first contributor-rules record)
 ---
 
-# Keelworks Contributor Rules Decision
+# Isolith Contributor Rules Decision
 
-This record is the binding product decision for how contributions to Keelworks
+This record is the binding product decision for how contributions to Isolith
 are certified and who owns review of what. It implements the charter goals
 (open, self-hosted, clean-room) and the hybrid license posture (Apache-2.0
 applications and libraries, AGPL-3.0 server/PDM and P2P orchestration). Every
@@ -23,13 +23,13 @@ version in the front matter and adds a line to the change log at the bottom.
 
 ## 1. Decision
 
-Keelworks uses the Developer Certificate of Origin (DCO) as its contribution
+Isolith uses the Developer Certificate of Origin (DCO) as its contribution
 certification mechanism, not a Contributor License Agreement (CLA). Every
 contribution is certified by a per-commit `Signed-off-by` line, the standard
 git sign-off. There is no standing CLA, no click-through contributor agreement,
 and no copyright assignment.
 
-Keelworks adopts a CODEOWNERS policy scoped per workstream. The repo-root
+Isolith adopts a CODEOWNERS policy scoped per workstream. The repo-root
 `CODEOWNERS` file is the policy artifact: every code workstream, every
 governance directory, and a catch-all default carry named owners, and main
 branch protection requires an approving code owner for every applicable rule
@@ -87,7 +87,7 @@ directory it lands in (per the hybrid posture). They are NOT assigning
 copyright and no other rights transfer. The sign-off is a statement of origin
 and right, not an assignment.
 
-One sentence a contributor should be able to rely on: contributing to Keelworks
+One sentence a contributor should be able to rely on: contributing to Isolith
 requires signing off your commits under the DCO, nothing more, and your code
 stays under the same open license as everyone else's.
 
@@ -96,7 +96,7 @@ stays under the same open license as everyone else's.
 The root `CODEOWNERS` file (first file Gitea searches for) is the policy
 artifact. It mirrors the monorepo layout in `docs/layout.md`:
 
-- Catch-all default: the keelworks owners team governs everything not matched
+- Catch-all default: the isolith owners team governs everything not matched
   below, so nothing can fall between ownership rows.
 - Per workstream: one row per Cargo workspace crate (`crates/oep-*`), plus
   rows for `python/`, `docs/`, `tests/`, `standards/`, and the P0-* governance
@@ -146,7 +146,7 @@ this record hands off rather than absorbs:
 
 ## 8. Coverage across the program
 
-- Applies to every repository in the keelworks org, starting with this
+- Applies to every repository in the isolith org, starting with this
   monorepo, and to every contribution type: Rust crates, Python tooling,
   standards material, documentation, and decision records all travel the same
   DCO sign-off and CODEOWNERS review path.

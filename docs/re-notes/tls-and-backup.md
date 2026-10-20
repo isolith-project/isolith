@@ -1,6 +1,6 @@
 # Re-note: P10-M1-T02 -- TLS/certs for the stack + vault DB/blob backup to a second disk/archive
 
-What: the self-hosted Keelworks PDM gained native HTTPS termination (no reverse
+What: the self-hosted Isolith PDM gained native HTTPS termination (no reverse
 proxy required) and a scheduled, checksummed backup of the vault (store DB +
 content-addressed blobs + audit chain) to a second-disk / archive target on
 U1/VM-class hosts, with the producer-side restore round-trip proven.
@@ -11,7 +11,7 @@ Key facts:
   reports https when TLS is on. Local identities from
   `scripts/gen-stack-certs.sh` (CA + leaf, SANs hostname/localhost/127.0.0.1).
 - Backup producer `scripts/backup/vault-backup.sh` writes the DR-shared bundle
-  contract `<archive>/keelworks-vault-backup/{latest/{store.json, blobs/,
+  contract `<archive>/isolith-vault-backup/{latest/{store.json, blobs/,
   audit/}, manifest.sha256, meta.json}`; manifest is sha256 and self-verified;
   NAS paths are refused (decision #9).
 - Scheduling: `scripts/backup/install-vault-backup-cron.sh` (cron or systemd

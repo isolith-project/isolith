@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P0-M3-T01 acceptance test: Keelworks monorepo skeleton with workspace layout
+"""P0-M3-T01 acceptance test: Isolith monorepo skeleton with workspace layout
 (crates/modules per workstream).
 
 Pure stdlib. Runs under `python3 tests/monorepo_layout_test.py` and pytest.
@@ -164,7 +164,7 @@ def test_cargo_test():
 
 
 def main():
-    print("Keelworks monorepo skeleton acceptance test")
+    print("Isolith monorepo skeleton acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_root_workspace()

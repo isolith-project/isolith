@@ -1,12 +1,12 @@
 # P10-M5-T01 -- Update checker feature (decision #11)
 
 Status: RED (acceptance + design committed; crate lands in GREEN).
-Owner: Keelworks operations / P10 delivery lane. Version: 1.
+Owner: Isolith operations / P10 delivery lane. Version: 1.
 
 ## 1. What this is
 
-A designed, advisory update checker that ships with every Keelworks stack.
-Decision #11 (2026-10-17) makes Keelworks' update checking a DESIGNED FEATURE
+A designed, advisory update checker that ships with every Isolith stack.
+Decision #11 (2026-10-17) makes Isolith' update checking a DESIGNED FEATURE
 with hard rules:
 
 - ADVISORY and NON-BLOCKING: the program must run identically whether the

@@ -3,7 +3,7 @@ title: P11-T03 Auth Boundary (RBAC bypass attempts, IDOR on vault objects)
 status: Ratified (Wave-3 P11-T03)
 version: 1.2.0
 date: 2026-10-18
-owner: Keelworks program governance, P11 security lane
+owner: Isolith program governance, P11 security lane
 applies_to: the oep-pdm REST API v1 surface (items, revisions, files, audit log, lock/transition, sync), served behind the P8-M3 RBAC authorizer
 supersedes: nothing (first auth-boundary record; closes threats NW-1 and NW-5 in workstreams/security/threat-model.md via mitigation M-RBAC)
 ---

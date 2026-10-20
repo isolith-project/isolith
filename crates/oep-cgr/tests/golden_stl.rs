@@ -20,7 +20,7 @@
 //!    coordinates exactly; otherwise the test skips so CI stays green before
 //!    the corpus PRs merge.
 //!
-//! Clean-room: box.stl is a keelworks-authored CC0-1.0 fixture (P0-M4-T02),
+//! Clean-room: box.stl is a isolith-authored CC0-1.0 fixture (P0-M4-T02),
 //! so reproducing its geometry carries no third-party rights. No proprietary
 //! bytes are used anywhere in this test.
 

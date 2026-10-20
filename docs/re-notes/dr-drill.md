@@ -7,11 +7,11 @@ checks and a real vault read. Measured TDR must be under 60 minutes.
 
 Key facts:
 - Run target: U1/VM-class hosts (decision #9; the NAS is passive storage only).
-- Backup contract: `<archive>/keelworks-vault-backup/{latest/{store.json,
+- Backup contract: `<archive>/isolith-vault-backup/{latest/{store.json,
   blobs/, audit/}, manifest.sha256, meta.json}` -- produced by
   scripts/dr/backup-vault.sh, consumed by scripts/dr/drill-restore.sh.
 - Drill definition of "fresh": a brand-new bare machine image (ubuntu:24.04
-  container), no host mounts, no Keelworks state. Vault data enters the fresh
+  container), no host mounts, no Isolith state. Vault data enters the fresh
   host only via the backup bundle read off the archive target, never from the
   live vault.
 - Integrity-first: the sha256 manifest is re-verified inside the fresh host

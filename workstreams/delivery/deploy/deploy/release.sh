@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# KEELWORKS OEP - Release / offline-image bundler (P10-M1-T01).
+# ISOLITH OEP - Release / offline-image bundler (P10-M1-T01).
 #
 # Builds the stack image and, with --tarball, saves it into an offline
 # bundle for air-gapped installs. Same offline-image pattern discipline as
 # Bastion S2:
 #
-#   build --> docker save | gzip --> keelworks-oep-stack-<ver>.tar.gz
+#   build --> docker save | gzip --> isolith-oep-stack-<ver>.tar.gz
 #           + <tar.gz>.sha256 checksum
 #
 # The downstream air-gap card (P10-M2-T02) signs and ships this bundle; the
@@ -44,8 +44,8 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-IMAGE="keelworks/oep-stack:${VERSION}"
-BUNDLE="${OUT_DIR}/keelworks-oep-stack-${VERSION}.tar.gz"
+IMAGE="isolith/oep-stack:${VERSION}"
+BUNDLE="${OUT_DIR}/isolith-oep-stack-${VERSION}.tar.gz"
 
 # --- Preflight ---
 command -v docker >/dev/null || { err "docker required"; exit 1; }
@@ -58,8 +58,8 @@ log "Building ${IMAGE} (this compiles the Rust workspace in the builder image)..
 docker compose -f docker-compose.yml build
 
 # --- Tag latest ---
-docker tag "${IMAGE}" "keelworks/oep-stack:latest"
-log "Tagged keelworks/oep-stack:latest."
+docker tag "${IMAGE}" "isolith/oep-stack:latest"
+log "Tagged isolith/oep-stack:latest."
 
 # --- Offline tarball ---
 if [[ "$TARBALL" == "true" ]]; then

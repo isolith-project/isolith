@@ -1,7 +1,7 @@
 # P13-T03 - Docs site: getting-started, admin guide, honest format matrix
 
 Status: delivered 2026-10-18. Owner: P13 community/docs/sovereignty-narrative
-lane (release-surface slice pulled forward). Card: t_a3444dca on the Keelworks
+lane (release-surface slice pulled forward). Card: t_a3444dca on the Isolith
 board. Version: 1.
 
 ## 1. What this delivers
@@ -27,7 +27,7 @@ no "separate docs infra":
     anchors the QA spot-check asserts.
 - `crates/oep-docs` - a zero-dependency, std-only static file server
   (healthz contract `GET /healthz`). It is a fourth service in the SAME
-  `keelworks/oep-stack` image and compose file as PDM/viewer/P2P
+  `isolith/oep-stack` image and compose file as PDM/viewer/P2P
   ("docs served from the sum"): `workstreams/delivery/deploy/deploy/{Dockerfile,
   docker-compose.yml, install.sh, .env.example}` were extended additively.
   The P10-M5 GA-gate surface (the three core services) is unchanged; docs is
@@ -53,7 +53,7 @@ claim is spot-checked against the committed GA matrices:
 - P3-M5-T02 GA gate report  (total=18 pass=9 open=7 fail=0 skip=2; topology
   goldens Star/Dolphin/Baby/Hand/Octopus/AttributeAll).
 - P4-M5-T03 GA gate matrix  (fidelity cells=64 PASS 14 / FAIL 2 / SKIP 48;
-  keelworks-box hausdorff=0 vol_rel_err=0 eps 1e-9) plus the P4-M2-T03 PMI
+  isolith-box hausdorff=0 vol_rel_err=0 eps 1e-9) plus the P4-M2-T03 PMI
   fidelity matrix that names the two FAIL topics: circular runout and
   tolerance modifiers under step-io 0.2.5 - documented gaps, never relabeled.
 

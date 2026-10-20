@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P6-M5-T02: preview viewer (desktop app shell).
+"""Acceptance test for Isolith P6-M5-T02: preview viewer (desktop app shell).
 
 Written FIRST (TDD). The viewer crate at crates/oep-viewer and its committed
 real-material proof must make this test pass. It verifies the real material,

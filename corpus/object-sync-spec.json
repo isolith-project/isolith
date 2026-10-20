@@ -184,7 +184,7 @@
       "format": "stl-ascii",
       "geometry_class": "prism",
       "license": "CC0-1.0",
-      "source": "keelworks-authored test fixture (self-written)",
+      "source": "isolith-authored test fixture (self-written)",
       "sha256": "37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0",
       "size": 1421,
       "redistributable": true

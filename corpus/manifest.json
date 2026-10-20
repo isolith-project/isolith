@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "description": "Keelworks shared test-data registry + corpus manifest (P1-M1-T04). Every redistributable sample: source, license, format, size, sha256, geometry class (prism|surface|assembly|dataset|text). Clean-room: only redistributable, license-clean samples are entries; non-redistributable/reference-only samples (11 CGR + 2 3DXML) are catalogued in corpus/inventory.json with role=reference and are never committed or synced.",
+  "description": "Isolith shared test-data registry + corpus manifest (P1-M1-T04). Every redistributable sample: source, license, format, size, sha256, geometry class (prism|surface|assembly|dataset|text). Clean-room: only redistributable, license-clean samples are entries; non-redistributable/reference-only samples (11 CGR + 2 3DXML) are catalogued in corpus/inventory.json with role=reference and are never committed or synced.",
   "task": "P1-M1-T04",
   "generated": "2026-10-15",
-  "generated_by": "keelworks worker (default profile)",
+  "generated_by": "isolith worker (default profile)",
   "policy": "Redistribution granted only under explicit open licenses (MIT/Apache-2.0/CC0-1.0). backend=repo files are committed under corpus/data/. The 121 MIT CATPart blobs + fixture mirror use backend=object-store (NAS Gitea generic package registry, content-addressed by sha256) and are uploaded by P1-M1-T05.",
   "geometry_classes": "prism|surface|assembly|dataset|text",
   "inputs": [
@@ -56,7 +56,7 @@
       "path": "data/box.stl",
       "format": "stl-ascii",
       "geometry_class": "prism",
-      "source": "keelworks-authored test fixture (self-written, P0-M4-T02)",
+      "source": "isolith-authored test fixture (self-written, P0-M4-T02)",
       "license": "CC0-1.0",
       "size": 1421,
       "sha256": "37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0",
@@ -217,7 +217,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b2f8b3ade8c72dfb6cd29db9865bc581e230e913dfc0dfd4b31b5cca9afa95a2.catpart"
       }
@@ -234,7 +234,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "8f6f6ddc97254cd98276aab45cb9dc183a270a77b59f2333f7c6dd8f650418f2.catpart"
       }
@@ -251,7 +251,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7cf3c8fbe80e69e2c26a5a8b87daec5544e51e797be86396095e046064826299.catpart"
       }
@@ -268,7 +268,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "2da2b000ea2ef77991d206954c153b703d2ac7e8eb93eaead345ec331c9146a6.catpart"
       }
@@ -285,7 +285,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "72ea5a0baa90d2a06623c406682176f3d7a280e5a69ec00e6b3d2f215106e218.catpart"
       }
@@ -302,7 +302,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "2411fb4bf332593d89ff62cdc9cf025ce33f1348530e166f5b19231f727010d1.catpart"
       }
@@ -319,7 +319,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "1454758049e37dfbc2fc162763e71a836d19bc502a94082f56f097c865808c02.catpart"
       }
@@ -336,7 +336,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "0670122186d12372661493f380134ecefa41abab1d16d1fe2704cbdcbed35930.catpart"
       }
@@ -353,7 +353,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "58a6a55fcec9a3e9bb6a17e09c5b862a9174d4b268c3065d15af77fa3eb67584.catpart"
       }
@@ -370,7 +370,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "20128a3d3ff7f9d142092ecba324339a038500a1c39ac6a05ab1eaeaf962885b.catpart"
       }
@@ -387,7 +387,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "22ba1cf42901bfcacfe304de422fcb03c465ab8f540bb213f5fa1b8983b4292c.catpart"
       }
@@ -404,7 +404,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b25fa2e4f0f7cb31b0b8c034f35f62ab97fbb12fd3f8326801116a57c5da2bb7.catpart"
       }
@@ -421,7 +421,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "53e0ce6e3400120aaeadb618f07c3caf1b4bd48af28543018f7a4a660bd178b9.catpart"
       }
@@ -438,7 +438,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "8489cc7066d63f5b94499b4bc66084292c3a7c80efd7a2e739c1a8112a01445a.catpart"
       }
@@ -455,7 +455,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "99828bac6a5a8b80c0e6e5bda777284a7c9f83820f0e021d18190dba8a7b7aaf.catpart"
       }
@@ -472,7 +472,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "03f5acd78dc32be43d077a84f991c5edfe98cd8a1ad6e8ed6ca9d61cc602cef1.catpart"
       }
@@ -489,7 +489,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "c21a53abceea3f674e964f720ef15f51d8b97add4942bde50eef6fa33bd4b5ce.catpart"
       }
@@ -506,7 +506,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "45f1323da4475feef9230fe46b60cfe1fdff46d5bcea5e3389089f447a912aa5.catpart"
       }
@@ -523,7 +523,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b6f9308543a41ac19f2bbcac2774f31b4507d9ee3d4c008052ef27b030966bc2.catpart"
       }
@@ -540,7 +540,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "ec07450d19dbb657fd751bb2df67bbf593cd0c6a94c72f08462247e4be027b7c.catpart"
       }
@@ -557,7 +557,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7f4aa770b79690c4f9760795d360ae27a931ab7c3f5d7b241bbf9f75c7602c44.catpart"
       }
@@ -574,7 +574,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7e06fe919f6fe696cb99db0a29a370bae99589776dc0a9792eec2fefcdf36ec2.catpart"
       }
@@ -591,7 +591,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "596f23c56b3bc366baf8d57cee0d1187792409f63718c59cce47c9b96834ae55.catpart"
       }
@@ -608,7 +608,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "6c9f734e15e8eb7ba7ad656093787b241f0e4361fb48b53d78f887b2cd63b5d2.catpart"
       }
@@ -625,7 +625,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "88ddb132971cd686421074dedb234fdf3bd50a979c2b9054eef66dfa46179522.catpart"
       }
@@ -642,7 +642,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "9bfcac18d4d18fee5a09127fd345379720fe1e7069feadc089b4a6d53f737818.catpart"
       }
@@ -659,7 +659,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "36f116457c6e3142af94a8273cb2f976cc92210e5b1097654c71d465169ff111.catpart"
       }
@@ -676,7 +676,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "5acafacd1540483c8846f9046227127697dd3c36f5ec3bf228bae7b56e98dc38.catpart"
       }
@@ -693,7 +693,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "91537647837de75ff5e99d24afa7d477a329e2bb482cd7a00a7f60c3c8d5a9bd.catpart"
       }
@@ -710,7 +710,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "a7bc582913dca1ce8e257447407ab24860f0178c44d6e937ce2cf3ca04d249c8.catpart"
       }
@@ -727,7 +727,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "88bff4289432fe050739db2170b74bb807eb26c3d3c50c9cfae0ab3a76c470fe.catpart"
       }
@@ -744,7 +744,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "26cbccaf185fc645bf2b0e1235e2ebe58fd3144370f81f54948fc19ab5901649.catpart"
       }
@@ -761,7 +761,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "75c116630276cfec08fd5620a7a6ee7057c1a3f085e068f2d61184f28e2f0267.catpart"
       }
@@ -778,7 +778,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "2a9953c9b1af34a04fa0bb83c03d9dce719c4bbd146444f71c4b54de7781ecd2.catpart"
       }
@@ -795,7 +795,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "dd27dd0330149f3ab2375e77bcc8a31dcbb9d235f8308ca5e20b5c749904ee2e.catpart"
       }
@@ -812,7 +812,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "86f29c1c9fb1bed30b4334a8f6779496b4a36ebddfb30d2af2441f87a0772bc5.catpart"
       }
@@ -829,7 +829,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "ea73b27366f3dfd586468bee4be0127e9927ce2356049855b604f88af8977acc.catpart"
       }
@@ -846,7 +846,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "1feed53ae6df652dc7e4331a726d6d0e090cad91671f8c2f4242fef03d6fa3b0.catpart"
       }
@@ -863,7 +863,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "d1e92b9f78e0cb6dc93e6085424cc3425bce4a42f8086a4dd85d624e2ca909c0.catpart"
       }
@@ -880,7 +880,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "92204a9003ed4f2d0dda3261cfe67b789f985d8c8cdb5e55de545cebbc7802c3.catpart"
       }
@@ -897,7 +897,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "f9b7b2a013f445509f0282c8f4f8428b36620ad34b72625e63cc0d8f9fa042dd.catpart"
       }
@@ -914,7 +914,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "f123c25211d7d2a22996474817d21eafe1396c2d1404a0657cc85a95bcca6bbb.catpart"
       }
@@ -931,7 +931,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "79b11745011f32bec735679e4b8057e368a45ffb4ad750619cb7c81815ada2a0.catpart"
       }
@@ -948,7 +948,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "2dc61331cfe378fcea0fd58b29b583ec793efeb28905072ec096f46908c416de.catpart"
       }
@@ -965,7 +965,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "4dd7190ac2880c59c58967292ed97d6334ee19d0121419a00699a6b6322abb4f.catpart"
       }
@@ -982,7 +982,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7307c2e846e5e20a8fdb9b9a02ae4716991e880b4c6c936c1177a1c5b283ae8c.catpart"
       }
@@ -999,7 +999,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "46b9328b59eef2755553a986691034c3704d1c7b5072319f6d5ebd44f4a5f3dc.catpart"
       }
@@ -1016,7 +1016,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "c0067b6f50a2ca1ecde73fca463b86499515f46cfa22a1f8dc97932b889a2be7.catpart"
       }
@@ -1033,7 +1033,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "bc9a440dd194b99ed582727832f149eb9fc6aa4be3cd59f6ef2a2d202845ab21.catpart"
       }
@@ -1050,7 +1050,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "29d29f13a5c24e35e61b914200c2eb9a49963da479973dcf6e16e03091524c31.catpart"
       }
@@ -1067,7 +1067,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "752ac3c4a801b0120597b180897c92f0987a59e7165b0679c64afb583e0ccf3a.catpart"
       }
@@ -1084,7 +1084,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "a16139f6d7a7b8c552225541a46edcdcafb08b604cce34fe661394a360e68205.catpart"
       }
@@ -1101,7 +1101,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "603678468d481665c53359a5878533f3118dfe28db468434457d5257ddd296d3.catpart"
       }
@@ -1118,7 +1118,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "9cbd1096957bd09d902e7a2291ab483bd5661116057de7ffcb8546aad34d4f65.catpart"
       }
@@ -1135,7 +1135,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "41c7bc107ebeea45c1b34d1dfe77ac8448c2be2d8edf78b6ad02143f60aebcf7.catpart"
       }
@@ -1152,7 +1152,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "c8c995b0b56a5aa64ddf7e33b66bad7f4d4b5586e3d3b214c61c5f179dcf496e.catpart"
       }
@@ -1169,7 +1169,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "52c30ca3003f8619b481ad3c56a774e51047e748bd86e15c368a31bfad829222.catpart"
       }
@@ -1186,7 +1186,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "297e8ec6dfc3697e8fa71965592295f4c00ba3552de5d4b19ca0a5a5d6c98c2b.catproduct"
       }
@@ -1203,7 +1203,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "9ba1e994c708163cb2967c24e42c74d618b4df1ebade02621f09ee54f1e2e750.catpart"
       }
@@ -1220,7 +1220,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b22ed4861cbfdc6e88c16263ab692151ab346d86ec2ca957f31f60d95d5d001e.catpart"
       }
@@ -1237,7 +1237,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "69bb6b5bb8eb8d1173ff00a915f659041dea4bf0c798651e709a7556d2c86796.catpart"
       }
@@ -1254,7 +1254,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "2d37e4ae6218776f605224abdf498e533cd9667d8b52d6099dd5ba8b6cfd83d7.catpart"
       }
@@ -1271,7 +1271,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "26c2a7534a7b46c2ccc1d44fa7930af6496c4334d7a721e84e3f858d8049932c.catpart"
       }
@@ -1288,7 +1288,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "8e88887848e3a5fbbf0ae80fa0530678a4def1e9ec4feb527abfbea1a3daa8de.catpart"
       }
@@ -1305,7 +1305,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "189e27cc4d0ffff82e6413e299719cb640fce85a5972415b940fa9f3854fca5d.catpart"
       }
@@ -1322,7 +1322,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "c44761ed4d31daf71e43c42f93aa6410c091c02951a23d83964d1e5f018496f3.catproduct"
       }
@@ -1339,7 +1339,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "e51ba83bcc866533091e3eb6b29dc2571e81b9980085bbc75e1554a8dfe0eaa3.catpart"
       }
@@ -1356,7 +1356,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "58e7ae6a8494d4713c7467d69e4d4a36eb1ee2135e3659a98b1aa3a62ef24e47.catpart"
       }
@@ -1373,7 +1373,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b66e7e049611e25111b3ccf5a90acd1e90f93ae4b810cbb12bb8d2e9d721a763.catpart"
       }
@@ -1390,7 +1390,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "cbdaf0289f5d30472cff86b5c962296d917fc4e2416db212ca53dd3923d67849.catpart"
       }
@@ -1407,7 +1407,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "0573ec6059a4122a49ad4b89fc1314ee0d1a11ee9a8f84d46c7185875b83649d.catpart"
       }
@@ -1424,7 +1424,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "6fdaca53b2b2c8534df0dd26a358f7842b0693f8f2945c21a2da9c48aeac0341.catproduct"
       }
@@ -1441,7 +1441,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "e1bded308f15865b94e2dd2b04ccd8a44ab2e3a6976382ba312d508207bc8df3.catpart"
       }
@@ -1458,7 +1458,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "1b09b24dbea40f63b90c80296811094973e45c02a63c14ef927b880ed5621fbc.catpart"
       }
@@ -1475,7 +1475,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "4b25e8b12ff97981feb59e511d901c44bb04273ae9a8bc9420df724d3bdac6c0.catpart"
       }
@@ -1492,7 +1492,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "ac330b202fdbc69d6f742f411d549f4752a7657677ea6f1e0b591405916a7e64.catpart"
       }
@@ -1509,7 +1509,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "1fbe149f1b3e20c4ca95d40bf17e7b4a372c81f5e9c8897341c4749c02dbb95f.catpart"
       }
@@ -1526,7 +1526,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "dc1f162c30d94d381606eccc5fb8034d23abfb80cc525103d467a74e7e6ce377.catproduct"
       }
@@ -1543,7 +1543,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "08f565d10fee117731966681f432867925dd5358449a7c56b11f4147abaa76cf.catpart"
       }
@@ -1560,7 +1560,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "236415be8ad407a4576c9a15d54d339bb9d95795640ef17d3cd9e45a08c11c17.catpart"
       }
@@ -1577,7 +1577,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "88de921de109352d50f24797b371a6f6936060ffaeec87e849fa7aac34ae1aa1.catpart"
       }
@@ -1594,7 +1594,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "002c2160c29ab231ed12712beed024a296408919e08bb199a59de601b6aae74c.catpart"
       }
@@ -1611,7 +1611,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "3e934adfb967daf5c13e72eafe38cc65745b69098a096f5d494d9bb1ae094abc.catpart"
       }
@@ -1628,7 +1628,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "0184bbeb536efe33612757bfa1c826109c004d6ac9a096d5b1b36dd8994bfa6f.catpart"
       }
@@ -1645,7 +1645,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "a3eb2ae8a83b2a36600f1e7cdb640494387a40fa7e39a5e025b6a36e7beb19d5.catproduct"
       }
@@ -1662,7 +1662,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "8eb1ffe2f54890975ca1f32bad04e16b8bc6296857ab34248bf3641a3f8664dd.catpart"
       }
@@ -1679,7 +1679,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "915719571dcce6ada3d0a52988f0e1af043cff9ce94f6635b3178c75f2dde60d.catpart"
       }
@@ -1696,7 +1696,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "10416a9f0e04b996312388530f8a4fd8c34869663d5eabaabb5f26013d4265bd.catpart"
       }
@@ -1713,7 +1713,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b9087fb7713dc5e8255bcfc8508a934f18389c1b30921cbd464a8866f2fa0970.catpart"
       }
@@ -1730,7 +1730,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "51f524f6e86d5852ec839efbb4e34e58d43575a4fab02c2cbe7d1063f46f9899.catproduct"
       }
@@ -1747,7 +1747,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b0bdff922c98f5531256e52f8fcb5b59b6efb38c8381c1020f3b590d3fed26fa.catpart"
       }
@@ -1764,7 +1764,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "84bfea6f050e8973b3beffbb7ce8a33656695f787f19c811ef68d62734e375b3.catpart"
       }
@@ -1781,7 +1781,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b459a7d3468ac2416563a36705564e655d7913103103f0e86e61e2e2f042803b.catpart"
       }
@@ -1798,7 +1798,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "460ec917b7eaad8603886eff6c8b89ce9c460f183e62881cdd4c60ab7a741787.catpart"
       }
@@ -1815,7 +1815,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "982b5cf60a431266453869511d797d3cfff70f92c7c69f7c0303ad4470479193.catpart"
       }
@@ -1832,7 +1832,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "0986479787cc967c3ef8e7d8f6e5f0c0c65812c4b15db69582c126abdf1d1fd4.catpart"
       }
@@ -1849,7 +1849,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "bdfad1a8761b8217b9075da7aa5bac1ba692d5dbf9450c75e503fe5a9e125b01.catpart"
       }
@@ -1866,7 +1866,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "d42dbfae8a2b02a94773e7c0ba67336316490b6ac952760eb1d35d32c25ebb84.catpart"
       }
@@ -1883,7 +1883,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7b68d373e9543cfae8376c9118cafc9bc6c6ac9203744a227b3f380ec30cc8a6.catpart"
       }
@@ -1900,7 +1900,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "ca7322ee5c6d82e5a0eb65ceb02e361bd854e81e4e04536a3f7446c9f02e8dba.catpart"
       }
@@ -1917,7 +1917,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7904d6f9d2069e949437d0d0be1403d1df10f37daf7ce821b0c80fbc20851446.catpart"
       }
@@ -1934,7 +1934,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "41b3004db130297d9f360207fe14fbdcee54d8af1b3d0ec4af473d7adbd86162.catpart"
       }
@@ -1951,7 +1951,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "b105ec9a13e094943b07dd836c79da738dad3411dec149e3b3f162add505b3c5.catpart"
       }
@@ -1968,7 +1968,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "e4587dcc16c24079545642215411a1564dfe1d246ea049611fad783407002120.catpart"
       }
@@ -1985,7 +1985,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "82b94609d1242c6baeed1b23b3fa022de6c98ebd15edfefd8a2f87cf7cfb3077.catpart"
       }
@@ -2002,7 +2002,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7b353851c7b84a59853ccb2b83ac34de905b90dfe311ec7668b411527acf5e35.catpart"
       }
@@ -2019,7 +2019,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "862b51fc86d665593a7ce9b92308a8b7ef336ee2744280d203b7b28dc1e8633d.catproduct"
       }
@@ -2036,7 +2036,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "3313f741f5bf70b47f679fa4d2438ee8c53d538ebef25d290e42949db7209b58.catpart"
       }
@@ -2053,7 +2053,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "fbe50d8c63e467884d8b817c37f3aa72cc402256196180836c249612cf716dbd.catpart"
       }
@@ -2070,7 +2070,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "f496e6615c493cc079e1bf19d4ca8c0f52c28af86549f84abd0243ea04e72eb0.catpart"
       }
@@ -2087,7 +2087,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "f96943b46ad63db79598a40096516f32ca1f482ef86a2a6b1a642820a2c75c6e.catpart"
       }
@@ -2104,7 +2104,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "37f4add68f101d7ba4f349830065d6db82d7d5f318912853da8786172283d4d8.catpart"
       }
@@ -2121,7 +2121,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "e7182d0e307dd4455ff2ff480298e44bd6794829b21ef84d04aa16d7b17c30c9.catpart"
       }
@@ -2138,7 +2138,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "f024e02b7e58b422e2920f6465226c11d4480b45673bf50ce62b332601091413.catpart"
       }
@@ -2155,7 +2155,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "6d8040f1fcb2b79c7757cda72417fb1f631bd0af06412c0612f2af4e926c7b48.catpart"
       }
@@ -2172,7 +2172,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "854df2fc725181593a291b52fc0c2d9cec868478c6fb24795a7cc701346536e5.catpart"
       }
@@ -2189,7 +2189,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "28cd2250ab0417585e090c2383e8c8a88c332c92ad6c361508f153a979f8637b.catpart"
       }
@@ -2206,7 +2206,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "7517b418502df74f790b3f0d065d86a621959ec516fd22daf1b604d0e8698d14.catpart"
       }
@@ -2223,7 +2223,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "9463bd62691448bbeea57490fd4face9393c3e245cf6acd10e26a312ee18b2df.catpart"
       }
@@ -2240,7 +2240,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "69d8f1a272648fa0ea732234466144434f1f78344e41185a1b8469027b8cd720.catpart"
       }
@@ -2257,7 +2257,7 @@
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "45de7652e4dcdabb3ff6eae52564965aeb2cf90ee64e42a2bd2567250fc5bd71.catpart"
       }
@@ -2267,14 +2267,14 @@
       "path": "object/37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0.stl",
       "format": "stl-ascii",
       "geometry_class": "prism",
-      "source": "keelworks-authored test fixture mirrored to NAS object store (P0-M4-T02)",
+      "source": "isolith-authored test fixture mirrored to NAS object store (P0-M4-T02)",
       "license": "CC0-1.0",
       "size": 1421,
       "sha256": "37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0",
       "backend": "object-store",
       "object_store": {
         "owner": "don",
-        "package": "keelworks-corpus",
+        "package": "isolith-corpus",
         "version": "v1",
         "object": "37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0.stl"
       }

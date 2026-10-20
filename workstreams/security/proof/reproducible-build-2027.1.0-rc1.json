@@ -1,9 +1,9 @@
 {
-  "schema": "keelworks.reproducible-build.v1",
+  "schema": "isolith.reproducible-build.v1",
   "version": "2027.1.0-rc1",
   "toolchain": "rustc 1.98.1 (48a229cea 2026-09-01)",
   "source_date_epoch": "1700000000",
-  "rustflags": "--remap-path-prefix=/home/r1a/keelworks-main/.worktrees/release-drill-ga-1018a=.",
+  "rustflags": "--remap-path-prefix=/home/r1a/isolith-main/.worktrees/release-drill-ga-1018a=.",
   "built_at": "2026-10-19T10:23:19Z",
   "host": "promaxgb10-83f1",
   "artifacts": 18,

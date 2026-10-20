@@ -16,7 +16,7 @@ Run targets (decision #9): U1 (LAN node) + garage PC (remote node, WoL), NOT NAS
 
 ## Topology
 
-The demo replicates one Keelworks vault between two nodes inside a single
+The demo replicates one Isolith vault between two nodes inside a single
 trust boundary (decision #10: everything customer-hosted, LAN default):
 
 - **LAN node (node A)** — the authoritative vault: one `oep-pdm` service
@@ -131,7 +131,7 @@ two divergent text files are auto-merged without a human decision.
 - The demo runs in the `Airgap` role by default (P8-M5-T03). A `hybrid`
   deployment (relay for NAT'd remote) is a later opt-in and is out of scope
   here; decision #10 keeps remote access a customer-network choice, not a
-  Keelworks product feature.
+  Isolith product feature.
 - Nothing here runs on the NAS (decision #9: NAS is passive storage + repo host
   only).
 

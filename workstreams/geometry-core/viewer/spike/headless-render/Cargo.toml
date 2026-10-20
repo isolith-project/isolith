@@ -2,7 +2,7 @@
 name = "headless-render"
 version = "0.1.0"
 edition = "2021"
-description = "Keelworks P6-M5-T01 spike: prove wgpu renders headless (offscreen) on real hardware."
+description = "Isolith P6-M5-T01 spike: prove wgpu renders headless (offscreen) on real hardware."
 license = "Apache-2.0"
 
 # Standalone spike crate. Deliberately NOT a root workspace member: CI (which

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P1-M3-T02: audit of commercial reader
+"""Acceptance test for Isolith P1-M3-T02: audit of commercial reader
 feature lists (CAD Exchanger SDK, Spatial HOOPS, TransMagic, Okino), used
 strictly as a functional spec source (what entity classes the industry's
 readers can handle), never as a source of implementation techniques.
@@ -36,7 +36,7 @@ EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
 # The four commercial reader products named on the card, and the minimum
 # that each section must contain. format_claims is a subset: the section must
 # mention these formats. must_record_native is the critical functional-spec
-# axis: does this vendor claim to read the Keelworks native targets?
+# axis: does this vendor claim to read the Isolith native targets?
 REQUIRED_READER_SECTIONS = {
     "CAD Exchanger SDK": {
         "format_claims": ["CATPart", "CATProduct", "CGR"],
@@ -76,7 +76,7 @@ REQUIRED_ENTITY_CLASSES = [
 ]
 
 # The first-parcel bridge: the audit must tie what commercial readers claim
-# to the Keelworks workstreams that will have to match it, so P1-M3-T03 can
+# to the Isolith workstreams that will have to match it, so P1-M3-T03 can
 # set priorities. These substrings must appear in the synthesis section.
 REQUIRED_SYNTHESIS_MENTIONS = [
     "P2",   # oep-cgr

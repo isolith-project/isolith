@@ -259,7 +259,7 @@ impl VaultStore {
     pub fn new() -> Self {
         VaultStore {
             meta: VaultMeta {
-                owner: "keelworks".to_string(),
+                owner: "isolith".to_string(),
                 next_item_seq: 0,
                 items: Vec::new(),
                 pending_conflicts: Vec::new(),

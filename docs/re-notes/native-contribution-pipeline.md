@@ -64,7 +64,7 @@ privacy/ITAR sweep stays the hard line.
 2. **Manifest growth:** 139 -> 158 entries (object-store 122 -> 141, repo 17).
    Every native entry carries `sha256`, `geometry_class=prism`, `license`,
    `license_usage` and `dev_only=true`.
-3. **Mirror:** all 19 new blobs mirrored to `don/keelworks-corpus` v1,
+3. **Mirror:** all 19 new blobs mirrored to `don/isolith-corpus` v1,
    content-addressed by sha256; live GET-back verified 158/158 (0 BAD, 0
    pending; 19/19 NIST blobs re-hash to the manifest).
 4. **Regression:** `python3 -m oep_tooling.regression --fetch` on the full

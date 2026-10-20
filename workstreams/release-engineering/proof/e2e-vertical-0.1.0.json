@@ -16,7 +16,7 @@
       "id": "stack-boot",
       "leg": "BOOT",
       "status": "PASS",
-      "detail": "packaged stack image keelworks/oep-stack:0.1.0 (oep-web) on http://127.0.0.1:48937",
+      "detail": "packaged stack image isolith/oep-stack:0.1.0 (oep-web) on http://127.0.0.1:48937",
       "class": ""
     },
     {

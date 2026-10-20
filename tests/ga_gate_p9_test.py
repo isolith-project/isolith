@@ -144,7 +144,7 @@ def test_live_gate_local_only():
 
 
 def main():
-    print("Keelworks P9-M5-T02 GA gate acceptance test")
+    print("Isolith P9-M5-T02 GA gate acceptance test")
     print("repo: %s" % ROOT)
     print("=" * 60)
     test_gate_module_present()

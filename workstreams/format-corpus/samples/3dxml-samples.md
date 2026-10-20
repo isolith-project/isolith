@@ -1,7 +1,7 @@
 # Public 3DXML Sample Catalog (P1-M1-T02)
 
 Version: 1.0, 2026-10-15
-Author: Keelworks default worker
+Author: Isolith default worker
 **Task:** Locate public 3DXML samples (Dassault published samples, open collections) + obtain 3DXML spec under Dassault free internal-use license. This catalog covers the sample-location half; the specification request process is documented separately in [3dxml-spec-process.md](3dxml-spec-process.md).
 
 ## Summary

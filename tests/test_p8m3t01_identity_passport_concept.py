@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance for Keelworks P8-M3-T01: identity + our own passport concept.
+"""Acceptance for Isolith P8-M3-T01: identity + our own passport concept.
 
 This test drives the acceptance from the other side of the fence:
 

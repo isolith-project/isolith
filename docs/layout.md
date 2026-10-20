@@ -1,7 +1,7 @@
 # Isolith Monorepo Layout
 
 Isolith (public brand for the Open Engineering Platform, OEP) is a monorepo at
-`don/keelworks` on NAS Gitea; `keelworks` is the internal-only codename.
+`don/isolith` on NAS Gitea; `isolith` is the internal-only codename.
 One crate per code workstream, under `crates/`; Python tooling lives under
 `python/`. This file is the machine-verifiable contract checked by
 `tests/monorepo_layout_test.py`.
@@ -118,7 +118,7 @@ new crates (the PDM server that carries TLS is P8 `oep-pdm`):
 - `scripts/backup/install-vault-backup-cron.sh` -- daily scheduled backup
 - `scripts/p10m1t02-proof.sh`         -- acceptance proof capture (P10-M1-T02)
 - `scripts/dr/backup-vault.sh` `scripts/dr/drill-restore.sh` -- DR lane (P10-M3-T01),
-  consuming the same `keelworks-vault-backup/` bundle contract
+  consuming the same `isolith-vault-backup/` bundle contract
 - docs: `workstreams/delivery/deploy/` (lane docs + proof), `workstreams/delivery/disaster-recovery/` (DR runbook + proof)
 
 ## P12 release engineering

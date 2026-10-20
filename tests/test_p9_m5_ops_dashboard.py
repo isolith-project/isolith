@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P9-M5-T01: ops dashboard.
+"""Acceptance test for Isolith P9-M5-T01: ops dashboard.
 
 Written to verify the REAL material, not mocks. It checks that the dashboard
 reads live queue/node/job/cost state from the real oep-lane Scheduler and

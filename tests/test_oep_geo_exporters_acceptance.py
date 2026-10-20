@@ -5,7 +5,7 @@ The six exporters (STL, glTF/GLB, OBJ, SVG-2D, PDF drawing path, STEP
 faceted passthrough) are exercised INDEPENDENTLY of the Rust writer: their
 committed goldens under `crates/oep-geo/tests/golden/` are re-parsed here
 with pure-stdlib decoders written from the public format specs, and the
-reference tessellation (the CC0-1.0 keelworks unit box, 8 vertices / 12
+reference tessellation (the CC0-1.0 isolith unit box, 8 vertices / 12
 triangles) is re-extracted EXACTLY. The Rust integration tests
 (`crates/oep-geo/tests/*.rs`) byte-lock the writer output to these goldens,
 so everything verified here is verified transitively against the writers.

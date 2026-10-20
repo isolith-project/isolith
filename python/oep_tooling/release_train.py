@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks release-train tooling (P12-T05).
+"""Isolith release-train tooling (P12-T05).
 
 Pure-stdlib CLI behind the policy in workstreams/release-engineering/release-train.md. Never mutates git
 state unless a mutating subcommand is explicitly invoked.
@@ -7,7 +7,7 @@ state unless a mutating subcommand is explicitly invoked.
 Subcommands
 -----------
   release_train.py validate --version <V>
-      Exit 0 iff <V> matches the Keelworks calver+semver scheme YYYY.N.P[-PRE].
+      Exit 0 iff <V> matches the Isolith calver+semver scheme YYYY.N.P[-PRE].
 
   release_train.py freeze --repo DIR --version <V> --trunk <REF>
                           [--since <REF>] [--out PATH]
@@ -43,7 +43,7 @@ PRERELEASE_RE = r"(?:rc\d+|(?:alpha|beta|gamma)\.[1-9]\d*)"
 VERSION_RE = re.compile(
     rf"^(20\d\d)\.([1-9]\d?)\.(\d+)(?:-({PRERELEASE_RE}))?$"
 )
-SCHEMA = "keelworks.release-freeze.v1"
+SCHEMA = "isolith.release-freeze.v1"
 
 
 class ReleaseTrainError(RuntimeError):
@@ -217,7 +217,7 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
     steps = []
     steps.append(f"manifest -> workstreams/release-engineering/freeze-manifests/{info['full']}.json (write)")
     steps.append(f"branch  -> git branch {rel_branch} {cut['cut_from']['sha']}")
-    steps.append(f"tag     -> git tag -a {tag} -m 'Keelworks {info['full']} freeze' {cut['cut_from']['sha']}")
+    steps.append(f"tag     -> git tag -a {tag} -m 'Isolith {info['full']} freeze' {cut['cut_from']['sha']}")
     steps.append(f"push    -> git push canary {rel_branch}:{canary_branch} {tag}")
     if dry_run:
         print("DRY RUN for", info["full"])
@@ -240,7 +240,7 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
 
     ensure_ref(rel_branch, ["branch", rel_branch, cut["cut_from"]["sha"]], "branch")
     ensure_ref(tag, ["tag", "-a", tag,
-                     "-m", f"Keelworks {info['full']} release candidate freeze",
+                     "-m", f"Isolith {info['full']} release candidate freeze",
                      cut["cut_from"]["sha"]], "tag")
     remote_url = _canary_url(canary_owner_repo)
     existing = git_rev(repo, "remote").splitlines()
@@ -260,7 +260,7 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Keelworks release-train tooling")
+    ap = argparse.ArgumentParser(description="Isolith release-train tooling")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     p = sub.add_parser("validate")

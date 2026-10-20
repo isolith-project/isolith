@@ -5,7 +5,7 @@ and to the export-all interop archives written by `oep-archive`.
 
 ## One-line doctrine
 
-**Keelworks never deletes data automatically. Every retention value below is a
+**Isolith never deletes data automatically. Every retention value below is a
 review horizon, not an auto-delete timer; the only delete path is a manual,
 audit-logged admin action that additionally requires the content to already
 exist in a verified export-all archive.**

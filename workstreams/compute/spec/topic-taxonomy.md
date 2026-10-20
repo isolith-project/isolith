@@ -1,17 +1,17 @@
 ---
-title: Keelworks OEP Message Topic Taxonomy
+title: Isolith OEP Message Topic Taxonomy
 taxonomy_version: 1.0.0
 date: 2026-10-17
 status: Ratified
-owner: Keelworks program governance, P9-M1 (message bus decision)
-applies_to: P9-M2 scheduler, P9-M3 workers, P9-M4 GPU/heterogeneous lane, P9-M5 ops dashboard, and every publisher/subscriber on the Keelworks message bus
+owner: Isolith program governance, P9-M1 (message bus decision)
+applies_to: P9-M2 scheduler, P9-M3 workers, P9-M4 GPU/heterogeneous lane, P9-M5 ops dashboard, and every publisher/subscriber on the Isolith message bus
 applies_to_json: workstreams/compute/spec/topic-taxonomy.json (machine-readable contract, source of truth for this document)
 ---
 
-# Keelworks OEP Message Topic Taxonomy
+# Isolith OEP Message Topic Taxonomy
 
 This document and its machine-readable twin `workstreams/compute/spec/topic-taxonomy.json`
-together form the committed topic taxonomy for the Keelworks message bus. The
+together form the committed topic taxonomy for the Isolith message bus. The
 JSON file is the contract: every subject defined here is validated by the
 acceptance test `tests/test_p9m1t02_message_bus_taxonomy.py` against the NATS
 client-protocol subject rules, and subscribers must only subscribe with the

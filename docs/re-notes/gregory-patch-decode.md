@@ -1,6 +1,6 @@
 # Gregory-patch surface decode to NURBS (P3-M2-T01)
 
-Version: 1.0, 2026-10-15. Author: Keelworks default worker.
+Version: 1.0, 2026-10-15. Author: Isolith default worker.
 Re-notes discipline: written for the next worker/P6; `[uncertain]` marks every
 part that is NOT byte-decoded from a proven spec.
 

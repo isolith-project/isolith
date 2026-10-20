@@ -2,7 +2,7 @@
 
 Version 1.0, 2026-10-17. Milestone: P8-M1-T02 (vault object model: *item*,
 *revision*, *file*, *relationship*, *context*; content-addressed blobs;
-migration path from V5-era folder trees anticipated). Program: Keelworks /
+migration path from V5-era folder trees anticipated). Program: Isolith /
 Open Engineering Platform (OEP), P8 self-hosted PDM (ENOVIA-lite).
 Clean-room, our own format — nothing here is a Dassault or vendor schema.
 
@@ -209,7 +209,7 @@ data isn't there, and loud when it's wrong.
 ### 3.3 NAS mirror (`python/oep_tooling/vault_blobs.py`)
 
 The vault blob directory mirrors to the NAS object store exactly like
-P1-M4-T01 rerode the corpus: `PUT /api/packages/{owner}/generic/keelworks-vault/v1/{sha256}`,
+P1-M4-T01 rerode the corpus: `PUT /api/packages/{owner}/generic/isolith-vault/v1/{sha256}`,
 object named by the content address, 409-safe idempotent upload (a conflict on
 a content-addressed name races an identical prior upload and is re-verified),
 and a `verify_mirror` that GETs every blob back and re-hashes it against its

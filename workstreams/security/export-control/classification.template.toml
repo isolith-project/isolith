@@ -1,11 +1,11 @@
-# Keelworks per-release export-control classification file (P11-T05).
+# Isolith per-release export-control classification file (P11-T05).
 #
 # This is the FORM (P0-M2-T04 recommendation 4): copy it to
 #   workstreams/security/export-control/<V>.classification.toml
 # for each release version <V>, fill in the slots, and commit it BEFORE the
 # freeze tag is pushed. The release pipeline refuses to proceed without it.
 #
-# Honest default for a Keelworks open-source tooling release:
+# Honest default for a Isolith open-source tooling release:
 #   UNCLASSIFIED, NOT subject to ITAR, NOT subject to the EAR as published
 #   open-source software (15 CFR 734.3(b)(3) + 734.7(a)), no ECCN, no
 #   customer/geometry/payload content. See P0-M2-T04 for the full posture.
@@ -40,4 +40,4 @@ data_locality = "Release bundles tool source + built binaries only; no customer 
 
 [governance]
 basis = "P0-M2-T04 export-control memo v1.0 (2026-10-15)"
-prepared_by = "Keelworks P11 security lane"
+prepared_by = "Isolith P11 security lane"

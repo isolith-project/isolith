@@ -1,6 +1,6 @@
 # Quantized / Lossy CGR Geometry: Vertex Counts vs Native and the Fidelity Budget
 
-P2-M2-T04 · Keelworks / OEP P2 CGR reader
+P2-M2-T04 · Isolith / OEP P2 CGR reader
 Status: measured on real material 2026-10-15 (synthetic round-trip leg GREEN;
 real-corpus extraction leg recorded honestly as unverified)
 Version: 1.0

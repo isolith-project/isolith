@@ -206,8 +206,8 @@ def test_real_material_gate():
     if golden.get("pairs") is None:
         return
     check("golden exposes box-export + conformance rows",
-          "keelworks-box-export" in golden["pairs"]
-          and "keelworks-box-conformance" in golden["pairs"],
+          "isolith-box-export" in golden["pairs"]
+          and "isolith-box-conformance" in golden["pairs"],
           detail=str(sorted(golden.get("pairs", {}).keys())))
 
     if probe is None:

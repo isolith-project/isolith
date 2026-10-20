@@ -1,7 +1,7 @@
 # P8-M1-T03 -- Working-set protocol: lock / edit / publish (object locking)
 
 Status: implemented (P8-M1-T03). Owner: P8 PDM lane. Version: 1 (2026-10-17).
-Delivered as keelworks/keelworks PR #<TBD>, branch `task/p8m1t03-working-set-1016a`
+Delivered as isolith/isolith PR #<TBD>, branch `task/p8m1t03-working-set-1016a`
 (TDD: RED then GREEN).
 
 ## 1. Purpose
@@ -12,7 +12,7 @@ the vault's own copy of a file in place. The classic vendor answer is
 check it back in, and (in many systems) make the source object read-only for
 everyone else while it is out.
 
-This card deliberately rejects that model. Keelworks uses **object locking**:
+This card deliberately rejects that model. Isolith uses **object locking**:
 a working set is the set of vault objects a principal currently holds
 short-lived **leases** on, for one edit session. The protocol is exactly three
 steps --

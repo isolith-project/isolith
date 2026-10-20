@@ -231,7 +231,7 @@ def test_status_page_html_and_escaping():
     hostile_log = 'weird "quotes" & <b>tags</b> \N{SNOWMAN}'
     report = {
         "schema_version": 1,
-        "repo": "don/keelworks",
+        "repo": "don/isolith",
         "commit": "abc123",
         "generated_at": "2026-10-15T00:00:00Z",
         "jobs": [
@@ -302,7 +302,7 @@ def test_nightly_schedule():
 
 
 def main():
-    print("Keelworks nightly stress suite acceptance test")
+    print("Isolith nightly stress suite acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_file_layout()

@@ -47,8 +47,8 @@
       "id": "p4-accuracy-within-eps",
       "gate": "P4-M5-T03",
       "source": "corpus/ga-gate-p4-matrix.json",
-      "assert": {"row": "keelworks-box", "status": "PASS", "hausdorff": 0.0, "vol_rel_err": 0.0, "eps": "1.0e-09"},
-      "match": "fidelity leg keelworks-box PASS hausdorff=0 vol_rel_err=0 eps=1.0e-09"
+      "assert": {"row": "isolith-box", "status": "PASS", "hausdorff": 0.0, "vol_rel_err": 0.0, "eps": "1.0e-09"},
+      "match": "fidelity leg isolith-box PASS hausdorff=0 vol_rel_err=0 eps=1.0e-09"
     },
     {
       "id": "p3-gate-summary",
@@ -190,7 +190,7 @@
       "evidence": {
         "gate": "P4-M5-T03",
         "artifact": "corpus/ga-gate-p4-matrix.json",
-        "detail": "keelworks-box row PASS: hausdorff=0 vol_rel_err=0 eps=1.0e-09 (P4-M1-T03 measured row)"
+        "detail": "isolith-box row PASS: hausdorff=0 vol_rel_err=0 eps=1.0e-09 (P4-M1-T03 measured row)"
       },
       "gap": "a measured row out of epsilon is a hard gate FAIL - geometry drift never relabeled"
     },

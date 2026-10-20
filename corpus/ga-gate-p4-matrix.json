@@ -23,7 +23,7 @@
       "class": ""
     },
     {
-      "id": "keelworks-box",
+      "id": "isolith-box",
       "leg": "fidelity",
       "status": "PASS",
       "detail": "hausdorff=0 vol_rel_err=0 eps=1.0e-09",

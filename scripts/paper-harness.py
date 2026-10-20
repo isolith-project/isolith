@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks paper-trail archive harness (Don 2026-10-19).
+"""Isolith paper-trail archive harness (Don 2026-10-19).
 
 The program's internal paper trail lives OUT of the repo, canonically at the
 NAS archive. This script verifies archive integrity against the shipped

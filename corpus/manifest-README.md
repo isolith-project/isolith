@@ -1,4 +1,4 @@
-# Keelworks Corpus Manifest (P1-M1-T04)
+# Isolith Corpus Manifest (P1-M1-T04)
 
 **Task:** build the corpus manifest: source, license, format, size, geometry
 class for every located sample — CGR, 3DXML, CATPart/CATProduct, fixtures.

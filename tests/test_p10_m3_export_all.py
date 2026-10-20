@@ -78,7 +78,7 @@ def _run():
     check("manifest.version", manifest.get("version") == 1)
     tool = manifest.get("tool", {})
     check("manifest.tool", tool.get("name") == "oep-archive")
-    check("manifest.source_vault", manifest.get("source_vault", {}).get("owner") == "keelworks-proof")
+    check("manifest.source_vault", manifest.get("source_vault", {}).get("owner") == "isolith-proof")
 
     summary = manifest.get("summary", {})
     check("summary.items", summary.get("items") == 3)

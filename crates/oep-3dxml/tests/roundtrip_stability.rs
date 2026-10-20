@@ -24,7 +24,7 @@
 //!     decode is exact regardless of how the caller packs indices.
 //!
 //! Test meshes:
-//!   1. `box_mesh` — the keelworks CC0-1.0 unit box (exact 0/1 coordinates).
+//!   1. `box_mesh` — the isolith CC0-1.0 unit box (exact 0/1 coordinates).
 //!   2. `noisy_mesh` — non-exact f32 values (0.1, 3.14, 2.5e-3, ...) that prove
 //!      the shortest-round-trip Display survives a full cycle, not just 0/1.
 //!   3. `remap_mesh` — index holes and out-of-order index values (positions
@@ -43,7 +43,7 @@ use std::f32::consts::{PI, TAU};
 /// The writer's public contract (P3-M4-T01). RED: `ascii` does not exist yet.
 use oep_3dxml::ascii::{write_package, write_rep_markup, WriteError, WriterOpts};
 
-/// The keelworks CC0-1.0 reference box tessellation (as in the writer's tests).
+/// The isolith CC0-1.0 reference box tessellation (as in the writer's tests).
 fn box_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
     let positions = vec![
         [1.0, 0.0, 0.0],
@@ -119,7 +119,7 @@ fn remap_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
 fn opts() -> WriterOpts<'static> {
     WriterOpts {
         product_name: "roundtrip",
-        author: "keelworks",
+        author: "isolith",
         timestamp: "",
     }
 }

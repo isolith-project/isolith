@@ -1,10 +1,10 @@
-# QIF — Keelworks Use
+# QIF — Isolith Use
 
-## Why Keelworks cares
+## Why Isolith cares
 
-QIF gives Keelworks the quality/metrology side of the Model-Based Enterprise. While
+QIF gives Isolith the quality/metrology side of the Model-Based Enterprise. While
 AP242 is the design-side carrier of PMI, QIF is how that PMI flows into inspection
-plans, results, and statistics. A Keelworks that can emit and consume QIF closes the
+plans, results, and statistics. A Isolith that can emit and consume QIF closes the
 digital thread instead of stopping at the CAD model.
 
 ## Workstream mapping
@@ -16,7 +16,7 @@ digital thread instead of stopping at the CAD model.
 - **P4-M5 (MBD validator)** — a supplied model/drawing validated against rule sets;
   QIF MBD models are one validation input shape.
 - **P6-M1-T02 (PMI model schema)** — QIF's representation of geometry + PMI informs
-  Keelworks' internal PMI model so both AP242 and QIF can map onto it.
+  Isolith' internal PMI model so both AP242 and QIF can map onto it.
 - **P14 reference vertical** — the "small defense subcontractor" scenario includes
   quality data exchange; QIF capability rounds out the demo.
 

@@ -26,11 +26,11 @@ picks up a package by construction.
 
 ## Format decision
 
-- Docker: one multi-service image `keelworks/oep-stack` (P10-M1-T01) is the
+- Docker: one multi-service image `isolith/oep-stack` (P10-M1-T01) is the
   official server/worker distribution; per-binary container images are NOT
   created separately because the stack image already carries the full shipped
   binary set and adds nothing reproducible per binary. Matrix column
-  "Docker" = present in `keelworks/oep-stack`.
+  "Docker" = present in `isolith/oep-stack`.
 - Linux desktop: AppImage is the primary desktop format (single-file,
   no root, FUSE or extract-and-run), Flatpak is the alternate path (sandboxed,
   portal-integrated). Both recipes are provided; AppImage is the one built and
@@ -92,7 +92,7 @@ cross-target `target/<triple>/release` for Windows).
 | Recipe | Purpose | Usage |
 |--------|---------|-------|
 | `build-appimage.sh <bin>` | Build a Linux desktop AppImage (aarch64/x86_64 auto from host) from a `.desktop` + AppDir + the release binary | `bash workstreams/release-engineering/packaging/build-appimage.sh oep-web` |
-| `flatpak/org.keelworks.oep.yml` | Flatpak manifest (Freedesktop 24.08 runtime), finish-args network=local + browser capture for the viewer | `bash workstreams/release-engineering/packaging/build-flatpak.sh oep-web` |
+| `flatpak/org.isolith.oep.yml` | Flatpak manifest (Freedesktop 24.08 runtime), finish-args network=local + browser capture for the viewer | `bash workstreams/release-engineering/packaging/build-flatpak.sh oep-web` |
 | `build-msi.sh <bin> <arch>` | Cross-compile `<bin>` to the given Windows triple, write WiX `.wxs`, build `.msi` with wixl (msitools, in a hermetic debian container) | `bash workstreams/release-engineering/packaging/build-msi.sh oep-pdm x86_64-pc-windows-gnu` |
 | `oep-studio.desktop.in` | Template launcher + icon seeded for the future studio shell | (placeholder) |
 | `Dockerfile` | Already shipped at `workstreams/delivery/deploy/deploy/Dockerfile` (stack image); referenced, not duplicated | `docker compose -f workstreams/delivery/deploy/deploy/docker-compose.yml build` |

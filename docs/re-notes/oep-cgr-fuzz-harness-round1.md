@@ -1,6 +1,6 @@
 # oep-cgr Fuzz Harness Round 1: cargo-fuzz on the Header Parser
 
-P2-M1-T05 · Keelworks / OEP P2 CGR Reader
+P2-M1-T05 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15
 Version: 1.0
 

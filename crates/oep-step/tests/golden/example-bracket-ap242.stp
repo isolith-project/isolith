@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('oep-pmi example-bracket AP242 semantic PMI export', 'P4-M2-T02'),'2;1');
-FILE_NAME('example-bracket-ap242.stp','',('Keelworks OEP'),(''),'oep-step 0.1.0','Keelworks OEP','');
+FILE_NAME('example-bracket-ap242.stp','',('Isolith OEP'),(''),'oep-step 0.1.0','Isolith OEP','');
 FILE_SCHEMA (('AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }'));
 ENDSEC;
 

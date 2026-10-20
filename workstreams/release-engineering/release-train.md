@@ -1,17 +1,17 @@
 ---
-title: Keelworks Release Train, Versioning, and Patch Policy
+title: Isolith Release Train, Versioning, and Patch Policy
 decision: release_train_calver_semver_canary_staged_patch_model
 version: 1.0.0
 date: 2026-10-18
 status: Ratified
-owner: Keelworks program governance, P12-T05 (release engineering)
-applies_to: every released artifact of the Keelworks / Open Engineering Platform (OEP) monorepo -- oep-pdm, oep-geo, oep-viewer, oep-cgr, oep-3dxml, oep-step, the P2P compute lane, and the install/package bundles (P12-T04) once they exist
+owner: Isolith program governance, P12-T05 (release engineering)
+applies_to: every released artifact of the Isolith / Open Engineering Platform (OEP) monorepo -- oep-pdm, oep-geo, oep-viewer, oep-cgr, oep-3dxml, oep-step, the P2P compute lane, and the install/package bundles (P12-T04) once they exist
 supersedes: nothing (first release-engineering record; implements the P0-M5-T03 decision "release train and versioning (semver + calendar, e.g. 2027.1)")
 ---
 
-# Keelworks Release Train, Versioning, and Patch Policy
+# Isolith Release Train, Versioning, and Patch Policy
 
-This record is the binding operating policy for how Keelworks ships: the train
+This record is the binding operating policy for how Isolith ships: the train
 cadence, the version scheme, the branch/freeze mechanics, the staged canary
 rollout, and the patch/hotfix rules. It implements the P0-M5-T03 decision and
 is the canonical answer to card P12-T05. It is versioned like the renderer
@@ -26,7 +26,7 @@ manifest in `workstreams/release-engineering/freeze-manifests/`.
 
 ## 1. Cyclic train model
 
-Keelworks ships on a quarterly calendar train. Each train is one release
+Isolith ships on a quarterly calendar train. Each train is one release
 planning and stabilization cycle that ends in a candidate (`-rc1`) and, after
 canary soak, a general-availability (GA) cut.
 
@@ -97,7 +97,7 @@ unchanged git state:
 
 ```json
 {
-  "schema": "keelworks.release-freeze.v1",
+  "schema": "isolith.release-freeze.v1",
   "version": "2027.1.0-rc1",
   "train": "2027.1",
   "cut_from": {"ref": "<trunk ref>", "sha": "<40-hex>"},
@@ -107,7 +107,7 @@ unchanged git state:
   "frozen_commits_first_parent": <int>,
   "frozen_newest": "<40-hex>",
   "frozen_oldest": "<40-hex>",
-  "canary": {"repo": "keelworks/keelworks-canary", "branch": "canary/2027.1.0-rc1", "tag": "v2027.1.0-rc1"},
+  "canary": {"repo": "isolith/isolith-canary", "branch": "canary/2027.1.0-rc1", "tag": "v2027.1.0-rc1"},
   "created_utc": "<ISO-8601>",
   "host": "<host>"
 }
@@ -138,19 +138,19 @@ working tree clean in the cutting worktree):
 ```
 release_train.py release-cut \
   --version <YYYY.N.P-rcN> --trunk <ref> \
-  --canary keelworks/keelworks-canary [--dry-run]
+  --canary isolith/isolith-canary [--dry-run]
 ```
 
 The tool, in order: resolves the trunk; verifies the version scheme; writes
 the freeze manifest; verifies manifest fidelity; creates `release/<YYYY.N>`
 at the cut sha; tags `v<version>` on it; pushes branch + tag to the canary
-remote (`keelworks/keelworks-canary`). `--dry-run` prints every git command
+remote (`isolith/isolith-canary`). `--dry-run` prints every git command
 without running the mutating ones. The manifest is written first and, on a
 successful cut, committed with the branch creation.
 
 ## 5. Staged rollout: canary repo first, GA second
 
-Every candidate passes through **`keelworks/keelworks-canary`** before it is
+Every candidate passes through **`isolith/isolith-canary`** before it is
 general availability. The canary repo receives, for each candidate:
 
 - the `canary/<version>` branch (a copy of the freeze point), and

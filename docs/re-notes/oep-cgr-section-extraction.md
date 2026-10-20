@@ -1,6 +1,6 @@
 # CGR Section/View Extraction: Observation Gate + Computed Planar Cut
 
-P2-M3-T03 · Keelworks / OEP P2 CGR Reader
+P2-M3-T03 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15 (TDD GREEN; real-material
 box.stl leg PASS)
 Version: 1.0

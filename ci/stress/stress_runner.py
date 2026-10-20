@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks P0-M4-T03 — nightly stress/regression runner + status page.
+"""Isolith P0-M4-T03 — nightly stress/regression runner + status page.
 
 Runs a registered set of long fuzz/regression jobs, records each job's
 status/duration/timed-out/exit code into a JSON report, and renders a
@@ -104,7 +104,7 @@ def run_job(job, cwd):
 def git_identity(cwd):
     repo = subprocess.run(["git", "remote", "get-url", "gitea"], cwd=cwd,
                           capture_output=True, text=True, timeout=20)
-    url = repo.stdout.strip() or "don/keelworks"
+    url = repo.stdout.strip() or "don/isolith"
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=cwd,
                             capture_output=True, text=True, timeout=20)
     return url, (commit.stdout.strip() or "unknown")
@@ -184,7 +184,7 @@ def render_status_html(report):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keelworks Nightly Stress Status</title>
+<title>Isolith Nightly Stress Status</title>
 <style>
   :root {{ color-scheme: light dark; }}
   body {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -210,7 +210,7 @@ def render_status_html(report):
 </style>
 </head>
 <body>
-<h1>Keelworks — Nightly Stress Status</h1>
+<h1>Isolith — Nightly Stress Status</h1>
 <p class="meta">repo: {repo} &middot; commit: {commit}<br>
 generated: {ts} UTC</p>
 <p>Suite state: <span class="badge {state_cls}">{state}</span>
@@ -244,7 +244,7 @@ ci/stress/jobs.json</footer>
 def main(argv=None):
     ap = argparse.ArgumentParser(
         prog="stress_runner.py",
-        description="Keelworks nightly stress/regression runner and status page.")
+        description="Isolith nightly stress/regression runner and status page.")
     ap.add_argument("--jobs", default="ci/stress/jobs.json",
                     help="job registry JSON (default: ci/stress/jobs.json)")
     ap.add_argument("--out-dir", default="docs/status",
@@ -282,7 +282,7 @@ def main(argv=None):
         fh.write(render_status_html(report))
 
     s = report["summary"]
-    print("Keelworks nightly stress run")
+    print("Isolith nightly stress run")
     print("repo=%s commit=%s generated=%s" % (repo, commit, generated_at))
     print("-" * 64)
     for r in results:

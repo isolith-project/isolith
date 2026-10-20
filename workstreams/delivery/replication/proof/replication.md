@@ -4,7 +4,7 @@
 - lan_node: U1 (oep-pdm vault)
 - remote_node: garage PC (sync client replica, WoL)
 - deployment_role: Airgap (workstreams/pdm/sync/hybrid-cloud-role-adr.md)
-- binary: /home/r1a/keelworks-main/.worktrees/p10m4t01-replication-1017a/target/debug/oep-pdm (port 18789)
+- binary: /home/r1a/isolith-main/.worktrees/p10m4t01-replication-1017a/target/debug/oep-pdm (port 18789)
 
 Summary: total=13 PASS=13 FAIL=0 SKIP=0
 

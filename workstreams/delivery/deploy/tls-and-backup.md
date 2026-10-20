@@ -1,11 +1,11 @@
 # P10-M1-T02 -- TLS/certs for the stack + vault DB/blob backup to a second disk/archive
 
 Status: delivered + verified on the U1-class reference host (GB10, 2026-10-17/18).
-Owner: Keelworks self-hosted PDM lane (oep-pdm server). Version: 1.
+Owner: Isolith self-hosted PDM lane (oep-pdm server). Version: 1.
 
 ## 1. What this is
 
-Wave-2 downstream P10 delivery: the self-hosted Keelworks PDM no longer has to
+Wave-2 downstream P10 delivery: the self-hosted Isolith PDM no longer has to
 ride plain HTTP on the LAN. This card delivers two things for the stack:
 
 1. **TLS + certs**: `oep-pdm` terminates HTTPS natively (rustls via
@@ -41,12 +41,12 @@ refuses NAS paths; see decision #9, amended x2).
   restores the bundle into a fresh persist dir, boots a fresh oep-pdm, and the
   served file bytes hash back to an entry in the backup manifest.
 - **DR handoff to P10-M3-T01**: the DR drill card consumes exactly this bundle
-  layout (`<BK_TARGET>/keelworks-vault-backup/{latest, manifest.sha256,
+  layout (`<BK_TARGET>/isolith-vault-backup/{latest, manifest.sha256,
   meta.json}`), so a backup produced here is restorable by that drill.
 
 ## 3. Bundle contract (shared with P10-M3-T01)
 
-    <BK_TARGET>/keelworks-vault-backup/
+    <BK_TARGET>/isolith-vault-backup/
       latest/
         store.json               # vault item/revision metadata DB
         blobs/<sha256>           # content-addressed object store

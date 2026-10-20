@@ -6,7 +6,7 @@ summary: 4 rows | 1 measured | 3 skipped | classes {'reference-unavailable': 3}
 
 | id | status | class | symmetric_hausdorff | volume_delta | tol-p100 |
 |---|---|---|---|---|---|
-| keelworks-native-box | measured | - | 0 | 0 | 0 |
+| isolith-native-box | measured | - | 0 | 0 | 0 |
 | native-hex-nut | skip | reference-unavailable |  |  |  |
 | native-kj-pin | skip | reference-unavailable |  |  |  |
 | native-square-thread | skip | reference-unavailable |  |  |  |

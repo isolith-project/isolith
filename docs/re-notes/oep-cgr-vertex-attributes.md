@@ -1,6 +1,6 @@
 # CGR Vertex-Attribute / Normal Record Observation
 
-P2-M3-T01 · Keelworks / OEP P2 reader
+P2-M3-T01 · Isolith / OEP P2 reader
 Status: observation draft, verified on real material 2026-10-15
 Version: 1.0
 

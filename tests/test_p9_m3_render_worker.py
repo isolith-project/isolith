@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P9-M3-T01: headless render worker binary.
+"""Acceptance test for Isolith P9-M3-T01: headless render worker binary.
 
 Written FIRST (TDD). The render worker at crates/oep-render-worker and its
 committed real-material proof must make this test pass. It verifies the real

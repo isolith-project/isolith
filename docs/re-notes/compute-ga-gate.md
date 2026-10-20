@@ -2,7 +2,7 @@
 
 > Task: t_90343243 (P9 capstone). Status: implemented + verified live on the
 > real GB10 fleet 2026-10-17. Version 1.
-> Repo: keelworks/keelworks @ NAS Gitea; branch task/p9m5t02-ga-gate-1017a.
+> Repo: isolith/isolith @ NAS Gitea; branch task/p9m5t02-ga-gate-1017a.
 > Gate classification: **PASS** -- 100 jobs, 0 manual interventions, 100/100
 > outputs hash-verified in the P8 vault, across 3 real nodes; exit-code
 > contract + self-consistent JSON/MD report identical to the P2/P3/P4/P8 gates.

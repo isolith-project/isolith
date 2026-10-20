@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P11-T03: the auth-boundary test suite.
+"""Acceptance test for Isolith P11-T03: the auth-boundary test suite.
 
 Written to check the committed real material of card P11-T03, the same way the
 P11-T01 threat-model test checks its own artifact. It verifies:

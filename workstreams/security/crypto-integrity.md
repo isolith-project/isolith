@@ -1,14 +1,14 @@
 ---
-title: Keelworks Crypto / Integrity Doctrine (Content-Hash Blob Integrity, Artifact and Update-Manifest Signing)
+title: Isolith Crypto / Integrity Doctrine (Content-Hash Blob Integrity, Artifact and Update-Manifest Signing)
 status: Ratified (Wave-3 P11-T04)
 version: 1.0.0
 date: 2026-10-18
-owner: Keelworks program governance, P11 security lane
+owner: Isolith program governance, P11 security lane
 applies_to: the vault blob store (oep-pdm), every shipped release binary/artifact from the P12 packaging matrix, and the update bundle consumed by the P10-M5-T01 update checker
 supersedes: extends the P10-M5-T01 signed-bundle design; does not replace it
 ---
 
-# Keelworks Crypto and Integrity Doctrine
+# Isolith Crypto and Integrity Doctrine
 
 This record closes the crypto hardening card P11-T04: content-hash integrity
 on vault blobs (verified on read/retrieve) and signatures for release
@@ -97,13 +97,13 @@ Two secret keys exist, both on the build host only; every public key is
 committed:
 
 - gpg `oep-airgap-signing` (RSA 2048, uid
-  "oep-airgap-signing (Keelworks OEP air-gap release signing)"): pubkey
+  "oep-airgap-signing (Isolith OEP air-gap release signing)"): pubkey
   committed at `scripts/airgap/keys/oep-airgap-signing.pub.asc`, secret in the
   build-host keyring. Used for artifact detached signatures and the offline
   air-gap bundle.
 - Ed25519 `oep-update-signing`: pubkey committed at
   `workstreams/security/keys/oep-update-signing.pub` (hex), secret held on the build host at
-  `/home/r1a/keelworks-secrets/oep-update-signing/secret.hex` (mode 600),
+  `/home/r1a/isolith-secrets/oep-update-signing/secret.hex` (mode 600),
   consumed via `OEP_UPDATE_SIGN_KEY` / `OEP_UPDATE_SIGN_KEYFILE`. Used to sign
   `update.bundle.json`.
 

@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('oep-geo tessellated faceted B-Rep (planar facets). This is a TESSELLATED representation and is NOT an exact analytic B-Rep.'),'2;1');
-FILE_NAME('assembly.step','0.1.0',('Keelworks OEP'),(''),'step-io 0.2.5','oep-step','');
+FILE_NAME('assembly.step','0.1.0',('Isolith OEP'),(''),'step-io 0.2.5','oep-step','');
 FILE_SCHEMA(('AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }'));
 ENDSEC;
 DATA;

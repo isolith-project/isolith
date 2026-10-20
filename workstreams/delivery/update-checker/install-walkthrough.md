@@ -1,26 +1,26 @@
-# Keelworks P10-M5-T02 - Fresh Install Walkthrough and Checklist
+# Isolith P10-M5-T02 - Fresh Install Walkthrough and Checklist
 
 Version: 1.0.0 (2026-10-18)
 Status: P10 GA gate - verified on two approved machines (U1 + a U1/VM-class VM),
 recorded in workstreams/delivery/update-checker/proof/ga-gate-p10-m5t02.json/.md + the recorded install
 video under workstreams/delivery/update-checker/proof/video/.
 Owner: P10 hybrid-cloud delivery lane (GA gate card t_e3843afe).
-Card: P10-M5-T02 on the Keelworks board.
+Card: P10-M5-T02 on the Isolith board.
 Ties to: decision #9 (run targets: U1 + a second U1/VM-class host; NAS stays
 repo/storage only), decision #10 (on-prem / air-gap is the default posture),
 decision #11 (update checker advisory + off by default).
 
 ## 1. What this walks you through
 
-A brand-new machine with Docker installed but nothing Keelworks on it. You
+A brand-new machine with Docker installed but nothing Isolith on it. You
 follow this document top to bottom on that machine, and at the end the full
 stack comes up with every health check green:
 
 | service  | binary          | container       | host port | health surface                    |
 |----------|-----------------|-----------------|-----------|------------------------------------|
-| PDM      | oep-pdm         | keelworks-pdm   | 8787      | GET /api/v1/health                 |
-| Viewer   | oep-web         | keelworks-viewer| 8790      | GET /  (explorer HTML, HTTP 200)   |
-| P2P      | oep-opsdash     | keelworks-p2p   | 8080      | GET /healthz                       |
+| PDM      | oep-pdm         | isolith-pdm   | 8787      | GET /api/v1/health                 |
+| Viewer   | oep-web         | isolith-viewer| 8790      | GET /  (explorer HTML, HTTP 200)   |
+| P2P      | oep-opsdash     | isolith-p2p   | 8080      | GET /healthz                       |
 
 "Worker" (the task wording) is the P2P compute lane plus the actual worker
 binaries shipped in the same image (oep-batch-convert, the convert worker, and
@@ -49,8 +49,8 @@ recorded as proof, not as a log line.
 Online path (clone the repo, then work from the deploy dir):
 
 ```bash
-git clone http://<gitea>/keelworks/keelworks.git keelworks
-cd keelworks/workstreams/delivery/deploy/deploy
+git clone http://<gitea>/isolith/isolith.git isolith
+cd isolith/workstreams/delivery/deploy/deploy
 ```
 
 Air-gap path: copy the signed bundle + repo scripts off the USB/ISO exactly as
@@ -66,7 +66,7 @@ That is the whole install. From a clean state it:
 
 1. preflights docker + compose + disk and writes `.env` from `.env.example`
    (host binds default to 127.0.0.1 - nothing exposed to the LAN);
-2. builds the single stack image `keelworks/oep-stack:0.1.0` (one image,
+2. builds the single stack image `isolith/oep-stack:0.1.0` (one image,
    three services: pdm, viewer, p2p);
 3. `docker compose up -d`;
 4. waits until all three compose healthchecks are green (up to 180s);
@@ -78,13 +78,13 @@ Exit code 0 iff all three surfaces answer green. To stop: `./install.sh --down`.
 
 | # | Step | Command | Expected |
 |---|------|---------|----------|
-| 1 | Clean state confirmed | `docker ps --filter name=keelworks- --format '{{.Names}}'` | (empty - no keelworks containers) |
+| 1 | Clean state confirmed | `docker ps --filter name=isolith- --format '{{.Names}}'` | (empty - no isolith containers) |
 | 2 | Install | `./install.sh` | `All 3 services healthy.` and exit 0 |
 | 3 | PDM health | `curl -fsS http://127.0.0.1:8787/api/v1/health` | `{"status":"ok","service":"oep-pdm","version":"1.0.0"}` |
 | 4 | Viewer health | `curl -fsS -o /dev/null -w '%{http_code}' http://127.0.0.1:8790/` | `200` |
 | 5 | P2P health | `curl -fsS http://127.0.0.1:8080/healthz` | `{"status":"ok"}` |
-| 6 | Convert worker shipped | `docker run --rm --entrypoint oep-batch-convert keelworks/oep-stack:0.1.0 --help` | usage text, exit 0 |
-| 7 | Render worker shipped | `docker run --rm --entrypoint oep-render-worker keelworks/oep-stack:0.1.0 --describe` | JSON descriptor, exit 0 |
+| 6 | Convert worker shipped | `docker run --rm --entrypoint oep-batch-convert isolith/oep-stack:0.1.0 --help` | usage text, exit 0 |
+| 7 | Render worker shipped | `docker run --rm --entrypoint oep-render-worker isolith/oep-stack:0.1.0 --describe` | JSON descriptor, exit 0 |
 | 8 | Update checker off | `grep -c 'OEP_UPDATE_CHECK=on' .env; echo $?` | `1` (grep finds nothing - feature stays off) and nothing in the compose stack phones home |
 
 For step 8, the stronger statement: the generated `.env` has NO
@@ -96,7 +96,7 @@ crates/oep-update/tests/update_checker_acceptance.rs.
 
 ## 6. Done
 
-When all eight rows above match, the machine is a verified Keelworks P10
+When all eight rows above match, the machine is a verified Isolith P10
 install. Run the same on the second machine. Record both runs (the proof
 script does this for you) - a GA gate needs two recorded verifications, not
 one.
@@ -109,18 +109,18 @@ bundle (P10-M2 tooling):
 ```bash
 cd scripts/airgap
 ./build-offline-bundle.sh --version 0.1.0 \
-  --images keelworks/oep-pdm:airgap-proof-src nats:2-alpine \
+  --images isolith/oep-pdm:airgap-proof-src nats:2-alpine \
   --compose docker-compose.airgap.yml --out dist/
 ```
 
-Carry `keelworks-offline-0.1.0.tar.gz` + `.sha256` + `.sig` to the target by
+Carry `isolith-offline-0.1.0.tar.gz` + `.sha256` + `.sig` to the target by
 USB/ISO. On the target (no network):
 
 ```bash
-sha256sum -c keelworks-offline-0.1.0.tar.gz.sha256
-sudo ./airgap-verify.sh --bundle keelworks-offline-0.1.0.tar.gz
-sudo ./airgap-install.sh --bundle keelworks-offline-0.1.0.tar.gz \
-     --install-dir /opt/keelworks --project oep
+sha256sum -c isolith-offline-0.1.0.tar.gz.sha256
+sudo ./airgap-verify.sh --bundle isolith-offline-0.1.0.tar.gz
+sudo ./airgap-install.sh --bundle isolith-offline-0.1.0.tar.gz \
+     --install-dir /opt/isolith --project oep
 ```
 
 Result: signature + per-file checksums verified, images docker-loaded (no
@@ -151,7 +151,7 @@ workstreams/delivery/update-checker/
       machine-b-online.typescript (+ .timing)  VM online install session
       machine-a-online.mp4                     rendered replay (U1)
       machine-b-online.mp4                     rendered replay (VM, build elided)
-      keelworks-install-walkthrough.mp4        combined replay (headline video)
+      isolith-install-walkthrough.mp4        combined replay (headline video)
       README.md                                what each file is + how to replay
                                        (air-gap re-proof + update-off posture are
                                         the measured AIRGAP/UPDATE rows in the

@@ -1,4 +1,4 @@
-//! P4-M3-T01 golden generator: export the keelworks unit box part and a small
+//! P4-M3-T01 golden generator: export the isolith unit box part and a small
 //! assembly to STEP files.
 //!
 //! Used by `tests/test_step_export_freecad_acceptance.py` (independently from
@@ -15,7 +15,7 @@ use oep_geo::{
 use oep_step::export::{write_document, BodyMesh, ExportOpts};
 use std::path::PathBuf;
 
-/// The keelworks CC0-1.0 unit box (8 verts / 12 tris, bbox [0,0,0]..[1,1,1]).
+/// The isolith CC0-1.0 unit box (8 verts / 12 tris, bbox [0,0,0]..[1,1,1]).
 fn box_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
     let positions = vec![
         [1.0, 0.0, 0.0],
@@ -87,9 +87,9 @@ fn assembly_document() -> Document {
 fn opts(file_name: &str) -> ExportOpts {
     ExportOpts {
         file_name: file_name.to_string(),
-        product_name: "keelworks-export".to_string(),
+        product_name: "isolith-export".to_string(),
         version: "0.1.0".to_string(),
-        org: "Keelworks OEP".to_string(),
+        org: "Isolith OEP".to_string(),
         system: "oep-step".to_string(),
     }
 }

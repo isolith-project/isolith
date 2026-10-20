@@ -1,4 +1,4 @@
-# Keelworks Python tooling workspace (P0-M3-T02).
+# Isolith Python tooling workspace (P0-M3-T02).
 #
 # Python is the tooling/scripting language (master plan Decision 6: Rust-first for
 # core, Python allowed for tooling/scripts). This workspace pins the interpreter
@@ -6,9 +6,9 @@
 # Reproducibility doctrine (P11-T06): never install deps without the lockfile.
 
 [project]
-name = "keelworks-tooling"
+name = "isolith-tooling"
 version = "0.1.0"
-description = "Keelworks / Open Engineering Platform - Python tooling and corpus scripts"
+description = "Isolith / Open Engineering Platform - Python tooling and corpus scripts"
 requires-python = ">=3.11"
 dependencies = []
 

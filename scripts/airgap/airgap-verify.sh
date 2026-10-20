@@ -7,8 +7,8 @@
 #   * the same health checks the online install uses pass.
 #
 # Usage:
-#   airgap-verify.sh --bundle /path/keelworks-offline-<ver>.tar.gz \
-#       [--install-dir /opt/keelworks] [--project oep]
+#   airgap-verify.sh --bundle /path/isolith-offline-<ver>.tar.gz \
+#       [--install-dir /opt/isolith] [--project oep]
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./airgap-lib.sh
@@ -17,7 +17,7 @@ source ./airgap-lib.sh
 import_public_key
 
 BUNDLE=""
-INSTALL_DIR="/opt/keelworks"
+INSTALL_DIR="/opt/isolith"
 PROJECT="oep"
 HEALTHCHECK_URL="${HEALTHCHECK_URL:-http://127.0.0.1:8787/api/v1/health}"
 
@@ -32,7 +32,7 @@ done
 
 [ -n "$BUNDLE" ] || die "--bundle is required"
 
-log "=== Keelworks air-gap stack verification (no-phone-home) ==="
+log "=== Isolith air-gap stack verification (no-phone-home) ==="
 gpg_detach_verify "$BUNDLE" || die "bundle signature FAILED"
 log "bundle signature OK"
 if [ -f "$BUNDLE.sha256" ]; then
@@ -44,7 +44,7 @@ fi
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 tar xzf "$BUNDLE" -C "$STAGE"
-BUNDLE_DIR="$(find "$STAGE" -maxdepth 1 -type d -name 'keelworks-offline-*' | head -1)"
+BUNDLE_DIR="$(find "$STAGE" -maxdepth 1 -type d -name 'isolith-offline-*' | head -1)"
 gpg_detach_verify "$BUNDLE_DIR/MANIFEST.json" || die "manifest signature FAILED"
 log "manifest signature OK"
 

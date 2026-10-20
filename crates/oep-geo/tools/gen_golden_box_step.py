@@ -126,8 +126,8 @@ def main():
         "'2;1');\n"
     )
     out_lines.append(
-        "FILE_NAME('box-reference.step','',('Keelworks OEP'),(''),'oep-geo "
-        + VERSION + "','Keelworks OEP','');\n"
+        "FILE_NAME('box-reference.step','',('Isolith OEP'),(''),'oep-geo "
+        + VERSION + "','Isolith OEP','');\n"
     )
     out_lines.append("FILE_SCHEMA(('AUTOMOTIVE_DESIGN { 1 0 10303 214 1 1 1 1 }'));\n")
     out_lines.append("ENDSEC;\n")

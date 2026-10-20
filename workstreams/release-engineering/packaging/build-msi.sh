@@ -40,20 +40,20 @@ STAGED_EXE="$OUT/$BIN.exe"
 cp -f "$EXE" "$STAGED_EXE"
 
 # --- 3. WiX source (wixl-compatible subset) -----------------------------------
-WXS="$OUT/keelworks-$BIN.wxs"
+WXS="$OUT/isolith-$BIN.wxs"
 cat > "$WXS" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Keelworks OEP $BIN"
+  <Product Id="*" Name="Isolith OEP $BIN"
            Language="1033" Version="$VERSION"
-           Manufacturer="Keelworks">
-    <Package Description="Keelworks OEP $BIN"
+           Manufacturer="Isolith">
+    <Package Description="Isolith OEP $BIN"
              Comments="OEP $BIN"
              InstallerVersion="200" Compressed="yes"/>
     <Media Id="1" Cabinet="oep.cab" EmbedCab="yes"/>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLLOCATION" Name="Keelworks">
+        <Directory Id="INSTALLLOCATION" Name="Isolith">
           <Directory Id="BINDIR" Name="bin">
             <Component Id="main.exe" Guid="*">
               <File Id="oep.exe" Name="$BIN.exe"
@@ -63,7 +63,7 @@ cat > "$WXS" <<EOF
         </Directory>
       </Directory>
     </Directory>
-    <Feature Id="Complete" Title="Keelworks OEP $BIN" Level="1">
+    <Feature Id="Complete" Title="Isolith OEP $BIN" Level="1">
       <ComponentRef Id="main.exe"/>
     </Feature>
   </Product>
@@ -72,7 +72,7 @@ EOF
 
 # --- 4. build the .msi (hermetic debian container + wixl) ----------------------
 MI_IMAGE="${MI_IMAGE:-debian:bookworm-slim}"
-MSI="$OUT/keelworks-$BIN-$TRIPLE-$VERSION.msi"
+MSI="$OUT/isolith-$BIN-$TRIPLE-$VERSION.msi"
 docker run --rm -v "$OUT:/out" "$MI_IMAGE" bash -c "
 set -e
 apt-get update -qq >/dev/null && apt-get install -y -qq wixl >/dev/null 2>&1

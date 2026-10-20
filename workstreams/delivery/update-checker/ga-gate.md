@@ -50,13 +50,13 @@ operator actually follows. Nothing is mocked.
 ## 3. The machines (decision #9)
 
 Approved run targets are U1 + a second U1/VM-class host; the NAS is repo and
-storage host only and never runs Keelworks services.
+storage host only and never runs Isolith services.
 
 - Machine A -- U1 (promaxgb10-83f1, 192.168.0.67, aarch64, Ubuntu 24.04).
-  Clean state: every prior keelworks container/volume/image/.env removed, then
+  Clean state: every prior isolith container/volume/image/.env removed, then
   the docs' `./install.sh` from `workstreams/delivery/deploy/deploy`.
 - Machine B -- keelwb2, a fresh QEMU/KVM aarch64 VM on U1 booted from the
-  Ubuntu 24.04 cloud image with Docker installed and nothing Keelworks on it;
+  Ubuntu 24.04 cloud image with Docker installed and nothing Isolith on it;
   the same `./install.sh` run by an operator-shaped step (SSH command, no U1
   Docker involved - the VM runs its own engine).
 

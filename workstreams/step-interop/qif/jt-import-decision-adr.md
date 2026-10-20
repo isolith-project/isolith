@@ -1,18 +1,18 @@
 ---
-title: Keelworks JT Import Decision (Visualization / PMI)
+title: Isolith JT Import Decision (Visualization / PMI)
 decision: build_own_rust_jt_reader_from_documented_iso_spec_visualization_first_reject_gpl_readers
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks program governance, P4-M4 (QIF/JT interop lane)
+owner: Isolith program governance, P4-M4 (QIF/JT interop lane)
 applies_to: oep-step (adopting crate, P4 lane), a future oep-jt reader module or crate behind the same vendor-neutral seam, the P6 importer hub (oep-import feed), and the P6-M1-T02 PMI model
 supersedes: nothing (first JT import decision record)
 ---
 
-# Keelworks JT Import Decision
+# Isolith JT Import Decision
 
 This record is the binding product decision for the P4-M4-T02 card: whether
-Keelworks adopts an existing open-source JT reader or builds its own, for JT
+Isolith adopts an existing open-source JT reader or builds its own, for JT
 import covering visualization and PMI. The format in question is Siemens
 Jupiter Tessellation (JT), file extensions .jt and .jtext, standardized as
 ISO 14306 and commonly carrying tessellated geometry, assembly scene graphs,
@@ -23,7 +23,7 @@ change bumps the version in the front matter and adds a line to the change log
 at the bottom.
 
 The default stated in the P4-M4-T02 card is to weigh adoption against build.
-This document records the outcome: Keelworks REJECTS the GPL-2.0-only Open
+This document records the outcome: Isolith REJECTS the GPL-2.0-only Open
 CASCADE TKJT / JT Assistant reader line as a runtime dependency on license
 grounds, rejects the immature permissive candidates on quality grounds, and
 BUILDS its own Rust JT reader from the documented ISO 14306 / JTIAP format
@@ -33,7 +33,7 @@ below that drives a decision is checked against a live primary source there.
 
 ## 1. Decision
 
-Keelworks BUILDS a Rust JT reader (visualization first, PMI second) in the P4
+Isolith BUILDS a Rust JT reader (visualization first, PMI second) in the P4
 lane, and does NOT adopt any existing OSS JT reader as a linked dependency as
 of 2026-10-16. The reader lives behind the same vendor-neutral seam doctrine as
 the STEP work in `oep-step` (P4-M1-T01): JT concepts and any borrowed decode
@@ -85,7 +85,7 @@ Four facts drive it:
    refuses to take TKJT into its mainline for exactly this reason (the
    maintainer: "Because TKJT is under the GPL it won't be added to FreeCAD");
    PyOpenJt's own README states the GPL extends to all linked work including
-   user scripts. Keelworks would have to GPL the whole oep-step crate and
+   user scripts. Isolith would have to GPL the whole oep-step crate and
    everything that links it. That is a non-starter for a sovereign, Apache-2.0
    product line.
 
@@ -185,7 +185,7 @@ Four facts drive it:
 
 The JT reader exposes, through oep-step (or a future oep-jt crate behind the
 same discipline, per the layout.md one-crate-per-workstream rule), a public
-surface that deals only in Keelworks types: a JT header summary (version,
+surface that deals only in Isolith types: a JT header summary (version,
 toc/segment listing), an LSG tree of part/instance/LOD nodes with names and
 bounding data, per-node facet meshes (vertices, triangles/polylines/points,
 optional colors and transforms), and later PMI entities. No JT segment offsets,
@@ -215,7 +215,7 @@ plus an honest empty, never a crash.
 
 ## 7. License
 
-- Our JT reader code is authored by Keelworks under Apache-2.0 (the decided
+- Our JT reader code is authored by Isolith under Apache-2.0 (the decided
   posture for applications/libraries). No GPL code is linked, copied, or
   adapted.
 - The candidate readers are the license constraints: TKJT, JT Assistant, and

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P4-M4-T03 (t_6d40b761): JT reader
+"""Acceptance test for Isolith P4-M4-T03 (t_6d40b761): JT reader
 visualization-first wedge in the P4 lane (oep-step jt module).
 
 Written FIRST (TDD) by the same convention as test_p4m4_jt_adr.py. It

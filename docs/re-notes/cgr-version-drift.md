@@ -1,6 +1,6 @@
 # CGR Version Drift: R18-Era vs R2026-Era Comparison
 
-P1-M2-T02 · Keelworks / OEP P1 Format Reconnaissance
+P1-M2-T02 · Isolith / OEP P1 Format Reconnaissance
 Status: verified on real material 2026-10-15 (old-era leg); modern-era leg
 recorded as blocked-on-sample.
 Version: 1.0

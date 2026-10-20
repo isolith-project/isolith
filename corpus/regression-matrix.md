@@ -1,4 +1,4 @@
-# Keelworks regression corpus matrix (P1-M4-T01)
+# Isolith regression corpus matrix (P1-M4-T01)
 
 total=139  open=8  skip=131
 by_backend: object-store(t=122 open=1 skip=121), repo(t=17 open=7 skip=10)

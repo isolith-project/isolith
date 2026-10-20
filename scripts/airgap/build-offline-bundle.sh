@@ -12,7 +12,7 @@
 #
 # Usage:
 #   build-offline-bundle.sh --version 0.1.0 \
-#       --images keelworks/oep-pdm:0.1.0 nats:2-alpine \
+#       --images isolith/oep-pdm:0.1.0 nats:2-alpine \
 #       --compose deploy/docker-compose.yml \
 #       [--out dist/] [--sign-key <gpg-uid>]
 #
@@ -26,7 +26,7 @@
 #   --bundle-dir DIR staging dir for the assembled bundle (default: tmp)
 #
 # The bundle layout (what lands on the target via USB/ISO):
-#   keelworks-offline-<version>/
+#   isolith-offline-<version>/
 #     MANIFEST.json             signed inventory: version, date, images,
 #                               sha256 per image tarball, checksums
 #     MANIFEST.json.sig         detached signature over the manifest
@@ -37,7 +37,7 @@
 #     compose.yaml              the embedded compose stack (if --compose)
 #     env.example               environment template (update-check OFF)
 #     scripts/*                 install / verify / rollback + this lib
-# The bundle is then gzipped to keelworks-offline-<version>.tar.gz, with
+# The bundle is then gzipped to isolith-offline-<version>.tar.gz, with
 #   *.sha256  (bundle checksum) and *.sig (detached signature).
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -68,10 +68,10 @@ command -v gpg   >/dev/null 2>&1 || die "gpg required to sign the bundle"
 
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
-BUNDLE="$WORK/keelworks-offline-$VERSION"
+BUNDLE="$WORK/isolith-offline-$VERSION"
 mkdir -p "$BUNDLE/images" "$BUNDLE/scripts" "$OUT"
 
-log "building signed offline bundle keelworks-offline-$VERSION"
+log "building signed offline bundle isolith-offline-$VERSION"
 log "signing identity: $SIGN_KEY_ID"
 log "images: ${IMAGES[*]}"
 
@@ -116,7 +116,7 @@ for base, _dirs, names in os.walk(root):
         files[rel] = h.hexdigest()
 import time
 manifest = {
-    "bundle": "keelworks-offline",
+    "bundle": "isolith-offline",
     "version": version,
     "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     "files": files,
@@ -134,9 +134,9 @@ gpg_detach_sign "$BUNDLE/SHA256SUMS"
 # 5. Assemble the final tarball + checksum + signature.
 (
     cd "$WORK"
-    tar czf "$OUT/keelworks-offline-$VERSION.tar.gz" "keelworks-offline-$VERSION"
+    tar czf "$OUT/isolith-offline-$VERSION.tar.gz" "isolith-offline-$VERSION"
 )
-BUNDLE_TGZ="$OUT/keelworks-offline-$VERSION.tar.gz"
+BUNDLE_TGZ="$OUT/isolith-offline-$VERSION.tar.gz"
 sha256sum "$BUNDLE_TGZ" | awk '{print $1}' > "$BUNDLE_TGZ.sha256"
 gpg_detach_sign "$BUNDLE_TGZ"
 

@@ -55,6 +55,6 @@ Every claim enforced by tests/test_oss_readers_audit_acceptance.py was checked a
 
 ## Companion program references
 
-- Keelworks master plan, P1-M3-T01 card and P1.3 milestone. /home/r1a/.hermes/plans/2026-10-15_084708-open-catia-program-decomposition.md
+- Isolith master plan, P1-M3-T01 card and P1.3 milestone. /home/r1a/.hermes/plans/2026-10-15_084708-open-catia-program-decomposition.md
 - Vault research note, CATIA Native Files and 3DEXPERIENCE Deliverables Research (no OSS native reader conclusion, CGR commercial-only). /mnt/vault/Notes/Research/CATIA Native Files and 3DEXPERIENCE Deliverables Research.md
 - Vault research note, CATIA V5 and V6 Ecosystem Research (interop landscape, Dassault format guards). /mnt/vault/Notes/Research/CATIA V5 and V6 Ecosystem Research.md

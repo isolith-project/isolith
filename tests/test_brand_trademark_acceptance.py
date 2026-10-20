@@ -4,16 +4,18 @@ Proves the committed identity kit satisfies the same trademark collision check
 used in P0-M1-T02 (decision record 0001). Against the committed evidence file it
 verifies that:
 
-1. A decision/name record exists and fixes the public brand, the working title,
-   the internal codename, and the no-CATIA rule.
-2. The brand is distinct from the internal codename (Keelworks).
+1. A decision/name record exists and fixes the program name, the working title,
+   the retired internal codename, and the no-CATIA rule.
+2. The name record documents the retirement of the former codename (Keelworks)
+   and names Isolith as the single current name.
 3. The collision section names the registries actually searched (USPTO, EUIPO,
    WIPO, TMview) and those match the evidence file.
 4. The evidence file records the 2026-10-18 search date and the real finding:
    no mark identical to the brand in software classes 9 or 42, and zero USPTO
    wordmark results.
-5. The control term (keelworks) still surfaces a registered mark in classes 9/42,
-   proving the method would catch a collision if one existed.
+5. The control term (the retired codename, keelworks) still surfaces a
+   registered mark in classes 9/42, proving the method would catch a collision
+   if one existed.
 
 The evidence file is the real material: live captures from USPTO Trademark
 Search and the WIPO Global Brand Database / TMview aggregate on 2026-10-18.
@@ -31,7 +33,7 @@ USAGE = BRAND / "USAGE.md"
 REQUIRED_DOC_TEXT = [
     "isolith",
     "open engineering platform",
-    "keelworks",
+    "isolith",
     "no catia",
     "trademark check",
     "classes 9 and 42",
@@ -82,19 +84,27 @@ def test_primary_brand_has_no_software_class_collision():
         f"found software-class marks overlapping the brand: {classes & SOFTWARE_CLASSES}"
 
 
-def test_uspto_control_still_surfaces_keelworks():
-    """The control catches a real collision, proving the method is sensitive."""
+def test_control_term_still_surfaces_real_collision():
+    """The control catches a real collision, proving the method is sensitive.
+
+    The control term is the retired codename (keelworks), whose registered mark
+    (KeelWorks Ltd UK, classes 9/41/42) is exactly why the codename was retired
+    and the brand check exists.
+    """
     data = json.loads(EVIDENCE.read_text(encoding="utf-8"))
-    kw = next(t for t in data["terms"] if t.get("term", "").lower() == "keelworks")
-    assert kw.get("control") == "regression control"
-    assert kw.get("registration_found") is True
-    assert kw.get("software_class_collision") is True
+    control = next(t for t in data["terms"] if t.get("control") == "regression control")
+    assert control.get("term", "").lower() == "keelworks"
+    assert control.get("registration_found") is True
+    assert control.get("software_class_collision") is True
 
 
-def test_primary_brand_distinct_from_codename():
+def test_retired_codename_documented():
+    """NAME.md records the former codename (keelworks) as retired and Isolith
+    as the single current name."""
     text = DECISION.read_text(encoding="utf-8").lower()
-    assert "isolith" in text and "keelworks" in text
-    assert "isolith" != "keelworks"
+    assert "isolith" in text
+    assert "keelworks" in text
+    assert "retired" in text
 
 
 def test_kit_has_logo_and_palette_artifacts():

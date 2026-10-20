@@ -185,7 +185,7 @@ pub fn export_all(
             "archive output directory is not empty; refusing to overwrite".to_string(),
         ));
     }
-    let owner = owner_label.unwrap_or("keelworks").to_string();
+    let owner = owner_label.unwrap_or("isolith").to_string();
 
     fs::create_dir_all(out.join("geometry"))?;
     fs::create_dir_all(out.join("model"))?;
@@ -557,7 +557,7 @@ fn push_mesh_artifacts(
     let arc_rel = format!("geometry/{slug}/{revnum}/{stem}.3dxml");
     let opts = oep_3dxml::ascii::WriterOpts {
         product_name: stem,
-        author: "Keelworks OEP",
+        author: "Isolith OEP",
         // Empty timestamp keeps geometry bytes deterministic; the wall clock
         // lives only in manifest.json.
         timestamp: "",

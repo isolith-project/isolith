@@ -66,11 +66,11 @@ notes, tolerances, datums) are presented and queryable in the digital model.
 ## PMI / MBD relevance
 
 - Y14.41 is the **practice** standard behind MBD: it defines what makes a model
-  "product definition". Keelworks' P4-M5 MBD validator's rule set is squarely
+  "product definition". Isolith' P4-M5 MBD validator's rule set is squarely
   Y14.41-shaped (missing PMI, dangling datums, model completeness, units, annotations
   attached to the right geometry).
 - It complements AP242: Y14.41 defines the human/business MBD practice; AP242 defines
-  the machine-readable carrier. A robust Keelworks validates Y14.41 conformance over
+  the machine-readable carrier. A robust Isolith validates Y14.41 conformance over
   AP242 data.
 - The master plan's P4-M5 explicitly lists "Y14.41, prime requirements" as the rule
   basis for the validator service.

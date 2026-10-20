@@ -1,4 +1,4 @@
-# Keelworks P12-T09 - E2E Scenario Suite (the reference vertical, headless)
+# Isolith P12-T09 - E2E Scenario Suite (the reference vertical, headless)
 
 Version: 1.0.0 (2026-10-18)
 Status: active release-blocking E2E gate (P12 QA / CI-CD / release engineering).

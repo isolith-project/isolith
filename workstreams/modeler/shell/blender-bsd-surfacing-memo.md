@@ -11,7 +11,7 @@ P7-M1-T01 fork.
 ## 0. Working definition
 
 "Blender-BSD path" is not glossarized in the program; the only "BSD" usage
-anywhere in the keelworks tree is the permissive license family (BSD-3/2
+anywhere in the isolith tree is the permissive license family (BSD-3/2
 Clause, modified BSD, etc.) in the corpus manifests and reader audits. I read
 the phrase as: **use Blender as the freeform surfacing environment, with the
 surface math carried by permissive (BSD-family) components rather than by

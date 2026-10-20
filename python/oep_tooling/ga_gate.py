@@ -417,7 +417,7 @@ def write_report(matrix: dict, outdir: str) -> list:
     jp = out / "ga-gate-matrix.json"
     jp.write_text(json.dumps(matrix, indent=2) + "\n", encoding="utf-8")
     mp = out / "ga-gate-matrix.md"
-    lines = ["# Keelworks P2 GA gate — matrix (P2-M6-T03)", ""]
+    lines = ["# Isolith P2 GA gate — matrix (P2-M6-T03)", ""]
     s = matrix["summary"]
     lines.append("total=%d pass=%d open=%d fail=%d skip=%d (%s)" % (
         s["total"], s["pass"], s["open"], s["fail"], s["skip"],

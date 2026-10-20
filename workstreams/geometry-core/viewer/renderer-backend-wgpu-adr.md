@@ -1,17 +1,17 @@
 ---
-title: Keelworks Renderer Backend Decision (WGSL/wgpu, offline, headless)
+title: Isolith Renderer Backend Decision (WGSL/wgpu, offline, headless)
 decision: adopt_wgpu_wgsl_offline_headless_renderer_shared_by_preview_and_p2p_render_jobs
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks program governance, P6-M5 (renderer backend)
+owner: Isolith program governance, P6-M5 (renderer backend)
 applies_to: oep-geo (adopting surface), oep-render (new renderer crate behind a clean seam), the P6-M5-T02 preview viewer, the P9-M3-T01 headless render worker, and any offline/P2P render job
 supersedes: nothing (first renderer backend decision record)
 ---
 
-# Keelworks Renderer Backend Decision
+# Isolith Renderer Backend Decision
 
-This record is the binding product decision for how Keelworks renders geometry:
+This record is the binding product decision for how Isolith renders geometry:
 it names the renderer backend, the shading language, and the render target
 model, and it answers the P6-M5-T01 question "WGSL/wgpu offline renderer for
 previews and P2P render jobs; headless render target". It is versioned like the
@@ -29,7 +29,7 @@ mocks.
 
 ## 1. Decision
 
-Keelworks ADOPTS **wgpu** as its renderer backend and **WGSL** as its shading
+Isolith ADOPTS **wgpu** as its renderer backend and **WGSL** as its shading
 language, driving an **offline** renderer with a **headless** render target.
 The same backend serves the two consumers named in the P6-M5-T01 card:
 
@@ -118,7 +118,7 @@ share the pipeline, differing only in where the color attachment lives.
    backend. The GL backend of wgpu remains available as a compatibility
    fallback (section 9) without us touching GL directly.
 
-4. **Metal or DirectX 12 directly.** Platform-locked; Keelworks targets the
+4. **Metal or DirectX 12 directly.** Platform-locked; Isolith targets the
    self-hosted/Linux/heterogeneous-node world (U1, NAS/Docker, P2P GPU nodes)
    where Vulkan is the common denominator. REJECTED as a primary; serving as
    optional wgpu backends is free.

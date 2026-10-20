@@ -1,8 +1,8 @@
-# AP242 — Keelworks Use
+# AP242 — Isolith Use
 
-## Why Keelworks cares
+## Why Isolith cares
 
-AP242 is the neutral, vendor-independent carrier for the geometry + PMI that Keelworks
+AP242 is the neutral, vendor-independent carrier for the geometry + PMI that Isolith
 must read and write to be a serious interoperable engineering platform. The master
 plan's P4 workstream (STEP AP242 / QIF / JT Interop) is built around it. It is also
 the format defense customers most often require (tied to MIL-STD-31000 TDPs).

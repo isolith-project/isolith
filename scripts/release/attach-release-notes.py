@@ -12,7 +12,7 @@ Usage:
   attach-release-notes.py <version> <changelog-file> <token> <api-url>
 
 Env:
-  GITHUB_REPOSITORY  owner/repo to attach to (fallback keelworks/keelworks)
+  GITHUB_REPOSITORY  owner/repo to attach to (fallback isolith/isolith)
 """
 import json
 import os
@@ -21,7 +21,7 @@ import urllib.error
 import urllib.request
 
 VERSION, CHANGELOG_FILE, TOKEN, API_URL = sys.argv[1:5]
-REPO = os.environ.get("GITHUB_REPOSITORY", "keelworks/keelworks")
+REPO = os.environ.get("GITHUB_REPOSITORY", "isolith/isolith")
 
 PRERELEASE_HINTS = ("pre", "rc", "alpha", "beta", "gamma")
 

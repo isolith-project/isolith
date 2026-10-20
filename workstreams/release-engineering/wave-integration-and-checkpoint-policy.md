@@ -1,15 +1,15 @@
 ---
-title: Keelworks Wave Integration and Checkpoint Policy
+title: Isolith Wave Integration and Checkpoint Policy
 decision: integrate-every-wave-onto-one-branch-and-emit-a-documented-checkpoint
 version: 1.0.0
 date: 2026-10-18
 status: Ratified
-owner: Keelworks program governance, P12 (release engineering)
+owner: Isolith program governance, P12 (release engineering)
 applies_to: every wave and milestone; the wave/N integration branches; main; the release train (P12-T05); the single canary repo; every dispatched worker's definition of done
 supersedes: the implicit stacked-branch integration practice used through waves 1 and 2, under which per-card PRs were opened and never merged
 ---
 
-# Keelworks Wave Integration and Checkpoint Policy
+# Isolith Wave Integration and Checkpoint Policy
 
 This record is the binding operating policy for how a wave's work becomes part
 of the product. It exists because the first two waves were built on stacked
@@ -70,7 +70,7 @@ what prevents the pile.
 At wave end the integrator emits, in the same commit that merges `wave/N` to
 `main`:
 
-- `workstreams/release-engineering/wave-checkpoints/wave-N.json`, schema `keelworks.wave-checkpoint.v1`:
+- `workstreams/release-engineering/wave-checkpoints/wave-N.json`, schema `isolith.wave-checkpoint.v1`:
   wave id; the source `wave/N` tip sha and the resulting `main` sha; every
   card (id, title, PR number, squashed commit sha); every gate proof path with
   its SHA-256; test counts; and the list of deferrals.
@@ -78,11 +78,11 @@ At wave end the integrator emits, in the same commit that merges `wave/N` to
   was deferred and why, gate results, known risks, decisions taken.
 - An annotated tag `wave-N` on the checkpoint commit, so the whole wave is one
   `git diff wave-(N-1)..wave-N` away and revertible in a single step.
-- A vault update (the Keelworks topic page and the project history log) in the
+- A vault update (the Isolith topic page and the project history log) in the
   same motion, so the durable record moves with the code.
 
 The manifest follows the freeze-manifest discipline already used by the
-release train (`workstreams/release-engineering/release-train.md`, schema `keelworks.release-freeze.v1`),
+release train (`workstreams/release-engineering/release-train.md`, schema `isolith.release-freeze.v1`),
 so the two compose (section 7).
 
 ## 6. Repository and artifact hygiene (anti-proliferation)
@@ -90,11 +90,11 @@ so the two compose (section 7).
 The program has exactly TWO Gitea repositories and this policy forbids
 generating more without an explicit human decision:
 
-- `keelworks/keelworks` is the single canonical development repository. Every
+- `isolith/isolith` is the single canonical development repository. Every
   wave, card, integration branch, tag, manifest, report, proof, and gate lives
   here as a branch, a tag, or a directory. `main` and `wave/*` are branches in
   this one repo.
-- `keelworks/keelworks-canary` is exactly ONE canary repository for staged
+- `isolith/isolith-canary` is exactly ONE canary repository for staged
   rollout, REUSED by every train and every wave. It is never per-wave, never
   per-train, never per-release.
 
@@ -116,7 +116,7 @@ Legacy allowance: `oep-meta` exists from the wave-1 kickoff and is the one
 grandfathered repository. It receives NO new work, holds no artifact that is
 not also in the canonical repo, and is archived on Don's decision. It is the
 only exception and the tooling reports it separately as a warning rather than
-tolerating it silently. Anything beyond `keelworks`, `keelworks-canary`, and
+tolerating it silently. Anything beyond `isolith`, `isolith-canary`, and
 the legacy `oep-meta` is a policy violation.
 
 Also bounded here because they are the same failure shape:

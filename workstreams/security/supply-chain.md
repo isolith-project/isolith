@@ -1,14 +1,14 @@
 ---
-title: Keelworks Supply-Chain Hardening (Pinned Dependencies, Reproducible Builds, Signed Artifacts)
+title: Isolith Supply-Chain Hardening (Pinned Dependencies, Reproducible Builds, Signed Artifacts)
 status: Ratified (Wave-3 P11-T06)
 version: 1.0.0
 date: 2026-10-18
-owner: Keelworks program governance, P11 security lane
-applies_to: every artifact built from the Keelworks / Open Engineering Platform (OEP) monorepo -- all workspace crates, every shipped binary, the P12 packaging and release bundles
+owner: Isolith program governance, P11 security lane
+applies_to: every artifact built from the Isolith / Open Engineering Platform (OEP) monorepo -- all workspace crates, every shipped binary, the P12 packaging and release bundles
 supersedes: extends the P0-M3-T02 toolchain pin (does not replace it)
 ---
 
-# Keelworks Supply-Chain Doctrine
+# Isolith Supply-Chain Doctrine
 
 This record closes the M-SUPPLY mitigation from the P11 threat model
 (`workstreams/security/threat-model.md` section 7): the P0-M3-T02 toolchain pin extended to a

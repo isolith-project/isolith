@@ -6,4 +6,4 @@ summary: 1 rows | 1 measured | 0 skipped | classes {}
 
 | id | status | class | symmetric_hausdorff | volume_delta | volume_rel_error |
 |---|---|---|---|---|---|
-| keelworks-box | measured | - | 0 | 0 | 0 |
+| isolith-box | measured | - | 0 | 0 | 0 |

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P6-M3-T01: B-Rep boolean operations decision.
+"""Acceptance test for Isolith P6-M3-T01: B-Rep boolean operations decision.
 
 Written FIRST (TDD). The ADR at workstreams/geometry-core/kernel/boolean-ops-occ-adr.md must make this
 test pass. It verifies the real material, not mocks:

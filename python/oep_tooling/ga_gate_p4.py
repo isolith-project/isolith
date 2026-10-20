@@ -9,7 +9,7 @@ zero gate-`FAIL` rows for the gate to open:
 
    * the PMI fidelity matrix (P4-M2-T03, `docs/pmi-fidelity/`):
      the artifact parses, declares the matrix schema
-     (`keelworks/pmi-fidelity-matrix/v1`), every GD&T x app cell carries a
+     (`isolith/pmi-fidelity-matrix/v1`), every GD&T x app cell carries a
      closed-set verdict (PASS / FAIL / SKIP) with evidence, and the GD&T type
      set matches the cells. An honest FAIL cell inside the matrix (step-io
      drops circular runout / modifier semantics) is a *finding*, never a gate
@@ -52,7 +52,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-MATRIX_SCHEMA = "keelworks/pmi-fidelity-matrix/v1"
+MATRIX_SCHEMA = "isolith/pmi-fidelity-matrix/v1"
 VERDICTS = ("PASS", "FAIL", "SKIP")
 
 # Closed SKIP taxonomy for this gate (a SKIP row always carries one of these).
@@ -398,7 +398,7 @@ def write_report(matrix: dict, outdir: str) -> list:
     jp = out / "ga-gate-p4-matrix.json"
     jp.write_text(json.dumps(matrix, indent=2) + "\n", encoding="utf-8")
     mp = out / "ga-gate-p4-matrix.md"
-    lines = ["# Keelworks P4 GA gate - matrix (P4-M5-T03)", ""]
+    lines = ["# Isolith P4 GA gate - matrix (P4-M5-T03)", ""]
     s = matrix["summary"]
     lines.append("total=%d pass=%d fail=%d skip=%d (%s)" % (
         s["total"], s["pass"], s["fail"], s["skip"],

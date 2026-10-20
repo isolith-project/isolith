@@ -1,7 +1,7 @@
 # P2-M5-T02 — `oep-cgr2step` CLI (tessellated mesh -> STEP B-Rep passthrough)
 
 Status: implemented. Version 1.0 (2026-10-15).
-Owner: Keelworks program, P2 CGR reader workstream (milestone P2.5 "CLI + regression").
+Owner: Isolith program, P2 CGR reader workstream (milestone P2.5 "CLI + regression").
 
 ## Purpose
 

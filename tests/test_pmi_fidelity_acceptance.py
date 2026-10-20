@@ -123,7 +123,7 @@ def main():
             return 1
         mx = load_matrix(tmp)
 
-        check("matrix schema marker present", mx.get("matrix_schema") == "keelworks/pmi-fidelity-matrix/v1")
+        check("matrix schema marker present", mx.get("matrix_schema") == "isolith/pmi-fidelity-matrix/v1")
         rows = set(mx.get("gd_t_types", []))
         want_rows = {"straightness", "flatness", "circularity", "cylindricity",
                      "profile-of-line", "profile-of-surface", "angularity",

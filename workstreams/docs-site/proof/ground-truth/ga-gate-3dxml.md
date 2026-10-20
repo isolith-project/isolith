@@ -1,8 +1,8 @@
 # P3-M5-T02 — P3 GA gate: corpus of 3DXML files opens; surfaces tessellate; round-trip stable
 
-> Task: t_2e96ec9c (Keelworks wave 1, P3 capstone). Status: implemented +
+> Task: t_2e96ec9c (Isolith wave 1, P3 capstone). Status: implemented +
 > verified on real material 2026-10-16. Version 1.0.
-> Repo: keelworks/keelworks @ NAS Gitea; branch task/3dxml-ga-gate-1016a.
+> Repo: isolith/isolith @ NAS Gitea; branch task/3dxml-ga-gate-1016a.
 > Clean-room: no vendor library reads any 3DXML/CGR; no proprietary bytes
 > committed; every constant is a published clean-room observation (docs/re-notes
 > 3dxml-hex-notebook / gregory-patch-decode / p3-m5-t01-3dxml-regression) or a

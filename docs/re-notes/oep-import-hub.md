@@ -1,6 +1,6 @@
 # P6-M4-T02 — Importer hub: P2/P3/P4 adapters feed `oep-geo`; one canonical format
 
-Milestone: P6-M4-T02 (Keelworks wave 1 / P6). Program: Open Engineering
+Milestone: P6-M4-T02 (Isolith wave 1 / P6). Program: Open Engineering
 Platform. 2026-10-16. Integration card: this delivery defines the first
 cross-crate `path` deps in the workspace (docs/layout.md), so the ONE canonical
 internal format is consumed by every reader.

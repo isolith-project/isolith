@@ -62,7 +62,7 @@
 //! # Ok::<(), std::io::Error>(())
 //! ```
 //!
-//! [oep-job]: https://192.168.0.101:3200/keelworks/keelworks
+//! [oep-job]: https://192.168.0.101:3200/isolith/isolith
 #![deny(missing_docs)]
 
 pub mod cgroup;

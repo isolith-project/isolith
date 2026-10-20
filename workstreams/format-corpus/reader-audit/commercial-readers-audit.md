@@ -11,15 +11,15 @@ Purpose, and how this audit is allowed to be used (clean-room invariant)
 This audit records WHAT the commercial reader products can read: which file
 formats, which entity classes (exact B-Rep geometry, NURBS math, tessellation
 meshes, PMI, assembly structure, metadata). It is a functional-spec source for
-the Keelworks import roadmap. It is deliberately NOT a source of HOW those
+the Isolith import roadmap. It is deliberately NOT a source of HOW those
 products read data. No vendor implementation detail, technique, data
-structure, or code is reproduced or adopted here. Keelworks builds its
+structure, or code is reproduced or adopted here. Isolith builds its
 readers from lawful observation of public formats and public specs (STEP,
 3DXML license, CGR behavior) only, per master plan invariant 5. Treat any
 claimed commercial capability below as a target to match or exceed with our
 own clean-room implementation, never as a recipe.
 
-The four products named on the card, in order of relevance to the Keelworks
+The four products named on the card, in order of relevance to the Isolith
 native targets (CGR, 3DXML, CATPart/CATProduct):
 
 1. Spatial HOOPS (HOOPS Exchange SDK, now under Tech Soft 3D)
@@ -209,10 +209,10 @@ and brochure PDF are current and carry 2026-era references.
 
 ---
 
-## Capability matrix: what commercial readers claim for the Keelworks targets
+## Capability matrix: what commercial readers claim for the Isolith targets
 
 The card asks specifically what entity classes the industry can read. The
-matrix records, for the Keelworks-native targets, which entity class each
+matrix records, for the Isolith-native targets, which entity class each
 product claims.
 
 Columns: Products (Exchange = Spatial HOOPS Exchange, CX = CAD Exchanger SDK,
@@ -241,7 +241,7 @@ exact geometry lives in the B-Rep path.
 
 ## Synthesis: what the first parcel must cover
 
-This synthesis is the bridge from vendor capability claims to the Keelworks
+This synthesis is the bridge from vendor capability claims to the Isolith
 workstream priorities; P1-M3-T03 (the P1 report) will turn it into the
 prioritized import-target list and the first parcel.
 
@@ -288,8 +288,8 @@ HOOPS Exchange, docs324x.cadexchanger.com and cadexchanger.com for CAD
 Exchanger, transmagic.com for TransMagic, okino.com for Okino). Where a
 claim came from a vendor marketing page rather than a format documentation
 table, it is marked as a marketing claim in the sources file. Vendor claims
-of capability are recorded as claims, not as verified-by-Keelworks behavior:
+of capability are recorded as claims, not as verified-by-Isolith behavior:
 we have not executed any of these products, and we do not link or copy any
 of their code, per the clean-room invariant. The functional target for
-Keelworks is to match or exceed these entity-class claims with clean-room
+Isolith is to match or exceed these entity-class claims with clean-room
 implementations, verified on our own corpus.

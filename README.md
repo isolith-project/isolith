@@ -6,9 +6,9 @@ geometry files suppliers actually exchange (CGR, 3DXML, CATPart), gives you a
 geometry core, a self-hosted PDM, and peer-to-peer compute, and it replaces
 per-seat license fees with software you install yourself.
 
-"Isolith" is the product name. The project's working codename, Keelworks, is
-kept internal because it collides with a registered trademark; see
-`assets/brand/NAME.md`.
+"Isolith" is the name of the program and the product. Its former working
+codename (Keelworks) was retired in October 2026 because it collided with a
+registered trademark; see `assets/brand/NAME.md`.
 
 ## What it is for
 
@@ -34,8 +34,8 @@ as containers, or from source.
 
 ```sh
 # Containers
-git clone <your-repo-url> keelworks
-cd keelworks/workstreams/delivery/deploy/deploy
+git clone <your-repo-url> isolith
+cd isolith/workstreams/delivery/deploy/deploy
 ./install.sh
 
 # From source

@@ -6,7 +6,7 @@
   "ReportID": "01a15090-32db-7488-82c6-74c6b515e840",
   "CreatedAt": "2026-10-18T12:49:49.915297895-07:00",
   "ArtifactID": "sha256:be7319dc72782b65f78d0f41dd60040695631b264624f02189722f60c2187248",
-  "ArtifactName": "keelworks/oep-stack:0.1.0",
+  "ArtifactName": "isolith/oep-stack:0.1.0",
   "ArtifactType": "container_image",
   "Metadata": {
     "Size": 156350464,
@@ -29,12 +29,12 @@
       "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
     ],
     "RepoTags": [
-      "keelworks/oep-stack:0.1.0"
+      "isolith/oep-stack:0.1.0"
     ],
     "RepoDigests": [
-      "keelworks/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152"
+      "isolith/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152"
     ],
-    "Reference": "keelworks/oep-stack:0.1.0",
+    "Reference": "isolith/oep-stack:0.1.0",
     "ImageConfig": {
       "architecture": "arm64",
       "created": "2026-10-18T04:11:43.5547757-07:00",
@@ -46,7 +46,7 @@
         },
         {
           "created": "2026-10-18T07:45:59Z",
-          "created_by": "LABEL org.opencontainers.image.title=keelworks/oep-stack org.opencontainers.image.description=Open Engineering Platform (Keelworks): PDM + P2P compute + P6 preview viewer in one image org.opencontainers.image.version=",
+          "created_by": "LABEL org.opencontainers.image.title=isolith/oep-stack org.opencontainers.image.description=Open Engineering Platform (Isolith): PDM + P2P compute + P6 preview viewer in one image org.opencontainers.image.version=",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
@@ -126,11 +126,11 @@
           "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
         ],
         "Labels": {
-          "com.docker.compose.project": "keelworks",
+          "com.docker.compose.project": "isolith",
           "com.docker.compose.service": "pdm",
           "com.docker.compose.version": "5.2.0",
-          "org.opencontainers.image.description": "Open Engineering Platform (Keelworks): PDM + P2P compute + P6 preview viewer in one image",
-          "org.opencontainers.image.title": "keelworks/oep-stack",
+          "org.opencontainers.image.description": "Open Engineering Platform (Isolith): PDM + P2P compute + P6 preview viewer in one image",
+          "org.opencontainers.image.title": "isolith/oep-stack",
           "org.opencontainers.image.version": ""
         },
         "WorkingDir": "/srv"
@@ -196,7 +196,7 @@
   },
   "Results": [
     {
-      "Target": "keelworks/oep-stack:0.1.0 (debian 12.15)",
+      "Target": "isolith/oep-stack:0.1.0 (debian 12.15)",
       "Class": "os-pkgs",
       "Type": "debian",
       "Packages": [

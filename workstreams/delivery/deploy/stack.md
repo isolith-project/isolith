@@ -1,11 +1,11 @@
 # P10-M1-T01: One-command Docker-compose stack (PDM + P2P + viewer)
 
 Status: delivered (2026-10-17). Owner: P10 hybrid-cloud delivery lane.
-Card: `t_a1035554` (P10-M1-T01 on the Keelworks board).
+Card: `t_a1035554` (P10-M1-T01 on the Isolith board).
 
 ## What this delivers
 
-A single `install.sh` that, from a clean state, brings the whole Keelworks
+A single `install.sh` that, from a clean state, brings the whole Isolith
 integrated stack up on an approved U1/VM-class host with all health checks
 green. The stack is three services on one image (one build, three entry
 points), exactly the three named deliverables:
@@ -25,7 +25,7 @@ the integration section below.
 ## Run target (decision #9)
 
 Approved run targets are U1 (primary) and the garage PC (WoL-required); the
-NAS is repo/storage host only and must not host Keelworks services. This card
+NAS is repo/storage host only and must not host Isolith services. This card
 is verified on U1 (`promaxgb10-83f1`, 192.168.0.67). "Fresh install verified
 on two machines" (plan wording) means two U1/VM-class machines — covered by
 the P10-M5-T02 GA gate card, which walks a clean operator through the same
@@ -44,7 +44,7 @@ What it does, then verifies:
 
 1. Preflight: docker present+running, compose v2, disk, `.env` from
    `.env.example` (host binds default to `127.0.0.1` — on-prem posture).
-2. Builds the single stack image (`keelworks/oep-stack`) from the repo, or
+2. Builds the single stack image (`isolith/oep-stack`) from the repo, or
    `docker load`s an offline bundle when `--offline-bundle <tar.gz>` is given.
 3. `docker compose up -d` (services `pdm`, `viewer`, `p2p`, volumes
    `pdm_data`, `viewer_data`).
@@ -54,7 +54,7 @@ What it does, then verifies:
 Exit code 0 iff all three surfaces answer green.
 
 ```bash
-./install.sh --offline-bundle keelworks-oep-stack-0.1.0.tar.gz  # air-gap
+./install.sh --offline-bundle isolith-oep-stack-0.1.0.tar.gz  # air-gap
 ./install.sh --no-build                                          # reuse image
 ./install.sh --down                                              # stop
 ```
@@ -68,7 +68,7 @@ with no network. The P10-M2-T02 downstream card signs and ships this bundle.
 ```bash
 cd workstreams/delivery/deploy/deploy
 ./release.sh 0.1.0 --tarball --out ../releases
-# -> ../releases/keelworks-oep-stack-0.1.0.tar.gz + .sha256
+# -> ../releases/isolith-oep-stack-0.1.0.tar.gz + .sha256
 ```
 
 `install.sh --offline-bundle <tar.gz>` verifies the `.sha256` (when present)

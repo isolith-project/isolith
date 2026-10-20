@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks wave checkpoint tooling (P12 wave integration policy).
+"""Isolith wave checkpoint tooling (P12 wave integration policy).
 
 Companion to python/oep_tooling/release_train.py and to
 workstreams/release-engineering/wave-integration-and-checkpoint-policy.md. A wave integrates onto a single
@@ -11,12 +11,12 @@ Subcommands:
              on the base, no divergence beyond the base).
   manifest   --wave N --branch wave/N [--base main] [--out PATH]
              Compute the wave checkpoint manifest (schema
-             keelworks.wave-checkpoint.v1) and print or write it.
+             isolith.wave-checkpoint.v1) and print or write it.
   checkpoint --wave N --branch wave/N [--base main] [--dir workstreams/release-engineering/wave-checkpoints]
              Emit the manifest JSON and the human wave report MD.
   verify     --manifest PATH
              Re-verify a manifest against its repository.
-  repos      [--repo DIR] [--allow keelworks,keelworks-canary]
+  repos      [--repo DIR] [--allow isolith,isolith-canary]
              Enforce the two-repository hygiene bound (policy section 6): fail
              if the Gitea org holds more than the allowed repositories.
   selfcheck  Policy/doc consistency checks, no repo mutation (CI safe).
@@ -33,11 +33,11 @@ import sys
 import urllib.error
 import urllib.request
 
-SCHEMA = "keelworks.wave-checkpoint.v1"
+SCHEMA = "isolith.wave-checkpoint.v1"
 POLICY = "workstreams/release-engineering/wave-integration-and-checkpoint-policy.md"
 DEFAULT_DIR = "workstreams/release-engineering/wave-checkpoints"
 # Policy section 6: the program has exactly these repositories and no others.
-ALLOWED_REPOS = {"keelworks", "keelworks-canary"}
+ALLOWED_REPOS = {"isolith", "isolith-canary"}
 # Grandfathered legacy repo (wave-1 kickoff). No new work; archive pending Don.
 LEGACY_REPOS = {"oep-meta"}
 GITEA_API = "http://192.168.0.101:3200/api/v1"
@@ -141,7 +141,7 @@ def write_manifest(path, manifest):
 
 def write_report(path, manifest):
     lines = []
-    lines.append("# Keelworks wave checkpoint: wave-%s" % manifest["wave"])
+    lines.append("# Isolith wave checkpoint: wave-%s" % manifest["wave"])
     lines.append("")
     lines.append("Schema: %s" % manifest["schema"])
     lines.append("Branch: `%s` -> `%s`" % (manifest["branch"], manifest["base"]))
@@ -212,7 +212,7 @@ def _gitea_token():
     return m.group(1) if m else None
 
 
-def list_repos(org="keelworks"):
+def list_repos(org="isolith"):
     tok = _gitea_token()
     if not tok:
         raise SystemExit("no Gitea token found in ~/.git-credentials")
@@ -245,8 +245,8 @@ def selfcheck(root):
         problems.append("policy doc missing: %s" % POLICY)
         return problems
     text = open(policy, encoding="utf-8").read()
-    for needle in ("wave/N", "keelworks.wave-checkpoint.v1",
-                   "keelworks/keelworks-canary", "Definition of done",
+    for needle in ("wave/N", "isolith.wave-checkpoint.v1",
+                   "isolith/isolith-canary", "Definition of done",
                    "anti-proliferation"):
         if needle not in text:
             problems.append("policy doc missing required content: %r" % needle)
@@ -261,7 +261,7 @@ def selfcheck(root):
 # cli
 # --------------------------------------------------------------------------
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Keelworks wave checkpoint tooling")
+    ap = argparse.ArgumentParser(description="Isolith wave checkpoint tooling")
     ap.add_argument("--repo", default=".")
     sub = ap.add_subparsers(dest="cmd", required=True)
 

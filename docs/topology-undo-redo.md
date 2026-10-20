@@ -1,6 +1,6 @@
 # P6-M3-T02: Topology Undo/Redo Stack, Serializable
 
-Status: implemented and independently verified (Keelworks wave 1, P6).
+Status: implemented and independently verified (Isolith wave 1, P6).
 
 ## Scope
 

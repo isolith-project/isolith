@@ -13,7 +13,7 @@ Our entry point is the **MBD quality data** (datums, datum reference frames,
 GD&T characteristics and their nominals) — the design-side PMI that primes
 "actually exchange" between CAD and inspection.
 
-Sources used (observational, license-safe, standards/qif/keelworks-use.md):
+Sources used (observational, license-safe, standards/qif/isolith-use.md):
 
 - Official schema bundle (free to implementers): DMSC QIF3.0-2018-ANSI.zip at
   qifstandards.org; xsd/QIFApplications/QIFDocument.xsd + QIFLibrary/*.

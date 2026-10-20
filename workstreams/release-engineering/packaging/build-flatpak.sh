@@ -3,11 +3,11 @@
 # Usage: bash workstreams/release-engineering/packaging/build-flatpak.sh <binary>
 #
 # Wraps flatpak-builder around the parameterized manifest
-# (flatpak/org.keelworks.oep.yml -> org.keelworks.oep.<bin>). Requires
+# (flatpak/org.isolith.oep.yml -> org.isolith.oep.<bin>). Requires
 # flatpak + flatpak-builder + a flathub FDO 24.08 runtime on the build host
 # (the AppImage recipe is the zero-setup path when those are absent).
 #
-# Output: <out>/keelworks-oep-<bin>.flatpak (bundle) + a local flatpak repo
+# Output: <out>/isolith-oep-<bin>.flatpak (bundle) + a local flatpak repo
 # under <out>/flatpak-repo.
 
 set -euo pipefail
@@ -17,7 +17,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT="${OUT_DIR:-$PWD}"
 VERSION="${OEP_VERSION:-0.1.0}"
-APPID="org.keelworks.oep.$BIN"
+APPID="org.isolith.oep.$BIN"
 
 command -v flatpak-builder >/dev/null || { echo "flatpak-builder not installed" >&2; exit 2; }
 
@@ -34,23 +34,23 @@ cat > "$STAGE/oep-$BIN.desktop" <<EOF
 [Desktop Entry]
 Type=Application
 Name=OEP $BIN
-Comment=Keelworks Open Engineering Platform - $BIN
+Comment=Isolith Open Engineering Platform - $BIN
 Exec=oep-$BIN
-Icon=org.keelworks.oep.$BIN
+Icon=org.isolith.oep.$BIN
 Terminal=false
 Categories=Engineering;Graphics;Office;
 StartupNotify=true
 EOF
 
 # parameterized manifest
-sed "s/{BIN}/$BIN/g" "$HERE/flatpak/org.keelworks.oep.yml" > "$STAGE/manifest.yml"
+sed "s/{BIN}/$BIN/g" "$HERE/flatpak/org.isolith.oep.yml" > "$STAGE/manifest.yml"
 
 (
   cd "$STAGE"
   flatpak-builder --user --force-clean --repo="$OUT/flatpak-repo" build "$STAGE/manifest.yml"
-  flatpak build-bundle "$OUT/flatpak-repo" "$OUT/keelworks-oep-$BIN.flatpak" "$APPID" "$VERSION"
+  flatpak build-bundle "$OUT/flatpak-repo" "$OUT/isolith-oep-$BIN.flatpak" "$APPID" "$VERSION"
 )
 rm -rf "$STAGE"
 
-echo "$OUT/keelworks-oep-$BIN.flatpak"
-sha256sum "$OUT/keelworks-oep-$BIN.flatpak"
+echo "$OUT/isolith-oep-$BIN.flatpak"
+sha256sum "$OUT/isolith-oep-$BIN.flatpak"

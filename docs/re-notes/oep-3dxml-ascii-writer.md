@@ -61,7 +61,7 @@ importer hub) yet trivially callable with `mesh.vertices()`/`mesh.triangles()`.
   Root -> box.3dxml; model doc Header + ProductStructure + TESSELLATED
   ReferenceRep -> `urn:3DXML:box.3DRep`; rep is ASCII XMLRepresentation with
   Faces/VertexBuffer; geometry decodes to exactly the 8-corner / 12-triangle
-  unit box (keelworks CC0-1.0 reference tessellation, P0-M4-T02 fixture).
+  unit box (isolith CC0-1.0 reference tessellation, P0-M4-T02 fixture).
 - Real material: with `OEP_CORPUS`/`samples/` pointed at the committed
   3DXML corpus, the writer's package structure is checked against every real
   sample; all 5 ZIP-archive ASCII-branch samples match (CATIA V5-author

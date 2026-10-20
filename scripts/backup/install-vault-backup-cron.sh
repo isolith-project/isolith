@@ -5,22 +5,22 @@
 #
 # The scheduling surface is genuinely opportunistic: it uses whichever local
 # scheduler exists (cron if present, else a systemd user timer). It never
-# touches the NAS. Idempotent: re-running replaces the keelworks-vault-backup
+# touches the NAS. Idempotent: re-running replaces the isolith-vault-backup
 # line, never duplicates it.
 #
 # Usage:
 #   scripts/backup/install-vault-backup-cron.sh [SOURCE] [BK_TARGET] [HOUR]
 #     SOURCE     oep-pdm --persist-dir vault to snapshot
-#                (default: $HOME/keelworks-data/keelworks-vault)
+#                (default: $HOME/isolith-data/isolith-vault)
 #     BK_TARGET  archive dir on the second disk/archive target
-#                (default: $HOME/keelworks-data)
+#                (default: $HOME/isolith-data)
 #     HOUR       daily UTC hour to run (default 3 -> 03:00 UTC)
 set -euo pipefail
 cd "$(dirname "$0")/../.." || exit 1
 WT=$(pwd)
 
-SOURCE="${1:-$HOME/keelworks-data/keelworks-vault}"
-BK_TARGET="${2:-$HOME/keelworks-data}"
+SOURCE="${1:-$HOME/isolith-data/isolith-vault}"
+BK_TARGET="${2:-$HOME/isolith-data}"
 HOUR="${3:-3}"
 BK=$WT/scripts/backup/vault-backup.sh
 
@@ -37,7 +37,7 @@ case "$BK_TARGET" in
     ;;
 esac
 
-MARKER="### Keelworks vault backup (P10-M1-T02) ###"
+MARKER="### Isolith vault backup (P10-M1-T02) ###"
 LINE="$HOUR 0 * * * $BK '$SOURCE' '$BK_TARGET' >> $BK_TARGET/vault-backup.log 2>&1"
 
 if command -v crontab >/dev/null 2>&1; then
@@ -61,16 +61,16 @@ fi
 if command -v systemctl >/dev/null 2>&1 && systemctl --user is-system-running >/dev/null 2>&1; then
   UNIT_DIR="$HOME/.config/systemd/user"
   mkdir -p "$UNIT_DIR"
-  cat > "$UNIT_DIR/keelworks-vault-backup.service" <<EOF
+  cat > "$UNIT_DIR/isolith-vault-backup.service" <<EOF
 [Unit]
-Description=Keelworks vault backup (P10-M1-T02)
+Description=Isolith vault backup (P10-M1-T02)
 [Service]
 Type=oneshot
 ExecStart=$BK '$SOURCE' '$BK_TARGET' >> $BK_TARGET/vault-backup.log 2>&1
 EOF
-  cat > "$UNIT_DIR/keelworks-vault-backup.timer" <<EOF
+  cat > "$UNIT_DIR/isolith-vault-backup.timer" <<EOF
 [Unit]
-Description=Daily Keelworks vault backup
+Description=Daily Isolith vault backup
 [Timer]
 OnCalendar=*-*-* ${HOUR}:00:00
 Persistent=true
@@ -78,9 +78,9 @@ Persistent=true
 WantedBy=timers.target
 EOF
   systemctl --user daemon-reload
-  systemctl --user enable --now keelworks-vault-backup.timer >/dev/null
+  systemctl --user enable --now isolith-vault-backup.timer >/dev/null
   echo "[schedule] installed systemd user timer (daily ${HOUR}:00)"
-  systemctl --user list-timers keelworks-vault-backup.timer
+  systemctl --user list-timers isolith-vault-backup.timer
   exit 0
 fi
 

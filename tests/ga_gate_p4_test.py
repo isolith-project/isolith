@@ -55,7 +55,7 @@ def check(name, ok, detail=""):
 CM_HEADER = {
     "schema_version": 1,
     "description": "PMI fidelity matrix (synthetic, acceptance test)",
-    "matrix_schema": "keelworks/pmi-fidelity-matrix/v1",
+    "matrix_schema": "isolith/pmi-fidelity-matrix/v1",
     "generated_at": "2026-10-16T00:00:00Z",
     "host": "test",
     "apps": [{"id": "stepio", "label": "step-io 0.2.5", "kind": "oss",
@@ -106,7 +106,7 @@ def make_accuracy_report(dirpath, hausdorff=0.0, vol_rel=0.0, measured=True):
     rows = []
     if measured:
         rows.append({
-            "id": "keelworks-box", "status": "measured", "class": "",
+            "id": "isolith-box", "status": "measured", "class": "",
             "reason": "", "geometry_class": "prism",
             "metrics": {"symmetric_hausdorff": hausdorff,
                         "volume_rel_error": vol_rel,
@@ -192,7 +192,7 @@ def test_fidelity_leg_published_and_within_epsilon():
                                                  and r.status == "PASS" for r in rows),
               repr([(r.id, r.status) for r in rows])[:160])
         check("fidelity_leg: accuracy within-epsilon passes",
-              any(r.id == "keelworks-box" and r.status == "PASS" for r in rows),
+              any(r.id == "isolith-box" and r.status == "PASS" for r in rows),
               repr([(r.id, r.status) for r in rows])[:160])
 
 

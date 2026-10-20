@@ -287,7 +287,7 @@ def run_gate(args):
             if args.local_only:
                 cmd += ["--local-only"]
             env = dict(os.environ)
-            env["KEELWORKS_ROOT"] = str(root)
+            env["ISOLITH_ROOT"] = str(root)
             r = subprocess.run(cmd, capture_output=True, text=True, env=env,
                                timeout=args.timeout)
             wave_json = args.report + "-wave.json"

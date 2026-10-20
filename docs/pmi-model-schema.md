@@ -1,7 +1,7 @@
 # oep-pmi model schema and serialization format (P6-M1-T02)
 
 Version 1.0, 2026-10-16. Milestone: P6-M1-T02 (PMI model schema: GD&T types,
-datums, notes; importable from P4). Program: Keelworks / Open Engineering
+datums, notes; importable from P4). Program: Isolith / Open Engineering
 Platform (OEP), P6 geometry core. Clean-room, our own format — nothing here is
 a vendor format, and no Dassault/Siemens/PTC PMI schema is embedded.
 

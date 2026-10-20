@@ -2,13 +2,13 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "keelworks-oep rust SBOM 0.1.0",
-  "documentNamespace": "https://keelworks.local/spdx/rust-0.1.0-eb10c285769e9c6f",
+  "name": "isolith-oep rust SBOM 0.1.0",
+  "documentNamespace": "https://isolith.local/spdx/rust-0.1.0-eb10c285769e9c6f",
   "creationInfo": {
     "created": "2026-10-18T20:04:34Z",
     "creators": [
-      "Tool: keelworks-oep-sbom-0.1.0",
-      "Organization: Keelworks"
+      "Tool: isolith-oep-sbom-0.1.0",
+      "Organization: Isolith"
     ]
   },
   "packages": [

@@ -1,7 +1,7 @@
 # P4-M2-T02: PMI re-export to AP242 — correctness tests (over and back)
 
 Version 1.0, 2026-10-16. Milestone: P4-M2-T02 (PMI re-export to AP242 with
-correctness tests). Program: Keelworks / Open Engineering Platform (OEP),
+correctness tests). Program: Isolith / Open Engineering Platform (OEP),
 P4 STEP AP242 PMI lane. Clean-room: the entity emission follows the *public*
 ISO 10303-242 MIM structure and mirrors how the NIST MBE PMI test models
 (`nist_*_ap242-*.stp`, public-domain NIST data) represent semantic PMI; no

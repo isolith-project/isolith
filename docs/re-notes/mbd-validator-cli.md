@@ -1,6 +1,6 @@
 # P4-M5-T02: MBD validator CLI + report output (wedge product surface)
 
-Task t_697255d5, Keelworks wave-2 P4 MBD lane. The product surface over the
+Task t_697255d5, Isolith wave-2 P4 MBD lane. The product surface over the
 P4-M5-T01 validator service: a real, scriptable CLI that checks a supplied
 model/PMI bundle (or a whole fixture manifest) against the `y4141` and `prime`
 rule sets, emits the honest report artifact (JSON + Markdown), and returns a
@@ -17,7 +17,7 @@ It reuses the service - `mbd.build_report` / `render_markdown` / `write_report`
 The module is the CLI (same `python3 -m` convention as the P4-M2-T03 PMI
 fidelity runner):
 
-    cd keelworks
+    cd isolith
     PYTHONPATH=python python3 -m oep_tooling.mbd_validate_cli [OPTIONS] [INPUT...]
     PYTHONPATH=python python3 -m oep_tooling.mbd_validate_cli --manifest MANIFEST [OPTIONS]
 
@@ -100,7 +100,7 @@ Validator Report".
 
 Run the whole registered fixture manifest and emit both artifacts:
 
-    cd keelworks
+    cd isolith
     PYTHONPATH=python python3 -m oep_tooling.mbd_validate_cli \
         --manifest corpus/mbd-fixture-manifest.json --out out/
     echo $?            # 1 - the corpus deliberately contains FAIL fixtures

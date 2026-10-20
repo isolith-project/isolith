@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Keelworks P0-M3-T02 acceptance test: verify toolchain pinning manifests are
+# Isolith P0-M3-T02 acceptance test: verify toolchain pinning manifests are
 # present, internally consistent, and resolve on this machine.
 # TDD: this test documents the acceptance criteria BEFORE the manifests exist.
 # Exit 0 = pinned, reproducible toolchain. Non-zero = a pin is missing/broken.

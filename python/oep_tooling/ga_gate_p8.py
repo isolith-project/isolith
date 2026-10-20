@@ -470,7 +470,7 @@ def audit_leg(base_url: str) -> list:
 def _nas_probe(nas_base, token_value):
     """True when the NAS object store answers with the repo (P8-M5-T03 pattern)."""
     try:
-        url = nas_base + "/api/v1/repos/keelworks/keelworks"
+        url = nas_base + "/api/v1/repos/isolith/isolith"
         req = urllib.request.Request(
             url, headers={"Authorization": "token " + token_value} if token_value else {})
         with urllib.request.urlopen(req, timeout=15) as r:
@@ -499,7 +499,7 @@ def nas_leg(binary: str, nas_base: str = "http://192.168.0.101:3200") -> list:
     """Stage the released oep-pdm binary on the NAS and verify by sha-256.
 
     Uses the exact P8-M5-T03 LAN/air-gap staging shape: Gitea generic package
-    registry under /api/packages/don/generic/keelworks-pdm/, multipart PUT
+    registry under /api/packages/don/generic/isolith-pdm/, multipart PUT
     content-addressed by the binary sha-256, then GET back and re-hash.
     NAS-unreachable is a SKIP (tolerant doctrine, never a crash or FAIL).
     """
@@ -519,7 +519,7 @@ def nas_leg(binary: str, nas_base: str = "http://192.168.0.101:3200") -> list:
                        "NAS unreachable at %s" % nas_base,
                        cls="nas-unreachable")]
     fname = "oep-pdm-%s" % sha[:16]
-    url = ("%s/api/packages/don/generic/keelworks-pdm/airgap-v1/%s"
+    url = ("%s/api/packages/don/generic/isolith-pdm/airgap-v1/%s"
            % (nas_base, sha))
     body_multi, ct = _multipart({fname: body})
     try:

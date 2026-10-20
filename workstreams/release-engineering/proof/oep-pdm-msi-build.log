@@ -2,4 +2,4 @@
 ** (wixl:261): CRITICAL **: 18:05:22.520: wixl_add_braces: assertion 'str != NULL' failed
 
 ** (wixl:261): CRITICAL **: 18:05:22.520: wixl_msi_table_property_add: assertion 'value != NULL' failed
--rw-r--r-- 1 root root 4356096 Oct 18 18:05 keelworks-oep-pdm-x86_64-pc-windows-gnu-0.1.0.msi
+-rw-r--r-- 1 root root 4356096 Oct 18 18:05 isolith-oep-pdm-x86_64-pc-windows-gnu-0.1.0.msi

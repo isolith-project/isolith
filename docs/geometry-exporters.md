@@ -1,6 +1,6 @@
 # P6-M4-T01: Exporters for `oep-geo` (STL, glTF/GLB, OBJ, SVG-2D, PDF, STEP)
 
-Status: implemented and golden-verified (Keelworks wave 1, P6).
+Status: implemented and golden-verified (Isolith wave 1, P6).
 
 ## Scope
 
@@ -25,7 +25,7 @@ Formats covered:
 
 ## Reference material and TDD
 
-The reference tessellation is the CC0-1.0 keelworks unit box
+The reference tessellation is the CC0-1.0 isolith unit box
 (`corpus/data/box.stl`, P0-M4-T02 fixture): 8 vertices / 12 triangles.
 
 TDD order followed:

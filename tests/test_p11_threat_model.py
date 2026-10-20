@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P11-T01: the stack threat model.
+"""Acceptance test for Isolith P11-T01: the stack threat model.
 
 Written FIRST (TDD), mirroring the ADR-test convention. The document at
 workstreams/security/threat-model.md must make this test pass. It verifies the committed real

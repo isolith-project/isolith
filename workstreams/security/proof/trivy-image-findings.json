@@ -1,6 +1,6 @@
 [
   {
-    "id": "image:keelworks/oep-stack:apt",
+    "id": "image:isolith/oep-stack:apt",
     "package": "apt",
     "version": "2.6.1",
     "summary": "It was found that apt-key in apt, all versions, do not correctly valid ...",
@@ -13,10 +13,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2011-3374",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bash",
+    "id": "image:isolith/oep-stack:bash",
     "package": "bash",
     "version": "5.2.15-2+b13",
     "summary": "[Privilege escalation possible to other user than root]",
@@ -29,10 +29,10 @@
     "url": "https://security-tracker.debian.org/tracker/TEMP-0841856-B18BAF",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -45,10 +45,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -61,10 +61,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -77,10 +77,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -93,10 +93,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -109,10 +109,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -125,10 +125,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -141,10 +141,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -157,10 +157,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -173,10 +173,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -189,10 +189,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:bsdutils",
+    "id": "image:isolith/oep-stack:bsdutils",
     "package": "bsdutils",
     "version": "1:2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -205,10 +205,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:coreutils",
+    "id": "image:isolith/oep-stack:coreutils",
     "package": "coreutils",
     "version": "9.1-1",
     "summary": "coreutils: Non-privileged session can escape to the parent session in chroot",
@@ -221,10 +221,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2016-2781",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:coreutils",
+    "id": "image:isolith/oep-stack:coreutils",
     "package": "coreutils",
     "version": "9.1-1",
     "summary": "coreutils: race condition vulnerability in chown and chgrp",
@@ -237,10 +237,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2017-18018",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:coreutils",
+    "id": "image:isolith/oep-stack:coreutils",
     "package": "coreutils",
     "version": "9.1-1",
     "summary": "coreutils: Heap Buffer Under-Read in GNU Coreutils sort via Key Specification",
@@ -253,10 +253,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-5278",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:coreutils",
+    "id": "image:isolith/oep-stack:coreutils",
     "package": "coreutils",
     "version": "9.1-1",
     "summary": "coreutils: GNU coreutils uniq: Denial of Service and information disclosure via out-of-bounds read with multibyte input",
@@ -269,10 +269,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-56391",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:coreutils",
+    "id": "image:isolith/oep-stack:coreutils",
     "package": "coreutils",
     "version": "9.1-1",
     "summary": "coreutils: GNU coreutils unexpand: Denial of Service via crafted tab stop values",
@@ -285,10 +285,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-56392",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: SSH host verification bypass when using schemeless URLs with SFTP/SCP",
@@ -301,10 +301,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-12064",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Information disclosure due to cookie leak when reusing connections with custom Host headers",
@@ -317,10 +317,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6276",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Insecure connection establishment due to TLS configuration mismatch",
@@ -333,10 +333,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8286",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Unauthorized connection reuse due to a logical error",
@@ -349,10 +349,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8458",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: Information disclosure due to uncleared proxy authentication state",
@@ -365,10 +365,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8927",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "libcurl: libcurl: Use-after-free vulnerability leading to Denial of Service",
@@ -381,10 +381,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-10536",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Information disclosure via incorrect Digest authentication header reuse",
@@ -397,10 +397,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-11856",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Authentication bypass due to incorrect connection reuse with Negotiate authentication",
@@ -413,10 +413,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-1965",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Information disclosure via incorrect connection reuse with Negotiate authentication",
@@ -429,10 +429,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19931",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Information disclosure due to incorrect TLS connection reuse",
@@ -445,10 +445,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-4873",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Authentication bypass due to incorrect HTTP Negotiate connection reuse",
@@ -461,10 +461,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5545",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Proxy credential disclosure via redirects to unauthenticated proxies",
@@ -477,10 +477,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6253",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Credential leak via reused proxy connection during HTTP redirects",
@@ -493,10 +493,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6429",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Cookie injection via malicious HTTP server using super cookies",
@@ -509,10 +509,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8924",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "libcurl: libcurl: Security feature bypass due to improper mTLS connection reuse",
@@ -525,10 +525,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8932",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: FTP wildcard write callback mixup",
@@ -541,10 +541,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92388",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: QUIC certificate check bypass with wolfSSL",
@@ -557,10 +557,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-2379",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "libcurl: Buffer Overflow in libcurl via zlib Integer Overflow",
@@ -573,10 +573,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-0725",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: Curl missing SFTP host verification with wolfSSH backend",
@@ -589,10 +589,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-10966",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Security bypass due to global TLS option changes in multi-threaded LDAPS transfers",
@@ -605,10 +605,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14017",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: Host verification bypass during SSH transfers",
@@ -621,10 +621,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-15079",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libssh key passphrase bypass without agent set",
@@ -637,10 +637,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-15224",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: info leak uploading over WebSockets with GnuTLS",
@@ -653,10 +653,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107928",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Authentication bypass in OpenLDAP SASL negotiation via Man-in-the-Middle (MITM) attack",
@@ -669,10 +669,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13608",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Use-after-free in HTTP/2 Server Push with shared connections",
@@ -685,10 +685,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18924",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Public key pinning bypass allows unauthenticated connections",
@@ -701,10 +701,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-80230",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Information disclosure via improper Public Suffix List boundary check",
@@ -717,10 +717,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-82209",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: stale SigV4 headers sent unintended",
@@ -733,10 +733,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: redirect to SFTP or SCP bypasses host verification",
@@ -749,10 +749,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: leaking host credentials to HTTP proxy",
@@ -765,10 +765,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86414",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: IMAP APPEND plus CRLF conversion command injection",
@@ -781,10 +781,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-87864",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: knownhost callback mismatches key as missing",
@@ -797,10 +797,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-87865",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: wolfSSL public-key pinning bypass",
@@ -813,10 +813,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-87866",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: TFTP direction confusion",
@@ -829,10 +829,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92389",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: -J no-clobber guarantee bypassed with 103 early hints",
@@ -845,10 +845,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92390",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: curl_mime_free stack overflow by recursion",
@@ -861,10 +861,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92391",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: password leak in CURLINFO_EFFECTIVE_URL",
@@ -877,10 +877,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-94266",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:curl",
+    "id": "image:isolith/oep-stack:curl",
     "package": "curl",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Man-in-the-middle attack via SSH host key bypass",
@@ -893,10 +893,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-9547",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:dash",
+    "id": "image:isolith/oep-stack:dash",
     "package": "dash",
     "version": "0.5.12-2",
     "summary": "dash: dash: Super-polynomial backtracking in pmatch when libc fnmatch is disabled",
@@ -909,10 +909,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-102473",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:dash",
+    "id": "image:isolith/oep-stack:dash",
     "package": "dash",
     "version": "0.5.12-2",
     "summary": "dash: dash: Heap out-of-bounds write in conv_escape via undersized Unicode escape reservation",
@@ -925,10 +925,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-102474",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:diffutils",
+    "id": "image:isolith/oep-stack:diffutils",
     "package": "diffutils",
     "version": "1:3.8-4",
     "summary": "diffutils: heap\u2011based buffer overflow due to multiple signed integer overflows in line\u2011mapping calculations",
@@ -941,10 +941,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53910",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gcc-12-base",
+    "id": "image:isolith/oep-stack:gcc-12-base",
     "package": "gcc-12-base",
     "version": "12.2.0-14+deb12u1",
     "summary": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
@@ -957,10 +957,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-102010",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gcc-12-base",
+    "id": "image:isolith/oep-stack:gcc-12-base",
     "package": "gcc-12-base",
     "version": "12.2.0-14+deb12u1",
     "summary": "gcc: libstdc++ integer overflow in `new` operator",
@@ -973,10 +973,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95619",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gcc-12-base",
+    "id": "image:isolith/oep-stack:gcc-12-base",
     "package": "gcc-12-base",
     "version": "12.2.0-14+deb12u1",
     "summary": "binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows stack exhaustion in demangle_const",
@@ -989,10 +989,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-27943",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gpgv",
+    "id": "image:isolith/oep-stack:gpgv",
     "package": "gpgv",
     "version": "2.2.40-1.1+deb12u2",
     "summary": "gnupg: verification DoS due to a malicious subkey in the keyring",
@@ -1005,10 +1005,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-30258",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gpgv",
+    "id": "image:isolith/oep-stack:gpgv",
     "package": "gpgv",
     "version": "2.2.40-1.1+deb12u2",
     "summary": "gnupg: GnuPG: Signature bypass via form feed character in signed messages",
@@ -1021,10 +1021,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-68972",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gpgv",
+    "id": "image:isolith/oep-stack:gpgv",
     "package": "gpgv",
     "version": "2.2.40-1.1+deb12u2",
     "summary": "gnupg: denial of service issue (resource consumption) using compressed packets",
@@ -1037,10 +1037,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-3219",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gpgv",
+    "id": "image:isolith/oep-stack:gpgv",
     "package": "gpgv",
     "version": "2.2.40-1.1+deb12u2",
     "summary": "gnupg2: gnupg: Arbitrary file overwrite via symlink traversal in gpgtar",
@@ -1053,10 +1053,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-105712",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gpgv",
+    "id": "image:isolith/oep-stack:gpgv",
     "package": "gpgv",
     "version": "2.2.40-1.1+deb12u2",
     "summary": "GnuPG: Incorrect cryptographic message parsing",
@@ -1069,10 +1069,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-57062",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gzip",
+    "id": "image:isolith/oep-stack:gzip",
     "package": "gzip",
     "version": "1.12-1",
     "summary": "gzip: gzip: Information disclosure via global buffer overflow in LZH decompression",
@@ -1085,10 +1085,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-41992",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:gzip",
+    "id": "image:isolith/oep-stack:gzip",
     "package": "gzip",
     "version": "1.12-1",
     "summary": "gzip: gzip: Arbitrary file overwrite via insecure temporary file handling in gzexe utility",
@@ -1101,10 +1101,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-41991",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libacl1",
+    "id": "image:isolith/oep-stack:libacl1",
     "package": "libacl1",
     "version": "2.3.1-3",
     "summary": "acl: Symlink traversal privilege escalation via libacl functions",
@@ -1117,10 +1117,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54369",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libacl1",
+    "id": "image:isolith/oep-stack:libacl1",
     "package": "libacl1",
     "version": "2.3.1-3",
     "summary": "acl: TOCTOU Symlink Traversal via getfacl/setfacl",
@@ -1133,10 +1133,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54370",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libapt-pkg6.0",
+    "id": "image:isolith/oep-stack:libapt-pkg6.0",
     "package": "libapt-pkg6.0",
     "version": "2.6.1",
     "summary": "It was found that apt-key in apt, all versions, do not correctly valid ...",
@@ -1149,10 +1149,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2011-3374",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libattr1",
+    "id": "image:isolith/oep-stack:libattr1",
     "package": "libattr1",
     "version": "1:2.5.1-4",
     "summary": "attr: attr: Symlink Traversal Privilege Escalation via getfattr and setfattr",
@@ -1165,10 +1165,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54371",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -1181,10 +1181,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -1197,10 +1197,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -1213,10 +1213,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -1229,10 +1229,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -1245,10 +1245,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -1261,10 +1261,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -1277,10 +1277,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -1293,10 +1293,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -1309,10 +1309,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -1325,10 +1325,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libblkid1",
+    "id": "image:isolith/oep-stack:libblkid1",
     "package": "libblkid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -1341,10 +1341,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libbz2-1.0",
+    "id": "image:isolith/oep-stack:libbz2-1.0",
     "package": "libbz2-1.0",
     "version": "1.0.8-5+b1",
     "summary": "bzip2: bzip2: Denial of Service in bzip2recover via a specially crafted file",
@@ -1357,10 +1357,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-42250",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Heap buffer overflow via attacker-controlled fopen mode string",
@@ -1373,10 +1373,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18374",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Buffer Overflow in strfmon right-justification padding",
@@ -1389,10 +1389,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19499",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Fix out-of-bounds array write in tdelete",
@@ -1405,10 +1405,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19542",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Out-of-bounds write via TSIG record processing",
@@ -1421,10 +1421,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5435",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Heap Buffer Overflow in `scanf` with `%mc` format specifier and large width",
@@ -1437,10 +1437,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5450",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Information disclosure or denial of service via ungetwc function with specific wide character encodings",
@@ -1453,10 +1453,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5928",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Application crash or uninitialized memory read via crafted DNS response",
@@ -1469,10 +1469,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6238",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Process abort due to invalid memory in wordexp",
@@ -1485,10 +1485,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6368",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Glibc: Denial of Service via stack exhaustion during tilde expansion",
@@ -1501,10 +1501,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6791",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Non-progress DoS in SHIFT_JISX0213 -&gt",
@@ -1517,10 +1517,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-77117",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Non-progress DoS in EUC_JISX0213 -> UCS-4 conversion state",
@@ -1533,10 +1533,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-80489",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc DNS stub resolver: Denial of Service via long search domain in configuration",
@@ -1549,10 +1549,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8674",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Privilege escalation and arbitrary code execution via TOCTOU race condition in dynamic loader",
@@ -1565,10 +1565,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86805",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: nscd stack overflow leads to degraded DNS resolution",
@@ -1581,10 +1581,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-89092",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Local attacker can cause denial of service and information disclosure via stack-based buffer overflow.",
@@ -1597,10 +1597,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95818",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glob implementation can cause excessive CPU and memory consumption due to crafted glob expressions",
@@ -1613,10 +1613,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2010-4756",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
@@ -1629,10 +1629,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-20796",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: stack guard protection bypass",
@@ -1645,10 +1645,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010022",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: running ldd on malicious ELF leads to code execution because of wrong size computation",
@@ -1661,10 +1661,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010023",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: ASLR bypass using cache of thread stack and heap",
@@ -1677,10 +1677,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010024",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: information disclosure of heap addresses of pthread_created thread",
@@ -1693,10 +1693,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010025",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
@@ -1709,10 +1709,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-9192",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc-bin",
+    "id": "image:isolith/oep-stack:libc-bin",
     "package": "libc-bin",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Denial of Service via out-of-bounds read in strncasecmp",
@@ -1725,10 +1725,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-97399",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Heap buffer overflow via attacker-controlled fopen mode string",
@@ -1741,10 +1741,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18374",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Buffer Overflow in strfmon right-justification padding",
@@ -1757,10 +1757,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19499",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Fix out-of-bounds array write in tdelete",
@@ -1773,10 +1773,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19542",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Out-of-bounds write via TSIG record processing",
@@ -1789,10 +1789,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5435",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Heap Buffer Overflow in `scanf` with `%mc` format specifier and large width",
@@ -1805,10 +1805,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5450",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Information disclosure or denial of service via ungetwc function with specific wide character encodings",
@@ -1821,10 +1821,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5928",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Application crash or uninitialized memory read via crafted DNS response",
@@ -1837,10 +1837,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6238",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Process abort due to invalid memory in wordexp",
@@ -1853,10 +1853,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6368",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Glibc: Denial of Service via stack exhaustion during tilde expansion",
@@ -1869,10 +1869,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6791",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Non-progress DoS in SHIFT_JISX0213 -&gt",
@@ -1885,10 +1885,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-77117",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: Non-progress DoS in EUC_JISX0213 -> UCS-4 conversion state",
@@ -1901,10 +1901,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-80489",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc DNS stub resolver: Denial of Service via long search domain in configuration",
@@ -1917,10 +1917,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8674",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Privilege escalation and arbitrary code execution via TOCTOU race condition in dynamic loader",
@@ -1933,10 +1933,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86805",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: nscd stack overflow leads to degraded DNS resolution",
@@ -1949,10 +1949,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-89092",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Local attacker can cause denial of service and information disclosure via stack-based buffer overflow.",
@@ -1965,10 +1965,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95818",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glob implementation can cause excessive CPU and memory consumption due to crafted glob expressions",
@@ -1981,10 +1981,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2010-4756",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
@@ -1997,10 +1997,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-20796",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: stack guard protection bypass",
@@ -2013,10 +2013,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010022",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: running ldd on malicious ELF leads to code execution because of wrong size computation",
@@ -2029,10 +2029,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010023",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: ASLR bypass using cache of thread stack and heap",
@@ -2045,10 +2045,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010024",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: information disclosure of heap addresses of pthread_created thread",
@@ -2061,10 +2061,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-1010025",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c",
@@ -2077,10 +2077,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2019-9192",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libc6",
+    "id": "image:isolith/oep-stack:libc6",
     "package": "libc6",
     "version": "2.36-9+deb12u14",
     "summary": "glibc: glibc: Denial of Service via out-of-bounds read in strncasecmp",
@@ -2093,10 +2093,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-97399",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: SSH host verification bypass when using schemeless URLs with SFTP/SCP",
@@ -2109,10 +2109,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-12064",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Information disclosure due to cookie leak when reusing connections with custom Host headers",
@@ -2125,10 +2125,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6276",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Insecure connection establishment due to TLS configuration mismatch",
@@ -2141,10 +2141,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8286",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Unauthorized connection reuse due to a logical error",
@@ -2157,10 +2157,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8458",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: Information disclosure due to uncleared proxy authentication state",
@@ -2173,10 +2173,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8927",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "libcurl: libcurl: Use-after-free vulnerability leading to Denial of Service",
@@ -2189,10 +2189,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-10536",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Information disclosure via incorrect Digest authentication header reuse",
@@ -2205,10 +2205,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-11856",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Authentication bypass due to incorrect connection reuse with Negotiate authentication",
@@ -2221,10 +2221,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-1965",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Information disclosure via incorrect connection reuse with Negotiate authentication",
@@ -2237,10 +2237,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19931",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Information disclosure due to incorrect TLS connection reuse",
@@ -2253,10 +2253,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-4873",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Authentication bypass due to incorrect HTTP Negotiate connection reuse",
@@ -2269,10 +2269,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5545",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Proxy credential disclosure via redirects to unauthenticated proxies",
@@ -2285,10 +2285,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6253",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Credential leak via reused proxy connection during HTTP redirects",
@@ -2301,10 +2301,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-6429",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Cookie injection via malicious HTTP server using super cookies",
@@ -2317,10 +2317,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8924",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "libcurl: libcurl: Security feature bypass due to improper mTLS connection reuse",
@@ -2333,10 +2333,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8932",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: FTP wildcard write callback mixup",
@@ -2349,10 +2349,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92388",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: QUIC certificate check bypass with wolfSSL",
@@ -2365,10 +2365,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-2379",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "libcurl: Buffer Overflow in libcurl via zlib Integer Overflow",
@@ -2381,10 +2381,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-0725",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: Curl missing SFTP host verification with wolfSSH backend",
@@ -2397,10 +2397,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-10966",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Security bypass due to global TLS option changes in multi-threaded LDAPS transfers",
@@ -2413,10 +2413,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14017",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: Host verification bypass during SSH transfers",
@@ -2429,10 +2429,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-15079",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libssh key passphrase bypass without agent set",
@@ -2445,10 +2445,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-15224",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: info leak uploading over WebSockets with GnuTLS",
@@ -2461,10 +2461,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107928",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Authentication bypass in OpenLDAP SASL negotiation via Man-in-the-Middle (MITM) attack",
@@ -2477,10 +2477,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13608",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Use-after-free in HTTP/2 Server Push with shared connections",
@@ -2493,10 +2493,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18924",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Public key pinning bypass allows unauthenticated connections",
@@ -2509,10 +2509,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-80230",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: libcurl: Information disclosure via improper Public Suffix List boundary check",
@@ -2525,10 +2525,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-82209",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: stale SigV4 headers sent unintended",
@@ -2541,10 +2541,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: redirect to SFTP or SCP bypasses host verification",
@@ -2557,10 +2557,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: leaking host credentials to HTTP proxy",
@@ -2573,10 +2573,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-86414",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: IMAP APPEND plus CRLF conversion command injection",
@@ -2589,10 +2589,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-87864",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: knownhost callback mismatches key as missing",
@@ -2605,10 +2605,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-87865",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: wolfSSL public-key pinning bypass",
@@ -2621,10 +2621,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-87866",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: TFTP direction confusion",
@@ -2637,10 +2637,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92389",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: -J no-clobber guarantee bypassed with 103 early hints",
@@ -2653,10 +2653,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92390",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: curl_mime_free stack overflow by recursion",
@@ -2669,10 +2669,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-92391",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: password leak in CURLINFO_EFFECTIVE_URL",
@@ -2685,10 +2685,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-94266",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libcurl4",
+    "id": "image:isolith/oep-stack:libcurl4",
     "package": "libcurl4",
     "version": "7.88.1-10+deb12u15",
     "summary": "curl: curl: Man-in-the-middle attack via SSH host key bypass",
@@ -2701,10 +2701,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-9547",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgcc-s1",
+    "id": "image:isolith/oep-stack:libgcc-s1",
     "package": "libgcc-s1",
     "version": "12.2.0-14+deb12u1",
     "summary": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
@@ -2717,10 +2717,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-102010",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgcc-s1",
+    "id": "image:isolith/oep-stack:libgcc-s1",
     "package": "libgcc-s1",
     "version": "12.2.0-14+deb12u1",
     "summary": "gcc: libstdc++ integer overflow in `new` operator",
@@ -2733,10 +2733,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95619",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgcc-s1",
+    "id": "image:isolith/oep-stack:libgcc-s1",
     "package": "libgcc-s1",
     "version": "12.2.0-14+deb12u1",
     "summary": "binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows stack exhaustion in demangle_const",
@@ -2749,10 +2749,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-27943",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgcrypt20",
+    "id": "image:isolith/oep-stack:libgcrypt20",
     "package": "libgcrypt20",
     "version": "1.10.1-3+deb12u1",
     "summary": "libgcrypt: ElGamal implementation doesn't have semantic security due to incorrectly encoded plaintexts possibly allowing to obtain sensitive information",
@@ -2765,10 +2765,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-6829",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgcrypt20",
+    "id": "image:isolith/oep-stack:libgcrypt20",
     "package": "libgcrypt20",
     "version": "1.10.1-3+deb12u1",
     "summary": "libgcrypt: vulnerable to Marvin Attack",
@@ -2781,10 +2781,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-2236",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "HTTPS: block-wise chosen-plaintext attack against SSL/TLS (BEAST)",
@@ -2797,10 +2797,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2011-3389",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "gnutls: gnutls: Information disclosure via contradictory Key Usage and Extended Key Usage extensions",
@@ -2813,10 +2813,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-67693",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "gnutls: gnutls: Information disclosure via hostname verification bypass",
@@ -2829,10 +2829,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-88647",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "gnutls: gnutls: Cross-domain certificate restriction bypass via incomplete X.509 validation",
@@ -2845,10 +2845,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-88648",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "Improper certificate validation in gnutls v3.8.13 causes the applicati ...",
@@ -2861,10 +2861,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "An issue in gnutls v3.8.13 causes legitimate CA certificates to be rej ...",
@@ -2877,10 +2877,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95209",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgnutls30",
+    "id": "image:isolith/oep-stack:libgnutls30",
     "package": "libgnutls30",
     "version": "3.7.9-2+deb12u7",
     "summary": "Improper certificate validation in gnutls v3.8.13 causes the applicati ...",
@@ -2893,10 +2893,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95210",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgssapi-krb5-2",
+    "id": "image:isolith/oep-stack:libgssapi-krb5-2",
     "package": "libgssapi-krb5-2",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
@@ -2909,10 +2909,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107708",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgssapi-krb5-2",
+    "id": "image:isolith/oep-stack:libgssapi-krb5-2",
     "package": "libgssapi-krb5-2",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via crafted forwarded credentials",
@@ -2925,10 +2925,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107778",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgssapi-krb5-2",
+    "id": "image:isolith/oep-stack:libgssapi-krb5-2",
     "package": "libgssapi-krb5-2",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
@@ -2941,10 +2941,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-5709",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgssapi-krb5-2",
+    "id": "image:isolith/oep-stack:libgssapi-krb5-2",
     "package": "libgssapi-krb5-2",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
@@ -2957,10 +2957,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26458",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgssapi-krb5-2",
+    "id": "image:isolith/oep-stack:libgssapi-krb5-2",
     "package": "libgssapi-krb5-2",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
@@ -2973,10 +2973,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26461",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libgssapi-krb5-2",
+    "id": "image:isolith/oep-stack:libgssapi-krb5-2",
     "package": "libgssapi-krb5-2",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
@@ -2989,10 +2989,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-11850",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libk5crypto3",
+    "id": "image:isolith/oep-stack:libk5crypto3",
     "package": "libk5crypto3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
@@ -3005,10 +3005,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107708",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libk5crypto3",
+    "id": "image:isolith/oep-stack:libk5crypto3",
     "package": "libk5crypto3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via crafted forwarded credentials",
@@ -3021,10 +3021,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107778",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libk5crypto3",
+    "id": "image:isolith/oep-stack:libk5crypto3",
     "package": "libk5crypto3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
@@ -3037,10 +3037,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-5709",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libk5crypto3",
+    "id": "image:isolith/oep-stack:libk5crypto3",
     "package": "libk5crypto3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
@@ -3053,10 +3053,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26458",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libk5crypto3",
+    "id": "image:isolith/oep-stack:libk5crypto3",
     "package": "libk5crypto3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
@@ -3069,10 +3069,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26461",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libk5crypto3",
+    "id": "image:isolith/oep-stack:libk5crypto3",
     "package": "libk5crypto3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
@@ -3085,10 +3085,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-11850",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5-3",
+    "id": "image:isolith/oep-stack:libkrb5-3",
     "package": "libkrb5-3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
@@ -3101,10 +3101,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107708",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5-3",
+    "id": "image:isolith/oep-stack:libkrb5-3",
     "package": "libkrb5-3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via crafted forwarded credentials",
@@ -3117,10 +3117,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107778",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5-3",
+    "id": "image:isolith/oep-stack:libkrb5-3",
     "package": "libkrb5-3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
@@ -3133,10 +3133,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-5709",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5-3",
+    "id": "image:isolith/oep-stack:libkrb5-3",
     "package": "libkrb5-3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
@@ -3149,10 +3149,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26458",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5-3",
+    "id": "image:isolith/oep-stack:libkrb5-3",
     "package": "libkrb5-3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
@@ -3165,10 +3165,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26461",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5-3",
+    "id": "image:isolith/oep-stack:libkrb5-3",
     "package": "libkrb5-3",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
@@ -3181,10 +3181,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-11850",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5support0",
+    "id": "image:isolith/oep-stack:libkrb5support0",
     "package": "libkrb5support0",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via malformed PAC in S4U2Proxy requests",
@@ -3197,10 +3197,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107708",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5support0",
+    "id": "image:isolith/oep-stack:libkrb5support0",
     "package": "libkrb5support0",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: Denial of Service via crafted forwarded credentials",
@@ -3213,10 +3213,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107778",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5support0",
+    "id": "image:isolith/oep-stack:libkrb5support0",
     "package": "libkrb5support0",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: integer overflow in dbentry->n_key_data in kadmin/dbutil/dump.c",
@@ -3229,10 +3229,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2018-5709",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5support0",
+    "id": "image:isolith/oep-stack:libkrb5support0",
     "package": "libkrb5support0",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c",
@@ -3245,10 +3245,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26458",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5support0",
+    "id": "image:isolith/oep-stack:libkrb5support0",
     "package": "libkrb5support0",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c",
@@ -3261,10 +3261,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-26461",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libkrb5support0",
+    "id": "image:isolith/oep-stack:libkrb5support0",
     "package": "libkrb5support0",
     "version": "1.20.1-2+deb12u5",
     "summary": "krb5: krb5: integer underflow in berval2tl_data() leads to heap out-of-bounds read",
@@ -3277,10 +3277,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-11850",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libldap-2.5-0",
+    "id": "image:isolith/oep-stack:libldap-2.5-0",
     "package": "libldap-2.5-0",
     "version": "2.5.13+dfsg-5",
     "summary": "openldap: null pointer dereference in  ber_memalloc_x  function",
@@ -3293,10 +3293,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-2953",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libldap-2.5-0",
+    "id": "image:isolith/oep-stack:libldap-2.5-0",
     "package": "libldap-2.5-0",
     "version": "2.5.13+dfsg-5",
     "summary": "openldap: incorrect multi-keyword mode cipherstring parsing",
@@ -3309,10 +3309,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2015-3276",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libldap-2.5-0",
+    "id": "image:isolith/oep-stack:libldap-2.5-0",
     "package": "libldap-2.5-0",
     "version": "2.5.13+dfsg-5",
     "summary": "openldap: Privilege escalation via PID file manipulation",
@@ -3325,10 +3325,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2017-14159",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libldap-2.5-0",
+    "id": "image:isolith/oep-stack:libldap-2.5-0",
     "package": "libldap-2.5-0",
     "version": "2.5.13+dfsg-5",
     "summary": "openldap: contrib/slapd-modules/nops/nops.c attempts to free stack buffer allowing remote attackers to cause a denial of service",
@@ -3341,10 +3341,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2017-17740",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libldap-2.5-0",
+    "id": "image:isolith/oep-stack:libldap-2.5-0",
     "package": "libldap-2.5-0",
     "version": "2.5.13+dfsg-5",
     "summary": "openldap: Certificate validation incorrectly matches name against CN-ID",
@@ -3357,10 +3357,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2020-15719",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libldap-2.5-0",
+    "id": "image:isolith/oep-stack:libldap-2.5-0",
     "package": "libldap-2.5-0",
     "version": "2.5.13+dfsg-5",
     "summary": "OpenLDAP: OpenLDAP LMDB: Denial of Service and Information Disclosure via Heap Buffer Underflow",
@@ -3373,10 +3373,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-22185",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -3389,10 +3389,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -3405,10 +3405,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -3421,10 +3421,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -3437,10 +3437,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -3453,10 +3453,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -3469,10 +3469,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -3485,10 +3485,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -3501,10 +3501,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -3517,10 +3517,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -3533,10 +3533,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libmount1",
+    "id": "image:isolith/oep-stack:libmount1",
     "package": "libmount1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -3549,10 +3549,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libnghttp2-14",
+    "id": "image:isolith/oep-stack:libnghttp2-14",
     "package": "libnghttp2-14",
     "version": "1.52.0-1+deb12u3",
     "summary": "nghttp2: nghttp2: HTTP Request/Response Smuggling and Response-Queue Poisoning via ambiguous HTTP/1.1 Upgrade requests",
@@ -3565,10 +3565,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-58055",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libp11-kit0",
+    "id": "image:isolith/oep-stack:libp11-kit0",
     "package": "libp11-kit0",
     "version": "0.24.1-2",
     "summary": "p11-kit: Stack exhaustion via unbounded recursion in RPC attribute parsing",
@@ -3581,10 +3581,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13757",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libp11-kit0",
+    "id": "image:isolith/oep-stack:libp11-kit0",
     "package": "libp11-kit0",
     "version": "0.24.1-2",
     "summary": "p11-kit: Integer overflow in RPC attribute-array length calculation can under-allocate nested attribute storage on 32 bit systems",
@@ -3597,10 +3597,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18938",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam-modules",
+    "id": "image:isolith/oep-stack:libpam-modules",
     "package": "libpam-modules",
     "version": "1.5.2-6+deb12u2",
     "summary": "pam: libpam: Libpam vulnerable to read hashed password",
@@ -3613,10 +3613,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-10041",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam-modules",
+    "id": "image:isolith/oep-stack:libpam-modules",
     "package": "libpam-modules",
     "version": "1.5.2-6+deb12u2",
     "summary": "linux-pam: Plaintext password recovery via timing discrepancy in pam_userdb module",
@@ -3629,10 +3629,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54411",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam-modules-bin",
+    "id": "image:isolith/oep-stack:libpam-modules-bin",
     "package": "libpam-modules-bin",
     "version": "1.5.2-6+deb12u2",
     "summary": "pam: libpam: Libpam vulnerable to read hashed password",
@@ -3645,10 +3645,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-10041",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam-modules-bin",
+    "id": "image:isolith/oep-stack:libpam-modules-bin",
     "package": "libpam-modules-bin",
     "version": "1.5.2-6+deb12u2",
     "summary": "linux-pam: Plaintext password recovery via timing discrepancy in pam_userdb module",
@@ -3661,10 +3661,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54411",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam-runtime",
+    "id": "image:isolith/oep-stack:libpam-runtime",
     "package": "libpam-runtime",
     "version": "1.5.2-6+deb12u2",
     "summary": "pam: libpam: Libpam vulnerable to read hashed password",
@@ -3677,10 +3677,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-10041",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam-runtime",
+    "id": "image:isolith/oep-stack:libpam-runtime",
     "package": "libpam-runtime",
     "version": "1.5.2-6+deb12u2",
     "summary": "linux-pam: Plaintext password recovery via timing discrepancy in pam_userdb module",
@@ -3693,10 +3693,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54411",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam0g",
+    "id": "image:isolith/oep-stack:libpam0g",
     "package": "libpam0g",
     "version": "1.5.2-6+deb12u2",
     "summary": "pam: libpam: Libpam vulnerable to read hashed password",
@@ -3709,10 +3709,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-10041",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libpam0g",
+    "id": "image:isolith/oep-stack:libpam0g",
     "package": "libpam0g",
     "version": "1.5.2-6+deb12u2",
     "summary": "linux-pam: Plaintext password recovery via timing discrepancy in pam_userdb module",
@@ -3725,10 +3725,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54411",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsasl2-2",
+    "id": "image:isolith/oep-stack:libsasl2-2",
     "package": "libsasl2-2",
     "version": "2.1.28+dfsg-10",
     "summary": "cyrus-sasl: Heap buffer overflow in cyrus-sasl add_to_challenge() allows malicious server to crash or compromise DIGEST-MD5 clients",
@@ -3741,10 +3741,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107161",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsasl2-modules-db",
+    "id": "image:isolith/oep-stack:libsasl2-modules-db",
     "package": "libsasl2-modules-db",
     "version": "2.1.28+dfsg-10",
     "summary": "cyrus-sasl: Heap buffer overflow in cyrus-sasl add_to_challenge() allows malicious server to crash or compromise DIGEST-MD5 clients",
@@ -3757,10 +3757,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-107161",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -3773,10 +3773,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -3789,10 +3789,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -3805,10 +3805,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -3821,10 +3821,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -3837,10 +3837,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -3853,10 +3853,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -3869,10 +3869,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -3885,10 +3885,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -3901,10 +3901,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -3917,10 +3917,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsmartcols1",
+    "id": "image:isolith/oep-stack:libsmartcols1",
     "package": "libsmartcols1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -3933,10 +3933,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: compat-openssl: openssl: Information disclosure via DTLS handshake retransmission",
@@ -3949,10 +3949,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-84782",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: OpenSSL: Private key recovery via timing side-channel in generic elliptic curve operations",
@@ -3965,10 +3965,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54872",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: openssl: Denial of Service via crafted CMP certificate revocation response",
@@ -3981,10 +3981,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-75805",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: OpenSSL: Denial of Service via undersized DTLS record",
@@ -3997,10 +3997,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-75806",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: OpenSSL: Private key recovery via SM2 timing side-channel",
@@ -4013,10 +4013,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-77696",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable  ...",
@@ -4029,10 +4029,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-27587",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libssl3",
+    "id": "image:isolith/oep-stack:libssl3",
     "package": "libssl3",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: openssl: Denial of Service via excessive memory allocation in CRL distribution point processing",
@@ -4045,10 +4045,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-35189",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libstdc++6",
+    "id": "image:isolith/oep-stack:libstdc++6",
     "package": "libstdc++6",
     "version": "12.2.0-14+deb12u1",
     "summary": "gcc-toolset-15-gcc: gcc: gcc-toolset-16: gcc: Denial of Service via use-after-free in binary heap erase_if",
@@ -4061,10 +4061,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-102010",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libstdc++6",
+    "id": "image:isolith/oep-stack:libstdc++6",
     "package": "libstdc++6",
     "version": "12.2.0-14+deb12u1",
     "summary": "gcc: libstdc++ integer overflow in `new` operator",
@@ -4077,10 +4077,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-95619",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libstdc++6",
+    "id": "image:isolith/oep-stack:libstdc++6",
     "package": "libstdc++6",
     "version": "12.2.0-14+deb12u1",
     "summary": "binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows stack exhaustion in demangle_const",
@@ -4093,10 +4093,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-27943",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: systemd-homed: Local privilege escalation via missing home-record signature verification",
@@ -4109,10 +4109,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-16742",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: systemd-oomd: Unprivileged users can terminate arbitrary processes via IPC API",
@@ -4125,10 +4125,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-15059",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: TOCTOU race condition when updating file permissions and SELinux security contexts",
@@ -4141,10 +4141,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2013-4392",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "An issue was discovered in systemd 253. An attacker can modify a seale ...",
@@ -4157,10 +4157,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31437",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "An issue was discovered in systemd 253. An attacker can truncate a sea ...",
@@ -4173,10 +4173,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31438",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "An issue was discovered in systemd 253. An attacker can modify the con ...",
@@ -4189,10 +4189,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31439",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libsystemd0",
+    "id": "image:isolith/oep-stack:libsystemd0",
     "package": "libsystemd0",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: systemd-journald: Unintended output to user terminals via logger command",
@@ -4205,10 +4205,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-40228",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libtasn1-6",
+    "id": "image:isolith/oep-stack:libtasn1-6",
     "package": "libtasn1-6",
     "version": "4.19.0-2+deb12u1",
     "summary": "libtasn1: libtasn1: Denial of Service via stack-based buffer overflow in asn1_expend_octet_string",
@@ -4221,10 +4221,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-13151",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libtinfo6",
+    "id": "image:isolith/oep-stack:libtinfo6",
     "package": "libtinfo6",
     "version": "6.4-4",
     "summary": "ncurses: ncurses: Buffer overflow vulnerability may lead to arbitrary code execution.",
@@ -4237,10 +4237,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-69720",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libtinfo6",
+    "id": "image:isolith/oep-stack:libtinfo6",
     "package": "libtinfo6",
     "version": "6.4-4",
     "summary": "ncurses: segmentation fault via _nc_wrap_entry()",
@@ -4253,10 +4253,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-50495",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libtinfo6",
+    "id": "image:isolith/oep-stack:libtinfo6",
     "package": "libtinfo6",
     "version": "6.4-4",
     "summary": "gnu-ncurses: ncurses Stack Buffer Overflow",
@@ -4269,10 +4269,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-6141",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: systemd-homed: Local privilege escalation via missing home-record signature verification",
@@ -4285,10 +4285,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-16742",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: systemd-oomd: Unprivileged users can terminate arbitrary processes via IPC API",
@@ -4301,10 +4301,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-15059",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: TOCTOU race condition when updating file permissions and SELinux security contexts",
@@ -4317,10 +4317,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2013-4392",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "An issue was discovered in systemd 253. An attacker can modify a seale ...",
@@ -4333,10 +4333,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31437",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "An issue was discovered in systemd 253. An attacker can truncate a sea ...",
@@ -4349,10 +4349,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31438",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "An issue was discovered in systemd 253. An attacker can modify the con ...",
@@ -4365,10 +4365,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31439",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libudev1",
+    "id": "image:isolith/oep-stack:libudev1",
     "package": "libudev1",
     "version": "252.39-1~deb12u2",
     "summary": "systemd: systemd-journald: Unintended output to user terminals via logger command",
@@ -4381,10 +4381,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-40228",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -4397,10 +4397,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -4413,10 +4413,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -4429,10 +4429,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -4445,10 +4445,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -4461,10 +4461,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -4477,10 +4477,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -4493,10 +4493,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -4509,10 +4509,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -4525,10 +4525,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -4541,10 +4541,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:libuuid1",
+    "id": "image:isolith/oep-stack:libuuid1",
     "package": "libuuid1",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -4557,10 +4557,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:login",
+    "id": "image:isolith/oep-stack:login",
     "package": "login",
     "version": "1:4.13+dfsg1-1+deb12u2",
     "summary": "initscripts in rPath Linux 1 sets insecure permissions for the /var/lo ...",
@@ -4573,10 +4573,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2007-5686",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:login",
+    "id": "image:isolith/oep-stack:login",
     "package": "login",
     "version": "1:4.13+dfsg1-1+deb12u2",
     "summary": "shadow-utils: Default subordinate ID configuration in /etc/login.defs could lead to compromise",
@@ -4589,10 +4589,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-56433",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:login",
+    "id": "image:isolith/oep-stack:login",
     "package": "login",
     "version": "1:4.13+dfsg1-1+deb12u2",
     "summary": "[more related to CVE-2005-4890]",
@@ -4605,10 +4605,10 @@
     "url": "https://security-tracker.debian.org/tracker/TEMP-0628843-DBAD28",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -4621,10 +4621,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -4637,10 +4637,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -4653,10 +4653,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -4669,10 +4669,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -4685,10 +4685,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -4701,10 +4701,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -4717,10 +4717,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -4733,10 +4733,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -4749,10 +4749,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -4765,10 +4765,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:mount",
+    "id": "image:isolith/oep-stack:mount",
     "package": "mount",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -4781,10 +4781,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:ncurses-base",
+    "id": "image:isolith/oep-stack:ncurses-base",
     "package": "ncurses-base",
     "version": "6.4-4",
     "summary": "ncurses: ncurses: Buffer overflow vulnerability may lead to arbitrary code execution.",
@@ -4797,10 +4797,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-69720",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:ncurses-base",
+    "id": "image:isolith/oep-stack:ncurses-base",
     "package": "ncurses-base",
     "version": "6.4-4",
     "summary": "ncurses: segmentation fault via _nc_wrap_entry()",
@@ -4813,10 +4813,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-50495",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:ncurses-base",
+    "id": "image:isolith/oep-stack:ncurses-base",
     "package": "ncurses-base",
     "version": "6.4-4",
     "summary": "gnu-ncurses: ncurses Stack Buffer Overflow",
@@ -4829,10 +4829,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-6141",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:ncurses-bin",
+    "id": "image:isolith/oep-stack:ncurses-bin",
     "package": "ncurses-bin",
     "version": "6.4-4",
     "summary": "ncurses: ncurses: Buffer overflow vulnerability may lead to arbitrary code execution.",
@@ -4845,10 +4845,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-69720",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:ncurses-bin",
+    "id": "image:isolith/oep-stack:ncurses-bin",
     "package": "ncurses-bin",
     "version": "6.4-4",
     "summary": "ncurses: segmentation fault via _nc_wrap_entry()",
@@ -4861,10 +4861,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-50495",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:ncurses-bin",
+    "id": "image:isolith/oep-stack:ncurses-bin",
     "package": "ncurses-bin",
     "version": "6.4-4",
     "summary": "gnu-ncurses: ncurses Stack Buffer Overflow",
@@ -4877,10 +4877,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-6141",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: compat-openssl: openssl: Information disclosure via DTLS handshake retransmission",
@@ -4893,10 +4893,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-84782",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: OpenSSL: Private key recovery via timing side-channel in generic elliptic curve operations",
@@ -4909,10 +4909,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-54872",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: openssl: Denial of Service via crafted CMP certificate revocation response",
@@ -4925,10 +4925,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-75805",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: OpenSSL: Denial of Service via undersized DTLS record",
@@ -4941,10 +4941,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-75806",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: OpenSSL: Private key recovery via SM2 timing side-channel",
@@ -4957,10 +4957,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-77696",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable  ...",
@@ -4973,10 +4973,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-27587",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:openssl",
+    "id": "image:isolith/oep-stack:openssl",
     "package": "openssl",
     "version": "3.0.22-1~deb12u1",
     "summary": "openssl: openssl: Denial of Service via excessive memory allocation in CRL distribution point processing",
@@ -4989,10 +4989,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-35189",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:passwd",
+    "id": "image:isolith/oep-stack:passwd",
     "package": "passwd",
     "version": "1:4.13+dfsg1-1+deb12u2",
     "summary": "initscripts in rPath Linux 1 sets insecure permissions for the /var/lo ...",
@@ -5005,10 +5005,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2007-5686",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:passwd",
+    "id": "image:isolith/oep-stack:passwd",
     "package": "passwd",
     "version": "1:4.13+dfsg1-1+deb12u2",
     "summary": "shadow-utils: Default subordinate ID configuration in /etc/login.defs could lead to compromise",
@@ -5021,10 +5021,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2024-56433",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:passwd",
+    "id": "image:isolith/oep-stack:passwd",
     "package": "passwd",
     "version": "1:4.13+dfsg1-1+deb12u2",
     "summary": "[more related to CVE-2005-4890]",
@@ -5037,10 +5037,10 @@
     "url": "https://security-tracker.debian.org/tracker/TEMP-0628843-DBAD28",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl: Perl: Incorrect regular expression processing via large regular expressions",
@@ -5053,10 +5053,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13221",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-archive-tar: perl-archive-tar: Path traversal via crafted symlinks allows arbitrary file access",
@@ -5069,10 +5069,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-42496",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl: Perl: Heap buffer overflow when compiling regular expressions on 32-bit builds",
@@ -5085,10 +5085,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-8376",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-Archive-Tar: perl-Archive-Tar: Arbitrary file modification via crafted hardlinks during archive extraction",
@@ -5101,10 +5101,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-42497",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-IO-Compress: perl-IO-Compress: Arbitrary code execution via attacker-controlled output glob",
@@ -5117,10 +5117,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-48962",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl: Perl: Information disclosure via integer overflow in pack/unpack operations",
@@ -5133,10 +5133,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-57432",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "Storable: Storable: Denial of Service via signed integer overflow in deserialization",
@@ -5149,10 +5149,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-57433",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-Archive-Tar: perl-Archive-Tar: Denial of Service via crafted tar header with large entry size",
@@ -5165,10 +5165,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-9538",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-IO-Compress: perl-IO-Compress: Denial of Service via malformed DOS date in zip header",
@@ -5181,10 +5181,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-15649",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-Socket: perl-Socket: Information Disclosure due to Out-of-Bounds Read",
@@ -5197,10 +5197,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-12087",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl: Perl: Arbitrary code execution via out-of-bounds memory access in regular expression engine.",
@@ -5213,10 +5213,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-15534",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl: Perl: Incorrect regular expression matching can lead to wrong access or filtering decisions.",
@@ -5229,10 +5229,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-19487",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl-IO-Compress: perl-IO-Compress: CPU exhaustion via per-byte read loop in fastForward",
@@ -5245,10 +5245,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-48959",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "HTTP::Tiny versions before 0.093 for Perl do not validate CRLF in HTTP ...",
@@ -5261,10 +5261,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-7010",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "HTTP::Tiny versions before 0.095 for Perl forward credential headers t ...",
@@ -5277,10 +5277,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-7017",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "perl: File:: Temp insecure temporary file handling",
@@ -5293,10 +5293,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2011-4116",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "http-tiny: perl: insecure TLS cert default",
@@ -5309,10 +5309,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-31486",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:perl-base",
+    "id": "image:isolith/oep-stack:perl-base",
     "package": "perl-base",
     "version": "5.36.0-7+deb12u3",
     "summary": "Pod::Text versions before 6.1.1 for Perl allow CPU and memory exhausti ...",
@@ -5325,10 +5325,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-82560",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:sysvinit-utils",
+    "id": "image:isolith/oep-stack:sysvinit-utils",
     "package": "sysvinit-utils",
     "version": "3.06-4",
     "summary": "[sysvinit: no-root option in expert installer exposes locally exploitable security flaw]",
@@ -5341,10 +5341,10 @@
     "url": "https://security-tracker.debian.org/tracker/TEMP-0517018-A83CE6",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:tar",
+    "id": "image:isolith/oep-stack:tar",
     "package": "tar",
     "version": "1.34+dfsg-1.2+deb12u1",
     "summary": "tar: tar: TOCTOU in incremental dumpdir 'X' rename handling allows restore path escape",
@@ -5357,10 +5357,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18477",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:tar",
+    "id": "image:isolith/oep-stack:tar",
     "package": "tar",
     "version": "1.34+dfsg-1.2+deb12u1",
     "summary": "tar: tar: --one-top-level hardlink targets not confined to top-level directory enabling arbitrary file overwrite",
@@ -5373,10 +5373,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-18508",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:tar",
+    "id": "image:isolith/oep-stack:tar",
     "package": "tar",
     "version": "1.34+dfsg-1.2+deb12u1",
     "summary": "tar: tar: Hidden file injection via crafted archives",
@@ -5389,10 +5389,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-5704",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:tar",
+    "id": "image:isolith/oep-stack:tar",
     "package": "tar",
     "version": "1.34+dfsg-1.2+deb12u1",
     "summary": "tar: does not properly warn the user when extracting setuid or setgid files",
@@ -5405,10 +5405,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2005-2541",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:tar",
+    "id": "image:isolith/oep-stack:tar",
     "package": "tar",
     "version": "1.34+dfsg-1.2+deb12u1",
     "summary": "[tar's rmt command may have undesired side effects]",
@@ -5421,10 +5421,10 @@
     "url": "https://security-tracker.debian.org/tracker/TEMP-0290435-0B57B5",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -5437,10 +5437,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -5453,10 +5453,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -5469,10 +5469,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -5485,10 +5485,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -5501,10 +5501,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -5517,10 +5517,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -5533,10 +5533,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -5549,10 +5549,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -5565,10 +5565,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -5581,10 +5581,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux",
+    "id": "image:isolith/oep-stack:util-linux",
     "package": "util-linux",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -5597,10 +5597,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: TOCTOU in the mount program via ancestor directory swap on target path",
@@ -5613,10 +5613,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53613",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Partition metadata compromise via integer overflow in DOS partition parser",
@@ -5629,10 +5629,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-53615",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: failed external mount helper still runs privileged X-mount post-hooks",
@@ -5645,10 +5645,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-76642",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
@@ -5661,10 +5661,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78408",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: X-mount.subdir detached-tree resolution can escape via intermediate symlinks",
@@ -5677,10 +5677,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78409",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: restricted bind mounts do not pin the source, allowing X-mount.owner/group/mode redirection",
@@ -5693,10 +5693,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-78410",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: heap use-after-free in libblkid nested partition probing",
@@ -5709,10 +5709,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-13595",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: TOCTOU in the mount program when setting up loop devices",
@@ -5725,10 +5725,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27456",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Access control bypass due to improper hostname canonicalization",
@@ -5741,10 +5741,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-3184",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline",
@@ -5757,10 +5757,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2022-0563",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:util-linux-extra",
+    "id": "image:isolith/oep-stack:util-linux-extra",
     "package": "util-linux-extra",
     "version": "2.38.1-5+deb12u3",
     "summary": "util-linux: util-linux: Heap buffer overread in setpwnam() when processing 256-byte usernames",
@@ -5773,10 +5773,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2025-14104",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:zlib1g",
+    "id": "image:isolith/oep-stack:zlib1g",
     "package": "zlib1g",
     "version": "1:1.2.13.dfsg-1",
     "summary": "zlib: integer overflow and resultant heap-based buffer overflow in zipOpenNewFileInZip4_6",
@@ -5789,10 +5789,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2023-45853",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:zlib1g",
+    "id": "image:isolith/oep-stack:zlib1g",
     "package": "zlib1g",
     "version": "1:1.2.13.dfsg-1",
     "summary": "zlib: zlib: Denial of Service via infinite loop in CRC32 combine functions",
@@ -5805,10 +5805,10 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-27171",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   },
   {
-    "id": "image:keelworks/oep-stack:zlib1g",
+    "id": "image:isolith/oep-stack:zlib1g",
     "package": "zlib1g",
     "version": "1:1.2.13.dfsg-1",
     "summary": "zlib versions 1.3.1.2 through 1.3.2 contain a heap buffer overflow vul ...",
@@ -5821,6 +5821,6 @@
     "url": "https://avd.aquasec.com/nvd/cve-2026-85091",
     "date": "",
     "state": "trivy-image",
-    "target": "keelworks/oep-stack"
+    "target": "isolith/oep-stack"
   }
 ]

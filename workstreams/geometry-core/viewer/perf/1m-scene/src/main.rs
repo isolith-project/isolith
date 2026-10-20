@@ -1,4 +1,4 @@
-// Keelworks P6-M5-T03 performance benchmark: 1M-triangle scene interactive on
+// Isolith P6-M5-T03 performance benchmark: 1M-triangle scene interactive on
 // U1-class hardware, measured budget.
 //
 // Real material, not mocks: this builds a genuine indexed mesh of >= 1,000,000

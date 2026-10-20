@@ -1,6 +1,6 @@
 # P6-M2-T01: Vector / Matrix / Quaternion Math Core for `oep-geo`
 
-Status: implemented and property-tested (Keelworks wave 1, P6).
+Status: implemented and property-tested (Isolith wave 1, P6).
 
 ## Scope
 

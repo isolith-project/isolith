@@ -7,7 +7,7 @@ form is optional; the zip asset URL is stable):
 
     https://qifstandards.org/wp-content/uploads/2014/08/QIF3.0-2018-ANSI.zip
 
-Per standards/qif/keelworks-use.md we do NOT re-host the bundle inside the
+Per standards/qif/isolith-use.md we do NOT re-host the bundle inside the
 repo; tests that need real-schema validation are gated on the schema being
 present on disk (OEP_QIF_XSD_ROOT), exactly like the real-material legs in
 the corpus/lane tests. This module gives reproducible fetch + validation.

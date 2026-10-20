@@ -1,5 +1,5 @@
 {
-  "record": "keelworks.train-cut-proof.v1",
+  "record": "isolith.train-cut-proof.v1",
   "candidate": "2027.1.0-rc1",
   "dry_run": true,
   "run_target": "U1 (promaxgb10-83f1, 192.168.0.67, aarch64)",
@@ -18,7 +18,7 @@
     "epoch_range": ["98a899bfa908809daec4d22a07c89eb2bda7ed22", "e67b8fcc28ede7caadb68f530191fb3e9f1e2d80"]
   },
   "canary": {
-    "repo": "keelworks/keelworks-canary",
+    "repo": "isolith/isolith-canary",
     "received_branch": "canary/2027.1.0-rc1",
     "received_branch_sha": "e67b8fcc28ede7caadb68f530191fb3e9f1e2d80",
     "received_tag": "v2027.1.0-rc1",
@@ -26,7 +26,7 @@
     "read_back": "via Gitea API branch/tag listing, shas match the cut sha"
   },
   "checks": [
-    {"name": "manifest written and conforms to keelworks.release-freeze.v1", "result": "PASS"},
+    {"name": "manifest written and conforms to isolith.release-freeze.v1", "result": "PASS"},
     {"name": "freeze verify (recompute vs manifest) matches git object db", "result": "PASS"},
     {"name": "release branch created at cut sha", "result": "PASS"},
     {"name": "annotated tag v2027.1.0-rc1 at cut sha", "result": "PASS"},

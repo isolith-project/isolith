@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('oep-geo: tessellated mesh passthrough. Faceted (planar) B-Rep derived from source tessellation. This is a TESSELLATED representation and is NOT an exact analytic B-Rep.'),'2;1');
-FILE_NAME('box-reference.step','',('Keelworks OEP'),(''),'oep-geo 0.1.0','Keelworks OEP','');
+FILE_NAME('box-reference.step','',('Isolith OEP'),(''),'oep-geo 0.1.0','Isolith OEP','');
 FILE_SCHEMA(('AUTOMOTIVE_DESIGN { 1 0 10303 214 1 1 1 1 }'));
 ENDSEC;
 DATA;

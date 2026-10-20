@@ -54,9 +54,9 @@ src="$ROOT/"
 rsync -az --delete \
   -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -p $MACHINE_B_PORT" \
   --exclude '.git/' --exclude 'target/' --exclude '.worktrees/' \
-  --exclude 'keelworksb2.qcow2' --exclude '*.typescript' --exclude '*.timing' \
+  --exclude 'isolithb2.qcow2' --exclude '*.typescript' --exclude '*.timing' \
   --exclude '*.mp4' --exclude 'workstreams/delivery/update-checker/proof/video/' \
-  "$src" "$MACHINE_B_HOST:~/keelworks/"
+  "$src" "$MACHINE_B_HOST:~/isolith/"
 
 # 2. run the measured gate
 echo "[proof] running ga_gate_p10 (docker + machine A + machine B)"

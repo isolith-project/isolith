@@ -6,5 +6,5 @@ summary: 2 rows | 2 measured | 0 drifted | 0 skipped | drift {}
 
 | id | status | class | current transfer | faces | area | volume |
 |---|---|---|---|---|---|---|
-| keelworks-box-export | measured | - | False |  |  |  |
-| keelworks-box-conformance | measured | - | True | 12 | 6.0 | 2.7755575615628914e-17 |
+| isolith-box-export | measured | - | False |  |  |  |
+| isolith-box-conformance | measured | - | True | 12 | 6.0 | 2.7755575615628914e-17 |

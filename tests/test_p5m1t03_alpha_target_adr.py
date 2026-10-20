@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P5-M1-T03: alpha target ADR for the native
+"""Acceptance test for Isolith P5-M1-T03: alpha target ADR for the native
 CATPart/CATProduct reader - B-Rep/geometry first, feature-tree semantics
 deferred (documented).
 

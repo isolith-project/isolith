@@ -10,7 +10,7 @@ VM; the NAS is repo/storage only).
 | machine-b-online.typescript / .timing | same walkthrough on machine B (keelwb2 U1/VM over SSH) |
 | machine-a-online.mp4 | rendered replay of the U1 recording (10s) |
 | machine-b-online.mp4 | rendered replay of the machine B recording, build span elided (13s) |
-| keelworks-install-walkthrough.mp4 | combined A + B replay (the headline install video) |
+| isolith-install-walkthrough.mp4 | combined A + B replay (the headline install video) |
 
 Replay the typescripts yourself with `scriptreplay`:
 

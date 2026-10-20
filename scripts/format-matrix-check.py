@@ -135,17 +135,17 @@ def spot_check_p4(rows, matrix_path, pmi_path):
                  pmi_path)
 
     # Spot-check 3: the within-epsilon accuracy row is PASS as committed.
-    box = next((r for r in m.get("rows", []) if r.get("id") == "keelworks-box"), None)
+    box = next((r for r in m.get("rows", []) if r.get("id") == "isolith-box"), None)
     if box is None:
         return classify(rows, "p4-accuracy-within-eps", "FAIL",
-                        "keelworks-box row missing from p4 matrix", matrix_path)
+                        "isolith-box row missing from p4 matrix", matrix_path)
     bd = (box.get("detail") or "").lower()
     ok_acc = box.get("status") == "PASS" and "hausdorff=0" in bd and \
              "vol_rel_err=0" in bd and "1.0e-09" in bd
     classify(rows, "p4-accuracy-within-eps",
              "PASS" if ok_acc else "FAIL",
-             f"keelworks-box PASS hausdorff=0 vol_rel_err=0 eps=1.0e-09"
-             if ok_acc else f"keelworks-box diverges from committed accuracy row: {box}",
+             f"isolith-box PASS hausdorff=0 vol_rel_err=0 eps=1.0e-09"
+             if ok_acc else f"isolith-box diverges from committed accuracy row: {box}",
              matrix_path)
     return rows
 

@@ -1,6 +1,6 @@
 # PMI Fidelity Audit Runner: GD&T Types x Reference Apps (Honest Matrix)
 
-P4-M2-T03 · Keelworks / OEP P4 STEP/PMI lane
+P4-M2-T03 · Isolith / OEP P4 STEP/PMI lane
 Status: measured on real material 2026-10-16 (NIST MBE PMI AP242 corpus, 17 files; step-io 0.2.5 column PASS/FAIL with per-file evidence; OCCT / FreeCAD / commercial readers honestly SKIP on this host)
 Version: 1.0
 

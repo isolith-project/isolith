@@ -8,7 +8,7 @@ corpus/object-store-index.json land and a real sync against the live NAS object
 store has been performed.
 
 'Done' for P1-M1-T05 means every redistributable corpus sample is present on the
-NAS object store (Gitea generic package registry don/keelworks-corpus v1),
+NAS object store (Gitea generic package registry don/isolith-corpus v1),
 content-addressed by sha256, and a fresh GET of each blob re-hashes to the
 committed index sha256. CGR samples are reference-only (proprietary, T01 policy)
 and must never be uploaded.
@@ -156,7 +156,7 @@ def test_index_matches_spec_and_uploads():
                   "%s != %s" % (ie.get("sha256"), e.get("sha256")))
             check("index has object ptr: %s" % e["id"],
                   bool(ie.get("object")) and ie.get("owner") == "don"
-                  and ie.get("package") == "keelworks-corpus",
+                  and ie.get("package") == "isolith-corpus",
                   "ptr=%r pkg=%r" % (ie.get("object"), ie.get("package")))
         else:
             check("reference-only NOT uploaded: %s" % e["id"],
@@ -205,19 +205,19 @@ def test_live_upload_and_verify():
     #     hash it back from the NAS. This proves the transport itself works on
     #     real material without depending on any not-yet-merged sample file.
     import tempfile
-    payload = b"keelworks-objectstore-sync-acceptance\n" * 4096  # ~90 KiB
+    payload = b"isolith-objectstore-sync-acceptance\n" * 4096  # ~90 KiB
     expect = hashlib.sha256(payload).hexdigest()
     obj = os_mod.object_name(expect, ".bin")
     with tempfile.NamedTemporaryFile(suffix=".bin", delete=False) as tf:
         tf.write(payload)
         tmppath = tf.name
     try:
-        ok, detail = os_mod.upload_file("don", "keelworks-corpus", "v1", obj, tmppath)
+        ok, detail = os_mod.upload_file("don", "isolith-corpus", "v1", obj, tmppath)
     finally:
         os.unlink(tmppath)
     check("live PUT to NAS object store (acceptance fixture)", ok, detail)
     if ok:
-        data, err = os_mod.download("don", "keelworks-corpus", "v1", obj)
+        data, err = os_mod.download("don", "isolith-corpus", "v1", obj)
         if err or data is None:
             check("live GET round-trip", False, err or "no data")
         else:

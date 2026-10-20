@@ -3,7 +3,7 @@
     "format": "CGR (CATIA Graphical Representation, Dassault Systemes)",
     "task": "P1-M1-T01",
     "generated": "2026-10-15",
-    "generated_by": "keelworks worker (default profile)",
+    "generated_by": "isolith worker (default profile)",
     "clean_room": true,
     "policy": "No proprietary redistribution. Real CGR binaries verified locally are NOT committed to the repo; the registry records source + license + verification evidence. Redistribution is only permitted under an explicitly permissive/open license.",
     "identity_note": "Observed 8-byte prefix 0x0100000000000000 across all 11 verified samples; later R-era samples are denser binary with no string table in the first 64 KiB. Full hex-level analysis is P1-M2-T01 scope; this task only records identity evidence.",

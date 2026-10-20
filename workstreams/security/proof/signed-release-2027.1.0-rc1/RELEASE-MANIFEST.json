@@ -19,7 +19,7 @@
       "url": null
     },
     {
-      "name": "oep-pdm-keelworks-oep-aarch64.AppImage",
+      "name": "oep-pdm-isolith-oep-aarch64.AppImage",
       "sha256": "fdac88215d0e78a4266d97b5225b6745fec745bc95be24ad0343291afcb8ebdc",
       "size": 3006848,
       "url": null
@@ -55,13 +55,13 @@
       "url": null
     },
     {
-      "name": "oep-web-keelworks-oep-aarch64.AppImage",
+      "name": "oep-web-isolith-oep-aarch64.AppImage",
       "sha256": "e82c723081ae17ec69664abbf9d54962254f0070c9541ba2d23273451f1cc708",
       "size": 1819008,
       "url": null
     }
   ],
-  "manifest": "keelworks-release-v1",
+  "manifest": "isolith-release-v1",
   "product": "oep",
   "release": "2027.1.0-rc1",
   "released": "2026-10-19T10:31:14Z"

@@ -1,6 +1,6 @@
-# Keelworks wave checkpoint: wave-1-3
+# Isolith wave checkpoint: wave-1-3
 
-Schema: keelworks.wave-checkpoint.v1
+Schema: isolith.wave-checkpoint.v1
 Branch: `wave/1-3` -> `main`
 Base sha: `d22800bf2d345533fe07caf66f45d189122b2e08`
 Tip sha:  `0acde1e6ab450cd78c7496c51e45c201fb9ab03c`
@@ -101,7 +101,7 @@ Evidence: `integration/union-gate.{json,md}` at the wave/1-3 tip; fresh
   evaluated and rejected with evidence. ADR v1.2.0 supersedes v1.1.0.
 - Worktrees are ephemeral: stale worktrees pruned in this step (policy section
   6). Card branches remain as refs for provenance.
-- Repository bound (policy section 6): exactly keelworks + keelworks-canary
+- Repository bound (policy section 6): exactly isolith + isolith-canary
   (+ grandfathered archived oep-meta). `wave_checkpoint.py repos` confirms no
   new repositories.
 

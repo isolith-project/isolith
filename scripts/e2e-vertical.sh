@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# P12-T09 -- Keelworks E2E scenario suite driver (reference vertical: import
+# P12-T09 -- Isolith E2E scenario suite driver (reference vertical: import
 # CGR/STEP -> model -> release via PDM -> render/convert via P2P -> share).
 #
 # Thin bash wrapper around python/oep_tooling/e2e_vertical.py in the same

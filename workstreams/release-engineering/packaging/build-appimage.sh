@@ -31,7 +31,7 @@ case "$HOST_ARCH" in
   x86_64|amd64)  AIT_ARCH=x86_64 ;;
   *) echo "unhandled host arch $HOST_ARCH" >&2; exit 2 ;;
 esac
-AIT="$HOME/.cache/keelworks-appimagetool/appimagetool-$AIT_ARCH.AppImage"
+AIT="$HOME/.cache/isolith-appimagetool/appimagetool-$AIT_ARCH.AppImage"
 if [[ ! -x "$AIT" ]]; then
   mkdir -p "$(dirname "$AIT")"
   echo "fetching appimagetool ($AIT_ARCH) ..." >&2
@@ -56,7 +56,7 @@ chmod +x "$APP/AppRun"
 
 # icon: self-contained generated PNG (appimagetool wants .png/.svg/.xpm)
 # bundled one per build to keep the recipe standalone.
-ICON="$APP/usr/share/icons/hicolor/256x256/apps/keelworks-oep.png"
+ICON="$APP/usr/share/icons/hicolor/256x256/apps/isolith-oep.png"
 mkdir -p "$(dirname "$ICON")"
 python3 - "$ICON" <<'PYEOF'
 import sys
@@ -71,15 +71,15 @@ img.save(sys.argv[1])
 PYEOF
 
 # desktop entry (root copy for appimagetool discovery)
-printf '[Desktop Entry]\nType=Application\nName=OEP %s\nComment=Keelworks OEP %s\nExec=%s\nIcon=keelworks-oep\nTerminal=false\nCategories=Engineering;Graphics;Office;\n' \
-  "$BIN" "$BIN" "$BIN" > "$APP/keelworks-$BIN.desktop"
-cp "$APP/keelworks-$BIN.desktop" "$APP/usr/share/applications/keelworks-$BIN.desktop"
+printf '[Desktop Entry]\nType=Application\nName=OEP %s\nComment=Isolith OEP %s\nExec=%s\nIcon=isolith-oep\nTerminal=false\nCategories=Engineering;Graphics;Office;\n' \
+  "$BIN" "$BIN" "$BIN" > "$APP/isolith-$BIN.desktop"
+cp "$APP/isolith-$BIN.desktop" "$APP/usr/share/applications/isolith-$BIN.desktop"
 touch "$APP/.DirIcon" 2>/dev/null || true
-cp "$ICON" "$APP/keelworks-oep.png"
+cp "$ICON" "$APP/isolith-oep.png"
 
 # --- package -----------------------------------------------------------------
 mkdir -p "$OUT"
-ARCH="${BIN}-keelworks-oep-$(uname -m).AppImage"   # artifact name
+ARCH="${BIN}-isolith-oep-$(uname -m).AppImage"   # artifact name
 rm -f "$OUT/$ARCH"
 echo "building $ARCH ..." >&2
 "$AIT" --appimage-extract-and-run "$APP" "$OUT/$ARCH" >&2

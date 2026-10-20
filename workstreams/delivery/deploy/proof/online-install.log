@@ -1,7 +1,7 @@
 [OEP] Preflight... (docker + compose + disk)
 [OEP] Preflight ok.
-[OEP] Building stack image keelworks/oep-stack:0.1.0 (first build fetches crates, minutes)...
- Image keelworks/oep-stack:0.1.0 Building 
+[OEP] Building stack image isolith/oep-stack:0.1.0 (first build fetches crates, minutes)...
+ Image isolith/oep-stack:0.1.0 Building 
 #1 [internal] load local bake definitions
 #1 reading from stdin 658B done
 #1 DONE 0.0s
@@ -92,32 +92,32 @@
 #25 exporting attestation manifest sha256:2e41436b725654cc3285c3bfabd6cae48e34ffe5e7ae7df8e9136b81ed76eb12 0.1s done
 #25 exporting manifest list sha256:5b682dd6ffe90cbafe8f31481cda70dbfb58f9569f1888314b5afca6e7a4cbad
 #25 exporting manifest list sha256:5b682dd6ffe90cbafe8f31481cda70dbfb58f9569f1888314b5afca6e7a4cbad 0.0s done
-#25 naming to docker.io/keelworks/oep-stack:0.1.0 done
-#25 unpacking to docker.io/keelworks/oep-stack:0.1.0 0.0s done
+#25 naming to docker.io/isolith/oep-stack:0.1.0 done
+#25 unpacking to docker.io/isolith/oep-stack:0.1.0 0.0s done
 #25 DONE 0.2s
 
 #26 resolving provenance for metadata file
 #26 DONE 0.0s
- Image keelworks/oep-stack:0.1.0 Built 
+ Image isolith/oep-stack:0.1.0 Built 
 [OEP] Starting stack (pdm + viewer + p2p)...
- Network keelworks_default Creating 
- Network keelworks_default Created 
- Volume keelworks_viewer_data Creating 
- Volume keelworks_viewer_data Created 
- Volume keelworks_pdm_data Creating 
- Volume keelworks_pdm_data Created 
- Container keelworks-p2p Creating 
- Container keelworks-pdm Creating 
- Container keelworks-p2p Created 
- Container keelworks-pdm Created 
- Container keelworks-viewer Creating 
- Container keelworks-viewer Created 
- Container keelworks-p2p Starting 
- Container keelworks-pdm Starting 
- Container keelworks-p2p Started 
- Container keelworks-pdm Started 
- Container keelworks-viewer Starting 
- Container keelworks-viewer Started 
+ Network isolith_default Creating 
+ Network isolith_default Created 
+ Volume isolith_viewer_data Creating 
+ Volume isolith_viewer_data Created 
+ Volume isolith_pdm_data Creating 
+ Volume isolith_pdm_data Created 
+ Container isolith-p2p Creating 
+ Container isolith-pdm Creating 
+ Container isolith-p2p Created 
+ Container isolith-pdm Created 
+ Container isolith-viewer Creating 
+ Container isolith-viewer Created 
+ Container isolith-p2p Starting 
+ Container isolith-pdm Starting 
+ Container isolith-p2p Started 
+ Container isolith-pdm Started 
+ Container isolith-viewer Starting 
+ Container isolith-viewer Started 
 [OEP] Waiting for health checks to go green (up to 180s)...
 [OEP] All 3 services healthy.
 [OEP] Verifying each health endpoint directly...
@@ -129,4 +129,4 @@
   Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
   P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
 
-[OEP] One-command install complete: the full Keelworks stack is up with health checks green.
+[OEP] One-command install complete: the full Isolith stack is up with health checks green.

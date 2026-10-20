@@ -1,15 +1,15 @@
 ---
-title: Keelworks Open Modeler Shell Decision (keep a thin own shell around Open CASCADE; do not acquire FreeCAD or the CADCraft lineage)
+title: Isolith Open Modeler Shell Decision (keep a thin own shell around Open CASCADE; do not acquire FreeCAD or the CADCraft lineage)
 decision: keep_thin_own_modeler_shell_around_opencascade_reject_acquiring_freecad_or_cadcraft
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks program governance, P7 modeler lane (P7-M1-T01)
+owner: Isolith program governance, P7 modeler lane (P7-M1-T01)
 applies_to: the P7 modeler lane (P7-M1 through P7-M5), the oep-geo canonical model that the shell hosts, the oep-engine-occ boundary, the wgpu renderer surface (P6-M5), the downstream cards P7-M2-T01/T02, P7-M3-T01/T02, P7-M4-T01/T02, and P7-M5-T01/T02, and the P8 PDM and P9 compute integrations
 supersedes: nothing (first open modeler shell decision record; the master-plan working assumption that P7 builds FreeCAD workbenches is hereby replaced)
 ---
 
-# Keelworks Open Modeler Shell Decision (keep/acquire)
+# Isolith Open Modeler Shell Decision (keep/acquire)
 
 This record is the binding product decision for the P7-M1-T01 card: which
 "open modeler shell" the platform models inside. The question is narrowly
@@ -28,11 +28,11 @@ and adds a line to the change log at the bottom.
 
 ## 1. Decision
 
-Keelworks KEEPS a thin own modeler shell around Open CASCADE Technology. That
+Isolith KEEPS a thin own modeler shell around Open CASCADE Technology. That
 shell is built in Rust as an extension of the P6 modeler host (the wgpu-based
 oep-geo preview/app shell started in P6-M5-T02), displays and edits the
 oep-geo canonical model directly, and reaches OCCT only through the
-oep-engine-occ boundary ratified in the boolean-ops record. Keelworks does NOT
+oep-engine-occ boundary ratified in the boolean-ops record. Isolith does NOT
 acquire FreeCAD as the P7 modeler shell, and does NOT acquire the CADCraft
 lineage, today.
 
@@ -200,7 +200,7 @@ copied code.
    product class (2D drafting, no 3D kernel, no parametrics, no assembly, no
    B-Rep) and a pre-alpha maturity; acquisition is rejected today and kept on
    watch (section 5.3).
-4. Program-ratified decisions (primary: Keelworks master plan decomposition
+4. Program-ratified decisions (primary: Isolith master plan decomposition
    2026-10-15, P6-M3 boolean ADR, P6-M5 renderer ADR, board program record).
    (a) oep-geo is the canonical model ("our model, our serde schema"); (b) the
    renderer is wgpu/WGSL, headless, with a committed real-material spike; (c)

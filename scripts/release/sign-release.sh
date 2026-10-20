@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sign-release.sh - build-host signer for Keelworks release artifacts (P11-T04).
+# sign-release.sh - build-host signer for Isolith release artifacts (P11-T04).
 #
 # Runs ONLY on the build host, where the two signing secrets live:
 #   * gpg key     oep-airgap-signing   (secret in the build host keyring;
@@ -123,7 +123,7 @@ for f in sorted(os.listdir(".")):
     url = f"{mirror}/{f}" if mirror else None
     artifacts.append({"name": f, "sha256": h.hexdigest(),
                       "size": os.path.getsize(f), "url": url})
-manifest = {"manifest": "keelworks-release-v1", "release": version,
+manifest = {"manifest": "isolith-release-v1", "release": version,
             "product": "oep", "released": date, "artifacts": artifacts}
 with open("RELEASE-MANIFEST.json", "w") as fh:
     json.dump(manifest, fh, indent=2, sort_keys=True)
@@ -165,7 +165,7 @@ with open("SHA256SUMS") as fh:
     for line in fh:
         h, name = line.split(None, 1)
         checksums[name.strip()] = h
-out = {"schema": "keelworks.release-signatures.v1", "version": version,
+out = {"schema": "isolith.release-signatures.v1", "version": version,
        "signed": date, "update_bundle": bundle,
        "artifacts": len([k for k in signatures if k != "SHA256SUMS.sig"]),
        "detached_signatures": sorted(signatures),

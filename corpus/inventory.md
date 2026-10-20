@@ -1,4 +1,4 @@
-# Keelworks Corpus Inventory (P1-M1-T04)
+# Isolith Corpus Inventory (P1-M1-T04)
 
 Version 1.0, 2026-10-15
 

@@ -188,7 +188,7 @@ def test_live_regression_fetch_full_corpus():
 
 
 def main():
-    print("Keelworks P1-M4-T01 object-store mirror acceptance test")
+    print("Isolith P1-M4-T01 object-store mirror acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_manifest_pointers_wellformed()

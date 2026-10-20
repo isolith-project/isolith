@@ -17,7 +17,7 @@
     "record_prs": "integration/port-record.md"
   },
   "host": "promaxgb10-83f1",
-  "schema": "keelworks.wave-checkpoint.v1",
+  "schema": "isolith.wave-checkpoint.v1",
   "tip_sha": "0acde1e6ab450cd78c7496c51e45c201fb9ab03c",
   "tip_tree": "638a68501ac027bf3cb592accbd432ad99509eba",
   "uncarded_commits": [

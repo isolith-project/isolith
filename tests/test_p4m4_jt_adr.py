@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P4-M4-T02: JT import (visualization/PMI) decision
+"""Acceptance test for Isolith P4-M4-T02: JT import (visualization/PMI) decision
 ADR -- adopt an existing OSS JT reader or build.
 
 Written FIRST (TDD). The ADR at workstreams/step-interop/qif/jt-import-decision-adr.md must make this

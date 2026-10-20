@@ -1,4 +1,4 @@
-# Keelworks CODEOWNERS
+# Isolith CODEOWNERS
 #
 # Policy record for P0-M1-T04 (contributor rules decision). Mirrors
 # docs/layout.md: one owner row per Cargo workspace workstream plus the
@@ -13,8 +13,8 @@
 # Rows track the Cargo workspace member list (INTEGRATION-T02 forward-ported
 # oep-step-pmi / oep-pmi / oep-qif rows in with the P4 lane).
 
-# Catch-all default: the keelworks owners team governs everything below.
-.* @keelworks/Owners
+# Catch-all default: the isolith owners team governs everything below.
+.* @isolith/Owners
 
 # Per workstream (every Cargo.toml workspace member crate).
 crates/oep-cgr/.* @don

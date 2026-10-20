@@ -1,4 +1,4 @@
-"""NAS object-store sync backend for the Keelworks corpus (P1-M1-T05).
+"""NAS object-store sync backend for the Isolith corpus (P1-M1-T05).
 
 Mirrors license-clean corpus blobs to the NAS object store — the NAS Gitea
 generic package registry (the same backend P0-M4-T02 chose for the corpus
@@ -28,7 +28,7 @@ GITEA_BASE = "http://192.168.0.101:3200"
 CREDS = os.path.expanduser("~/.git-credentials")
 
 DEFAULT_OWNER = "don"
-DEFAULT_PACKAGE = "keelworks-corpus"
+DEFAULT_PACKAGE = "isolith-corpus"
 DEFAULT_VERSION = "v1"
 
 

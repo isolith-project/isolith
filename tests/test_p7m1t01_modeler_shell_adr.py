@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P7-M1-T01: open modeler shell eval (keep/acquire
+"""Acceptance test for Isolith P7-M1-T01: open modeler shell eval (keep/acquire
 memo). Decides the architectural fork P7-M2 through P7-M5 depend on.
 
 Written FIRST (TDD). The memo at workstreams/modeler/shell/open-modeler-shell-eval-memo.md must make

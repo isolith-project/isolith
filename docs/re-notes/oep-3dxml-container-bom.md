@@ -1,6 +1,6 @@
 # oep-3dxml Container + BOM: Outer ZIP Parse and Manifest
 
-P3-M1-T01 · Keelworks / OEP P3 3DXML Reader
+P3-M1-T01 · Isolith / OEP P3 3DXML Reader
 Status: verified on real material 2026-10-15
 Version: 1.0
 

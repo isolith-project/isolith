@@ -1,4 +1,4 @@
-// Keelworks P6-M5-T01 renderer backend decision, real-material spike.
+// Isolith P6-M5-T01 renderer backend decision, real-material spike.
 //
 // Proves the adopted backend (wgpu + WGSL) can render HEADLESS: no display
 // session, no window, no on-screen swapchain. A WGSL shader draws a triangle

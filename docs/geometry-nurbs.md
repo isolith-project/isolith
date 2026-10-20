@@ -1,6 +1,6 @@
 # P6-M2-T02: NURBS / B-spline Math Integration (oep-geo)
 
-Status: implemented, GREEN on real material (Keelworks wave 1, P6).
+Status: implemented, GREEN on real material (Isolith wave 1, P6).
 Card: P6-M2-T02  -  "NURBS/B-spline math integration (OCC bindings or Rust
 NURBS crate); curve/surface evaluation tests."
 Bump: none (first P6-M2-T02 record).

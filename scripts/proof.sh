@@ -56,7 +56,7 @@ def call(method, path, body=None):
     req = urllib.request.Request(base+path, data=json.dumps(body).encode() if body else None,
                                  method=method, headers={"Content-Type": "application/json"})
     return json.loads(urllib.request.urlopen(req).read())
-sample = open("/home/r1a/keelworks-main/.worktrees/p10m1t02-tls-backup-1017a/crates/oep-pdm/tests/fixtures/box-mini.step","rb").read()
+sample = open("/home/r1a/isolith-main/.worktrees/p10m1t02-tls-backup-1017a/crates/oep-pdm/tests/fixtures/box-mini.step","rb").read()
 count = 5
 for i in range(count):
     it = call("POST","/items",{"name":f"Proof-{i}","kind":"part","description":"P10-M1-T02 proof seed"})
@@ -91,7 +91,7 @@ RESTORE_OK=1
 # ---- 3. schedule installed? (cron/user timer entry references the producer) --
 SCHEDULE="absent"
 crontab -l 2>/dev/null | grep -q "vault-backup.sh" && SCHEDULE="cron-ok"
-systemctl --user list-timers 2>/dev/null | grep -q "keelworks-vault-backup" && SCHEDULE="systemd-ok"
+systemctl --user list-timers 2>/dev/null | grep -q "isolith-vault-backup" && SCHEDULE="systemd-ok"
 
 # ---- 4. write proof json -----------------------------------------------------
 python3 - "$OUT_JSON" "$TLS_HANDSHAKE" "$TLS_HEALTH" "$SEEDED" "$CATALOGUE" "$AUDIT_OK" \
@@ -111,7 +111,7 @@ out = {
     "catalogue_total": int(sys.argv[5]),
     "audit_verify_ok": (sys.argv[6] == "True" or sys.argv[6] == "true"),
     "blob_count": int(sys.argv[7]),
-    "bundle_contract": "keelworks-vault-backup/{latest,manifest.sha256,meta.json}"
+    "bundle_contract": "isolith-vault-backup/{latest,manifest.sha256,meta.json}"
   },
   "restore_round_trips_on_this_host": sys.argv[8] == "1",
   "scheduled": sys.argv[9],

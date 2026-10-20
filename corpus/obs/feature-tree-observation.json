@@ -1,7 +1,7 @@
 {
   "task": "P5-M4-T01",
   "method": "byte-observed, clean-room (stdlib only, no vendor binary)",
-  "corpus_root": "/home/r1a/keelworks-main/.worktrees/p5m1t02-native-observability-1016a/corpus",
+  "corpus_root": "/home/r1a/isolith-main/.worktrees/p5m1t02-native-observability-1016a/corpus",
   "unique_files_scanned": 123,
   "parts_observed": 123,
   "lp_feature_records_total": 841,

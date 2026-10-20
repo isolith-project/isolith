@@ -1,7 +1,7 @@
 # P9-M3-T02 — Export/convert workers: CGR->glTF, STEP->mesh (dogfood P2/P4)
 
 Version 1.0, 2026-10-17. Milestone: P9-M3-T02 (export/convert workers) of the
-P9 P2P compute lane (wave 2). Program: Keelworks / Open Engineering Platform.
+P9 P2P compute lane (wave 2). Program: Isolith / Open Engineering Platform.
 
 Delivered as `crates/oep-worker` (layout anchor `P9 oep-worker`), which is the
 P9 `convert` executor lane. The program eats its own dogfood: CGR->glTF runs

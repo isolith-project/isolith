@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P8-M4-T02: approval flows + reviewer
+"""Acceptance test for Isolith P8-M4-T02: approval flows + reviewer
 comments + e-signature-equivalent (intent-affirmation, not a legal seal).
 
 Written FIRST (TDD), mirroring the ADR-test convention (P8-M1, renderer-backend

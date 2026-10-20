@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P8-M5-T03: hybrid cloud role decision.
+"""Acceptance test for Isolith P8-M5-T03: hybrid cloud role decision.
 
 Written FIRST (TDD), mirroring the P8-M1 web-stack ADR test convention. The
 decision record at workstreams/pdm/sync/hybrid-cloud-role-adr.md must make this test pass.
@@ -219,7 +219,7 @@ def _nas_probe():
                 break
     try:
         req = urllib.request.Request(
-            "http://192.168.0.101:3200/api/v1/repos/keelworks/keelworks",
+            "http://192.168.0.101:3200/api/v1/repos/isolith/isolith",
             headers={"Authorization": "token " + tok} if tok else {})
         with urllib.request.urlopen(req, timeout=15) as r:
             return r.status == 200

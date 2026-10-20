@@ -1,6 +1,6 @@
 # oep-cgr Face/Edge Topology Reconstruction (open/unclosed boundary flags)
 
-P2-M3-T02 · Keelworks / OEP P2 CGR Reader
+P2-M3-T02 · Isolith / OEP P2 CGR Reader
 Status: TDD acceptance test GREEN on real material 2026-10-15
 Version: 1.0
 

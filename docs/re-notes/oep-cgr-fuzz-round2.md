@@ -1,6 +1,6 @@
 # oep-cgr Fuzz Campaign Round 2: Structure Depth, Huge Files, Truncated Tails
 
-P2-M6-T01 · Keelworks / OEP P2 CGR Reader
+P2-M6-T01 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15
 Version: 1.0
 

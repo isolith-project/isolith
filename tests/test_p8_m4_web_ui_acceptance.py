@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P8-M4-T01: PDM web UI.
+"""Acceptance test for Isolith P8-M4-T01: PDM web UI.
 
 Written FIRST (TDD) and kept green. The crate at crates/oep-web must make this
 test pass. It verifies the acceptance criteria against the crate and its

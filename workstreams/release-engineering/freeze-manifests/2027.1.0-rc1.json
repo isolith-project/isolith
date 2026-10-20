@@ -10,7 +10,7 @@
   "frozen_newest": "18d24b0402681f938b40744ac9f400ce11678478",
   "frozen_oldest": "98a899bfa908809daec4d22a07c89eb2bda7ed22",
   "host": "promaxgb10-83f1",
-  "schema": "keelworks.release-freeze.v1",
+  "schema": "isolith.release-freeze.v1",
   "train": "2027.1",
   "version": "2027.1.0-rc1"
 }

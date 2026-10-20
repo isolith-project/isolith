@@ -276,8 +276,8 @@ def check_install_machine(name, host, port, root, report, docker_available):
     def x(cmd, timeout=1800):
         if host is None:
             return run(["bash", "-lc", cmd], timeout=timeout)
-        # machine B: the RC tree was rsynced to ~/keelworks by the proof driver
-        return ssh_run(host, port, f"cd ~/keelworks && {cmd}", timeout=timeout)
+        # machine B: the RC tree was rsynced to ~/isolith by the proof driver
+        return ssh_run(host, port, f"cd ~/isolith && {cmd}", timeout=timeout)
 
     def curl_on_target(path, want_status=200):
         # Run the documented health curl on the machine that hosts the stack.
@@ -285,11 +285,11 @@ def check_install_machine(name, host, port, root, report, docker_available):
         code = outc.stdout.strip()
         return code == str(want_status), code
 
-    # 0. clean state: no keelworks containers/volumes/images, no .env.
-    clean = x("docker ps -aq --filter name=keelworks- | xargs -r docker rm -f; "
+    # 0. clean state: no isolith containers/volumes/images, no .env.
+    clean = x("docker ps -aq --filter name=isolith- | xargs -r docker rm -f; "
               "docker volume ls -q --filter name=pdm_data | xargs -r docker volume rm; "
               "docker volume ls -q --filter name=viewer_data | xargs -r docker volume rm; "
-              "docker image rm -f keelworks/oep-stack:0.1.0 2>/dev/null; "
+              "docker image rm -f isolith/oep-stack:0.1.0 2>/dev/null; "
               "rm -f workstreams/delivery/deploy/deploy/.env; true")
     if clean.returncode != 0:
         report.add(LegRow(f"install-{name}", "INSTALL", "FAIL",
@@ -311,8 +311,8 @@ def check_install_machine(name, host, port, root, report, docker_available):
     pdm_json_ok = '"status":"ok"' in pdm_body or '"status": "ok"' in pdm_body
     p2p_json_ok = '"status":"ok"' in p2p_body or '"status": "ok"' in p2p_body
     # worker binaries present in the installed image (steps 6-7 of checklist).
-    w1 = x("docker run --rm --entrypoint oep-batch-convert keelworks/oep-stack:0.1.0 --help >/dev/null 2>&1; echo $?")
-    w2 = x("docker run --rm --entrypoint oep-render-worker keelworks/oep-stack:0.1.0 --describe >/dev/null 2>&1; echo $?")
+    w1 = x("docker run --rm --entrypoint oep-batch-convert isolith/oep-stack:0.1.0 --help >/dev/null 2>&1; echo $?")
+    w2 = x("docker run --rm --entrypoint oep-render-worker isolith/oep-stack:0.1.0 --describe >/dev/null 2>&1; echo $?")
     workers_ok = w1.stdout.strip() == "0" and w2.stdout.strip() == "0"
     if not (pdm_ok and pdm_json_ok and viewer_ok and p2p_ok and p2p_json_ok and workers_ok):
         report.add(LegRow(
@@ -333,7 +333,7 @@ def check_stack(root, report, docker_available):
     if not docker_available:
         report.add(LegRow("full-stack", "STACK", "SKIP", "no docker daemon", "no-docker"))
         return
-    img = "keelworks/oep-stack:0.1.0"
+    img = "isolith/oep-stack:0.1.0"
     w1 = run(["docker", "run", "--rm", "--entrypoint", "oep-batch-convert", img, "--help"])
     w2 = run(["docker", "run", "--rm", "--entrypoint", "oep-render-worker", img, "--describe"])
     if w1.returncode != 0 or w2.returncode != 0:
@@ -341,7 +341,7 @@ def check_stack(root, report, docker_available):
                           f"worker bins: oep-batch-convert rc={w1.returncode}, "
                           f"oep-render-worker rc={w2.returncode}"))
         return
-    ps = run(["docker", "ps", "--filter", "name=keelworks-", "--format",
+    ps = run(["docker", "ps", "--filter", "name=isolith-", "--format",
               "{{.Names}} {{.Status}}"])
     healthy = sum(1 for line in ps.stdout.splitlines() if "healthy" in line)
     if healthy < 3:
@@ -361,7 +361,7 @@ def check_airgap(root, report, docker_available):
         return
     # The air-gap proof image may already be built (from the M2-T02 proof);
     # build it if not present.
-    img = "keelworks/oep-pdm:airgap-proof-src"
+    img = "isolith/oep-pdm:airgap-proof-src"
     have = run(["docker", "image", "inspect", img, "--format", "{{.Id}}"])
     if have.returncode != 0:
         b = run(["docker", "build", "-f", str(root / "scripts/airgap/Dockerfile.oep-pdm"),
@@ -406,7 +406,7 @@ def check_airgap(root, report, docker_available):
                 return
     with tempfile.TemporaryDirectory(prefix="p10ga-airgap-") as td:
         td = Path(td)
-        bundle = td / "keelworks-offline-0.1.0.tar.gz"
+        bundle = td / "isolith-offline-0.1.0.tar.gz"
         bk = run(["bash", str(root / "scripts/airgap/build-offline-bundle.sh"),
                   "--version", "0.1.0",
                   "--images", img, "nats:2-alpine",
@@ -444,17 +444,17 @@ def check_airgap(root, report, docker_available):
             # So we take the signature/integrity markers as the proof here and
             # demand a clean rc=0 verify AFTER the install (final verification).
             verify_before = t("bash /opt/airgap-scripts/airgap-verify.sh "
-                              "--bundle /media/keelworks-offline-0.1.0.tar.gz")
+                              "--bundle /media/isolith-offline-0.1.0.tar.gz")
             vb_out = verify_before.stdout + verify_before.stderr
             sig_ok = ("bundle signature OK" in vb_out) and \
                      ("manifest signature OK" in vb_out)
             install = t("bash /opt/airgap-scripts/airgap-install.sh "
-                        "--bundle /media/keelworks-offline-0.1.0.tar.gz "
-                        "--install-dir /opt/keelworks --project oep")
+                        "--bundle /media/isolith-offline-0.1.0.tar.gz "
+                        "--install-dir /opt/isolith --project oep")
             off = "OEP_UPDATE_CHECK=off" in install.stdout or "OEP_UPDATE_CHECK=off" in install.stderr
             verify_after = t("bash /opt/airgap-scripts/airgap-verify.sh "
-                             "--bundle /media/keelworks-offline-0.1.0.tar.gz "
-                             "--install-dir /opt/keelworks --project oep")
+                             "--bundle /media/isolith-offline-0.1.0.tar.gz "
+                             "--install-dir /opt/isolith --project oep")
             if sig_ok and install.returncode == 0 and off and verify_after.returncode == 0:
                 report.add(LegRow(
                     "airgap", "AIRGAP", "PASS",
@@ -473,7 +473,7 @@ def check_airgap(root, report, docker_available):
             tar = run(["docker", "rm", "-f", "oep-airgap-target"])
             # remove the compose stack the air-gap install left on the host
             run(["docker", "rm", "-f", "oep-airgap-pdm", "oep-airgap-bus"])
-            run(["docker", "volume", "rm", "-f", "keelworks_pdm-data"])
+            run(["docker", "volume", "rm", "-f", "isolith_pdm-data"])
             del tar
 
 

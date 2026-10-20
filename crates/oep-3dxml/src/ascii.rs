@@ -229,7 +229,7 @@ fn write_model_doc<W: Write>(opts: &WriterOpts<'_>, w: &mut W) -> std::io::Resul
     writeln!(w, "    <SchemaVersion>4.0</SchemaVersion>")?;
     writeln!(w, "    <Title>{title}</Title>")?;
     writeln!(w, "    <Author>{author}</Author>")?;
-    writeln!(w, "    <Generator>Keelworks oep-3dxml</Generator>")?;
+    writeln!(w, "    <Generator>Isolith oep-3dxml</Generator>")?;
     if !opts.timestamp.is_empty() {
         writeln!(w, "    <Created>{}</Created>", xml_escape(opts.timestamp))?;
     }

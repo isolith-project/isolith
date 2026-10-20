@@ -1,6 +1,6 @@
 # P7-M4-T02: Rules/checks sandbox (Knowledgeware-lite, documented not parity)
 
-Status: implemented (Keelworks wave 2, P7 modeler lane, milestone P7.4 Sketcher/Parametrics).
+Status: implemented (Isolith wave 2, P7 modeler lane, milestone P7.4 Sketcher/Parametrics).
 Deliverable: `crates/oep-rules`, a knowledge-light engine (parameters, formulas,
 checks, single-pass rules) evaluated against real `oep-geo` parts, plus a rules
 demo on the committed canonical bracket part.

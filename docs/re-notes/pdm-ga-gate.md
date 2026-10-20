@@ -1,6 +1,6 @@
 # P8-M6-T03 RE note: P8 GA gate (multi-user edit/publish/release + concurrent lock test)
 
-Task: P8-M6-T03 (t_8cee3e28). Delivered as keelworks PR (branch
+Task: P8-M6-T03 (t_8cee3e28). Delivered as isolith PR (branch
 task/p8m6t03-ga-gate-1017a). Version 1 (2026-10-17).
 
 ## What landed

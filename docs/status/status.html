@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keelworks Nightly Stress Status</title>
+<title>Isolith Nightly Stress Status</title>
 <style>
   :root { color-scheme: light dark; }
   body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -29,8 +29,8 @@
 </style>
 </head>
 <body>
-<h1>Keelworks — Nightly Stress Status</h1>
-<p class="meta">repo: http://192.168.0.101:3200/keelworks/keelworks.git &middot; commit: bc3f57f<br>
+<h1>Isolith — Nightly Stress Status</h1>
+<p class="meta">repo: http://192.168.0.101:3200/isolith/isolith.git &middot; commit: bc3f57f<br>
 generated: 2026-10-15T18:34:49.928541+00:00 UTC</p>
 <p>Suite state: <span class="badge good">PASS</span>
 &nbsp; 5/5 passed, 0 failed, 0 timed out</p>
@@ -38,11 +38,11 @@ generated: 2026-10-15T18:34:49.928541+00:00 UTC</p>
 <thead><tr><th>Job</th><th>Category</th><th>Status</th><th>Duration</th>
 <th>Output tail</th></tr></thead>
 <tbody>
-<tr class="good"><td class="job">cargo-build-workspace</td><td>regression</td><td class="status">pass</td><td class="num">0.07s (exit 0)</td><td><pre>   Compiling oep-3dxml v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml)
-   Compiling oep-cgr v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr)
-   Compiling oep-step v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step)
-   Compiling oep-geo v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo)
-   Compiling oep-pdm v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm)
+<tr class="good"><td class="job">cargo-build-workspace</td><td>regression</td><td class="status">pass</td><td class="num">0.07s (exit 0)</td><td><pre>   Compiling oep-3dxml v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml)
+   Compiling oep-cgr v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-cgr)
+   Compiling oep-step v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-step)
+   Compiling oep-geo v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-geo)
+   Compiling oep-pdm v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-pdm)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s</pre></td></tr>
 <tr class="good"><td class="job">cargo-test-workspace</td><td>regression</td><td class="status">pass</td><td class="num">0.23s (exit 0)</td><td><pre>
 running 0 tests
@@ -94,11 +94,11 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-   Compiling oep-step v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step)
-   Compiling oep-cgr v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr)
-   Compiling oep-3dxml v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml)
-   Compiling oep-geo v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo)
-   Compiling oep-pdm v0.1.0 (/home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm)
+   Compiling oep-step v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-step)
+   Compiling oep-cgr v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-cgr)
+   Compiling oep-3dxml v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml)
+   Compiling oep-geo v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-geo)
+   Compiling oep-pdm v0.1.0 (/home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-pdm)
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.14s
      Running unittests src/lib.rs (target/debug/deps/oep_3dxml-12d903e4f8afbac8)
      Running unittests src/lib.rs (target/debug/deps/oep_cgr-42f5cd8e664a8ad6)
@@ -123,31 +123,31 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 [PASS] member crates/oep-step uses oep- prefix -- crates/oep-step
 [PASS] member crates/oep-pdm uses oep- prefix -- crates/oep-pdm
 [PASS] crate dir: oep-cgr
-[PASS] crate Cargo.toml: oep-cgr -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr/Cargo.toml
-[PASS] crate src/lib.rs: oep-cgr -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-cgr/src/lib.rs
+[PASS] crate Cargo.toml: oep-cgr -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-cgr/Cargo.toml
+[PASS] crate src/lib.rs: oep-cgr -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-cgr/src/lib.rs
 [PASS] package.name == oep-cgr -- &#x27;oep-cgr&#x27;
 [PASS] package.name starts with oep-
 [PASS] crate dir: oep-3dxml
-[PASS] crate Cargo.toml: oep-3dxml -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml/Cargo.toml
-[PASS] crate src/lib.rs: oep-3dxml -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml/src/lib.rs
+[PASS] crate Cargo.toml: oep-3dxml -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml/Cargo.toml
+[PASS] crate src/lib.rs: oep-3dxml -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-3dxml/src/lib.rs
 [PASS] package.name == oep-3dxml -- &#x27;oep-3dxml&#x27;
 [PASS] package.name starts with oep-
 [PASS] crate dir: oep-geo
-[PASS] crate Cargo.toml: oep-geo -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo/Cargo.toml
-[PASS] crate src/lib.rs: oep-geo -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-geo/src/lib.rs
+[PASS] crate Cargo.toml: oep-geo -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-geo/Cargo.toml
+[PASS] crate src/lib.rs: oep-geo -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-geo/src/lib.rs
 [PASS] package.name == oep-geo -- &#x27;oep-geo&#x27;
 [PASS] package.name starts with oep-
 [PASS] crate dir: oep-step
-[PASS] crate Cargo.toml: oep-step -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step/Cargo.toml
-[PASS] crate src/lib.rs: oep-step -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-step/src/lib.rs
+[PASS] crate Cargo.toml: oep-step -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-step/Cargo.toml
+[PASS] crate src/lib.rs: oep-step -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-step/src/lib.rs
 [PASS] package.name == oep-step -- &#x27;oep-step&#x27;
 [PASS] package.name starts with oep-
 [PASS] crate dir: oep-pdm
-[PASS] crate Cargo.toml: oep-pdm -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm/Cargo.toml
-[PASS] crate src/lib.rs: oep-pdm -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/crates/oep-pdm/src/lib.rs
+[PASS] crate Cargo.toml: oep-pdm -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-pdm/Cargo.toml
+[PASS] crate src/lib.rs: oep-pdm -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/crates/oep-pdm/src/lib.rs
 [PASS] package.name == oep-pdm -- &#x27;oep-pdm&#x27;
 [PASS] package.name starts with oep-
-[PASS] exists: docs/layout.md -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/docs/layout.md
+[PASS] exists: docs/layout.md -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/docs/layout.md
 [PASS] layout.md mentions oep-cgr
 [PASS] layout.md maps P2 -&gt; oep-cgr
 [PASS] layout.md mentions oep-3dxml
@@ -163,7 +163,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 [PASS] layout.md anchors workstream P8
 [PASS] layout.md anchors workstream P2
 [PASS] layout.md anchors workstream P4
-[PASS] python/oep_tooling/__init__.py -- /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a/python/oep_tooling/__init__.py
+[PASS] python/oep_tooling/__init__.py -- /home/r1a/isolith-main/.worktrees/nightly-stress-1015a/python/oep_tooling/__init__.py
 [PASS] exists: .gitignore
 [PASS] .gitignore ignores target/
 [PASS] .gitignore ignores .worktrees/
@@ -172,8 +172,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 [PASS] cargo test --workspace (exit 0)
 ============================================================
 ALL CHECKS PASSED</pre></td></tr>
-<tr class="good"><td class="job">text-file-integrity</td><td>regression</td><td class="status">pass</td><td class="num">0.01s (exit 0)</td><td><pre>Keelworks text-file integrity scan (P0-M4-T03)
-root: /home/r1a/keelworks-main/.worktrees/nightly-stress-1015a
+<tr class="good"><td class="job">text-file-integrity</td><td>regression</td><td class="status">pass</td><td class="num">0.01s (exit 0)</td><td><pre>Isolith text-file integrity scan (P0-M4-T03)
+root: /home/r1a/isolith-main/.worktrees/nightly-stress-1015a
 ------------------------------------------------------------
 ------------------------------------------------------------
 INTEGRITY OK files=29</pre></td></tr>

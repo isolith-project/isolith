@@ -1,6 +1,6 @@
 # oep-cgr Streaming Parse for Large Assemblies (100k+ parts)
 
-P2-M6-T02 · Keelworks / OEP P2 CGR Reader
+P2-M6-T02 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15
 Version: 1.0
 

@@ -120,7 +120,7 @@ fn main() {
         .unwrap();
     store.save().expect("save seed vault");
 
-    let manifest = export_all(&store, &archive_dir, Some("keelworks-proof")).expect("export-all");
+    let manifest = export_all(&store, &archive_dir, Some("isolith-proof")).expect("export-all");
     println!(
         "export-all OK: {} artifacts ({} geometry, {} model, {} raw, {} skipped)",
         manifest.artifacts.len(),

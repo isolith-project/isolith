@@ -1,29 +1,29 @@
 [OEP] Preflight... (docker + compose + disk)
 [OEP] Preflight ok.
-[OEP] Verifying ../releases/keelworks-oep-stack-0.1.0.tar.gz.sha256...
-keelworks-oep-stack-0.1.0.tar.gz: OK
-[OEP] Loading offline image tarball ../releases/keelworks-oep-stack-0.1.0.tar.gz (no build, no network)...
-Loaded image: keelworks/oep-stack:0.1.0
-[OEP] Reusing prebuilt image keelworks/oep-stack:0.1.0.
+[OEP] Verifying ../releases/isolith-oep-stack-0.1.0.tar.gz.sha256...
+isolith-oep-stack-0.1.0.tar.gz: OK
+[OEP] Loading offline image tarball ../releases/isolith-oep-stack-0.1.0.tar.gz (no build, no network)...
+Loaded image: isolith/oep-stack:0.1.0
+[OEP] Reusing prebuilt image isolith/oep-stack:0.1.0.
 [OEP] Starting stack (pdm + viewer + p2p)...
- Network keelworks_default Creating 
- Network keelworks_default Created 
- Volume keelworks_pdm_data Creating 
- Volume keelworks_pdm_data Created 
- Volume keelworks_viewer_data Creating 
- Volume keelworks_viewer_data Created 
- Container keelworks-p2p Creating 
- Container keelworks-pdm Creating 
- Container keelworks-pdm Created 
- Container keelworks-viewer Creating 
- Container keelworks-p2p Created 
- Container keelworks-viewer Created 
- Container keelworks-pdm Starting 
- Container keelworks-p2p Starting 
- Container keelworks-pdm Started 
- Container keelworks-viewer Starting 
- Container keelworks-p2p Started 
- Container keelworks-viewer Started 
+ Network isolith_default Creating 
+ Network isolith_default Created 
+ Volume isolith_pdm_data Creating 
+ Volume isolith_pdm_data Created 
+ Volume isolith_viewer_data Creating 
+ Volume isolith_viewer_data Created 
+ Container isolith-p2p Creating 
+ Container isolith-pdm Creating 
+ Container isolith-pdm Created 
+ Container isolith-viewer Creating 
+ Container isolith-p2p Created 
+ Container isolith-viewer Created 
+ Container isolith-pdm Starting 
+ Container isolith-p2p Starting 
+ Container isolith-pdm Started 
+ Container isolith-viewer Starting 
+ Container isolith-p2p Started 
+ Container isolith-viewer Started 
 [OEP] Waiting for health checks to go green (up to 180s)...
 [OEP] All 3 services healthy.
 [OEP] Verifying each health endpoint directly...
@@ -35,4 +35,4 @@ Loaded image: keelworks/oep-stack:0.1.0
   Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
   P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
 
-[OEP] One-command install complete: the full Keelworks stack is up with health checks green.
+[OEP] One-command install complete: the full Isolith stack is up with health checks green.

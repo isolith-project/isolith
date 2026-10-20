@@ -29,7 +29,7 @@
 //!    preserves those 36 vertex coordinates exactly; otherwise the test
 //!    skips so CI stays green before the corpus PRs merge.
 //!
-//! Clean-room: box.stl is a keelworks-authored CC0-1.0 fixture
+//! Clean-room: box.stl is a isolith-authored CC0-1.0 fixture
 //! (P0-M4-T02), and the glTF 2.0 / GLB layout is the public Khronos spec
 //! (CC-BY-4.0). No proprietary bytes are used anywhere in this test.
 

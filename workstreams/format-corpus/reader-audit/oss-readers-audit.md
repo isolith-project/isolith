@@ -1,12 +1,12 @@
-# P1-M3-T01 Audit: Open-Source Readers for Keelworks Target Formats
+# P1-M3-T01 Audit: Open-Source Readers for Isolith Target Formats
 
 Version: 1.1 (2026-10-15)
-Owner: Keelworks program, P1 Format Reconnaissance and Corpus (P1.3 baseline readers audit)
-Status: baseline readers audit. Output feeds P1-M3-T03 (prioritized import targets and first parcel), and validates the P2 (CGR) and P3 (3DXML) reader assumptions. The audit records what existing open-source readers can and cannot do for the Keelworks target formats, and the concrete gaps the P2/P3 reader work must fill.
+Owner: Isolith program, P1 Format Reconnaissance and Corpus (P1.3 baseline readers audit)
+Status: baseline readers audit. Output feeds P1-M3-T03 (prioritized import targets and first parcel), and validates the P2 (CGR) and P3 (3DXML) reader assumptions. The audit records what existing open-source readers can and cannot do for the Isolith target formats, and the concrete gaps the P2/P3 reader work must fill.
 
 ## 1. Purpose and scope
 
-The card asks for an audit of existing open-source (OSS) readers in five named buckets: GLC_Player, any CGR loaders, FreeCAD importers, Open CASCADE STEP, and Bob-the-Builder style tools. The point is not to catalog every OSS CAD tool that exists. The point is to answer, for each Keelworks target format, the question that decides the P2/P3 build plan: is there an existing OSS component we can read, fork, or learn from, and where does it stop (the gap)?
+The card asks for an audit of existing open-source (OSS) readers in five named buckets: GLC_Player, any CGR loaders, FreeCAD importers, Open CASCADE STEP, and Bob-the-Builder style tools. The point is not to catalog every OSS CAD tool that exists. The point is to answer, for each Isolith target format, the question that decides the P2/P3 build plan: is there an existing OSS component we can read, fork, or learn from, and where does it stop (the gap)?
 
 Target formats, from the P1 master plan and the format research notes:
 
@@ -23,7 +23,7 @@ GLC_Player is an OpenGL, open-source, cross-platform 3D model viewer, with a com
 
 What it reads (verifiable from the project site and SourceForge, 2026-10-15): COLLADA, 3DXML, OBJ, 3DS, STL, OFF, COFF.
 
-Critical fact for Keelworks: GLC_Player does NOT read CGR, CATPart, or CATProduct. Its 3DXML support is limited to the ASCII tessellated representation (the XML surface-mesh branch), the same surface the Dassault 3DXML spec publishes, and it reads it for display only. GLC_Player has been effectively unmaintained: the SourceForge project's last binary update is dated 2013-04-05, project version 2.3.0, and it is built on the Qt4 era. GLC_lib source is the still-useful artifact here: it contains a working 3DXML ASCII tessellation reader and a mesh viewer pipeline written in C++, both of which are lawful reference material for a P3 reader (documented format, Dassault free-internal-use spec) but not a maintained dependency.
+Critical fact for Isolith: GLC_Player does NOT read CGR, CATPart, or CATProduct. Its 3DXML support is limited to the ASCII tessellated representation (the XML surface-mesh branch), the same surface the Dassault 3DXML spec publishes, and it reads it for display only. GLC_Player has been effectively unmaintained: the SourceForge project's last binary update is dated 2013-04-05, project version 2.3.0, and it is built on the Qt4 era. GLC_lib source is the still-useful artifact here: it contains a working 3DXML ASCII tessellation reader and a mesh viewer pipeline written in C++, both of which are lawful reference material for a P3 reader (documented format, Dassault free-internal-use spec) but not a maintained dependency.
 
 License: GLC_lib is LGPL (v3+ per package listings), GLC_Player application is GPLv2. This matters for program license posture: a P3 reader that traces or adapts GLC_lib's 3DXML ASCII mesh path stays clean under Apache-2.0 or LGPL for a library, but copying the GPLv2 viewer application wholesale would not be compatible with Apache-2.0.
 
@@ -53,7 +53,7 @@ FreeCAD is the most complete OSS parametric modeler and the program's P7 open-mo
 
 What FreeCAD reads (verified via FreeCAD documentation and forums, 2026-10-15): STEP (AP203/AP214/AP242 via OCCT), IGES, BREP, OBJ, STL, DXF, SVG, DAE, IFC, OFF, NASTRAN, VRML, plus its native FCStd. The Part Import command additionally covers STEP/IGES/BREP with or without colors.
 
-Critical fact for Keelworks: FreeCAD does NOT open CATPart, CATProduct, or CGR natively. The only path to bring a CATIA part into FreeCAD is via an exported neutral format, in practice STEP (confirmed in the FreeCAD forum: the CATIA-to-FreeCAD path is STEP). There is no CGR loader, no CATPart loader, and no CATProduct assembly loader in FreeCAD core.
+Critical fact for Isolith: FreeCAD does NOT open CATPart, CATProduct, or CGR natively. The only path to bring a CATIA part into FreeCAD is via an exported neutral format, in practice STEP (confirmed in the FreeCAD forum: the CATIA-to-FreeCAD path is STEP). There is no CGR loader, no CATPart loader, and no CATProduct assembly loader in FreeCAD core.
 
 3DXML in FreeCAD: there is no core 3DXML importer. A single community macro, Macro_3DXML_import (author heda, 2021, LGPL-2.0-or-later, FreeCAD 0.19 era), imports only the ASCII tessellated .3DRep representation: it reads mesh faces (and optionally edges as polylines) from a single reference file, has no binary .3drep support, no Gregory-patch surface decoding, no assembly/instance/materials richness, and its own author notes applicability beyond the one reference file is unknown. It is a proof of concept, not a maintained importer.
 
@@ -81,7 +81,7 @@ Gap recorded: AP242 PMI fidelity partial. OCCT is the strongest OSS STEP base, a
 
 ## 6. Bob-the-Builder style tools
 
-The card's fifth bucket, "Bob-the-Builder style tools", reads as the class of lightweight, single-purpose, often one-person viewer/convert utilities that "just build" a reader for one format and stop: quick mesh viewers, browser asset pipelines, and one-off importers. For Keelworks these are survey material: they prove the pattern of thin readers and cheap viewers, and they occasionally hold a parse nugget worth referencing.
+The card's fifth bucket, "Bob-the-Builder style tools", reads as the class of lightweight, single-purpose, often one-person viewer/convert utilities that "just build" a reader for one format and stop: quick mesh viewers, browser asset pipelines, and one-off importers. For Isolith these are survey material: they prove the pattern of thin readers and cheap viewers, and they occasionally hold a parse nugget worth referencing.
 
 Survey as of 2026-10-15:
 
@@ -97,7 +97,7 @@ Status: mixed, from actively developed (Assimp) to dormant one-offs.
 
 Gap recorded: the Bob-the-Builder bucket confirms there is no reusable OSS reader for any CATIA-native or CATIA-graphics format hiding in the lightweight-tool world either. Assimp's refusal of 3DXML on license grounds and openswx's success with a different closed format sharpen the program's own conclusion: for CGR/3DXML, we build the reader ourselves, observationally, against our own license-clean corpus, and we keep the tolerant never-crash model.
 
-## 7. Capability matrix (what exists vs what Keelworks needs)
+## 7. Capability matrix (what exists vs what Isolith needs)
 
 | Reader bucket | CGR | 3DXML ASCII | 3DXML binary .3drep | CATPart/CATProduct | STEP AP242 PMI | License usable? |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -106,11 +106,11 @@ Gap recorded: the Bob-the-Builder bucket confirms there is no reusable OSS reade
 | FreeCAD core | no | no | no | no (STEP only) | partial (via OCCT) | LGPL-2.0+ |
 | OCCT STEP | no | no | no | no | partial | LGPL-2.1 + exception |
 | Bob-the-Builder bucket (Assimp et al.) | no | declined (licensing) | no | no | no | mixed |
-| Keelworks target (P2/P3/P4) | build oep-cgr | build oep-3dxml | build/scope .3drep | P5 (two-year) | wrap OCCT, P4-M2 | Apache-2.0 / AGPL |
+| Isolith target (P2/P3/P4) | build oep-cgr | build oep-3dxml | build/scope .3drep | P5 (two-year) | wrap OCCT, P4-M2 | Apache-2.0 / AGPL |
 
 ## 8. Gaps (drives P1-M3-T03 first-parcel prioritization)
 
-The authoritative gap table, one row per target format. "Gap" means the existing OSS field does not cover it, so Keelworks work is required.
+The authoritative gap table, one row per target format. "Gap" means the existing OSS field does not cover it, so Isolith work is required.
 
 | Format | Gap | Evidence (2026-10-15) | P1-M3-T03 consequence |
 | --- | --- | --- | --- |

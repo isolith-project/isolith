@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P8-M1-T01: oep-pdm web-stack decision.
+"""Acceptance test for Isolith P8-M1-T01: oep-pdm web-stack decision.
 
 Written FIRST (TDD), mirroring the renderer-backend ADR test convention. The
 decision record at workstreams/pdm/service/web-stack-adr.md must make this test pass. It

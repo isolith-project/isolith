@@ -2,7 +2,7 @@
 """P1-M2-T05: "shape record" observation tool.
 
 Pure-stdlib, read-only. Classifies and reports the shape-record evidence for
-each Keelworks target format from REAL bytes:
+each Isolith target format from REAL bytes:
 
   - CGR:        header magic, preamble, invariant template, rep-graph class
                 strings (CAT3DBagRep / CATSurfacicRepy), alignment.

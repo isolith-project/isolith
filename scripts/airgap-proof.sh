@@ -77,7 +77,7 @@ def _nas_probe():
     tok = _git_token()
     try:
         req = urllib.request.Request(
-            "%s/api/v1/repos/keelworks/keelworks" % GITEA_BASE,
+            "%s/api/v1/repos/isolith/isolith" % GITEA_BASE,
             headers={"Authorization": "token " + tok} if tok else {})
         with urllib.request.urlopen(req, timeout=15) as r:
             return r.status == 200
@@ -112,7 +112,7 @@ def _nas_stage_verify(bin_bytes, bin_sha):
     tok = _git_token()
     headers = {"Authorization": "token " + tok} if tok else {}
     fname = "oep-pdm-%s" % bin_sha[:16]
-    url = ("%s/api/packages/don/generic/keelworks-pdm/airgap-v1/%s"
+    url = ("%s/api/packages/don/generic/isolith-pdm/airgap-v1/%s"
            % (GITEA_BASE, bin_sha))
     body, ct = _multipart({fname: bin_bytes})
     try:

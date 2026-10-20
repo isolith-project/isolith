@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Keelworks nightly stress/regression job registry (P0-M4-T03). Run with: python3 ci/stress/stress_runner.py --jobs ci/stress/jobs.json. Adding a lane: add it here AND to REQUIRED_JOBS in tests/stress_suite_test.py.",
+  "description": "Isolith nightly stress/regression job registry (P0-M4-T03). Run with: python3 ci/stress/stress_runner.py --jobs ci/stress/jobs.json. Adding a lane: add it here AND to REQUIRED_JOBS in tests/stress_suite_test.py.",
   "jobs": [
     {
       "name": "cargo-build-workspace",

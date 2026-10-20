@@ -1,12 +1,12 @@
 # "Shape Record" Hypothesis per Format
 
-P1-M2-T05 · Keelworks / OEP P1 Format Reconnaissance
+P1-M2-T05 · Isolith / OEP P1 Format Reconnaissance
 Status: hypothesis note, byte-verified on real material 2026-10-15
 Version: 1.0
 
 ## 1. What a "shape record" is (and why we need the hypothesis)
 
-Every format in the Keelworks target set is a *container* first: a wrapper
+Every format in the Isolith target set is a *container* first: a wrapper
 that carries identity, structure, metadata, and references. Inside that
 wrapper, the one record that actually stores the geometric shape - the
 vertices/triangles/topology a reader must extract - is what this note calls

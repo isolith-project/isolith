@@ -130,7 +130,7 @@ def run_git(path, args, **kw):
     # hooks): a fixture repo created inside the hook must never inherit the
     # parent repo's git dir, or its commits would land in the real repo
     # (observed: 'should pass'/blocked' commits staged _gate_fixture.py into
-    # the Keelworks worktree).
+    # the Isolith worktree).
     clean_env = {k: v for k, v in os.environ.items()
                  if not k.startswith("GIT_")}
     return subprocess.run(["git"] + args, cwd=path, capture_output=True,
@@ -150,8 +150,8 @@ def test_hook_blocks_bad_commit_and_passes_good():
         os.remove(stray)
     with tempfile.TemporaryDirectory(prefix="kgate-") as tmp:
         run_git(tmp, ["init", "-q", "-b", "main"])
-        run_git(tmp, ["config", "user.email", "gate@keelworks.test"])
-        run_git(tmp, ["config", "user.name", "Keelworks Gate"])
+        run_git(tmp, ["config", "user.email", "gate@isolith.test"])
+        run_git(tmp, ["config", "user.name", "Isolith Gate"])
         # Install the vendored hook into the fixture repo. Scrub GIT_* env too:
         # install-hook.sh must act on the fixture's .git, not the parent's.
         clean_env = {k: v for k, v in os.environ.items()
@@ -191,7 +191,7 @@ def test_hook_blocks_bad_commit_and_passes_good():
 # --------------------------------------------------------------------------
 
 def main():
-    print("Keelworks precommit quality gate (P0-M3-T04) acceptance test")
+    print("Isolith precommit quality gate (P0-M3-T04) acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_gate_script_present()

@@ -2,7 +2,7 @@
 
 The card delivers HARDWARE-CLASS OFFLINE INSTALL TOOLING, not a document:
 an air-gapped ITAR/defense machine with NO network access installs the full
-Keelworks stack from a signed offline bundle and passes the same health checks
+Isolith stack from a signed offline bundle and passes the same health checks
 as online install (decision #10), with no phone-home and the update checker
 off by default (decision #11), and signed artifacts (P11 tie).
 

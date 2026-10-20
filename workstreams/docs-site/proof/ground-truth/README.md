@@ -5,7 +5,7 @@ that the docs-site format matrix is checked against ("no overstated claims").
 They live under the P13-T03 proof dir so the committed proof is self-contained
 (it does not depend on which branches have merged).
 
-Provenance (source of truth is the keelworks/keelworks GA-gate branch files):
+Provenance (source of truth is the isolith/isolith GA-gate branch files):
 
 - ga-gate-p4-matrix.json   <- corpus/ga-gate-p4-matrix.json on
                               task/p4m5t03-ga-gate-1016a (P4-M5-T03 gate)

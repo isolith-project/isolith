@@ -1,4 +1,4 @@
-# Keelworks Rust toolchain pin (P0-M3-T02).
+# Isolith Rust toolchain pin (P0-M3-T02).
 # Purpose: reproducible builds across machines (P11-T06 supply-chain doctrine).
 # This pins the exact stable channel used for all workspace crates. Do NOT use
 # "stable" here: an unpinned channel drifts on rustup update.

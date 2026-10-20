@@ -222,7 +222,7 @@ pub fn write_step<W: Write>(
          '2;1');\n",
     );
     em.out.push_str(&format!(
-        "FILE_NAME('{}','',('Keelworks OEP'),(''),'oep-geo {}','Keelworks OEP','');\n",
+        "FILE_NAME('{}','',('Isolith OEP'),(''),'oep-geo {}','Isolith OEP','');\n",
         opts.file_name, opts.version
     ));
     em.out

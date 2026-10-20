@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared reference tessellation + numeric formatters for P6-M4-T01 encoders.
 
-The CC0-1.0 keelworks unit box (`corpus/data/box.stl`, P0-M4-T02 fixture):
+The CC0-1.0 isolith unit box (`corpus/data/box.stl`, P0-M4-T02 fixture):
 8 vertices / 12 triangles. Every exporter golden under
 `crates/oep-geo/tools/*` imports POSITIONS / TRIANGLES from here so all six
 formats are generated from the SAME reference geometry.

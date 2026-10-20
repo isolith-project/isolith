@@ -1,7 +1,7 @@
 # oep-job: the P9 job/task spec (P9-M1-T01)
 
 Version 1.0, 2026-10-17. Milestone: P9-M1-T01 (job/task spec: *input vault
-refs*, *executor*, *resource caps*, *output refs*). Program: Keelworks /
+refs*, *executor*, *resource caps*, *output refs*). Program: Isolith /
 Open Engineering Platform (OEP), P9 P2P compute lane (wave 2).
 Clean-room, our own format — nothing here is a vendor or cloud schema.
 

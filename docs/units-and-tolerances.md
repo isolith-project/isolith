@@ -1,6 +1,6 @@
 # P6-M1-T03: Units and Accuracy Discipline for `oep-geo`
 
-Status: implemented and verified (Keelworks wave 1, P6).
+Status: implemented and verified (Isolith wave 1, P6).
 
 ## Scope
 

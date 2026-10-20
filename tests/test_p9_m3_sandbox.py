@@ -90,7 +90,7 @@ def test_resource_caps_not_vacuous():
 
 
 def main():
-    print("Keelworks P9-M3-T03 worker sandbox acceptance test")
+    print("Isolith P9-M3-T03 worker sandbox acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     fails = 0

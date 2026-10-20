@@ -439,13 +439,13 @@ def _manifest_markup(name: str) -> str:
     )
 
 
-def _model_markup(name: str, author: str = "keelworks") -> str:
+def _model_markup(name: str, author: str = "isolith") -> str:
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<Model_3dxml xmlns="%s" xmlns:xsi="%s">\n'
         "  <Header>\n    <SchemaVersion>4.0</SchemaVersion>\n"
         "    <Title>%s</Title>\n    <Author>%s</Author>\n"
-        "    <Generator>Keelworks oep-3dxml</Generator>\n  </Header>\n"
+        "    <Generator>Isolith oep-3dxml</Generator>\n  </Header>\n"
         '  <ProductStructure root="1">\n'
         '    <Reference3D id="1" name="%s"/>\n'
         '    <Instance3D id="11" name="Instance1">\n      <IsAggregatedBy/>\n'
@@ -689,7 +689,7 @@ def write_report(matrix: dict, outdir: str) -> list:
     jp = out / "ga-gate-3dxml-matrix.json"
     jp.write_text(json.dumps(matrix, indent=2) + "\n", encoding="utf-8")
     mp = out / "ga-gate-3dxml-matrix.md"
-    lines = ["# Keelworks P3 GA gate — matrix (P3-M5-T02)", ""]
+    lines = ["# Isolith P3 GA gate — matrix (P3-M5-T02)", ""]
     s = matrix["summary"]
     lines.append("total=%d pass=%d open=%d fail=%d skip=%d (%s)" % (
         s["total"], s["pass"], s["open"], s["fail"], s["skip"],

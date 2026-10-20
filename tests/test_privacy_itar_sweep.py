@@ -3,7 +3,7 @@
 
 Written FIRST (TDD RED). Defines 'done' for P1-M1-T06: a reusable privacy/ITAR
 sweep tool exists under python/oep_tooling/, every sample that is destined for
-the shared keelworks repo has been swept on its real bytes (sha256-anchored),
+the shared isolith repo has been swept on its real bytes (sha256-anchored),
 the sweep detects planted ITAR/PII markers on synthetic fixtures (positive
 control) while ignoring binary float noise (negative control), and a committed
 evidence report (workstreams/format-corpus/samples/privacy-itar-sweep-report.json) documents the verdict

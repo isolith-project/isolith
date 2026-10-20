@@ -1,9 +1,9 @@
 ```toml
 [advisory]
 id = "RUSTSEC-0000-2026-INFO"
-package = "keelworks-fixture-unmaintained"
+package = "isolith-fixture-unmaintained"
 date = "2026-10-18"
-url = "https://keelworks.local/advisories/RUSTSEC-0000-2026-INFO"
+url = "https://isolith.local/advisories/RUSTSEC-0000-2026-INFO"
 categories = ["unmaintained"]
 informational = true
 

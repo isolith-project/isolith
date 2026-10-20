@@ -4,9 +4,9 @@
   "task": "P4-M1-T03",
   "pairs": [
     {
-      "id": "keelworks-box",
+      "id": "isolith-box",
       "geometry_class": "prism",
-      "source": "CC0-1.0 keelworks unit box (P0-M4-T02 fixture, 8 verts / 12 tris)",
+      "source": "CC0-1.0 isolith unit box (P0-M4-T02 fixture, 8 verts / 12 tris)",
       "native": "data/box.stl",
       "step": "../crates/oep-geo/tests/golden/box-reference.step"
     }

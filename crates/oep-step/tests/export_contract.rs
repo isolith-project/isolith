@@ -8,7 +8,7 @@
 //!    per-body tessellations. It emits a real B-Rep (`MANIFOLD_SOLID_BREP`
 //!    with `ADVANCED_FACE`/`EDGE_LOOP`/`EDGE_CURVE`/`VERTEX_POINT`), NOT the
 //!    `SHELL_BASED_SURFACE_MODEL` passthrough form (which OCCT cannot build).
-//! 2. Single part, single body: taking the keelworks unit box (8 verts, 12
+//! 2. Single part, single body: taking the isolith unit box (8 verts, 12
 //!    tris) yields a file whose DATA section contains a MANIFOLD_SOLID_BREP,
 //!    one CLOSED_SHELL, 12 ADVANCED_FACEs and the honest marking strings
 //!    (faceted / tessellated, not exact analytic B-Rep) in FILE_DESCRIPTION
@@ -38,7 +38,7 @@ use oep_geo::{
 };
 use oep_step::export::{write_document, BodyMesh, ExportError, ExportOpts};
 
-/// The keelworks CC0-1.0 unit box tessellation (same as the P6 exporters'
+/// The isolith CC0-1.0 unit box tessellation (same as the P6 exporters'
 /// reference; 8 verts / 12 tris, axis-aligned bbox [0,0,0]..[1,1,1]).
 fn box_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
     let positions = vec![
@@ -115,7 +115,7 @@ fn opts() -> ExportOpts {
         file_name: "export-test.step".to_string(),
         product_name: "export-test".to_string(),
         version: "0.1.0".to_string(),
-        org: "Keelworks OEP".to_string(),
+        org: "Isolith OEP".to_string(),
         system: "oep-step".to_string(),
     }
 }
@@ -400,7 +400,7 @@ fn export_is_byte_stable_across_golden_refregen() {
     let bytes = write_document(&doc, &box_meshes("body-1", &positions, &triangles), &{
         let mut o = opts();
         o.file_name = "box-part.step".to_string();
-        o.product_name = "keelworks-export".to_string();
+        o.product_name = "isolith-export".to_string();
         o
     })
     .expect("box export");

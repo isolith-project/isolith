@@ -3,11 +3,11 @@
   <QPId>6e206109-f027-4a5e-8138-99308066435b</QPId>
   <Header>
     <Application>
-      <Name>keelworks-basic-mbd</Name>
+      <Name>isolith-basic-mbd</Name>
     </Application>
     <Author>
-      <Name>keelworks</Name>
-      <Organization>keelworks</Organization>
+      <Name>isolith</Name>
+      <Organization>isolith</Organization>
     </Author>
   </Header>
   <StandardsDefinitions n="1">
@@ -79,7 +79,7 @@
   <Product>
     <Header>
       <Application>
-        <Name>keelworks-basic-mbd</Name>
+        <Name>isolith-basic-mbd</Name>
       </Application>
     </Header>
     <PartSet n="1">

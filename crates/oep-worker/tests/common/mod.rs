@@ -28,7 +28,7 @@ pub fn real_cgr_path() -> Option<PathBuf> {
     }
     // Conventional dev location used during the P9-M3-T02 proof run.
     let conventional =
-        Path::new("/home/r1a/keelworks-main/corpus/cgr").join("nist_stc_06_asme1_V56R2023.CATPart");
+        Path::new("/home/r1a/isolith-main/corpus/cgr").join("nist_stc_06_asme1_V56R2023.CATPart");
     if conventional.is_file() {
         return Some(conventional);
     }

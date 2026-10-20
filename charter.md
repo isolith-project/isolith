@@ -1,8 +1,8 @@
 # Open Engineering Platform (OEP) Charter
 
-Working brand: Isolith. Internal program codename: Keelworks, which is never
-used on a public surface because it collides with a registered mark (see
-`assets/brand/NAME.md` and decision record 0001).
+Program name and working brand: Isolith. It replaced the former internal
+codename (Keelworks), which was retired 2026-10-20 because it collided with a
+registered mark (see `assets/brand/NAME.md` and decision record 0001).
 
 ## Mission
 

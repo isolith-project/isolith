@@ -1,6 +1,6 @@
 # P8-M5-T03: LAN/air-gap install path for oep-pdm
 
-Status: implemented as part of task P8-M5-T03 (keelworks card t_8cd16f7b).
+Status: implemented as part of task P8-M5-T03 (isolith card t_8cd16f7b).
 Owner: open-engineering-platform P8 PDM lane.
 Ratifies: the hybrid cloud role decision `workstreams/pdm/sync/hybrid-cloud-role-adr.md` v1.0.0.
 Version: 1 (2026-10-17).

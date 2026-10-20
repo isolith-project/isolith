@@ -1,6 +1,6 @@
 # Sketcher + parametric variable sets in the chosen shell (P7-M4-T01)
 
-Version 1.0, 2026-10-16. Keelworks / Open Engineering Platform (OEP), P7
+Version 1.0, 2026-10-16. Isolith / Open Engineering Platform (OEP), P7
 modeler lane. Chosen shell: our own thin Rust shell around Open CASCADE
 (P7-M1-T01). FreeCAD is the behavioral reference, NOT the shell: this card
 implements sketcher and variable-set semantics in the chosen shell's own

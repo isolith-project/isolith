@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P1-M3-T03: the P1 report (prioritized import
+"""Acceptance test for Isolith P1-M3-T03: the P1 report (prioritized import
 targets + the "first parcel" that the first shipped reader must open).
 
 TDD: this test documents the acceptance criteria BEFORE the report exists, so

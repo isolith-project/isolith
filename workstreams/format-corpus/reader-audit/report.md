@@ -1,7 +1,7 @@
 # P1 Report: Prioritized Import Targets and the First Parcel
 
 Version: 1.0 (2026-10-15)
-Owner: Keelworks program, P1 Format Reconnaissance and Corpus (P1.3 baseline
+Owner: Isolith program, P1 Format Reconnaissance and Corpus (P1.3 baseline
 readers audit).
 Status: delivered. This is the P1 report that turns the four sibling P1
 deliverables into a ranked import plan and a concrete definition of the first

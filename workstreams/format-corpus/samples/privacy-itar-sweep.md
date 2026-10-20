@@ -1,4 +1,4 @@
-# Keelworks P1-M1-T06: Privacy / ITAR Sweep of the Sample Corpus
+# Isolith P1-M1-T06: Privacy / ITAR Sweep of the Sample Corpus
 
 Version: 1.1 (2026-10-16) — full-corpus re-run for the P1-M4-T01 object-store
 mirror (edit 2026-10-16: added §Follow-up P1-M4-T01, evidence
@@ -11,7 +11,7 @@ counsel before the public-release gate (P11-T05).
 
 ## What this sweeps
 
-Every file that is destined for the Keelworks shared repo from the public
+Every file that is destined for the Isolith shared repo from the public
 sample corpus, plus the CGR binaries as a reference-only pass (those are held
 outside the repo because their licenses do not grant redistribution; see
 P1-M1-T01).
@@ -76,7 +76,7 @@ so that noise is not treated as a finding:
 ## What is NOT re-examined here
 
 - Registry and catalog documents (`workstreams/format-corpus/samples/*.md`, `corpus/*.json`) are authored
-  by Keelworks workers and intentionally discuss licenses, including words like
+  by Isolith workers and intentionally discuss licenses, including words like
   `ITAR`, `restricted`, and `proprietary` as redistribution commentary. They
   are the corpus bookkeeping, not sample payload; their integrity is guarded by
   the corpus manifest task (P1-M1-T04), not by this content sweep.

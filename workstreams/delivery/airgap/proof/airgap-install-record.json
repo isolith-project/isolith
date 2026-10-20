@@ -1,7 +1,7 @@
 {
   "card": "P10-M2-T02",
   "mode": "airgap",
-  "bundle": "keelworks-offline-0.1.0.tar.gz",
+  "bundle": "isolith-offline-0.1.0.tar.gz",
   "installed_at": "2026-10-18T07:56:15.217617+00:00",
   "host": "81fd91b14396",
   "health_check": "http://127.0.0.1:8787/api/v1/health",

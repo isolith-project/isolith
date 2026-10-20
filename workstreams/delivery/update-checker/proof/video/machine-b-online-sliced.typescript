@@ -1,6 +1,6 @@
 Script started on 2026-10-18 05:09:13-07:00 [COMMAND="ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -p 2229 op@127.0.0.1 "bash /tmp/wtb.sh"" <not executed on terminal>]
 
-[1;36m==== Keelworks P10 fresh-install walkthrough on machine B (U1/VM-class, keelwb2) ====[0m
+[1;36m==== Isolith P10 fresh-install walkthrough on machine B (U1/VM-class, keelwb2) ====[0m
 ubuntu
 aarch64
 
@@ -10,7 +10,7 @@ aarch64
 [0;32m[OEP][0m Preflight... (docker + compose + disk)
 [0;32m[OEP][0m Wrote .env from .env.example (host binds default to 127.0.0.1).
 [0;32m[OEP][0m Preflight ok.
-[0;32m[OEP][0m Building stack image keelworks/oep-stack:0.1.0 (first build fetches crates, minutes)...
+[0;32m[OEP][0m Building stack image isolith/oep-stack:0.1.0 (first build fetches crates, minutes)...
 time="2026-10-18T12:09:25Z" level=warning msg=… (4613s of release build elided) …
  go green (up to 180s)...
 [0;32m[OEP][0m All 3 services healthy.
@@ -23,7 +23,7 @@ time="2026-10-18T12:09:25Z" level=warning msg=… (4613s of release build elided
   Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
   P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
 
-[0;32m[OEP][0m One-command install complete: the full Keelworks stack is up with health checks green.
+[0;32m[OEP][0m One-command install complete: the full Isolith stack is up with health checks green.
 install.sh exit=0
 
 [1;36m==== 3. PDM health ====[0m
@@ -58,9 +58,9 @@ no OEP_UPDATE_CHECK line in .env -> checker stays off (decision #11)
 
 [1;36m==== Containers (all healthy) ====[0m
 NAMES              STATUS
-keelworks-viewer   Up 43 seconds (healthy)
-keelworks-p2p      Up 59 seconds (healthy)
-keelworks-pdm      Up 50 seconds (healthy)
+isolith-viewer   Up 43 seconds (healthy)
+isolith-p2p      Up 59 seconds (healthy)
+isolith-pdm      Up 50 seconds (healthy)
 === WALKTHROUGH B COMPLETE: full stack healthy, update checker off ===
 
 Script done on 2026-10-18 06:26:44-07:00 [COMMAND_EXIT_CODE="0"]

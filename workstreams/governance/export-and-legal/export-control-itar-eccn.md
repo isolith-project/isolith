@@ -1,15 +1,15 @@
 # P0-M2-T04 Export Control Memo: ITAR / ECCN Classification of Engineering Data Flows; Air-Gap Posture
 
 Version: 1.0 (2026-10-15)
-Owner: Keelworks program governance, P0-M2 (legal posture)
+Owner: Isolith program governance, P0-M2 (legal posture)
 Status: internal program document. This memo is an internal export-control posture reflection, not legal advice. It maps the US regulatory frameworks so engineering can build inside them; it does not replace qualified export-control counsel or a formal BIS CCATS / DDTC commodity-jurisdiction determination, which is scheduled for specific items at the appropriate gate (P11-T05, public-release gate).
 
 ## 1. Scope and purpose
 
-Keelworks (OEP) is an open engineering platform: readers that open third-party CAD artifacts (CGR, 3DXML, CATPart), a geometry core, a self-hosted PDM server, and P2P compute, all from lawful observation and public specifications (clean-room invariant), privately developed on NAS Gitea, with a decided hybrid license (Apache-2.0 applications/libraries, AGPL-3.0 server/P2P). This memo answers two questions from the card:
+Isolith (OEP) is an open engineering platform: readers that open third-party CAD artifacts (CGR, 3DXML, CATPart), a geometry core, a self-hosted PDM server, and P2P compute, all from lawful observation and public specifications (clean-room invariant), privately developed on NAS Gitea, with a decided hybrid license (Apache-2.0 applications/libraries, AGPL-3.0 server/P2P). This memo answers two questions from the card:
 
-1. How are Keelworks' engineering data flows classified under the US International Traffic in Arms Regulations (ITAR, 22 CFR 120-130) and the Export Administration Regulations (EAR, 15 CFR 730-774), expressed as ECCNs on the Commerce Control List?
-2. What is the air-gap posture that makes a Keelworks deployment fit for an ITAR/EAR-regulated shop, and what can we honestly claim about it?
+1. How are Isolith' engineering data flows classified under the US International Traffic in Arms Regulations (ITAR, 22 CFR 120-130) and the Export Administration Regulations (EAR, 15 CFR 730-774), expressed as ECCNs on the Commerce Control List?
+2. What is the air-gap posture that makes a Isolith deployment fit for an ITAR/EAR-regulated shop, and what can we honestly claim about it?
 
 The memo feeds P8 (PDM RBAC/audit), P9 (worker sandbox), P10 (offline install), P11 (release export-control checkbox), P13 (sovereignty narrative), and the P1 corpus sweep (P1-M1-T06). It cross-references the sibling postures: P0-M2-T01 (RE doctrine and contract exposure) and P0-M2-T02 (patent posture).
 
@@ -38,12 +38,12 @@ Public domain (120.34(a)) means information that is published and generally acce
 - 15 CFR 734.7(b): published encryption software classified under ECCN 5D002 remains subject to the EAR unless it is publicly available encryption object code whose source meets 15 CFR 742.15(b). This touches the PDM server's TLS/encryption surface (see section 5.2).
 - 15 CFR 734.7(c): software or technology for producing certain firearm items (ECCNs 0A501, 0A506, 0A507, 0A509) that is posted online and ready for insertion into a CNC/AM machine (AMF or G-code) REMAINS subject to the EAR even when published. That is a genuine backstop for any digital-manufacturing output our exporters later feed (P2-M5, CAM-style passes): "published" does not rescue firearm-production G-code/CAM files.
 
-## 3. Classification of the Keelworks engineering data flows
+## 3. Classification of the Isolith engineering data flows
 
 The table below classifies each named flow. The spine rule is stated first so the table stays honest: the classification of a data flow rides on the article the data describes, not on the OEP software that carries it.
 
 [A] Source code of OEP (readers, geometry core, PDM, workers) once publicly released:
-- Not subject to the EAR (published, 15 CFR 734.3(b)(3) + 734.7(a)); not ITAR technical data (public domain, 22 CFR 120.34). ECCN: none; not on the CCL. [uncertain] While Keelworks is still private pre-publication on NAS Gitea, the code is not yet "published" under 734.7; the program must confirm the private tree contains no ITAR technical data before any foreign-person access (that is the P1-M1-T06 sweep discipline extended to source), and treat the pending-encryption surface per 5.2.
+- Not subject to the EAR (published, 15 CFR 734.3(b)(3) + 734.7(a)); not ITAR technical data (public domain, 22 CFR 120.34). ECCN: none; not on the CCL. [uncertain] While Isolith is still private pre-publication on NAS Gitea, the code is not yet "published" under 734.7; the program must confirm the private tree contains no ITAR technical data before any foreign-person access (that is the P1-M1-T06 sweep discipline extended to source), and treat the pending-encryption surface per 5.2.
 - This is the export-clean core of the sovereignty narrative (section 6): open public release of the tool is what makes the tool itself export-clean.
 
 [B] CAD model / B-Rep / tessellation geometry (customer content: CGR, CATPart, 3DXML, STEP):
@@ -79,7 +79,7 @@ Flow table summary (what leaves the platform boundary, and under which regime):
 
 ## 4. The three rules that keep this memo honest
 
-1. The cargo rule. Keelworks does not change the classification of data; it transports it. A STEP file of a USML component is ITAR technical data whether it was made in CATIA, FreeCAD, or OEP. The platform's obligation is to carry classification metadata faithfully (source article, controlled/not, country of destination) and to enforce controls, not to guess its customers' classifications. The P4/P6 geometry model and P8 vault schema should reserve an optional classification attribute on items so the flag survives the pipeline.
+1. The cargo rule. Isolith does not change the classification of data; it transports it. A STEP file of a USML component is ITAR technical data whether it was made in CATIA, FreeCAD, or OEP. The platform's obligation is to carry classification metadata faithfully (source article, controlled/not, country of destination) and to enforce controls, not to guess its customers' classifications. The P4/P6 geometry model and P8 vault schema should reserve an optional classification attribute on items so the flag survives the pipeline.
 2. The publication rule. The single most powerful thing the program does for export posture is public release under open licenses: it moves the tool itself, and every flow derived purely from the tool's own code/interfaces, outside EAR scope (734.3(b)(3), 734.7) and outside ITAR technical data (120.34). Clean-room means we never embed vendor binary/source in the tool, so nothing of a protected vendor's controlled data rides in our readers by construction (pairs with P0-M2-T02 patent posture).
 3. The custody rule. Under 22 CFR 120.56, technical data is "released" (an export) to a foreign person through use of access information to enable access to UNENCRYPTED technical data (120.56(a)(3)-(4), with access information defined in 120.55 as decryption keys, network codes, passwords). Authorization is required to provide that access information if it can enable access to unencrypted controlled data (120.56(b)). Consequence for P8: who holds the decryption keys is a defense-trade-controls decision. Keys must stay with US persons / the data owner, never with the service, for any controlled vault.
 
@@ -113,7 +113,7 @@ Because OEP ships open-source software that includes a PDM server with TLS/encry
 The P13-T04 narrative should claim exactly what is true:
 
 - The tool is export-clean as published open source: not subject to the EAR (published) and not ITAR technical data (public domain), with a per-release classification file (P11-T05).
-- ITAR-cleanliness of a DEPLOYMENT is a customer configuration/policy obligation, which Keelworks genuinely supports: air-gap install (P10-M2-T02), no telemetry by default with hard-disable for controlled environments (P0-M5-T02), E2E/FIPS boundary and key custody (120.54/120.56), worker no-egress (P9-M3-T03), RBAC + audit (P8-M3).
+- ITAR-cleanliness of a DEPLOYMENT is a customer configuration/policy obligation, which Isolith genuinely supports: air-gap install (P10-M2-T02), no telemetry by default with hard-disable for controlled environments (P0-M5-T02), E2E/FIPS boundary and key custody (120.54/120.56), worker no-egress (P9-M3-T03), RBAC + audit (P8-M3).
 - What we must NOT claim: that storing or transmitting a customer's defense-article technical data in OEP makes it non-ITAR, or that any deployment is automatically compliant. The cargo rule (section 4) makes that the customer's exporters' obligation; our product promise is capability and defaults, not their compliance.
 
 ## 7. Workstream mapping and required engineering hooks
@@ -140,7 +140,7 @@ The P13-T04 narrative should claim exactly what is true:
 ## 9. Open questions
 
 - [uncertain] Exact ECCN of the AGPL PDM server build once shipped (5D002/5D992 ENC note) — resolved at release time, see recommendation 4.
-- [uncertain] Whether any Keelworks customer classifies their own payloads consistently; P8 classification attribute + contract flow-down mitigate, but we should define an "unclassified by default, flag to elevate" convention.
+- [uncertain] Whether any Isolith customer classifies their own payloads consistently; P8 classification attribute + contract flow-down mitigate, but we should define an "unclassified by default, flag to elevate" convention.
 - [uncertain] CCATS/CJ need for specific future exports (commercial managed-PDM binary, if any) — trigger at first such release.
 
 ## 10. Scope and non-goals (what this memo is not)

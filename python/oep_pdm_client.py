@@ -13,7 +13,7 @@ from typing import List, Optional
 API_BASE = "/api/v1"
 API_VERSION = "1.0.0"
 # SHA-256 of the workstreams/pdm/api/openapi-v1.yaml bytes this client was generated from.
-SPEC_SHA256 = "205fce896a60a217997092a4ee7c202565c15893b3bcf5679a50d1b25a88bb39"
+SPEC_SHA256 = "70fd55f60bcd2869bb9fa257356beda68da17415921f6dc953884143719862b1"
 
 @dataclass
 class Health:

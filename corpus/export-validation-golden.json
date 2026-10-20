@@ -4,14 +4,14 @@
   "task": "P4-M3-T02",
   "independent_reader": "Open CASCADE Technology 7.6.3 (Debian libocct-*), STEPControl_Reader; cross-checked with FreeCAD 1.1 (snap freecad.cmd) on 2026-10-16",
   "pairs": {
-    "keelworks-box-export": {
+    "isolith-box-export": {
       "transfer": false,
       "shape_type": "NULL",
       "read_status": 1,
       "roots": 1,
-      "reason": "OCC parses the SHELL_BASED_SURFACE_MODEL export (status Done, 1 root) but transfers no shape: the exporter wires geometry via SHAPE_REPRESENTATION + SHAPE_REPRESENTATION_RELATIONSHIP; OCCT's STEPControl_Reader does not route that wiring to a TopoDS_Shape. Same geometry re-wired AP214-conventionally transfers (see keelworks-box-conformance)."
+      "reason": "OCC parses the SHELL_BASED_SURFACE_MODEL export (status Done, 1 root) but transfers no shape: the exporter wires geometry via SHAPE_REPRESENTATION + SHAPE_REPRESENTATION_RELATIONSHIP; OCCT's STEPControl_Reader does not route that wiring to a TopoDS_Shape. Same geometry re-wired AP214-conventionally transfers (see isolith-box-conformance)."
     },
-    "keelworks-box-conformance": {
+    "isolith-box-conformance": {
       "transfer": true,
       "shape_type": 0,
       "read_status": 1,

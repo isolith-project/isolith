@@ -5,7 +5,7 @@ manifest, and the mechanical release cut.
 Pure stdlib; runs under `python3 tests/test_p12release_train.py`, pytest, and
 the P0-M3-T04 precommit gate. The release-cut machinery is exercised end to
 end against a hermetic local (file://) canary bare repo -- no network, no
-mutating the real Keelworks checkout.
+mutating the real Isolith checkout.
 
 Checks
 ------
@@ -54,7 +54,7 @@ def assert_isolated(tmp, label):
     if os.path.realpath(gd) != os.path.realpath(os.path.join(tmp, ".git")):
         raise AssertionError(
             f"{label}: fixture repo NOT isolated: git dir {gd} != {tmp}/.git. "
-            "A leaked GIT_* env var would corrupt the real keelworks repo.")
+            "A leaked GIT_* env var would corrupt the real isolith repo.")
 
 
 def make_repo(path, ncommits=3, author="release-train test <t@kw>"):
@@ -96,7 +96,7 @@ def test_doc_present_and_covers_policy():
           and "status: Ratified" in text)
     for needle in ("## 3. Feature freeze", "## 5. Staged rollout",
                    "## 6. Patch / hotfix policy", "**A patch release",
-                   "goes to the next train", "keelworks/keelworks-canary",
+                   "goes to the next train", "isolith/isolith-canary",
                    "## Change log"):
         check(f"doc covers required policy: {needle!r}", needle in text)
 
@@ -141,7 +141,7 @@ def test_release_cut_end_to_end_hermetic():
         run(["git", "remote", "add", "canary", bare], cwd=tmp, env=env)
         head_sha = run(["git", "rev-parse", "HEAD"], cwd=tmp, env=env)[1]
         cut, manifest_path = rt.release_cut(
-            tmp, "2027.1.0-rc1", "main", "keelworks/keelworks-canary")
+            tmp, "2027.1.0-rc1", "main", "isolith/isolith-canary")
         # manifest written
         check("release-cut writes the manifest", manifest_path
               and os.path.isfile(manifest_path), manifest_path)

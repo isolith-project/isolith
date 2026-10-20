@@ -1,15 +1,15 @@
 ---
-title: Keelworks P8 PDM Web-Stack Decision (Rust axum)
+title: Isolith P8 PDM Web-Stack Decision (Rust axum)
 decision: adopt_rust_axum_for_oep_pdm_service
 version: 1.0.0
 date: 2026-10-17
 status: Ratified
-owner: Keelworks program governance, P8-M1 (oep-pdm service skeleton)
+owner: Isolith program governance, P8-M1 (oep-pdm service skeleton)
 applies_to: crates/oep-pdm (server/PDM), P8-M6-T01 (REST API v1), the P9 P2P orchestrator server (same stack decision, tracking this record)
 supersedes: the P7-M2-T02 stub deferral of the framework choice ("stub uses no web framework so P8 owns the framework decision")
 ---
 
-# Keelworks P8 PDM Web-Stack Decision
+# Isolith P8 PDM Web-Stack Decision
 
 This record is the binding product decision for the oep-pdm service web stack:
 it answers the P8-M1-T01 question "Rust axum or Python FastAPI for the
@@ -31,7 +31,7 @@ rewriting the stub tests.
 
 ## 1. Decision
 
-Keelworks ADOPTS **Rust axum** as the web stack for the oep-pdm PDM service
+Isolith ADOPTS **Rust axum** as the web stack for the oep-pdm PDM service
 skeleton, and thereby for the P8 server lane. The service is implemented as an
 axum Router over the existing `VaultStore` and `api` contract types, compiled
 into a single `oep-pdm` binary, served on the contract base path `/api/v1`.

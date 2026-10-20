@@ -1,17 +1,17 @@
 ---
-title: Keelworks B-Rep Kernel Operations Decision (Open CASCADE)
+title: Isolith B-Rep Kernel Operations Decision (Open CASCADE)
 decision: bind_opencascade_occ_for_b_rep_operations_behind_clean_interface
 version: 1.1.0
 date: 2026-10-18
 status: Ratified
-owner: Keelworks program governance, P6-M3 (B-Rep ops)
+owner: Isolith program governance, P6-M3 (B-Rep ops)
 applies_to: oep-geo (adopting crate), the oep-engine-occ FFI crate (P6-M3-T04), the STEP interop lane (P4), and the P6 feature-graph replay (P6-M3-T03)
 supersedes: version 1.0.0 of this record (boolean-only scope); 1.1.0 adds fillet, chamfer, and primitive creation to the seam
 ---
 
-# Keelworks B-Rep Kernel Operations Decision
+# Isolith B-Rep Kernel Operations Decision
 
-This record is the binding product decision for how Keelworks does exact
+This record is the binding product decision for how Isolith does exact
 boundary-representation (B-Rep) operations against a geometry kernel. At
 version 1.0.0 the scope was boolean operations (union, difference,
 intersection of solids and shells); version 1.1.0 widens the scope to the
@@ -30,7 +30,7 @@ clean-room positions are, and what guardrails keep the decision honest.
 
 ## 1. Decision
 
-Keelworks ADOPTS Open CASCADE Technology (OCCT) as the geometry kernel behind
+Isolith ADOPTS Open CASCADE Technology (OCCT) as the geometry kernel behind
 the oep-geo clean, documented seam. The oep-geo public surface is the ONLY
 thing downstream code (callers, P4 STEP interop, P6-M3-T03 feature replay, P7
 modeler shell) sees; OCCT types, handles, tolerances, and idioms never cross
@@ -219,7 +219,7 @@ the PDM server and P2P orchestration, decided 2026-10-15):
 ## 8. Clean-room
 
 The program clean-room invariant forbids vendor binaries, copied source, and
-any Dassault/Autodesk/Siemens library being used or linked into Keelworks.
+any Dassault/Autodesk/Siemens library being used or linked into Isolith.
 Binding OCCT does not violate it:
 
 - OCCT is not a vendor CAD binary and not extracted from any vendor product.

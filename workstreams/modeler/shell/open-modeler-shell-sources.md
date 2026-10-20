@@ -42,7 +42,7 @@ version bump of the memo.
     LGPL 2.1 with the OCCT exception; modular C++ toolkits (math, geometry,
     topology, modeling algorithms, visualization, exchange, and OCAF
     application data with transactions/undo/persistence).
-- Keelworks boolean record (internal, committed) - workstreams/geometry-core/kernel/boolean-ops-occ-
+- Isolith boolean record (internal, committed) - workstreams/geometry-core/kernel/boolean-ops-occ-
   adr.md: OCCT 8.0.x adopted as the boolean engine behind the oep-engine-occ
   seam; the "P7 modeler shell" is named a downstream caller of oep-geo
   through the clean interface.
@@ -82,15 +82,15 @@ version bump of the memo.
     non-affiliation disclaimer; works from public specifications and
     observed behaviour; uses the MPL-2.0 acadrust library for DWG; sources
     the same EU Software Directive / SAS v WPL and US Sega v Accolade
-    clean-room reasoning the Keelworks P0-M2 legal lane uses.
+    clean-room reasoning the Isolith P0-M2 legal lane uses.
   - Point: the CADCraft run is direct evidence that small agent-driven
     clean-room teams can build CAD-class software fast (a data point for the
     own-shell feasibility argument), while its AutoCAD-class 2D scope
     confirms the capability gap versus the CATIA class.
 
-## 4. Program records (internal, committed to keelworks/keelworks)
+## 4. Program records (internal, committed to isolith/isolith)
 
-- Keelworks master plan decomposition (2026-10-15, v1.2) - .hermes/plans/
+- Isolith master plan decomposition (2026-10-15, v1.2) - .hermes/plans/
   2026-10-15_084708-open-catia-program-decomposition.md
   - P7 "Open Modeler Integration (FreeCAD-class core)" with P7-M1-T01 (this
     card), P7-M2 workbench, P7-M3 assembly, P7-M4 sketcher/parametrics, P7-M5

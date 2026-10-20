@@ -1,14 +1,14 @@
 ---
-title: Keelworks P7-M5-T02 Accessibility Checklist (viewer and workbench surfaces)
+title: Isolith P7-M5-T02 Accessibility Checklist (viewer and workbench surfaces)
 version: 1.0.0
 date: 2026-10-16
 status: Ratified for the P7-M5-T02 headless surfaces
-owner: Keelworks program governance, P7 modeler lane (P7-M5-T02)
+owner: Isolith program governance, P7 modeler lane (P7-M5-T02)
 applies_to: the oep-viewer surface (P6-M5-T02 preview viewer) and the oep-shell workbench command surface (P7-M2-T01), and the gated items that land when the P7-M5 immediate-mode interactive panel is delivered
 supersedes: nothing
 ---
 
-# Keelworks P7-M5-T02 Accessibility Checklist
+# Isolith P7-M5-T02 Accessibility Checklist
 
 ## Scope and honesty note
 

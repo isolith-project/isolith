@@ -13,7 +13,7 @@
 # (build-appimage.sh) is the verified desktop package; this manifest is the
 # reviewer/release-train alternate fed through P12-T05.
 
-id: org.keelworks.oep.{BIN}
+id: org.isolith.oep.{BIN}
 branch: '0.1'
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
@@ -37,8 +37,8 @@ modules:
     buildsystem: simple
     build-commands:
       - install -Dm0755 oep-{BIN} /app/bin/oep-{BIN}
-      - install -Dm0644 oep-{BIN}.desktop /app/share/applications/org.keelworks.oep.{BIN}.desktop
-      - install -Dm0644 oep-icon.svg /app/share/icons/hicolor/scalable/apps/org.keelworks.oep.{BIN}.svg
+      - install -Dm0644 oep-{BIN}.desktop /app/share/applications/org.isolith.oep.{BIN}.desktop
+      - install -Dm0644 oep-icon.svg /app/share/icons/hicolor/scalable/apps/org.isolith.oep.{BIN}.svg
     sources:
       - type: file
         path: ../oep-{BIN}

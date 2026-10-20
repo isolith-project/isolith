@@ -1,4 +1,4 @@
-# Keelworks P11-T02 - Dependency SBOM + CVE scanning in CI (every release)
+# Isolith P11-T02 - Dependency SBOM + CVE scanning in CI (every release)
 
 Version: 1.0.0 (2026-10-18)
 
@@ -6,11 +6,11 @@ Status: active release-engineering routine (P11). Before and during every
 release the exact release tree must produce an SBOM and a vulnerability scan
 report, and the scan must show no unfixed critical/high CVEs (or every one
 covered by a committed waiver in `workstreams/security/waivers.toml`) for the release to pass
-the gate. This is the Keelworks form of supply-chain due diligence wired into
+the gate. This is the Isolith form of supply-chain due diligence wired into
 CI and into the release drill.
 
 Owner: P11 supply-chain / release-engineering lane.
-Card: P11-T02 on the Keelworks board.
+Card: P11-T02 on the Isolith board.
 Ties to: P11-T06 (reproducible build + supply-chain doctrine; the SBOM is
 derived from the committed Cargo.lock, so the BOM matches what got built),
 P11-T01 (threat model: supply-chain boundary the SBOM is the inventory for),
@@ -32,7 +32,7 @@ copied into the tree.
 - The CVE scan source of truth is the rustsec advisory-db (the same data
   `cargo audit` consumes), parsed locally with severity honouring the
   advisory's declared severity or its CVSS v3.1 vector. AOSV cross-check leg
-  (report-only) and a trivy pass over the built keelworks image (real, on the
+  (report-only) and a trivy pass over the built isolith image (real, on the
   release host, recorded under `workstreams/security/proof/`) enrich the report.
 
 Gate policy (defaults, overridable in `workstreams/security/waivers.toml [policy]`):
@@ -67,7 +67,7 @@ On the release host, fold the REAL built-image scan in (so a critical/high OS
 CVE in the shipped image blocks unless waivered) and record the deliberate-
 failure repro:
 
-    python3 -m oep_tooling.sbom_cve trivy-image --image keelworks/oep-stack:<ver> --out workstreams/security/proof
+    python3 -m oep_tooling.sbom_cve trivy-image --image isolith/oep-stack:<ver> --out workstreams/security/proof
     ./scripts/sbom-cve-gate.sh --repo "$PWD" --ref <release-ver> \
         --osv --trivy-scan workstreams/security/proof/trivy-image-findings.json
     bash scripts/sbom-cve-fail-repro.sh --advisory-db workstreams/security/.advisory-db   # seeded critical must FAIL
@@ -80,7 +80,7 @@ advisory-db), `--waivers PATH`.
 
 Real container-image scan (requires docker + trivy on the release host):
 
-    python3 -m oep_tooling.sbom_cve trivy-image --image keelworks/oep-stack:0.1.0 --out workstreams/security/proof
+    python3 -m oep_tooling.sbom_cve trivy-image --image isolith/oep-stack:0.1.0 --out workstreams/security/proof
     # -> workstreams/security/proof/trivy-image.cdx.json + trivy-image.json
 
 ## 4. Accept a waiver (the only sanctioned way to ship an unfixed critical/high)

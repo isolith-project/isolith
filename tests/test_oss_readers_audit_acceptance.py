@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P1-M3-T01: audit of existing open-source
-readers for the Keelworks target formats (CGR, 3DXML, CATPart/CATProduct,
+"""Acceptance test for Isolith P1-M3-T01: audit of existing open-source
+readers for the Isolith target formats (CGR, 3DXML, CATPart/CATProduct,
 STEP AP242, and lightweight Bob-the-Builder style viewer/convert tools).
 
 TDD: this test documents the acceptance criteria BEFORE the audit report
@@ -33,7 +33,7 @@ SOURCES = os.path.join(ROOT, "workstreams/format-corpus/reader-audit", "oss-read
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
 
 # The five audit targets named on the card, and the gap area that must be
-# recorded for the Keelworks-critical native formats.
+# recorded for the Isolith-critical native formats.
 REQUIRED_READER_SECTIONS = {
     "GLC_Player": {
         "format_claims": ["3DXML", "COLLADA"],

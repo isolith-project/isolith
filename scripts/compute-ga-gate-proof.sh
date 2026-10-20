@@ -80,7 +80,7 @@ done
 # 5. Run the GA gate (driver + python harness both write the proof).
 echo "[5/5] running the 100-job GA gate wave..."
 export PYTHONPATH="$WT/python:$WT/python/oep_tooling"
-export KEELWORKS_ROOT="$WT"
+export ISOLITH_ROOT="$WT"
 python3 -m oep_tooling.ga_gate_p9 \
     --repo "$WT" \
     --fleet "$FLT" \

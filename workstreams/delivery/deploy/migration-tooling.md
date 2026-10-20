@@ -2,7 +2,7 @@
 
 Version 1.0, 2026-10-17. Milestone: P10-M1-T03 (migration tooling: import
 V5-era folder-based file trees into the P8 vault with metadata mapping).
-Program: Keelworks / Open Engineering Platform (OEP), P10 delivery lane.
+Program: Isolith / Open Engineering Platform (OEP), P10 delivery lane.
 
 Tool: `oep-vault-migrate` (Rust binary in `crates/oep-pdm`, consuming the
 P8-M1-T02 vault object model). This is the card P8-M1-T02 anticipated: section

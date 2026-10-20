@@ -33,7 +33,7 @@
   <ul>
     <li>Ubuntu 24.04 (aarch64 or amd64) or Debian 12, on a U1/VM-class host.
         The NAS is the repository and storage host only; it never runs
-        Keelworks services.</li>
+        Isolith services.</li>
     <li>Docker Engine 24+ running (<code>docker info</code>) and Docker Compose v2.</li>
     <li>About 5 GB free disk, <code>curl</code>, <code>git</code>.</li>
     <li>Online path: outbound internet to fetch build base images and crates.
@@ -41,8 +41,8 @@
   </ul>
 
   <h2>2. Online install (one command)</h2>
-  <pre><code>git clone http://gitea/keelworks/keelworks.git keelworks
-cd keelworks/workstreams/P10-M1/deploy
+  <pre><code>git clone http://gitea/isolith/isolith.git isolith
+cd isolith/workstreams/P10-M1/deploy
 ./install.sh</code></pre>
   <p>
     The script preflights Docker/Compose/disk, writes <code>.env</code> from
@@ -84,23 +84,23 @@ cd keelworks/workstreams/P10-M1/deploy
 gpg --import keys/oep-airgap-signing.pub.asc
 export SIGN_KEY_ID=oep-airgap-signing
 ./build-offline-bundle.sh --version 0.1.0 \
-    --images keelworks/oep-pdm:0.1.0 \
+    --images isolith/oep-pdm:0.1.0 \
     --compose docker-compose.airgap.yml \
     --out dist/</code></pre>
-  <p>Output: <code>keelworks-offline-0.1.0.tar.gz</code> (the bundle),
+  <p>Output: <code>isolith-offline-0.1.0.tar.gz</code> (the bundle),
      <code>.sha256</code> (media checksum), and <code>.sig</code>
      (detached signature, P11).</p>
   <h3>On the air-gapped target</h3>
-  <pre><code>sha256sum -c keelworks-offline-0.1.0.tar.gz.sha256
-sudo ./airgap-verify.sh --bundle /media/usb/keelworks-offline-0.1.0.tar.gz
+  <pre><code>sha256sum -c isolith-offline-0.1.0.tar.gz.sha256
+sudo ./airgap-verify.sh --bundle /media/usb/isolith-offline-0.1.0.tar.gz
 sudo ./airgap-install.sh \
-    --bundle /media/usb/keelworks-offline-0.1.0.tar.gz \
-    --install-dir /opt/keelworks --project oep</code></pre>
+    --bundle /media/usb/isolith-offline-0.1.0.tar.gz \
+    --install-dir /opt/isolith --project oep</code></pre>
   <p>
     <code>airgap-install.sh</code> verifies the bundle gpg signature and its
     sha256, extracts and verifies the signed MANIFEST (every file's checksum is
     checked, so a tampered bit anywhere fails install), docker-loads the
-    embedded images (no pull), writes a fresh <code>/opt/keelworks/.env</code>
+    embedded images (no pull), writes a fresh <code>/opt/isolith/.env</code>
     with a new local secret and <code>OEP_UPDATE_CHECK=off</code> by default,
     brings the stack up, waits for the same health checks as an online install,
     and records <code>proof/airgap-install-record.json</code> as the audit

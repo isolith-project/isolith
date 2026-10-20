@@ -1,7 +1,7 @@
 # Checkpoint / Resume for Long Jobs (P9-M4-T02)
 
 Version 1.0, 2026-10-17. Milestone: P9-M4-T02 (wave-2 downstream P9 compute
-lane). Program: Keelworks / Open Engineering Platform (OEP).
+lane). Program: Isolith / Open Engineering Platform (OEP).
 
 ## 1. What this is
 

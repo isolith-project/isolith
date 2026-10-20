@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P11-T06: supply-chain hardening.
+"""Acceptance test for Isolith P11-T06: supply-chain hardening.
 
 Written FIRST (TDD), mirroring the ADR/threat-model test convention. It
 machine-checks committed real material, not mocks:

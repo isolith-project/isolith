@@ -1,14 +1,14 @@
 # CATPart vs CATProduct container: differences and reference-graph discovery
 
 Format: Hex-level reverse-engineering observation notebook
-Task: P1-M2-T03 (Keelworks wave 1, P1 format reconnaissance) + P5-M1-T01 (wave-2
+Task: P1-M2-T03 (Isolith wave 1, P1 format reconnaissance) + P5-M1-T01 (wave-2
 full-corpus re-run and schema-drift notes, section 9)
 Version: 1.1
 Date: 2026-10-15 (v1.0), extended 2026-10-16 (v1.1)
 Status: verified on real material (121 real files wave-1; 131 native rows
 re-run 2026-10-16, see section 9)
 
-Owner: Keelworks P1 corpus / RE lane. Companion notebook: docs/re-notes/cgr-hex-notebook.md (P1-M2-T01, CGR). Shape-record hypothesis carryover: P1-M2-T05.
+Owner: Isolith P1 corpus / RE lane. Companion notebook: docs/re-notes/cgr-hex-notebook.md (P1-M2-T01, CGR). Shape-record hypothesis carryover: P1-M2-T05.
 
 ---
 

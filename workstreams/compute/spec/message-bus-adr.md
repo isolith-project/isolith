@@ -1,17 +1,17 @@
 ---
-title: Keelworks Message Bus Decision (NATS self-hosted default) and Topic Taxonomy
+title: Isolith Message Bus Decision (NATS self-hosted default) and Topic Taxonomy
 decision: adopt_nats_selfhosted_for_oep_message_bus_with_committed_topic_taxonomy
 version: 1.0.0
 date: 2026-10-17
 status: Ratified
-owner: Keelworks program governance, P9-M1 (message bus)
+owner: Isolith program governance, P9-M1 (message bus)
 applies_to: P9-M2 scheduler, P9-M3 workers, P9-M4 GPU/heterogeneous lane, P9-M5 ops dashboard, and every publisher/subscriber in the P9 compute lane and across oep-pdm and the P2P mesh
 supersedes: nothing (first P9 message bus decision record)
 ---
 
-# Keelworks Message Bus Decision
+# Isolith Message Bus Decision
 
-This record is the binding product decision for how the Keelworks compute lane
+This record is the binding product decision for how the Isolith compute lane
 ships messages: it answers the P9-M1-T02 question "NATS self-hosted default +
 topic taxonomy" and names NATS, self-hosted, as the message bus, with the topic
 taxonomy committed to the repository. It is versioned like the web-stack
@@ -31,11 +31,11 @@ ADR and the taxonomy and the run-log together, on real material, not on mocks.
 
 ## 1. Decision
 
-Keelworks ADOPTS **NATS, self-hosted**, as the message bus for the P9 compute
+Isolith ADOPTS **NATS, self-hosted**, as the message bus for the P9 compute
 lane. "Self-hosted" means the bus is one open-source `nats-server` binary
 running inside our own infrastructure (the same self-hosted stack as oep-pdm,
 on the NAS and the U1/GPU nodes), with no connection to any externally hosted
-service. Together with the bus, Keelworks commits the **topic taxonomy** in
+service. Together with the bus, Isolith commits the **topic taxonomy** in
 `workstreams/compute/spec/topic-taxonomy.json` (machine-readable contract) and
 `workstreams/compute/spec/topic-taxonomy.md` (human reference) as the complete set of subjects and
 subscription patterns publishers and consumers may use.

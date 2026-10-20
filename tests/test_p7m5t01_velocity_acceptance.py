@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P7-M5-T01: power-user velocity pass.
+"""Acceptance test for Isolith P7-M5-T01: power-user velocity pass.
 
 Power-user velocity is measured, not promised: 30 common command-line
 operations a power user runs every session on the OEP interchange workbench

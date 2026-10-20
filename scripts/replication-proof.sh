@@ -4,7 +4,7 @@
 # Verified-live acceptance for "a vault edit on one node appears on the other
 # with conflict semantics documented; concurrent-edit conflict resolves
 # deterministically; verified live across the two approved hosts" (decision #9:
-# U1 + garage PC are the approved Keelworks run targets; NOT the NAS).
+# U1 + garage PC are the approved Isolith run targets; NOT the NAS).
 #
 #  1. WoL-wake the garage PC (192.168.0.43, MAC 24-4B-FE-58-92-90; see the
 #     garage-pc-power-wake skill), wait for SSH.

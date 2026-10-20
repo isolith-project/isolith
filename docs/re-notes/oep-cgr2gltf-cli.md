@@ -1,6 +1,6 @@
 # oep-cgr2gltf CLI: CGR -> glTF/GLB converter
 
-P2-M5-T01 · Keelworks / OEP P2 CGR Reader
+P2-M5-T01 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15 (acceptance test GREEN; real
 corpus classified-skip with reasons, per P2-M1-T04 tolerant-failure doctrine)
 Version: 1.0

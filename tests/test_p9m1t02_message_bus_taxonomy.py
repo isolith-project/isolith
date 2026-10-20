@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P9-M1-T02: message bus decision + topic taxonomy.
+"""Acceptance test for Isolith P9-M1-T02: message bus decision + topic taxonomy.
 
 Written FIRST (TDD). The decision record at workstreams/compute/spec/message-bus-adr.md and the
 topic taxonomy at workstreams/compute/spec/topic-taxonomy.json/.md must make this test pass. It

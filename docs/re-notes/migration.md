@@ -1,6 +1,6 @@
 # P10-M1-T03 RE note: V5-era folder-tree migration tooling
 
-Task: P10-M1-T03 (t_bf3397e5). Delivered as keelworks PR on branch
+Task: P10-M1-T03 (t_bf3397e5). Delivered as isolith PR on branch
 task/p10m1t03-migration-1017a (base task/p8m1t02-vault-model-1016a). Version 1
 (2026-10-17).
 

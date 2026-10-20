@@ -1,17 +1,17 @@
 ---
-title: Keelworks P8 Hybrid Cloud Role Decision (Bastion-shaped P2P relay vs plain HTTPS; default LAN/air-gap)
+title: Isolith P8 Hybrid Cloud Role Decision (Bastion-shaped P2P relay vs plain HTTPS; default LAN/air-gap)
 decision: adopt_bastion_shaped_p2p_relay_for_natted_remote_with_lan_airgap_default
 version: 1.0.0
 date: 2026-10-17
 status: Ratified
-owner: Keelworks program governance, P8-M5 (sync / hybrid)
+owner: Isolith program governance, P8-M5 (sync / hybrid)
 applies_to: oep-pdm (server/PDM), P8-M5-T01 (sync client), P8-M5-T02 (offline mode), P9 P2P orchestration and P10-M2-T02 (offline install), the reference vertical P14
 supersedes: no prior P8 network-role record; the pure-HTTP stub transport deferral (P7-M2-T02) is resolved to LAN-direct plus optional relay, not public HTTPS
 ---
 
-# Keelworks P8 Hybrid Cloud Role Decision
+# Isolith P8 Hybrid Cloud Role Decision
 
-This record is the binding product decision for how a Keelworks PDM deployment
+This record is the binding product decision for how a Isolith PDM deployment
 reaches remote (NAT'd) peers and how it deploys in regulated shops: it answers
 the P8-M5-T03 question "hybrid cloud role: P2P relay when NAT'd (Bastion-
 shaped), or pure LAN/air-gap deployment" and names **Bastion-shaped P2P mesh
@@ -32,7 +32,7 @@ mocks.
 
 ## 1. Decision
 
-Keelworks ADOPTS a **two-role deployment model** for the oep-pdm lane, encoded
+Isolith ADOPTS a **two-role deployment model** for the oep-pdm lane, encoded
 in `crates/oep-pdm/src/deploy_role.rs` as a first-class, serializable
 `DeploymentRole`:
 
@@ -62,7 +62,7 @@ standing attack surface. HTTPS remains allowed only inside the LAN boundary
 the NAT-traversal path for controlled data.
 
 The Bastion element is reuse of a **pattern**, not a runtime dependency on the
-R1A Bastion product: Keelworks does not link, embed, or require Bastion
+R1A Bastion product: Isolith does not link, embed, or require Bastion
 containers. The mesh shape (self-hosted control plane + relay-only forwarder +
 E2E WireGuard-class transport, just-in-time node approval, tamper-evident
 audit trail) is adopted as architecture; the implementation stays clean-room
@@ -117,7 +117,7 @@ pattern (R1A product record, Topics/Bastion Mesh VPN):
    self-hosted, FIPS-friendly, relay-only mesh (Tailscale wire protocol,
    headscale core under BSD-3, DERP relay for NAT traversal, JIT approval,
    tamper-evident audit) validated end to end in its S10 install rehearsal.
-   Keelworks reuses the shape without embedding the proprietary product, which
+   Isolith reuses the shape without embedding the proprietary product, which
    keeps the AGPL-3.0 P2P orchestration boundary (decision #3) intact while
    giving the P9 compute / P10 delivery lanes a relay design already proven in
    production-shaped conditions. For a NAT'd remote peer the mesh is strictly

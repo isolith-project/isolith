@@ -58,7 +58,7 @@ def cmd_golden(args):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m oep_tooling.corpus",
-                                 description="Keelworks test corpus harness")
+                                 description="Isolith test corpus harness")
     ap.add_argument("--cache", default=None,
                     help="cache dir for object-store blobs (default corpus/cache)")
     sub = ap.add_subparsers(dest="cmd", required=True)

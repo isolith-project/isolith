@@ -2,7 +2,7 @@
 # Install the adaptive pre-commit quality gate for the current repo.
 # Usage: install-hook.sh [repo-dir  (default: cwd)]
 #
-# Vendored into the Keelworks repo (scripts/gate/) from the Hermes
+# Vendored into the Isolith repo (scripts/gate/) from the Hermes
 # `precommit-quality-gate` skill. The hook symlinks to THIS checkout's
 # precommit-gate.sh (self-contained), not to a Hermes skill path, so any clone
 # can install it even on machines without Hermes.

@@ -20,10 +20,10 @@
       ]
     },
     "component": {
-      "bom-ref": "pkg:oci/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152?arch=arm64&repository_url=index.docker.io%2Fkeelworks%2Foep-stack",
+      "bom-ref": "pkg:oci/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152?arch=arm64&repository_url=index.docker.io%2Fisolith%2Foep-stack",
       "type": "container",
-      "name": "keelworks/oep-stack:0.1.0",
-      "purl": "pkg:oci/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152?arch=arm64&repository_url=index.docker.io%2Fkeelworks%2Foep-stack",
+      "name": "isolith/oep-stack:0.1.0",
+      "purl": "pkg:oci/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152?arch=arm64&repository_url=index.docker.io%2Fisolith%2Foep-stack",
       "properties": [
         {
           "name": "aquasecurity:trivy:DiffID",
@@ -75,7 +75,7 @@
         },
         {
           "name": "aquasecurity:trivy:Labels:com.docker.compose.project",
-          "value": "keelworks"
+          "value": "isolith"
         },
         {
           "name": "aquasecurity:trivy:Labels:com.docker.compose.service",
@@ -87,23 +87,23 @@
         },
         {
           "name": "aquasecurity:trivy:Labels:org.opencontainers.image.description",
-          "value": "Open Engineering Platform (Keelworks): PDM + P2P compute + P6 preview viewer in one image"
+          "value": "Open Engineering Platform (Isolith): PDM + P2P compute + P6 preview viewer in one image"
         },
         {
           "name": "aquasecurity:trivy:Labels:org.opencontainers.image.title",
-          "value": "keelworks/oep-stack"
+          "value": "isolith/oep-stack"
         },
         {
           "name": "aquasecurity:trivy:Reference",
-          "value": "keelworks/oep-stack:0.1.0"
+          "value": "isolith/oep-stack:0.1.0"
         },
         {
           "name": "aquasecurity:trivy:RepoDigest",
-          "value": "keelworks/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152"
+          "value": "isolith/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152"
         },
         {
           "name": "aquasecurity:trivy:RepoTag",
-          "value": "keelworks/oep-stack:0.1.0"
+          "value": "isolith/oep-stack:0.1.0"
         },
         {
           "name": "aquasecurity:trivy:SchemaVersion",
@@ -8847,7 +8847,7 @@
       ]
     },
     {
-      "ref": "pkg:oci/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152?arch=arm64&repository_url=index.docker.io%2Fkeelworks%2Foep-stack",
+      "ref": "pkg:oci/oep-stack@sha256:7d0055e06844a9f462fbce23f4cf451e6ad860bd5f6d0350816bef9aa3985152?arch=arm64&repository_url=index.docker.io%2Fisolith%2Foep-stack",
       "dependsOn": [
         "d3ae70e5-06a9-4235-b208-5ddf2bef467a"
       ]

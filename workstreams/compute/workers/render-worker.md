@@ -1,7 +1,7 @@
 # Render Worker (P9-M3-T01): headless oep-geo renderer as a worker function
 
 Version 1.0, 2026-10-17. Milestone: P9-M3-T01 (wave-2 downstream P9 compute
-lane). Program: Keelworks / Open Engineering Platform (OEP).
+lane). Program: Isolith / Open Engineering Platform (OEP).
 
 ## 1. What this is
 

@@ -1,9 +1,9 @@
 # P4-M5-T03 — P4 GA gate: STEP fidelity matrix published; MBD validator demo on
 # real corpus material
 
-> Task: t_488ab698 (Keelworks wave 2, P4 capstone). Status: implemented +
+> Task: t_488ab698 (Isolith wave 2, P4 capstone). Status: implemented +
 > verified on real material 2026-10-16. Version 1.0.
-> Repo: keelworks/keelworks @ NAS Gitea; branch task/p4m5t03-ga-gate-1016a.
+> Repo: isolith/isolith @ NAS Gitea; branch task/p4m5t03-ga-gate-1016a.
 > Gate classification: **PASS** — both P4 GA criteria evidenced on real corpus
 > material; exit code contract + CI-safe degraded run the same as the
 > P2-M6-T03 / P3-M5-T02 GA gates.
@@ -88,7 +88,7 @@ P4 GA gate: total=6 pass=6 fail=0 skip=0 | exit=0
 
 - FIDELITY leg (2 rows): `pmi-fidelity-matrix` PASS — schema ok, 64 cells
   (PASS 14 / FAIL 2 / SKIP 48; the 2 FAIL cells are the documented step-io
-  capability gaps, not gate FAILs); `keelworks-box` PASS — Hausdorff 0.0,
+  capability gaps, not gate FAILs); `isolith-box` PASS — Hausdorff 0.0,
   volume_rel_error 0.0 vs eps 1e-9 (real P4-M1-T03 measured row). This closes
   criterion (1): the STEP fidelity matrix is published and honest.
 - MBD leg (4 rows): `nist-ftc-06`, `nist-ftc-08`, `nist-stc-06` all PASS —

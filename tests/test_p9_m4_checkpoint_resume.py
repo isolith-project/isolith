@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P9-M4-T02: checkpoint/resume for long jobs.
+"""Acceptance test for Isolith P9-M4-T02: checkpoint/resume for long jobs.
 
 Written FIRST (TDD). The farm crate (crates/oep-farm) + its committed
 real-material proof must make this test pass. It verifies the real material,

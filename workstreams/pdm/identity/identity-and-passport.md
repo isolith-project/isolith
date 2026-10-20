@@ -4,13 +4,13 @@ decision: identity_local_accounts_plus_optional_oidc_own_passport
 version: 1.0.0
 date: 2026-10-17
 status: Ratified
-owner: Keelworks program, P8 PDM lane (P8-M3 identity)
+owner: Isolith program, P8 PDM lane (P8-M3 identity)
 supersedes: nothing (first identity record)
 ---
 
 # OEP Identity and Passport Concept
 
-This record is the binding design decision for identity in the Keelworks /
+This record is the binding design decision for identity in the Isolith /
 Open Engineering Platform (OEP) PDM. It defines our own account and passport
 model, keeps OIDC optional and OFF by default (sovereignty principle from
 P0-M5-T02), and documents exactly how far the "passport" idea goes and no

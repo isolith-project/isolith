@@ -1,17 +1,17 @@
 ---
-title: Keelworks Telemetry Decision
+title: Isolith Telemetry Decision
 decision: telemetry_off_by_default_optin_crash_reports_only
 version: 1.0.0
 date: 2026-10-15
 status: Ratified
-owner: Keelworks program governance, P0-M5 (MBD/corpus standards and product policy)
+owner: Isolith program governance, P0-M5 (MBD/corpus standards and product policy)
 applies_to: all components (crates oep-cgr, oep-3dxml, oep-geo, oep-step, oep-pdm; P2P workers, delivery packaging, CLI and GUI entry points)
 supersedes: nothing (first telemetry record)
 ---
 
-# Keelworks Telemetry Decision
+# Isolith Telemetry Decision
 
-This record is the binding product decision for telemetry in the Keelworks
+This record is the binding product decision for telemetry in the Isolith
 open engineering platform. It implements charter goal 5 ("Sovereignty
 defaults: no telemetry by default, opt-in crash reports only, air-gap capable,
 deployable on a single NAS") and the clean-room, self-hosted invariants in
@@ -23,7 +23,7 @@ version in the front matter and adds a line to the change log at the bottom.
 
 ## 1. Decision
 
-Keelworks ships with NO telemetry of any kind by default. No usage analytics,
+Isolith ships with NO telemetry of any kind by default. No usage analytics,
 no error logs off-box, no session replay, no feature-flag telemetry, no
 marketplace or update-check pings, no crash reporting. The default build of
 every component performs no outbound network traffic for observation, and
@@ -49,7 +49,7 @@ Three facts drive it:
    it, to an uncontrolled third party is incompatible with the legal and
    export-control posture in P0-M2.
 3. Corruption of the model. Telemetry is a per-seat surveillance tax on the
-   model Keelworks replaces. Adopting the incumbent's habit of harvesting user
+   model Isolith replaces. Adopting the incumbent's habit of harvesting user
    behavior is the one thing the program cannot copy.
 
 ## 3. Options considered
@@ -94,7 +94,7 @@ data-minimization discipline.
 The report endpoint is user-controlled by default: a self-hosted collector
 configured by the operator (the PDM host or a dedicated crash collector on the
 same network), exactly like the rest of the stack. No report is ever sent to a
-Keelworks-run endpoint automatically. If a hosted collection option is ever
+Isolith-run endpoint automatically. If a hosted collection option is ever
 offered, it must be (a) explicitly selected by the user at runtime, and (b)
 preceded by a plain-language notice of what is sent and where. The default
 remains self-hosted.

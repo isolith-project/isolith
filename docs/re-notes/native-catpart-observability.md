@@ -1,10 +1,10 @@
 # P5-M1-T02 · Native CATPart entity-class observability: B-Rep vs tessellation vs parameter graph
 
 Format: hex-level reverse-engineering observation report, grounded in observed bytes only
-Task: P5-M1-T02 (Keelworks wave-2, P5 native lane) - feeds the P5-M1-T03 alpha-target decision
+Task: P5-M1-T02 (Isolith wave-2, P5 native lane) - feeds the P5-M1-T03 alpha-target decision
 Date: 2026-10-16
 Status: verified on real material (114-part native CATPart corpus; see Verification record)
-Owner: Keelworks P5 native lane. Sibling notes: docs/re-notes/catpart-catproduct-container-notebook.md (P1-M2-T03), docs/re-notes/shape-record-hypothesis.md (P1-M2-T05).
+Owner: Isolith P5 native lane. Sibling notes: docs/re-notes/catpart-catproduct-container-notebook.md (P1-M2-T03), docs/re-notes/shape-record-hypothesis.md (P1-M2-T05).
 
 ---
 

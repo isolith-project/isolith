@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Keelworks P11-T06: lock-pin verifier (the "CI fails on any unpinned or
+# Isolith P11-T06: lock-pin verifier (the "CI fails on any unpinned or
 # unverified dependency change" gate).
 #
 # Fails (exit 1) on any of:

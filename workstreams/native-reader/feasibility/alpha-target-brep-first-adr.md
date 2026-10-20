@@ -1,15 +1,15 @@
 ---
-title: Keelworks Native CATPart Reader Alpha Target (B-Rep / geometry first, feature tree deferred)
+title: Isolith Native CATPart Reader Alpha Target (B-Rep / geometry first, feature tree deferred)
 decision: alpha_targets_brep_exact_geometry_first_feature_tree_semantics_deferred
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks P5 native-reader lane (wave 2), P5-M1-T03
+owner: Isolith P5 native-reader lane (wave 2), P5-M1-T03
 applies_to: the native CATPart/CATProduct reader workstream (P5), its feed into the oep-geo canonical model via the P6-M4-T02 importer hub, the P5-M3 B-Rep extraction lane, and the P5-M4 feature-tree recoverability research lane
 supersedes: nothing (first native-reader alpha target decision record; the master plan default for P5-M1-T03 is hereby ratified)
 ---
 
-# Keelworks Native CATPart Reader Alpha Target
+# Isolith Native CATPart Reader Alpha Target
 
 This record is the binding product decision for the P5-M1-T03 card: what the
 alpha target of the native CATPart/CATProduct reader is. The two candidate
@@ -242,7 +242,7 @@ only). Concretely:
 
 ## 7. License
 
-- All reader code authored by Keelworks is Apache-2.0 (the decided posture
+- All reader code authored by Isolith is Apache-2.0 (the decided posture
   for applications/libraries). No vendor or GPL code is linked, copied, or
   adapted.
 - The corpus is dev-only reference material under the decided posture

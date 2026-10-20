@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # P10-M1-T02: generate a local TLS identity (CA + server cert/key) for the
-# self-hosted Keelworks PDM stack, with SANs for the host so `oep-pdm
+# self-hosted Isolith PDM stack, with SANs for the host so `oep-pdm
 # --tls-cert --tls-key` terminates HTTPS trustably on U1/VM-class hosts.
 #
 # Usage:
@@ -32,7 +32,7 @@ DAYS=825          # 27 months -- rotate before expiry (renewal is a cron/ops job
 if [ ! -f "$OUT_DIR/ca.pem" ]; then
   openssl req -x509 -newkey rsa:2048 -sha256 -days "$DAYS" -nodes \
     -keyout "$OUT_DIR/ca.key" -out "$OUT_DIR/ca.pem" \
-    -subj "/CN=Keelworks Stack Local CA (dev)" >/dev/null 2>&1
+    -subj "/CN=Isolith Stack Local CA (dev)" >/dev/null 2>&1
 else
   echo "[certs] reuse existing ca.pem"
 fi

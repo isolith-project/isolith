@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P11-T04: crypto / integrity.
+"""Acceptance test for Isolith P11-T04: crypto / integrity.
 
 Two layers (same pattern as the P11-T06 supply-chain test):
 

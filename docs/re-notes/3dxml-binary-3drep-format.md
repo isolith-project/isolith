@@ -1,6 +1,6 @@
 # Binary `.3DRep` Format: V5_CFV3 Container Header (Documentation + TDD Contract)
 
-P3-M3-T01 · Keelworks / OEP P3 3DXML Reader/Writer
+P3-M3-T01 · Isolith / OEP P3 3DXML Reader/Writer
 Status: verified on real material 2026-10-15
 Version: 1.0
 

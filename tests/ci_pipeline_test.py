@@ -37,7 +37,7 @@ EXPECTED_JOBS = ["lint", "unit", "integration"]
 EXPECTED_TRIGGERS = ["push"]
 # Context names Gitea branch protection must require. Gitea records Actions
 # job statuses as "<workflow name> / <job name> (<event>)" -- assert the real
-# shape, not the bare job name (verified live on keelworks 2026-10-15).
+# shape, not the bare job name (verified live on isolith 2026-10-15).
 STATUS_PREFIX = "CI (lint + unit + integration) / "
 _failures = []
 _partB_ok = True
@@ -111,7 +111,7 @@ def branch_protection_and_runs(token, base):
     """PART B live-check helper (called from main(); NOT a pytest test — it
     takes token/base as args, which pytest would wrongly treat as fixtures)."""
     global _partB_ok
-    owner, repo = (os.environ.get("OEP_REPO") or "keelworks/keelworks").split("/", 1)
+    owner, repo = (os.environ.get("OEP_REPO") or "isolith/isolith").split("/", 1)
     try:
         rules = api_get("/repos/%s/%s/branch_protections" % (owner, repo), token, base)
     except urllib.error.HTTPError as e:
@@ -154,7 +154,7 @@ def branch_protection_and_runs(token, base):
 
 
 def main():
-    print("Keelworks CI pipeline (P0-M4-T01) acceptance test")
+    print("Isolith CI pipeline (P0-M4-T01) acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_workflow_exists()

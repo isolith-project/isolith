@@ -35,7 +35,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 
-MATRIX_SCHEMA = "keelworks/pmi-fidelity-matrix/v1"
+MATRIX_SCHEMA = "isolith/pmi-fidelity-matrix/v1"
 
 # Canonical GD&T axis: the 14 ASME Y14.5 / ISO 1101 characteristics (matching
 # oep-pmi's `Characteristic` closed set) plus two supporting rows.
@@ -238,7 +238,7 @@ TransMagic / NX / CATIA / SolidWorks)",
         "kind": "commercial",
         "available": os.environ.get("OEP_APP_COMMERCIAL") == "1",
         "version": "n/a",
-        "evidence": ("not licensed/present on this host; keelworks treats commercial "
+        "evidence": ("not licensed/present on this host; isolith treats commercial "
                      "reader feature lists as a functional-spec source only "
                      "(P1-M3-T02), never as a runnable reference — SKIP by policy"),
     })
@@ -421,7 +421,7 @@ def _label_of(row):
 # --------------------------------------------------------------------------
 def render_markdown(mx):
     lines = []
-    lines.append("# Keelworks PMI fidelity audit matrix (P4-M2-T03)")
+    lines.append("# Isolith PMI fidelity audit matrix (P4-M2-T03)")
     lines.append("")
     lines.append("> Format-matrix convention (P13-T03 style): an HONEST capability "
                  "table. Every cell is one of **PASS / FAIL / SKIP** with an "

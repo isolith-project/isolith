@@ -4,14 +4,14 @@
   "task": "P4-M3-T02",
   "pairs": [
     {
-      "id": "keelworks-box-export",
+      "id": "isolith-box-export",
       "geometry_class": "prism",
-      "source": "P6-M4-T01 faceted AP214 passthrough export of the CC0 keelworks unit box (8 verts / 12 tris), byte-locked to the independent encoder. As of this card OCC parses it (status Done, 1 root) but transfers NO shape (SHAPE_REPRESENTATION_RELATIONSHIP wiring -> golden transfer=false).",
+      "source": "P6-M4-T01 faceted AP214 passthrough export of the CC0 isolith unit box (8 verts / 12 tris), byte-locked to the independent encoder. As of this card OCC parses it (status Done, 1 root) but transfers NO shape (SHAPE_REPRESENTATION_RELATIONSHIP wiring -> golden transfer=false).",
       "step": "crates/oep-geo/tests/golden/box-reference.step",
       "tolerance": {"faces": 0, "area": 1e-6}
     },
     {
-      "id": "keelworks-box-conformance",
+      "id": "isolith-box-conformance",
       "geometry_class": "prism",
       "source": "Same unit-box geometry, re-wired to the OCC-transferable AP214 form (MANIFOLD_SURFACE_SHAPE_REPRESENTATION + SHAPE_DEFINITION_REPRESENTATION) by corpus/tools/gen_convention_step.py from the committed export. Proves the exporter's GEOMETRY is sound and isolates the drift to the representation wiring; sets the target for exporter follow-up (P4-M3-T01).",
       "step": "corpus/reference/box-AP214-convention.step",

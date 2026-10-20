@@ -1,6 +1,6 @@
 # P8-M6-T03: P8 GA gate -- multi-user edit/publish/release + concurrent lock test
 
-Status: implemented as part of task P8-M6-T03 (keelworks card t_8cee3e28).
+Status: implemented as part of task P8-M6-T03 (isolith card t_8cee3e28).
 Owner: open-engineering-platform P8 PDM lane.
 Version: 1 (2026-10-17).
 

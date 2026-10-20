@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# KEELWORKS OEP - One-command install (P10-M1-T01).
+# ISOLITH OEP - One-command install (P10-M1-T01).
 #
 # From a clean state (no images, no containers, no .env) this script:
 #   1. preflights Docker / Compose / disk / OS
@@ -17,7 +17,7 @@
 #
 # Usage:
 #   ./install.sh                     # build from source (needs network at build)
-#   ./install.sh --offline-bundle keelworks-oep-stack-0.1.0.tar.gz   # air-gap
+#   ./install.sh --offline-bundle isolith-oep-stack-0.1.0.tar.gz   # air-gap
 #   ./install.sh --no-build          # reuse an already-built/loaded image
 #   ./install.sh --down              # stop the stack
 
@@ -85,13 +85,13 @@ load_or_build() {
         NO_BUILD=true
     fi
     if [[ "$NO_BUILD" == "true" ]]; then
-        if ! docker image inspect "keelworks/oep-stack:${TAG}" >/dev/null 2>&1; then
-            err "image keelworks/oep-stack:${TAG} not present and --no-build/offline bundle given."
+        if ! docker image inspect "isolith/oep-stack:${TAG}" >/dev/null 2>&1; then
+            err "image isolith/oep-stack:${TAG} not present and --no-build/offline bundle given."
             exit 1
         fi
-        log "Reusing prebuilt image keelworks/oep-stack:${TAG}."
+        log "Reusing prebuilt image isolith/oep-stack:${TAG}."
     else
-        log "Building stack image keelworks/oep-stack:${TAG} (first build fetches crates, minutes)..."
+        log "Building stack image isolith/oep-stack:${TAG} (first build fetches crates, minutes)..."
         docker compose -f docker-compose.yml build
     fi
 }
@@ -101,14 +101,14 @@ wait_healthy() {
     local deadline=$(( $(date +%s) + 180 ))
     local want=3 got=0
     while (( $(date +%s) < deadline )); do
-        got=$(docker ps --filter name=keelworks- --format '{{.Names}} {{.Status}}' \
+        got=$(docker ps --filter name=isolith- --format '{{.Names}} {{.Status}}' \
             | grep -c 'healthy' || true)
         [[ "$got" -ge "$want" ]] && break
         sleep 3
     done
     if [[ "$got" -lt "$want" ]]; then
         err "Timed out: only $got/$want services healthy."
-        docker ps --filter name=keelworks-
+        docker ps --filter name=isolith-
         exit 1
     fi
     log "All $want services healthy."
@@ -150,6 +150,6 @@ main() {
     wait_healthy
     verify_health
     show_summary
-    log "One-command install complete: the full Keelworks stack is up with health checks green."
+    log "One-command install complete: the full Isolith stack is up with health checks green."
 }
 main

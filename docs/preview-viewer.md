@@ -1,7 +1,7 @@
 # oep-viewer: preview viewer (desktop app shell) for oep-geo models (P6-M5-T02)
 
 Version 1.0, 2026-10-16. Milestone: P6-M5-T02 (preview viewer shows `oep-geo`
-models; camera, selections, clipping). Program: Keelworks / Open Engineering
+models; camera, selections, clipping). Program: Isolith / Open Engineering
 Platform (OEP), P6 geometry core, renderer backend lane.
 
 Reference implementation: `crates/oep-viewer` (Rust, std-only, deterministic).

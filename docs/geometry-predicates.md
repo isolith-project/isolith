@@ -1,6 +1,6 @@
 # P6-M2-T03: Geometric Predicates (On/Off Tolerance, Distance, Containment) for `oep-geo`
 
-Status: implemented and fuzz-verified (Keelworks wave 1, P6).
+Status: implemented and fuzz-verified (Isolith wave 1, P6).
 
 ## Scope
 

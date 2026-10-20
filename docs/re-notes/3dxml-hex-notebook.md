@@ -1,6 +1,6 @@
 # 3DXML ASCII vs Binary (.3DRep): Hex-Level Observation Notebook
 
-P1-M2-T04 · Keelworks / OEP P1 Format Reconnaissance
+P1-M2-T04 · Isolith / OEP P1 Format Reconnaissance
 Status: observation draft, verified on real material 2026-10-15
 Version: 1.0
 

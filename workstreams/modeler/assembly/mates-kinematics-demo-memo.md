@@ -4,7 +4,7 @@ decision: mates_kinematics_demo_is_an_own_dependency_free_semantics_wedge_produc
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks program governance, P7 modeler lane (P7-M3-T02)
+owner: Isolith program governance, P7 modeler lane (P7-M3-T02)
 applies_to: the P7-M3-T02 mates/kinematics demo, the oep-kinematics crate, and the P7-M3-T01 solver ADR boundary
 supersedes: nothing
 ---

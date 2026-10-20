@@ -1,7 +1,7 @@
 # P1-M1-T01: Public CGR Sample Files — Location and License Verification
 
 Version: 1.0 (2026-10-15)
-Owner: Keelworks program, P1 corpus
+Owner: Isolith program, P1 corpus
 Status: verified. This task LOCATES public CGR (CATIA Graphical Representation) sample
 files and VERIFIES the license of each sample. Program rule: no proprietary
 redistribution (clean-room invariant, board.program.json). Real CGR binaries are used

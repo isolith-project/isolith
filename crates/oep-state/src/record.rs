@@ -61,7 +61,7 @@ impl JobState {
 /// only preserves it across claims and redeliveries — which is exactly what
 /// node-loss survival requires.
 ///
-/// [spec]: https://keelworks/keelworks (P9-M1-T01 oep-job fmt)
+/// [spec]: https://isolith/isolith (P9-M1-T01 oep-job fmt)
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct JobRecord {
     /// Globally unique, url-safe job id.

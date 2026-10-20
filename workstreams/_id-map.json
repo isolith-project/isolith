@@ -243,5 +243,5 @@
     }
   },
   "note": "Internal card/workstream code -> descriptive path map. Codes stay internal to the program, never used in a public surface.",
-  "schema": "keelworks.workstream-id-map.v1"
+  "schema": "isolith.workstream-id-map.v1"
 }

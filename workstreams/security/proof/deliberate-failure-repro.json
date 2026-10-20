@@ -2,7 +2,7 @@
   "repro": "P11-T02 deliberate-failure: release tree with a seeded critical vuln in a (test-)dependency MUST fail the release gate",
   "timestamp": "2026-10-19T06:59:47Z",
   "hermetic": {
-    "seed": "keelworks-fixture-unsafe@1.5.0 -> RUSTSEC-0000-2026-CRIT (critical, fixture advisory-db)",
+    "seed": "isolith-fixture-unsafe@1.5.0 -> RUSTSEC-0000-2026-CRIT (critical, fixture advisory-db)",
     "gate_rc": 1,
     "expected_rc": 1
   },

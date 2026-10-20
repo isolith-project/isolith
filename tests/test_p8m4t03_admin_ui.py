@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance for Keelworks P8-M4-T03: admin UI backend contract lockstep.
+"""Acceptance for Isolith P8-M4-T03: admin UI backend contract lockstep.
 
 The Rust side proves behavior (tests/admin_roles_live.rs and
 tests/admin_revisions_quotas.rs). This test guards the *contract surface* from

@@ -3,7 +3,7 @@
   "task": "P13-T03",
   "generated": "2026-10-18T15:50:00Z",
   "host": "promaxgb10-83f1",
-  "what": "docs site rendered from the repo and served by the P10 delivery stack (oep-docs in the built keelworks/oep-stack image); format matrix spot-checked against the committed P2/P3/P4 GA matrices",
+  "what": "docs site rendered from the repo and served by the P10 delivery stack (oep-docs in the built isolith/oep-stack image); format matrix spot-checked against the committed P2/P3/P4 GA matrices",
   "rows": [
     {
       "id": "sections-from-repo",
@@ -13,7 +13,7 @@
     {
       "id": "sections-from-image",
       "status": "PASS",
-      "detail": "same three sections + /healthz served from the BUILT image keelworks/oep-stack:0.1.0-p13t03 (docker build of workstreams/delivery/deploy/deploy/Dockerfile), oep-docs shipping at /usr/local/bin/oep-docs and the site at /srv/docs - docs from the sum, no separate infra"
+      "detail": "same three sections + /healthz served from the BUILT image isolith/oep-stack:0.1.0-p13t03 (docker build of workstreams/delivery/deploy/deploy/Dockerfile), oep-docs shipping at /usr/local/bin/oep-docs and the site at /srv/docs - docs from the sum, no separate infra"
     },
     {
       "id": "format-matrix-check",
@@ -28,7 +28,7 @@
     {
       "id": "compose-valid",
       "status": "PASS",
-      "detail": "docker compose config: four services (docs/pdm/viewer/p2p) on the single keelworks/oep-stack image; docs OEP_DOCS_PORT=8792, healthcheck GET /healthz"
+      "detail": "docker compose config: four services (docs/pdm/viewer/p2p) on the single isolith/oep-stack image; docs OEP_DOCS_PORT=8792, healthcheck GET /healthz"
     },
     {
       "id": "p10-ga-surface-unchanged",

@@ -1,7 +1,7 @@
 # Obtaining the Official 3DXML Specification (P1-M1-T02)
 
 Version: 1.0, 2026-10-15
-Author: Keelworks default worker
+Author: Isolith default worker
 **Purpose:** Document the exact process to obtain the Dassault 3DXML specification
 (XSD reference schemas + user's guide) under Dassault's free internal-use license,
 per program clean-room doctrine (public specs and licensed materials only, no
@@ -20,10 +20,10 @@ interoperability downloads. This matches public guidance in Dassault's own
 3DEXPERIENCE help ("To ask for a documentation, browse the ... internet site then
 choose 3D XML XSD Schema") and UTF-8 help mirrors.
 
-Key constraint for Keelworks: the license grants internal use only, so the XSD and
+Key constraint for Isolith: the license grants internal use only, so the XSD and
 user's guide must NOT be republished. Do not republish the XSD or user's guide in
 any public or open repository, bundle them into a shipped product, or quote them
-beyond fair use. Keelworks may hold and read the spec internally (private NAS repo)
+beyond fair use. Isolith may hold and read the spec internally (private NAS repo)
 to build its clean-room 3DXML reader, mirroring how the program treats STEP/AP242
 reference material, but the corpus stays license-clean.
 

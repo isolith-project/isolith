@@ -33,7 +33,7 @@ GITEA_BASE = "http://192.168.0.101:3200"
 CREDS = os.path.expanduser("~/.git-credentials")
 
 DEFAULT_OWNER = "don"
-DEFAULT_PACKAGE = "keelworks-vault"
+DEFAULT_PACKAGE = "isolith-vault"
 DEFAULT_VERSION = "v1"
 
 

@@ -25,7 +25,7 @@
 #
 # 2026-10-18 green baseline: the Rust crate tree scans clean at block severity
 # (one informational RustSec hit, ring 0.17.14 / RUSTSEC-2025-0007, is
-# non-blocking and reported, not waived). The keelworks/oep-stack:0.1.0
+# non-blocking and reported, not waived). The isolith/oep-stack:0.1.0
 # runtime image (debian:bookworm-slim + curl/ca-certificates for in-container
 # health checks) carries the OS-package critical/high findings waived below.
 
@@ -36,176 +36,176 @@ version = "1"
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:bsdutils"
+id = "image:isolith/oep-stack:bsdutils"
 package = "bsdutils"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:curl"
+id = "image:isolith/oep-stack:curl"
 package = "curl"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-12064, CVE-2026-6276, CVE-2026-8286, CVE-2026-8458, CVE-2026-8927) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-12064, CVE-2026-6276, CVE-2026-8286, CVE-2026-8458, CVE-2026-8927) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:gzip"
+id = "image:isolith/oep-stack:gzip"
 package = "gzip"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-41992) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-41992) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libacl1"
+id = "image:isolith/oep-stack:libacl1"
 package = "libacl1"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-54369) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-54369) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libblkid1"
+id = "image:isolith/oep-stack:libblkid1"
 package = "libblkid1"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libcurl4"
+id = "image:isolith/oep-stack:libcurl4"
 package = "libcurl4"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-12064, CVE-2026-6276, CVE-2026-8286, CVE-2026-8458, CVE-2026-8927) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-12064, CVE-2026-6276, CVE-2026-8286, CVE-2026-8458, CVE-2026-8927) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libldap-2.5-0"
+id = "image:isolith/oep-stack:libldap-2.5-0"
 package = "libldap-2.5-0"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2023-2953) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2023-2953) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libmount1"
+id = "image:isolith/oep-stack:libmount1"
 package = "libmount1"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libsmartcols1"
+id = "image:isolith/oep-stack:libsmartcols1"
 package = "libsmartcols1"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libssl3"
+id = "image:isolith/oep-stack:libssl3"
 package = "libssl3"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-84782) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-84782) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libsystemd0"
+id = "image:isolith/oep-stack:libsystemd0"
 package = "libsystemd0"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-16742) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-16742) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libtinfo6"
+id = "image:isolith/oep-stack:libtinfo6"
 package = "libtinfo6"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2025-69720) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2025-69720) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libudev1"
+id = "image:isolith/oep-stack:libudev1"
 package = "libudev1"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-16742) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-16742) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:libuuid1"
+id = "image:isolith/oep-stack:libuuid1"
 package = "libuuid1"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:mount"
+id = "image:isolith/oep-stack:mount"
 package = "mount"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:ncurses-base"
+id = "image:isolith/oep-stack:ncurses-base"
 package = "ncurses-base"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2025-69720) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2025-69720) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:ncurses-bin"
+id = "image:isolith/oep-stack:ncurses-bin"
 package = "ncurses-bin"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2025-69720) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2025-69720) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:openssl"
+id = "image:isolith/oep-stack:openssl"
 package = "openssl"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-84782) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-84782) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:perl-base"
+id = "image:isolith/oep-stack:perl-base"
 package = "perl-base"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "Critical OS-level findings (CVE-2026-13221, CVE-2026-42496, CVE-2026-42497, CVE-2026-48962, CVE-2026-57432, CVE-2026-57433, CVE-2026-8376, CVE-2026-9538) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "Critical OS-level findings (CVE-2026-13221, CVE-2026-42496, CVE-2026-42497, CVE-2026-48962, CVE-2026-57432, CVE-2026-57433, CVE-2026-8376, CVE-2026-9538) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:util-linux"
+id = "image:isolith/oep-stack:util-linux"
 package = "util-linux"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:util-linux-extra"
+id = "image:isolith/oep-stack:util-linux-extra"
 package = "util-linux-extra"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "High OS-level findings (CVE-2026-53613, CVE-2026-53615, CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
 
 
 [[waiver]]
-id = "image:keelworks/oep-stack:zlib1g"
+id = "image:isolith/oep-stack:zlib1g"
 package = "zlib1g"
 date = "2026-10-18"
 owner = "release-eng"
-reason = "Critical OS-level findings (CVE-2023-45853) in the debian:bookworm-slim runtime base of keelworks/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."
+reason = "Critical OS-level findings (CVE-2023-45853) in the debian:bookworm-slim runtime base of isolith/oep-stack. Runtime binds 127.0.0.1 only (decision #10); curl/ca-certificates are in-container health-check tooling, not a network service. Tracked via trivy at every release drill; remediation = rebuild pulls current bookworm-slim point release + bookworm-security; reviewed each release; block if severity/exploitability changes."

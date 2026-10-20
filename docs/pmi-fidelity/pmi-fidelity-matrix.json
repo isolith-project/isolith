@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-10-16T18:55:45Z",
   "host": "promaxgb10-83f1",
-  "matrix_schema": "keelworks/pmi-fidelity-matrix/v1",
+  "matrix_schema": "isolith/pmi-fidelity-matrix/v1",
   "probe_reports": [
     {
       "dropped": 0,
@@ -51,7 +51,7 @@
       "input_entities": 4350,
       "kept_entities": 4350,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_01_asme1_ap242-e1.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ctc_01_asme1_ap242-e1.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }\"])) }",
       "surfaced": {
         "datums": 3,
@@ -116,7 +116,7 @@
       "input_entities": 22304,
       "kept_entities": 22304,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_02_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ctc_02_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 10,
@@ -180,7 +180,7 @@
       "input_entities": 5920,
       "kept_entities": 5920,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_03_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ctc_03_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 6,
@@ -245,7 +245,7 @@
       "input_entities": 20456,
       "kept_entities": 20456,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_04_asme1_ap242-e1.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ctc_04_asme1_ap242-e1.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }\"])) }",
       "surfaced": {
         "datums": 8,
@@ -311,7 +311,7 @@
       "input_entities": 13394,
       "kept_entities": 13382,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ctc_05_asme1_ap242-e1.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ctc_05_asme1_ap242-e1.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }\"])) }",
       "surfaced": {
         "datums": 4,
@@ -376,7 +376,7 @@
       "input_entities": 10034,
       "kept_entities": 10034,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_06_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_06_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 10,
@@ -440,7 +440,7 @@
       "input_entities": 17010,
       "kept_entities": 17010,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_07_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_07_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 5,
@@ -505,7 +505,7 @@
       "input_entities": 12630,
       "kept_entities": 12630,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_08_asme1_ap242-e1-tg.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_08_asme1_ap242-e1-tg.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }\"])) }",
       "surfaced": {
         "datums": 0,
@@ -561,7 +561,7 @@
       "input_entities": 10072,
       "kept_entities": 10072,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_08_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_08_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 11,
@@ -626,7 +626,7 @@
       "input_entities": 11662,
       "kept_entities": 11662,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_09_asme1_ap242-e1.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_09_asme1_ap242-e1.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }\"])) }",
       "surfaced": {
         "datums": 8,
@@ -690,7 +690,7 @@
       "input_entities": 21230,
       "kept_entities": 21230,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_10_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_10_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 11,
@@ -757,7 +757,7 @@
       "input_entities": 2032,
       "kept_entities": 2032,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_ftc_11_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_ftc_11_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(1), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }\"])) }",
       "surfaced": {
         "datums": 2,
@@ -821,7 +821,7 @@
       "input_entities": 11780,
       "kept_entities": 11780,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_06_asme1_ap242-e3.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_stc_06_asme1_ap242-e3.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 4 1 4 }\"])) }",
       "surfaced": {
         "datums": 6,
@@ -885,7 +885,7 @@
       "input_entities": 17470,
       "kept_entities": 17470,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_07_asme1_ap242-e3.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_stc_07_asme1_ap242-e3.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF  {1 0 10303 442 4 1 4}\"])) }",
       "surfaced": {
         "datums": 5,
@@ -949,7 +949,7 @@
       "input_entities": 11548,
       "kept_entities": 11548,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_08_asme1_ap242-e3.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_stc_08_asme1_ap242-e3.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 4 1 4 }\"])) }",
       "surfaced": {
         "datums": 8,
@@ -1013,7 +1013,7 @@
       "input_entities": 10393,
       "kept_entities": 10393,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_09_asme1_ap242-e3.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_stc_09_asme1_ap242-e3.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(3), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF  { 1 0 10303 442 4 1 4 }\"])) }",
       "surfaced": {
         "datums": 8,
@@ -1076,7 +1076,7 @@
       "input_entities": 12073,
       "kept_entities": 12073,
       "parse_ok": true,
-      "path": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files/nist_stc_10_asme1_ap242-e2.stp",
+      "path": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files/nist_stc_10_asme1_ap242-e2.stp",
       "schema": "SchemaId { family: Ap242, edition: Some(2), stage: Is, raw: Some(NonEmptyStringList([\"AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 3 1 4 }\"])) }",
       "surfaced": {
         "datums": 9,
@@ -1103,7 +1103,7 @@
     "step_io_version": "0.2.5",
     "step_io_pin": "=0.2.5",
     "probe_sha256": "20f1f114b3bfd984b26a9669c15718fec511439440710428c139e6a64f41cdd3",
-    "corpus_dir": "/home/r1a/.hermes/cache/scratch/keelworks/ref/nist/NIST-PMI-STEP-Files",
+    "corpus_dir": "/home/r1a/.hermes/cache/scratch/isolith/ref/nist/NIST-PMI-STEP-Files",
     "corpus_file_count": 17,
     "probe_reports": 17
   },
@@ -1198,7 +1198,7 @@
       "kind": "oss",
       "available": true,
       "version": "0.2.5",
-      "evidence": "probe binary /home/r1a/keelworks-main/.worktrees/p4m2t03-pmi-fidelity-1016a/target/debug/examples/pmi_probe sha256=20f1f114b3bfd984"
+      "evidence": "probe binary /home/r1a/isolith-main/.worktrees/p4m2t03-pmi-fidelity-1016a/target/debug/examples/pmi_probe sha256=20f1f114b3bfd984"
     },
     {
       "id": "occt",
@@ -1222,7 +1222,7 @@
       "kind": "commercial",
       "available": false,
       "version": "n/a",
-      "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy"
+      "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy"
     }
   ],
   "cells": {
@@ -1366,7 +1366,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -1510,7 +1510,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -1654,7 +1654,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -1798,7 +1798,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -1942,7 +1942,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2086,7 +2086,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2230,7 +2230,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2374,7 +2374,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2518,7 +2518,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2662,7 +2662,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2806,7 +2806,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -2950,7 +2950,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -3094,7 +3094,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -3238,7 +3238,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -3382,7 +3382,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     },
@@ -3526,7 +3526,7 @@
       },
       "commercial-readers": {
         "verdict": "SKIP",
-        "evidence": "not licensed/present on this host; keelworks treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
+        "evidence": "not licensed/present on this host; isolith treats commercial reader feature lists as a functional-spec source only (P1-M3-T02), never as a runnable reference \u2014 SKIP by policy \u2014 no cell probed for this host.",
         "counts": {}
       }
     }

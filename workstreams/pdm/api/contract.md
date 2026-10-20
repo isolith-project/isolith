@@ -6,7 +6,7 @@ machine contract itself is ONE file, and everything else is derived from it:
 `workstreams/pdm/api/openapi-v1.yaml` (OpenAPI 3.0.3, base path `/api/v1`).
 
 `P8-M6-T01` is the lane that owns this contract going forward. It inherited
-the stub-first surface from `P7-M2-T02` (keelworks card t_c46b5c21): the
+the stub-first surface from `P7-M2-T02` (isolith card t_c46b5c21): the
 P7 modeler lane implemented open-from-PDM / save-revisions-to-PDM against this
 exact spec, and the retained `oep-pdm-stub` binary (P8-M1-T01) is the reference
 implementation that stays at the same base URL speaking the same contract.

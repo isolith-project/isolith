@@ -26,7 +26,7 @@ jobs:
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
           git init -q
-          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/keelworks/keelworks.git"
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
           git fetch -q --depth 1 origin "${{ github.ref }}"
           git checkout -q FETCH_HEAD
           git log --oneline -1

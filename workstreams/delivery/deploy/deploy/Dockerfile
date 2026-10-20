@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Keelworks OEP stack runtime image (P10-M1-T01).
+# Isolith OEP stack runtime image (P10-M1-T01).
 #
 # Multi-stage: build the real workspace release binaries on a pinned Rust
 # toolchain (rust-toolchain.toml, P0-M3-T02), copy only those binaries into a
@@ -33,8 +33,8 @@ RUN set -eux; \
         -p oep-docs
 
 FROM debian:bookworm-slim AS runtime
-LABEL org.opencontainers.image.title="keelworks/oep-stack" \
-      org.opencontainers.image.description="Open Engineering Platform (Keelworks): PDM + P2P compute + P6 preview viewer in one image" \
+LABEL org.opencontainers.image.title="isolith/oep-stack" \
+      org.opencontainers.image.description="Open Engineering Platform (Isolith): PDM + P2P compute + P6 preview viewer in one image" \
       org.opencontainers.image.version="$OEP_VERSION"
 
 # curl is only for in-container health checks; the services themselves need no

@@ -85,10 +85,10 @@ pub struct ExportOpts {
 impl Default for ExportOpts {
     fn default() -> Self {
         Self {
-            file_name: "keelworks-export.step".to_string(),
-            product_name: "keelworks-model".to_string(),
+            file_name: "isolith-export.step".to_string(),
+            product_name: "isolith-model".to_string(),
             version: "0.1.0".to_string(),
-            org: "Keelworks OEP".to_string(),
+            org: "Isolith OEP".to_string(),
             system: "oep-step".to_string(),
         }
     }

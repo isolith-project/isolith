@@ -1,6 +1,6 @@
 # oep-cgr Transform/Instance Hierarchy (Assembly CGR inside part) + Matrix Stack
 
-P2-M4-T02 · Keelworks / OEP P2 CGR Reader
+P2-M4-T02 · Isolith / OEP P2 CGR Reader
 Status: model GREEN + real-material classified-skip with measured reasons
 (2026-10-15), per P1-M3-T03 §5 first-parcel boundary
 Version: 1.0

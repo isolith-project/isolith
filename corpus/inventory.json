@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Complete Keelworks corpus inventory (shared + reference-only). corpus_role=shared samples are manifest entries (redistributable); corpus_role=reference samples are located + identity-verified but NOT redistributable, so they are never committed or synced. CGR identity was established on real material by P1-M1-T01 (2026-10-15); hash re-verification runs in tests/manifest_test.py whenever local copies are present.",
+  "description": "Complete Isolith corpus inventory (shared + reference-only). corpus_role=shared samples are manifest entries (redistributable); corpus_role=reference samples are located + identity-verified but NOT redistributable, so they are never committed or synced. CGR identity was established on real material by P1-M1-T01 (2026-10-15); hash re-verification runs in tests/manifest_test.py whenever local copies are present.",
   "task": "P1-M1-T04",
   "generated": "2026-10-15",
   "samples": [
@@ -2079,7 +2079,7 @@
       "file": "box.stl",
       "format": "stl-ascii",
       "geometry_class": "prism",
-      "source": "keelworks-authored test fixture (self-written, P0-M4-T02)",
+      "source": "isolith-authored test fixture (self-written, P0-M4-T02)",
       "source_registry": "corpus-harness",
       "license": "CC0-1.0",
       "redistribution_allowed": true,
@@ -2094,7 +2094,7 @@
       "file": "box.stl.object",
       "format": "stl-ascii",
       "geometry_class": "prism",
-      "source": "keelworks-authored test fixture mirrored to NAS object store (P0-M4-T02)",
+      "source": "isolith-authored test fixture mirrored to NAS object store (P0-M4-T02)",
       "source_registry": "corpus-harness",
       "license": "CC0-1.0",
       "redistribution_allowed": true,

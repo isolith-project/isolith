@@ -1,7 +1,7 @@
 # P2-M7-T01: Real-CGR triangle-stream record LOCATION (fresh pairing, measured)
 
 Format: reverse-engineering observation notebook
-Task: P2-M7-T01 (Keelworks wave-2 prep; closes waveform-analysis flags 1+2
+Task: P2-M7-T01 (Isolith wave-2 prep; closes waveform-analysis flags 1+2
 on the side that a clean-room reader MAY honestly claim today)
 Version: 2.0
 Date: 2026-10-16
@@ -9,7 +9,7 @@ Status: verified on real material (piston 2007-era); modern-era latch via
 public-domain NIST V5-6R2023 material (see §8). cfysa R19-era family
 classified (different payload family)
 
-Owner: Keelworks P2 CGR reader / RE lane. Companion notebooks:
+Owner: Isolith P2 CGR reader / RE lane. Companion notebooks:
 docs/re-notes/oep-cgr-table-of-blocks-walker.md (P2-M1-T03),
 docs/re-notes/diff-harness.md (P1-M2-T06),
 docs/re-notes/oep-cgr-mesh-extraction.md (P2-M2-T01).

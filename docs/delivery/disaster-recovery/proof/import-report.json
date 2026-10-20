@@ -6,7 +6,7 @@
     "name": "oep-archive",
     "version": "0.1.0"
   },
-  "archive": "/home/r1a/keelworks-main/.worktrees/p10m3t02-export-all-1017a/crates/oep-archive/../../docs/delivery/disaster-recovery/proof/archive",
+  "archive": "/home/r1a/isolith-main/.worktrees/p10m3t02-export-all-1017a/crates/oep-archive/../../docs/delivery/disaster-recovery/proof/archive",
   "vault": {
     "items_rebuilt": 3,
     "revisions_rebuilt": 3,

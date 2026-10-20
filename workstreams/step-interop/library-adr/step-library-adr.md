@@ -1,15 +1,15 @@
 ---
-title: Keelworks oep-step STEP Library Choice (P4-M1)
+title: Isolith oep-step STEP Library Choice (P4-M1)
 decision: wrap_a_pure_rust_oss_step_library_Behind_vendor_neutral_wrappers_now_occt_is_the_p4_m2_fidelity_path
 version: 1.0.0
 date: 2026-10-16
 status: Ratified
-owner: Keelworks program governance, P4 STEP/QIF/JT lane
+owner: Isolith program governance, P4 STEP/QIF/JT lane
 applies_to: oep-step (adopting crate), the P6 importer hub (oep-import feed), any future engine bindings (oep-engine-occ), and the P4-M2 semantic-PMI lane
 supersedes: nothing (first P4-M1 decision record)
 ---
 
-# Keelworks oep-step STEP Library Choice
+# Isolith oep-step STEP Library Choice
 
 This record is the binding product decision for the P4-M1-T01 card
 "oep-step crate skeleton over an OSS STEP library, vendor-neutral wrappers".

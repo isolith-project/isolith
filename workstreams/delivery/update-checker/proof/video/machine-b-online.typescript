@@ -1,6 +1,6 @@
 Script started on 2026-10-18 05:09:13-07:00 [COMMAND="ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -p 2229 op@127.0.0.1 "bash /tmp/wtb.sh"" <not executed on terminal>]
 
-[1;36m==== Keelworks P10 fresh-install walkthrough on machine B (U1/VM-class, keelwb2) ====[0m
+[1;36m==== Isolith P10 fresh-install walkthrough on machine B (U1/VM-class, keelwb2) ====[0m
 ubuntu
 aarch64
 
@@ -10,10 +10,10 @@ aarch64
 [0;32m[OEP][0m Preflight... (docker + compose + disk)
 [0;32m[OEP][0m Wrote .env from .env.example (host binds default to 127.0.0.1).
 [0;32m[OEP][0m Preflight ok.
-[0;32m[OEP][0m Building stack image keelworks/oep-stack:0.1.0 (first build fetches crates, minutes)...
+[0;32m[OEP][0m Building stack image isolith/oep-stack:0.1.0 (first build fetches crates, minutes)...
 time="2026-10-18T12:09:25Z" level=warning msg="buildx Docker CLI plugin not found: falling back to the classic builder. BuildKit-only build features (multi-arch, secrets, ssh, additional contexts, ...) will not be available"
- Image keelworks/oep-stack:0.1.0 Building 
- Image keelworks/oep-stack:0.1.0 Building 
+ Image isolith/oep-stack:0.1.0 Building 
+ Image isolith/oep-stack:0.1.0 Building 
 Sending build context to Docker daemon  524.4kBSending build context to Docker daemon  943.8kB
 Step 1/18 : FROM rust:1.98-bookworm AS builder
 1.98-bookworm: Pulling from library/rust
@@ -261,7 +261,7 @@ bookworm-slim: Pulling from library/debian
 [1A[2Kc96d6ea700e1: Downloading [======================>                            ]  1.049MB/2.36MB[1B[2A[2Kc75f989a229d: Downloading [===>                                               ]  1.966MB/28.14MB[2B[1A[2Kc96d6ea700e1: Downloading [======================>                            ]  1.049MB/2.36MB[1B[2A[2Kc75f989a229d: Downloading [=====>                                             ]  2.822MB/28.14MB[2B[1A[2Kc96d6ea700e1: Downloading [============================>                      ]  1.352MB/2.36MB[1B[2A[2Kc75f989a229d: Downloading [=====>                                             ]  3.146MB/28.14MB[2B[1A[2Kc96d6ea700e1: Downloading [============================================>      ]  2.097MB/2.36MB[1B[2A[2Kc75f989a229d: Downloading [=======>                                           ]  4.194MB/28.14MB[2B[1A[2Kc96d6ea700e1: Downloading [============================================>      ]  2.097MB/2.36MB[1B[2A[2Kc75f989a229d: Downloading [=======>                                           ]  4.194MB/28.14MB[2B[1A[2Kc96d6ea700e1: Downloading [==================================================>]   2.36MB/2.36MB[1B[2A[2Kc75f989a229d: Downloading [=========>                                         ]  5.243MB/28.14MB[2B[1A[2Kc96d6ea700e1: Download complete [1B[2A[2Kc75f989a229d: Downloading [===========>                                       ]  6.291MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [===========>                                       ]  6.291MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [===========>                                       ]  6.586MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=============>                                     ]   7.34MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=============>                                     ]  7.463MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==============>                                    ]  8.389MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [===============>                                   ]  8.901MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=================>                                 ]  9.732MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [===================>                               ]  10.76MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=====================>                             ]  11.97MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [======================>                            ]  12.58MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================>                          ]  13.63MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=========================>                         ]  14.57MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [===========================>                       ]  15.61MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [============================>                      ]  16.22MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==============================>                    ]  17.37MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [================================>                  ]  18.04MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==================================>                ]  19.34MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [====================================>              ]  20.35MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=====================================>             ]  20.97MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [=======================================>           ]  22.02MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [========================================>          ]  23.07MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==========================================>        ]  24.12MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [============================================>      ]  25.04MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [============================================>      ]  25.17MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==============================================>    ]  26.21MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [================================================>  ]  27.26MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [================================================>  ]  27.26MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==================================================>]  28.14MB/28.14MB[2B[2A[2Kc75f989a229d: Downloading [==================================================>]  28.14MB/28.14MB[2B[2A[2Kc75f989a229d: Download complete [2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 1 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 2 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 3 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 4 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 5 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 6 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 7 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 8 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 9 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 10 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 11 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 12 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 13 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 14 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 15 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 16 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 17 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 18 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 19 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 20 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 21 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 22 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 23 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 24 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 25 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Extracting 26 s[2B[2A[2Kc75f989a229d: Pull complete [2BDigest: sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
 Status: Downloaded newer image for debian:bookworm-slim
  ---> 7c7b2c966bc9
-Step 7/18 : LABEL org.opencontainers.image.title="keelworks/oep-stack"       org.opencontainers.image.description="Open Engineering Platform (Keelworks): PDM + P2P compute + P6 preview viewer in one image"       org.opencontainers.image.version="$OEP_VERSION"
+Step 7/18 : LABEL org.opencontainers.image.title="isolith/oep-stack"       org.opencontainers.image.description="Open Engineering Platform (Isolith): PDM + P2P compute + P6 preview viewer in one image"       org.opencontainers.image.version="$OEP_VERSION"
  ---> Running in fa977c6eeefa
  ---> Removed intermediate container fa977c6eeefa
  ---> e5a8be73858d
@@ -428,34 +428,34 @@ Step 18/18 : LABEL com.docker.compose.image.builder=classic
  ---> 4e2adce41774
 [Warning] One or more build-args [OEP_VERSION] were not consumed
 Successfully built 4e2adce41774
-Successfully tagged keelworks/oep-stack:0.1.0
- Image keelworks/oep-stack:0.1.0 Built 
- Image keelworks/oep-stack:0.1.0 Built 
+Successfully tagged isolith/oep-stack:0.1.0
+ Image isolith/oep-stack:0.1.0 Built 
+ Image isolith/oep-stack:0.1.0 Built 
 [0;32m[OEP][0m Starting stack (pdm + viewer + p2p)...
- Volume keelworks_pdm_data Creating 
- Network keelworks_default Creating 
- Volume keelworks_viewer_data Creating 
- Volume keelworks_pdm_data Creating 
- Volume keelworks_viewer_data Creating 
- Network keelworks_default Creating 
- Volume keelworks_pdm_data Created 
- Volume keelworks_pdm_data Created 
- Volume keelworks_viewer_data Created 
- Volume keelworks_viewer_data Created 
- Network keelworks_default Created 
- Network keelworks_default Created 
- Container keelworks-p2p Creating 
- Container keelworks-pdm Creating 
- Container keelworks-p2p Created 
- Container keelworks-pdm Created 
- Container keelworks-viewer Creating 
- Container keelworks-viewer Created 
- Container keelworks-p2p Starting 
- Container keelworks-pdm Starting 
- Container keelworks-p2p Started 
- Container keelworks-pdm Started 
- Container keelworks-viewer Starting 
- Container keelworks-viewer Started 
+ Volume isolith_pdm_data Creating 
+ Network isolith_default Creating 
+ Volume isolith_viewer_data Creating 
+ Volume isolith_pdm_data Creating 
+ Volume isolith_viewer_data Creating 
+ Network isolith_default Creating 
+ Volume isolith_pdm_data Created 
+ Volume isolith_pdm_data Created 
+ Volume isolith_viewer_data Created 
+ Volume isolith_viewer_data Created 
+ Network isolith_default Created 
+ Network isolith_default Created 
+ Container isolith-p2p Creating 
+ Container isolith-pdm Creating 
+ Container isolith-p2p Created 
+ Container isolith-pdm Created 
+ Container isolith-viewer Creating 
+ Container isolith-viewer Created 
+ Container isolith-p2p Starting 
+ Container isolith-pdm Starting 
+ Container isolith-p2p Started 
+ Container isolith-pdm Started 
+ Container isolith-viewer Starting 
+ Container isolith-viewer Started 
 [0;32m[OEP][0m Waiting for health checks to go green (up to 180s)...
 [0;32m[OEP][0m All 3 services healthy.
 [0;32m[OEP][0m Verifying each health endpoint directly...
@@ -467,7 +467,7 @@ Successfully tagged keelworks/oep-stack:0.1.0
   Viewer  (P6 preview + browser UI)              http://127.0.0.1:8790/
   P2P     (compute lane dashboard)               http://127.0.0.1:8080/      /healthz
 
-[0;32m[OEP][0m One-command install complete: the full Keelworks stack is up with health checks green.
+[0;32m[OEP][0m One-command install complete: the full Isolith stack is up with health checks green.
 install.sh exit=0
 
 [1;36m==== 3. PDM health ====[0m
@@ -502,9 +502,9 @@ no OEP_UPDATE_CHECK line in .env -> checker stays off (decision #11)
 
 [1;36m==== Containers (all healthy) ====[0m
 NAMES              STATUS
-keelworks-viewer   Up 43 seconds (healthy)
-keelworks-p2p      Up 59 seconds (healthy)
-keelworks-pdm      Up 50 seconds (healthy)
+isolith-viewer   Up 43 seconds (healthy)
+isolith-p2p      Up 59 seconds (healthy)
+isolith-pdm      Up 50 seconds (healthy)
 === WALKTHROUGH B COMPLETE: full stack healthy, update checker off ===
 
 Script done on 2026-10-18 06:26:44-07:00 [COMMAND_EXIT_CODE="0"]

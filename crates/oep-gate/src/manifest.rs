@@ -313,11 +313,11 @@ fn render_job(i: usize) -> JobSpec {
 }
 
 /// The repo root, resolved robustly from the current worktree at build/run
-/// time (the gate always runs from a keelworks checkout).
+/// time (the gate always runs from a isolith checkout).
 fn repo_root() -> String {
     // Allow an explicit env override (the proof script sets it), else walk up
     // from CWD until we see Cargo.toml.
-    if let Ok(p) = std::env::var("KEELWORKS_ROOT") {
+    if let Ok(p) = std::env::var("ISOLITH_ROOT") {
         return std::path::PathBuf::from(p).to_string_lossy().into_owned();
     }
     let mut dir = std::env::current_dir().unwrap_or_default();

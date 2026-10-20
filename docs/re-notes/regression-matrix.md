@@ -6,7 +6,7 @@
 
 ## What this is
 
-A regression sweep over the Keelworks corpus. For every corpus file it yields
+A regression sweep over the Isolith corpus. For every corpus file it yields
 exactly one classified outcome — status `OPEN` or a `SKIP` carrying a machine
 code from a closed taxonomy — and writes a report matrix (JSON + markdown).
 It is the P2/P3-shared corpus regression infra (P3-M5-T01 reuses it): format

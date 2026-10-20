@@ -28,8 +28,8 @@ trademark-evidence-2026-10-18.json.
 Conclusion of the check: no identical or confusingly similar registered mark in
 the classes a CAD/CAE/PDM platform occupies (9 and 42), and no identical US
 filing at all. Isolith passes the same collision check that rejected the
-Keelworks codename. This is a preliminary clearance; P0-M2-T03 owns the formal
-legal memo.
+Keelworks codename (now retired). This is a preliminary clearance; P0-M2-T03
+owns the formal legal memo.
 
 ## Sensitivity control
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Keelworks changelog / release-notes generator (P12-T07).
+# Isolith changelog / release-notes generator (P12-T07).
 #
 # Drives git-cliff (cliff.toml at repo root) over the repository's conventional
 # commit history and writes a categorized changelog. Used by:

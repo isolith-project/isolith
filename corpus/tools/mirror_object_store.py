@@ -2,7 +2,7 @@
 """P1-M4-T01: materialize + verify the corpus object-store mirror on NAS.
 
 Operates on the LIVE NAS object store (Gitea generic package registry
-don/keelworks-corpus v1), driven by corpus/manifest.json (the P1-M1-T04
+don/isolith-corpus v1), driven by corpus/manifest.json (the P1-M1-T04
 registry) as the single source of truth.
 
   python3 corpus/tools/mirror_object_store.py --mirror \

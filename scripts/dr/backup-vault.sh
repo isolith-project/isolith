@@ -6,7 +6,7 @@
 # This is the backup shape the P10-M3-T01 DR drill restores from. Its layout is
 # the contract between the backup task and the DR drill:
 #
-#   <BK_TARGET>/keelworks-vault-backup/
+#   <BK_TARGET>/isolith-vault-backup/
 #     latest/                     # latest snapshot (rolled)
 #       store.json                # vault item/revision metadata DB
 #       blobs/<sha256>            # content-addressed object store (V5/CGR/etc)
@@ -20,7 +20,7 @@
 #     SOURCE      oep-pdm persist dir to snapshot (default:
 #                 keeps a running --persist-dir vault alive; pass a directory)
 #     BK_TARGET   second-disk mount point or archive dir (default:
-#                 $HOME/keelworks-data/keelworks-vault-backup)
+#                 $HOME/isolith-data/isolith-vault-backup)
 #     LABEL       free-form snapshot label (default: manual-YYYYMMDD-HHMMSS)
 #
 # Run target (decision #9): U1/VM-class hosts; the NAS is NOT a backup target.
@@ -32,10 +32,10 @@ cd "$(dirname "$0")/../.."
 WT=$(pwd)
 
 SOURCE="${1:-/tmp/p9ga-probe-vault}"
-BK_TARGET="${2:-$HOME/keelworks-data}"
+BK_TARGET="${2:-$HOME/isolith-data}"
 LABEL="${3:-manual-$(date +%Y%m%d-%H%M%S)}"
 
-BACKUP_ROOT="$BK_TARGET/keelworks-vault-backup"
+BACKUP_ROOT="$BK_TARGET/isolith-vault-backup"
 LATEST="$BACKUP_ROOT/latest"
 STAGING="$(mktemp -d)"
 trap 'rm -rf "$STAGING"' EXIT
@@ -110,7 +110,7 @@ sort -k2 -o "$BACKUP_ROOT/manifest.sha256" "$BACKUP_ROOT/manifest.sha256"
 NITEMS=$(python3 -c "import json,sys; d=json.load(open('$BACKUP_ROOT/latest/store.json')); print(d.get('next_item_seq',0))")
 cat > "$BACKUP_ROOT/meta.json" <<EOF
 {
-  "schema": "keelworks-vault-backup/1",
+  "schema": "isolith-vault-backup/1",
   "label": "$LABEL",
   "created_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "source_host": "$(hostname)",

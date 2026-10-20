@@ -1,14 +1,14 @@
-# Keelworks P12-T06 - Release Install Rehearsal (fresh clean machine per release)
+# Isolith P12-T06 - Release Install Rehearsal (fresh clean machine per release)
 
 Version: 1.0.0 (2026-10-18)
 
 Status: active release-engineering routine (P12). Every time a release is about
 to ship, run `scripts/install-rehearsal.sh` on the two approved hosts and only
-release when the recorded report is green. This is the Keelworks form of the
+release when the recorded report is green. This is the Isolith form of the
 r1a-release-workflow install rehearsal.
 
 Owner: P12 QA / CI-CD / release engineering lane.
-Card: P12-T06 on the Keelworks board.
+Card: P12-T06 on the Isolith board.
 Ties to: decision #9 (run targets: U1 + a second U1/VM-class host; NAS stays
 repo/storage only), P10-M1-T01 (the one-command install being rehearsed),
 P10-M5-T02 (the two-machine fresh-install walkthrough + GA gate proof this
@@ -25,9 +25,9 @@ with three health checks green:
 
 | service | binary       | container        | host port | health surface               |
 |---------|--------------|------------------|-----------|------------------------------|
-| PDM     | oep-pdm      | keelworks-pdm    | 8787      | GET /api/v1/health           |
-| Viewer  | oep-web      | keelworks-viewer | 8790      | GET /  (explorer HTML, 200)  |
-| P2P     | oep-opsdash  | keelworks-p2p   | 8080      | GET /healthz                 |
+| PDM     | oep-pdm      | isolith-pdm    | 8787      | GET /api/v1/health           |
+| Viewer  | oep-web      | isolith-viewer | 8790      | GET /  (explorer HTML, 200)  |
+| P2P     | oep-opsdash  | isolith-p2p   | 8080      | GET /healthz                 |
 
 The worker binaries (oep-batch-convert, oep-render-worker) must be present in
 the installed image, and the stack binds to 127.0.0.1 (nothing exposed to the
@@ -59,8 +59,8 @@ What the script does, top to bottom:
    shipped.
 3. Ships the release tree to machine B verbatim (rsync, the documented
    physical-transfer path).
-4. Machine A = U1: tears down all `keelworks-` containers, `pdm_data` /
-   `viewer_data` volumes, the `keelworks/oep-stack:<ver>` image and the
+4. Machine A = U1: tears down all `isolith-` containers, `pdm_data` /
+   `viewer_data` volumes, the `isolith/oep-stack:<ver>` image and the
    generated `workstreams/delivery/deploy/deploy/.env` (the clean state), then runs the one-command
    `./install.sh`.
 5. Asserts on A: PDM `/api/v1/health` returns 200 + `{"status":"ok"}`, Viewer
@@ -79,13 +79,13 @@ For a truly manual rehearsal, on each clean machine, in order:
 
 | # | Step | Command | Expected |
 |---|------|---------|----------|
-| 1 | Clean state confirmed | `docker ps --filter name=keelworks- --format '{{.Names}}'` | (empty - no keelworks containers) |
+| 1 | Clean state confirmed | `docker ps --filter name=isolith- --format '{{.Names}}'` | (empty - no isolith containers) |
 | 2 | Install (from the deploy dir) | `cd workstreams/delivery/deploy/deploy && ./install.sh` | `All 3 services healthy.` and exit 0 |
 | 3 | PDM health | `curl -fsS http://127.0.0.1:8787/api/v1/health` | `{"status":"ok",...}` |
 | 4 | Viewer health | `curl -fsS -o /dev/null -w '%{http_code}' http://127.0.0.1:8790/` | `200` |
 | 5 | P2P health | `curl -fsS http://127.0.0.1:8080/healthz` | `{"status":"ok"}` |
-| 6 | Convert worker shipped | `docker run --rm --entrypoint oep-batch-convert keelworks/oep-stack:0.1.0 --help` | usage text, exit 0 |
-| 7 | Render worker shipped | `docker run --rm --entrypoint oep-render-worker keelworks/oep-stack:0.1.0 --describe` | JSON descriptor, exit 0 |
+| 6 | Convert worker shipped | `docker run --rm --entrypoint oep-batch-convert isolith/oep-stack:0.1.0 --help` | usage text, exit 0 |
+| 7 | Render worker shipped | `docker run --rm --entrypoint oep-render-worker isolith/oep-stack:0.1.0 --describe` | JSON descriptor, exit 0 |
 
 Run rows 1-7 on machine A and again on machine B. Both machines must come up
 green; one recorded verification is not enough for a release rehearsal.

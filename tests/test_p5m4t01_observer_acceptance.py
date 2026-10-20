@@ -77,7 +77,7 @@ class TestReproducible(unittest.TestCase):
 
     def test_rerun_reproduces_totals(self):
         cand = [
-            "/home/r1a/keelworks-main/.worktrees/p5m1t02-native-observability-1016a/corpus",
+            "/home/r1a/isolith-main/.worktrees/p5m1t02-native-observability-1016a/corpus",
             os.path.join(REPO, "corpus"),
         ]
         root = next((c for c in cand if os.path.isdir(c)

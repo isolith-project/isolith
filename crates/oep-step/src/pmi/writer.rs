@@ -264,7 +264,7 @@ pub fn write_ap242_pmi<W: IoWrite>(
     );
     let _ = writeln!(
         em.out,
-        "FILE_NAME('{}','',('Keelworks OEP'),(''),'oep-step {}','Keelworks OEP','');",
+        "FILE_NAME('{}','',('Isolith OEP'),(''),'oep-step {}','Isolith OEP','');",
         opts.file_name, opts.version
     );
     let _ = writeln!(em.out, "FILE_SCHEMA (('{}'));", AP242_SCHEMA);

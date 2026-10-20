@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P0-M1-T04: contributor rules (CLA, DCO, CODEOWNERS).
+"""Acceptance test for Isolith P0-M1-T04: contributor rules (CLA, DCO, CODEOWNERS).
 
 Written FIRST (TDD). The decision record at workstreams/governance/contributor-rules/contributor-rules-decision.md
 plus the root CODEOWNERS file must make this test pass. It verifies the real

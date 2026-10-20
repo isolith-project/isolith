@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Keelworks P11-T05: export-control classification gate (the release
+# Isolith P11-T05: export-control classification gate (the release
 # pipeline checkbox). Wraps python/oep_tooling/export_control_gate.py so CI
 # and the release-cut step share one entry point.
 #

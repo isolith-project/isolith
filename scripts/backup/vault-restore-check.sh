@@ -2,7 +2,7 @@
 # P10-M1-T02: restore round-trip verification on U1/VM.
 #
 # Proves the "a restore from the backup round-trips" acceptance criterion: take
-# the latest `keelworks-vault-backup/` bundle produced by scripts/backup/
+# the latest `isolith-vault-backup/` bundle produced by scripts/backup/
 # vault-backup.sh, restore it into a FRESH persist dir on this host, boot a
 # fresh oep-pdm against it, and verify with the exact checks the DR drill uses
 # (health ok, item catalogue non-empty, audit chain verifies, one real vault
@@ -13,8 +13,8 @@
 #
 # Usage:
 #   scripts/backup/vault-restore-check.sh [BK_TARGET] [PDM_BIN]
-#     BK_TARGET  archive dir holding keelworks-vault-backup/
-#                (default: $HOME/keelworks-data)
+#     BK_TARGET  archive dir holding isolith-vault-backup/
+#                (default: $HOME/isolith-data)
 #     PDM_BIN    oep-pdm binary to boot the restored vault with
 #                (default: $WT/target/debug/oep-pdm)
 # Exit 0 iff the restore round-trips on this U1/VM host.
@@ -22,9 +22,9 @@ set -euo pipefail
 cd "$(dirname "$0")/../.." || exit 1
 WT=$(pwd)
 
-BK_TARGET="${1:-$HOME/keelworks-data}"
+BK_TARGET="${1:-$HOME/isolith-data}"
 PDM_BIN="${2:-$WT/target/debug/oep-pdm}"
-BACKUP_ROOT="$BK_TARGET/keelworks-vault-backup"
+BACKUP_ROOT="$BK_TARGET/isolith-vault-backup"
 RESTORE_DIR="$(mktemp -d)"
 HOST_PORT=$(python3 -c "import socket;s=socket.socket();s.bind(('127.0.0.1',0));print(s.getsockname()[1]);s.close()")
 trap 'kill "${SERVER_PID:-0}" 2>/dev/null || true; rm -rf "$RESTORE_DIR"' EXIT

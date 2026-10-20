@@ -9,7 +9,7 @@
 # matching runbook-change (see workstreams/delivery/disaster-recovery/dr-runbook.md).
 #
 # Layout (interchange contract, shared with P10-M3-T01):
-#   <BK_TARGET>/keelworks-vault-backup/
+#   <BK_TARGET>/isolith-vault-backup/
 #     latest/
 #       store.json                # vault item/revision metadata DB
 #       blobs/<sha256>            # content-addressed object store
@@ -25,19 +25,19 @@
 # Usage:
 #   scripts/backup/vault-backup.sh [SOURCE] [BK_TARGET] [LABEL]
 #     SOURCE      oep-pdm --persist-dir vault to snapshot
-#                 (default: $HOME/keelworks-data/keelworks-vault)
+#                 (default: $HOME/isolith-data/isolith-vault)
 #     BK_TARGET   second-disk mount point or archive dir
-#                 (default: $HOME/keelworks-data)
+#                 (default: $HOME/isolith-data)
 #     LABEL       free-form snapshot label (default: scheduled-YYYYMMDD-HHMMSS)
 #
 # Exit 0 iff a checksum-verified snapshot landed under
-#   $BK_TARGET/keelworks-vault-backup/  (latest/ + manifest + meta).
+#   $BK_TARGET/isolith-vault-backup/  (latest/ + manifest + meta).
 set -euo pipefail
 cd "$(dirname "$0")/../.." || exit 1
 WT=$(pwd)
 
-SOURCE="${1:-$HOME/keelworks-data/keelworks-vault}"
-BK_TARGET="${2:-$HOME/keelworks-data}"
+SOURCE="${1:-$HOME/isolith-data/isolith-vault}"
+BK_TARGET="${2:-$HOME/isolith-data}"
 LABEL="${3:-scheduled-$(date +%Y%m%d-%H%M%S)}"
 
 # ---- Decision #9 guard: the NAS is passive storage, never a backup target ----
@@ -48,7 +48,7 @@ case "$BK_TARGET" in
     ;;
 esac
 
-BACKUP_ROOT="$BK_TARGET/keelworks-vault-backup"
+BACKUP_ROOT="$BK_TARGET/isolith-vault-backup"
 LATEST="$BACKUP_ROOT/latest"
 STAGING="$(mktemp -d)"
 trap 'rm -rf "$STAGING"' EXIT
@@ -127,7 +127,7 @@ python3 - "$BACKUP_ROOT/meta.json" "$LABEL" "$SOURCE" "$AUDIT_HASH" "$NBLOBS" "$
 import json, sys, datetime
 out_path, label, source, audit_head, nb, nitems, target = sys.argv[1:]
 meta = {
-  "schema": "keelworks-vault-backup/1",
+  "schema": "isolith-vault-backup/1",
   "label": label,
   "created_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
   "source_host": __import__("socket").gethostname(),

@@ -502,7 +502,7 @@ def test_3dxml_real_material_classified():
             dirs.append(chunk)
     for probe in (
         "/home/r1a/.hermes/cache/scratch/t05-stage/data/3dxml",
-        "/home/r1a/keelworks-main/.worktrees/3dxml-samples-1015a/corpus/data/3dxml",
+        "/home/r1a/isolith-main/.worktrees/3dxml-samples-1015a/corpus/data/3dxml",
         "/home/r1a/.hermes/cache/scratch/3dxml-binary-branch",
     ):
         if os.path.isdir(probe):

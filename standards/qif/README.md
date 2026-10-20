@@ -77,5 +77,5 @@ feeding statistics back up the digital thread.
   model) but specializes in **quality workflow** (plans, results, statistical
   analysis), enabling reuse of design PMI for inspection.
 - P4-M4-T01 targets QIF import/export (MBD quality data) per the master plan.
-- Interoperating with QIF means Keelworks can participate in the metrology digital
+- Interoperating with QIF means Isolith can participate in the metrology digital
   thread and, via MIL-STD-31000-style TDPs, deliver inspection-ready data packages.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# verify-release.sh - consumer-side verification of a signed Keelworks release
+# verify-release.sh - consumer-side verification of a signed Isolith release
 # (P11-T04). Needs ONLY public key material (no secrets): the gpg pubkey
 # committed at scripts/airgap/keys/oep-airgap-signing.pub.asc and the Ed25519
 # pubkey committed at workstreams/security/keys/oep-update-signing.pub.

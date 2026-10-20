@@ -1,7 +1,7 @@
 //! P6-M4-T01 acceptance contract (TDD RED-first) — the six exporters of the
 //! `oep-geo` geometry core.
 //!
-//! The internal tessellation reference is the CC0-1.0 keelworks unit box
+//! The internal tessellation reference is the CC0-1.0 isolith unit box
 //! (`corpus/data/box.stl`, P0-M4-T02 fixture: 8 vertices / 12 triangles,
 //! SAME vertex+triangle order as `crates/oep-geo/tools/box_ref.py`).
 //!
@@ -33,7 +33,7 @@ use oep_geo::export::{
     write_pdf_drawing, write_step, write_svg_2d, ExportError, StepOpts,
 };
 
-/// Reference tessellation: the keelworks unit box (same order as box_ref.py).
+/// Reference tessellation: the isolith unit box (same order as box_ref.py).
 fn box_mesh() -> (Vec<[f32; 3]>, Vec<[u32; 3]>) {
     let positions = vec![
         [1.0, 0.0, 0.0],

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P0-M5-T01 shared standards reference materials.
+"""Acceptance test for Isolith P0-M5-T01 shared standards reference materials.
 
 Asserts, against the REAL files in the repo, that:
   1. A standards index exists and covers exactly the four program standards:
      STEP AP242, QIF, MIL-STD-31000, ASME Y14.41.
-  2. Each standard has a directory with README.md, keelworks-use.md, references.md.
+  2. Each standard has a directory with README.md, isolith-use.md, references.md.
   3. Each README carries the required metadata blocks (publisher, current edition,
      availability, license/redistribution status, official URL).
   4. Fair-quoting discipline: no vendored full-text spec; quoted extracts are marked
@@ -12,8 +12,8 @@ Asserts, against the REAL files in the repo, that:
      PDF body.
   5. reference URLs are well-formed http(s) links (checked off-network as far as
      format; the live resolution pass is separate).
-  6. Every standard is mapped to at least one Keelworks workstream/milestone in the
-     index and in its keelworks-use.md.
+  6. Every standard is mapped to at least one Isolith workstream/milestone in the
+     index and in its isolith-use.md.
 
 Run:  python3 tests/standards_test.py
 Exit 0 = pass; non-zero = fail. Zero dependencies (stdlib only).
@@ -33,7 +33,7 @@ EXPECTED = {
     "asme-y14.41": "asme-y14.41",
 }
 
-REQUIRED_FILES = ["README.md", "keelworks-use.md", "references.md"]
+REQUIRED_FILES = ["README.md", "isolith-use.md", "references.md"]
 
 REQUIRED_README_SECTIONS = [
     "Standard",       # official name + document id
@@ -43,7 +43,7 @@ REQUIRED_README_SECTIONS = [
     "License / redistribution status",
     "Official source",  # canonical URL or where to obtain
     "Scope",            # what it covers (may cite public abstract, fair quote)
-    "PMI / MBD relevance",  # why keelworks cares
+    "PMI / MBD relevance",  # why isolith cares
 ]
 
 # Fair-quote budget: any single quoted extract must be <= this many chars.
@@ -141,11 +141,11 @@ def main():
             bad = [u for u in urls if not url_ok(u)]
             check(not bad, "standards/%s/references.md has malformed URLs: %s" % (dirname, bad))
 
-        use = os.path.join(d, "keelworks-use.md")
+        use = os.path.join(d, "isolith-use.md")
         if os.path.exists(use):
             use_text = open(use, encoding="utf-8").read()
             has_ws = bool(re.search(r"\b(P[0-9]|P0-[A-Z])\b", use_text))
-            check(has_ws, "standards/%s/keelworks-use.md maps to no workstream "
+            check(has_ws, "standards/%s/isolith-use.md maps to no workstream "
                   "(no P# milestone token found)" % dirname)
 
     # index must map each standard to a workstream

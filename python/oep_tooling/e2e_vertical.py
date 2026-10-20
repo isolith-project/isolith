@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P12-T09 - Keelworks E2E scenario suite: the reference vertical flow scripted
+"""P12-T09 - Isolith E2E scenario suite: the reference vertical flow scripted
 and asserted headlessly against the packaged stack.
 
 This is the measured E2E harness for the reference vertical demo:
@@ -24,10 +24,10 @@ Two stack modes:
                   This is the CI-safe degraded mode: CI has no docker daemon
                   and no second host (decision #9), so the packaged-image leg
                   cannot run there; the equivalence is that the same code that
-                  goes into keelworks/oep-stack is driven headlessly, exactly
+                  goes into isolith/oep-stack is driven headlessly, exactly
                   like the P8/P9 gates build + drive the real binaries in CI.
 
-  --mode docker   boot the packaged stack image keelworks/oep-stack:<version>
+  --mode docker   boot the packaged stack image isolith/oep-stack:<version>
                   (entrypoint oep-web) and drive the SAME vertical, asserting
                   the packaged artifact itself. Runs on U1 / a docker host and
                   is recorded as the per-release proof under workstreams/release-engineering/proof/.
@@ -296,7 +296,7 @@ def boot_local(args, report):
         return None
     web_bin = web_bin.resolve()
     port = args.port or free_port()
-    persist = tempfile.mkdtemp(prefix="keelworks-e2e-vault-")
+    persist = tempfile.mkdtemp(prefix="isolith-e2e-vault-")
     proc = subprocess.Popen(
         [str(web_bin), "--addr", f"127.0.0.1:{port}", "--persist-dir", persist],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
@@ -322,7 +322,7 @@ def boot_local(args, report):
 def boot_docker(args, report):
     image = args.image
     version = args.version
-    name = f"keelworks-e2e-{os.getpid()}"
+    name = f"isolith-e2e-{os.getpid()}"
     port = args.port or free_port()
     base = f"http://127.0.0.1:{port}"
     if shutil.which("docker") is None:
@@ -356,7 +356,7 @@ def boot_docker(args, report):
         return None
     report.add(LegRow("stack-boot", "BOOT", "PASS",
                       f"packaged stack image {image} (oep-web) on {base}"))
-    workdir = tempfile.mkdtemp(prefix="keelworks-e2e-workdir-")
+    workdir = tempfile.mkdtemp(prefix="isolith-e2e-workdir-")
     return StackHost(base, docker_name=name, image=image, workdir=workdir)
 
 
@@ -460,7 +460,7 @@ def _cgr_sample(args):
     if env and Path(env).is_file():
         return Path(env)
     # Conventional U1 dev location used by the P2/P9 corpus harness.
-    conv = Path("/home/r1a/keelworks-main/corpus/cgr/nist_stc_06_asme1_V56R2023.CATPart")
+    conv = Path("/home/r1a/isolith-main/corpus/cgr/nist_stc_06_asme1_V56R2023.CATPart")
     if conv.is_file():
         return conv
     return None
@@ -527,7 +527,7 @@ def run_stage_model(root, host, report, args, step_item_id, model_fixture):
                         "target": {"kind": "attach_item", "item_id": step_item_id + "-mesh"}}],
         }],
     }
-    wd = host.workdir or tempfile.mkdtemp(prefix="keelworks-e2e-convert-")
+    wd = host.workdir or tempfile.mkdtemp(prefix="isolith-e2e-convert-")
     batchf = str(Path(wd) / "e2e-batch.json")
     Path(batchf).write_text(json.dumps(batch))
     repf = str(Path(wd) / "e2e-batch-report.json")
@@ -624,7 +624,7 @@ def run_stage_render(root, host, report, args, model_id):
     if model_fx is None:
         report.add(LegRow("render", "RENDER", "SKIP", "model fixture missing", "corpus-missing"))
         return None
-    wd = host.workdir or tempfile.mkdtemp(prefix="keelworks-e2e-render-")
+    wd = host.workdir or tempfile.mkdtemp(prefix="isolith-e2e-render-")
     staged_model = str(Path(wd) / "e2e-model.oepgeo.json")
     out_png = str(Path(wd) / "e2e-render.png")
     shutil.copyfile(model_fx, staged_model)
@@ -689,11 +689,11 @@ def run_stage_share(host, report, model_id, break_stage):
 # ---------------------------------------------------------------------------
 
 def parse_args(argv):
-    p = argparse.ArgumentParser(description="Keelworks P12-T09 E2E vertical suite")
+    p = argparse.ArgumentParser(description="Isolith P12-T09 E2E vertical suite")
     p.add_argument("--repo", default=str(Path.cwd()), help="repo checkout root")
     p.add_argument("--bin-dir", default=None, help="path to built binaries (default: repo target/{release,debug})")
     p.add_argument("--mode", choices=["local", "docker"], default="local")
-    p.add_argument("--image", default="keelworks/oep-stack:0.1.0", help="packaged stack image (:version)")
+    p.add_argument("--image", default="isolith/oep-stack:0.1.0", help="packaged stack image (:version)")
     p.add_argument("--port", type=int, default=0, help="explicit port (0 = ephemeral)")
     p.add_argument("--version", default="0.1.0", help="release version for the report")
     p.add_argument("--out", default="workstreams/release-engineering/proof/e2e-vertical", help="report base path (JSON+MD)")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks P0-M4-T03 — long fuzz job for the status-page/report serializers.
+"""Isolith P0-M4-T03 — long fuzz job for the status-page/report serializers.
 
 Attacks the invariants the status page depends on with hostile bytes:
   - server crashes: render_status_html/build_report must never raise;
@@ -62,7 +62,7 @@ def fuzz_once(rng):
     }
     report = {
         "schema_version": stress_runner.SCHEMA_VERSION,
-        "repo": "don/keelworks",
+        "repo": "don/isolith",
         "commit": rng.choice(NASTY),
         "generated_at": "2026-10-15T00:00:00Z",
         "jobs": [job],
@@ -92,7 +92,7 @@ def fuzz_once(rng):
 def main(argv=None):
     ap = argparse.ArgumentParser(
         prog="stress_fuzz_report.py",
-        description="Fuzz the Keelworks status-page/report serializers "
+        description="Fuzz the Isolith status-page/report serializers "
                     "(P0-M4-T03).")
     ap.add_argument("--iterations", type=int, default=3000,
                     help="number of fuzz iterations (default 3000)")

@@ -2,7 +2,7 @@
 
 Version 1.0, 2026-10-17. Milestone: P9-M3-T03 (worker sandbox:
 *resource limits*, *no network egress by default*, *escaping fails a test*).
-Program: Keelworks / Open Engineering Platform (OEP), P9 P2P compute lane
+Program: Isolith / Open Engineering Platform (OEP), P9 P2P compute lane
 (wave 2). Clean-room, own implementation — no guest agent, no sidecar vendor
 binary.
 

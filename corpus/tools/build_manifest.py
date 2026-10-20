@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P1-M1-T04: deterministic corpus-manifest builder for the Keelworks corpus.
+"""P1-M1-T04: deterministic corpus-manifest builder for the Isolith corpus.
 
 Consumes the sibling registries and the real on-disk corpus bytes, and emits:
 
@@ -45,7 +45,7 @@ INVENTORY_MD = os.path.join(CORPUS, "inventory.md")
 
 GEOMETRY_CLASSES = ("prism", "surface", "assembly", "dataset", "text")
 
-# Keelworks-authored fixture entries inherited from P0-M4-T02 (PR #14) so the
+# Isolith-authored fixture entries inherited from P0-M4-T02 (PR #14) so the
 # manifest is the union of the whole corpus program. Kept byte-identical to the
 # harness PR to make later merges trivially conflict-free.
 BOX_STL_SHA = "37323bbac8e341aad5ef46c2a2c85d230dab35d72353bed3af7665fa604957b0"
@@ -99,7 +99,7 @@ def build():
         "path": "data/box.stl",
         "format": "stl-ascii",
         "geometry_class": "prism",
-        "source": "keelworks-authored test fixture (self-written, P0-M4-T02)",
+        "source": "isolith-authored test fixture (self-written, P0-M4-T02)",
         "license": "CC0-1.0",
         "size": box_size,
         "sha256": box_sha,
@@ -110,14 +110,14 @@ def build():
         "path": "object/%s.stl" % box_sha,
         "format": "stl-ascii",
         "geometry_class": "prism",
-        "source": "keelworks-authored test fixture mirrored to NAS object store (P0-M4-T02)",
+        "source": "isolith-authored test fixture mirrored to NAS object store (P0-M4-T02)",
         "license": "CC0-1.0",
         "size": box_size,
         "sha256": box_sha,
         "backend": "object-store",
         "object_store": {
             "owner": "don",
-            "package": "keelworks-corpus",
+            "package": "isolith-corpus",
             "version": "v1",
             "object": "%s.stl" % box_sha,
         },
@@ -161,7 +161,7 @@ def build():
             "backend": "object-store",
             "object_store": {
                 "owner": "don",
-                "package": "keelworks-corpus",
+                "package": "isolith-corpus",
                 "version": "v1",
                 "object": "%s.%s" % (e["sha256"], ext),
             },
@@ -192,7 +192,7 @@ def build():
 
     manifest = {
         "schema_version": 1,
-        "description": ("Keelworks shared test-data registry + corpus manifest "
+        "description": ("Isolith shared test-data registry + corpus manifest "
                         "(P1-M1-T04). Every redistributable sample: source, "
                         "license, format, size, sha256, geometry class "
                         "(prism|surface|assembly|dataset|text). Clean-room: "
@@ -203,7 +203,7 @@ def build():
                         "never committed or synced."),
         "task": "P1-M1-T04",
         "generated": today,
-        "generated_by": "keelworks worker (default profile)",
+        "generated_by": "isolith worker (default profile)",
         "policy": ("Redistribution granted only under explicit open licenses "
                    "(MIT/Apache-2.0/CC0-1.0). backend=repo files are committed "
                    "under corpus/data/. The 121 MIT CATPart blobs + fixture "
@@ -306,7 +306,7 @@ def build():
     inv_samples.sort(key=lambda x: (x["corpus_role"] != "reference", x["id"]))
     inventory = {
         "schema_version": 1,
-        "description": ("Complete Keelworks corpus inventory (shared + "
+        "description": ("Complete Isolith corpus inventory (shared + "
                         "reference-only). corpus_role=shared samples are "
                         "manifest entries (redistributable); "
                         "corpus_role=reference samples are located + identity-"
@@ -336,7 +336,7 @@ def render_inventory_md(manifest, inventory, cgr_verified):
     lic_shared = Counter(e["license"] for e in es)
 
     L = []
-    L.append("# Keelworks Corpus Inventory (P1-M1-T04)\n")
+    L.append("# Isolith Corpus Inventory (P1-M1-T04)\n")
     L.append("Version 1.0, %s" % manifest["generated"])
     L.append("\nComplete corpus manifest and inventory: for every located sample, this")
     L.append("records source, license, format, size and geometry class")

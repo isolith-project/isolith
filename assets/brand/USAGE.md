@@ -1,4 +1,4 @@
-# Isolith identity usage rules (v1.0, 2026-10-18)
+# Isolith identity usage rules (v1.1, 2026-10-20)
 
 These are the binding usage rules for the Isolith brand. The docs site, release
 artifacts, and any other public-facing surface must follow them. When in doubt,
@@ -11,8 +11,9 @@ use less decoration, more space, and the primary mark.
 - First mention on any surface pairs it with the expanded name:
   "Isolith, the open engineering platform" or "Isolith: Open Engineering
   Platform (OEP)".
-- Do not use "Keelworks" on any public surface. It is the internal codename and
-  collides with a registered mark.
+- Use "Isolith" everywhere, including on every public surface. Never use
+  "Keelworks": it is the retired internal codename and collides with a
+  registered mark.
 - Never use "CATIA" in public naming (program rule, decision record 0001).
 - Never claim compatibility with a vendor product you have not tested and
   documented. "Reads files produced by X" only where the GA matrix proves it.

@@ -80,7 +80,7 @@ XSI = "http://www.w3.org/2001/XMLSchema-instance"
 ZIP_LOCAL_HEADER = b"PK\x03\x04"
 STANDALONE_XML_PREFIX = b"<?xm"
 
-# The keelworks CC0-1.0 unit box (P0-M4-T02 fixture / P3-M4-T01 golden mesh).
+# The isolith CC0-1.0 unit box (P0-M4-T02 fixture / P3-M4-T01 golden mesh).
 BOX_POSITIONS = [
     (1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 0.0), (1.0, 1.0, 0.0),
     (0.0, 0.0, 1.0), (0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 1.0),
@@ -112,13 +112,13 @@ def _rep_markup(positions, triangles):
     )
 
 
-def _model_doc(name="box", author="keelworks"):
+def _model_doc(name="box", author="isolith"):
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<Model_3dxml xmlns="%s" xmlns:xsi="%s">\n'
         "  <Header>\n    <SchemaVersion>4.0</SchemaVersion>\n"
         "    <Title>%s</Title>\n    <Author>%s</Author>\n"
-        "    <Generator>Keelworks oep-3dxml</Generator>\n  </Header>\n"
+        "    <Generator>Isolith oep-3dxml</Generator>\n  </Header>\n"
         '  <ProductStructure root="1">\n'
         '    <Reference3D id="1" name="%s"/>\n'
         '    <Instance3D id="11" name="Instance1">\n      <IsAggregatedBy/>\n'

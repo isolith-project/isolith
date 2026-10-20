@@ -106,5 +106,5 @@ tables from vendor documentation are treated as primary; marketing pages are
 flagged as claims. The audit report records only what these sources claim
 their products can read (entity classes and formats); no source contributed
 implementation technique, per the clean-room invariant (master plan
-invariant 5). We have not executed any of these products, and Keelworks does
+invariant 5). We have not executed any of these products, and Isolith does
 not link or copy any commercial reader code.

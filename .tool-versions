@@ -1,4 +1,4 @@
-# Keelworks single source of truth for toolchain versions (P0-M3-T02).
+# Isolith single source of truth for toolchain versions (P0-M3-T02).
 # Every toolchain the build touches is pinned here in one place. The
 # per-tool manifests (rust-toolchain.toml, .python-version, CMakePresets.json)
 # reference the same versions; acceptance-test.sh verifies they agree with the

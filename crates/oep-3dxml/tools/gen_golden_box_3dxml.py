@@ -8,7 +8,7 @@ and the public PKWARE ZIP APPNOTE — NOT from the Rust writer, so the Rust test
 that byte-locks its output against this golden proves conformance against an
 encoding derived independently from the format facts.
 
-The unit box (8 corners / 12 triangles) is the keelworks CC0-1.0 reference
+The unit box (8 corners / 12 triangles) is the isolith CC0-1.0 reference
 tessellation (`corpus/data/box.stl`, P0-M4-T02 fixture).
 
 ZIP byte contract (matched bv the Rust writer for determinism):
@@ -74,7 +74,7 @@ def model_doc(name: str, author: str) -> str:
         "    <SchemaVersion>4.0</SchemaVersion>\n"
         "    <Title>%s</Title>\n"
         "    <Author>%s</Author>\n"
-        "    <Generator>Keelworks oep-3dxml</Generator>\n"
+        "    <Generator>Isolith oep-3dxml</Generator>\n"
         "  </Header>\n"
         '  <ProductStructure root="1">\n'
         '    <Reference3D id="1" name="%s"/>\n'
@@ -186,7 +186,7 @@ def main() -> int:
         / "golden"
         / "box-reference.3dxml"
     )
-    pkg = build_package("box", "keelworks")
+    pkg = build_package("box", "isolith")
     out.write_bytes(pkg)
     print("wrote %s (%d bytes)" % (out, len(pkg)))
     return 0

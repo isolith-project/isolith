@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# P12-T06 -- Keelworks release install rehearsal (r1a-release-workflow pattern).
+# P12-T06 -- Isolith release install rehearsal (r1a-release-workflow pattern).
 #
 # Before a release ships, rehearse the one-command install on a fresh clean
 # machine. For every release this runs the P10-M1-T01 one-command install
@@ -19,7 +19,7 @@
 #
 # A fresh clean machine per release (the r1a-release-workflow rule) means the
 # rehearsal never reuses a previous install: this script tears down all
-# keelworks containers, volumes and the stack image and removes the generated
+# isolith containers, volumes and the stack image and removes the generated
 # .env before each install leg, so every run starts from the same clean state
 # the checklist in workstreams/release-engineering/install-rehearsal.md tells an operator to start from.
 #
@@ -218,11 +218,11 @@ else
         local label="$1" host="$2" port="$3"
         local id="install-$label" leg="INSTALL-$label"
         local pre
-        if [[ "$host" == "LOCAL" ]]; then pre=""; else pre="cd ~/keelworks && "; fi
-        local clean_cmd="docker ps -aq --filter name=keelworks- | xargs -r docker rm -f; \
+        if [[ "$host" == "LOCAL" ]]; then pre=""; else pre="cd ~/isolith && "; fi
+        local clean_cmd="docker ps -aq --filter name=isolith- | xargs -r docker rm -f; \
 docker volume ls -q --filter name=pdm_data | xargs -r docker volume rm; \
 docker volume ls -q --filter name=viewer_data | xargs -r docker volume rm; \
-docker image rm -f keelworks/oep-stack:$VERSION 2>/dev/null; \
+docker image rm -f isolith/oep-stack:$VERSION 2>/dev/null; \
 rm -f workstreams/delivery/deploy/deploy/.env; true"
         local prep_rc=0 prep_out
         prep_out="$(on_target "$host" "$port" "$pre$clean_cmd" 2>&1)" || prep_rc=$? || true
@@ -251,8 +251,8 @@ rm -f workstreams/delivery/deploy/deploy/.env; true"
         [[ "$p2p" == "200" ]] && [[ "$p2p_body" == *'"status":"ok"'* || "$p2p_body" == *'"status": "ok"'* ]] && p2p_ok=true
         # worker binaries shipped in the installed image (checklist steps 6-7)
         local w1 w2 w_ok=false
-        w1="$(on_target "$host" "$port" "$pre docker run --rm --entrypoint oep-batch-convert keelworks/oep-stack:$VERSION --help >/dev/null 2>&1; echo $?")" || true
-        w2="$(on_target "$host" "$port" "$pre docker run --rm --entrypoint oep-render-worker keelworks/oep-stack:$VERSION --describe >/dev/null 2>&1; echo $?")" || true
+        w1="$(on_target "$host" "$port" "$pre docker run --rm --entrypoint oep-batch-convert isolith/oep-stack:$VERSION --help >/dev/null 2>&1; echo $?")" || true
+        w2="$(on_target "$host" "$port" "$pre docker run --rm --entrypoint oep-render-worker isolith/oep-stack:$VERSION --describe >/dev/null 2>&1; echo $?")" || true
         [[ "$w1" == "0" && "$w2" == "0" ]] && w_ok=true
         if [[ "$pdm_ok" == true && "$view_ok" == true && "$p2p_ok" == true && "$w_ok" == true ]]; then
             row "$leg" "$id" "PASS" \
@@ -272,7 +272,7 @@ rm -f workstreams/delivery/deploy/deploy/.env; true"
             --exclude '.git/' --exclude 'target/' --exclude '.worktrees/' \
             --exclude '*.qcow2' --exclude '*.typescript' --exclude '*.timing' \
             --exclude '*.mp4' --exclude 'workstreams/delivery/update-checker/proof/video/' \
-            "$ROOT/" "$MACHINE_B_HOST:~/keelworks/"
+            "$ROOT/" "$MACHINE_B_HOST:~/isolith/"
         B_REACHABLE=true
     else
         echo "[rehearsal] machine B unreachable ($MACHINE_B_HOST:$MACHINE_B_PORT)" >&2

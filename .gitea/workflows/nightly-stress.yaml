@@ -1,4 +1,4 @@
-# Keelworks P0-M4-T03: nightly stress run.
+# Isolith P0-M4-T03: nightly stress run.
 # Runs the long fuzz/regression suite on a schedule (02:00 UTC) and on demand,
 # publishes the status page + JSON report as artifacts, and turns the nightly
 # run red (non-zero exit) when any lane fails or times out.

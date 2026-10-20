@@ -1,4 +1,4 @@
-# Keelworks reproducible build proof -- 2027.1.0-rc1
+# Isolith reproducible build proof -- 2027.1.0-rc1
 
 Toolchain: rustc 1.98.1 (48a229cea 2026-09-01)  |  Source date epoch: 1700000000  |  Host: promaxgb10-83f1  |  Built: 2026-10-19T10:23:19Z
 

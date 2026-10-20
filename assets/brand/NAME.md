@@ -1,23 +1,25 @@
-# Isolith: Public Product Brand for Open Engineering Platform (OEP)
+# Isolith: Name and Public Product Brand for Open Engineering Platform (OEP)
 
-Status: Selected and trademark-checked by P13-T08 (2026-10-18). Formal legal memo P0-M2-T03 owns the final clearance and any attorney review.
-Date: 2026-10-18
-Version: 1.0
+Status: Selected and trademark-checked by P13-T08 (2026-10-18). Formal legal memo P0-M2-T03 owns the final clearance and any attorney review. On 2026-10-20 Don approved the full name change: the internal codename is retired and Isolith is the single program name (internal and public).
+Date: 2026-10-18 (name record v1.0), rename record v1.1 2026-10-20
+Version: 1.1
 Owner: Don (final), P13-T08 worker (selection, design, and collision check)
 
 ## Decision
 
-The public product brand is **Isolith** (pronounced eye-so-lith; two syllables
-stressed on the first). It is the name shown to customers, on the docs site, in
-release notes, and on packaging.
+The program name and public product brand is **Isolith** (pronounced eye-so-lith;
+two syllables stressed on the first). It is the name used for the program, the
+product, on the docs site, in release notes, and on packaging. The former
+internal codename, Keelworks, is retired: it collided with a registered mark and
+is no longer used on any surface.
 
 Fixed naming map, re-stated so it cannot drift:
 
 | Name | Use | Public? |
 |---|---|---|
-| Isolith | Public product brand. Wordmark "isolith". | Yes |
+| Isolith | Program name and public product brand. Wordmark "isolith". | Yes |
 | Open Engineering Platform (OEP) | Descriptive working title and expanded name ("Isolith: Open Engineering Platform"). Never the registrable brand. | Yes |
-| Keelworks | Internal program codename only. Collides with the registered KEELWORKS mark (KeelWorks Ltd UK, classes 9/41/42) per decision record 0001. Not used on any public surface. | No |
+| Keelworks | Former internal codename. Retired 2026-10-20 (decision record 0001, rename record v1.1) because it collides with the registered KEELWORKS mark (KeelWorks Ltd UK, classes 9/41/42). Not used on any surface. | No |
 
 ## Trademark check (same method as P0-M1-T02, live registries, 2026-10-18)
 
@@ -48,7 +50,8 @@ Finding for the rejected runners-up (all checked in the same registries;
 details in the evidence file):
 
 - Keelworks: the control. Still registered (US 7153038 / serial 79353104,
-  classes 9/41/42), confirming the method catches a real collision.
+  classes 9/41/42), confirming the method catches a real collision. This is the
+  mark the retired codename collided with.
 - Geolith: live US registration 8147704 covering class 42. Rejected.
 - Stratolith: live US application 50149416 (classes 25/35), plus a weak name.
   Rejected.
@@ -63,8 +66,8 @@ details in the evidence file):
   points at engineering drawing and at solid, dependable tooling.
 - Short, one invented word, low collision surface, works as a wordmark and as a
   monogram (mark + "isolith").
-- No nautical association with the codename, no part of the rejected class that
-  Keelworks occupies, no "CATIA", no descriptor that reads generic.
+- No nautical association with the old codename, no part of the rejected class
+  the codename occupied, no "CATIA", no descriptor that reads generic.
 - Carries the program's honesty posture: the mark is a solid engineering block,
   not an overclaim.
 
@@ -74,7 +77,7 @@ record 0001).
 
 ## Hand-off
 
-- The docs site (P13-T03) uses the new brand: wordmark, mark, palette tokens and
+- The docs site (P13-T03) uses Isolith: wordmark, mark, palette tokens and
   typography from this kit (assets/brand/). See README.md in this folder for the
   exact consumption contract.
 - P0-M2-T03 (formal trademark memo) uses this evidence file as its primary
@@ -84,9 +87,10 @@ record 0001).
 
 ## Decision record
 
-- Public product brand: Isolith.
+- Program name and public product brand: Isolith.
 - Public working title: Open Engineering Platform (OEP).
-- Internal codename: Keelworks (never public).
+- Former internal codename: Keelworks (retired 2026-10-20; superseded by
+  Isolith on every surface).
 - Collision check date: 2026-10-18 (evidence file linked above).
 - Registries searched: uspto, euipo, wipo, tmview.
 - Next owner: P0-M2-T03 trademark memo (formal).

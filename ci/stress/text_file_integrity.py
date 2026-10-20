@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keelworks P0-M4-T03 — repo text-file integrity regression job.
+"""Isolith P0-M4-T03 — repo text-file integrity regression job.
 
 Scans every text file in the repository and verifies, on real material:
   - strict UTF-8 decode (no mojibake / accidental binary in text files);
@@ -72,7 +72,7 @@ def main(argv=None):
     files = sorted(iter_text_files(REPO))
     scanned = 0
     found = 0
-    print("Keelworks text-file integrity scan (P0-M4-T03)")
+    print("Isolith text-file integrity scan (P0-M4-T03)")
     print("root: %s" % REPO)
     print("-" * 60)
     for path in files:

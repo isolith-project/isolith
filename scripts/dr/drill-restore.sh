@@ -4,8 +4,8 @@
 # the NAS is passive storage only and never the drill target.
 #
 # What "fresh" means here: a brand-new, bare Ubuntu container (ubuntu:24.04,
-# no host mounts, no Keelworks state) is provisioned from the stock image and
-# the keelworks stack is installed + restored onto it. The ONLY path by which
+# no host mounts, no Isolith state) is provisioned from the stock image and
+# the isolith stack is installed + restored onto it. The ONLY path by which
 # vault data enters the fresh host is the backup bundle read off the
 # second-disk / archive target. It is never copied from the live vault.
 #
@@ -13,8 +13,8 @@
 #   scripts/dr/drill-restore.sh [--check] [BK_TARGET] [FRESH_IMAGE]
 #     ---check     validate prerequisites only; no container, no timing
 #     BK_TARGET    second-disk mount point or archive dir holding
-#                  keelworks-vault-backup/ (default:
-#                  $HOME/keelworks-data/keelworks-vault-backup)
+#                  isolith-vault-backup/ (default:
+#                  $HOME/isolith-data/isolith-vault-backup)
 #     FRESH_IMAGE  stock bare image for the fresh host (default ubuntu:24.04)
 #
 # Exit 0 iff every health check passes AND measured TDR < 60 minutes.
@@ -24,10 +24,10 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 WT=$(pwd)
 
-BK_TARGET="${1:-$HOME/keelworks-data}"
+BK_TARGET="${1:-$HOME/isolith-data}"
 FRESH_IMAGE="${2:-ubuntu:24.04}"
-PDN_BIN="${PDN_BIN:-/home/r1a/keelworks-main/.worktrees/p9m5t02-ga-gate-1017a/target/debug/oep-pdm}"
-BACKUP_ROOT="$BK_TARGET/keelworks-vault-backup"
+PDN_BIN="${PDN_BIN:-/home/r1a/isolith-main/.worktrees/p9m5t02-ga-gate-1017a/target/debug/oep-pdm}"
+BACKUP_ROOT="$BK_TARGET/isolith-vault-backup"
 CT_NAME="dr-fresh-$(date +%s)"
 HOST_PORT=28914
 PROOF_DIR="$WT/workstreams/delivery/disaster-recovery/proof"
@@ -80,10 +80,10 @@ echo "[2/8] container up (id $CT_NAME, host port $HOST_PORT)"
 # ---------- phase 3: install the stack (binary only; offline install
 #                     package is P10-M2-T02 territory) ----------
 echo "[3/8] installing oep-pdm into the fresh host ..."
-docker exec "$CT_NAME" mkdir -p /opt/keelworks/bin /var/lib/keelworks/vault
-docker cp "$PDN_BIN" "$CT_NAME:/opt/keelworks/bin/oep-pdm"
-docker exec "$CT_NAME" chmod +x /opt/keelworks/bin/oep-pdm
-docker exec "$CT_NAME" /opt/keelworks/bin/oep-pdm --help >/dev/null
+docker exec "$CT_NAME" mkdir -p /opt/isolith/bin /var/lib/isolith/vault
+docker cp "$PDN_BIN" "$CT_NAME:/opt/isolith/bin/oep-pdm"
+docker exec "$CT_NAME" chmod +x /opt/isolith/bin/oep-pdm
+docker exec "$CT_NAME" /opt/isolith/bin/oep-pdm --help >/dev/null
 
 # ---------- phase 4: transfer backup bundle (from archive, not live) ----------
 echo "[4/8] transferring backup bundle from archive target ..."
@@ -95,15 +95,15 @@ docker cp "$BACKUP_ROOT/latest/." "$CT_NAME:/tmp/restore-src/latest/"
 echo "[5/8] verifying + extracting in the fresh host ..."
 docker exec "$CT_NAME" sh -c 'cd /tmp/restore-src && sha256sum -c < manifest.sha256 >/dev/null 2>&1' \
   || { echo "[drill] FAIL: bomb-to-host transfer fails integrity check" >&2; exit 1; }
-docker exec "$CT_NAME" sh -c 'cp -a /tmp/restore-src/latest/store.json /var/lib/keelworks/vault/ && \
-  cp -a /tmp/restore-src/latest/blobs /var/lib/keelworks/vault/ && \
-  [ -d /tmp/restore-src/latest/audit ] && cp -a /tmp/restore-src/latest/audit /var/lib/keelworks/vault/ || true'
-echo "[5/8] restored to /var/lib/keelworks/vault (store.json + blobs + audit)"
+docker exec "$CT_NAME" sh -c 'cp -a /tmp/restore-src/latest/store.json /var/lib/isolith/vault/ && \
+  cp -a /tmp/restore-src/latest/blobs /var/lib/isolith/vault/ && \
+  [ -d /tmp/restore-src/latest/audit ] && cp -a /tmp/restore-src/latest/audit /var/lib/isolith/vault/ || true'
+echo "[5/8] restored to /var/lib/isolith/vault (store.json + blobs + audit)"
 
 # ---------- phase 6: boot the stack ----------
 echo "[6/8] starting oep-pdm on the fresh host ..."
-docker exec -d "$CT_NAME" /opt/keelworks/bin/oep-pdm \
-  --addr 0.0.0.0:8787 --persist-dir /var/lib/keelworks/vault
+docker exec -d "$CT_NAME" /opt/isolith/bin/oep-pdm \
+  --addr 0.0.0.0:8787 --persist-dir /var/lib/isolith/vault
 sleep 2
 
 # ---------- phase 7: health checks + real vault read (from the host, as a

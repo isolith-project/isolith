@@ -2,7 +2,7 @@
   "schema_version": 1,
   "description": "P10-M4-T01 multi-site replication demo: live two-host proof (U1 LAN node + garage PC remote node), conflict semantics",
   "generated_at": "2026-10-18T08:07:33.788653+00:00",
-  "binary": "/home/r1a/keelworks-main/.worktrees/p10m4t01-replication-1017a/target/debug/oep-pdm",
+  "binary": "/home/r1a/isolith-main/.worktrees/p10m4t01-replication-1017a/target/debug/oep-pdm",
   "hosts": {
     "lan_node": "U1 (oep-pdm vault)",
     "remote_node": "garage PC (sync client replica, WoL)"

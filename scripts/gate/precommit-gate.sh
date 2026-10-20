@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Adaptive pre-commit quality gate (v1.1), vendored into the Keelworks repo
+# Adaptive pre-commit quality gate (v1.1), vendored into the Isolith repo
 # from the Hermes `precommit-quality-gate` skill so the SAME gate runs locally
 # (as .git/hooks/pre-commit) and in CI (scripts/gate run by Gitea Actions).
 # Usage: precommit-gate.sh [repo-dir  (default: cwd; git runs hooks from the repo root)]

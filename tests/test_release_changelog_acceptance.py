@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P12-T07: release notes / changelog automation.
+"""Acceptance test for Isolith P12-T07: release notes / changelog automation.
 
 Written FIRST (TDD). Verifies the real material, not mocks:
 

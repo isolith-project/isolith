@@ -4,9 +4,9 @@
   "task": "P5-M3-T02",
   "pairs": [
     {
-      "id": "keelworks-native-box",
+      "id": "isolith-native-box",
       "geometry_class": "prism",
-      "source": "CC0-1.0 keelworks unit box (P0-M4-T02 fixture, 8 verts / 12 tris)",
+      "source": "CC0-1.0 isolith unit box (P0-M4-T02 fixture, 8 verts / 12 tris)",
       "native": "data/box.stl",
       "reference": "reference/box-reference-freecad.json",
       "reference_producer": "FreeCAD 26.3 (OCC kernel) via freecadcmd Mesh.read"

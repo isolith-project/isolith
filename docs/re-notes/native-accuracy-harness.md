@@ -26,7 +26,7 @@ Deliberately honest-by-construction (program anti-fabrication doctrine):
 ## Pair list and outputs
 
 - Pair list: `corpus/native-accuracy-pairs.json` (schema v1). Today it carries
-  the committed real-material pair **keelworks-native-box**: native
+  the committed real-material pair **isolith-native-box**: native
   `corpus/data/box.stl` (CC0 unit box, 8 verts / 12 tris) and the external-
   converter reference `corpus/reference/box-reference-freecad.json` — the SAME
   box read by FreeCAD 26.3 / Open CASCADE kernel (committed producer
@@ -65,7 +65,7 @@ Deliberately honest-by-construction (program anti-fabrication doctrine):
 
 ## Current honest numbers (real committed material)
 
-- keelworks-native-box: **measured**, symmetric Hausdorff 0.0, volume delta
+- isolith-native-box: **measured**, symmetric Hausdorff 0.0, volume delta
   0.0, tolerance distribution 100% inside the tightest bin (p100 == 0.0) —
   the fiducial pair proving the harness measures the box identically to the
   independent converter.

@@ -1,6 +1,6 @@
 # P4-M5-T01: MBD validator service (rule engine + honest report)
 
-Task t_17247e17, Keelworks wave-2 P4 MBD lane. Reference implementation:
+Task t_17247e17, Isolith wave-2 P4 MBD lane. Reference implementation:
 `python/oep_tooling/mbd_validate.py` (pure stdlib; Python is the designated
 tooling location per docs/layout.md). Product surfacing happens in the P4-M5-T02
 card (CLI + exit codes); this card owns the rule engine, the service API, the
@@ -140,7 +140,7 @@ the expect blocks.
 
 ## 6. Demo (defense-prime walkthrough)
 
-    cd keelworks          # repo root
+    cd isolith          # repo root
     PYTHONPATH=python python3 -m oep_tooling.mbd_validate \
         --manifest corpus/mbd-fixture-manifest.json --out corpus/
 

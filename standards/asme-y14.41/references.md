@@ -31,7 +31,7 @@ official pointers and the public scope only.
 ## Note on redistribution
 
 ASME Y14.41 (and the rest of the Y14 series) is copyrighted by ASME. Never vendor it.
-For validator rule implementation, encode rules in Keelworks' own words and attach
+For validator rule implementation, encode rules in Isolith' own words and attach
 section citations/links as the normative reference — do not quote the standard into
 code or tests.
 

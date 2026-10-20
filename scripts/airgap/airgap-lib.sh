@@ -1,4 +1,4 @@
-# airgap-lib.sh — shared helpers for the Keelworks offline/air-gap install path
+# airgap-lib.sh — shared helpers for the Isolith offline/air-gap install path
 # (P10-M2-T02). Sourced by build-offline-bundle.sh, airgap-install.sh,
 # airgap-verify.sh and airgap-rollback.sh.
 #
@@ -17,7 +17,7 @@ set -u
 AIRGAP_DIR="${AIRGAP_DIR:-$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)}"
 SIGN_KEY_ID="${SIGN_KEY_ID:-oep-airgap-signing}"
 KEYRING_DIR="${KEYRING_DIR:-$AIRGAP_DIR/keys}"
-BUNDLE_NAME="${BUNDLE_NAME:-keelworks-offline}"
+BUNDLE_NAME="${BUNDLE_NAME:-isolith-offline}"
 COMPOSE_BIN="${COMPOSE_BIN:-docker compose}"
 
 # The single public key ships with the repo so ANY operator can verify a
@@ -42,8 +42,8 @@ update_check_env() {
 # update *checking* only, never analytics reach-back.
 OEP_UPDATE_CHECK=off
 # When ON, one of (must be reachable without the public internet):
-#   OEP_UPDATE_MIRROR_URL=https://updates.example.local/keelworks   (on-site)
-#   OEP_UPDATE_OFFLINE_BUNDLE=/path/to/keelworks-offline-<ver>.tar.gz (local)
+#   OEP_UPDATE_MIRROR_URL=https://updates.example.local/isolith   (on-site)
+#   OEP_UPDATE_OFFLINE_BUNDLE=/path/to/isolith-offline-<ver>.tar.gz (local)
 OEP_UPDATE_MIRROR_URL=
 OEP_UPDATE_OFFLINE_BUNDLE=
 EOF

@@ -73,7 +73,7 @@
       "registration_found": true,
       "software_class_collision": true,
       "control": "regression control",
-      "note": "Control term: confirms the same USPTO method still surfaces the registered KEELWORKS mark that decision record 0001 identified. USPTO result 1 of 1: serial 79353104, registration 7153038, filing date 2022-03-16, owner KeelWorks Ltd (UK). This is why the public brand must differ from the internal codename, and it validates the check tools."
+      "note": "Control term: confirms the same USPTO method still surfaces the registered KEELWORKS mark (KeelWorks Ltd UK) that decision record 0001 identified. USPTO result 1 of 1: serial 79353104, registration 7153038, filing date 2022-03-16, owner KeelWorks Ltd (UK). The retired internal codename collided with this mark, which is why the brand check exists; the control validates the check tools."
     },
     {
       "term": "open engineering platform",

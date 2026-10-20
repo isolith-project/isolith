@@ -1,4 +1,4 @@
-# Keelworks Test Corpus
+# Isolith Test Corpus
 
 The shared test-data registry plus golden-file runner (P0-M4-T02). Downstream
 consumers: P1 corpus build (manifest + sync), P2/P3 regression runners
@@ -76,7 +76,7 @@ Classification (tolerant per P2-M1-T04, report matrix per P2-M5-T03):
 
 The whole shared corpus is mirrored to the NAS object store: every
 `backend=object-store` entry of `corpus/manifest.json` is present as a blob at
-`don/keelworks-corpus` v1 under the exact object name its `object_store` pointer
+`don/isolith-corpus` v1 under the exact object name its `object_store` pointer
 names (`<sha256>.<ext>`), and GET-back verifies against the manifest sha256.
 
     # materialize (upload missing blobs), write index, verify all — live NAS

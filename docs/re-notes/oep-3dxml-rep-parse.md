@@ -1,6 +1,6 @@
 # oep-3dxml XML Rep Parse: Nodes, References, Instances
 
-P3-M1-T02 · Keelworks / OEP P3 3DXML Reader
+P3-M1-T02 · Isolith / OEP P3 3DXML Reader
 Status: verified on real material 2026-10-15
 Version: 1.0
 

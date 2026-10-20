@@ -1,6 +1,6 @@
-# Keelworks PDM service image (real component, air-gap proof subject).
+# Isolith PDM service image (real component, air-gap proof subject).
 # Multi-stage: build the oep-pdm binary from this repo, ship the slim runtime.
-# This is a real Keelworks component container used as the offline-bundle
+# This is a real Isolith component container used as the offline-bundle
 # proof subject for P10-M2-T02. When the P10-M1-T01 compose stack lands,
 # the same signed-bundle tooling wraps those images unchanged.
 FROM rust:1.98.1-slim-bookworm AS build

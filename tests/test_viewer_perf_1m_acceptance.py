@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance test for Keelworks P6-M5-T03: 1M-triangle scene interactive on
+"""Acceptance test for Isolith P6-M5-T03: 1M-triangle scene interactive on
 U1-class hardware, measured budget.
 
 Written FIRST (TDD). The committed performance benchmark at workstreams/geometry-core/viewer/perf/1m-scene

@@ -18,7 +18,7 @@ the corpus**, and emits a fidelity report. Deliberately honest-by-construction:
 ## Pair list and outputs
 
 - Pair list: `corpus/accuracy-pairs.json` (schema v1). Today it carries the
-  committed real-material pair **keelworks-box**: native
+  committed real-material pair **isolith-box**: native
   `corpus/data/box.stl` (CC0 unit box, 8 verts / 12 tris) and STEP
   `crates/oep-geo/tests/golden/box-reference.step` (facetted AP214 passthrough
   from the SAME reference tessellation, P6-M4-T01).

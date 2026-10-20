@@ -107,7 +107,7 @@ def test_registry():
 
 
 def main():
-    print("Keelworks P1-M1-T03 CATPart/CATProduct corpus acceptance test")
+    print("Isolith P1-M1-T03 CATPart/CATProduct corpus acceptance test")
     print("repo: %s" % REPO)
     print("=" * 60)
     test_sample_corpus_exists()

@@ -1,16 +1,16 @@
 ---
-title: Keelworks Export-Control Classification (ITAR/EAR release checkbox)
+title: Isolith Export-Control Classification (ITAR/EAR release checkbox)
 status: Ratified (Wave-3 P11-T05)
 version: 1.0.0
 date: 2026-10-18
-owner: Keelworks program governance, P11 security lane
-applies_to: every released artifact of the Keelworks / Open Engineering Platform (OEP) monorepo -- oep-pdm, oep-geo, oep-viewer, oep-web, the P2P compute lane, and the install/package bundles (P12-T04). Each release TRAIN (release/YYYY.N per P12-T05) and each candidate version (e.g. 2027.1.0-rc1) carries exactly one classification file.
+owner: Isolith program governance, P11 security lane
+applies_to: every released artifact of the Isolith / Open Engineering Platform (OEP) monorepo -- oep-pdm, oep-geo, oep-viewer, oep-web, the P2P compute lane, and the install/package bundles (P12-T04). Each release TRAIN (release/YYYY.N per P12-T05) and each candidate version (e.g. 2027.1.0-rc1) carries exactly one classification file.
 supersedes: nothing (implements P0-M2-T04 recommendation 4 and the P11-T05 release pipeline checkbox)
 ---
 
-# Keelworks Export-Control Classification (ITAR/EAR Release Checkbox)
+# Isolith Export-Control Classification (ITAR/EAR Release Checkbox)
 
-This record wires the export-control checkbox into the Keelworks release
+This record wires the export-control checkbox into the Isolith release
 pipeline: **every release emits an ITAR/EAR classification file**, and the
 release pipeline **will not proceed** (CI fails, the release-cut step refuses)
 unless that file exists, states the release's classification, and asserts
@@ -40,7 +40,7 @@ guessing. Concretely:
   below) requires the file for the version being cut. **Absence fails the
   release** -- this is the checkbox: unchecked, the release cannot ship.
 
-The Keelworks release is an open-source tooling release. Its honest
+The Isolith release is an open-source tooling release. Its honest
 classification under P0-M2-T04 is:
 
 - **ITAR**: NOT subject. General-purpose CAD/PDM/geometry software is not a
@@ -54,7 +54,7 @@ classification under P0-M2-T04 is:
   binary, so the 5D992.c mass-market ENC analysis does not apply to this
   release type (P0-M2-T04 section 5.2).
 - **734.7(c) firearm-CAM backstop**: no CAM/G-code or AMF artifact content is
-  shipped in any current Keelworks release, so the published-firearm
+  shipped in any current Isolith release, so the published-firearm
   carve-out exception does not trigger (P0-M2-T04 section 2.2).
 - **Data locality**: the release bundles tool source code and the binaries
   built from it **only**. It contains no customer CAD models, no PMI/GD&T or
@@ -101,7 +101,7 @@ data_locality = "Release bundles tool source + built binaries only; no customer 
 
 [governance]
 basis = "P0-M2-T04 export-control memo v1.0 (2026-10-15)"
-prepared_by = "Keelworks P11 security lane"
+prepared_by = "Isolith P11 security lane"
 ```
 
 Forbidden to pass: `status != UNCLASSIFIED`, any `*.subject = true`, any

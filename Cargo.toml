@@ -1,4 +1,4 @@
-# Keelworks / Open Engineering Platform -- Rust workspace root.
+# Isolith / Open Engineering Platform -- Rust workspace root.
 #
 # One crate per workstream (see docs/layout.md for the full mapping).
 # Toolchain pinning (edition bumps, rust-toolchain.toml, lockfile policy) is
@@ -43,5 +43,5 @@ members = [
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-authors = ["Keelworks contributors"]
-repository = "http://192.168.0.101:3200/don/keelworks"
+authors = ["Isolith contributors"]
+repository = "http://192.168.0.101:3200/don/isolith"

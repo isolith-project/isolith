@@ -1,8 +1,8 @@
 # P2-M6-T03 — P2 GA gate: all corpus meshes load, 100% golden files match within epsilon
 
-> Task: t_e8c603e4 (Keelworks wave 1, P2 capstone). Status: implemented +
+> Task: t_e8c603e4 (Isolith wave 1, P2 capstone). Status: implemented +
 > verified on real material 2026-10-15. Version 1.0.
-> Repo: keelworks/keelworks @ NAS Gitea; branch task/ga-gate-1015a.
+> Repo: isolith/isolith @ NAS Gitea; branch task/ga-gate-1015a.
 > Clean-room: no vendor library reads any CGR; no proprietary bytes committed;
 > every constant is a published clean-room observation (docs/re-notes
 > oep-cgr-header-parse / P1-M2-T01 hex notebook).

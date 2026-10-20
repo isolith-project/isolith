@@ -49,7 +49,7 @@
     "ed25519_update": "workstreams/security/keys/oep-update-signing.pub",
     "gpg_artifact": "scripts/airgap/keys/oep-airgap-signing.pub.asc"
   },
-  "schema": "keelworks.release-signatures.v1",
+  "schema": "isolith.release-signatures.v1",
   "signed": "2026-10-19T19:17:55Z",
   "update_bundle": "SKIPPED",
   "version": "2027.1.0-rc2"

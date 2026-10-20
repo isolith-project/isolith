@@ -1,7 +1,7 @@
 # export-all: the interop escape hatch (P10-M3-T02)
 
 `oep-archive export-all` turns a P8 vault into a documented, neutral archive a
-customer can always take out of Keelworks, whatever happens to the product
+customer can always take out of Isolith, whatever happens to the product
 line. This is the "no lock-in" guarantee: your data lives on in formats any
 CAD/CAE/PLM stack can open, plus a complete machine-readable vault record.
 

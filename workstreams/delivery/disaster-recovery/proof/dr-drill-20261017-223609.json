@@ -16,6 +16,6 @@
     "count": 413,
     "head_hash": "2e69da7abc2be059a1b28f731e96214c6a942d20cdd16f6a15c0a39d6446bbb3"
   },
-  "backup_target": "/home/r1a/keelworks-data",
+  "backup_target": "/home/r1a/isolith-data",
   "fresh_image": "ubuntu:24.04"
 }

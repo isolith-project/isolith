@@ -1,6 +1,6 @@
 # P5-M3-T01: B-Rep extraction attempt - CATPart topology + NURBS into oep-geo
 
-Task: P5-M3-T01 (Keelworks / Open Engineering Platform, P5 native-reader
+Task: P5-M3-T01 (Isolith / Open Engineering Platform, P5 native-reader
 lane). Status: attempt completed, extraction parity classified honestly (no
 fabricated PASS). Version: 1.0. Date: 2026-10-16. Companion tool:
 `python/oep_tooling/catpart_brep_extract.py`; acceptance test:

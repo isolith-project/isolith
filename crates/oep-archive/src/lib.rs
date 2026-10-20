@@ -1,7 +1,7 @@
 //! oep-archive -- P10-M3-T02: retention/archive policy + export-all interop
 //! escape hatch.
 //!
-//! This crate is the "take your data out" lane of Keelworks / Open
+//! This crate is the "take your data out" lane of Isolith / Open
 //! Engineering Platform. It composes the platform's own readers and exporters
 //! (P2 CGR + glTF, P3 3DXML, P4 STEP, P6 oep-geo, P8 vault) into one
 //! documented, neutral archive a customer can always walk out with:

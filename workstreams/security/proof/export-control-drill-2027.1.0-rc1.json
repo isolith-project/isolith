@@ -1,5 +1,5 @@
 {
-  "schema": "keelworks.export-control-drill.v1",
+  "schema": "isolith.export-control-drill.v1",
   "card": "P11-T05",
   "release": "2027.1.0-rc1",
   "train": "2027.1",

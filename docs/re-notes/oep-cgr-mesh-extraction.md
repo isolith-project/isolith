@@ -1,6 +1,6 @@
 # oep-cgr Tessellation Mesh Extraction: Internal Mesh Type + Structural Scan
 
-P2-M2-T01 · Keelworks / OEP P2 CGR Reader
+P2-M2-T01 · Isolith / OEP P2 CGR Reader
 Status: verified on real material 2026-10-15 (mesh type GREEN; real-material
 payload extraction classified-skip with reasons, per P1-M3-T03 section 8)
 Version: 1.0

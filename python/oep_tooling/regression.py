@@ -510,7 +510,7 @@ def write_matrix(matrix: dict, outdir: str) -> list:
     jp = out / "regression-matrix.json"
     jp.write_text(json.dumps(matrix, indent=2) + "\n", encoding="utf-8")
     mp = out / "regression-matrix.md"
-    lines = ["# Keelworks regression corpus matrix (P1-M4-T01)", ""]
+    lines = ["# Isolith regression corpus matrix (P1-M4-T01)", ""]
     s = matrix["summary"]
     lines.append("total=%d  open=%d  skip=%d" % (s["total"], s["open"], s["skip"]))
     lines.append("by_backend: " + ", ".join(

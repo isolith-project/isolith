@@ -36,7 +36,7 @@ and https://docs.techsoft3d.com/hoops/exchange/start/format/jt_reader.html
 
 ## Program context
 
-- Keelworks license posture (P0-M2): Apache-2.0 applications/libraries,
+- Isolith license posture (P0-M2): Apache-2.0 applications/libraries,
   AGPL-3.0 server/PDM and P2P orchestration components. GPL-2.0-only is
   incompatible with Apache-2.0 for linked libraries and with AGPL-3.0 for the
   server (a combined work cannot carry both).

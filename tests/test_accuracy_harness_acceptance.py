@@ -257,7 +257,7 @@ def test_pair_list_runner_and_report():
     if acc is None:
         return
     pairs = [
-        {"id": "keelworks-box",
+        {"id": "isolith-box",
          "native": os.path.join(REPO, "corpus", "data", "box.stl"),
          "step": os.path.join(REPO, "crates", "oep-geo", "tests", "golden",
                               "box-reference.step"),
@@ -274,7 +274,7 @@ def test_pair_list_runner_and_report():
     check("no phantom rows, no dropped pairs",
           row_ids == {p["id"] for p in pairs}, detail=str(row_ids))
 
-    box_row = next(r for r in rows if r["id"] == "keelworks-box")
+    box_row = next(r for r in rows if r["id"] == "isolith-box")
     check("box pair status == measured",
           box_row["status"] == "measured", detail=str(box_row))
     check("box pair measured symmetric hausdorff 0.0",

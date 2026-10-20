@@ -1,16 +1,16 @@
 ---
-title: Keelworks Contributing Guide
+title: Isolith Contributing Guide
 version: 1.0.0
 date: 2026-10-15
 status: Ratified
-owner: Keelworks program (Open Engineering Platform), P0-M1 (program governance and foundations)
-applies_to: every repository under the keelworks org; every contribution type (Rust crates, Python tooling, standards material, docs, decision records)
+owner: Isolith program (Open Engineering Platform), P0-M1 (program governance and foundations)
+applies_to: every repository under the isolith org; every contribution type (Rust crates, Python tooling, standards material, docs, decision records)
 supersedes: nothing (first contributing guide)
 ---
 
-# Keelworks Contributing Guide
+# Isolith Contributing Guide
 
-Keelworks (working title: Open Engineering Platform, OEP) is an open,
+Isolith (working title: Open Engineering Platform, OEP) is an open,
 self-hosted, interoperable engineering suite. This guide tells you how to
 contribute to it. It implements the contributor rules decided in
 `workstreams/governance/contributor-rules/contributor-rules-decision.md` (P0-M1-T04). If you have not read the
@@ -24,14 +24,14 @@ change log at the bottom.
 
 ## What a contribution is
 
-A contribution is any change you submit to a keelworks repository: a Rust
+A contribution is any change you submit to a isolith repository: a Rust
 crate, Python tooling, standards material, documentation, or a decision record.
 Every contribution, including your very first one, travels the same path:
 certify it, open a pull request, get owner review, merge.
 
 ## Certifying your work: the DCO, not a CLA
 
-Keelworks uses the Developer Certificate of Origin (DCO). There is no standing
+Isolith uses the Developer Certificate of Origin (DCO). There is no standing
 Contributor License Agreement, no click-through agreement, and no copyright
 assignment. The full reasoning is in the contributor-rules decision; here is
 what you actually do:

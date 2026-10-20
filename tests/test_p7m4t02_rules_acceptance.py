@@ -53,7 +53,7 @@ def read(path):
 
 
 def main() -> int:
-    print("Keelworks P7-M4-T02 rules/checks sandbox acceptance")
+    print("Isolith P7-M4-T02 rules/checks sandbox acceptance")
     print("repo: %s" % REPO)
 
     # --- 1. artifacts -----------------------------------------------------

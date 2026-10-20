@@ -32,7 +32,7 @@ info:
   title: OEP PDM REST API
   version: 1.0.0
   description: >-
-    Self-hosted PDM / ENOVIA-lite vault service (Keelworks P8). v1 is the
+    Self-hosted PDM / ENOVIA-lite vault service (Isolith P8). v1 is the
     stub-first contract: items, revisions, content-addressed files, open and
     save-revision verbs. P8-M6-T01 implements this same contract for real.
 tags:

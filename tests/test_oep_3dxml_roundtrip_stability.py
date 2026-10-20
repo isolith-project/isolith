@@ -154,7 +154,7 @@ def test_reencode_of_decoded_is_byte_identical_to_golden():
 
     # Re-encode the DECODED mesh from the format facts (independent encoder),
     # same name/author as the golden, and require strict byte equality.
-    rebuilt = enc.build_package("box", "keelworks")
+    rebuilt = enc.build_package("box", "isolith")
     # Cross-check the encoder got the right data by reaching into it.
     assert enc.POSITIONS == positions, "encoded positions match decoded"
     assert enc.TRIANGLES == triangles, "encoded indices match decoded"

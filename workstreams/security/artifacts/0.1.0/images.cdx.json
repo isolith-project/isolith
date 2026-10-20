@@ -7,14 +7,14 @@
     "timestamp": "2026-10-18T20:04:34Z",
     "component": {
       "type": "application",
-      "bom-ref": "keelworks-oep@0.1.0",
-      "name": "keelworks-oep",
+      "bom-ref": "isolith-oep@0.1.0",
+      "name": "isolith-oep",
       "version": "0.1.0"
     },
     "tools": [
       {
-        "vendor": "Keelworks",
-        "name": "keelworks-oep-sbom",
+        "vendor": "Isolith",
+        "name": "isolith-oep-sbom",
         "version": "0.1.0"
       }
     ]
@@ -28,8 +28,8 @@
       "externalReferences": [],
       "properties": [
         {
-          "name": "keelworks:dockerfile",
-          "value": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/workstreams/delivery/deploy/deploy/Dockerfile;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.airgap-target;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.oep-pdm;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/tests/fixtures/p11t02/fixturerepo/Dockerfile"
+          "name": "isolith:dockerfile",
+          "value": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/workstreams/delivery/deploy/deploy/Dockerfile;/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.airgap-target;/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.oep-pdm;/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/tests/fixtures/p11t02/fixturerepo/Dockerfile"
         }
       ],
       "purl": "pkg:docker/debian@bookworm-slim"
@@ -42,8 +42,8 @@
       "externalReferences": [],
       "properties": [
         {
-          "name": "keelworks:dockerfile",
-          "value": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/workstreams/delivery/deploy/deploy/Dockerfile;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/tests/fixtures/p11t02/fixturerepo/Dockerfile"
+          "name": "isolith:dockerfile",
+          "value": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/workstreams/delivery/deploy/deploy/Dockerfile;/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/tests/fixtures/p11t02/fixturerepo/Dockerfile"
         }
       ],
       "purl": "pkg:docker/rust@1.98-bookworm"
@@ -56,8 +56,8 @@
       "externalReferences": [],
       "properties": [
         {
-          "name": "keelworks:dockerfile",
-          "value": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.oep-pdm"
+          "name": "isolith:dockerfile",
+          "value": "/home/r1a/.hermes/kanban/boards/isolith/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.oep-pdm"
         }
       ],
       "purl": "pkg:docker/rust@1.98.1-slim-bookworm"

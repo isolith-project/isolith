@@ -238,7 +238,7 @@ def test_install_schedule_and_restore_round_trip():
             capture_output=True, text=True)
         check("backup producer exits 0", rc.returncode == 0,
               rc.stdout[-200:] + rc.stderr[-200:])
-        backup_root = archive / "keelworks-vault-backup"
+        backup_root = archive / "isolith-vault-backup"
         check("backup bundle layout (latest/)",
               (backup_root / "latest" / "store.json").is_file())
         check("backup bundle manifest written",
