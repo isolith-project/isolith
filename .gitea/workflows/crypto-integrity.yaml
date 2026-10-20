@@ -44,5 +44,5 @@ jobs:
         run: cargo test -p oep-update
       - name: Keep the recorded signed-release proof referenced by the test
         run: |
-          ls -l workstreams/P11/proof/ | tail -5
+          ls -l workstreams/security/proof/ | tail -5
           echo "crypto proof recorded on this ref"

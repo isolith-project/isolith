@@ -1,7 +1,7 @@
 """P10-M5-T02 acceptance: the committed P10 GA gate artifacts.
 
 The live two-machine verification is a real-LAN action (U1 + U1/VM-class VM,
-decision #9), recorded under workstreams/P10-M5/proof/. CI cannot reach a second host or a
+decision #9), recorded under workstreams/delivery/update-checker/proof/. CI cannot reach a second host or a
 docker daemon, so this test pins the committed deliverable facts - the
 walkthrough checklist, the one-command install surface, the air-gap re-proof
 contract, and the update-checker off-by-default posture - and a post-hoc
@@ -9,7 +9,7 @@ assertion that the committed gate proof really does carry PASS rows for the
 two machine-install legs (the "both verifications recorded, not a log line"
 requirement).
 
-The live proof is reproduced by scripts/p10m5t02-ga-gate-proof.sh and the
+The live proof is reproduced by scripts/delivery-ga-gate-proof.sh and the
 harness python/oep_tooling/ga_gate_p10.py; CI runs that harness in its
 degraded mode (live legs SKIP under the closed taxonomy).
 """
@@ -19,13 +19,13 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-WALK = REPO_ROOT / "workstreams/P10-M5" / "install-walkthrough.md"
-GATE_DOC = REPO_ROOT / "workstreams/P10-M5" / "ga-gate.md"
-PROOF = REPO_ROOT / "workstreams/P10-M5" / "proof" / "ga-gate-p10-m5t02.json"
+WALK = REPO_ROOT / "workstreams/delivery/update-checker" / "install-walkthrough.md"
+GATE_DOC = REPO_ROOT / "workstreams/delivery/update-checker" / "ga-gate.md"
+PROOF = REPO_ROOT / "workstreams/delivery/update-checker" / "proof" / "ga-gate.json"
 HARNESS = REPO_ROOT / "python" / "oep_tooling" / "ga_gate_p10.py"
-PROOF_SH = REPO_ROOT / "scripts" / "p10m5t02-ga-gate-proof.sh"
+PROOF_SH = REPO_ROOT / "scripts" / "delivery-ga-gate-proof.sh"
 
-VIDEO_DIR = REPO_ROOT / "workstreams/P10-M5" / "proof" / "video"
+VIDEO_DIR = REPO_ROOT / "workstreams/delivery/update-checker" / "proof" / "video"
 
 
 def test_walkthrough_checklist_committed() -> None:
@@ -49,17 +49,17 @@ def test_walkthrough_checklist_committed() -> None:
 def test_walkthrough_references_real_files() -> None:
     # The files the doc tells an operator to run must exist in the repo.
     for rel in (
-        "workstreams/P10-M1/deploy/install.sh",
-        "workstreams/P10-M1/deploy/docker-compose.yml",
-        "workstreams/P10-M1/deploy/.env.example",
+        "workstreams/delivery/deploy/deploy/install.sh",
+        "workstreams/delivery/deploy/deploy/docker-compose.yml",
+        "workstreams/delivery/deploy/deploy/.env.example",
         "scripts/airgap/airgap-verify.sh",
         "scripts/airgap/airgap-install.sh",
         "scripts/airgap/build-offline-bundle.sh",
-        "workstreams/P10-M2/air-gap-install.md",
+        "workstreams/delivery/airgap/air-gap-install.md",
     ):
         assert (REPO_ROOT / rel).is_file(), f"walkthrough references missing file: {rel}"
     # The install script is the one-command surface.
-    inst = (REPO_ROOT / "workstreams/P10-M1/deploy/install.sh").read_text(encoding="utf-8")
+    inst = (REPO_ROOT / "workstreams/delivery/deploy/deploy/install.sh").read_text(encoding="utf-8")
     for needle in ("preflight", "docker compose -f docker-compose.yml", "wait_healthy",
                    "verify_health", "health checks green"):
         assert needle in inst, f"install.sh missing {needle}"
@@ -79,7 +79,7 @@ def test_update_checker_off_by_default_posture() -> None:
     lib = REPO_ROOT / "scripts/airgap" / "airgap-lib.sh"
     lib_text = lib.read_text(encoding="utf-8")
     assert "OEP_UPDATE_CHECK=off" in lib_text
-    env_ex = (REPO_ROOT / "workstreams/P10-M1/deploy/.env.example").read_text(encoding="utf-8")
+    env_ex = (REPO_ROOT / "workstreams/delivery/deploy/deploy/.env.example").read_text(encoding="utf-8")
     assert "OEP_UPDATE_CHECK" not in env_ex, (
         "the generated install .env must never enable the update checker")
 
@@ -87,7 +87,7 @@ def test_update_checker_off_by_default_posture() -> None:
 def test_airgap_contract_still_pinned() -> None:
     # The M2-T02 acceptance the gate depends on is still committed + runnable.
     assert (REPO_ROOT / "tests" / "test_p10m2t02_airgap.py").is_file()
-    assert (REPO_ROOT / "workstreams/P10-M2" / "air-gap-install.md").is_file()
+    assert (REPO_ROOT / "workstreams/delivery/airgap" / "air-gap-install.md").is_file()
 
 
 def test_committed_proof_records_both_machine_installs() -> None:
@@ -111,7 +111,7 @@ def test_committed_proof_records_both_machine_installs() -> None:
 
 def test_video_deliverable_committed() -> None:
     """The 'install video' part of the acceptance: a replayable recording of
-    the install walkthrough is committed under workstreams/P10-M5/proof/video/."""
+    the install walkthrough is committed under workstreams/delivery/update-checker/proof/video/."""
     if not VIDEO_DIR.is_dir():
         pytest.skip("video dir not yet committed on this ref (expected pre-run)")
     typescripts = sorted(VIDEO_DIR.glob("*.typescript"))

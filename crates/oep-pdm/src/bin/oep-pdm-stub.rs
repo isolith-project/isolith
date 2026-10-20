@@ -1,9 +1,9 @@
 //! `oep-pdm-stub` -- retained P7-M2-T02 compat binary for the PDM service.
 //!
 //! P8-M1-T01 resolved the P7-M2-T02 "no web framework" deferral by ratifying
-//! Rust axum (`workstreams/P8-M1/web-stack-adr.md`) and shipping the real service
+//! Rust axum (`workstreams/pdm/service/web-stack-adr.md`) and shipping the real service
 //! skeleton (binary `oep-pdm`). This binary name is kept so the P7-M2
-//! integration surface (`workstreams/P7-M2/pdm-integration.md`) and the retained contract
+//! integration surface (`workstreams/modeler/interchange/pdm-integration.md`) and the retained contract
 //! test (`tests/test_p8_pdm_stub_contract.py`) keep working unchanged; it runs
 //! the exact same axum service and reports the same `oep-pdm` health identity.
 //!

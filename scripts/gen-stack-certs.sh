@@ -5,7 +5,7 @@
 #
 # Usage:
 #   scripts/gen-stack-certs.sh [OUT_DIR] [CN]
-#     OUT_DIR  where certs land (default: ./workstreams/P10-M1/certs)
+#     OUT_DIR  where certs land (default: ./workstreams/delivery/deploy/certs)
 #     CN       common name / primary SAN (default: $(hostname))
 #
 # Produces, in OUT_DIR:
@@ -22,7 +22,7 @@
 # Exit 0 iff the generated stack verifies with openssl against its own CA.
 set -euo pipefail
 
-OUT_DIR="${1:-workstreams/P10-M1/certs}"
+OUT_DIR="${1:-workstreams/delivery/deploy/certs}"
 CN="${2:-$(hostname)}"
 mkdir -p "$OUT_DIR"
 

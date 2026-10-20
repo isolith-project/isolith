@@ -20,7 +20,7 @@ THREE legs over the real corpus and the workstream contract, and requires zero
    reinterprets into Gregory patches, P3-M2) decodes to a finite, in-range,
    non-degenerate triangle mesh with quality control; golden topology compare
    where a golden exists (real-model face/vertex/triangle goldens are recorded
-   in ``docs/re-notes/p3-m5-t02-ga-gate.md``). Never a fabricated PASS on
+   in ``docs/re-notes/3dxml-ga-gate.md``). Never a fabricated PASS on
    hostile input — a file the lattice probe cannot resolve is a classified
    SKIP with a reasoned detail, and a triangle-count golden mismatch is a FAIL.
 

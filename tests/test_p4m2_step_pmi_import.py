@@ -5,7 +5,7 @@ Independent (stdlib-only) verification of the P4-M2 semantic-PMI wedge:
 
   - the crate exists and is a workspace member (layout sync),
   - real NIST MBE AP242 fixtures are committed under crates/oep-step-pmi/fixtures/,
-  - the P4-M2 ADR (workstreams/P4-M2/pmi-import-adr.md) records the gate decision:
+  - the P4-M2 ADR (workstreams/step-interop/pmi/pmi-import-adr.md) records the gate decision:
     wrap the OSS STEP library (step-io) behind vendor-neutral wrappers for the
     semantic PMI lane, OCCT stays the analytic-B-Rep fidelity path,
     honest absence flags, no fabricated PMI,
@@ -27,7 +27,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIXTURES = os.path.join(ROOT, "crates", "oep-step-pmi", "fixtures")
 CRATE = os.path.join(ROOT, "crates", "oep-step-pmi")
-ADR = os.path.join(ROOT, "workstreams/P4-M2", "pmi-import-adr.md")
+ADR = os.path.join(ROOT, "workstreams/step-interop/pmi", "pmi-import-adr.md")
 EM_DASH = "\u2014"
 CURLY = "\u201c\u201d\u2018\u2019"
 
@@ -91,7 +91,7 @@ def run_checks():
           "ftc_08 must carry no datum/dimension PMI records")
 
     # 3. ADR exists, versioned, documents the gate decision.
-    check(os.path.isfile(ADR), "missing workstreams/P4-M2/pmi-import-adr.md")
+    check(os.path.isfile(ADR), "missing workstreams/step-interop/pmi/pmi-import-adr.md")
     adr = ""
     if os.path.isfile(ADR):
         with open(ADR, encoding="utf-8") as fh:

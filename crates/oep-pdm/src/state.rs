@@ -1,8 +1,8 @@
 //! P8-M2-T01 -- Revision lifecycle state machine.
 //!
 //! Models the lifecycle of a PDM *revision* over the four states adopted
-//! verbatim from the wire contract (`workstreams/P8-M6/openapi-v1.yaml`, v1). See
-//! `workstreams/P8-M2/revision-state-machine.md` for the full spec.
+//! verbatim from the wire contract (`workstreams/pdm/api/openapi-v1.yaml`, v1). See
+//! `workstreams/pdm/revisions/revision-state-machine.md` for the full spec.
 //!
 //! ```text
 //!   (new) -> working -> under_review -> released -> obsolete   (terminal)

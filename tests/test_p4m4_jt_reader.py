@@ -33,8 +33,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JT_DIR = os.path.join(ROOT, "crates", "oep-step", "src", "jt")
 LIB = os.path.join(ROOT, "crates", "oep-step", "src", "lib.rs")
 CORPUS = os.path.join(ROOT, "corpus", "jt")
-SOURCES = os.path.join(ROOT, "workstreams/P4-M4", "jt-import-sources.md")
-PLAN = os.path.join(ROOT, "workstreams/P4-M4", "jt-reader-plan.md")
+SOURCES = os.path.join(ROOT, "workstreams/step-interop/qif", "jt-import-sources.md")
+PLAN = os.path.join(ROOT, "workstreams/step-interop/qif", "jt-reader-plan.md")
 
 EM_DASH = "\u2014"
 CURLY = "\u201c\u201d\u2018\u2019"
@@ -161,11 +161,11 @@ def run_checks():
     present = os.listdir(CORPUS) if os.path.isdir(CORPUS) else []
     for fx in expected_fixtures:
         check(fx in present, "missing corpus fixture: %s" % fx)
-    check(os.path.isfile(SOURCES), "missing workstreams/P4-M4/jt-import-sources.md")
+    check(os.path.isfile(SOURCES), "missing workstreams/step-interop/qif/jt-import-sources.md")
 
     # 5. Plan record exists (plan-first convention) and is em-dash / curly
     #    free along with the sources file.
-    check(os.path.isfile(PLAN), "missing workstreams/P4-M4/jt-reader-plan.md")
+    check(os.path.isfile(PLAN), "missing workstreams/step-interop/qif/jt-reader-plan.md")
     for path, label in ((PLAN, "plan"), (SOURCES, "sources")):
         if os.path.isfile(path):
             text = read(path)

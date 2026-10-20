@@ -37,7 +37,7 @@ INVENTORY = os.path.join(ROOT, "corpus", "inventory.json")
 BUILDER = os.path.join(ROOT, "corpus", "tools", "build_manifest.py")
 CATPART_DIR = os.path.join(ROOT, "corpus", "data", "catpart")
 THREEDXML_DIR = os.path.join(ROOT, "corpus", "data", "3dxml")
-CGR_REGISTRY = os.path.join(ROOT, "workstreams/P1-M1", "cgr-sample-registry.json")
+CGR_REGISTRY = os.path.join(ROOT, "workstreams/format-corpus/samples", "cgr-sample-registry.json")
 
 # Real CGR copies verified by P1-M1-T01 live on the U1 dev disk (they are NOT
 # redistributable, so they live outside the repo). When present, the test

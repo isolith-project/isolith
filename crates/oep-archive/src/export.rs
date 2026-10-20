@@ -282,7 +282,7 @@ pub fn export_all(
     let retention = RetentionSnapshot {
         format: RETENTION_FORMAT.to_string(),
         version: ARCHIVE_SCHEMA_VERSION,
-        reference: "docs/P10-M3/retention-policy.md".to_string(),
+        reference: "docs/delivery/disaster-recovery/retention-policy.md".to_string(),
         defaults: true,
     };
 

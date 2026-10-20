@@ -372,7 +372,7 @@ def run_gate(args):
 
 def main():
     p = argparse.ArgumentParser(description="P9-M5-T02 GA gate")
-    p.add_argument("--report", default="workstreams/P9-M5/proof/ga-gate-p9")
+    p.add_argument("--report", default="workstreams/compute/ops/proof/ga-gate-p9")
     p.add_argument("--repo", default=".")
     p.add_argument("--fleet", required=True)
     p.add_argument("--jobs", default=None)

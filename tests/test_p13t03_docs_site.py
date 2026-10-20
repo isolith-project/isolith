@@ -20,7 +20,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "docs-site")
 MATRIX = os.path.join(SITE, "format-matrix.json")
-CHECKER = os.path.join(ROOT, "scripts", "p13t03-format-matrix-check.py")
+CHECKER = os.path.join(ROOT, "scripts", "format-matrix-check.py")
 
 SECTIONS = {
     "index.html": ("Open Engineering Platform", "getting-started.html"),

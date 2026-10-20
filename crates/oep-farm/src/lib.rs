@@ -31,7 +31,7 @@
 //!    have started) and resumes from the checkpoint's `next_item`.
 //! 4. **Byte-equivalence is the acceptance.** The drill
 //!    (`tests/checkpoint_resume_acceptance.rs`, also emitted as
-//!    `workstreams/P9-M4/proof/checkpoint-resume-proof.json` by the `oep-farm-drill`
+//!    `workstreams/compute/gpu/proof/checkpoint-resume-proof.json` by the `oep-farm-drill`
 //!    binary) runs the same long job twice: once clean to completion, once
 //!    with a worker evicted mid-job and resumed from the last checkpoint.
 //!    The final artifact bytes of both runs must be **identical, byte for

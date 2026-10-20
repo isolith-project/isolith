@@ -7,7 +7,7 @@
 //! Extracts the tessellated triangle mesh from a CGR file
 //! (`oep_cgr::mesh::extract`) and writes it as a faceted STEP B-Rep that is
 //! explicitly **marked as tessellated and NOT claimed as exact** (see
-//! `oep_cgr::step` and `docs/p2-m5-oep-cgr2step.md`).
+//! `oep_cgr::step` and `docs/cgr-to-step.md`).
 //!
 //! ## Exit codes (documented contract)
 //!

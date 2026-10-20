@@ -1,0 +1,70 @@
+{
+  "card": "P10-M2-T02",
+  "title": "Offline/air-gap install path (USB/ISO), signed, no phone-home",
+  "result": "PASS",
+  "date": "2026-10-17",
+  "host": "U1 (promaxgb10-83f1, 192.168.0.67)",
+  "method": "air-gapped target with NETWORK DELIBERATELY DISABLED",
+  "target": {
+    "execution_context": "oep-airgap-target container launched with --network none (zero network interfaces, no default route)",
+    "routes_on_target": 0,
+    "proc_net_route_entries": 0,
+    "external_reachability": "UNREACHABLE (192.168.0.101:3200 did not answer)"
+  },
+  "bundle": {
+    "file": "keelworks-offline-0.1.0.tar.gz",
+    "sha256": "b3ddd7903fa47d3eb4d8fb4c86a5901a34e7d67228257db10e9eead56b241ee6",
+    "contents": [
+      "images/keelworks_oep-pdm_airgap-proof-src.tar.gz",
+      "images/nats_2-alpine.tar.gz",
+      "MANIFEST.json (+ .sig)",
+      "SHA256SUMS (+ .sig)",
+      "oep-airgap-signing.pub.asc",
+      "compose.yaml",
+      "env.example",
+      "scripts/airgap-{install,verify,rollback,lib}.sh"
+    ],
+    "signature_verify": "PASS (detached gpg sig over bundle and MANIFEST.json)",
+    "checksum_verify": "PASS (10 files, 0 corrupt/missing)"
+  },
+  "install_steps": {
+    "verify_signature": "PASS",
+    "verify_sha256": "PASS",
+    "verify_manifest_sig": "PASS",
+    "verify_per_file_checksums": "PASS (10/10)",
+    "extract": "PASS",
+    "load_images": "PASS (docker load only, no pull, no registry)",
+    "configure": "PASS (fresh OEP_LOCAL_SECRET generated on-machine)",
+    "update_checker": "OFF by default (OEP_UPDATE_CHECK=off; no mirror, no offline bundle)",
+    "start": "PASS (docker compose up -d, internal no-egress network)",
+    "health_check": "PASS (all compose services healthy; GET /api/v1/health -> {\"status\":\"ok\",\"service\":\"oep-pdm\",\"version\":\"1.0.0\"})",
+    "rollback": "available (image snapshot taken before load; airgap-rollback.sh)"
+  },
+  "no_phone_home": {
+    "target_network": "disabled (verified 0 routes)",
+    "update_checker": "off by default (decision #11)",
+    "telemetry": "off (P0-M5-T02)",
+    "registry_reach": "none (docker load only; compose network internal: true)"
+  },
+  "online_equivalence": {
+    "health_endpoint": "GET /api/v1/health",
+    "airgap_health_result": "PASS",
+    "online_health_result": "PASS (oep-pdm started on normal networking, published 8791, same endpoint -> {\"status\":\"ok\",\"service\":\"oep-pdm\",\"version\":\"1.0.0\"})",
+    "compose_health": "same healthcheck definitions as online install"
+  },
+  "artifacts": [
+    "workstreams/delivery/airgap/air-gap-install.md",
+    "scripts/airgap/build-offline-bundle.sh",
+    "scripts/airgap/airgap-install.sh",
+    "scripts/airgap/airgap-verify.sh",
+    "scripts/airgap/airgap-rollback.sh",
+    "scripts/airgap/airgap-lib.sh",
+    "scripts/airgap/keys/oep-airgap-signing.pub.asc",
+    "scripts/airgap/Dockerfile.oep-pdm",
+    "scripts/airgap/Dockerfile.airgap-target",
+    "scripts/airgap/docker-compose.airgap.yml",
+    "workstreams/delivery/airgap/proof/airgap-proof.log",
+    "workstreams/delivery/airgap/proof/airgap-install-record.json"
+  ],
+  "note": "The one-command compose stack (P10-M1-T01) was still in flight (unmerged) while this card ran; this proof uses the real oep-pdm PDM service (built from this repo) + the real NATS bus (P9-adopted). The identical signed-bundle tooling wraps the M1-T01 stack unchanged via --images/--compose."
+}

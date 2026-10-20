@@ -13,7 +13,7 @@ per-command help index generated from command metadata:
      side byte-locks the same file against a fresh render; this file
      cross-checks the two from the text side so no single generator or editor
      can drift alone).
-  3. The accessibility checklist (workstreams/P7-M5/p7m5t02-accessibility-checklist.md)
+  3. The accessibility checklist (workstreams/modeler/quality/accessibility-checklist.md)
      covers BOTH surfaces named by the acceptance (the oep-viewer surface and
      the oep-shell workbench surface), declares a PASS/DEFERRED/N-A status for
      every item, and carries at least one PASS item per surface.
@@ -43,7 +43,7 @@ EXAMPLE = os.path.join(REPO, "crates", "oep-shell", "examples", "workbench.rs")
 THEME = os.path.join(REPO, "crates", "oep-viewer", "src", "theme.rs")
 RENDER = os.path.join(REPO, "crates", "oep-viewer", "src", "render.rs")
 HELP_INDEX = os.path.join(REPO, "docs", "re-notes", "oep-workbench-help-index.md")
-CHECKLIST = os.path.join(REPO, "workstreams/P7-M5", "p7m5t02-accessibility-checklist.md")
+CHECKLIST = os.path.join(REPO, "workstreams/modeler/quality", "accessibility-checklist.md")
 
 # The canonical workbench surface: every command a user can type, with its
 # canonical metadata. Must match crates/oep-shell/src/commands.rs exactly.

@@ -32,7 +32,7 @@ KNOWLEDGE = os.path.join(REPO, "crates", "oep-rules", "tests", "golden",
                          "kw-bracket.json")
 REPORT_GOLDEN = os.path.join(REPO, "crates", "oep-rules", "tests", "golden",
                              "bracket-report.golden.json")
-DOC = os.path.join(REPO, "workstreams/P7-M4", "rules-checks-sandbox.md")
+DOC = os.path.join(REPO, "workstreams/modeler/sketch-and-rules", "rules-checks-sandbox.md")
 CRATE_LIB = os.path.join(REPO, "crates", "oep-rules", "src", "lib.rs")
 
 E = 1e-9
@@ -57,7 +57,7 @@ def main() -> int:
     print("repo: %s" % REPO)
 
     # --- 1. artifacts -----------------------------------------------------
-    check(os.path.isfile(DOC), "documentation exists: workstreams/P7-M4/rules-checks-sandbox.md")
+    check(os.path.isfile(DOC), "documentation exists: workstreams/modeler/sketch-and-rules/rules-checks-sandbox.md")
     check(os.path.isfile(CRATE_LIB), "crate lib exists: crates/oep-rules/src/lib.rs")
     check(os.path.isfile(REAL_PART), "real part golden exists")
     check(os.path.isfile(KNOWLEDGE), "knowledge set golden exists")

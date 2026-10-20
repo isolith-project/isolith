@@ -115,7 +115,7 @@ impl Authorizer {
     /// * `env_attrs` — environment / request context attributes (may be
     ///   empty).
     ///
-    /// Evaluation order (documented in `workstreams/P8-M3/p8m3t02-rbac.md`):
+    /// Evaluation order (documented in `workstreams/pdm/identity/rbac.md`):
     ///
     /// 1. Collect the rules that match this action + subject/resource/env
     ///    attributes.

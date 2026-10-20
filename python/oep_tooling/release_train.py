@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Keelworks release-train tooling (P12-T05).
 
-Pure-stdlib CLI behind the policy in workstreams/P12/release-train.md. Never mutates git
+Pure-stdlib CLI behind the policy in workstreams/release-engineering/release-train.md. Never mutates git
 state unless a mutating subcommand is explicitly invoked.
 
 Subcommands
@@ -13,7 +13,7 @@ Subcommands
                           [--since <REF>] [--out PATH]
       Read-only: resolve <REF>, compute the frozen commit set and tree hash,
       and write the freeze manifest (default
-      workstreams/P12/freeze-manifests/<V>.json under the repo). Exit 0 on success.
+      workstreams/release-engineering/freeze-manifests/<V>.json under the repo). Exit 0 on success.
 
   release_train.py verify --repo DIR --manifest PATH
       Recompute the freeze for the recorded cut_from.sha and FAIL if the
@@ -139,7 +139,7 @@ def compute_freeze(repo, version, trunk_ref, since_ref=None):
 
 
 def _manifest_default_path(repo, version):
-    return os.path.join(repo, "workstreams/P12", "freeze-manifests", f"{version}.json")
+    return os.path.join(repo, "workstreams/release-engineering", "freeze-manifests", f"{version}.json")
 
 
 def write_manifest(manifest, path):
@@ -215,7 +215,7 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
     }
 
     steps = []
-    steps.append(f"manifest -> workstreams/P12/freeze-manifests/{info['full']}.json (write)")
+    steps.append(f"manifest -> workstreams/release-engineering/freeze-manifests/{info['full']}.json (write)")
     steps.append(f"branch  -> git branch {rel_branch} {cut['cut_from']['sha']}")
     steps.append(f"tag     -> git tag -a {tag} -m 'Keelworks {info['full']} freeze' {cut['cut_from']['sha']}")
     steps.append(f"push    -> git push canary {rel_branch}:{canary_branch} {tag}")

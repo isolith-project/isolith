@@ -10,7 +10,7 @@
 //! vendored GPL-3.0 SolveSpace tree and put an own bounded solver behind this
 //! crate's vendor-neutral seam. The engine is the damped Gauss-Newton
 //! least-squares lane from `oep-kinematics` (P7-M3-T02); the decision and
-//! consequence analysis are recorded in `workstreams/P7-M3/solver-adr.md` at the repo
+//! consequence analysis are recorded in `workstreams/modeler/assembly/solver-adr.md` at the repo
 //! root (v1.2.0). No GPL-3.0 code or dependency exists in this crate.
 //!
 //! Modules:

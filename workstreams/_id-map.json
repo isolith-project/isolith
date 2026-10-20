@@ -1,0 +1,247 @@
+{
+  "generated": "2026-10-19",
+  "map": {
+    "P0-M1": {
+      "lane": "governance",
+      "old_root": "workstreams/P0-M1",
+      "topic": "contributor-rules"
+    },
+    "P0-M2": {
+      "lane": "governance",
+      "old_root": "workstreams/P0-M2",
+      "topic": "export-and-legal"
+    },
+    "P0-M4-T03": {
+      "new": "docs/nightly-stress.md",
+      "note": "docs file",
+      "old": "docs/P0-M4-T03-nightly-stress.md"
+    },
+    "P0-M5": {
+      "lane": "governance",
+      "old_root": "workstreams/P0-M5",
+      "topic": "decisions"
+    },
+    "P1-M1": {
+      "lane": "format-corpus",
+      "old_root": "workstreams/P1-M1",
+      "topic": "samples"
+    },
+    "P1-M3": {
+      "lane": "format-corpus",
+      "old_root": "workstreams/P1-M3",
+      "topic": "reader-audit"
+    },
+    "P10-M1": {
+      "lane": "delivery",
+      "old_root": "workstreams/P10-M1",
+      "topic": "deploy"
+    },
+    "P10-M2": {
+      "lane": "delivery",
+      "old_root": "workstreams/P10-M2",
+      "topic": "airgap"
+    },
+    "P10-M3": {
+      "lane": "delivery",
+      "old_root": "docs/P10-M3",
+      "topic": "disaster-recovery"
+    },
+    "P10-M4": {
+      "lane": "delivery",
+      "old_root": "docs/P10-M4",
+      "topic": "replication"
+    },
+    "P10-M5": {
+      "lane": "delivery",
+      "old_root": "workstreams/P10-M5",
+      "topic": "update-checker"
+    },
+    "P11": {
+      "lane": "security",
+      "old_root": "workstreams/P11",
+      "topic": null
+    },
+    "P12": {
+      "lane": "release-engineering",
+      "old_root": "workstreams/P12",
+      "topic": null
+    },
+    "P13-T03": {
+      "lane": "docs-site",
+      "old_root": "workstreams/P13-T03",
+      "topic": null
+    },
+    "P4": {
+      "lane": "step-interop",
+      "old_root": "docs/P4",
+      "topic": null
+    },
+    "P4-M1": {
+      "lane": "step-interop",
+      "old_root": "workstreams/P4-M1",
+      "topic": "library-adr"
+    },
+    "P4-M2": {
+      "lane": "step-interop",
+      "old_root": "workstreams/P4-M2",
+      "topic": "pmi"
+    },
+    "P4-M4": {
+      "lane": "step-interop",
+      "old_root": "workstreams/P4-M4",
+      "topic": "qif"
+    },
+    "P5-M1": {
+      "lane": "native-reader",
+      "old_root": "workstreams/P5-M1",
+      "topic": "feasibility"
+    },
+    "P5-M4": {
+      "lane": "native-reader",
+      "old_root": "workstreams/P5-M4",
+      "topic": "feature-tree"
+    },
+    "P6-M3": {
+      "lane": "geometry-core",
+      "old_root": "workstreams/P6-M3",
+      "topic": "kernel"
+    },
+    "P6-M5": {
+      "lane": "geometry-core",
+      "old_root": "workstreams/P6-M5",
+      "topic": "viewer"
+    },
+    "P7-M1": {
+      "lane": "modeler",
+      "old_root": "workstreams/P7-M1",
+      "topic": "shell"
+    },
+    "P7-M2": {
+      "lane": "modeler",
+      "old_root": "workstreams/P7-M2",
+      "topic": "interchange"
+    },
+    "P7-M3": {
+      "lane": "modeler",
+      "old_root": "workstreams/P7-M3",
+      "topic": "assembly"
+    },
+    "P7-M4": {
+      "lane": "modeler",
+      "old_root": "workstreams/P7-M4",
+      "topic": "sketch-and-rules"
+    },
+    "P7-M5": {
+      "lane": "modeler",
+      "old_root": "workstreams/P7-M5",
+      "topic": "quality"
+    },
+    "P8-M1": {
+      "lane": "pdm",
+      "old_root": "docs/P8-M1",
+      "topic": "service"
+    },
+    "P8-M2": {
+      "lane": "pdm",
+      "old_root": "docs/P8-M2",
+      "topic": "revisions"
+    },
+    "P8-M3": {
+      "lane": "pdm",
+      "old_root": "workstreams/P8-M3",
+      "topic": "identity"
+    },
+    "P8-M4": {
+      "lane": "pdm",
+      "old_root": "docs/P8-M4",
+      "topic": "web"
+    },
+    "P8-M5": {
+      "lane": "pdm",
+      "old_root": "docs/P8-M5",
+      "topic": "sync"
+    },
+    "P8-M6": {
+      "lane": "pdm",
+      "old_root": "workstreams/P8-M6",
+      "topic": "api"
+    },
+    "P9-M1": {
+      "lane": "compute",
+      "old_root": "docs/P9-M1",
+      "topic": "spec"
+    },
+    "P9-M2": {
+      "lane": "compute",
+      "old_root": "docs/P9-M2",
+      "topic": "scheduler"
+    },
+    "P9-M3": {
+      "lane": "compute",
+      "old_root": "docs/P9-M3",
+      "topic": "workers"
+    },
+    "P9-M4": {
+      "lane": "compute",
+      "old_root": "workstreams/P9-M4",
+      "topic": "gpu"
+    },
+    "P9-M5": {
+      "lane": "compute",
+      "old_root": "workstreams/P9-M5",
+      "topic": "ops"
+    },
+    "p2-m5": {
+      "new": "docs/cgr-to-step.md",
+      "note": "docs file",
+      "old": "docs/p2-m5-oep-cgr2step.md"
+    },
+    "p3-m2": {
+      "new": "docs/3dxml-gregory-surfaces.md",
+      "note": "docs file",
+      "old": "docs/p3-m2-oep-3dxml-gregory.md"
+    },
+    "p4-m4": {
+      "new": "docs/qif-basic-cut.md",
+      "note": "docs file",
+      "old": "docs/p4-m4-oep-qif-basic-cut.md"
+    },
+    "p6-m1": {
+      "new": "docs/geometry-model-schema.md",
+      "note": "docs file",
+      "old": "docs/p6-m1-oep-geo-model-schema.md"
+    },
+    "p6-m2": {
+      "new": "docs/geometry-math.md",
+      "note": "docs file",
+      "old": "docs/p6-m2-oep-geo-math.md"
+    },
+    "p6-m3": {
+      "new": "docs/geometry-feature-graph.md",
+      "note": "docs file",
+      "old": "docs/p6-m3-oep-geo-feature-graph.md"
+    },
+    "p6-m3-t02": {
+      "new": "docs/topology-undo-redo.md",
+      "note": "docs file",
+      "old": "docs/p6-m3-t02-topology-undo-redo.md"
+    },
+    "p6-m4": {
+      "new": "docs/geometry-exporters.md",
+      "note": "docs file",
+      "old": "docs/p6-m4-oep-geo-exporters.md"
+    },
+    "p6-m5": {
+      "new": "docs/preview-viewer.md",
+      "note": "docs file",
+      "old": "docs/p6-m5-preview-viewer.md"
+    },
+    "p7-m3-t02": {
+      "new": "docs/mates-kinematics.md",
+      "note": "docs file",
+      "old": "docs/p7-m3-t02-mates-kinematics-demo.md"
+    }
+  },
+  "note": "Internal card/workstream code -> descriptive path map. Codes stay internal to the program, never used in a public surface.",
+  "schema": "keelworks.workstream-id-map.v1"
+}

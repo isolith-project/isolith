@@ -11,7 +11,7 @@
 //! metadata is a test failure by construction.
 //!
 //! Accessibility contract (rows WB-A11Y-01..05 in
-//! `workstreams/P7-M5/p7m5t02-accessibility-checklist.md`): every command is discoverable
+//! `workstreams/modeler/quality/accessibility-checklist.md`): every command is discoverable
 //! and documented, rendered help carries no ANSI color escapes (nothing is
 //! conveyed by color alone), an unknown command fails with an actionable error
 //! that names the token and points at `help`, and the index serializes to JSON

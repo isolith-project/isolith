@@ -1,4 +1,4 @@
-//! Regenerate the committed P10-M3-T02 proof under `docs/P10-M3/proof/`.
+//! Regenerate the committed P10-M3-T02 proof under `docs/delivery/disaster-recovery/proof/`.
 //!
 //! The proof is the escape-hatch acceptance on real material: a seeded P8
 //! vault -> `export-all` archive -> `verify-import` report. Both the archive
@@ -26,7 +26,7 @@ fn b64(b: &[u8]) -> String {
 }
 
 fn proof_root() -> std::path::PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("../../docs/P10-M3/proof")
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../../docs/delivery/disaster-recovery/proof")
 }
 
 fn main() {

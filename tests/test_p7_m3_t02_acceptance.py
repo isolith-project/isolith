@@ -25,7 +25,7 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CRATE = os.path.join(REPO, "crates", "oep-kinematics")
-OUT = os.path.join(REPO, "demos", "p7-m3-t02")
+OUT = os.path.join(REPO, "demos", "mates-kinematics")
 TRACE = os.path.join(OUT, "trace.json")
 MANIFEST = os.path.join(OUT, "manifest.json")
 FRAMES = os.path.join(OUT, "frames")

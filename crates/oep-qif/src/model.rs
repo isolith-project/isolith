@@ -1,6 +1,6 @@
 //! Internal model for the QIF basic cut (MBD quality data).
 //!
-//! Mirrors the IN set from `docs/p4-m4-oep-qif-basic-cut.md`: document
+//! Mirrors the IN set from `docs/qif-basic-cut.md`: document
 //! envelope, header, standards, primary linear unit, datums, datum reference
 //! frames, part identity, and characteristics (definitions + nominals).
 //!

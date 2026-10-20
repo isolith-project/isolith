@@ -2,7 +2,7 @@
 # verify-release.sh - consumer-side verification of a signed Keelworks release
 # (P11-T04). Needs ONLY public key material (no secrets): the gpg pubkey
 # committed at scripts/airgap/keys/oep-airgap-signing.pub.asc and the Ed25519
-# pubkey committed at workstreams/P11/keys/oep-update-signing.pub.
+# pubkey committed at workstreams/security/keys/oep-update-signing.pub.
 #
 # Check list (exit 0 iff ALL pass):
 #   1. every artifact has a valid detached gpg signature,
@@ -90,7 +90,7 @@ fi
 
 # 3) the update manifest must be signature-verified before we report it.
 if [ "$SKIP_BUNDLE" = "0" ] && [ -f update.bundle.json ]; then
-    PUB="$(cat "$ROOT/workstreams/P11/keys/oep-update-signing.pub" 2>/dev/null || true)"
+    PUB="$(cat "$ROOT/workstreams/security/keys/oep-update-signing.pub" 2>/dev/null || true)"
     if [ -n "$UPDATE_PUBKEY" ]; then PUB="$UPDATE_PUBKEY"; fi
     if [ -z "$PUB" ]; then
         echo "  [FAIL] update.bundle.json present but no verifying Ed25519 pubkey configured"

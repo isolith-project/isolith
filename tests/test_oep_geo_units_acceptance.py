@@ -52,7 +52,7 @@ def test_no_f32_or_f16_in_oep_geo_src():
     offenders = []
     for root, _dirs, files in os.walk(SRC_DIR):
         # P6-M4-T01 exporters are a documented, format-bound f32 boundary
-        # (glTF/STL/OBJ/PDF are float32 formats; see docs/p6-m4-oep-geo-exporters.md,
+        # (glTF/STL/OBJ/PDF are float32 formats; see docs/geometry-exporters.md,
         # "Decision: writers take slices"). The f64 discipline governs the
         # geometry kernel/model; integration (INTEGRATION-T02) scopes this audit
         # to src/*.rs outside the export/ adapter directory.

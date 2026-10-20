@@ -16,7 +16,7 @@ ride a single decoder with tolerant unknown-block handling (P2-M1-T04).
 This notebook is the COMPARISON. It consumes the byte-level facts established
 by P1-M2-T01 (`docs/re-notes/cgr-hex-notebook.md`, `python/oep_tooling/cgr_observe.py`)
 and the sample provenance/registry owned by P1-M1-T01
-(`workstreams/P1-M1/cgr-sample-registry.json`). The drift tool is
+(`workstreams/format-corpus/samples/cgr-sample-registry.json`). The drift tool is
 `python/oep_tooling/cgr_drift.py`; its acceptance test is
 `tests/test_cgr_version_drift_acceptance.py` (TDD: written first, RED, then
 GREEN on real material). This notebook is stored as a fellow RE note under

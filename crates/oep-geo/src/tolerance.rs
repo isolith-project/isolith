@@ -3,7 +3,7 @@
 //! This is the single epsilon policy that later geometry cards reuse:
 //! P6-M2-T03 (geometric predicates), P6-M2-T02 (NURBS evaluation) and the
 //! P6-M4 exporters. The model is documented in full in
-//! `docs/p6-m1-units-and-tolerances.md`; the essentials:
+//! `docs/units-and-tolerances.md`; the essentials:
 //!
 //! - **Absolute floor + scale-invariant relative term.** A comparison
 //!   `a ≈ b` holds when `|a - b| <= linear_abs + relative·max(|a|,|b|)`.

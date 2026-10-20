@@ -167,7 +167,7 @@ fn run_retention(args: &[String]) -> Result<(), String> {
     let path = dir.join("retention-policy.json");
     std::fs::write(&path, json).map_err(|e| format!("write {}: {e}", path.display()))?;
     println!("default retention policy written: {}", path.display());
-    println!("  (doc: docs/P10-M3/retention-policy.md -- edit the JSON to override;");
+    println!("  (doc: docs/delivery/disaster-recovery/retention-policy.md -- edit the JSON to override;");
     println!("   deletion is NEVER automatic, even after an override)");
     Ok(())
 }

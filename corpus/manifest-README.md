@@ -72,7 +72,7 @@ test fails if a committed output no longer matches a fresh build.
 
 ## Provenance
 
-Inputs folded here from sibling deliveries: `workstreams/P1-M1/cgr-sample-registry.json`
+Inputs folded here from sibling deliveries: `workstreams/format-corpus/samples/cgr-sample-registry.json`
 (P1-M1-T01), `corpus/catpart-samples.json` + `corpus/catpart-source-full-registry.json`
 (P1-M1-T03), `corpus/tools/3dxml-catalog.json` (P1-M1-T02, from its catalog +
 real-material rep inspection), `corpus/data/*` real bytes, and the box.stl

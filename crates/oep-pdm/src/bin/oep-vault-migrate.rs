@@ -4,7 +4,7 @@
 //! `CATProduct` / `CATDrawing` / aux files, organized into nested folders with
 //! no PDM metadata) into an `oep-pdm` vault **with metadata mapping**, not a
 //! dumb file copy. The mapping is exactly the one anticipated and defined by
-//! the P8-M1-T02 schema (`docs/P8-M1/vault-object-model.md`, modules
+//! the P8-M1-T02 schema (`docs/pdm/service/vault-object-model.md`, modules
 //! `oep_pdm::legacy` / `oep_pdm::blobstore` / `oep_pdm::model`):
 //!
 //! - every **directory** becomes a `folder` [`oep_pdm::model::Context`] nested

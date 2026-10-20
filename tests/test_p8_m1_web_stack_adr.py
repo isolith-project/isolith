@@ -2,20 +2,20 @@
 """Acceptance test for Keelworks P8-M1-T01: oep-pdm web-stack decision.
 
 Written FIRST (TDD), mirroring the renderer-backend ADR test convention. The
-decision record at workstreams/P8-M1/web-stack-adr.md must make this test pass. It
+decision record at workstreams/pdm/service/web-stack-adr.md must make this test pass. It
 verifies the real material, not mocks:
   decision      => Rust axum as the oep-pdm service web stack (default per
                    card P8-M1-T01; FastAPI weighed and rejected for core with
                    reasons, kept as tooling language)
   license       => AGPL-3.0 for the PDM server (program decision #3); axum
                    (MIT OR Apache-2.0) assessed as license-clean under it
-  contract      => the workstreams/P8-M6/openapi-v1.yaml contract (inherited from
+  contract      => the workstreams/pdm/api/openapi-v1.yaml contract (inherited from
                    P7-M2-T02) is what the skeleton must satisfy; the stub
                    becomes the contract test, served by the real service
   real material => the committed axum service skeleton (service.rs + the
                    oep-pdm binary), the pinned axum dependency in the crate
                    manifest, and the recorded health proof
-                   (workstreams/P8-M1/proof/health.json) captured from a live run
+                   (workstreams/pdm/service/proof/health.json) captured from a live run
   guardrails    => version pin, escape hatch, contract test gate, library
                    surface-language rule (no em dashes, no curly quotes)
 
@@ -28,12 +28,12 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "workstreams/P8-M1", "web-stack-adr.md")
-SPEC = os.path.join(ROOT, "workstreams/P8-M6", "openapi-v1.yaml")
+ADR = os.path.join(ROOT, "workstreams/pdm/service", "web-stack-adr.md")
+SPEC = os.path.join(ROOT, "workstreams/pdm/api", "openapi-v1.yaml")
 SERVICE_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "service.rs")
 BIN_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "bin", "oep-pdm.rs")
 CARGO = os.path.join(ROOT, "crates", "oep-pdm", "Cargo.toml")
-PROOF = os.path.join(ROOT, "workstreams/P8-M1", "proof", "health.json")
+PROOF = os.path.join(ROOT, "workstreams/pdm/service", "proof", "health.json")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -83,7 +83,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: workstreams/P8-M1/web-stack-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/pdm/service/web-stack-adr.md")
     if not os.path.isfile(ADR):
         return failures
 
@@ -199,7 +199,7 @@ def run_checks():
               "crate manifest must declare a pinned axum dependency")
         check("tokio" in cargo, "crate manifest must declare tokio")
     check(os.path.isfile(SPEC),
-          "missing contract spec: workstreams/P8-M6/openapi-v1.yaml")
+          "missing contract spec: workstreams/pdm/api/openapi-v1.yaml")
     if os.path.isfile(SPEC):
         spec = open(SPEC, encoding="utf-8").read()
         check("openapi: 3" in spec, "contract spec must be OpenAPI 3.x")
@@ -208,7 +208,7 @@ def run_checks():
 
     # 10. Health proof: real-material record of a live GET /api/v1/health.
     proof_ok = os.path.isfile(PROOF)
-    check(proof_ok, "missing health proof: workstreams/P8-M1/proof/health.json")
+    check(proof_ok, "missing health proof: workstreams/pdm/service/proof/health.json")
     if proof_ok:
         try:
             with open(PROOF, encoding="utf-8") as fh:
@@ -226,8 +226,8 @@ def run_checks():
 
     # 11. Cross-references: card + lane anchors.
     check("P8-M1-T01" in text, "must cite its own card P8-M1-T01")
-    check("workstreams/P8-M6" in text, "must tie to the REST API v1 milestone P8-M6")
-    check("workstreams/P7-M2" in text or "P7-M2-T02" in text,
+    check("workstreams/pdm/api" in text, "must tie to the REST API v1 milestone P8-M6")
+    check("workstreams/modeler/interchange" in text or "P7-M2-T02" in text,
           "must reference the inherited stub card P7-M2-T02")
     check("oep-pdm" in low, "must name the service crate oep-pdm")
 

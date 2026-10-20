@@ -32,7 +32,7 @@ impl RoleMatrix {
         }
     }
 
-    /// The default staff matrix documented in `workstreams/P8-M3/p8m3t02-rbac.md`.
+    /// The default staff matrix documented in `workstreams/pdm/identity/rbac.md`.
     ///
     /// * Designer: read + author items/revisions + submit for review.
     /// * Reviewer: read + review.

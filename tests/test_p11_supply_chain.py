@@ -8,12 +8,12 @@ machine-checks committed real material, not mocks:
                      verifiable (registry+checksum, or git pinned to an exact
                      rev); the rust-toolchain pin names a concrete channel
   reproducible   => scripts/supply-chain/reproducible-build.sh exists and is
-                     executable; a recorded workstreams/P11/proof/reproducible-build-*
+                     executable; a recorded workstreams/security/proof/reproducible-build-*
                      proof exists with identical=true
   gate           => scripts/supply-chain/verify-lockpin.sh exists/executable;
                      .gitea/workflows/supply-chain.yaml references both and
                      gates reproducible-build to the release branch line
-  doctrine doc   => workstreams/P11/supply-chain.md has the mandated sections (pinned
+  doctrine doc   => workstreams/security/supply-chain.md has the mandated sections (pinned
                      dependency set, reproducible build, tolerated
                      nondeterminism list, signed artifacts seam, CI
                      enforcement) and its front matter claims this card
@@ -30,7 +30,7 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOC = os.path.join(ROOT, "workstreams/P11", "supply-chain.md")
+DOC = os.path.join(ROOT, "workstreams/security", "supply-chain.md")
 REPRO_SH = os.path.join(ROOT, "scripts", "supply-chain", "reproducible-build.sh")
 LOCKPIN_SH = os.path.join(ROOT, "scripts", "supply-chain", "verify-lockpin.sh")
 WORKFLOW = os.path.join(ROOT, ".gitea", "workflows", "supply-chain.yaml")
@@ -64,7 +64,7 @@ def run_checks():
     print("=" * 66)
 
     # --- Doctrine doc -------------------------------------------------------
-    check(os.path.isfile(DOC), "missing: workstreams/P11/supply-chain.md")
+    check(os.path.isfile(DOC), "missing: workstreams/security/supply-chain.md")
     if os.path.isfile(DOC):
         text = read(DOC)
         check("P11-T06" in text, "doc does not claim P11-T06")
@@ -132,13 +132,13 @@ def run_checks():
     # --- Reproducible build ----------------------------------------------------
     check(os.path.isfile(REPRO_SH) and os.access(REPRO_SH, os.X_OK),
           "reproducible-build.sh missing or not executable")
-    proof_dir = os.path.join(ROOT, "workstreams/P11", "proof")
+    proof_dir = os.path.join(ROOT, "workstreams/security", "proof")
     proofs = []
     if os.path.isdir(proof_dir):
         proofs = [f for f in os.listdir(proof_dir)
                   if f.startswith("reproducible-build-") and f.endswith(".json")]
     check(len(proofs) >= 1,
-          "no workstreams/P11/proof/reproducible-build-*.json proof recorded")
+          "no workstreams/security/proof/reproducible-build-*.json proof recorded")
     for pf in proofs:
         try:
             with open(os.path.join(proof_dir, pf), encoding="utf-8") as fh:

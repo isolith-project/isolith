@@ -8,26 +8,26 @@ its recorded budget in seconds, verified with real per-op measured numbers.
 
 Written FIRST (TDD). The committed velocity pack must make this test pass:
 
-  catalog  => workstreams/P7-M5/velocity/ops.json documents exactly 30 common operations
+  catalog  => workstreams/modeler/quality/velocity/ops.json documents exactly 30 common operations
               (id, category, description, cli, expected, budget_s) covering:
               discovery, STEP load, 3DXML load, modern-CGR load, PDM
               lifecycle, interchange save lanes, and error paths
-  harness  => workstreams/P7-M5/velocity/run_velocity.py can build the workbench binary
+  harness  => workstreams/modeler/quality/velocity/run_velocity.py can build the workbench binary
               and run the 30-op catalog, resolving real corpus via the
               OEP_*_SAMPLES env vars the crates already use, SKIPping legs
               whose corpus is absent (clean-room: binaries never committed)
-  measured => workstreams/P7-M5/velocity/report-velocity.json records ONE number per op
+  measured => workstreams/modeler/quality/velocity/report-velocity.json records ONE number per op
               from a real wall-clock run of the built binary on U1 (the
               reference host), plus host/provenance fields
   budget   => every op's measured mean_seconds is > 0 and <= its budget_s;
               discovery/PDM/save-lane/error ops <=  1.0 s, loads <= 5.0 s,
               the large-assembly load (FM1_satellite) <= 10.0 s
-  regression => workstreams/P7-M5/velocity/baseline-velocity.json is the committed
-              baseline; workstreams/P7-M5/velocity/compare_velocity.py re-runs the
+  regression => workstreams/modeler/quality/velocity/baseline-velocity.json is the committed
+              baseline; workstreams/modeler/quality/velocity/compare_velocity.py re-runs the
               harness and FAILS on (a) any op over its hard budget or
               (b) any op whose new mean exceeds its baseline mean by more
               than the tolerance factor (regression tracker, exit code 1)
-  writeup  => workstreams/P7-M5/power-user-velocity-budget.md documents the 30 ops, the
+  writeup  => workstreams/modeler/quality/power-user-velocity-budget.md documents the 30 ops, the
               budget, the measured numbers, and the regression policy
 
 Plus the program surface-language rule (no em dashes, no curly quotes) on the
@@ -44,13 +44,13 @@ import re
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VEL = os.path.join(REPO, "workstreams/P7-M5", "velocity")
+VEL = os.path.join(REPO, "workstreams/modeler/quality", "velocity")
 OPS_JSON = os.path.join(VEL, "ops.json")
 HARNESS = os.path.join(VEL, "run_velocity.py")
 COMPARE = os.path.join(VEL, "compare_velocity.py")
 REPORT_JSON = os.path.join(VEL, "report-velocity.json")
 BASELINE_JSON = os.path.join(VEL, "baseline-velocity.json")
-WRITEUP = os.path.join(REPO, "workstreams/P7-M5", "power-user-velocity-budget.md")
+WRITEUP = os.path.join(REPO, "workstreams/modeler/quality", "power-user-velocity-budget.md")
 
 NUM_OPS = 30
 EM_DASH = "\u2014"
@@ -109,7 +109,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. Catalog: exactly 30 documented operations.
-    check(os.path.isfile(OPS_JSON), "missing catalog: workstreams/P7-M5/velocity/ops.json")
+    check(os.path.isfile(OPS_JSON), "missing catalog: workstreams/modeler/quality/velocity/ops.json")
     ops = []
     if os.path.isfile(OPS_JSON):
         try:
@@ -181,7 +181,7 @@ def run_checks():
         check("TOLERANCE" in c or "tolerance" in c, "comparator must use the tolerance factor")
 
     # 5. Versioned writeup: ops, budget, measurement, regression policy.
-    check(os.path.isfile(WRITEUP), "missing writeup: workstreams/P7-M5/power-user-velocity-budget.md")
+    check(os.path.isfile(WRITEUP), "missing writeup: workstreams/modeler/quality/power-user-velocity-budget.md")
     if os.path.isfile(WRITEUP):
         md = read(WRITEUP)
         mdl = md.lower()

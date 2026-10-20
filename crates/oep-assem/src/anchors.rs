@@ -33,7 +33,7 @@ impl Anchor {
 
     /// True when the anchor direction is along the part's local Z axis
     /// (plus or minus). Only such anchors may serve as orientation
-    /// references for a *moving* instance (see `workstreams/P7-M3/solver-adr.md`,
+    /// references for a *moving* instance (see `workstreams/modeler/assembly/solver-adr.md`,
     /// section "Workbench anchor model").
     pub fn is_z_axis(&self) -> bool {
         let n = &self.normal;

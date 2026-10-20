@@ -20,7 +20,7 @@
 //! Nothing here depends on a vendor's semantics or product; it is our own
 //! identity model built to the program's sovereignty doctrine.
 //!
-//! Integration points: `workstreams/P8-M3/p8m3t01-identity-and-passport.md`.
+//! Integration points: `workstreams/pdm/identity/identity-and-passport.md`.
 
 pub mod account;
 pub mod config;

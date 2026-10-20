@@ -1,6 +1,6 @@
 //! The adopted-OSS-solver seam: solve a [`Sketch`] with a [`VariableSet`].
 //!
-//! The P7-M1 shell decision and this card's solver ADR (`workstreams/P7-M4/sketch-solver-adr.md`)
+//! The P7-M1 shell decision and this card's solver ADR (`workstreams/modeler/sketch-and-rules/sketch-solver-adr.md`)
 //! mandate "adopt an OSS solver, do not rebuild". This module is the ONLY
 //! place the adopted solver appears: the public function [`solve_sketch`] and
 //! its return type [`SolveOutcome`] are our own types, and nothing solver-

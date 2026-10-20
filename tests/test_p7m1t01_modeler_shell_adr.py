@@ -2,7 +2,7 @@
 """Acceptance test for Keelworks P7-M1-T01: open modeler shell eval (keep/acquire
 memo). Decides the architectural fork P7-M2 through P7-M5 depend on.
 
-Written FIRST (TDD). The memo at workstreams/P7-M1/open-modeler-shell-eval-memo.md must make
+Written FIRST (TDD). The memo at workstreams/modeler/shell/open-modeler-shell-eval-memo.md must make
 this test pass. It verifies the real material, not mocks:
   decision   => the card question is answered with a single recommendation, and
                 all three candidates are weighed: FreeCAD (acquire), the CADCraft
@@ -26,8 +26,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEMO = os.path.join(ROOT, "workstreams/P7-M1", "open-modeler-shell-eval-memo.md")
-SOURCES = os.path.join(ROOT, "workstreams/P7-M1", "open-modeler-shell-sources.md")
+MEMO = os.path.join(ROOT, "workstreams/modeler/shell", "open-modeler-shell-eval-memo.md")
+SOURCES = os.path.join(ROOT, "workstreams/modeler/shell", "open-modeler-shell-sources.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -78,8 +78,8 @@ def run_checks():
     print("=" * 66)
 
     # 1. The memo and evidence file exist.
-    check(os.path.isfile(MEMO), "missing: workstreams/P7-M1/open-modeler-shell-eval-memo.md")
-    check(os.path.isfile(SOURCES), "missing: workstreams/P7-M1/open-modeler-shell-sources.md")
+    check(os.path.isfile(MEMO), "missing: workstreams/modeler/shell/open-modeler-shell-eval-memo.md")
+    check(os.path.isfile(SOURCES), "missing: workstreams/modeler/shell/open-modeler-shell-sources.md")
     if not os.path.isfile(MEMO):
         return failures
     text = read(MEMO)

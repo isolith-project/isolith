@@ -1,7 +1,7 @@
 # Keelworks air-gap proof stack — real components at this commit.
 # PDM service (oep-pdm, built from repo source by the air-gap lane's own
 # Dockerfile) + NATS message bus (the P9-adopted self-hosted bus,
-# workstreams/P9-M1/T02 message-bus-adr.md). Used both as the bundle content AND as the
+# workstreams/compute/spec/T02 message-bus-adr.md). Used both as the bundle content AND as the
 # online-equivalent stack the air-gap install must match health-for-health.
 #
 # When the P10-M1-T01 one-command compose stack lands (unmerged as of this

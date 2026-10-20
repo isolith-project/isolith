@@ -91,7 +91,7 @@ impl PartContext {
 
     /// Resolve a `part.*` member path to a value, or a typed error.
     ///
-    /// Supported shapes (documented in `workstreams/P7-M4/rules-checks-sandbox.md`):
+    /// Supported shapes (documented in `workstreams/modeler/sketch-and-rules/rules-checks-sandbox.md`):
     /// - `part.name` -> string
     /// - `part.part_number` -> string (error when the part has none)
     /// - `part.bbox.width | length | depth` -> number

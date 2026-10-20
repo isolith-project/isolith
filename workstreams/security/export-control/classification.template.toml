@@ -1,0 +1,43 @@
+# Keelworks per-release export-control classification file (P11-T05).
+#
+# This is the FORM (P0-M2-T04 recommendation 4): copy it to
+#   workstreams/security/export-control/<V>.classification.toml
+# for each release version <V>, fill in the slots, and commit it BEFORE the
+# freeze tag is pushed. The release pipeline refuses to proceed without it.
+#
+# Honest default for a Keelworks open-source tooling release:
+#   UNCLASSIFIED, NOT subject to ITAR, NOT subject to the EAR as published
+#   open-source software (15 CFR 734.3(b)(3) + 734.7(a)), no ECCN, no
+#   customer/geometry/payload content. See P0-M2-T04 for the full posture.
+#
+# The gate (python/oep_tooling/export_control_gate.py) fails the release if
+# any of these is violated: status != UNCLASSIFIED, any *.subject = true,
+# any restricted_content.* = true, an empty data_locality, or a release
+# field that does not match the version being released.
+
+release = "<V>"                 # exact version, e.g. 2027.1.0-rc1
+train = "YYYY.N"                # release train this version belongs to, e.g. 2027.1
+classification_date = "YYYY-MM-DD"
+
+[classification]
+status = "UNCLASSIFIED"         # gate-passing value; anything else flags the release
+summary = "General-engineering open-source software release: not a defense article, not ITAR technical data, not EAR-controlled."
+
+[classification.itar]
+subject = false                 # false = NOT a USML defense article / NOT ITAR technical data (22 CFR 120.33(a), 120.34)
+
+[classification.ear]
+subject = false                 # false = NOT subject to the EAR (published OSS, 15 CFR 734.3(b)(3) + 734.7)
+eccn = "NONE"                   # not on the CCL; NONE | EAR99 | <actual ECCN only if ever flagged>
+enc_note = "published-software carve-out (15 CFR 734.7(b)); no closed binary (5D992.c mass-market ENC analysis N/A)"
+firearm_cam_backstop = "no CAM/G-code/AMF content in this release (15 CFR 734.7(c) N/A)"
+
+[restricted_content]
+contains_itar_technical_data = false
+contains_eccn_controlled_content = false
+contains_customer_data = false          # data-locality assertion
+data_locality = "Release bundles tool source + built binaries only; no customer CAD/geometry/PMI/payload content."
+
+[governance]
+basis = "P0-M2-T04 export-control memo v1.0 (2026-10-15)"
+prepared_by = "Keelworks P11 security lane"

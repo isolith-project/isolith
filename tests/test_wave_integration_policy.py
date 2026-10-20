@@ -24,7 +24,7 @@ import sys
 import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-POLICY = os.path.join(ROOT, "workstreams/P12", "wave-integration-and-checkpoint-policy.md")
+POLICY = os.path.join(ROOT, "workstreams/release-engineering", "wave-integration-and-checkpoint-policy.md")
 TOOL = os.path.join(ROOT, "python", "oep_tooling", "wave_checkpoint.py")
 
 EM_DASH = "\u2014"

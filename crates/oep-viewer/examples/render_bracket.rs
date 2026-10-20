@@ -5,12 +5,12 @@
 //! viewer scene, frames the orbit camera, renders the full assembly and a
 //! clip-plane variant with the reference software renderer, and writes the
 //! two proof PNGs the acceptance test requires:
-//!   workstreams/P6-M5/proof/preview-full.png
-//!   workstreams/P6-M5/proof/preview-clipped.png
+//!   workstreams/geometry-core/viewer/proof/preview-full.png
+//!   workstreams/geometry-core/viewer/proof/preview-clipped.png
 //!
 //! Run:  cargo run -p oep-viewer --example render_bracket
 //! Output path is resolved relative to the crate manifest (two levels up from
-//! crates/oep-viewer => the repo root, then workstreams/P6-M5/proof/).
+//! crates/oep-viewer => the repo root, then workstreams/geometry-core/viewer/proof/).
 
 use std::fs;
 use std::path::PathBuf;

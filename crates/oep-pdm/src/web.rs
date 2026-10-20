@@ -2,7 +2,7 @@
 //!
 //! Serves the approval UI (list, create, submit, comment, decide) over a
 //! tiny HTTP/1.1 server on real sockets -- the same std-only transport
-//! posture the P7 stub used before axum was ratified (workstreams/P8-M1/web-stack-adr.md
+//! posture the P7 stub used before axum was ratified (workstreams/pdm/service/web-stack-adr.md
 //! keeps the std-only seam for tooling and contract-test clients). Because
 //! this card lands in parallel with the axum service skeleton (P8-M1-T01),
 //! it deliberately carries no web framework dependency: the [`ApprovalBoard`]
@@ -14,7 +14,7 @@
 //! Forms carry `by` (principal) + `role` (one of the P8-M3-T02 role names)
 //! until the P8-M3-T01 identity layer binds real sessions; the board denies
 //! anything the role matrix does not grant (default-deny). See
-//! `workstreams/P8-M4/approval-flows.md`.
+//! `workstreams/pdm/web/approval-flows.md`.
 //!
 //! Routes (all under `/approval`):
 //!

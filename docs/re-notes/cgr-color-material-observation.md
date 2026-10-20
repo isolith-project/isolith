@@ -34,7 +34,7 @@ side: the parse plus the `materials`-array emitter. Downstream cards consume
 | Era | CATIA V5 R19-era doc tree (2008-2009) |
 | Size | 176128 bytes (0x1000-aligned) |
 | sha256 | `43cc0cb474b5fe10a4d0bf1b8c61f48d952a8bba849aa8b116e12b490d7dcbd6` |
-| Registry | P1-M1-T01 `workstreams/P1-M1/cgr-sample-registry.json` id `dassault-dmu-space-analysis-valve` |
+| Registry | P1-M1-T01 `workstreams/format-corpus/samples/cgr-sample-registry.json` id `dassault-dmu-space-analysis-valve` |
 
 Clean-room rule (board.program.json): the proprietary binary is NEVER
 committed. The repo records observed facts (this note + constants in

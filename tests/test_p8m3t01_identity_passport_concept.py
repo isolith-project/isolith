@@ -3,11 +3,11 @@
 
 This test drives the acceptance from the other side of the fence:
 
-1. The identity + passport DOC (workstreams/P8-M3/p8m3t01-identity-and-passport.md)
+1. The identity + passport DOC (workstreams/pdm/identity/identity-and-passport.md)
    must exist, be versioned, and lock the sovereignty defaults (OIDC off by
    default, local accounts on) plus the clean-room boundary (our own concept,
    no vendor product/semantics). The doc is the durable decision record, like
-   workstreams/P0-M5/telemetry-decision.md.
+   workstreams/governance/decisions/telemetry-decision.md.
 
 2. An INDEPENDENT re-parse of the stored secret material: the Rust
    lifecycle test proves secrets are stored as `$argon2id$` PHC strings; this
@@ -26,7 +26,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOC = os.path.join(ROOT, "workstreams/P8-M3", "p8m3t01-identity-and-passport.md")
+DOC = os.path.join(ROOT, "workstreams/pdm/identity", "p8m3t01-identity-and-passport.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose

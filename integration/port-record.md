@@ -40,7 +40,7 @@ this file is the human-readable summary.
   its tests re-pointed. Main's VaultStore untouched.
 - **PR 74 f64 audit**: the P6-M1-T03 "no f32/f16 anywhere" audit was scoped to exclude the
   format-bound `export/` adapter dir (glTF/STL/OBJ/PDF are float32 formats; documented in
-  docs/p6-m4-oep-geo-exporters.md).
+  docs/geometry-exporters.md).
 
 ## New crates registered in the workspace
 

@@ -3,7 +3,7 @@
 //! On/off tolerance tests, point-to-primitive distances, and containment tests
 //! over [`Point`] = `[f64; 3]`.
 //!
-//! Design decisions (see `docs/p6-m2-oep-geo-predicates.md` and the PR body):
+//! Design decisions (see `docs/geometry-predicates.md` and the PR body):
 //!
 //! - **`[f64;3]` points, NOT `math::Vec3`.** The P6-M2-T01 math branch is
 //!   unmerged; consuming its `Vec3` here would drag a branch dependency into

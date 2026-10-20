@@ -29,7 +29,7 @@ APPROVAL_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "approval.rs")
 WEB_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "web.rs")
 FLOW_TEST = os.path.join(ROOT, "crates", "oep-pdm", "tests", "approval_flows.rs")
 WEB_TEST = os.path.join(ROOT, "crates", "oep-pdm", "tests", "approval_web_flows.rs")
-NOTE = os.path.join(ROOT, "workstreams/P8-M4", "approval-flows.md")
+NOTE = os.path.join(ROOT, "workstreams/pdm/web", "approval-flows.md")
 
 failures = []
 
@@ -49,7 +49,7 @@ def main():
     check(os.path.exists(WEB_SRC), "web.rs exists")
     check(os.path.exists(FLOW_TEST), "approval_flows.rs acceptance exists")
     check(os.path.exists(WEB_TEST), "approval_web_flows.rs end-to-end exists")
-    check(os.path.exists(NOTE), "workstreams/P8-M4/approval-flows.md exists")
+    check(os.path.exists(NOTE), "workstreams/pdm/web/approval-flows.md exists")
 
     approval = read(APPROVAL_SRC) if os.path.exists(APPROVAL_SRC) else ""
     check("pub struct ApprovalBoard" in approval, "ApprovalBoard defined")

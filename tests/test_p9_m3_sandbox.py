@@ -15,7 +15,7 @@ additionally unit-verified by simulating the exact BPF instruction stream, so
 the security property is covered in both postures.
 
 "Done" for P9-M3-T03 means this test passes against the real tree AND the
-sandbox suite it drives is green (see workstreams/P9-M3/sandbox.md for the
+sandbox suite it drives is green (see workstreams/compute/workers/sandbox.md for the
 verification record).
 """
 import os

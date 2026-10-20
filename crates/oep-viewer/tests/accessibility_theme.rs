@@ -1,7 +1,7 @@
 //! P7-M5-T02: accessibility on the viewer surface (oep-viewer), measured on
 //! the REAL committed golden model.
 //!
-//! Each test maps to a row in workstreams/P7-M5/p7m5t02-accessibility-checklist.md:
+//! Each test maps to a row in workstreams/modeler/quality/accessibility-checklist.md:
 //!
 //! - VW-A11Y-01 structural identity without vision: pick returns the full
 //!   structured identity (part/body/instance) with no pixel/color reading

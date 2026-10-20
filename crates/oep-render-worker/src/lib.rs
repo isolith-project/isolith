@@ -3,7 +3,7 @@
 //! The P9 compute lane's first worker function (master plan P9-M3-T01):
 //! a headless renderer that turns a real `oep-geo` model into an image
 //! artifact, built on the P6-M5-T01 renderer decision (prereq t_cfbc5f03,
-//! ADR `workstreams/P6-M5/renderer-backend-wgpu-adr.md`). Per the ADR's clean seam, the
+//! ADR `workstreams/geometry-core/viewer/renderer-backend-wgpu-adr.md`). Per the ADR's clean seam, the
 //! worker consumes the [`oep_viewer`] scene/render surface and never sees
 //! wgpu/WGSL; today that surface is the deterministic CPU reference
 //! rasterizer (the ADR's documented escape hatch), so this worker renders

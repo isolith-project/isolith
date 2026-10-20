@@ -1,7 +1,7 @@
 //! P7-M3-T02 demo binary: solve and record the crank-slider mechanism.
 //!
 //! Usage: `oep-kinematics-demo [outdir] [frames]`
-//!   - `outdir`   output directory (default `demos/p7-m3-t02`)
+//!   - `outdir`   output directory (default `demos/mates-kinematics`)
 //!   - `frames`   number of animation frames (default 90, one crank turn)
 //!
 //! Produces:
@@ -10,7 +10,7 @@
 //!   `outdir/frames/*.ppm`     rendered frames (own software renderer, PPM P6)
 //!
 //! The PPM frames are packaged into a playable GIF/MP4 by the recording
-//! script `scripts/p7-m3-t02-record.sh` (ffmpeg on the recording host; not a
+//! script `scripts/record.sh` (ffmpeg on the recording host; not a
 //! crate dependency).
 
 use oep_kinematics::demo::{self, DemoResult};
@@ -89,7 +89,7 @@ fn main() {
     let outdir = args
         .get(1)
         .cloned()
-        .unwrap_or_else(|| "demos/p7-m3-t02".to_string());
+        .unwrap_or_else(|| "demos/mates-kinematics".to_string());
     let frames: usize = parse("frames", &args.get(2).cloned(), 90_usize);
 
     println!("P7-M3-T02 mates/kinematics demo: crank-slider fixture");

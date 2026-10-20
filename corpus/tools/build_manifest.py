@@ -14,7 +14,7 @@ Inputs (single source of truth; derived data is never trusted as-is):
   corpus/catpart-samples.json            (P1-M1-T03)   10 repo-backed MIT parts
   corpus/catpart-source-full-registry.json (P1-M1-T03) 121 object-store MIT parts
   corpus/tools/3dxml-catalog.json        (P1-M1-T02)   8 samples (6 committed)
-  workstreams/P1-M1/cgr-sample-registry.json         (P1-M1-T01)   11 reference-only CGRs
+  workstreams/format-corpus/samples/cgr-sample-registry.json         (P1-M1-T01)   11 reference-only CGRs
   corpus/data/* real bytes               size + sha256 computed HERE
 
 Invariant: a repo-backed entry whose real bytes disagree with its registry hash
@@ -212,7 +212,7 @@ def build():
                    "P1-M1-T05."),
         "geometry_classes": "|".join(GEOMETRY_CLASSES),
         "inputs": [
-            "workstreams/P1-M1/cgr-sample-registry.json (P1-M1-T01)",
+            "workstreams/format-corpus/samples/cgr-sample-registry.json (P1-M1-T01)",
             "corpus/catpart-samples.json + corpus/catpart-source-full-registry.json (P1-M1-T03)",
             "corpus/tools/3dxml-catalog.json (P1-M1-T02)",
             "corpus/data/ real bytes (size+sha256 computed here)",
@@ -226,7 +226,7 @@ def build():
     manifest["entries"] = entries
 
     # --- reference-only inventory --------------------------------------
-    cgr = load(os.path.join(ROOT, "workstreams/P1-M1", "cgr-sample-registry.json"))
+    cgr = load(os.path.join(ROOT, "workstreams/format-corpus/samples", "cgr-sample-registry.json"))
     env_cache = os.environ.get("CGR_CACHE_DIR")
     if env_cache:
         cgr_cache_dirs = [env_cache]

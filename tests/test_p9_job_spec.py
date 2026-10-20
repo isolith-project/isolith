@@ -3,7 +3,7 @@
 
 Pure stdlib. Runs under `pytest -q` and directly. Checks four things:
 
-1. The committed JSON Schema (docs/P9-M1/job-spec-v1.schema.json) uses ONLY
+1. The committed JSON Schema (docs/compute/spec/job-spec-v1.schema.json) uses ONLY
    the documented self-contained subset (type/properties/required/items/enum/
    const/pattern/oneOf/minimum/maximum/minLength/...) that this test can
    validate with no external deps -- an unknown keyword fails the run.
@@ -23,10 +23,10 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SCHEMA_PATH = os.path.join(REPO, "docs", "P9-M1", "job-spec-v1.schema.json")
+SCHEMA_PATH = os.path.join(REPO, "docs", "compute", "spec", "job-spec-v1.schema.json")
 EXAMPLES = [
-    os.path.join(REPO, "docs", "P9-M1", "examples", "render-job.json"),
-    os.path.join(REPO, "docs", "P9-M1", "examples", "convert-job.json"),
+    os.path.join(REPO, "docs", "compute", "spec", "examples", "render-job.json"),
+    os.path.join(REPO, "docs", "compute", "spec", "examples", "convert-job.json"),
 ]
 SPEC_RS = os.path.join(REPO, "crates", "oep-job", "src", "spec.rs")
 

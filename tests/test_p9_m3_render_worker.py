@@ -46,7 +46,7 @@ WORKER = os.path.join(ROOT, "crates", "oep-render-worker")
 SRC = os.path.join(WORKER, "src")
 GOLDEN = os.path.join(ROOT, "crates", "oep-geo", "tests", "golden",
                       "example-bracket.oepgeo.json")
-PROOF_DIR = os.path.join(ROOT, "workstreams/P9-M3", "proof")
+PROOF_DIR = os.path.join(ROOT, "workstreams/compute/workers", "proof")
 PROOF_LOW = os.path.join(PROOF_DIR, "render-worker-640x480-low.png")
 PROOF_HIGH = os.path.join(PROOF_DIR, "render-worker-640x480-high.png")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"

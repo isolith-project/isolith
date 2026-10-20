@@ -17,7 +17,7 @@
 //! `sRGB -> linear` per the spec.
 //!
 //! Accessibility checklist rows: VW-A11Y-04 (contrast floor) and
-//! VW-A11Y-06 (single source) in `workstreams/P7-M5/p7m5t02-accessibility-checklist.md`.
+//! VW-A11Y-06 (single source) in `workstreams/modeler/quality/accessibility-checklist.md`.
 
 /// Theme background color (dark neutral RGB, opaque).
 pub const BACKGROUND_RGB: [u8; 3] = [28, 30, 34];

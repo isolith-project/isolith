@@ -19,7 +19,7 @@ per-command docs, help index generated from command metadata)
    `oep-workbench --write-help-index`, with a Rust drift-guard test that
    fails if the committed file and the metadata diverge. Per-command docs are
    now an artifact, not prose duplicated in two places.
-3. An accessibility checklist (`workstreams/P7-M5/p7m5t02-accessibility-checklist.md`)
+3. An accessibility checklist (`workstreams/modeler/quality/accessibility-checklist.md`)
    that names a PASS/DEFERRED/N-A status for every item on BOTH surfaces the
    acceptance names: the viewer (oep-viewer) and the workbench (oep-shell).
    PASS items are asserted by automated tests on real material (the committed

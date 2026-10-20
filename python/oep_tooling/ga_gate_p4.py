@@ -7,7 +7,7 @@ zero gate-`FAIL` rows for the gate to open:
 
 1. FIDELITY leg — the STEP fidelity matrix is PUBLISHED and HONEST:
 
-   * the PMI fidelity matrix (P4-M2-T03, `docs/p4-m2-t03-pmi-fidelity/`):
+   * the PMI fidelity matrix (P4-M2-T03, `docs/pmi-fidelity/`):
      the artifact parses, declares the matrix schema
      (`keelworks/pmi-fidelity-matrix/v1`), every GD&T x app cell carries a
      closed-set verdict (PASS / FAIL / SKIP) with evidence, and the GD&T type
@@ -215,7 +215,7 @@ def fidelity_leg(fidelity_dir=None, accuracy_report=None, eps=1e-9):
     """FIDELITY leg: STEP fidelity matrix published, measured rows within-epsilon.
 
     ``fidelity_dir``: directory holding pmi-fidelity-matrix.{json,md}
-    (default <repo>/docs/p4-m2-t03-pmi-fidelity). ``accuracy_report``: path to
+    (default <repo>/docs/pmi-fidelity). ``accuracy_report``: path to
     corpus/accuracy-report.json. Returns ``LegRow`` list. Never raises.
     """
     repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

@@ -1,6 +1,6 @@
 //! Worker registry: how the render worker registers with the P9 scheduler.
 //!
-//! The P9-M1 job spec (docs/P9-M1/job-spec.md, "Executor") says a job's
+//! The P9-M1 job spec (docs/compute/spec/job-spec.md, "Executor") says a job's
 //! `executor` names `kind` and `function`, and that **worker registry /
 //! function resolution is owned by P9-M3-T01** -- this card. The scheduler
 //! maps `executor.function` onto a worker through a registry; this module is
@@ -35,7 +35,7 @@ pub const WORKER_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const WORKER_ARGS: [&str; 2] = ["--resolution", "--fidelity"];
 
 /// Fidelity level vocabulary this worker advertises (supersample factors),
-/// in the canonical workstreams/P9-M1/GUI order. Low = 1x, Medium = 2x, High = 4x.
+/// in the canonical workstreams/compute/spec/GUI order. Low = 1x, Medium = 2x, High = 4x.
 pub const FIDELITY_LEVELS: [&str; 3] = ["low", "medium", "high"];
 
 /// A single worker registration record.

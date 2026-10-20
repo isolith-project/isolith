@@ -1,0 +1,120 @@
+# Keelworks OEP one-command stack (P10-M1-T01).
+#
+# Brings up the three deliveries of the integrated install:
+#
+#   pdm     oep-pdm      PDM service (P8 REST API v1, vault, audit)
+#   viewer  oep-web      P6 preview viewer (browser UI + preview PNG embed)
+#   p2p     oep-opsdash  P2P compute lane dashboard (P9 queue/node/jobs)
+#   docs    oep-docs     P13-T03 docs site (static, served by the same image -
+#                        "docs from the sum, no separate infra")
+#
+# Start with `./install.sh` from this directory (or `docker compose up -d`).
+# The image is built once (docker-compose.yml build context is the repo root)
+# and reused by all four services; the offline-image path is `release.sh
+# --tarball` + `install.sh --offline-bundle <tar.gz>` (Bastion S2 discipline).
+#
+# Health-check contract (the acceptance surface, verified by install.sh):
+#   GET /api/v1/health  on pdm    -> {"status":"ok",...}
+#   GET /                on viewer -> 200 (explorer HTML)
+#   GET /healthz         on p2p    -> {"status":"ok"}
+#   GET /healthz         on docs   -> {"status":"ok"}
+#
+# All service ports are configurable via OEP_* vars (defaults below); the
+# bind is deliberately 127.0.0.1 on the host side so nothing is exposed to
+# the LAN until the operator publishes it (decision #10).
+#
+# SEC-AUTHZ-DEFAULT / SEC-AUTHZ-RESIDUAL (2026-10-18): the pdm AND viewer
+# services now run behind the P11-T03 RBAC boundary by default. The REST API
+# v1 surface on both requires the identity headers X-Oep-User / X-Oep-Roles /
+# X-Oep-Tenant (authorization-grade; the P8-M3-T01 identity layer will replace
+# them with a verified passport). The viewer's read-only HTML/PNG workbench
+# routes stay reachable (loopback-bound until published). To run the open
+# contract, add "--no-auth" to the pdm or viewer command below -- for
+# controlled test / air-gap use ONLY; the binaries print a loud warning when
+# authorization is disabled.
+
+name: keelworks
+
+services:
+  pdm:
+    build:
+      context: ../../..
+      dockerfile: workstreams/delivery/deploy/deploy/Dockerfile
+      args:
+        OEP_VERSION: ${OEP_VERSION:-0.1.0}
+    image: keelworks/oep-stack:${OEP_VERSION:-0.1.0}
+    container_name: keelworks-pdm
+    command: ["oep-pdm", "--addr", "0.0.0.0:8787", "--persist-dir", "/data"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: pdm
+    volumes:
+      - pdm_data:/data
+    ports:
+      - "${OEP_PDM_BIND:-127.0.0.1}:${OEP_PDM_PORT:-8787}:8787"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8787/api/v1/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  viewer:
+    image: keelworks/oep-stack:${OEP_VERSION:-0.1.0}
+    container_name: keelworks-viewer
+    command: ["oep-web", "--addr", "0.0.0.0:8790", "--persist-dir", "/data"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: viewer
+    volumes:
+      - viewer_data:/data
+    ports:
+      - "${OEP_VIEWER_BIND:-127.0.0.1}:${OEP_VIEWER_PORT:-8790}:8790"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8790/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    depends_on:
+      pdm:
+        # The viewer is a self-contained web server over its own store today;
+        # it does not need pdm to be healthy, but starting after pdm keeps the
+        # two services' banners readable in the same boot sequence.
+        condition: service_started
+
+  p2p:
+    image: keelworks/oep-stack:${OEP_VERSION:-0.1.0}
+    container_name: keelworks-p2p
+    command: ["oep-opsdash", "serve", "--listen", "0.0.0.0:8080", "--live"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: p2p
+    ports:
+      - "${OEP_P2P_BIND:-127.0.0.1}:${OEP_P2P_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  docs:
+    image: keelworks/oep-stack:${OEP_VERSION:-0.1.0}
+    container_name: keelworks-docs
+    command: ["oep-docs", "--root", "/srv/docs", "--addr", "0.0.0.0:8792"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: docs
+    ports:
+      - "${OEP_DOCS_BIND:-127.0.0.1}:${OEP_DOCS_PORT:-8792}:8792"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8792/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+volumes:
+  pdm_data:
+  viewer_data:

@@ -48,7 +48,7 @@ one-command install of the INTEGRATED 0.1.0 stack on both approved hosts:
     INSTALL-B (keelwb2) PASS  same on the second approved host
 
     total=4 PASS=4 FAIL=0 SKIP=0  exit_code 0
-    proof: workstreams/P12/proof/release-rehearsal-0.1.0.{json,md} (regenerated on the integrated head)
+    proof: workstreams/release-engineering/proof/release-rehearsal-0.1.0.{json,md} (regenerated on the integrated head)
 
 ## Real integration defects fixed by this card (not waived)
 
@@ -92,5 +92,5 @@ one-command install of the INTEGRATED 0.1.0 stack on both approved hosts:
 
 - integration/union-gate.json (this record, machine-readable)
 - integration/union-gate.md (this record)
-- workstreams/P12/proof/release-rehearsal-0.1.0.{json,md}
+- workstreams/release-engineering/proof/release-rehearsal-0.1.0.{json,md}
 - corpus/ga-gate-p4-mbd-report.{json,md} (regenerated P4 MBD report on the union)

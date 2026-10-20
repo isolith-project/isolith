@@ -1,6 +1,6 @@
 [package]
 name = "oep-assem"
-description = "P7: Assembly workbench + solver seam (permissive bounded solver, SOLVER-REPLACE; ADR workstreams/P7-M3/solver-adr.md)."
+description = "P7: Assembly workbench + solver seam (permissive bounded solver, SOLVER-REPLACE; ADR workstreams/modeler/assembly/solver-adr.md)."
 version.workspace = true
 edition.workspace = true
 authors.workspace = true

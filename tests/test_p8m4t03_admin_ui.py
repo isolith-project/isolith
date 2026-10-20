@@ -6,7 +6,7 @@ tests/admin_revisions_quotas.rs). This test guards the *contract surface* from
 the other side of the fence, exactly like the sibling P8 contract-lockstep
 tests:
 
-1. The design doc (workstreams/P8-M4/p8m4t03-admin-ui.md) exists and locks the three
+1. The design doc (workstreams/pdm/web/admin-ui.md) exists and locks the three
    pillars (role matrix / revisions / storage quotas) plus the audit seam.
 
 2. The public admin surface (crates/oep-pdm/src/admin.rs) exposes the methods
@@ -25,7 +25,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOC = os.path.join(ROOT, "workstreams/P8-M4", "p8m4t03-admin-ui.md")
+DOC = os.path.join(ROOT, "workstreams/pdm/web", "admin-ui.md")
 ADMIN_MOD = os.path.join(ROOT, "crates", "oep-pdm", "src", "admin.rs")
 
 EM_DASH = "\u2014"  # U+2014, banned from program prose

@@ -233,7 +233,7 @@ def classify_parity(chain, gated):
 def to_oep_geo_document(chain, gated, source_name):
     """Map the observed B-Rep chain into the documented oep-geo model.
 
-    Document format follows docs/p6-m1-oep-geo-model-schema.md: flat
+    Document format follows docs/geometry-model-schema.md: flat
     id-keyed collections, format tag, version 1, mm units.
     """
     slug = re.sub(r"[^A-Za-z0-9]+", "-", os.path.basename(source_name)).strip("-").lower() or "catpart"

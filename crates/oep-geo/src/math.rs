@@ -1,6 +1,6 @@
 //! P6-M2-T01: vendored vector/matrix/quaternion math for `oep-geo`.
 //!
-//! Design decisions (see docs/p6-m2-oep-geo-math.md and the PR body):
+//! Design decisions (see docs/geometry-math.md and the PR body):
 //!
 //! - **Vendored, not `nalgebra`.** std-only, zero new dependencies. No
 //!   `Cargo.toml`/`Cargo.lock` churn (avoids collision with the concurrent

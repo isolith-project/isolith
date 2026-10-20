@@ -2,7 +2,7 @@
 //!
 //! Emits a normalized basic-cut QIF 3.0 document from the [`QifDoc`] model
 //! using the exact element order and attribute grammar verified against the
-//! official QIF 3.0 XSD (see `docs/p4-m4-oep-qif-basic-cut.md`): root
+//! official QIF 3.0 XSD (see `docs/qif-basic-cut.md`): root
 //! QIFDocument (versionQIF=3.0.0, idMax, xmlns qif3), QPId, Header,
 //! StandardsDefinitions, FileUnits/PrimaryUnits, DatumDefinitions,
 //! DatumReferenceFrames, Product (PartSet + RootPart), Characteristics.

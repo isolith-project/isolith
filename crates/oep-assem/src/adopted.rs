@@ -1,6 +1,6 @@
 //! The solver seam: a small, safe wrapper over the OEP permissive solver.
 //!
-//! SOLVER-REPLACE (program decision #16, `workstreams/P7-M3/solver-adr.md` v1.2.0)
+//! SOLVER-REPLACE (program decision #16, `workstreams/modeler/assembly/solver-adr.md` v1.2.0)
 //! replaced the vendored GPL-3.0 SolveSpace engine with an **own bounded
 //! solver** behind this vendor-neutral seam. Everything above this module is
 //! the OEP assembly workbench; the engine below is the damped Gauss-Newton

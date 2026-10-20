@@ -82,7 +82,7 @@ impl SandboxBuilder {
     /// `cpu.max` / `memory.max` derived from the caps, and move the worker
     /// into it. `None` (default) runs RLIMIT-only — the acceptance core that
     /// works everywhere. Rooted deployers (NAS/DGX supervisors) can pass a
-    /// real cgroup root to add linear throttling (see `docs/P9-M3/sandbox.md`).
+    /// real cgroup root to add linear throttling (see `docs/compute/workers/sandbox.md`).
     pub fn cgroup_root(mut self, root: impl Into<std::path::PathBuf>) -> Self {
         self.cgroup_root = Some(root.into());
         self

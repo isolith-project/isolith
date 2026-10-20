@@ -1,7 +1,7 @@
 //! P6-M2-T02: NURBS / B-spline curve + surface math for `oep-geo`.
 //!
 //! Self-contained, std-only, f64 implementation (no OCC binding, no external
-//! crate  -  see `docs/p6-m2-oep-geo-nurbs.md` for the decision). Follows the
+//! crate  -  see `docs/geometry-nurbs.md` for the decision). Follows the
 //! NURBS Book conventions (Piegl & Tiller): grounded clamped knot vectors,
 //! Cox-de Boor basis, rational evaluation by homogeneous projection, and
 //! derivative evaluation by the homogeneous quotient (Leibniz) rule.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Acceptance test for Keelworks P9-M1-T02: message bus decision + topic taxonomy.
 
-Written FIRST (TDD). The decision record at workstreams/P9-M1/message-bus-adr.md and the
-topic taxonomy at workstreams/P9-M1/topic-taxonomy.json/.md must make this test pass. It
+Written FIRST (TDD). The decision record at workstreams/compute/spec/message-bus-adr.md and the
+topic taxonomy at workstreams/compute/spec/topic-taxonomy.json/.md must make this test pass. It
 verifies the real material, not mocks:
 
   decision      => NATS self-hosted as the default/adopted message bus
@@ -15,8 +15,8 @@ verifies the real material, not mocks:
                    clean-room violation
   guardrails    => version pin, escape hatch (Redis), test gate, auth via the
                    P8 identity layer, no cloud egress from workers
-  real material => the committed NATS probe (workstreams/P9-M1/spike/nats_probe.py) and its
-                   run-log (workstreams/P9-M1/spike/run-log.json) recorded against a
+  real material => the committed NATS probe (workstreams/compute/spec/spike/nats_probe.py) and its
+                   run-log (workstreams/compute/spec/spike/run-log.json) recorded against a
                    self-hosted nats-server on the reference host, loopback only
   taxonomy       => machine-readable subject taxonomy committed and validated:
                    well-formed subjects and patterns, NATS wildcard semantics
@@ -34,11 +34,11 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "workstreams/P9-M1", "message-bus-adr.md")
-TAX_JSON = os.path.join(ROOT, "workstreams/P9-M1", "topic-taxonomy.json")
-TAX_MD = os.path.join(ROOT, "workstreams/P9-M1", "topic-taxonomy.md")
-SPIKE_PY = os.path.join(ROOT, "workstreams/P9-M1", "spike", "nats_probe.py")
-RUN_LOG = os.path.join(ROOT, "workstreams/P9-M1", "spike", "run-log.json")
+ADR = os.path.join(ROOT, "workstreams/compute/spec", "message-bus-adr.md")
+TAX_JSON = os.path.join(ROOT, "workstreams/compute/spec", "topic-taxonomy.json")
+TAX_MD = os.path.join(ROOT, "workstreams/compute/spec", "topic-taxonomy.md")
+SPIKE_PY = os.path.join(ROOT, "workstreams/compute/spec", "spike", "nats_probe.py")
+RUN_LOG = os.path.join(ROOT, "workstreams/compute/spec", "spike", "run-log.json")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 VERSION_LINE = re.compile(r"^\d+\.\d+\.\d+")
@@ -218,7 +218,7 @@ def check_taxonomy(tax):
 
 def check_run_log(tax):
     if not os.path.isfile(RUN_LOG):
-        check(False, "missing spike run-log: workstreams/P9-M1/spike/run-log.json")
+        check(False, "missing spike run-log: workstreams/compute/spec/spike/run-log.json")
         return
     log = json.loads(read(RUN_LOG))
     check(log.get("all_passed") is True, "run-log all_passed must be true")
@@ -253,7 +253,7 @@ def run_checks():
     print("=" * 66)
 
     # 0. ADR exists and is versioned.
-    check(os.path.isfile(ADR), "missing: workstreams/P9-M1/message-bus-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/compute/spec/message-bus-adr.md")
     if not os.path.isfile(ADR):
         return failures
     text = read(ADR)
@@ -337,8 +337,8 @@ def run_checks():
               "guardrails must require a test/probe gate")
 
     # 9. The committed taxonomy is the contract.
-    check(os.path.isfile(TAX_JSON), "missing: workstreams/P9-M1/topic-taxonomy.json")
-    check(os.path.isfile(TAX_MD), "missing: workstreams/P9-M1/topic-taxonomy.md")
+    check(os.path.isfile(TAX_JSON), "missing: workstreams/compute/spec/topic-taxonomy.json")
+    check(os.path.isfile(TAX_MD), "missing: workstreams/compute/spec/topic-taxonomy.md")
     if os.path.isfile(TAX_JSON):
         tax = json.loads(read(TAX_JSON))
         check_taxonomy(tax)
@@ -351,7 +351,7 @@ def run_checks():
         check("P9-M1-T02" in text, "must cite its own card P9-M1-T02")
 
     # 10. Real material: spike source + run-log.
-    check(os.path.isfile(SPIKE_PY), "missing spike: workstreams/P9-M1/spike/nats_probe.py")
+    check(os.path.isfile(SPIKE_PY), "missing spike: workstreams/compute/spec/spike/nats_probe.py")
     if os.path.isfile(SPIKE_PY):
         sp = read(SPIKE_PY)
         check("socket" in sp, "spike must use the raw NATS protocol over a socket")

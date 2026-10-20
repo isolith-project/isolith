@@ -1,6 +1,6 @@
 //! P4-M4-T03 acceptance test (TDD) - oep-step JT reader visualization wedge.
 //!
-//! Contract, per workstreams/P4-M4/jt-reader-plan.md and the ADR section 9 acceptance:
+//! Contract, per workstreams/step-interop/qif/jt-reader-plan.md and the ADR section 9 acceptance:
 //!
 //! 1. `oep_step::jt::parse` reads a committed golden JT fixture
 //!    (`corpus/jt/golden-box-a.jt`, a license-clean synthesized file written

@@ -33,7 +33,7 @@ summary = {
     "unresolved": miss,
     "files": rows,
 }
-out = "docs/re-notes/p5-m3-t01-brep-extraction-report.json"
+out = "docs/re-notes/brep-extraction-report.json"
 with open(out, "w") as fh:
     json.dump(summary, fh, indent=1)
     fh.write("\n")

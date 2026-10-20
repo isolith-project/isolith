@@ -1,6 +1,6 @@
 //! P6-M1-T03: units model for `oep-geo`.
 //!
-//! Canonical bases (documented in `docs/p6-m1-units-and-tolerances.md`):
+//! Canonical bases (documented in `docs/units-and-tolerances.md`):
 //!
 //! - **Length:** canonical base is the **millimetre**. [`LengthUnit`] maps the
 //!   engineering drawing units onto that base with exact rational factors

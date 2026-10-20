@@ -2,7 +2,7 @@
 //!
 //! This is the knowledge-light engine the P7-M4-T02 card calls for. It is
 //! documented as NOT parity with CATIA V5 Knowledgeware (see
-//! `workstreams/P7-M4/rules-checks-sandbox.md`): parameters are flat `f64`/boolean/string
+//! `workstreams/modeler/sketch-and-rules/rules-checks-sandbox.md`): parameters are flat `f64`/boolean/string
 //! values (no typed physical quantities, no units engine), formulas are
 //! evaluated on demand (not keep-alive), checks are evaluated on demand (not
 //! event-driven), and rules are single-pass if-then-else that can only SET

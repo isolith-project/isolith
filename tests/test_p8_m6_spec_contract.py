@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""P8-M6-T01 contract gate: workstreams/P8-M6/openapi-v1.yaml IS the contract, and the
+"""P8-M6-T01 contract gate: workstreams/pdm/api/openapi-v1.yaml IS the contract, and the
 committed generated client (python/oep_pdm_client.py) must be the faithful
 derivation of it.
 
 Two enforcement layers:
 
 1. DRIFT (always runs, stdlib-only, CI-safe): the generated client embeds
-   `SPEC_SHA256`, the sha-256 of the exact workstreams/P8-M6/openapi-v1.yaml bytes it was
+   `SPEC_SHA256`, the sha-256 of the exact workstreams/pdm/api/openapi-v1.yaml bytes it was
    generated from. If anyone edits the spec without regenerating the client,
    this test fails: edit the contract, you regenerate the client. That is the
    OpenAPI spec as the single source of truth.
@@ -24,7 +24,7 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPEC_PATH = os.path.join(ROOT, "workstreams/P8-M6", "openapi-v1.yaml")
+SPEC_PATH = os.path.join(ROOT, "workstreams/pdm/api", "openapi-v1.yaml")
 CLIENT_DIR = os.path.join(ROOT, "python")
 GENERATOR = os.path.join(ROOT, "scripts", "gen_pdm_client.py")
 
@@ -50,7 +50,7 @@ def test_committed_client_is_in_sync_with_spec():
     """The contract is the spec; the client must drift with it."""
     client = load_client()
     assert client.SPEC_SHA256 == spec_sha256(), (
-        "python/oep_pdm_client.py is out of sync with workstreams/P8-M6/openapi-v1.yaml; "
+        "python/oep_pdm_client.py is out of sync with workstreams/pdm/api/openapi-v1.yaml; "
         "run: python3 scripts/gen_pdm_client.py"
     )
     # Same for the wire identity the client hard-codes.

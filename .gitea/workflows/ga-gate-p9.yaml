@@ -8,7 +8,7 @@
 # CI-safe degraded path (`--local-only`): the REAL oep-pdm vault + the REAL
 # oep-ga-gate driver + the REAL worker functions + REAL PDM re-hash on the
 # committed STEP/oep-geo corpus. The 3-node fleet proof is a live-LAN action
-# documented in scripts/p9m5t02-ga-gate-proof.sh and workstreams/P9-M5/ga-gate.md.
+# documented in scripts/compute-ga-gate-proof.sh and workstreams/compute/ops/ga-gate.md.
 name: P9 GA gate (100-job render/convert wave, outputs verified in PDM)
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
           mkdir -p /tmp/p9g-out /tmp/p9g-persist
           PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.ga_gate_p9 \
             --repo "$PWD" \
-            --fleet workstreams/P9-M5/fleet.local.json \
+            --fleet workstreams/compute/ops/fleet.local.json \
             --jobs-count 100 \
             --driver "$PWD/target/debug/oep-ga-gate" \
             --agent "$PWD/target/debug/oep-ga-node" \

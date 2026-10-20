@@ -16,7 +16,7 @@
 //!   model level (like FreeCAD v1 variable sets / y-arsets), driving sketch
 //!   dimensions.
 //! - [`solve`]: the ADOPTED OSS constraint solver (choice + rationale:
-//!   `workstreams/P7-M4/sketch-solver-adr.md`) reached ONLY through a vendor-neutral
+//!   `workstreams/modeler/sketch-and-rules/sketch-solver-adr.md`) reached ONLY through a vendor-neutral
 //!   seam. The public surface is our own types, never the solver's. Editing
 //!   a variable re-solves and the solved geometry follows.
 //! - [`features`]: [`Sketch`] and [`VariableSet`] stored as `oep-geo`

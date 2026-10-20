@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Acceptance test for Keelworks P0-M1-T04: contributor rules (CLA, DCO, CODEOWNERS).
 
-Written FIRST (TDD). The decision record at workstreams/P0-M1/contributor-rules-decision.md
+Written FIRST (TDD). The decision record at workstreams/governance/contributor-rules/contributor-rules-decision.md
 plus the root CODEOWNERS file must make this test pass. It verifies the real
 material, not mocks:
   decision        => contributions are certified with the Developer Certificate
@@ -26,7 +26,7 @@ import sys
 import tomllib
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DECISION = os.path.join(ROOT, "workstreams/P0-M1", "contributor-rules-decision.md")
+DECISION = os.path.join(ROOT, "workstreams/governance/contributor-rules", "contributor-rules-decision.md")
 CODEOWNERS = os.path.join(ROOT, "CODEOWNERS")
 CARGO_TOML = os.path.join(ROOT, "Cargo.toml")
 
@@ -107,7 +107,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The decision record exists.
-    check(os.path.isfile(DECISION), "missing: workstreams/P0-M1/contributor-rules-decision.md")
+    check(os.path.isfile(DECISION), "missing: workstreams/governance/contributor-rules/contributor-rules-decision.md")
     if not os.path.isfile(DECISION):
         return failures
 

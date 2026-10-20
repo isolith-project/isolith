@@ -4,7 +4,7 @@
 //!
 //! 1. **Quotas configured and enforced under load** -- quotas come from a
 //!    real serialized `Config` (JSON, loaded byte-for-byte from the committed
-//!    sample at `docs/P9-M2/fairshare.sample.json`), and the load wave proves
+//!    sample at `docs/compute/scheduler/fairshare.sample.json`), and the load wave proves
 //!    an **oversubscribed team gets throttled**: it submits far more demand
 //!    than its caps allow on an otherwise idle cluster and is refused the
 //!    excess while a within-quota team is admitted.
@@ -23,7 +23,7 @@ use oep_fairshare::config::Config;
 use oep_fairshare::enforce::ResourceRequest;
 use oep_fairshare::FairShareScheduler;
 
-const SAMPLE_JSON: &str = include_str!("../../../docs/P9-M2/fairshare.sample.json");
+const SAMPLE_JSON: &str = include_str!("../../../docs/compute/scheduler/fairshare.sample.json");
 
 /// Load the committed sample config exactly as an operator would point the
 /// scheduler at it.

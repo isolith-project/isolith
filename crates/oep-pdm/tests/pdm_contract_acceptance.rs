@@ -1,5 +1,5 @@
 //! P7-M2-T02 acceptance contract: the OEP modeler/browser PDM stub speaks the
-//! P8 REST API v1 contract (OpenAPI spec at workstreams/P8-M6/openapi-v1.yaml).
+//! P8 REST API v1 contract (OpenAPI spec at workstreams/pdm/api/openapi-v1.yaml).
 //!
 //! This test is the RED-first expression of the acceptance criteria:
 //!   * A real HTTP stub server is booted on an ephemeral port (no in-process

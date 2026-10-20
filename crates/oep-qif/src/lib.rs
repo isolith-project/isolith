@@ -8,7 +8,7 @@
 //! ANSI QIF 3.0 / ISO 23952:2020) and its public XSD schemas.
 //!
 //! Scope of the "basic" cut (full contract in
-//! `docs/p4-m4-oep-qif-basic-cut.md`):
+//! `docs/qif-basic-cut.md`):
 //!
 //! - **IN** (modeled + re-emitted): document envelope (versionQIF, idMax,
 //!   QPId), Header, StandardsDefinitions, FileUnits/PrimaryUnits (linear),

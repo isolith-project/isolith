@@ -27,7 +27,7 @@
 //! resource usage: the worker cannot opt out, and "escaping the sandbox"
 //! (opening a socket, eating unbounded CPU/RAM/disk) is a failed operation,
 //! not a symptom. That is the testable boundary the P11 threat model will
-//! build on (see `docs/P9-M3/sandbox.md`).
+//! build on (see `docs/compute/workers/sandbox.md`).
 //!
 //! The caps are hard ceilings, not proportional shares: a 2000-millicore
 //! request becomes a bounded CPU-time budget, not a 2-core throttle. Linear

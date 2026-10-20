@@ -3,7 +3,7 @@
 #   ga-gate-p12t06  P12-T06 release install rehearsal (CI-safe degraded mode:
 #                   RELEASE + DOCS legs PASS, live-machine legs SKIP under the
 #                   closed taxonomy; the recorded two-machine proof per release
-#                   is committed under workstreams/P12/proof/).
+#                   is committed under workstreams/release-engineering/proof/).
 # Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
 # branch under validation.
 #
@@ -11,7 +11,7 @@
 # VM/garage PC are live-LAN actions), so install-rehearsal.sh --selfcheck
 # classifies the machine legs SKIP - exactly how the P8/P9/P10 gates treat
 # their live-LAN legs. The measured PASS rows live in the committed
-# workstreams/P12/proof/release-rehearsal-<ver>.{json,md}, produced by
+# workstreams/release-engineering/proof/release-rehearsal-<ver>.{json,md}, produced by
 # scripts/install-rehearsal.sh on U1 + the keelwb2 VM before each release.
 name: P12 gates (release install rehearsal)
 on:

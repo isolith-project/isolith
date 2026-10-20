@@ -91,7 +91,7 @@ pub struct RetentionPolicy {
 
 impl RetentionPolicy {
     /// The built-in defaults (documented in
-    /// `docs/P10-M3/retention-policy.md`, which this struct mirrors).
+    /// `docs/delivery/disaster-recovery/retention-policy.md`, which this struct mirrors).
     pub fn defaults() -> Self {
         Self {
             format: RETENTION_FORMAT.to_string(),
@@ -143,8 +143,8 @@ impl RetentionPolicy {
                 audit_logged_only: true,
             },
             references: vec![
-                "docs/P10-M3/retention-policy.md".to_string(),
-                "docs/P10-M3/export-all.md".to_string(),
+                "docs/delivery/disaster-recovery/retention-policy.md".to_string(),
+                "docs/delivery/disaster-recovery/export-all.md".to_string(),
             ],
         }
     }

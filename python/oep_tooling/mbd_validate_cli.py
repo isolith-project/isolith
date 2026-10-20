@@ -22,7 +22,7 @@ and maps the outcome onto a documented, scriptable exit code:
                  in normal operation).
 
 Full usage and exit-code contract:
-docs/re-notes/p4-m5-t02-mbd-validator-cli.md
+docs/re-notes/mbd-validator-cli.md
 """
 
 from __future__ import annotations
@@ -234,7 +234,7 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=(
             "exit codes: 0=clean 1=findings at/above --fail-on 2=usage "
             "3=input error 4=internal\n"
-            "documented in docs/re-notes/p4-m5-t02-mbd-validator-cli.md"))
+            "documented in docs/re-notes/mbd-validator-cli.md"))
     ap.add_argument("inputs", nargs="*", metavar="INPUT",
                     help="bundle/oep-pmi JSON file(s) or a directory of them "
                          "(mutually exclusive with --manifest)")

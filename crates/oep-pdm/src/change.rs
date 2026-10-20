@@ -20,7 +20,7 @@
 //! validation against the real vault lives in the P8-M1-T02 vault model;
 //! this change model treats a reference as a claim about a revision and
 //! enforces only that the reference itself is well-formed. See
-//! `workstreams/P8-M2/change-management.md` for the design note.
+//! `workstreams/pdm/revisions/change-management.md` for the design note.
 
 use std::fmt;
 

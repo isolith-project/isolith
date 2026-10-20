@@ -1,7 +1,7 @@
 //! P8 REST API v1 contract types -- the one source of truth shared by the stub
 //! server, the `PdmClient`, and (after P8-M6-T01) the real P8 service.
 //!
-//! The wire contract is the OpenAPI spec at `workstreams/P8-M6/openapi-v1.yaml`; these
+//! The wire contract is the OpenAPI spec at `workstreams/pdm/api/openapi-v1.yaml`; these
 //! structs are its Rust projection, field-for-field. A client or server that
 //! uses only these types is guaranteed to speak the documented contract.
 
@@ -59,7 +59,7 @@ pub mod error_code {
 // ---------------------------------------------------------------------------
 // P8-M6-T03 additive gate surface (lock / transition / audit). These are NEW
 // paths and types, additive to the v1 contract -- the existing verbs and their
-// byte-exact behavior do not change (workstreams/P8-M6/openapi-v1.yaml stays the same for
+// byte-exact behavior do not change (workstreams/pdm/api/openapi-v1.yaml stays the same for
 // them). The gate surface makes the real P8-M1-T03 / P8-M2-T01 / P8-M3-T03
 // lifecycle layers observable and testable over the same base URL.
 // ---------------------------------------------------------------------------

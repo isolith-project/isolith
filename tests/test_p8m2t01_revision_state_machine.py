@@ -1,6 +1,6 @@
 """P8-M2-T01 revision state machine: contract lockstep guard.
 
-The wire contract (workstreams/P8-M6/openapi-v1.yaml, v1) fixes the four revision states
+The wire contract (workstreams/pdm/api/openapi-v1.yaml, v1) fixes the four revision states
 ``working / under_review / released / obsolete`` and a nullable ``maturity``
 string. This test guards that the Rust state machine keeps those exact wire
 names and the exact legal-hop set, so a silent rename or refactor cannot drift
@@ -12,7 +12,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 STATE_FILE = ROOT / "crates" / "oep-pdm" / "src" / "state.rs"
-SPEC_DOC = ROOT / "workstreams/P8-M2" / "revision-state-machine.md"
+SPEC_DOC = ROOT / "workstreams/pdm/revisions" / "revision-state-machine.md"
 
 EXPECTED_STATES = {"working", "under_review", "released", "obsolete"}
 EXPECTED_MATURITY = {"preliminary", "detailed", "final"}
@@ -70,7 +70,7 @@ def test_legal_hops_match_contract_exactly():
 
 def test_spec_documents_the_same_states():
     md = SPEC_DOC.read_text() if SPEC_DOC.exists() else ""
-    assert md, "missing workstreams/P8-M2/revision-state-machine.md spec document"
+    assert md, "missing workstreams/pdm/revisions/revision-state-machine.md spec document"
     for name in EXPECTED_STATES:
         assert name in md, f"spec doc does not mention the {name!r} state"
     for name in EXPECTED_MATURITY:

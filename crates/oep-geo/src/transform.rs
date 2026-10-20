@@ -2,7 +2,7 @@
 //! assemblies.
 //!
 //! The transform is our own documented convention (see
-//! `docs/p6-m1-oep-geo-model-schema.md`): a row-major 4x4 matrix of 16
+//! `docs/geometry-model-schema.md`): a row-major 4x4 matrix of 16
 //! IEEE-754 doubles, translation in elements 12/13/14 and the homogeneous row
 //! element 15 fixed to `1.0` for a valid affine transform. Identity maps the
 //! child onto the parent frame unchanged.

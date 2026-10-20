@@ -684,7 +684,7 @@ impl FeatureGraph {
 
 /// The reference stand-in evaluator: folds each feature into a bounding box.
 ///
-/// Mini vocabulary (documented in `docs/p6-m3-oep-geo-feature-graph.md`, not
+/// Mini vocabulary (documented in `docs/geometry-feature-graph.md`, not
 /// CATIA semantics):
 /// - `Extrude` — union of the resolved inputs with a box of size
 ///   `length × width × height` built from the origin.

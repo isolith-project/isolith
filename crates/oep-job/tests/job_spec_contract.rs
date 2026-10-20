@@ -1,6 +1,6 @@
 //! Integration contract for the P9 job/task spec wire format.
 //!
-//! The committed examples under `docs/P9-M1/examples/` are the shared
+//! The committed examples under `docs/compute/spec/examples/` are the shared
 //! cross-language fixtures: this Rust test deserializes them and runs full
 //! validation (GREEN), and `tests/test_p9_job_spec.py` validates the same
 //! bytes against the committed JSON Schema. Both languages peer at the same
@@ -14,7 +14,7 @@ use oep_job::spec::{ExecutorRef, InputRef, JobSpec, OutputTarget, ResourceCaps, 
 use oep_job::{spec, validate};
 
 const RENDER_EXAMPLE: &str = concat!(
-    include_str!("../../../docs/P9-M1/examples/render-job.json"),
+    include_str!("../../../docs/compute/spec/examples/render-job.json"),
     "\n"
 );
 

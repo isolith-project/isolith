@@ -3,7 +3,7 @@
 //! These are the reader's coined, vendor-neutral carriers: they hold the
 //! parsed STEP content in shapes the rest of the platform understands and
 //! do NOT depend on the wrapped OSS STEP library. The library's own types
-//! never cross this surface (vendor-neutral seam, workstreams/P4-M1/step-library-adr.md);
+//! never cross this surface (vendor-neutral seam, workstreams/step-interop/library-adr/step-library-adr.md);
 //! a future swap of the underlying library behind an unchanged API replaces
 //! only the private walk in `lib.rs`.
 

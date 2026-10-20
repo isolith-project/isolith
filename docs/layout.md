@@ -34,25 +34,25 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P7 oep-sketch     -- 2D sketcher + parametric variable sets, adopted OSS solver via seam (P7-M4-T01)
 - P10 oep-archive   -- export-all interop escape hatch: neutral STEP/3DXML/glTF/STL + JSON archive (P10-M3-T02)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
-  (P8-M1-T01, Rust axum per workstreams/P8-M1/web-stack-adr.md, AGPL-3.0; retained
-  P7-M2-T02 StubServer identity + PdmClient), contract: workstreams/P8-M6/openapi-v1.yaml,
+  (P8-M1-T01, Rust axum per workstreams/pdm/service/web-stack-adr.md, AGPL-3.0; retained
+  P7-M2-T02 StubServer identity + PdmClient), contract: workstreams/pdm/api/openapi-v1.yaml,
   generated python client: python/oep_pdm_client.py (P8-M6-T01), validator:
-  scripts/validate-openapi.py, integration: workstreams/P7-M2/pdm-integration.md and
-  workstreams/P8-M6/integration-adapters.md (P8-M6-T02 adapter layer: oep_pdm::adapter,
+  scripts/validate-openapi.py, integration: workstreams/modeler/interchange/pdm-integration.md and
+  workstreams/pdm/api/integration-adapters.md (P8-M6-T02 adapter layer: oep_pdm::adapter,
   unit-instrumented seam the OEP shell and adopted tools use to reach the live
   PDM API). P8-M6-T03 (GA gate) wires the real working-set lock, revision
   state machine and tamper-evident audit log (oep_pdm::{working_set,state,
   audit}) into the served contract as additive gate verbs (lock / lock release
-  / transition / audit / audit-verify; see workstreams/P8-M6/ga-gate.md), with the gate
-  harness python/oep_tooling/ga_gate_p8.py and proof under workstreams/P8-M6/proof/
+  / transition / audit / audit-verify; see workstreams/pdm/api/ga-gate.md), with the gate
+  harness python/oep_tooling/ga_gate_p8.py and proof under workstreams/pdm/api/proof/
 - P10 oep-pdm sync   -- multi-site replication demo (P10-M4-T01): LAN node +
                        remote node replicating the vault with conflict semantics
-                       documented (docs/P10-M4/multi-site-replication.md),
+                       documented (docs/delivery/replication/multi-site-replication.md),
                        driven by the offline-sync surface rooted in
-                       workstreams/P8-M5/hybrid-cloud-role-adr.md (airgap default,
+                       workstreams/pdm/sync/hybrid-cloud-role-adr.md (airgap default,
                        deploy_role) + the generated client sync verbs;
                        harness python/oep_tooling/replication_demo.py, live
-                       two-host (U1 + garage PC) proof under workstreams/P10-M4/proof/
+                       two-host (U1 + garage PC) proof under workstreams/delivery/replication/proof/
 - P9 oep-job        -- P2P compute lane: job/task spec (input vault refs,
                        executor, resource caps, output refs)
 - P9 oep-lane       -- P2P compute lane: scheduler (queue, priorities, DAG,
@@ -99,14 +99,14 @@ P1 corpus tooling (python), P10 hybrid cloud, P14 integration.
 
 - Rationed per-milestone GA gates live under `.gitea/workflows/` (one workflow
   per GA-lane feature + the lane gate; the P12 lane gate is the release
-  drill). The E2E scenario suite (`workstreams/P12/e2e-vertical.md`,
+  drill). The E2E scenario suite (`workstreams/release-engineering/e2e-vertical.md`,
   `python/oep_tooling/e2e_vertical.py`, `scripts/e2e-vertical.sh`,
   `.gitea/workflows/ga-gate-p12e2e.yaml`) scripts the reference vertical
   (import CGR/STEP -> model -> release via PDM -> render/convert via P2P ->
   share) headlessly and asserts each stage; its pass is a release-blocking CI
   check (`ga-gate-p12e2e.yaml`) alongside the GA gates, and the
   deliberate-failure repro (`--break-stage release`) proves a broken stage
-  blocks. Recorded proofs: `workstreams/P12/proof/e2e-vertical-<ver>.{json,md}`.
+  blocks. Recorded proofs: `workstreams/release-engineering/proof/e2e-vertical-<ver>.{json,md}`.
 
 P10 hybrid cloud / self-hosted delivery to date ships as tooling + scripts, not
 new crates (the PDM server that carries TLS is P8 `oep-pdm`):
@@ -119,15 +119,15 @@ new crates (the PDM server that carries TLS is P8 `oep-pdm`):
 - `scripts/p10m1t02-proof.sh`         -- acceptance proof capture (P10-M1-T02)
 - `scripts/dr/backup-vault.sh` `scripts/dr/drill-restore.sh` -- DR lane (P10-M3-T01),
   consuming the same `keelworks-vault-backup/` bundle contract
-- docs: `workstreams/P10-M1/` (lane docs + proof), `workstreams/P10-M3/` (DR runbook + proof)
+- docs: `workstreams/delivery/deploy/` (lane docs + proof), `workstreams/delivery/disaster-recovery/` (DR runbook + proof)
 
 ## P12 release engineering
 
-- `workstreams/P12/release-train.md` -- release train, versioning, freeze, canary staging
+- `workstreams/release-engineering/release-train.md` -- release train, versioning, freeze, canary staging
   and patch policy (P12-T05)
 - `python/oep_tooling/release_train.py` -- freeze / verify / release-cut tooling
-- `workstreams/P12/freeze-manifests/` -- frozen commit set manifest per candidate
-- `workstreams/P12/proof/` -- verified dry-run train cut record
+- `workstreams/release-engineering/freeze-manifests/` -- frozen commit set manifest per candidate
+- `workstreams/release-engineering/proof/` -- verified dry-run train cut record
 
 P11 supply-chain / release gating ships as tooling + docs, not new crates:
 
@@ -135,15 +135,15 @@ P11 supply-chain / release gating ships as tooling + docs, not new crates:
   (1.5) + SPDX (2.3) BOMs for the Rust crate tree (from the committed
   Cargo.lock) and the container base images, scans Cargo.lock against the
   rustsec advisory-db, folds in a release-host trivy image scan, enforces
-  the critical/high gate with the committed waiver file workstreams/P11/waivers.toml.
+  the critical/high gate with the committed waiver file workstreams/security/waivers.toml.
 - `scripts/sbom-cve-gate.sh` -- release-gate driver (exit-code contract:
   0 == gate PASS; 1 == do not release).
 - `scripts/sbom-cve-fail-repro.sh` -- deliberate-failure repro (seeded
   critical vuln MUST fail the gate).
-- `workstreams/P11/sbom-cve.md` (runbook), `workstreams/P11/waivers.toml` (waiver register),
-  `workstreams/P11/artifacts/<ver>/` (committed per-release SBOMs + report),
-  `workstreams/P11/proof/` (durable proof: clean-scan report, trivy image scan,
-  deliberate-failure repro), `workstreams/P11/.advisory-db/` (gitignored cache).
+- `workstreams/security/sbom-cve.md` (runbook), `workstreams/security/waivers.toml` (waiver register),
+  `workstreams/security/artifacts/<ver>/` (committed per-release SBOMs + report),
+  `workstreams/security/proof/` (durable proof: clean-scan report, trivy image scan,
+  deliberate-failure repro), `workstreams/security/.advisory-db/` (gitignored cache).
 
 ## Conventions
 

@@ -30,7 +30,7 @@
 //! Coordinates are the source tessellation values emitted verbatim (f32
 //! shortest round-trip, trailing `.0` appended so every real has a decimal
 //! point per PART 21 grammar). Units are assumed millimetre (SI) — CGR
-//! carries no unit metadata; see `docs/p2-m5-oep-cgr2step.md`. Output is
+//! carries no unit metadata; see `docs/cgr-to-step.md`. Output is
 //! byte-deterministic for a given mesh + [`StepOpts`].
 //!
 //! ## Failures

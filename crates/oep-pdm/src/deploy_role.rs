@@ -1,7 +1,7 @@
 //! Hybrid cloud deployment role for the oep-pdm lane (P8-M5-T03).
 //!
 //! Adopts the two-role deployment model ratified in
-//! `workstreams/P8-M5/hybrid-cloud-role-adr.md` v1.0.0:
+//! `workstreams/pdm/sync/hybrid-cloud-role-adr.md` v1.0.0:
 //!
 //! * [`DeploymentRole::Airgap`] (default for regulated shops) -- the
 //!   deployment stays entirely inside the shop boundary: no internet, no

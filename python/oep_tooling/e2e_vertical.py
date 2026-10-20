@@ -30,7 +30,7 @@ Two stack modes:
   --mode docker   boot the packaged stack image keelworks/oep-stack:<version>
                   (entrypoint oep-web) and drive the SAME vertical, asserting
                   the packaged artifact itself. Runs on U1 / a docker host and
-                  is recorded as the per-release proof under workstreams/P12/proof/.
+                  is recorded as the per-release proof under workstreams/release-engineering/proof/.
 
 Deliberate-failure repro (what proves the gate *blocks*): --break-stage fails
 exactly one named stage (corrupts its invariant), so the run must record that
@@ -696,7 +696,7 @@ def parse_args(argv):
     p.add_argument("--image", default="keelworks/oep-stack:0.1.0", help="packaged stack image (:version)")
     p.add_argument("--port", type=int, default=0, help="explicit port (0 = ephemeral)")
     p.add_argument("--version", default="0.1.0", help="release version for the report")
-    p.add_argument("--out", default="workstreams/P12/proof/e2e-vertical", help="report base path (JSON+MD)")
+    p.add_argument("--out", default="workstreams/release-engineering/proof/e2e-vertical", help="report base path (JSON+MD)")
     p.add_argument("--cgr", default=None, help="path to a real .cgr sample (else OEP_CGR_SAMPLES / conventional)")
     p.add_argument("--break-stage", default=None,
                    choices=["import", "model", "release", "render", "share", "convert"],
@@ -710,7 +710,7 @@ def parse_args(argv):
 def _report_base(root, out):
     """Resolve the report base path. Absolute paths are used as-is; relative
     paths resolve under the repo root (so the wrapper keeps defaulting to
-    workstreams/P12/proof/...)."""
+    workstreams/release-engineering/proof/...)."""
     p = Path(out)
     if p.is_absolute():
         return str(p)

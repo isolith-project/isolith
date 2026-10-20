@@ -8,7 +8,7 @@ model, behaviorally matching FreeCAD v1 variable-set semantics without
 importing FreeCAD (clean-room invariant).
 
 Reference implementation: `crates/oep-sketch` (Rust, serde). Solver decision:
-`workstreams/P7-M4/sketch-solver-adr.md` (adopt an OSS 2D GCS behind a seam; do not
+`workstreams/modeler/sketch-and-rules/sketch-solver-adr.md` (adopt an OSS 2D GCS behind a seam; do not
 rebuild, do not import FreeCAD). Real-material gate:
 `crates/oep-sketch/tests/golden/bracket-sketch-drive.oepgeo.json`, byte-locked
 by `crates/oep-sketch/tests/p7m4_sketch_acceptance.rs` and independently
@@ -56,7 +56,7 @@ shell's semantics." Concretely, driven on real solver output:
 ## 3. Key decisions
 
 - ADOPT an OSS solver, do not rebuild, no FreeCAD module source copied:
-  `workstreams/P7-M4/sketch-solver-adr.md` (solver = `vcad-kernel-constraints` v0.10.0,
+  `workstreams/modeler/sketch-and-rules/sketch-solver-adr.md` (solver = `vcad-kernel-constraints` v0.10.0,
   MIT, behind the seam; escape hatches and revisit gates documented).
 - The dimension is the variable: `SolveOutcome.dimensions` is keyed by
   variable name so downstream consumers (P7-M4-T02 rules/checks sandbox) read

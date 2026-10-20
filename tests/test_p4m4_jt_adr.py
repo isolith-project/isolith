@@ -2,7 +2,7 @@
 """Acceptance test for Keelworks P4-M4-T02: JT import (visualization/PMI) decision
 ADR -- adopt an existing OSS JT reader or build.
 
-Written FIRST (TDD). The ADR at workstreams/P4-M4/jt-import-decision-adr.md must make this
+Written FIRST (TDD). The ADR at workstreams/step-interop/qif/jt-import-decision-adr.md must make this
 test pass. It verifies the real material, not mocks:
   decision    => the card question is answered: adopt an existing OSS JT reader
                  or build our own, with a single recommendation
@@ -27,7 +27,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "workstreams/P4-M4", "jt-import-decision-adr.md")
+ADR = os.path.join(ROOT, "workstreams/step-interop/qif", "jt-import-decision-adr.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -77,7 +77,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: workstreams/P4-M4/jt-import-decision-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/step-interop/qif/jt-import-decision-adr.md")
     if not os.path.isfile(ADR):
         return failures
 
@@ -176,7 +176,7 @@ def run_checks():
     # 10. Cross-references: P4-M4-T02 card, the P4 lane, the P1-M3 audit.
     check("P4-M4-T02" in text, "must cite its own card P4-M4-T02")
     check("P4" in text, "must place the decision in the P4 lane")
-    check("workstreams/P1-M3" in text or "readers" in text,
+    check("workstreams/format-corpus/reader-audit" in text or "readers" in text,
           "must tie to the P1-M3 readers audit web")
 
     # 11. Surface language rule: no em dashes, no curly quotes.

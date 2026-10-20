@@ -26,7 +26,7 @@
 //!   of them submits.
 //!
 //! The wire format is our own (`format = "oep-fairshare"`, `version = 1`);
-//! `Config` round-trips through `serde_json` and `docs/P9-M2/fairshare.sample.json`
+//! `Config` round-trips through `serde_json` and `docs/compute/scheduler/fairshare.sample.json`
 //! is the committed example the acceptance tests validate against the same
 //! bytes the library deserializes.
 //!

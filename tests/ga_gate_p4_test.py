@@ -10,7 +10,7 @@ the P2-M6-T03 / P3-M5-T02 gates.
 P4 GA gate means BOTH PIECE of the P4 milestone contract:
 
 1. FIDELITY LEG — the STEP fidelity matrix is published and honest: the PMI
-   fidelity matrix artifact (docs/p4-m2-t03-pmi-fidelity/) parses, declares the
+   fidelity matrix artifact (docs/pmi-fidelity/) parses, declares the
    matrix schema, every GD&T x app cell is a closed-set verdict (PASS/FAIL/SKIP)
    with evidence, the GD&T type set matches the cells, and the rollup counts are
    self-consistent; AND the P4-M1-T03 accuracy harness report
@@ -177,7 +177,7 @@ def test_fidelity_leg_published_and_within_epsilon():
     except Exception:
         return  # already reported in test 1 (RED)
     with tempfile.TemporaryDirectory() as td:
-        fid_dir = make_fidelity_matrix(td)          # docs/p4-m2-t03-pmi-fidelity
+        fid_dir = make_fidelity_matrix(td)          # docs/pmi-fidelity
         acc_dir = make_accuracy_report(td, 0.0, 0.0)  # corpus/accuracy-report.json
         rows = G.fidelity_leg(fidelity_dir=str(fid_dir),
                               accuracy_report=str(acc_dir / "accuracy-report.json"),

@@ -1,0 +1,213 @@
+{
+  "format": "oep-archive",
+  "version": 1,
+  "tool": {
+    "name": "oep-archive",
+    "version": "0.1.0"
+  },
+  "created_at": "2026-10-18T06:46:44Z",
+  "source_vault": {
+    "owner": "keelworks-proof",
+    "name": "keelworks-proof"
+  },
+  "summary": {
+    "items": 3,
+    "revisions": 3,
+    "files": 3,
+    "geometry_artifacts": 5,
+    "model_artifacts": 1,
+    "raw_artifacts": 3,
+    "skipped": 7
+  },
+  "retention": {
+    "format": "oep-retention-policy",
+    "version": 1,
+    "reference": "docs/delivery/disaster-recovery/retention-policy.md",
+    "defaults": true
+  },
+  "artifacts": [
+    {
+      "path": "raw/box-part-a/1/box-part.step",
+      "sha256": "0a3a57964bb1203353e90a713ebdafcf33a857a3da70c17396573983a2e73e57",
+      "role": "raw",
+      "format": "step",
+      "item_id": "item-0-ae94c51dfc70",
+      "item_name": "Box Part A",
+      "revision": "1",
+      "source_filename": "box-part.step",
+      "skipped": false
+    },
+    {
+      "path": "geometry/box-part-a/1/box-part.step",
+      "sha256": "0a3a57964bb1203353e90a713ebdafcf33a857a3da70c17396573983a2e73e57",
+      "role": "geometry",
+      "format": "step",
+      "item_id": "item-0-ae94c51dfc70",
+      "item_name": "Box Part A",
+      "revision": "1",
+      "source_filename": "box-part.step",
+      "skipped": false
+    },
+    {
+      "path": "geometry/box-part-a/1/box-part.glb",
+      "sha256": "7e32e752da33ebfe7b0a6330e8b3921cf7dc25e81f38a9df9901dbb840ef85d9",
+      "role": "geometry",
+      "format": "glb",
+      "item_id": "item-0-ae94c51dfc70",
+      "item_name": "Box Part A",
+      "revision": "1",
+      "source_filename": "box-part.step",
+      "skipped": false
+    },
+    {
+      "path": "geometry/box-part-a/1/box-part.stl",
+      "sha256": "7f65b01d182ccb71d623e122e91658f3473d802d3ddc448203fbe9d075ccd109",
+      "role": "geometry",
+      "format": "stl",
+      "item_id": "item-0-ae94c51dfc70",
+      "item_name": "Box Part A",
+      "revision": "1",
+      "source_filename": "box-part.step",
+      "skipped": false
+    },
+    {
+      "path": "geometry/box-part-a/1/box-part.3dxml",
+      "sha256": "8dbabba5211b4395b8db4bb5b74a6e421ec0c83d49279413a552ceb83e580eee",
+      "role": "geometry",
+      "format": "3dxml",
+      "item_id": "item-0-ae94c51dfc70",
+      "item_name": "Box Part A",
+      "revision": "1",
+      "source_filename": "box-part.step",
+      "skipped": false
+    },
+    {
+      "path": "model/box-part-a/1/box-part.oep-geo.json",
+      "sha256": "dd313ffedcfa4df8396688463cd69a2234342fe19ef5b305f27915941643a979",
+      "role": "model",
+      "format": "json",
+      "item_id": "item-0-ae94c51dfc70",
+      "item_name": "Box Part A",
+      "revision": "1",
+      "source_filename": "box-part.step",
+      "skipped": false
+    },
+    {
+      "path": "raw/box-mini-b/1/box-mini.step",
+      "sha256": "e40bdeea3788ddd14499bc39f5eb90086d49b5d297d2cd71ba6712cc4c4960c2",
+      "role": "raw",
+      "format": "step",
+      "item_id": "item-1-b972ac9b8111",
+      "item_name": "Box Mini B",
+      "revision": "1",
+      "source_filename": "box-mini.step",
+      "skipped": false
+    },
+    {
+      "path": "geometry/box-mini-b/1/box-mini.step",
+      "sha256": "e40bdeea3788ddd14499bc39f5eb90086d49b5d297d2cd71ba6712cc4c4960c2",
+      "role": "geometry",
+      "format": "step",
+      "item_id": "item-1-b972ac9b8111",
+      "item_name": "Box Mini B",
+      "revision": "1",
+      "source_filename": "box-mini.step",
+      "skipped": false
+    },
+    {
+      "path": "geometry/box-mini-b/1/box-mini.glb",
+      "sha256": "",
+      "role": "geometry",
+      "format": "glb",
+      "item_id": "item-1-b972ac9b8111",
+      "item_name": "Box Mini B",
+      "revision": "1",
+      "source_filename": "box-mini.step",
+      "skipped": true,
+      "reason": "STEP read: no faceted geometry in STEP part: part contains no shell-based surface model (faceted geometry) this reader maps"
+    },
+    {
+      "path": "geometry/box-mini-b/1/box-mini.stl",
+      "sha256": "",
+      "role": "geometry",
+      "format": "stl",
+      "item_id": "item-1-b972ac9b8111",
+      "item_name": "Box Mini B",
+      "revision": "1",
+      "source_filename": "box-mini.step",
+      "skipped": true,
+      "reason": "STEP read: no faceted geometry in STEP part: part contains no shell-based surface model (faceted geometry) this reader maps"
+    },
+    {
+      "path": "geometry/box-mini-b/1/box-mini.3dxml",
+      "sha256": "",
+      "role": "geometry",
+      "format": "3dxml",
+      "item_id": "item-1-b972ac9b8111",
+      "item_name": "Box Mini B",
+      "revision": "1",
+      "source_filename": "box-mini.step",
+      "skipped": true,
+      "reason": "STEP read: no faceted geometry in STEP part: part contains no shell-based surface model (faceted geometry) this reader maps"
+    },
+    {
+      "path": "raw/note-c/1/note.txt",
+      "sha256": "7724e13367068984b72e0d90f6728273ad7e279604754fe4f6f4ec7cd5f87751",
+      "role": "raw",
+      "format": "txt",
+      "item_id": "item-2-f179fec724c2",
+      "item_name": "Note C",
+      "revision": "1",
+      "source_filename": "note.txt",
+      "skipped": false
+    },
+    {
+      "path": "geometry/note-c/1/note.step",
+      "sha256": "",
+      "role": "geometry",
+      "format": "step",
+      "item_id": "item-2-f179fec724c2",
+      "item_name": "Note C",
+      "revision": "1",
+      "source_filename": "note.txt",
+      "skipped": true,
+      "reason": "no neutral exporter for format txt"
+    },
+    {
+      "path": "geometry/note-c/1/note.glb",
+      "sha256": "",
+      "role": "geometry",
+      "format": "glb",
+      "item_id": "item-2-f179fec724c2",
+      "item_name": "Note C",
+      "revision": "1",
+      "source_filename": "note.txt",
+      "skipped": true,
+      "reason": "no neutral exporter for format txt"
+    },
+    {
+      "path": "geometry/note-c/1/note.stl",
+      "sha256": "",
+      "role": "geometry",
+      "format": "stl",
+      "item_id": "item-2-f179fec724c2",
+      "item_name": "Note C",
+      "revision": "1",
+      "source_filename": "note.txt",
+      "skipped": true,
+      "reason": "no neutral exporter for format txt"
+    },
+    {
+      "path": "geometry/note-c/1/note.3dxml",
+      "sha256": "",
+      "role": "geometry",
+      "format": "3dxml",
+      "item_id": "item-2-f179fec724c2",
+      "item_name": "Note C",
+      "revision": "1",
+      "source_filename": "note.txt",
+      "skipped": true,
+      "reason": "no neutral exporter for format txt"
+    }
+  ]
+}

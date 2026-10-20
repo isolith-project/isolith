@@ -40,7 +40,7 @@ NATIVE_FORMATS = ("catpart-v5", "catproduct-v5")
 
 V5_MAGIC = b"V5_CFV2\x00"
 RENOTE = os.path.join(REPO, "docs", "re-notes",
-                      "p5-m3-t01-brep-extraction-attempt.md")
+                      "brep-extraction-attempt.md")
 
 
 def resolve_native(manifest=None):

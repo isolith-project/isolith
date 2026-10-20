@@ -15,7 +15,7 @@
 #        it exits NON-zero - proving a broken stage really blocks;
 #     5. uploads both E2E reports as build artifacts.
 #   The packaged-stack (docker) and real-CGR legs are recorded per release on
-#   U1 under workstreams/P12/proof/ (decision #9: docker is a live-LAN action; CI classifies
+#   U1 under workstreams/release-engineering/proof/ (decision #9: docker is a live-LAN action; CI classifies
 #   those legs SKIP under the closed taxonomy like every other gate).
 name: P12 E2E gate (reference vertical, release-blocking)
 on:

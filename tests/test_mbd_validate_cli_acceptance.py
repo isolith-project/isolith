@@ -64,7 +64,7 @@ def test_cli_module_defines_documented_exit_codes_and_main():
     sys.path.insert(0, PYTHON_DIR)
     import oep_tooling.mbd_validate_cli as cli  # noqa: E402  (import gate)
 
-    # The exit-code contract from docs/re-notes/p4-m5-t02-mbd-validator-cli.md.
+    # The exit-code contract from docs/re-notes/mbd-validator-cli.md.
     assert cli.EXIT_OK == 0
     assert cli.EXIT_FINDINGS == 1
     assert cli.EXIT_USAGE == 2

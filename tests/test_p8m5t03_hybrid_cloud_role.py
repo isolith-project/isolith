@@ -2,7 +2,7 @@
 """Acceptance test for Keelworks P8-M5-T03: hybrid cloud role decision.
 
 Written FIRST (TDD), mirroring the P8-M1 web-stack ADR test convention. The
-decision record at workstreams/P8-M5/hybrid-cloud-role-adr.md must make this test pass.
+decision record at workstreams/pdm/sync/hybrid-cloud-role-adr.md must make this test pass.
 It verifies real material, not mocks:
 
   decision      => the PDM lane picks a deployment role for NAT'd / remote use:
@@ -35,12 +35,12 @@ import urllib.error
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "workstreams/P8-M5", "hybrid-cloud-role-adr.md")
-INSTALL = os.path.join(ROOT, "workstreams/P8-M5", "p8m5t03-lan-airgap-install-path.md")
+ADR = os.path.join(ROOT, "workstreams/pdm/sync", "hybrid-cloud-role-adr.md")
+INSTALL = os.path.join(ROOT, "workstreams/pdm/sync", "lan-airgap-install-path.md")
 DEPLOY_SRC = os.path.join(ROOT, "crates", "oep-pdm", "src", "deploy_role.rs")
-PROOF = os.path.join(ROOT, "workstreams/P8-M5", "proof", "p8m5t03-airgap-proof.json")
-SCRIPT = os.path.join(ROOT, "scripts", "p8m5t03-airgap-proof.sh")
-MEMO = os.path.join(ROOT, "workstreams/P0-M2", "export-control-itar-eccn.md")
+PROOF = os.path.join(ROOT, "workstreams/pdm/sync", "proof", "airgap-proof.json")
+SCRIPT = os.path.join(ROOT, "scripts", "airgap-proof.sh")
+MEMO = os.path.join(ROOT, "workstreams/governance/export-and-legal", "export-control-itar-eccn.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -87,7 +87,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: workstreams/P8-M5/hybrid-cloud-role-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/pdm/sync/hybrid-cloud-role-adr.md")
     if not os.path.isfile(ADR):
         return failures
 
@@ -192,7 +192,7 @@ def run_checks():
 
     # 9. Cross-references.
     check("P8-M5-T03" in text, "must cite its own card P8-M5-T03")
-    check("P0-M2-T04" in text or "workstreams/P0-M2" in text,
+    check("P0-M2-T04" in text or "workstreams/governance/export-and-legal" in text,
           "must cite the export-control memo card P0-M2-T04")
     check("oep-pdm" in low, "must name the service crate oep-pdm")
 
@@ -237,7 +237,7 @@ def _nas_bundle_proof():
     """
     checks = {}
     print("[NAS] probe() -> %s" % ("reachable" if _nas_probe() else "unreachable"))
-    bundle = os.path.join(ROOT, "workstreams/P8-M5", "proof", "airgap-bundle.sha256")
+    bundle = os.path.join(ROOT, "workstreams/pdm/sync", "proof", "airgap-bundle.sha256")
     if not _nas_probe():
         print("[SKIP] NAS bundle verify -- NAS unreachable")
         return checks

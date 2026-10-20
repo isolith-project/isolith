@@ -17,7 +17,7 @@
 //!   *intent-affirmation* record ([`SigningIntent`], `nature ==
 //!   [`SigningNature::IntentAffirmation`]) that captures who asserted what,
 //!   when, with a free-text affirmation statement. This is documented
-//!   not-parity (see `workstreams/P8-M4/approval-flows.md`): a genuine legal signature
+//!   not-parity (see `workstreams/pdm/web/approval-flows.md`): a genuine legal signature
 //!   (X.509/PAdES, identity proof, legal effect) is explicitly out of scope.
 //!
 //! Everything is default-deny: the board uses

@@ -23,7 +23,7 @@ import os
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROOF = os.path.join(REPO, "docs", "P9-M3", "proof")
+PROOF = os.path.join(REPO, "docs", "compute", "workers", "proof")
 
 failures = []
 

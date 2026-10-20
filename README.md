@@ -35,7 +35,7 @@ as containers, or from source.
 ```sh
 # Containers
 git clone <your-repo-url> keelworks
-cd keelworks/workstreams/P10-M1/deploy
+cd keelworks/workstreams/delivery/deploy/deploy
 ./install.sh
 
 # From source

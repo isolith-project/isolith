@@ -41,7 +41,7 @@ except Exception:  # pragma: no cover - CI python3 has no steputils
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CLI_NAME = "oep-cgr2step"
 
-# Documented CLI exit-code contract (see docs/p2-m5-oep-cgr2step.md).
+# Documented CLI exit-code contract (see docs/cgr-to-step.md).
 EXIT_OK, EXIT_IO, EXIT_USAGE, EXIT_NOT_CGR, EXIT_SKIP, EXIT_INTERNAL = range(6)
 DOCUMENTED_CODES = {EXIT_OK, EXIT_IO, EXIT_USAGE, EXIT_NOT_CGR, EXIT_SKIP, EXIT_INTERNAL}
 

@@ -2,7 +2,7 @@
 
 The live rehearsal is a real-LAN action (U1 + a U1/VM-class VM, decision #9),
 executed per release by scripts/install-rehearsal.sh and recorded under
-workstreams/P12/proof/release-rehearsal-<ver>.{json,md}. CI has no docker daemon and no
+workstreams/release-engineering/proof/release-rehearsal-<ver>.{json,md}. CI has no docker daemon and no
 second host, so this test pins the committed facts - the runbook checklist,
 the rehearsal driver's version contract, and the recorded proof carrying PASS
 rows for both machine-install legs with zero FAIL (the "all three health checks
@@ -19,11 +19,11 @@ import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-RUNBOOK = REPO_ROOT / "workstreams/P12" / "install-rehearsal.md"
+RUNBOOK = REPO_ROOT / "workstreams/release-engineering" / "install-rehearsal.md"
 DRIVER = REPO_ROOT / "scripts" / "install-rehearsal.sh"
-PROOF_DIR = REPO_ROOT / "workstreams/P12" / "proof"
-ENV_EXAMPLE = REPO_ROOT / "workstreams/P10-M1" / "deploy" / ".env.example"
-INSTALL_SH = REPO_ROOT / "workstreams/P10-M1" / "deploy" / "install.sh"
+PROOF_DIR = REPO_ROOT / "workstreams/release-engineering" / "proof"
+ENV_EXAMPLE = REPO_ROOT / "workstreams/delivery/deploy" / "deploy" / ".env.example"
+INSTALL_SH = REPO_ROOT / "workstreams/delivery/deploy" / "deploy" / "install.sh"
 
 
 def _env_example_version() -> str:

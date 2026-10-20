@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Acceptance test for Keelworks P4-M1-T01: oep-step library-choice ADR.
 
-Written FIRST (TDD). The ADR at workstreams/P4-M1/step-library-adr.md must make this test
+Written FIRST (TDD). The ADR at workstreams/step-interop/library-adr/step-library-adr.md must make this test
 pass. It verifies the real material, not mocks:
   decision    => oep-step wraps an existing OSS STEP library behind
                  vendor-neutral clean wrappers
@@ -24,7 +24,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ADR = os.path.join(ROOT, "workstreams/P4-M1", "step-library-adr.md")
+ADR = os.path.join(ROOT, "workstreams/step-interop/library-adr", "step-library-adr.md")
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 EM_DASH = "\u2014"  # U+2014, the em dash the program bans from its prose
@@ -74,7 +74,7 @@ def run_checks():
     print("=" * 66)
 
     # 1. The ADR exists.
-    check(os.path.isfile(ADR), "missing: workstreams/P4-M1/step-library-adr.md")
+    check(os.path.isfile(ADR), "missing: workstreams/step-interop/library-adr/step-library-adr.md")
     if not os.path.isfile(ADR):
         return failures
 

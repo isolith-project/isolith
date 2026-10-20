@@ -43,15 +43,15 @@ sockets, no mocks):
    (loopback-or-LAN client, no external egress), matching decision #10.
 
 4. DOC leg — the multi-site replication + conflict-semantics document
-   (workstreams/P10-M4/multi-site-replication.md) exists and is honest: it states the
+   (workstreams/delivery/replication/multi-site-replication.md) exists and is honest: it states the
    deterministic rules (divergence detected by content hash; resolution commits
    a new revision verified by hash) and does NOT claim automatic hunk-level
    text merge (resolution is ours/theirs/client-merged-document; a diff3
-   column view is a workstreams/P8-M4/T05 follow-up).
+   column view is a workstreams/pdm/web/T05 follow-up).
 
 The live two-host proof (U1 LAN node + garage PC WoL remote node, decision #9)
 is the card's 'verified live across the two approved hosts' acceptance and is
-run by scripts/p10m4t01-replication-proof.sh -> workstreams/P10-M4/proof/*.json. This
+run by scripts/replication-proof.sh -> workstreams/delivery/replication/proof/*.json. This
 acceptance test is the CI-safe, single-host exercise of the same legs
 (one service + a sync-client node, exactly as CI can run it).
 """
@@ -230,10 +230,10 @@ def test_airgap_leg_and_report():
 
 
 def test_docs_are_honest():
-    doc = Path(ROOT) / "docs" / "workstreams/P10-M4" / "multi-site-replication.md"
+    doc = Path(ROOT) / "docs" / "workstreams/delivery/replication" / "multi-site-replication.md"
     if not doc.is_file():
         check("multi-site doc present", False,
-              "write workstreams/P10-M4/multi-site-replication.md")
+              "write workstreams/delivery/replication/multi-site-replication.md")
         return
     text = doc.read_text(encoding="utf-8")
     check("doc present", doc.is_file())

@@ -4,7 +4,7 @@ The release drill, driven on the real gate (python/oep_tooling/
 export_control_gate.py) through the CI/bash wrapper:
 
 PASS direction (file present):
-  with workstreams/P11/export-control/<V>.classification.toml committed for the drill
+  with workstreams/security/export-control/<V>.classification.toml committed for the drill
   release, `verify --release <V>` must exit 0 -- the release is cleared.
 
 FAIL direction (file removed):
@@ -28,13 +28,13 @@ import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DOC = REPO_ROOT / "workstreams/P11" / "export-control.md"
-TPL = REPO_ROOT / "workstreams/P11" / "export-control" / "classification.template.toml"
-REL_DIR = REPO_ROOT / "workstreams/P11" / "export-control"
+DOC = REPO_ROOT / "workstreams/security" / "export-control.md"
+TPL = REPO_ROOT / "workstreams/security" / "export-control" / "classification.template.toml"
+REL_DIR = REPO_ROOT / "workstreams/security" / "export-control"
 GATE_MOD = REPO_ROOT / "python" / "oep_tooling" / "export_control_gate.py"
 WRAPPER = REPO_ROOT / "scripts" / "export-control" / "verify-classification.sh"
 WORKFLOW = REPO_ROOT / ".gitea" / "workflows" / "ga-gate-p11-export-control.yaml"
-PROOF_DIR = REPO_ROOT / "workstreams/P11" / "proof"
+PROOF_DIR = REPO_ROOT / "workstreams/security" / "proof"
 
 DRILL_RELEASE = "2027.1.0-rc1"
 DRILL_FILE = REL_DIR / f"{DRILL_RELEASE}.classification.toml"
@@ -62,9 +62,9 @@ def test_release_drill_fails_when_file_removed() -> None:
     # and confirm the gate blocks the release. Repo copy is read-only source.
     with tempfile.TemporaryDirectory() as td:
         fake_repo = Path(td) / "repo"
-        (fake_repo / "workstreams/P11").mkdir(parents=True)
-        shutil.copytree(REL_DIR, fake_repo / "workstreams/P11" / "export-control")
-        victim = fake_repo / "workstreams/P11" / "export-control" / f"{DRILL_RELEASE}.classification.toml"
+        (fake_repo / "workstreams/security").mkdir(parents=True)
+        shutil.copytree(REL_DIR, fake_repo / "workstreams/security" / "export-control")
+        victim = fake_repo / "workstreams/security" / "export-control" / f"{DRILL_RELEASE}.classification.toml"
         victim.unlink()  # absence = the repro
         out = _run(str(WRAPPER), "verify", "--release", DRILL_RELEASE, "--repo", str(fake_repo))
         assert out.returncode != 0, "gate must FAIL when the classification file is absent"
@@ -76,9 +76,9 @@ def test_release_drill_fails_when_content_flagged() -> None:
     # must also fail (the checkbox is not just existence, it is the assertion).
     with tempfile.TemporaryDirectory() as td:
         fake_repo = Path(td) / "repo"
-        (fake_repo / "workstreams/P11").mkdir(parents=True)
-        shutil.copytree(REL_DIR, fake_repo / "workstreams/P11" / "export-control")
-        flag_file = fake_repo / "workstreams/P11" / "export-control" / f"{DRILL_RELEASE}.classification.toml"
+        (fake_repo / "workstreams/security").mkdir(parents=True)
+        shutil.copytree(REL_DIR, fake_repo / "workstreams/security" / "export-control")
+        flag_file = fake_repo / "workstreams/security" / "export-control" / f"{DRILL_RELEASE}.classification.toml"
         text = flag_file.read_text(encoding="utf-8")
         text = text.replace("contains_itar_technical_data = false",
                             "contains_itar_technical_data = true")
@@ -141,7 +141,7 @@ def test_ci_workflow_pins_the_release_branch() -> None:
 
 def test_proof_recorded() -> None:
     proofs = sorted(PROOF_DIR.glob("export-control-drill-*.json"))
-    assert proofs, "no export-control drill proof recorded under workstreams/P11/proof/"
+    assert proofs, "no export-control drill proof recorded under workstreams/security/proof/"
     proof = json.loads(proofs[-1].read_text(encoding="utf-8"))
     assert proof["release"] == DRILL_RELEASE
     legs = {leg["leg"]: leg for leg in proof["legs"]}

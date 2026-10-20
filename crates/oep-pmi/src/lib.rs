@@ -4,7 +4,7 @@
 //! Information) model schema — GD&T tolerances, datums + datum reference
 //! frames, and model notes — serialized in our own documented format
 //! (`format = "oep-pmi"`, `version = 1`; spec in
-//! `docs/p6-m1-oep-pmi-model-schema.md`).
+//! `docs/pmi-model-schema.md`).
 //!
 //! This crate is the **import destination** for CAD PMI: the P4 interop
 //! workstream (`oep-step`, STEP AP242/QIF) maps semantic PMI entities into

@@ -14,7 +14,7 @@ verifies the real material, not mocks:
                 jobs go only to GPU nodes (and park when none is free), and
                 preferred GPU jobs fall back to a CPU node cleanly
                 (cpu_fallback flag) instead of failing
-  docs       => workstreams/P9-M4/gpu-scheduling.md exists and states the measured host
+  docs       => workstreams/compute/gpu/gpu-scheduling.md exists and states the measured host
   surface    => no em dashes / curly quotes in the committed P9-M4 material
                 (program surface-language rule)
 
@@ -27,8 +27,8 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RUN_LOG = os.path.join(ROOT, "workstreams/P9-M4", "spike", "run-log.json")
-DOC = os.path.join(ROOT, "workstreams/P9-M4", "gpu-scheduling.md")
+RUN_LOG = os.path.join(ROOT, "workstreams/compute/gpu", "spike", "run-log.json")
+DOC = os.path.join(ROOT, "workstreams/compute/gpu", "gpu-scheduling.md")
 
 EM_DASH = "\u2014"
 failures = []
@@ -81,7 +81,7 @@ def _run():
         except ValueError as e:
             check(False, "run-log.json is not valid JSON: %s" % e)
     else:
-        check(False, "workstreams/P9-M4/spike/run-log.json is missing")
+        check(False, "workstreams/compute/gpu/spike/run-log.json is missing")
 
     # --- doc: placement contract + measured host ----------------------------
     if os.path.exists(DOC):
@@ -95,7 +95,7 @@ def _run():
         check("measured" in low and ("gb10" in low or "dgx" in low),
               "doc names the real measured hardware")
     else:
-        check(False, "workstreams/P9-M4/gpu-scheduling.md is missing")
+        check(False, "workstreams/compute/gpu/gpu-scheduling.md is missing")
 
     if failures:
         print("FAIL P9-M4-T01")

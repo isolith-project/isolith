@@ -2,7 +2,7 @@
 //! defaults, and cluster assembly with validation.
 //!
 //! "Configured" means a real, serializable `Config` (see
-//! `docs/P9-M2/fairshare.sample.json`) rather than hard-coded policy.
+//! `docs/compute/scheduler/fairshare.sample.json`) rather than hard-coded policy.
 //! Deserialization is tolerant: unknown fields are ignored so future optional
 //! fields do not break version-1 documents. Validation is non-panicking and
 //! returns a structured list of problems.

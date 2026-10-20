@@ -59,7 +59,7 @@
         <td>write</td>
         <td>Exports the read mesh (with color/material) to glTF/GLB; the convert worker (<code>cgr2gltf</code>) dogfoods it with hash-verified outputs in the vault.</td>
         <td><span class="tag pass">mesh-golden</span></td>
-        <td>P2-M2 glTF export lane; P9-M3-T02 convert worker golden (<code>stc06.glb</code> committed under <code>docs/P9-M3/proof/</code>).</td>
+        <td>P2-M2 glTF export lane; P9-M3-T02 convert worker golden (<code>stc06.glb</code> committed under <code>docs/compute/workers/proof/</code>).</td>
         <td>Output fidelity is that of the input mesh, not of a surface or B-Rep model.</td>
       </tr>
       <tr id="3dxml-read">
@@ -203,7 +203,7 @@
   <h2>How this table is kept honest</h2>
   <p>
     The page renders <code>format-matrix.json</code> (same data, machine-checkable),
-    and <code>scripts/p13t03-format-matrix-check.py</code> spot-checks that data
+    and <code>scripts/format-matrix-check.py</code> spot-checks that data
     against the committed GA matrices on every run:
   </p>
   <ul>

@@ -156,7 +156,7 @@ pub struct ArchiveManifest {
     /// Rollup counts over the whole archive.
     pub summary: ArchiveSummary,
     /// The retention policy snapshot in force at export time (defaults unless
-    /// an admin override was supplied; see `docs/P10-M3/retention-policy.md`).
+    /// an admin override was supplied; see `docs/delivery/disaster-recovery/retention-policy.md`).
     pub retention: RetentionSnapshot,
     /// Every artifact (and every recorded skip) in the archive.
     pub artifacts: Vec<ArtifactRecord>,

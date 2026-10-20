@@ -5,7 +5,7 @@ TDD contract (written before the report; RED first, then GREEN on real material)
 
 * python/oep_tooling/catpart_observability.py exists and fingerprints a real
   native CATPart from bytes only (no vendor tooling).
-* docs/re-notes/p5-m1-t02-native-catpart-observability.md exists and answers
+* docs/re-notes/native-catpart-observability.md exists and answers
   the P5 alpha-target question: which entity classes (B-Rep exact geometry,
   tessellation, parameter graph) are observable in native CATPart, with a
   per-entity-class confidence rating and [uncertain] markers where the byte
@@ -36,7 +36,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "python"))
 
 REPORT = os.path.join(REPO, "docs", "re-notes",
-                      "p5-m1-t02-native-catpart-observability.md")
+                      "native-catpart-observability.md")
 MANIFEST = os.path.join(REPO, "corpus", "manifest.json")
 NATIVE_FORMATS = ("catpart-v5", "catproduct-v5")
 

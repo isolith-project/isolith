@@ -34,7 +34,7 @@ import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CRATE = os.path.join(ROOT, "crates", "oep-opsdash")
-PROOF = os.path.join(ROOT, "workstreams/P9-M5", "proof")
+PROOF = os.path.join(ROOT, "workstreams/compute/ops", "proof")
 EM_DASH = "\u2014"
 CURLY_QUOTES = {"\u2018", "\u2019", "\u201c", "\u201d"}
 
@@ -196,9 +196,9 @@ def check_live_advances(binpath):
 
 
 def check_proof_provenance():
-    d = os.path.join(ROOT, "workstreams/P9-M5")
+    d = os.path.join(ROOT, "workstreams/compute/ops")
     check(os.path.isdir(d), "P9-M5 card doc dir exists")
-    check(os.path.isfile(os.path.join(d, "ops-dashboard.md")), "workstreams/P9-M5/ops-dashboard.md exists")
+    check(os.path.isfile(os.path.join(d, "ops-dashboard.md")), "workstreams/compute/ops/ops-dashboard.md exists")
     check(os.path.isfile(os.path.join(PROOF, "snapshot.json")), "proof snapshot.json committed")
     check(os.path.isfile(os.path.join(PROOF, "dashboard.html")), "proof dashboard.html committed")
     if os.path.isfile(os.path.join(PROOF, "snapshot.json")):
@@ -217,7 +217,7 @@ def check_language_ban():
                 check(False, "em dash banned in %s" % f)
             if set(text) & CURLY_QUOTES:
                 check(False, "curly quotes banned in %s" % f)
-    for f in ["workstreams/P9-M5/ops-dashboard.md", "tests/test_p9_m5_ops_dashboard.py"]:
+    for f in ["workstreams/compute/ops/ops-dashboard.md", "tests/test_p9_m5_ops_dashboard.py"]:
         text = open(os.path.join(ROOT, f), encoding="utf-8").read()
         if EM_DASH in text:
             check(False, "em dash banned in %s" % f)

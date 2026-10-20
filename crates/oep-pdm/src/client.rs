@@ -1,10 +1,10 @@
 //! The OEP modeler/browser PDM client -- the durable half of P7-M2-T02.
 //!
 //! `PdmClient` talks to whatever service is serving the P8 REST API v1 contract
-//! (`workstreams/P8-M6/openapi-v1.yaml`). Today that is the stub server in this crate;
+//! (`workstreams/pdm/api/openapi-v1.yaml`). Today that is the stub server in this crate;
 //! when the real P8 service (P8-M6-T01) comes online, P8 comes online WITHOUT a
 //! client rewrite: point this client at the new base URL and it keeps speaking
-//! the same contract. See `workstreams/P7-M2/pdm-integration.md` for the swap contract.
+//! the same contract. See `workstreams/modeler/interchange/pdm-integration.md` for the swap contract.
 //!
 //! Transport is std-only HTTP/1.1 (see `crate::http`); JSON via serde_json.
 

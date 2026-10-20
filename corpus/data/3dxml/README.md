@@ -20,7 +20,7 @@ Source B: i2e-haw-hamburg/cad-in-unity
 - License: Apache-2.0.
 - Attribution: (c) i2e-haw-hamburg contributors, reproduced from cad-in-unity.
 
-Files NOT committed here (reference-only, see workstreams/P1-M1/3dxml-samples.md):
+Files NOT committed here (reference-only, see workstreams/format-corpus/samples/3dxml-samples.md):
 - Dassault official 3D XML gallery sample (press_rink_axe_fta.3dxml): hosted on
   www.3ds.com for free download, but 3ds.com does not state a redistribution
   license for it, so it is catalogued (URL + sha256) but not checked into git.

@@ -18,8 +18,8 @@
 //!   (verified in PDM by the P9-M5-T02 GA gate).
 //!
 //! The wire format is our own (`format = "oep-job"`, `version = 1`); a
-//! committed JSON Schema in `docs/P9-M1/job-spec-v1.schema.json` is the
-//! machine contract, and `docs/P9-M1/examples/*.json` are examples that both
+//! committed JSON Schema in `docs/compute/spec/job-spec-v1.schema.json` is the
+//! machine contract, and `docs/compute/spec/examples/*.json` are examples that both
 //! this crate (`include_str!`) and the Python acceptance test
 //! (`tests/test_p9_job_spec.py`) validate against the same bytes.
 //!

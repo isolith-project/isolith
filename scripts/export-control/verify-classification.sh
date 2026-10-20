@@ -4,7 +4,7 @@
 # and the release-cut step share one entry point.
 #
 # Exit code contract:
-#   verify --release <V>   -> 0 iff workstreams/P11/export-control/<V>.classification.toml
+#   verify --release <V>   -> 0 iff workstreams/security/export-control/<V>.classification.toml
 #                             exists AND validates (UNCLASSIFIED, data
 #                             locality, no ITAR/ECCN-restricted content).
 #                             Exit 1 blocks the release (absence included).

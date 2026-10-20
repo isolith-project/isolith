@@ -4,7 +4,7 @@
 //! workbench, mapped onto the adopted solver's constraint engine in
 //! [`crate::workbench`]. The vocabulary is deliberately small and honest:
 //! every mate maps to a solver constraint the engine solves robustly, and the
-//! solver ADR (`workstreams/P7-M3/solver-adr.md`) records what is out of scope today.
+//! solver ADR (`workstreams/modeler/assembly/solver-adr.md`) records what is out of scope today.
 //!
 //! Mates are serializable in their own documented format
 //! (`format = "oep-assem-constraints", version = 1`) so a fixture can carry

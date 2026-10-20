@@ -6,7 +6,7 @@ Follows the memo acceptance test: written first (TDD), now GREEN on real
 material. Verifies, without vendor tooling:
 
 * python/oep_tooling/feature_tree_observe.py exists and exposes the API.
-* corpus/obs/p5-m4-feature-tree-observation.json exists and is parseable.
+* corpus/obs/feature-tree-observation.json exists and is parseable.
 * The evidence is self-consistent: parts_observed > 0, every part magic-OK is
   not asserted here (summary only), LP records and value hits are non-zero,
   all sub-counts sum to the reported totals (no hand-written numbers).
@@ -25,7 +25,7 @@ import unittest
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBS = os.path.join(REPO, "python", "oep_tooling", "feature_tree_observe.py")
-EVID = os.path.join(REPO, "corpus", "obs", "p5-m4-feature-tree-observation.json")
+EVID = os.path.join(REPO, "corpus", "obs", "feature-tree-observation.json")
 
 
 def load_evidence():

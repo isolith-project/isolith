@@ -86,7 +86,7 @@ pub const ITEM_KIND_DOCUMENT: &str = "document";
 pub const ITEM_KINDS: [&str; 3] = [ITEM_KIND_PART, ITEM_KIND_ASSEMBLY, ITEM_KIND_DOCUMENT];
 
 // ---------------------------------------------------------------------------
-// Resource-cap bounds (conservative; see docs/P9-M1/job-spec.md)
+// Resource-cap bounds (conservative; see docs/compute/spec/job-spec.md)
 // ---------------------------------------------------------------------------
 
 /// Upper bound on [`ResourceCaps::cpu_millicores`] (64 CPUs).

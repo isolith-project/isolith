@@ -1,7 +1,7 @@
 //! Render options: resolution and fidelity parameterization.
 //!
 //! The P9-M1 job spec carries these as executor args on the `render` kind
-//! (see `docs/P9-M1/job-spec.md`): `--resolution WxH` and `--fidelity`.
+//! (see `docs/compute/spec/job-spec.md`): `--resolution WxH` and `--fidelity`.
 //! `Fidelity` is a real, testable quality knob: higher fidelity renders at a
 //! supersampled internal resolution and box-downsamples, so edges are
 //! anti-aliased and the output pixels differ from a low-fidelity render.

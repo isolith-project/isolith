@@ -14,7 +14,7 @@
 //!
 //! The log is JSON-lines under `<root>/audit.log` with a head checkpoint at
 //! `<root>/audit.head`; both paths are public so an operator can point a
-//! backing store at them. See `workstreams/P8-M3/audit-log.md` for the format.
+//! backing store at them. See `workstreams/pdm/identity/audit-log.md` for the format.
 
 use std::fs;
 use std::path::{Path, PathBuf};

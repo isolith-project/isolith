@@ -3,7 +3,7 @@
 //! P6-M1-T01 delivers the `oep-geo` model schema — the five OEP geometry
 //! classes **part, body, feature, assembly, instance** — plus serde
 //! serialization in our own documented format (JSON, `format = "oep-geo"`,
-//! `version = 1`; spec in `docs/p6-m1-oep-geo-model-schema.md`).
+//! `version = 1`; spec in `docs/geometry-model-schema.md`).
 //!
 //! The schema is a flat store: a [`Document`] owns five id-keyed collections
 //! and every link between classes is an id reference resolved by

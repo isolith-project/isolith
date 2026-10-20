@@ -7,7 +7,7 @@
 # paths remapped), then compares the sha256 of every produced binary. Exit 0
 # only if the two builds are byte-identical for every artifact (or if a
 # documented tolerated-nondeterminism path explicitly exempts it). On success
-# it records workstreams/P11/proof/reproducible-build-<ver>.{json,md} plus the artifact
+# it records workstreams/security/proof/reproducible-build-<ver>.{json,md} plus the artifact
 # SHA256SUMS manifest that the P11-T04 release-signing step consumes.
 #
 # Usage:  scripts/supply-chain/reproducible-build.sh [version] [source-dir]
@@ -21,8 +21,8 @@ VERSION="${1:-2027.1.0-rc1}"
 SRC="$(cd "${2:-$(pwd)}" && pwd)"
 STAMP="${SOURCE_DATE_EPOCH:-1700000000}"   # fixed epoch for deterministic envs
 
-SUMMARY="workstreams/P11/proof/reproducible-build-${VERSION}"
-mkdir -p "$SRC/workstreams/P11/proof"
+SUMMARY="workstreams/security/proof/reproducible-build-${VERSION}"
+mkdir -p "$SRC/workstreams/security/proof"
 T_A="${TARGET_A:-/tmp/keel-cleanroom-a}"
 T_B="${TARGET_B:-/tmp/keel-cleanroom-b}"
 PROBE_HOME="${PROBE_HOME:-/tmp/keel-cargo-probe-home}"

@@ -18,7 +18,7 @@
 #     FRESH_IMAGE  stock bare image for the fresh host (default ubuntu:24.04)
 #
 # Exit 0 iff every health check passes AND measured TDR < 60 minutes.
-# Writes a JSON drill report to workstreams/P10-M3/proof/dr-drill-<ts>.json
+# Writes a JSON drill report to workstreams/delivery/disaster-recovery/proof/dr-drill-<ts>.json
 
 set -euo pipefail
 cd "$(dirname "$0")/../.."
@@ -30,7 +30,7 @@ PDN_BIN="${PDN_BIN:-/home/r1a/keelworks-main/.worktrees/p9m5t02-ga-gate-1017a/ta
 BACKUP_ROOT="$BK_TARGET/keelworks-vault-backup"
 CT_NAME="dr-fresh-$(date +%s)"
 HOST_PORT=28914
-PROOF_DIR="$WT/workstreams/P10-M3/proof"
+PROOF_DIR="$WT/workstreams/delivery/disaster-recovery/proof"
 mkdir -p "$PROOF_DIR"
 
 # ---------- prereq check ----------

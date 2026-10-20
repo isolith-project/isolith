@@ -18,7 +18,7 @@
 //!    `cpu_fallback == true` instead of failing or dead-lettering.
 //! 4. **Measured on real dgx/gpu hardware with honest numbers** -- the probe
 //!    executes the real `nvidia-smi` on the host it runs on and records what
-//!    it found into `workstreams/P9-M4/spike/run-log.json`; this file is asserted to be
+//!    it found into `workstreams/compute/gpu/spike/run-log.json`; this file is asserted to be
 //!    present and to parse. The live host measurement itself lives in that
 //!    run-log plus the `gpu_discover` example, not in CI (CI has no GPU).
 //!
@@ -442,7 +442,7 @@ fn run_log_committed_for_hardware_evidence() {
     // keeping the Rust crate std-only by not pulling serde_json here).
     let path = concat!(
         env!("CARGO_MANIFEST_DIR"),
-        "/../../workstreams/P9-M4/spike/run-log.json"
+        "/../../workstreams/compute/gpu/spike/run-log.json"
     );
     let text = std::fs::read_to_string(path).expect("run-log.json is committed");
     assert!(

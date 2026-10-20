@@ -67,7 +67,7 @@ STANDALONE_XML_PREFIX = b"<?xm"
 # Canonical container BOM member name inside a ZIP-archive 3DXML.
 MANIFEST_NAME = "Manifest.xml"
 # 3DXML open-check exit codes for an external P3 reader CLI (documented
-# contract, cf. docs/re-notes/p3-m5-t01-3dxml-regression.md): 0=OPEN,
+# contract, cf. docs/re-notes/3dxml-regression.md): 0=OPEN,
 # 3=not-a-3dxml-container, 4=no-mesh-found, 2=io-error.
 
 
@@ -145,7 +145,7 @@ def _external_3dxml_reader() -> list:
     ``OEP_3DXML_READER`` this returns ``[]`` and the deterministic container
     probe (:func:`probe_3dxml_container`) is the authority. The exit-code
     contract below is the one a future P3 CLI MUST implement (documented in
-    ``docs/re-notes/p3-m5-t01-3dxml-regression.md``).
+    ``docs/re-notes/3dxml-regression.md``).
     """
     env = os.environ.get("OEP_3DXML_READER", "").strip()
     if env:

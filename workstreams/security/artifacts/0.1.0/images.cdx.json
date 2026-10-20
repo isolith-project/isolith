@@ -1,0 +1,66 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "serialNumber": "urn:uuid:45daf2d7-ae54-ea65-79f7-0e6418199fb5",
+  "metadata": {
+    "timestamp": "2026-10-18T20:04:34Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "keelworks-oep@0.1.0",
+      "name": "keelworks-oep",
+      "version": "0.1.0"
+    },
+    "tools": [
+      {
+        "vendor": "Keelworks",
+        "name": "keelworks-oep-sbom",
+        "version": "0.1.0"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "container",
+      "bom-ref": "pkg:docker/debian@bookworm-slim",
+      "name": "debian:bookworm-slim",
+      "version": "bookworm-slim",
+      "externalReferences": [],
+      "properties": [
+        {
+          "name": "keelworks:dockerfile",
+          "value": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/workstreams/delivery/deploy/deploy/Dockerfile;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.airgap-target;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.oep-pdm;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/tests/fixtures/p11t02/fixturerepo/Dockerfile"
+        }
+      ],
+      "purl": "pkg:docker/debian@bookworm-slim"
+    },
+    {
+      "type": "container",
+      "bom-ref": "pkg:docker/rust@1.98-bookworm",
+      "name": "rust:1.98-bookworm",
+      "version": "1.98-bookworm",
+      "externalReferences": [],
+      "properties": [
+        {
+          "name": "keelworks:dockerfile",
+          "value": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/workstreams/delivery/deploy/deploy/Dockerfile;/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/tests/fixtures/p11t02/fixturerepo/Dockerfile"
+        }
+      ],
+      "purl": "pkg:docker/rust@1.98-bookworm"
+    },
+    {
+      "type": "container",
+      "bom-ref": "pkg:docker/rust@1.98.1-slim-bookworm",
+      "name": "rust:1.98.1-slim-bookworm",
+      "version": "1.98.1-slim-bookworm",
+      "externalReferences": [],
+      "properties": [
+        {
+          "name": "keelworks:dockerfile",
+          "value": "/home/r1a/.hermes/kanban/boards/keelworks/workspaces/t_cab22517/wt/scripts/airgap/Dockerfile.oep-pdm"
+        }
+      ],
+      "purl": "pkg:docker/rust@1.98.1-slim-bookworm"
+    }
+  ]
+}
