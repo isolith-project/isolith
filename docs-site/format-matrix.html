@@ -50,7 +50,7 @@
         <td>read</td>
         <td>Triangle tessellation: vertices and index triangles. Approximate geometry; no B-Rep and no design intent (CGR is a mesh carrier by format). Modern-era real spatial-mesh decode with a numeric-epsilon golden (NIST V5-6R2023 STC-06, two independent readers agree).</td>
         <td><span class="tag pass">mesh-approximate</span><br><span class="tag pass">mesh-golden</span></td>
-        <td>P2-M6-T03 GA gate, LOAD leg: 11 real CGR meshes open, 11 truncated-head samples classified SKIP, 0 FAIL.</td>
+        <td>Measured against real material: 11 CGR meshes open, 11 truncated-head samples classified SKIP, 0 FAIL.</td>
         <td>Old-era embedded payloads whose triangle-stream offset is not yet locked return a reasoned <code>MeshNotFound</code> skip - a documented reverse-engineering wall, never invented geometry.</td>
       </tr>
       <tr id="cgr-export-gltf">
@@ -59,7 +59,7 @@
         <td>write</td>
         <td>Exports the read mesh (with color/material) to glTF/GLB; the convert worker (<code>cgr2gltf</code>) dogfoods it with hash-verified outputs in the vault.</td>
         <td><span class="tag pass">mesh-golden</span></td>
-        <td>P2-M2 glTF export lane; P9-M3-T02 convert worker golden (<code>stc06.glb</code> committed under <code>docs/compute/workers/proof/</code>).</td>
+        <td>glTF export lane; convert-worker golden (<code>stc06.glb</code> committed under <code>docs/compute/workers/proof/</code>).</td>
         <td>Output fidelity is that of the input mesh, not of a surface or B-Rep model.</td>
       </tr>
       <tr id="3dxml-read">
@@ -68,7 +68,7 @@
         <td>read</td>
         <td>3DXML container (coherent ZIP + <code>Manifest.xml</code> BOM, or standalone ASCII model), XML representation nodes/references/instances, surface decoding (Gregory patch to NURBS), and tessellation to a triangle mesh with quality control against recorded topology goldens.</td>
         <td><span class="tag pass">container-bom</span><br><span class="tag pass">surfaces-to-mesh</span><br><span class="tag pass">mesh-golden</span></td>
-        <td>P3-M5-T02 GA gate: OPEN 7/7 (6 real corpus files + writer golden), TESSELLATE 9 real XvlShell models with topology goldens (Star, Dolphin, Baby, Hand, Octopus, AttributeAll + attribute demos), 0 FAIL.</td>
+        <td>Measured: 7/7 open (6 real files + writer golden); 9 real XvlShell models tessellated with topology goldens; 0 FAIL.</td>
         <td>A prototype declaration with no concrete lattice classifies SKIP <code>no-mesh-found</code>; truncated blobs classify <code>truncated</code>. Never a fabricated open.</td>
       </tr>
       <tr id="3dxml-write">
@@ -77,7 +77,7 @@
         <td>write</td>
         <td>Deterministic encoder: internal mesh to a 3DXML package (manifest, model doc, representation). Write &rarr; read-back &rarr; re-write is a byte-class fixed point for our own encoder.</td>
         <td><span class="tag pass">roundtrip-byte-fixed</span></td>
-        <td>P3-M5-T02 GA gate, ROUNDTRIP leg; our encoder's fixed-point pinned by acceptance test.</td>
+        <td>Measured round-trip: our own encoder's output is a byte-class fixed point, pinned by an acceptance test.</td>
         <td>A foreign-writer archive whose member bytes decode/re-encode identically but whose low-level ZIP framing differs classifies SKIP <code>writer byte-layout differs</code> - valid, not a pass and not a failure.</td>
       </tr>
       <tr id="3drep-header">
@@ -86,7 +86,7 @@
         <td>read</td>
         <td>Binary .3DRep container and record header decode (reverse-engineering note).</td>
         <td><span class="tag gap">header-parse</span></td>
-        <td>P3-M3-T01 header/format RE note (<code>docs/re-notes/3dxml-binary-3drep-format.md</code>).</td>
+        <td>Header/format notes: <code>docs/re-notes/3dxml-binary-3drep-format.md</code>.</td>
         <td>Header/record decode only. Full geometry reconstruction from .3DRep is not claimed.</td>
       </tr>
       <tr id="step-read">
@@ -95,7 +95,7 @@
         <td>read</td>
         <td>Exact B-Rep topology (MANIFOLD_SOLID_BREP) and product structure. Syntax, AP-scheme and structure parity pass on 12 real NIST/CAx suite files; the read lane walks the B-Rep for round trip with committed goldens.</td>
         <td><span class="tag pass">brep-topology</span></td>
-        <td>P4-M1-T02 parity matrix (12/12); P4-M3-T01 read lane + goldens; P4-M3-T02 independent-reader golden diff (OCC 7.6 probe + FreeCAD cross-check) committed.</td>
+        <td>Parity 12/12; golden diff against an independent reader (OCC 7.6 + FreeCAD cross-check) committed.</td>
         <td>PMI semantics are a separate lane (below); exactness is B-Rep topology, verified within the accuracy harness.</td>
       </tr>
       <tr id="step-write">
@@ -113,7 +113,7 @@
         <td>read</td>
         <td>Measured geometry fidelity on real corpus: symmetric Hausdorff distance and volume error, both within a numeric epsilon.</td>
         <td><span class="tag pass">accuracy-within-eps</span></td>
-        <td>P4-M1-T03 accuracy report; P4-M5-T03 fidelity leg row <code>keelworks-box</code>: hausdorff 0, volume_rel_error 0, epsilon 1e-9, PASS.</td>
+        <td>Accuracy report; fidelity leg row <code>keelworks-box</code>: hausdorff 0, volume_rel_error 0, epsilon 1e-9, PASS.</td>
         <td>A measured row out of epsilon is a hard gate FAIL - geometry drift is never relabeled.</td>
       </tr>
       <tr id="step-pmi">
@@ -131,7 +131,7 @@
         <td>read</td>
         <td>MBD validator runs rule sets (Y14.41 and prime) over real STEP PMI corpus rows and reports findings; inputs never dropped, and UNVERIFIED never counts as PASS.</td>
         <td><span class="tag pass">mbd-checked</span></td>
-        <td>P4-M5-T01 engine, P4-M5-T02 CLI, P4-M5-T03 MBD leg: 3 real NIST rows reach checked reports under both rule sets; combined report rollup equals granular.</td>
+        <td>MBD validator engine, CLI, and MBD leg: 3 real NIST rows reach checked reports under both rule sets; combined report rollup equals granular.</td>
         <td>The validator surfaces real STEP-seam gaps (floating datums, unknown unit symbols) as findings - that is the demo working, not a claimed pass.</td>
       </tr>
       <tr id="qif">
@@ -140,16 +140,16 @@
         <td>read / write</td>
         <td>QIF basic cut: real NIST MBD files round-trip; output is XSD-valid.</td>
         <td><span class="tag pass">qif-basic</span></td>
-        <td>P4-M4-T01 (real NIST MBD round-trip, XSD-syntax tests).</td>
+        <td>Real NIST MBD round-trip verified with XSD-syntax tests.</td>
         <td>Basic cut scope only - not a full QIF surface claim.</td>
       </tr>
       <tr id="jt">
         <td><strong>JT</strong> <code>.jt</code></td>
-        <td>P4</td>
+        <td>oep-step</td>
         <td>read</td>
         <td>JT reader, visualization-first wedge: mesh / modern-era geometry for viewing.</td>
         <td><span class="tag gap">jt-visualization</span></td>
-        <td>P4-M4-T03 (JT reader wedge, license-clean JT corpus).</td>
+        <td>JT reader wedge on a license-clean JT corpus.</td>
         <td>Visualization only. JT B-Rep or PMI reconstruction is not claimed.</td>
       </tr>
       <tr id="internal-canonical">
@@ -158,7 +158,7 @@
         <td>read / write</td>
         <td>Our own canonical model representation (our-own-format serde) and mesh carrier: the single internal format readers and writers map into.</td>
         <td><span class="tag pass">internal-canonical</span></td>
-        <td>P6-M1-T01 model schema + our-own-format serde; P2 mesh carrier (golden validated); <code>docs/layout.md</code>.</td>
+        <td>Model schema + own-format serde; mesh carrier golden-validated; <code>docs/layout.md</code>.</td>
         <td>Internal format; not a promised exchange format for third parties.</td>
       </tr>
       <tr id="stl">
@@ -167,7 +167,7 @@
         <td>read</td>
         <td>Mesh record read with golden-count checks (e.g. box: 12 facets, 36 vertices within tolerance).</td>
         <td><span class="tag pass">mesh-golden</span></td>
-        <td>P2-M6-T03 golden leg <code>box-triangle-count</code> PASS within tolerance.</td>
+        <td>Golden <code>box-triangle-count</code> PASS within tolerance.</td>
         <td>Facet/vertex counts within epsilon; general-purpose STL reconstruction is not the claim.</td>
       </tr>
     </tbody>
@@ -207,11 +207,11 @@
     against the committed GA matrices on every run:
   </p>
   <ul>
-    <li>P4 GA gate matrix (<code>corpus/ga-gate-p4-matrix.json</code>): the table
+    <li>Measured matrix (<code>corpus/ga-gate-p4-matrix.json</code>): the table
         must reproduce the committed totals (e.g. matrix cells=64, PASS 14 /
         FAIL 2 / SKIP 48; the 2 FAIL cells are circular runout + tolerance
         modifiers) and the within-epsilon accuracy row.</li>
-    <li>P2 and P3 GA gate reports: the numbered run summaries (no FAIL rows;
+    <li>Reader measured run summaries (no FAIL rows;
         open/skip classifications) are encoded as truth anchors only if the
         committed report text is present on the ref.</li>
     <li>If a ground-truth artifact is absent on the ref, the checker classifies
@@ -219,7 +219,7 @@
         never fails the build for a missing artifact.</li>
   </ul>
   <p>
-    The doctrine is the same as the GA gates themselves: exit 0 iff no FAIL
+    The contract is the same: exit 0 iff no FAIL
     cell anywhere, and a capability is only ever claimed at the exact fidelity
     a measured run verified.
   </p>
@@ -230,7 +230,7 @@
 <footer class="site">
   <div class="wrap">
     Open Engineering Platform documentation - version 0.1.0. Format matrix
-    claims are bound to the committed P2/P3/P4 GA gate reports; see
+    claims are bound to the committed measured reports; see
     <code>format-matrix.json</code> for the machine-checkable copy.
   </div>
 </footer>
