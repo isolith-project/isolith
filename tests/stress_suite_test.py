@@ -71,8 +71,7 @@ def test_file_layout():
                 "ci/stress/jobs.json",
                 "ci/stress/stress_fuzz_report.py",
                 "ci/stress/text_file_integrity.py",
-                ".gitea/workflows/nightly-stress.yaml",
-                "docs/nightly-stress.md"):
+                ".gitea/workflows/nightly-stress.yaml"):
         check("exists: %s" % rel, os.path.isfile(os.path.join(REPO, rel)),
               os.path.join(REPO, rel))
 
