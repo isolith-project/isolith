@@ -31,9 +31,8 @@
 
   <h2>1. Prerequisites (every install)</h2>
   <ul>
-    <li>Ubuntu 24.04 (aarch64 or amd64) or Debian 12, on a U1/VM-class host.
-        The NAS is the repository and storage host only; it never runs
-        Keelworks services.</li>
+    <li>Ubuntu 24.04 (aarch64 or amd64) or Debian 12, on any recent server or
+        VM.</li>
     <li>Docker Engine 24+ running (<code>docker info</code>) and Docker Compose v2.</li>
     <li>About 5 GB free disk, <code>curl</code>, <code>git</code>.</li>
     <li>Online path: outbound internet to fetch build base images and crates.
@@ -89,7 +88,7 @@ export SIGN_KEY_ID=oep-airgap-signing
     --out dist/</code></pre>
   <p>Output: <code>keelworks-offline-0.1.0.tar.gz</code> (the bundle),
      <code>.sha256</code> (media checksum), and <code>.sig</code>
-     (detached signature, P11).</p>
+     (detached signature).</p>
   <h3>On the air-gapped target</h3>
   <pre><code>sha256sum -c keelworks-offline-0.1.0.tar.gz.sha256
 sudo ./airgap-verify.sh --bundle /media/usb/keelworks-offline-0.1.0.tar.gz
@@ -143,10 +142,10 @@ scripts/backup/vault-restore-check.sh          # restore round-trip proof</code>
 
   <h2>6. Disaster recovery</h2>
   <p>
-    The quarterly DR runbook restores the full vault from the P10-M1 backup to
-    a fresh U1/VM-class machine in under 60 minutes, verified by health checks
-    and a real vault read. Run <code>scripts/dr/drill-restore.sh</code> or the
-    manual procedure in <code>workstreams/P10-M3/dr-runbook.md</code>. Schedule an off-cycle
+    The quarterly DR runbook restores the full vault to a fresh machine in
+    under 60 minutes, verified by health checks and a real vault read. Run
+    <code>scripts/dr/drill-restore.sh</code> or the manual procedure in
+    <code>workstreams/P10-M3/dr-runbook.md</code>. Schedule an off-cycle
     drill whenever the vault schema, backup layout, restore procedure, or a
     release train changes.
   </p>
@@ -158,7 +157,7 @@ scripts/backup/vault-restore-check.sh          # restore round-trip proof</code>
     finds nothing, or cannot reach anything; no update gate ever prevents
     launch. It polls a configurable source (remote URL, on-site mirror, or an
     offline signed bundle placed by an admin), verifies signed manifests before
-    any payload, and never fails closed. Telemetry stays out (P0-M5-T02).
+    any payload, and never fails closed. Telemetry stays out by default.
   </p>
 
   <h2>8. Health checks, honest summary</h2>
@@ -176,7 +175,7 @@ scripts/backup/vault-restore-check.sh          # restore round-trip proof</code>
 <footer class="site">
   <div class="wrap">
     Open Engineering Platform documentation - version 0.1.0. Sourced from the
-    committed P10 stack records (P10-M1 stack, P10-M2 air-gap, P10-M3 DR).
+    delivery stack documentation and operational runbooks.
   </div>
 </footer>
 </body>

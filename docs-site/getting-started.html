@@ -24,8 +24,8 @@
   <h1>Getting started</h1>
   <p class="lead">
     This guide walks a new team from a clean machine to a verified OEP install
-    with every health check green. It is the same checklist the release gate
-    verified, top to bottom, on two machines.
+    with every health check green. It is the same checklist the release build
+    runs end to end.
   </p>
 
   <h2>What you get</h2>
@@ -47,8 +47,8 @@
 
   <h2>Prerequisites</h2>
   <ul>
-    <li>Ubuntu 24.04 (aarch64 or amd64), Debian 12, or a U1/VM-class host with
-        Docker Engine 24+ running and Docker Compose v2.</li>
+    <li>Ubuntu 24.04 (aarch64 or amd64), Debian 12, or any recent VM or small
+        server with Docker Engine 24+ running and Docker Compose v2.</li>
     <li>About 5 GB free disk, <code>curl</code>, <code>git</code>.</li>
     <li>For the online path: outbound internet to fetch build base images and
         crates. For an air-gap machine: the signed offline bundle instead

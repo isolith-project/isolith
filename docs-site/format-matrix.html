@@ -24,7 +24,7 @@
   <h1>Format capability matrix</h1>
   <p class="lead">
     What each OEP reader opens, and at what fidelity. Every row below maps
-    one-to-one to a committed general-availability (GA) gate report - the
+    one-to-one to a published release report; it is the
     measured result of that reader on real material. Nothing here claims more
     than the cited report verified. Where a reader has a documented limit, the
     limit is a row of its own.
@@ -39,14 +39,14 @@
         <th>Dir</th>
         <th>What it opens / restores</th>
         <th>Fidelity</th>
-        <th>Evidence (committed GA report)</th>
+        <th>Evidence (published report)</th>
         <th>Known limit (also from the report)</th>
       </tr>
     </thead>
     <tbody>
       <tr id="cgr-read">
         <td><strong>CGR</strong> <code>.cgr</code> (V5_CFV2 and modern spatial-mesh)</td>
-        <td><code>oep-cgr</code> (P2)</td>
+        <td><code>oep-cgr</code></td>
         <td>read</td>
         <td>Triangle tessellation: vertices and index triangles. Approximate geometry; no B-Rep and no design intent (CGR is a mesh carrier by format). Modern-era real spatial-mesh decode with a numeric-epsilon golden (NIST V5-6R2023 STC-06, two independent readers agree).</td>
         <td><span class="tag pass">mesh-approximate</span><br><span class="tag pass">mesh-golden</span></td>
@@ -55,7 +55,7 @@
       </tr>
       <tr id="cgr-export-gltf">
         <td><strong>CGR → glTF / GLB</strong></td>
-        <td><code>oep-cgr</code> + <code>oep-worker</code> (P2 / P9)</td>
+        <td><code>oep-cgr</code> + <code>oep-worker</code></td>
         <td>write</td>
         <td>Exports the read mesh (with color/material) to glTF/GLB; the convert worker (<code>cgr2gltf</code>) dogfoods it with hash-verified outputs in the vault.</td>
         <td><span class="tag pass">mesh-golden</span></td>
@@ -64,7 +64,7 @@
       </tr>
       <tr id="3dxml-read">
         <td><strong>3DXML</strong> <code>.3dxml</code>/<code>.3DXML</code> (ZIP or standalone ASCII)</td>
-        <td><code>oep-3dxml</code> (P3)</td>
+        <td><code>oep-3dxml</code></td>
         <td>read</td>
         <td>3DXML container (coherent ZIP + <code>Manifest.xml</code> BOM, or standalone ASCII model), XML representation nodes/references/instances, surface decoding (Gregory patch to NURBS), and tessellation to a triangle mesh with quality control against recorded topology goldens.</td>
         <td><span class="tag pass">container-bom</span><br><span class="tag pass">surfaces-to-mesh</span><br><span class="tag pass">mesh-golden</span></td>
@@ -73,7 +73,7 @@
       </tr>
       <tr id="3dxml-write">
         <td><strong>3DXML (write)</strong></td>
-        <td><code>oep-3dxml</code> (P3)</td>
+        <td><code>oep-3dxml</code></td>
         <td>write</td>
         <td>Deterministic encoder: internal mesh to a 3DXML package (manifest, model doc, representation). Write &rarr; read-back &rarr; re-write is a byte-class fixed point for our own encoder.</td>
         <td><span class="tag pass">roundtrip-byte-fixed</span></td>
@@ -82,7 +82,7 @@
       </tr>
       <tr id="3drep-header">
         <td><strong>3DRep</strong> <code>.3DRep</code> (V5_CFV3)</td>
-        <td><code>oep-3dxml</code> (P3)</td>
+        <td><code>oep-3dxml</code></td>
         <td>read</td>
         <td>Binary .3DRep container and record header decode (reverse-engineering note).</td>
         <td><span class="tag gap">header-parse</span></td>
@@ -91,7 +91,7 @@
       </tr>
       <tr id="step-read">
         <td><strong>STEP</strong> AP203 / AP214 / AP242 <code>.step</code> / <code>.stp</code></td>
-        <td><code>oep-step</code> (P4)</td>
+        <td><code>oep-step</code></td>
         <td>read</td>
         <td>Exact B-Rep topology (MANIFOLD_SOLID_BREP) and product structure. Syntax, AP-scheme and structure parity pass on 12 real NIST/CAx suite files; the read lane walks the B-Rep for round trip with committed goldens.</td>
         <td><span class="tag pass">brep-topology</span></td>
@@ -100,7 +100,7 @@
       </tr>
       <tr id="step-write">
         <td><strong>STEP AP242 (write)</strong></td>
-        <td><code>oep-step</code> (P4)</td>
+        <td><code>oep-step</code></td>
         <td>write</td>
         <td>Parts and assemblies to AP242 with real MANIFOLD_SOLID_BREP topology that Open CASCADE (OCCT) and FreeCAD can build. Honest tessellated marking; PMI export re-done over-and-back correctly (AP242).</td>
         <td><span class="tag pass">brep-topology</span></td>
@@ -109,7 +109,7 @@
       </tr>
       <tr id="step-accuracy">
         <td><strong>STEP accuracy (measured)</strong></td>
-        <td><code>oep-step</code>/probe (P4)</td>
+        <td><code>oep-step</code>/probe</td>
         <td>read</td>
         <td>Measured geometry fidelity on real corpus: symmetric Hausdorff distance and volume error, both within a numeric epsilon.</td>
         <td><span class="tag pass">accuracy-within-eps</span></td>
@@ -118,7 +118,7 @@
       </tr>
       <tr id="step-pmi">
         <td><strong>STEP AP242 PMI (semantic)</strong></td>
-        <td><code>oep-pmi</code> (P4)</td>
+        <td><code>oep-pmi</code></td>
         <td>read</td>
         <td>Semantic GD&amp;T, datums and tolerances import (through the step-io reference reader path), with a published, honest PMI fidelity matrix over 17 real NIST AP242 files (64 cells).</td>
         <td><span class="tag pass">pmi-semantic</span><br><span class="tag fail">pmi-reader-gap</span></td>
@@ -127,7 +127,7 @@
       </tr>
       <tr id="step-mbd">
         <td><strong>STEP MBD validation</strong></td>
-        <td><code>oep-pmi</code> + <code>oep_tooling.mbd_validate</code> (P4)</td>
+        <td><code>oep-pmi</code> + <code>oep_tooling.mbd_validate</code></td>
         <td>read</td>
         <td>MBD validator runs rule sets (Y14.41 and prime) over real STEP PMI corpus rows and reports findings; inputs never dropped, and UNVERIFIED never counts as PASS.</td>
         <td><span class="tag pass">mbd-checked</span></td>
@@ -136,7 +136,7 @@
       </tr>
       <tr id="qif">
         <td><strong>QIF</strong> <code>.qif</code></td>
-        <td><code>oep-qif</code> (P4)</td>
+        <td><code>oep-qif</code></td>
         <td>read / write</td>
         <td>QIF basic cut: real NIST MBD files round-trip; output is XSD-valid.</td>
         <td><span class="tag pass">qif-basic</span></td>
@@ -154,7 +154,7 @@
       </tr>
       <tr id="internal-canonical">
         <td><strong>OEP canonical</strong> <code>.oepgeo.json</code> / <code>.oepmesh</code></td>
-        <td><code>oep-geo</code> (P6) / <code>oep-cgr</code> (P2)</td>
+        <td><code>oep-geo</code> / <code>oep-cgr</code></td>
         <td>read / write</td>
         <td>Our own canonical model representation (our-own-format serde) and mesh carrier: the single internal format readers and writers map into.</td>
         <td><span class="tag pass">internal-canonical</span></td>
@@ -163,7 +163,7 @@
       </tr>
       <tr id="stl">
         <td><strong>STL</strong> <code>.stl</code></td>
-        <td>corpus/golden (P0/P2)</td>
+        <td>corpus/golden</td>
         <td>read</td>
         <td>Mesh record read with golden-count checks (e.g. box: 12 facets, 36 vertices within tolerance).</td>
         <td><span class="tag pass">mesh-golden</span></td>

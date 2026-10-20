@@ -1,69 +1,67 @@
 # Isolith
 
-Isolith is an open-source, self-hosted engineering platform for teams that
-need to own their own CAD data. It reads the proprietary geometry files
-sub-tier suppliers actually exchange (CGR, 3DXML, CATPart), gives you a
-geometry core, a self-hosted PDM layer, and P2P compute, and replaces the
-per-seat paywall with software you run yourself.
+Isolith is an open-source engineering platform you run on your own machines,
+built for teams that need to own their CAD data. It reads the proprietary
+geometry files suppliers actually exchange (CGR, 3DXML, CATPart), gives you a
+geometry core, a self-hosted PDM, and peer-to-peer compute, and it replaces
+per-seat license fees with software you install yourself.
 
-The name Isolith is the public product brand. The internal program codename is
-"Keelworks", which is never used on a public surface because it collides with
-a registered mark (see `assets/brand/NAME.md` and decision record 0001).
+"Isolith" is the product name. The project's working codename, Keelworks, is
+kept internal because it collides with a registered trademark; see
+`assets/brand/NAME.md`.
 
-## Why it exists
+## What it is for
 
-Commercial CAD/PLM gives you the formats and the platform the vendor controls.
-Interop readers are expensive and subscription-gated, native files are
-proprietary, and for defense and aerospace supply chains the exported models
-can carry data the customer does not want in a foreign cloud. Isolith is built
-for that gap: sovereign, self-hosted, ITAR-clean interchange, with the
-documented formats (STEP AP242, QIF, JT) covered and the proprietary exchange
-formats read first, because that is where engineering teams actually bleed.
+Commercial CAD and PLM tie your data to the vendor's formats, pricing, and in
+some cases their cloud. Interop readers are expensive, native files are
+undocumented, and for defense and aerospace teams the models can carry data
+the customer will not let sit in a foreign data center. Isolith targets that
+gap: you keep the data, the formats stay readable, and the whole thing
+installs inside your own network. The documented exchange formats (STEP
+AP242, QIF, JT) are covered, and the proprietary exchange formats are the
+first things the readers handle.
 
 ## Status
 
-Wave 3 (release-readiness) is complete. The 2027.1 train candidate
-`2027.1.0-rc2` is cut from `main`, signed, and published to the canary
-repository; `main` is the integrated development head. 2027.1.0-rc1 did not
-carry the docs site or brand kit, rc2 does. The Program is private on the NAS
-Gitea until a public release is approved.
+Pre-release. The code builds with all tests passing, and a signed install
+candidate is published on the Releases page for review. Do not plan around
+stable behavior yet; things will change before general availability.
 
 ## Quick start
 
-The whole stack (PDM, viewer, P2P dashboard, docs site) runs from one
-command, either as containers or from source.
+Two ways to run the whole stack (PDM, viewer, compute dashboard, docs site):
+as containers, or from source.
 
 ```sh
-# Containers: from the deploy directory on a machine with docker
-cd workstreams/P10-M1/deploy
-./install.sh            # builds/loads the stack image, starts all services
+# Containers
+git clone <your-repo-url> keelworks
+cd keelworks/workstreams/P10-M1/deploy
+./install.sh
 
 # From source
 cargo build --release
-./target/release/oep-pdm       # REST API on http://127.0.0.1:8787
-./target/release/oep-docs      # docs site on http://127.0.0.1:8792
+./target/release/oep-pdm    # REST API on http://127.0.0.1:8787
+./target/release/oep-docs   # docs site on http://127.0.0.1:8792
 ```
 
-Stop with `./install.sh stop`. The getting-started guide, admin guide, and the
-honest format matrix are served by the docs site itself (see the docs section
-below).
+Stop a container stack with `./install.sh --down`. The getting-started guide,
+admin guide, and the format capability matrix are served by the docs site
+itself.
 
-## What's inside
+## What's in it
 
-- Readers for the interchange formats primes rely on: CGR (triangle
-  tessellation), 3DXML, and STEP AP242 with semantic PMI; QIF and JT interop
-  are in the program scope.
-- Geometry core (`oep-geo`): one canonical model, golden-tested against real
-  material, not a toy.
-- Self-hosted PDM (`oep-pdm`): items, revisions, working sets, RBAC and
-  tamper-evident audit, REST API, secure by default.
-- P2P compute lane: job spec, scheduler, sandboxed render/convert workers with
-  content-hash-verified outputs.
-- Preview viewer and a static docs site, both part of the stack.
+- Readers for the exchange formats teams rely on: CGR (triangle
+  tessellation), 3DXML, and STEP AP242 with semantic PMI. QIF and JT are next.
+- A geometry core verified against real files, not just synthetic fixtures.
+- A self-hosted PDM: vault storage, revisions, roles and audit on a REST API,
+  secure by default.
+- A compute lane: job scheduling plus sandboxed render and convert workers
+  with checked outputs.
+- A preview viewer and this documentation site, both part of the same stack.
 
-Honest limits are stated, not hidden: the native CATPart reader is a gated
-two-year scope, and the format matrix in the docs site shows exactly what each
-reader does and does not support.
+Limits are stated rather than hidden: the format matrix tells you exactly what
+each reader opens and does not open today, and the native CATPart reader is
+gated by a milestone decision, not a date.
 
 ## Build and test
 
@@ -72,23 +70,18 @@ cargo build --workspace && cargo test
 uv run pytest tests/
 ```
 
-The repo layout map lives in `docs/layout.md`; workstream records (ADRs,
-evidence, milestones) live under `workstreams/`. The pre-commit quality gate is
-in `ci/`.
+## License and contributing
 
-## Contributing and license
+Apache-2.0 for applications and libraries; AGPL-3.0 for the server, PDM, and
+P2P components. No GPL-3.0 ships in the delivered software. Exports are
+classified per release.
 
-- Charter (mission, non-goals, license posture): `charter.md`
-- Contribution guidelines: `CONTRIBUTING.md`
-- Identity kit (mark, palette, usage rules, trademark evidence):
-  `assets/brand/`
-
-License: Apache-2.0 for applications and libraries; AGPL-3.0 for the
-server/PDM and P2P orchestration components. No GPL-3.0 ships in delivered
-software. Exports are classified per release (ITAR/ECCN posture).
+- Charter: `charter.md`
+- Contributions: `CONTRIBUTING.md`
+- Identity kit: `assets/brand/`
 
 ## Documentation
 
-- Docs site (getting started, admin guide, honest format matrix):
-  `docs-site/index.html`, served by `oep-docs` in the stack
+- Docs site (getting started, admin guide, format matrix):
+  `docs-site/index.html`
 - Repo layout: `docs/layout.md`
