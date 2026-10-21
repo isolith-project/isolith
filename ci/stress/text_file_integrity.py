@@ -21,10 +21,14 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(
 
 EXCLUDE_DIRS = {".git", ".worktrees", "target", ".venv", "__pycache__",
                 "node_modules", ".cache", "build"}
+# Binary or non-text by content, regardless of NUL heuristic:
+# - .ppm: binary P6 image data (no NUL required; bright pixels are NUL-free)
+# - .typescript: script(1) session captures carry ESC (0x1b) + CR control bytes
 SKIP_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf", ".zip",
             ".gz", ".bz2", ".xz", ".7z", ".bin", ".git", ".lock", ".woff",
             ".woff2", ".ttf", ".otf", ".jar", ".wasm", ".so", ".o", ".a",
-            ".exe", ".dll", ".db", ".sqlite", ".pyc", ".whl", ".tar"}
+            ".exe", ".dll", ".db", ".sqlite", ".pyc", ".whl", ".tar",
+            ".ppm", ".typescript"}
 
 
 def is_binary(path):
