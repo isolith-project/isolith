@@ -22,7 +22,9 @@ jobs:
       - name: rustfmt check
         run: cargo fmt --all -- --check
       - name: clippy (deny warnings)
-        run: cargo clippy --workspace --all-targets -- -D warnings 2>&1 | tail -25
+        run: |
+          set -o pipefail
+          cargo clippy --workspace --all-targets -- -D warnings 2>&1 | tail -25
 
   unit:
     name: unit
@@ -36,7 +38,9 @@ jobs:
           git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git" .
           git log --oneline -1
       - name: Unit tests
-        run: cargo test --workspace --lib 2>&1 | tail -25
+        run: |
+          set -o pipefail
+          cargo test --workspace --lib 2>&1 | tail -25
 
   integration:
     name: integration
@@ -50,7 +54,9 @@ jobs:
           git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git" .
           git log --oneline -1
       - name: Integration tests
-        run: cargo test --workspace --tests 2>&1 | tail -25
+        run: |
+          set -o pipefail
+          cargo test --workspace --tests 2>&1 | tail -25
 
   # P2-M6-T03: the P2 GA gate -- every corpus mesh classified (OPEN or SKIP,
   # zero panics) AND 100% of golden files PASS within epsilon. Restored here by
