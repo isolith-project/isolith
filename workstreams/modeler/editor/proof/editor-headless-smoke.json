@@ -1,0 +1,11 @@
+{
+  "task": "INTERACTIVE-SHELL smoke + rehearsal",
+  "timestamp": "2026-10-22T22:24:31Z",
+  "summary": "total=3 PASS=2 FAIL=0 SKIP=1",
+  "exit_code": 0,
+  "rows": [
+    {"leg":"DOCS","id":"docs","status":"PASS","detail":"demo manifest + STEP + workstream doc present; help index at 1.2.0"},
+    {"leg":"DRIVE-A","id":"drive-A","status":"PASS","detail":"full acceptance path on machine A (U1): solve -> extrude -> live edit -> STEP + reimport"},
+    {"leg":"DRIVE-B","id":"drive-B","status":"SKIP","detail":"--drive-only (no second host)"}
+  ]
+}

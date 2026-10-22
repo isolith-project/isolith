@@ -1,0 +1,36 @@
+editor open: part=part-1 body=body-1 sketch=sketch-1
+sketch point p0 at (0, 0)
+sketch point p1 at (3, 1)
+sketch point p2 at (4, 4)
+sketch point p3 at (1, 5)
+sketch line l0 (p0) to (p1)
+sketch line l1 (p1) to (p2)
+sketch line l2 (p2) to (p3)
+sketch line l3 (p3) to (p0)
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+variable width = 80 (volume n/a)
+variable height = 40 (volume n/a)
+solved dof=0 residual=6.181e-13 dims=2 points=4 lines=4
+  height = 40.000000
+  width = 80.000000
+extruded oep-feature-extrude-2: volume 32000.000000 faces=12 edges=12 bbox [2.9960653099084245e-13, 3.203431985822347e-13, 0.0, 80.0, 40.0, 10.0]
+camera framed
+rendered demos/editor-sketch-extrude/edpart-before.png sha256=8bd51e85c554a45a77298021861c1559ee9244c4f47eba55a866f8afdce5b1bc 640x480
+rendered demos/editor-sketch-extrude/edpart-before.ppm sha256=72eb7acf34d7e32f9e6e015cfc7d6234115f608ee077d16bd257e3351613a1d4 640x480
+props volume=32000.000000 bbox=Some([2.9960653099084245e-13, 3.203431985822347e-13, 0.0, 80.0, 40.0, 10.0]) features=3 dof=0 points=4 lines=4 constraints=7
+  var height = 40
+  var width = 80
+variable width = 120 (volume 32000.000000 -> 48000.000000 live recompute)
+rendered demos/editor-sketch-extrude/edpart-after.png sha256=657b12548af5b171934b8b55bf30272ada0faaa75b2e4f0f0241754fa9ebc1c6 640x480
+props volume=48000.000000 bbox=Some([-2.1461502483477966e-14, 3.764918301977279e-15, 0.0, 120.0, 40.0, 10.0]) features=3 dof=0 points=4 lines=4 constraints=7
+  var height = 40
+  var width = 120
+exported STEP demos/editor-sketch-extrude/edpart.step: faces=12 shells=1 closed=1
+undo: op=previous edit retained=18
+redo: op=next edit retained=0

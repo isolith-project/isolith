@@ -91,6 +91,24 @@ fn vec3_arr(a: [f64; 3]) -> Vec3 {
     Vec3::new(a[0], a[1], a[2])
 }
 
+/// A real triangle mesh attached to a primitive (world space).
+///
+/// The box-proxy era renders bodies as their AABB; the interactive editor
+/// attaches the actual derived solid mesh ([`oep_geo::tessellate`]) here so
+/// the viewport shows real faces and edges. `edges` are index pairs into
+/// `positions` (boundary wires). When `triangles` is empty but `edges` is
+/// not, the primitive is a pure wire overlay (e.g. a sketch drawn in the
+/// viewport).
+#[derive(Debug, Clone, PartialEq)]
+pub struct MeshData {
+    /// Vertex positions `[x, y, z]` in world space.
+    pub positions: Vec<[f32; 3]>,
+    /// Indexed triangles into [`MeshData::positions`].
+    pub triangles: Vec<[u32; 3]>,
+    /// Boundary/overlay edge polylines (index pairs into positions).
+    pub edges: Vec<[usize; 2]>,
+}
+
 /// One selectable, drawable leaf of the viewer scene.
 #[derive(Debug, Clone)]
 pub struct Primitive {
@@ -111,12 +129,71 @@ pub struct Primitive {
     pub world_corners: [Vec3; 8],
     /// Conservative world-space AABB of the transformed corners.
     pub world: Aabb,
+    /// Real solid mesh (world space) when the editor attaches one; `None` for
+    /// the classic box proxy.
+    pub mesh: Option<MeshData>,
+    /// Selection highlight: when `true` the renderer draws this primitive with
+    /// the theme highlight colour (faces and edges); identity is still the
+    /// structured [`crate::pick::Selection`], never pixel color.
+    pub highlighted: bool,
 }
 
 impl Primitive {
     /// The world-space AABB.
     pub fn world_aabb(&self) -> Aabb {
         self.world
+    }
+
+    /// Build a mesh primitive (world space, identity pose) directly from a
+    /// derived solid mesh, computing its AABB for picking/framing. The part
+    /// owns `part_id`; the body owns `body_id`.
+    pub fn from_mesh(
+        id: impl Into<String>,
+        part_id: impl Into<String>,
+        body_id: impl Into<String>,
+        mesh: MeshData,
+    ) -> Self {
+        let pts: Vec<Vec3> = mesh
+            .positions
+            .iter()
+            .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64))
+            .collect();
+        let world = if pts.is_empty() {
+            Aabb::new(Vec3::zero(), Vec3::zero())
+        } else {
+            Aabb::from_points(pts.iter()).expect("non-empty mesh bounds")
+        };
+        let local = world;
+        let world_corners = world.corners();
+        Self {
+            id: id.into(),
+            part_id: part_id.into(),
+            body_id: body_id.into(),
+            instance_ids: Vec::new(),
+            local,
+            transform: Mat4::identity(),
+            world_corners,
+            world,
+            mesh: Some(mesh),
+            highlighted: false,
+        }
+    }
+
+    /// A pure wire overlay primitive (sketch points/lines drawn in the
+    /// viewport): no filled faces, only the listed edges. A point is a
+    /// zero-length edge; a segment is one edge.
+    pub fn wire(
+        id: impl Into<String>,
+        part_id: impl Into<String>,
+        points: &[[f32; 3]],
+        edges: &[[usize; 2]],
+    ) -> Self {
+        let mesh = MeshData {
+            positions: points.to_vec(),
+            triangles: Vec::new(),
+            edges: edges.to_vec(),
+        };
+        Self::from_mesh(id, part_id, "", mesh)
     }
 }
 
@@ -187,6 +264,8 @@ fn emit_part_bodies(
             transform: *transform,
             world_corners,
             world,
+            mesh: None,
+            highlighted: false,
         });
     }
 }

@@ -63,12 +63,33 @@ CANONICAL_COMMANDS = [
     ("assem:solve", "assem:solve", "assembly"),
     ("assem:render", "assem:render:PATH", "assembly"),
     ("assem:animate", "assem:animate:FRAMES:OUT_DIR", "assembly"),
+    ("editor:open", "editor:open", "editor"),
+    ("sk:point", "sk:point:X:Y", "editor"),
+    ("sk:line", "sk:line:START:END", "editor"),
+    ("sk:constrain", "sk:constrain:KIND:ARGS...", "editor"),
+    ("sk:solve", "sk:solve", "editor"),
+    ("sk:render", "sk:render:PATH", "editor"),
+    ("sk:props", "sk:props", "editor"),
+    ("vars:list", "vars:list", "editor"),
+    ("vars:set", "vars:set:NAME:VALUE", "editor"),
+    ("feat:extrude", "feat:extrude:DEPTH", "editor"),
+    ("feat:revolve", "feat:revolve:ANGLE", "editor"),
+    ("feat:recompute", "feat:recompute", "editor"),
+    ("view:frame", "view:frame", "editor"),
+    ("view:orbit", "view:orbit:YAW:PITCH", "editor"),
+    ("view:zoom", "view:zoom:FACTOR", "editor"),
+    ("view:pan", "view:pan:DX:DY", "editor"),
+    ("view:pick", "view:pick:X:Y", "editor"),
+    ("export:step", "export:step:PATH", "editor"),
+    ("props", "props", "editor"),
+    ("undo", "undo", "editor"),
+    ("redo", "redo", "editor"),
     ("journal", "journal", "inspection"),
     ("help", "help [COMMAND]", "help"),
 ]
 CANONICAL_NAMES = [c[0] for c in CANONICAL_COMMANDS]
 CANONICAL_USAGES = [c[1] for c in CANONICAL_COMMANDS]
-EXPECT_VERSION = "1.1.0"
+EXPECT_VERSION = "1.2.0"
 
 EM_DASH = "\u2014"
 CURLY = "\u201c\u201d\u2018\u2019"

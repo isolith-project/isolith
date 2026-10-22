@@ -104,58 +104,45 @@ pub fn render(
     // Fixed deterministic light direction for Lambert shading.
     let light = Vec3::new(-0.4, 0.8, 0.45).normalize().expect("light dir");
 
-    // Collect faces, frustum/clip culled, transformed to NDC with view depth.
+    // Collect faces (box proxies or real meshes), frustum/clip culled,
+    // transformed to NDC with view depth; plus overlay wire segments
+    // (solid boundary edges and sketch wires) drawn after the fill.
     let mut faces: Vec<FaceNdc> = Vec::new();
+    let mut wires: Vec<([Vec3; 2], [u8; 4])> = Vec::new();
     for prim in &scene.primitives {
-        let color = theme::part_color(&prim.part_id);
-        for face in box_faces(prim) {
-            // Clip against every enabled clip plane.
-            let mut clipped: Vec<Vec3> = face.to_vec();
-            for pl in clips {
-                clipped = pl.clip_polygon(&clipped);
-                if clipped.len() < 3 {
-                    break;
+        let color = if prim.highlighted {
+            [
+                theme::HIGHLIGHT_RGB[0],
+                theme::HIGHLIGHT_RGB[1],
+                theme::HIGHLIGHT_RGB[2],
+                255,
+            ]
+        } else {
+            theme::part_color(&prim.part_id)
+        };
+        match &prim.mesh {
+            Some(mesh) => {
+                for t in &mesh.triangles {
+                    let poly = tri_poly(t, &mesh.positions);
+                    push_polygon(&mut faces, &poly, color, &world_to_view, &vp, clips, &light);
+                }
+                if !mesh.edges.is_empty() {
+                    let edge_color = if prim.highlighted { color } else { EDGE_RGB };
+                    for [ia, ib] in &mesh.edges {
+                        let (Some(pa), Some(pb)) =
+                            (pos(&mesh.positions, *ia), pos(&mesh.positions, *ib))
+                        else {
+                            continue;
+                        };
+                        wires.push(([pa, pb], edge_color));
+                    }
                 }
             }
-            if clipped.len() < 3 {
-                continue;
-            }
-            // Deterministic world-space face normal (Newell's method over the
-            // clipped polygon) -> Lambert shade factor.
-            let normal = newell_normal(&clipped);
-            let shade = normal.dot(&light).max(0.0) * 0.55 + 0.45;
-            // View + NDC transform and view depth.
-            let mut ok = true;
-            let mut pts: Vec<[f64; 3]> = Vec::with_capacity(clipped.len());
-            let mut view_depth_sum = 0.0f64;
-            for p in &clipped {
-                let view = world_to_view.transform_point(p);
-                let clip = vp.transform_point(p);
-                let w = clip_w(&vp, &view);
-                if w.abs() < 1e-9 {
-                    ok = false;
-                    break;
+            None => {
+                for face in box_faces(prim) {
+                    push_polygon(&mut faces, &face, color, &world_to_view, &vp, clips, &light);
                 }
-                let ndc_x = clip.x / w;
-                let ndc_y = clip.y / w;
-                let ndc_z = clip.z / w;
-                // Near/far frustum cull (NDC z in [-1,1]).
-                if ndc_z < -1.0 || ndc_z > 1.0 {
-                    ok = false;
-                    break;
-                }
-                view_depth_sum += view.z;
-                pts.push([ndc_x, ndc_y, ndc_z]);
             }
-            if !ok || pts.len() < 3 {
-                continue;
-            }
-            faces.push(FaceNdc {
-                _pts: pts,
-                depth: view_depth_sum / clipped.len() as f64,
-                color,
-                shade,
-            });
         }
     }
 
@@ -174,7 +161,202 @@ pub fn render(
             fill_triangle(&mut img, tri, shade_color(face.color, face.shade));
         }
     }
+
+    // Overlay wires on top: solid boundary edges and sketch lines. Drawn
+    // last so silhouette and guidance lines read above the fill.
+    for (seg, color) in wires {
+        draw_wire(&mut img, seg, &world_to_view, &vp, color);
+    }
     img
+}
+
+/// The world-space polygon of one indexed mesh triangle.
+fn tri_poly(t: &[u32; 3], positions: &[[f32; 3]]) -> Vec<Vec3> {
+    let mut v = Vec::with_capacity(3);
+    for i in t {
+        if let Some(p) = pos(positions, *i as usize) {
+            v.push(p);
+        }
+    }
+    v
+}
+
+/// The world-space point at `positions[i]`, if in range.
+fn pos(positions: &[[f32; 3]], i: usize) -> Option<Vec3> {
+    positions
+        .get(i)
+        .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64))
+}
+
+/// Push one world-space polygon through clipping, shading, view/NDC transform
+/// and near/far cull into the face list (the shared painter pipeline).
+#[allow(clippy::too_many_arguments)]
+fn push_polygon(
+    faces: &mut Vec<FaceNdc>,
+    poly: &[Vec3],
+    color: [u8; 4],
+    world_to_view: &Mat4,
+    vp: &Mat4,
+    clips: &[ClipPlane],
+    light: &Vec3,
+) {
+    if poly.len() < 3 {
+        return;
+    }
+    let mut clipped: Vec<Vec3> = poly.to_vec();
+    for pl in clips {
+        clipped = pl.clip_polygon(&clipped);
+        if clipped.len() < 3 {
+            break;
+        }
+    }
+    if clipped.len() < 3 {
+        return;
+    }
+    // Deterministic world-space face normal (Newell's method over the
+    // clipped polygon) -> Lambert shade factor.
+    let normal = newell_normal(&clipped);
+    let shade = normal.dot(light).max(0.0) * 0.55 + 0.45;
+    // View + NDC transform and view depth.
+    let mut ok = true;
+    let mut pts: Vec<[f64; 3]> = Vec::with_capacity(clipped.len());
+    let mut view_depth_sum = 0.0f64;
+    for p in &clipped {
+        let view = world_to_view.transform_point(p);
+        let clip = vp.transform_point(p);
+        let w = clip_w(vp, &view);
+        if w.abs() < 1e-9 {
+            ok = false;
+            break;
+        }
+        let ndc_x = clip.x / w;
+        let ndc_y = clip.y / w;
+        let ndc_z = clip.z / w;
+        // Near/far frustum cull (NDC z in [-1,1]).
+        if ndc_z < -1.0 || ndc_z > 1.0 {
+            ok = false;
+            break;
+        }
+        view_depth_sum += view.z;
+        pts.push([ndc_x, ndc_y, ndc_z]);
+    }
+    if !ok || pts.len() < 3 {
+        return;
+    }
+    faces.push(FaceNdc {
+        _pts: pts,
+        depth: view_depth_sum / clipped.len() as f64,
+        color,
+        shade,
+    });
+}
+
+/// Overlay wire color for solid boundary edges (neutral light gray).
+const EDGE_RGB: [u8; 4] = [170, 176, 184, 255];
+
+/// Rasterize one wire segment: project both endpoints to NDC, clip the
+/// segment to the visible NDC cube, then draw it as a 1px line.
+fn draw_wire(img: &mut RgbaImage, seg: [Vec3; 2], world_to_view: &Mat4, vp: &Mat4, color: [u8; 4]) {
+    let mut ndc = [[0.0f64; 3]; 2];
+    for (k, p) in seg.iter().enumerate() {
+        let view = world_to_view.transform_point(p);
+        let clip = vp.transform_point(p);
+        let w = clip_w(vp, &view);
+        if w.abs() < 1e-9 {
+            return;
+        }
+        ndc[k] = [clip.x / w, clip.y / w, clip.z / w];
+    }
+    let Some((t0, t1)) = clip_ndc_line(ndc[0], ndc[1]) else {
+        return;
+    };
+    let a = lerp3(ndc[0], ndc[1], t0);
+    let b = lerp3(ndc[0], ndc[1], t1);
+    let to_px = |p: &[f64; 3]| -> (f64, f64) {
+        let w = img.width as f64;
+        let h = img.height as f64;
+        ((p[0] * 0.5 + 0.5) * w, (0.5 - p[1] * 0.5) * h)
+    };
+    let (ax, ay) = to_px(&a);
+    let (bx, by) = to_px(&b);
+    let (cx0, cy0) = clip_point_to_rect(ax.round(), ay.round(), img.width, img.height);
+    let (cx1, cy1) = clip_point_to_rect(bx.round(), by.round(), img.width, img.height);
+    rasterize_line(img, cx0, cy0, cx1, cy1, color);
+}
+
+/// Parametrically clip a segment in NDC space to the visible cube
+/// `[-1,1]^3`; returns the surviving `t` interval (None when fully out).
+fn clip_ndc_line(a: [f64; 3], b: [f64; 3]) -> Option<(f64, f64)> {
+    let mut t0 = 0.0f64;
+    let mut t1 = 1.0f64;
+    for axis in 0..3 {
+        let d0 = -1.0 - a[axis];
+        let d1 = 1.0 - a[axis];
+        let dd = b[axis] - a[axis];
+        if dd.abs() < 1e-12 {
+            if d0 < 0.0 || d1 < 0.0 {
+                return None;
+            }
+            continue;
+        }
+        let ta = d0 / dd;
+        let tb = d1 / dd;
+        let (lo, hi) = if ta < tb { (ta, tb) } else { (tb, ta) };
+        t0 = t0.max(lo);
+        t1 = t1.min(hi);
+        if t0 > t1 {
+            return None;
+        }
+    }
+    if t1 < 0.0 || t0 > 1.0 {
+        return None;
+    }
+    Some((t0.max(0.0), t1.min(1.0)))
+}
+
+fn lerp3(a: [f64; 3], b: [f64; 3], t: f64) -> [f64; 3] {
+    [
+        a[0] + (b[0] - a[0]) * t,
+        a[1] + (b[1] - a[1]) * t,
+        a[2] + (b[2] - a[2]) * t,
+    ]
+}
+
+/// Integer Bresenham line from `(x0,y0)` to `(x1,y1)`, clipped to the image.
+fn rasterize_line(img: &mut RgbaImage, x0: f64, y0: f64, x1: f64, y1: f64, color: [u8; 4]) {
+    let (sx0, sy0) = clip_point_to_rect(x0, y0, img.width, img.height);
+    let (sx1, sy1) = clip_point_to_rect(x1, y1, img.width, img.height);
+    let (mut x0, mut y0) = (sx0 as i64, sy0 as i64);
+    let (x1, y1) = (sx1 as i64, sy1 as i64);
+    let dx = (x1 - x0).abs();
+    let dy = -(y1 - y0).abs();
+    let sx = if x0 < x1 { 1 } else { -1 };
+    let sy = if y0 < y1 { 1 } else { -1 };
+    let mut err = dx + dy;
+    loop {
+        if x0 >= 0 && y0 >= 0 && (x0 as u32) < img.width && (y0 as u32) < img.height {
+            img.set_pixel(x0 as u32, y0 as u32, color);
+        }
+        if x0 == x1 && y0 == y1 {
+            break;
+        }
+        let e2 = 2 * err;
+        if e2 >= dy {
+            err += dy;
+            x0 += sx;
+        }
+        if e2 <= dx {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+/// Clip a floating pixel coordinate into the image rectangle (inclusive).
+fn clip_point_to_rect(x: f64, y: f64, w: u32, h: u32) -> (f64, f64) {
+    let maxx = (w.saturating_sub(1)) as f64;
+    let maxy = (h.saturating_sub(1)) as f64;
+    (x.clamp(0.0, maxx), y.clamp(0.0, maxy))
 }
 
 /// Newell's method: robust area-weighted face normal of a planar polygon.

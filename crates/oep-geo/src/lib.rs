@@ -32,6 +32,9 @@
 //!   B-Rep booleans, fillet/chamfer, primitives, extrude and revolve, typed
 //!   errors, implemented by the oep-engine-occ OCCT binding behind the seam.
 //! - [`export`]: STL/glTF/OBJ/SVG/PDF/STEP exporters on the model (P6-M4-T01).
+//! - [`tessellate`]: deterministic sweep-solid tessellation (INTERACTIVE-SHELL):
+//!   extrude/revolve a closed planar profile into a triangle mesh with
+//!   boundary edges, so the editor shows and exports real derived solids.
 #![deny(missing_docs)]
 
 pub mod assembly;
@@ -48,6 +51,7 @@ pub mod math;
 pub mod nurbs;
 pub mod part;
 pub mod predicates;
+pub mod tessellate;
 pub mod tolerance;
 pub mod topology_state;
 pub mod transform;

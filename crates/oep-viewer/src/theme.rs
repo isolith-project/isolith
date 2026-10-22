@@ -22,6 +22,11 @@
 /// Theme background color (dark neutral RGB, opaque).
 pub const BACKGROUND_RGB: [u8; 3] = [28, 30, 34];
 
+/// Selection highlight color (amber, opaque). Used as the tint for the
+/// currently selected primitive (faces and edges). It carries no identity by
+/// itself: the structured [`crate::pick::Selection`] is the semantic channel.
+pub const HIGHLIGHT_RGB: [u8; 3] = [242, 186, 70];
+
 /// WCAG 1.4.11 non-text contrast floor for graphical objects (3.0:1).
 pub const MIN_NON_TEXT_CONTRAST: f64 = 3.0;
 

@@ -37,13 +37,36 @@ const CANONICAL_NAMES: &[&str] = &[
     "assem:solve",
     "assem:render",
     "assem:animate",
+    // INTERACTIVE-SHELL editor surface (the interactive sibling of the CLI).
+    "editor:open",
+    "sk:point",
+    "sk:line",
+    "sk:constrain",
+    "sk:solve",
+    "sk:render",
+    "sk:props",
+    "vars:list",
+    "vars:set",
+    "feat:extrude",
+    "feat:revolve",
+    "feat:recompute",
+    "view:frame",
+    "view:orbit",
+    "view:zoom",
+    "view:pan",
+    "view:pick",
+    "export:step",
+    "props",
+    "undo",
+    "redo",
     "journal",
     "help",
 ];
 
 /// The canonical set of dispatch tokens (the text before the first ':').
 const CANONICAL_TOKENS: &[&str] = &[
-    "load", "open-pdm", "save-pdm", "save", "assem", "journal", "help",
+    "load", "open-pdm", "save-pdm", "save", "assem", "editor", "sk", "vars", "feat", "view",
+    "export", "props", "undo", "redo", "journal", "help",
 ];
 
 fn committed_index_path() -> PathBuf {

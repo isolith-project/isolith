@@ -1,8 +1,10 @@
 //! P7-M5-T02: command metadata and help-index generation for the workbench
 //! command surface.
 //!
-//! The workbench is a keyboard/CLI-first surface (P7-M5 power-user pass): every
-//! command a user can type is described HERE, once. The interactive `help`
+//! The workbench is a keyboard/CLI-first surface (P7-M5 power-user pass; the
+//! INTERACTIVE-SHELL editor is its interactive sibling and uses the SAME
+//! command registry): every command a user can type is described HERE, once.
+//! The interactive `help`
 //! output, the `help <command>` per-command docs, the machine-readable JSON
 //! index, and the committed markdown help index are all GENERATED from this
 //! metadata, never hand-written in two places. A drift-guard test
@@ -19,7 +21,7 @@
 
 /// Version tag embedded in every generated help artifact and asserted by the
 /// drift-guard test. Bump when the help surface changes materially.
-pub const HELP_INDEX_VERSION: &str = "1.1.0";
+pub const HELP_INDEX_VERSION: &str = "1.2.0";
 
 /// Label of the surface this index documents (used in the JSON and markdown
 /// artifacts).
@@ -370,6 +372,389 @@ pub static COMMANDS: &[CommandSpec] = &[
         examples: &["save-pdm:BOX-01:A:initial"],
     },
     CommandSpec {
+        name: "editor:open",
+        token: "editor",
+        usage: "editor:open",
+        category: "editor",
+        summary: "Open a fresh interactive editor session (blank sketch document)",
+        long_help: concat!(
+            "Starts an EditorSession: a canonical oep-geo document with one part, ",
+            "one body, an empty sketch feature and an empty variable set. All ",
+            "sk:/vars:/feat:/view:/export: commands then operate on this session. ",
+            "The same command set is what a mouse-driven editor calls under the ",
+            "pointer; here it is text-callable (the agent/automation lane)."
+        ),
+        args: &[],
+        examples: &["editor:open", "sk:point:0:0", "sk:solve"],
+    },
+    CommandSpec {
+        name: "sk:point",
+        token: "sk",
+        usage: "sk:point:X:Y",
+        category: "editor",
+        summary: "Add a point at (X, Y) in the sketch plane; returns its id (p0, p1, ...)",
+        long_help: concat!(
+            "Appends a point at the given sketch-plane coordinates. The assigned ",
+            "id is printed (p0, p1, ...) so later sk:line and sk:constrain commands ",
+            "can reference it."
+        ),
+        args: &[
+            ArgSpec {
+                name: "X",
+                required: true,
+                help: "Sketch-plane x coordinate",
+            },
+            ArgSpec {
+                name: "Y",
+                required: true,
+                help: "Sketch-plane y coordinate",
+            },
+        ],
+        examples: &["sk:point:0:0", "sk:point:3:1"],
+    },
+    CommandSpec {
+        name: "sk:line",
+        token: "sk",
+        usage: "sk:line:START:END",
+        category: "editor",
+        summary: "Add a line segment between two existing points; returns its id (l0, l1, ...)",
+        long_help: concat!(
+            "Appends a line segment from point START to point END. Both points ",
+            "must exist. A closed loop of lines is what extrude/revolve consume."
+        ),
+        args: &[
+            ArgSpec {
+                name: "START",
+                required: true,
+                help: "Start point id (e.g. p0)",
+            },
+            ArgSpec {
+                name: "END",
+                required: true,
+                help: "End point id (e.g. p1)",
+            },
+        ],
+        examples: &["sk:line:p0:p1"],
+    },
+    CommandSpec {
+        name: "sk:constrain",
+        token: "sk",
+        usage: "sk:constrain:KIND:ARGS...",
+        category: "editor",
+        summary: "Add a sketch constraint (fixed, horizontal, vertical, coincident, length, distance)",
+        long_help: concat!(
+            "Appends a constraint to the sketch. KIND and ARGS:\n",
+            "  fixed:POINT:X:Y          anchor a point at (X,Y)\n",
+            "  horizontal:LINE          force a line horizontal\n",
+            "  vertical:LINE            force a line vertical\n",
+            "  coincident:A:B           coincide two points\n",
+            "  length:LINE:VAL          driven length (VAL = number, or a variable-set entry name)\n",
+            "  distance:A:B:VAL         driven distance between two points (number or variable name)\n",
+            "When VAL is not a number it references the variable set by name, so an ",
+            "edit to the variable re-solves the sketch (drive lane)."
+        ),
+        args: &[ArgSpec {
+            name: "KIND:ARGS...",
+            required: true,
+            help: "Constraint kind and colon-separated arguments (see long help)",
+        }],
+        examples: &["sk:constrain:fixed:p0:0:0", "sk:constrain:length:l0:width"],
+    },
+    CommandSpec {
+        name: "sk:solve",
+        token: "sk",
+        usage: "sk:solve",
+        category: "editor",
+        summary: "Solve the sketch against the variable set and write solved coordinates back",
+        long_help: concat!(
+            "Runs the oep-sketch solver over the current sketch + variable set. On ",
+            "convergence the solved point coordinates are written back into the ",
+            "canonical document and the report (dof, residual, driven dimensions) ",
+            "is printed. A non-converged solve is a typed error, never a fabricated ",
+            "solution."
+        ),
+        args: &[],
+        examples: &["sk:solve"],
+    },
+    CommandSpec {
+        name: "sk:render",
+        token: "sk",
+        usage: "sk:render:PATH",
+        category: "editor",
+        summary: "Render the current viewport (solid + sketch overlay) to PPM or PNG",
+        long_help: concat!(
+            "Renders the current scene through the deterministic CPU raster to PATH. ",
+            ".ppm writes a P6 PPM, .png a PNG. Prints the image SHA-256 so two ",
+            "consecutive renders prove whether the model moved."
+        ),
+        args: &[ArgSpec {
+            name: "PATH",
+            required: true,
+            help: "Output image path (.ppm or .png)",
+        }],
+        examples: &["sk:render:before.png", "vars:set:width:120", "sk:render:after.png"],
+    },
+    CommandSpec {
+        name: "sk:props",
+        token: "sk",
+        usage: "sk:props",
+        category: "editor",
+        summary: "Print the sketch summary (points, lines, constraints, solved dof)",
+        long_help: concat!(
+            "Prints the current sketch geometry and constraint counts plus the last ",
+            "solve's degrees of freedom and residual, if any."
+        ),
+        args: &[],
+        examples: &["sk:solve", "sk:props"],
+    },
+    CommandSpec {
+        name: "vars:list",
+        token: "vars",
+        usage: "vars:list",
+        category: "editor",
+        summary: "List the variable-set entries (sorted by name)",
+        long_help: concat!(
+            "Prints every variable-set entry: name = value. Dimensions that ",
+            "reference a variable by name resolve against this set at solve time."
+        ),
+        args: &[],
+        examples: &["vars:list"],
+    },
+    CommandSpec {
+        name: "vars:set",
+        token: "vars",
+        usage: "vars:set:NAME:VALUE",
+        category: "editor",
+        summary: "Set (or add) a variable; a solid feature recomputes live",
+        long_help: concat!(
+            "Sets the variable NAME to VALUE. If the session already carries a ",
+            "solid feature (extrude or revolve), the model recomputes immediately: ",
+            "the sketch re-solves and the solid follows the parameter (drive lane). ",
+            "Prints the solid volume before and after so the update is provable."
+        ),
+        args: &[
+            ArgSpec {
+                name: "NAME",
+                required: true,
+                help: "Variable name",
+            },
+            ArgSpec {
+                name: "VALUE",
+                required: true,
+                help: "Numeric value",
+            },
+        ],
+        examples: &["vars:set:width:120"],
+    },
+    CommandSpec {
+        name: "feat:extrude",
+        token: "feat",
+        usage: "feat:extrude:DEPTH",
+        category: "editor",
+        summary: "Create an extrude from the solved sketch profile by DEPTH (number or variable name)",
+        long_help: concat!(
+            "Derives the solid by extruding the solved closed sketch profile by ",
+            "DEPTH (a literal length or a variable-set entry name) along +Z. The ",
+            "solid is tessellated deterministically from the real model, the body ",
+            "bounding box is set from it, and the volume/faces/bbox are printed. ",
+            "Requires the sketch to be solved and to form a single closed loop."
+        ),
+        args: &[ArgSpec {
+            name: "DEPTH",
+            required: true,
+            help: "Extrude depth (number or variable name)",
+        }],
+        examples: &["feat:extrude:10", "feat:extrude:depth"],
+    },
+    CommandSpec {
+        name: "feat:revolve",
+        token: "feat",
+        usage: "feat:revolve:ANGLE",
+        category: "editor",
+        summary: "Create a revolve from the solved sketch profile by ANGLE radians about Z",
+        long_help: concat!(
+            "Derives the solid by revolving the solved closed profile about the Z ",
+            "axis by ANGLE radians (a literal or a variable-set entry name). The ",
+            "profile is a meridian cross section: x is radial distance (>= 0), y ",
+            "axial height, matching the kernel seam's revolve."
+        ),
+        args: &[ArgSpec {
+            name: "ANGLE",
+            required: true,
+            help: "Revolve angle in radians (number or variable name)",
+        }],
+        examples: &["feat:revolve:3.14159265"],
+    },
+    CommandSpec {
+        name: "feat:recompute",
+        token: "feat",
+        usage: "feat:recompute",
+        category: "editor",
+        summary: "Re-solve the sketch and re-derive the solid feature from the current model",
+        long_help: concat!(
+            "Full recompute: re-solves the sketch against the current variable set, ",
+            "rebuilds the closed profile, re-tessellates the solid feature, and ",
+            "updates the body bounding box and viewport mesh. This is the explicit ",
+            "form of the live recompute vars:set already triggers."
+        ),
+        args: &[],
+        examples: &["feat:recompute"],
+    },
+    CommandSpec {
+        name: "view:frame",
+        token: "view",
+        usage: "view:frame",
+        category: "editor",
+        summary: "Frame the camera to the model bounds",
+        long_help: concat!(
+            "Fits the orbit camera to the union of the solid and sketch bounds so ",
+            "the next render shows the whole model."
+        ),
+        args: &[],
+        examples: &["view:frame"],
+    },
+    CommandSpec {
+        name: "view:orbit",
+        token: "view",
+        usage: "view:orbit:YAW:PITCH",
+        category: "editor",
+        summary: "Orbit the camera by YAW / PITCH (radians)",
+        long_help: "Rotates the orbit camera around the target (the viewport orbit gesture).",
+        args: &[
+            ArgSpec {
+                name: "YAW",
+                required: true,
+                help: "Azimuth delta in radians",
+            },
+            ArgSpec {
+                name: "PITCH",
+                required: true,
+                help: "Elevation delta in radians",
+            },
+        ],
+        examples: &["view:orbit:0.8:0.5"],
+    },
+    CommandSpec {
+        name: "view:zoom",
+        token: "view",
+        usage: "view:zoom:FACTOR",
+        category: "editor",
+        summary: "Zoom the camera by a multiplicative FACTOR (< 1 moves closer)",
+        long_help: "Scales the camera distance (the viewport zoom gesture).",
+        args: &[ArgSpec {
+            name: "FACTOR",
+            required: true,
+            help: "Multiplicative zoom factor",
+        }],
+        examples: &["view:zoom:0.8"],
+    },
+    CommandSpec {
+        name: "view:pan",
+        token: "view",
+        usage: "view:pan:DX:DY",
+        category: "editor",
+        summary: "Pan the camera target by DX / DY world units",
+        long_help: concat!(
+            "Moves the orbit target along the camera right/up screen axes (the ",
+            "viewport pan gesture)."
+        ),
+        args: &[
+            ArgSpec {
+                name: "DX",
+                required: true,
+                help: "Pan along the camera right axis",
+            },
+            ArgSpec {
+                name: "DY",
+                required: true,
+                help: "Pan along the camera up axis",
+            },
+        ],
+        examples: &["view:pan:5:-3"],
+    },
+    CommandSpec {
+        name: "view:pick",
+        token: "view",
+        usage: "view:pick:X:Y",
+        category: "editor",
+        summary: "Pick the scene primitive under screen pixel (X, Y) and select it",
+        long_help: concat!(
+            "Unprojects the pixel through the camera and selects the nearest ",
+            "primitive (the solid, a sketch line or a point handle). Prints the ",
+            "selected id; the next render highlights it in amber."
+        ),
+        args: &[
+            ArgSpec {
+                name: "X",
+                required: true,
+                help: "Pixel x (0..639)",
+            },
+            ArgSpec {
+                name: "Y",
+                required: true,
+                help: "Pixel y (0..479)",
+            },
+        ],
+        examples: &["view:pick:320:240"],
+    },
+    CommandSpec {
+        name: "export:step",
+        token: "export",
+        usage: "export:step:PATH",
+        category: "editor",
+        summary: "Export the derived solid as an AP214 STEP file",
+        long_help: concat!(
+            "Writes the tessellated solid as a STEP (ISO 10303-21) faceted B-Rep ",
+            "via the oep-geo exporter. Requires a solid feature (extrude or ",
+            "revolve). The exported bytes re-import through the importer hub."
+        ),
+        args: &[ArgSpec {
+            name: "PATH",
+            required: true,
+            help: "Output .step path",
+        }],
+        examples: &["export:step:edpart.step"],
+    },
+    CommandSpec {
+        name: "props",
+        token: "props",
+        usage: "props",
+        category: "editor",
+        summary: "Print current model measures (volume, bbox, features, sketch stats, variables)",
+        long_help: concat!(
+            "Prints the derived solid volume and bounding box, the document feature ",
+            "count, the last solve's degrees of freedom, and the variable set."
+        ),
+        args: &[],
+        examples: &["props"],
+    },
+    CommandSpec {
+        name: "undo",
+        token: "undo",
+        usage: "undo",
+        category: "editor",
+        summary: "Undo the last edit (restores the prior canonical document state)",
+        long_help: concat!(
+            "Rewinds the session to the previous document snapshot and re-derives ",
+            "the solid. A typed error reports when nothing can be undone."
+        ),
+        args: &[],
+        examples: &["vars:set:width:120", "undo", "redo"],
+    },
+    CommandSpec {
+        name: "redo",
+        token: "redo",
+        usage: "redo",
+        category: "editor",
+        summary: "Redo the last undone edit",
+        long_help: concat!(
+            "Re-applies the most recently undone document snapshot and re-derives ",
+            "the solid. A typed error reports when nothing can be redone."
+        ),
+        args: &[],
+        examples: &["vars:set:width:120", "undo", "redo"],
+    },
+    CommandSpec {
         name: "journal",
         token: "journal",
         usage: "journal",
@@ -436,8 +821,15 @@ pub fn validate_token(token: &str) -> Result<&'static str, String> {
 }
 
 /// The help-index categories in display order.
-pub fn categories() -> [&'static str; 5] {
-    ["interchange", "pdm", "assembly", "inspection", "help"]
+pub fn categories() -> [&'static str; 6] {
+    [
+        "interchange",
+        "pdm",
+        "assembly",
+        "editor",
+        "inspection",
+        "help",
+    ]
 }
 
 /// Render the plain-text command index (the `help` output).

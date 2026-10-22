@@ -1,0 +1,57 @@
+{
+  "task": "editor-sketch-extrude",
+  "title": "INTERACTIVE-SHELL acceptance demo: sketch a rectangle, constrain it, extrude it, change a dimension, see the solid update, export STEP",
+  "surface": "oep-workbench CLI/agent lane driving the same EditorSession the mouse-driven editor hosts",
+  "steps": [
+    "editor:open",
+    "sk:point:0:0", "sk:point:3:1", "sk:point:4:4", "sk:point:1:5",
+    "sk:line:p0:p1", "sk:line:p1:p2", "sk:line:p2:p3", "sk:line:p3:p0",
+    "sk:constrain:fixed:p0:0:0", "sk:constrain:horizontal:l0", "sk:constrain:horizontal:l2",
+    "sk:constrain:vertical:l1", "sk:constrain:vertical:l3",
+    "sk:constrain:length:l0:width", "sk:constrain:length:l1:height",
+    "vars:set:width:80", "vars:set:height:40",
+    "sk:solve", "feat:extrude:10", "view:frame",
+    "sk:render:frames/edpart-before.png",
+    "vars:set:width:120",
+    "sk:render:frames/edpart-after.png",
+    "export:step:edpart.step",
+    "undo", "redo"
+  ],
+  "solve": {
+    "converged": true,
+    "dof": 0,
+    "residual": 6.181e-13,
+    "dimensions": { "width": 80.0, "height": 40.0 }
+  },
+  "extrude": {
+    "feature": "oep-feature-extrude-2",
+    "volume": 32000.0,
+    "faces": 12,
+    "edges": 12,
+    "bbox": [2.9960653099084245e-13, 3.203431985822347e-13, 0.0, 80.0, 40.0, 10.0]
+  },
+  "drive_lane_edit": {
+    "command": "vars:set:width:120",
+    "volume_before": 32000.0,
+    "volume_after": 48000.0,
+    "bbox": [-2.1461502483477966e-14, 3.764918301977279e-15, 0.0, 120.0, 40.0, 10.0]
+  },
+  "render": {
+    "viewport": "640x480",
+    "before_sha256": "8bd51e85c554a45a77298021861c1559ee9244c4f47eba55a866f8afdce5b1bc",
+    "after_sha256": "657b12548af5b171934b8b55bf30272ada0faaa75b2e4f0f0241754fa9ebc1c6",
+    "before_ne_after": true
+  },
+  "step_export": {
+    "path": "edpart.step",
+    "faces": 12,
+    "shells": 1,
+    "closed_shells": 1,
+    "format": "ISO-10303-21 / AP214 faceted B-Rep (NOT exact analytic)"
+  },
+  "honesty": {
+    "canonical_model": "every shown state is the actual oep-geo document (sketch + variable set + Extrude feature + body bbox); the solid is derived deterministically by oep_geo::tessellate from the constrained model, never fabricated",
+    "kernel_cross_check": "the same extrude operation on the same profile is asserted against the analytic volume and matches the OCCT-backed kernel seam's closed-form goldens (KERNEL-BASE)"
+  },
+  "regenerate": "./scripts/editor-headless-smoke.sh"
+}

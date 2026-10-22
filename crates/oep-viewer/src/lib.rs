@@ -36,4 +36,4 @@ pub use camera::Camera;
 pub use clip::{ClipPlane, Side};
 pub use pick::{pick, pick_ray, Ray, Selection};
 pub use render::{render, RgbaImage};
-pub use scene::{build_scene, Aabb, Primitive, Scene};
+pub use scene::{build_scene, Aabb, MeshData, Primitive, Scene};

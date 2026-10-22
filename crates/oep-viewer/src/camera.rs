@@ -134,6 +134,22 @@ impl Camera {
         self.distance *= factor;
         self.distance = self.distance.max(self.near * 2.0);
     }
+
+    /// Pan by moving the orbit target along the camera's right/up screen axes
+    /// by `dx` / `dy` world units (the viewport pan gesture). Deterministic
+    /// and headless-callable like every other camera operation.
+    pub fn pan(&mut self, dx: f64, dy: f64) {
+        let eye = self.eye();
+        let f = self
+            .target
+            .sub(&eye)
+            .normalize()
+            .expect("degenerate camera");
+        let up = Vec3::new(0.0, 1.0, 0.0);
+        let s = f.cross(&up).normalize().expect("camera pointing along Y");
+        let u = s.cross(&f);
+        self.target = self.target.add(&s.mul(-dx)).add(&u.mul(dy));
+    }
 }
 
 #[cfg(test)]

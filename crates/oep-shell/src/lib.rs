@@ -33,6 +33,12 @@ pub mod commands;
 /// The OEP interchange workbench command surface.
 pub mod workbench;
 
+/// The interactive editing surface (INTERACTIVE-SHELL): the editor session
+/// that turns oep-shell + oep-viewer into a mouse-grade editor (sketch,
+/// constraints, variable set, extrude/revolve, live recompute, undo/redo,
+/// viewport and STEP export). See [`editor`] for the surface contract.
+pub mod editor;
+
 /// The interactive assembly editing surface (EDITOR-ASSEM-EDIT): create,
 /// edit, delete mates in the viewport against the live solver.
 pub mod assem;

@@ -21,6 +21,12 @@ oep-pdm = { path = "../oep-pdm" }
 oep-assem = { path = "../oep-assem" }
 oep-kinematics = { path = "../oep-kinematics" }
 oep-geo = { path = "../oep-geo" }
+# The interactive editing surface (INTERACTIVE-SHELL): the sketch model and
+# variable set come from oep-sketch, the viewport (camera/render/pick) from
+# oep-viewer, both over the same canonical oep-geo model.
+oep-sketch = { path = "../oep-sketch" }
+oep-viewer = { path = "../oep-viewer" }
+serde_json = "1"
 
 [dev-dependencies]
 serde_json = "1"

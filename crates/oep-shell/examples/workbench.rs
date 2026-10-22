@@ -47,7 +47,438 @@
 
 use oep_shell::assem::{self, AssemblySession, MateOutcome, SolveOutcome};
 use oep_shell::commands;
+use oep_shell::editor::{self, EditorSession};
 use oep_shell::workbench::{Interchange, Workbench, WorkbenchAction};
+use oep_sketch::sketch::{Constraint, DimExpr};
+
+/// Dispatch one editor-surface command (`editor:`, `sk:`, `vars:`, `feat:`,
+/// `view:`, `export:`, `props`, `undo`, `redo`) against the interactive
+/// editor session. Returns `true` when the command ran cleanly; `false` for
+/// malformed input or missing session.
+fn dispatch_editor(session: &mut Option<EditorSession>, token: &str, arg: Option<&str>) -> bool {
+    let err_none = |msg: &str| -> bool {
+        println!("failed: {msg}");
+        false
+    };
+    let (sub, rest) = match arg {
+        Some(a) => match a.split_once(':') {
+            Some((s, r)) => (s.to_string(), Some(r.to_string())),
+            None => (a.to_string(), None),
+        },
+        None => (String::new(), None),
+    };
+    match token {
+        "editor" => {
+            if sub != "open" {
+                return err_none("editor:open is the only editor command");
+            }
+            *session = Some(EditorSession::new());
+            println!(
+                "editor open: part={} body={} sketch=sketch-1",
+                editor::PART_ID,
+                editor::BODY_ID
+            );
+            true
+        }
+        "sk" => match sub.as_str() {
+            "point" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                let args: Vec<&str> = rest.as_deref().unwrap_or("").split(':').collect();
+                let (x, y) = match (
+                    args.first().and_then(|v| v.parse().ok()),
+                    args.get(1).and_then(|v| v.parse().ok()),
+                ) {
+                    (Some(x), Some(y)) => (x, y),
+                    _ => return err_none("sk:point expects X:Y"),
+                };
+                match s.point(x, y) {
+                    Ok(r) => {
+                        println!("sketch point {} at ({x}, {y})", r.id);
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            "line" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                let args: Vec<&str> = rest.as_deref().unwrap_or("").split(':').collect();
+                if args.len() != 2 {
+                    return err_none("sk:line expects START:END");
+                }
+                match s.line(args[0], args[1]) {
+                    Ok(r) => {
+                        println!("sketch line {} ({}) to ({})", r.id, r.start, r.end);
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            "constrain" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                let args: Vec<&str> = rest.as_deref().unwrap_or("").split(':').collect();
+                match parse_constraint(&args) {
+                    Some(c) => match s.constrain(c) {
+                        Ok(()) => {
+                            println!("constraint added");
+                            true
+                        }
+                        Err(e) => err_none(&e.to_string()),
+                    },
+                    None => err_none("sk:constrain expects KIND:ARGS... (see help:sk:constrain)"),
+                }
+            }
+            "solve" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                match s.solve() {
+                    Ok(rep) => {
+                        println!(
+                            "solved dof={} residual={:.3e} dims={} points={} lines={}",
+                            rep.dof,
+                            rep.residual,
+                            rep.dimensions.len(),
+                            rep.point_count,
+                            rep.line_count
+                        );
+                        for (name, v) in &rep.dimensions {
+                            println!("  {name} = {v:.6}");
+                        }
+                        true
+                    }
+                    Err(e) => {
+                        println!("solved failed: {e}");
+                        false
+                    }
+                }
+            }
+            "render" => {
+                let Some(s) = session.as_ref() else {
+                    return err_none("run editor:open first");
+                };
+                let Some(path) = rest else {
+                    return err_none("sk:render expects PATH");
+                };
+                match s.render(&path) {
+                    Ok(r) => {
+                        println!(
+                            "rendered {} sha256={} {}x{}",
+                            r.path, r.sha256, r.width, r.height
+                        );
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            "props" => print_sketch_props(session),
+            other => err_none(&format!(
+                "unknown sk sub-command '{other}'; see help:sk:constrain"
+            )),
+        },
+        "vars" => match sub.as_str() {
+            "list" => {
+                let Some(s) = session.as_ref() else {
+                    return err_none("run editor:open first");
+                };
+                for (name, value) in s.vars() {
+                    println!("{name} = {value}");
+                }
+                true
+            }
+            "set" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                let args: Vec<&str> = rest.as_deref().unwrap_or("").split(':').collect();
+                let (name, value) = match (args.first(), args.get(1).and_then(|v| v.parse().ok())) {
+                    (Some(n), Some(v)) => (*n, v),
+                    _ => return err_none("vars:set expects NAME:VALUE"),
+                };
+                match s.set_var(name, value) {
+                    Ok(r) => {
+                        println!(
+                            "variable {name} = {value} (volume {}{}{})",
+                            r.volume_before
+                                .map(|v| format!("{v:.6} -> "))
+                                .unwrap_or_default(),
+                            r.volume_after
+                                .map(|v| format!("{v:.6}"))
+                                .unwrap_or_else(|| "n/a".to_string()),
+                            if r.volume_after.is_some() {
+                                " live recompute"
+                            } else {
+                                ""
+                            }
+                        );
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            other => err_none(&format!("unknown vars sub-command '{other}'")),
+        },
+        "feat" => match sub.as_str() {
+            "extrude" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                let Some(val) = rest else {
+                    return err_none("feat:extrude expects DEPTH");
+                };
+                match editor::parse_dim(&val).and_then(|d| s.extrude(d)) {
+                    Ok(r) => {
+                        println!(
+                            "extruded {}: volume {:.6} faces={} edges={} bbox {:?}",
+                            r.feature_id, r.volume, r.faces, r.edges, r.bbox
+                        );
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            "revolve" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                let Some(val) = rest else {
+                    return err_none("feat:revolve expects ANGLE");
+                };
+                match editor::parse_dim(&val).and_then(|d| s.revolve(d)) {
+                    Ok(r) => {
+                        println!(
+                            "revolved {}: volume {:.6} faces={} edges={} bbox {:?}",
+                            r.feature_id, r.volume, r.faces, r.edges, r.bbox
+                        );
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            "recompute" => {
+                let Some(s) = session.as_mut() else {
+                    return err_none("run editor:open first");
+                };
+                match s.recompute() {
+                    Ok(r) => {
+                        println!(
+                            "recomputed volume={} bbox={:?}",
+                            r.volume
+                                .map(|v| format!("{v:.6}"))
+                                .unwrap_or_else(|| "n/a".into()),
+                            r.bbox
+                        );
+                        true
+                    }
+                    Err(e) => err_none(&e.to_string()),
+                }
+            }
+            other => err_none(&format!("unknown feat sub-command '{other}'")),
+        },
+        "view" => {
+            let Some(s) = session.as_mut() else {
+                return err_none("run editor:open first");
+            };
+            let args: Vec<&str> = rest.as_deref().unwrap_or("").split(':').collect();
+            match sub.as_str() {
+                "frame" => {
+                    s.frame();
+                    println!("camera framed");
+                    true
+                }
+                "orbit" => match (
+                    args.first().and_then(|v| v.parse().ok()),
+                    args.get(1).and_then(|v| v.parse().ok()),
+                ) {
+                    (Some(y), Some(p)) => {
+                        s.orbit(y, p);
+                        println!("camera orbit");
+                        true
+                    }
+                    _ => err_none("view:orbit expects YAW:PITCH"),
+                },
+                "zoom" => match args.first().and_then(|v| v.parse().ok()) {
+                    Some(f) => {
+                        s.zoom(f);
+                        println!("camera zoom");
+                        true
+                    }
+                    None => err_none("view:zoom expects FACTOR"),
+                },
+                "pan" => match (
+                    args.first().and_then(|v| v.parse().ok()),
+                    args.get(1).and_then(|v| v.parse().ok()),
+                ) {
+                    (Some(dx), Some(dy)) => {
+                        s.pan(dx, dy);
+                        println!("camera pan");
+                        true
+                    }
+                    _ => err_none("view:pan expects DX:DY"),
+                },
+                "pick" => match (
+                    args.first().and_then(|v| v.parse().ok()),
+                    args.get(1).and_then(|v| v.parse().ok()),
+                ) {
+                    (Some(x), Some(y)) => match s.select_at(x, y) {
+                        Some(sel) => {
+                            println!(
+                                "selected {} (part={} body={} dist={:.3})",
+                                sel.id, sel.part_id, sel.body_id, sel.distance
+                            );
+                            true
+                        }
+                        None => {
+                            println!("no pick at ({x}, {y})");
+                            true
+                        }
+                    },
+                    _ => err_none("view:pick expects X:Y"),
+                },
+                other => err_none(&format!("unknown view sub-command '{other}'")),
+            }
+        }
+        "export" => {
+            if sub != "step" {
+                return err_none("export:step is the only export command");
+            }
+            let Some(s) = session.as_ref() else {
+                return err_none("run editor:open first");
+            };
+            let Some(path) = rest else {
+                return err_none("export:step expects PATH");
+            };
+            match s.export_step(&path) {
+                Ok(r) => {
+                    println!(
+                        "exported STEP {path}: faces={} shells={} closed={}",
+                        r.faces, r.shells, r.closed_shells
+                    );
+                    true
+                }
+                Err(e) => err_none(&e.to_string()),
+            }
+        }
+        "props" => print_props(session),
+        "undo" => {
+            let Some(s) = session.as_mut() else {
+                return err_none("run editor:open first");
+            };
+            match s.undo() {
+                Ok(r) => {
+                    println!("undo: op={} retained={}", r.op, r.count);
+                    true
+                }
+                Err(e) => err_none(&e.to_string()),
+            }
+        }
+        "redo" => {
+            let Some(s) = session.as_mut() else {
+                return err_none("run editor:open first");
+            };
+            match s.redo() {
+                Ok(r) => {
+                    println!("redo: op={} retained={}", r.op, r.count);
+                    true
+                }
+                Err(e) => err_none(&e.to_string()),
+            }
+        }
+        _ => err_none("unsupported editor command"),
+    }
+}
+
+/// Print the sketch summary (points, lines, constraints, solved dof).
+fn print_sketch_props(session: &Option<EditorSession>) -> bool {
+    let Some(s) = session.as_ref() else {
+        println!("failed: run editor:open first");
+        return false;
+    };
+    match s.sketch() {
+        Some(sk) => {
+            println!(
+                "sketch points={} lines={} constraints={} dof={}",
+                sk.points.len(),
+                sk.lines.len(),
+                sk.constraints.len(),
+                s.last_solve().map(|r| r.dof).unwrap_or(-1)
+            );
+            true
+        }
+        None => {
+            println!("failed: no sketch in the session");
+            false
+        }
+    }
+}
+
+/// Print the model measures.
+fn print_props(session: &Option<EditorSession>) -> bool {
+    let Some(s) = session.as_ref() else {
+        println!("failed: run editor:open first");
+        return false;
+    };
+    let p = s.props();
+    println!(
+        "props volume={} bbox={:?} features={} dof={} points={} lines={} constraints={}",
+        p.volume
+            .map(|v| format!("{v:.6}"))
+            .unwrap_or_else(|| "n/a".into()),
+        p.bbox,
+        p.features,
+        p.dof.unwrap_or(-1),
+        p.sketch_points,
+        p.sketch_lines,
+        p.constraints
+    );
+    for (name, value) in &p.vars {
+        println!("  var {name} = {value}");
+    }
+    true
+}
+
+/// Parse a `sk:constrain:KIND:ARGS...` string into an oep-sketch constraint.
+fn parse_constraint(args: &[&str]) -> Option<oep_sketch::sketch::Constraint> {
+    let kind = *args.first()?;
+    let num = |i: usize| -> Option<f64> { args.get(i).and_then(|v| v.parse().ok()) };
+    let dim = |i: usize| -> Option<DimExpr> {
+        let t = args.get(i)?;
+        if let Ok(v) = t.parse::<f64>() {
+            Some(DimExpr::Literal(v))
+        } else {
+            Some(DimExpr::Variable((*t).to_string()))
+        }
+    };
+    let ptr = |i: usize| -> Option<String> { args.get(i).map(|s| (*s).to_string()) };
+    match kind {
+        "fixed" => Some(Constraint::Fixed {
+            point: ptr(1)?,
+            x: num(2)?,
+            y: num(3)?,
+        }),
+        "horizontal" => Some(Constraint::Horizontal { line: ptr(1)? }),
+        "vertical" => Some(Constraint::Vertical { line: ptr(1)? }),
+        "coincident" => Some(Constraint::Coincident {
+            point_a: ptr(1)?,
+            point_b: ptr(2)?,
+        }),
+        "length" => Some(Constraint::Length {
+            line: ptr(1)?,
+            expr: dim(2)?,
+        }),
+        "distance" => Some(Constraint::Distance {
+            point_a: ptr(1)?,
+            point_b: ptr(2)?,
+            expr: dim(3)?,
+        }),
+        _ => None,
+    }
+}
 
 fn print_outcome(outcome: &oep_shell::workbench::WorkbenchOutcome) -> bool {
     match outcome {
@@ -354,6 +785,7 @@ fn main() {
 
     let mut workbench = Workbench::with_local_vault();
     let mut asm: Option<AssemblySession> = None;
+    let mut editor_session: Option<EditorSession> = None;
     let mut ok = true;
 
     for arg in &args {
@@ -473,6 +905,12 @@ fn main() {
             }
             ("assem", Some(arg)) => {
                 ok &= dispatch_assem(&mut asm, arg);
+            }
+            (
+                "editor" | "sk" | "vars" | "feat" | "view" | "export" | "props" | "undo" | "redo",
+                arg,
+            ) => {
+                ok &= dispatch_editor(&mut editor_session, cmd, arg);
             }
             ("journal", None) => {
                 for line in workbench.journal() {
