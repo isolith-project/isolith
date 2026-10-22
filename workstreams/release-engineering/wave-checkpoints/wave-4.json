@@ -1,0 +1,22 @@
+{
+  "base": "main",
+  "base_sha": "75c0027a10cd330f8f3dd00d39f0e858bed099c4",
+  "branch": "wave/editor",
+  "cards": [],
+  "counts": {
+    "cards": 0,
+    "commits": 1,
+    "uncarded": 1
+  },
+  "host": "promaxgb10-83f1",
+  "schema": "isolith.wave-checkpoint.v1",
+  "tip_sha": "8f0d9753e58e7f6ffbe18e0cf1b8e4f4663964f5",
+  "tip_tree": "88d9eb3b55c7ef7bb503da8e2660bfb49e9b0791",
+  "uncarded_commits": [
+    {
+      "sha": "8f0d9753e58e7f6ffbe18e0cf1b8e4f4663964f5",
+      "subject": "feat(editor): mouse-grade interactive editing surface on oep-shell + oep-viewer (INTERACTIVE-SHELL)"
+    }
+  ],
+  "wave": "4"
+}
