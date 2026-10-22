@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "task": "FEATURE-BASELINE (t_a686d2b9)",
+  "updated": "2026-10-22",
+  "description": "Isolith CATIA/SolidWorks editor parity baseline. Decision #19 sets the product bar: same-or-greater editor functionality than CATIA/SolidWorks for the working engineer. This register stops being an exclusion list and becomes the PARITY BASELINE inventory an engineer reads to judge whether Isolith covers their main job. Machine-checkable copy of docs/scope-register.md. Every row carries a current-status token (not-scoped / planned / building / shippable) and evidence; a row may NOT claim a status higher than a green accepted test proves (honest-claims discipline, enforced by python/oep_tooling/scope_register_check.py and tests/test_scope_register.py).",
+  "policy": {
+    "product_bar": "same-or-greater editor functionality than CATIA/SolidWorks for the working engineer (decision #19, 2026-10-22)",
+    "status_rank": ["not-scoped", "planned", "building", "shippable"],
+    "cost_classes": [
+      "class-1-additive",
+      "class-2-model-extend",
+      "class-3-kernel-gated",
+      "class-4-different-foundation"
+    ],
+    "vendor_tiers": ["base", "module", "limited", "no"],
+    "honesty_rule": "no row may claim a status higher than a green accepted test proves",
+    "evidence_ladder": {
+      "shippable": ["test"],
+      "building": ["test"],
+      "planned": ["decision", "test"],
+      "not-scoped": ["none", "decision"]
+    },
+    "required_capabilities": [
+      "2d-drafting",
+      "configurations-design-tables",
+      "mass-properties",
+      "interference-clash",
+      "exploded-views",
+      "sheet-metal",
+      "weldments",
+      "mold-tooling",
+      "routing",
+      "electrical-harness",
+      "composites",
+      "cam",
+      "fea",
+      "class-a-surfacing"
+    ]
+  },
+  "commitment_order": {
+    "near_term": [
+      "2d-drafting",
+      "mass-properties",
+      "interference-clash",
+      "exploded-views"
+    ],
+    "spine": "editor assembly mate editing (interactive surface over the live oep-assem solver) commits first, in parallel with the pull-forwards; it is the editor spine itself, not a Bucket C capability row",
+    "after_kernel_seam": ["sheet-metal", "weldments", "mold-tooling", "routing"],
+    "after_kernel_seam_note": "opens only after P6-M3-T04 (oep-engine-occ) lands on main behind the oep-geo Evaluator seam",
+    "secondary": ["electrical-harness", "cam", "fea"],
+    "secondary_note": "2027.2+ workstreams; CAM and FEA each get their own P15+ decomposition when opened",
+    "class_a_program": ["class-a-surfacing"],
+    "class_a_program_note": "its own long-horizon kernel-moat program (decision #19, full-send); strategy ADR is the next gate",
+    "composites_note": "in scope per decision #13; evaluation gate at 2027.2 before any build commitment (weakest commitment in the baseline)"
+  },
+  "rows": [
+    {
+      "id": "2d-drafting",
+      "capability": "2D drafting / drawings (sheets, views, dimensions, title block, export)",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-1-additive",
+      "workstream": "editor: drafting workbench (card EDITOR-2D-DRAFTING, running)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19 (master plan scope register + vault Topics/Isolith.md v1.23); card EDITOR-2D-DRAFTING",
+        "note": "near-term pull-forward #1: drafting is what engineers hand to fabrication"
+      }
+    },
+    {
+      "id": "configurations-design-tables",
+      "capability": "Configurations / design tables (variant states over the feature tree)",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-2-model-extend",
+      "workstream": "modeler: oep-geo model-extend (configurations as variant states / design tables; workstream not yet opened)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 (2027.2 pull-forward) and #19 (parity baseline); master plan 2027.2 scope section",
+        "note": "model-extend: version bump + migration on the versioned oep-geo schema (VariableSet/Feature kinds already exist)"
+      }
+    },
+    {
+      "id": "mass-properties",
+      "capability": "Mass properties (volume, mass, centroid, moments of inertia)",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-1-additive",
+      "workstream": "editor: mass properties (card EDITOR-MASS-PROP, running)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
+        "note": "near-term pull-forward #2; verify against a known analytical solid within tolerance"
+      }
+    },
+    {
+      "id": "interference-clash",
+      "capability": "Assembly interference / clash detection",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-1-additive",
+      "workstream": "editor: assembly interference/clash (card EDITOR-MASS-PROP, running)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
+        "note": "near-term pull-forward #2; CATIA ships this in the DMU Space Analysis lane (vendor tier transcribed from the recorded register)"
+      }
+    },
+    {
+      "id": "exploded-views",
+      "capability": "Exploded / assembly views",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-1-additive",
+      "workstream": "editor: exploded views (card EDITOR-MASS-PROP, running)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
+        "note": "near-term pull-forward #2, grouped with mass properties and clash"
+      }
+    },
+    {
+      "id": "sheet-metal",
+      "capability": "Sheet metal design",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-3-kernel-gated",
+      "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19; master plan cost class 3 (kernel-gated); P6-M3-T01 ADR (boolean-ops-occ-adr.md v1.1.0)",
+        "note": "rests on real B-Rep ops; blocked until oep-engine-occ lands behind the oep-geo Evaluator seam"
+      }
+    },
+    {
+      "id": "weldments",
+      "capability": "Weldments (welded structures / frames)",
+      "catia": "module",
+      "solidworks": "base",
+      "cost_class": "class-3-kernel-gated",
+      "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19; master plan cost class 2/3 (model + kernel); P6-M3-T01 ADR v1.1.0",
+        "note": "CATIA ships this via the Weld Design (WD1) workbench lineage (vendor tier from recorded register: add-ons); classified kernel-gated (class 3) because full weldment B-Rep rests on the seam"
+      }
+    },
+    {
+      "id": "mold-tooling",
+      "capability": "Mold tooling design",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-3-kernel-gated",
+      "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19; master plan cost class 3 (kernel-gated); P6-M3-T01 ADR v1.1.0",
+        "note": "CATIA Mold Tooling Design (MTD) + Machining context; classic kernel-gated vertical"
+      }
+    },
+    {
+      "id": "routing",
+      "capability": "Piping / tubing / routing",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-2-model-extend",
+      "workstream": "modeler: routing vertical (workstream opens after the kernel seam; class-2 model-extend)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19; master plan 2027.2 scope (kernel-gated verticals after P6-M3-T04)",
+        "note": "CATIA Piping/Tubing/HVAC routing workbenches; extends the versioned oep-geo schema (line/wireframe intent)"
+      }
+    },
+    {
+      "id": "electrical-harness",
+      "capability": "Electrical / harness (3D wire routing, flattening, harness design)",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-2-model-extend",
+      "workstream": "modeler: electrical/harness vertical (2027.2+ workstream, not yet opened)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 and #19; master plan 2027.2 scope",
+        "note": "CATIA Electrical 3D Design / Harness Installation / Wire Routing lineage; class-2 model-extend"
+      }
+    },
+    {
+      "id": "composites",
+      "capability": "Composites (laminate definition / ply handoff)",
+      "catia": "base",
+      "solidworks": "module",
+      "cost_class": "class-2-model-extend",
+      "workstream": "modeler: composites evaluation (2027.2 review gate; no committed workstream)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 (in scope, evaluated 2027.2+); master plan Bucket C",
+        "note": "weakest commitment in the baseline: in scope per decision #13 but gated behind a 2027.2 evaluation; SolidWorks ships composites as an add-on (vendor tier from recorded register)"
+      }
+    },
+    {
+      "id": "cam",
+      "capability": "CAM / machining / toolpaths",
+      "catia": "base",
+      "solidworks": "base",
+      "cost_class": "class-1-additive",
+      "workstream": "new vertical P15+ (CAM / machining decomposition; not yet opened)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 (2027.2+ workstream) and #19; master plan 2027.2 scope",
+        "note": "class-1 additive (large); robust boolean/tessellation from the kernel improves it"
+      }
+    },
+    {
+      "id": "fea",
+      "capability": "Simulation / FEA / structural analysis",
+      "catia": "module",
+      "solidworks": "base",
+      "cost_class": "class-1-additive",
+      "workstream": "new vertical P15+ (simulation / FEA decomposition; not yet opened)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #13 (2027.2+ workstream) and #19; master plan 2027.2 scope",
+        "note": "CATIA ships analysis as GPS / SIMULIA product family (vendor tier module, per recorded register annotation); SolidWorks cell recorded as yes/base with the Simulation add-on nuance noted"
+      }
+    },
+    {
+      "id": "class-a-surfacing",
+      "capability": "Class-A / ICEM-class surface design",
+      "catia": "base",
+      "solidworks": "limited",
+      "cost_class": "class-4-different-foundation",
+      "workstream": "SURFACING-CLASS-A program (card running; strategy ADR is the next gate)",
+      "status": "planned",
+      "evidence": {
+        "kind": "decision",
+        "ref": "decision #19 (moved INTO scope from day one, full-send); card SURFACING-CLASS-A; master plan Class-A SUPERSEDED note",
+        "note": "own long-horizon kernel-moat program (longest pole, biggest team accepted); needs a high-accuracy surface kernel, not vanilla OCC; CATIA ICEM/Generative Shape Design vs SolidWorks limited"
+      }
+    }
+  ]
+}
