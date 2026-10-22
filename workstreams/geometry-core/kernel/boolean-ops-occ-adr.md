@@ -1,12 +1,12 @@
 ---
 title: Isolith B-Rep Kernel Operations Decision (Open CASCADE)
 decision: bind_opencascade_occ_for_b_rep_operations_behind_clean_interface
-version: 1.1.0
+version: 1.2.0
 date: 2026-10-18
 status: Ratified
 owner: Isolith program governance, P6-M3 (B-Rep ops)
 applies_to: oep-geo (adopting crate), the oep-engine-occ FFI crate (P6-M3-T04), the STEP interop lane (P4), and the P6 feature-graph replay (P6-M3-T03)
-supersedes: version 1.0.0 of this record (boolean-only scope); 1.1.0 adds fillet, chamfer, and primitive creation to the seam
+supersedes: version 1.1.0 of this record (fillet/chamfer/primitive widening); 1.2.0 adds the extrude and revolve sweeps to the seam and records the confirmed license disposition (no GPL-3.0 anywhere, no reintroduction of a GPL tree)
 ---
 
 # Isolith B-Rep Kernel Operations Decision
@@ -14,14 +14,16 @@ supersedes: version 1.0.0 of this record (boolean-only scope); 1.1.0 adds fillet
 This record is the binding product decision for how Isolith does exact
 boundary-representation (B-Rep) operations against a geometry kernel. At
 version 1.0.0 the scope was boolean operations (union, difference,
-intersection of solids and shells); version 1.1.0 widens the scope to the
+intersection of solids and shells); version 1.1.0 widened the scope to the
 kernel operations the modeler actually needs at the seam: the three booleans,
-plus fillet, chamfer, and primitive creation (box, cylinder, sphere). It is
-the answer to the P6-M3-T01 question "adopt/tie Open CASCADE for B-Rep ops, or
-build an own kernel-lite", and it is the decision that P6-M3-T04 implements.
-It is versioned like the telemetry decision (P0-M5-T02) and the release train
-decision (P0-M5-T03); any material change bumps the version in the front
-matter and adds a line to the change log at the bottom.
+plus fillet, chamfer, and primitive creation (box, cylinder, sphere), and
+version 1.2.0 adds the two sweep operations the feature vocabulary names next:
+extrude and revolve. It is the answer to the P6-M3-T01 question "adopt/tie
+Open CASCADE for B-Rep ops, or build an own kernel-lite", and it is the
+decision that P6-M3-T04 implements. It is versioned like the telemetry
+decision (P0-M5-T02) and the release train decision (P0-M5-T03); any material
+change bumps the version in the front matter and adds a line to the change
+log at the bottom.
 
 The default stated in the P6-M3-T01 card is adopted: bind Open CASCADE
 Technology (OCCT) for parity of effort, behind a clean interface. This
@@ -36,7 +38,7 @@ thing downstream code (callers, P4 STEP interop, P6-M3-T03 feature replay, P7
 modeler shell) sees; OCCT types, handles, tolerances, and idioms never cross
 that seam.
 
-Two operation families are in scope at version 1.1.0:
+Three operation families are in scope at version 1.2.0:
 
 1. Exact B-Rep booleans, mapped to the OCCT BRepAlgoAPI_Fuse /
    BRepAlgoAPI_Cut / BRepAlgoAPI_Common algorithms:
@@ -49,18 +51,24 @@ Two operation families are in scope at version 1.1.0:
    - chamfer (BRepFilletAPI_MakeChamfer)
    - primitive creation: box, cylinder, sphere (BRepPrimAPI_MakeBox /
      MakeCylinder / MakeSphere)
+3. Sweeps of a planar profile, mapped to their OCCT equivalents:
+   - extrude (BRepPrimAPI_MakePrism)
+   - revolve (BRepPrimAPI_MakeRevol)
 
 The current OCCT release line is 8.0.x (8.0.0 final, May 2026); the binding
 implementation (oep-engine-occ, P6-M3-T04) pins a concrete OCCT version per
 its own guardrail (section 9) rather than tracking upstream bleeding edge.
 
-Version 1.0.0 scoped only the three booleans. The widening to fillet, chamfer,
-and primitives is recorded because a kernel seam that cannot fillet a solid
-is not the seam the P6-M3-T03 feature graph or the P7 modeler actually call
-(a feature vocabulary that already names Extrude, Fillet, Hole, Revolve,
-Pattern, Mirror needs those operations to be real). The same engine, license,
-seam, and guardrails cover the widened set; nothing about the adoption
-rationale changes.
+Versions 1.0.0/1.1.0 scoped the three booleans, then fillet, chamfer, and
+primitives. The widening is recorded because a kernel seam that cannot fillet
+a solid is not the seam the P6-M3-T03 feature graph or the P7 modeler
+actually call (a feature vocabulary that already names Extrude, Fillet, Hole,
+Revolve, Pattern, Mirror needs those operations to be real). Version 1.2.0
+extends the seam to extrude and revolve for the same reason: the P7 sketch
+lane sketches a 2D profile and the feature tree extrudes or revolves it into
+a solid, so the seam those callers hit must make the sweep real. The same
+engine, license, seam, and guardrails cover the widened set; nothing about
+the adoption rationale changes.
 
 Building an own "kernel-lite" engine in wave 1 is the explicitly weighed
 alternative and is REJECTED for this milestone (section 4). It remains the
@@ -216,6 +224,33 @@ the PDM server and P2P orchestration, decided 2026-10-15):
 - No dependency is added that changes a crate's license as declared in the
   P0-M2 legal posture. This is reviewed again at the P0-M2 legal gate.
 
+### 7.1 Confirmed disposition (v1.2.0): separately-linked kernel crate, no GPL-3.0
+
+This version confirms the disposition at the point the engine actually lands
+on main behind the seam:
+
+- OCCT is a separately-linked kernel crate (`oep-engine-occ`), exactly as the
+  license posture intends: the crates we author (oep-geo and the wrapper)
+  stay Apache-2.0 and compile only against our own types; the LGPL-2.1 +
+  exception component is a distinct, version-pinned engine dependency that we
+  link but do not copy source from. This satisfies the "Apache-2.0-applications
+  posture via a separately-linked LGPL kernel crate" reading of the OCCT
+  license, matching how the sketch-solver ADR carries its LGPL line.
+- No GPL-3.0 enters any build path. The added dependency graph for the engine
+  is permissive: `cxx` and `cxx-build` (Apache-2.0/MIT), `cc` (MIT /
+  Apache-2.0), `link-cplusplus` (Apache-2.0/MIT), `codespan-reporting`, and
+  the macro crates `proc-macro2` / `quote` / `syn` (MIT / Apache-2.0). A
+  license gate scans the lock for a GPL/AGPL marker before the engine feature
+  may be enabled (see `tests/test_kernel_seam_guardrails.py`).
+- No GPL tree is reintroduced. Decision #16 and the solver-adr precedent
+  removed the vendored GPL-3.0 SolveSpace resolver from oep-assem because
+  GPL-3.0 in a distributed link conflicts with the Apache-2.0-for-applications
+  posture. The OCC binding must not become a second GPL tree: OCCT is LGPL-2.1
+  + exception (allowed as a separate dependency), and the no-vendored-OCCT
+  guardrail (section 9) keeps even that LGPL source out of the repo. Any
+  future dependency whose license cannot stay in the permissive + separate-LGPL
+  set is reviewed under this same precedent before adoption.
+
 ## 8. Clean-room
 
 The program clean-room invariant forbids vendor binaries, copied source, and
@@ -276,6 +311,10 @@ These keep the decision honest in code, CI, and future reviews:
   - a chamfer of a box edge asserts the resulting volume and face count;
   - primitive creation asserts the box, cylinder, and sphere volumes to
     tolerance;
+  - an extrude of a planar profile asserts the resulting volume and face
+    count against both the closed form and the committed kernel golden;
+  - a revolve of a meridian profile asserts the resulting volume and face
+    count against both the closed form and the committed kernel golden;
   - a known-failing geometry returns BooleanError / KernelError, not a panic.
   OCCT has its own growing test suite; we do not rely on it as our gate, we
   use it as upstream confidence only.
@@ -321,3 +360,11 @@ Adopting OCCT for kernel operations:
   directly and a boolean-only seam cannot fillet a solid. Same engine, license,
   seam rule, and guardrails; seam-denial scan and test gate extended to the
   fillet/chamfer/primitive identifiers and assertions.
+- 1.2.0 (2026-10-22): KERNEL-BASE landing (card KERNEL-BASE). Adds the two
+  sweep operations to the seam and the engine: extrude (BRepPrimAPI_MakePrism)
+  and revolve (BRepPrimAPI_MakeRevol), so the P7 sketch lane profile becomes a
+  real solid. Confirms the license disposition at the point the engine lands on
+  main: OCCT as a separately-linked LGPL-2.1 + exception kernel crate, no
+  GPL-3.0 in any build path, and no reintroduction of a GPL tree (decision #16
+  and the solver-adr precedent). Test gate extended: the extrude/revolve
+  assertions join the committed kernel golden matrix.
