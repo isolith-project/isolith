@@ -7,6 +7,12 @@ scripts/release/changelog.sh, this config, or the commit messages, not this
 file's output.
 ## 2027.1.0-rc2
 
+2027.1.0-rc2 is the interop/PDM foundation release; the editor is the product
+spine. This candidate proves the read/render/vault foundation only: interop
+readers, geometry core, PDM, compute, delivery. It is not the product GA and
+does not claim to be the editor; the interactive editor ships along the defined
+kernel-first sequence and is the product bar.
+
 
 
 ### Features

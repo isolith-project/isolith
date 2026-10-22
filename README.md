@@ -23,9 +23,14 @@ first things the readers handle.
 
 ## Status
 
-Pre-release. The code builds with all tests passing, and a signed install
-candidate is published on the Releases page for review. Do not plan around
-stable behavior yet; things will change before general availability.
+Pre-release. 2027.1 is the interop/PDM foundation release; the editor is the
+product spine. The code builds with all tests passing, and a signed install
+candidate for that foundation line (interop readers, geometry core, PDM,
+compute, delivery) is published on the Releases page for review. This line is
+not the product GA and does not claim to be the editor: the interactive editor
+ships along the defined kernel-first sequence and is the product bar. Do not
+plan around stable behavior yet; things will change before general
+availability.
 
 ## Quick start
 

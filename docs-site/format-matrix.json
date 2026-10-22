@@ -2,7 +2,7 @@
   "schema_version": 1,
   "task": "P13-T03",
   "generated": "2026-10-18",
-  "description": "OEP honest format capability matrix. Machine-checkable copy of docs-site/format-matrix.html. Every row's fidelity must be a token from the closed set; every evidence.gate must be a GA report id; no claim may exceed what the cited GA report verified (enforced by scripts/format-matrix-check.py against the committed P2/P3/P4 GA matrices).",
+  "description": "OEP honest format capability matrix. Machine-checkable copy of docs-site/format-matrix.html. 2027.1 is the interop/PDM foundation release; the editor is the product spine; this table documents the read foundation only, never the editor. Every row's fidelity must be a token from the closed set; every evidence.gate must be a GA report id; no claim may exceed what the cited GA report verified (enforced by scripts/format-matrix-check.py against the committed P2/P3/P4 GA matrices).",
   "fidelity_classes": [
     "mesh-approximate",
     "mesh-golden",
