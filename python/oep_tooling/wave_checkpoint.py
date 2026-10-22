@@ -208,7 +208,7 @@ def _gitea_token():
     if not os.path.exists(cred):
         return None
     txt = open(cred).read()
-    m = re.search(r"http://don:([^@]+)@192\.168\.0\.101(:|%3a)3200", txt)
+    m = re.search(r"http://(?:don|r1a):([^@]+)@192\.168\.0\.101(:|%3a)3200", txt)
     return m.group(1) if m else None
 
 
