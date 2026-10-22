@@ -32,6 +32,7 @@ crates/oep-qif/.* @don
 crates/oep-shell/.* @don
 crates/oep-kinematics/.* @don
 crates/oep-assem/.* @don
+crates/oep-analysis/.* @don
 crates/oep-rules/.* @don
 crates/oep-sketch/.* @don
 crates/oep-drafting/.* @don

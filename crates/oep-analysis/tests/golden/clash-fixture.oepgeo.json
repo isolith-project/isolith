@@ -1,0 +1,70 @@
+{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-base",
+      "name": "base-plate",
+      "part_number": "AN-001",
+      "body_ids": ["oep-body-base"],
+      "feature_ids": []
+    },
+    {
+      "id": "oep-part-block",
+      "name": "interfering-block",
+      "part_number": "AN-002",
+      "body_ids": ["oep-body-block"],
+      "feature_ids": []
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-base",
+      "name": "base-solid",
+      "kind": "solid",
+      "bbox": { "min": [0.0, 0.0, 0.0], "max": [40.0, 30.0, 10.0] },
+      "feature_ids": []
+    },
+    {
+      "id": "oep-body-block",
+      "name": "block-solid",
+      "kind": "solid",
+      "bbox": { "min": [0.0, 0.0, 0.0], "max": [20.0, 10.0, 10.0] },
+      "feature_ids": []
+    }
+  ],
+  "features": [],
+  "assemblies": [
+    {
+      "id": "oep-assembly-fixture",
+      "name": "clash-fixture",
+      "instances": [
+        {
+          "id": "i-base",
+          "name": "base",
+          "source": { "kind": "part", "id": "oep-part-base" },
+          "transform": [
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0
+          ],
+          "visible": true
+        },
+        {
+          "id": "i-block",
+          "name": "block",
+          "source": { "kind": "part", "id": "oep-part-block" },
+          "transform": [
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            25.0, 20.0, 5.0, 1.0
+          ],
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

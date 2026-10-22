@@ -843,6 +843,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "oep-analysis"
+version = "0.1.0"
+dependencies = [
+ "oep-geo",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "oep-archive"
 version = "0.1.0"
 dependencies = [

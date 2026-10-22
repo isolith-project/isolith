@@ -35,6 +35,7 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
 - P7 oep-drafting   -- 2D drafting workbench: standard/projected views from the feature graph,
   variable-driven dimensions, title block + sheets, SVG/PDF vector export, honest STEP/2D story
   (EDITOR-2D-DRAFTING, Class 2 oep-geo extension)
+- P7 oep-analysis   -- editor-spine analysis lane (decision #19 pull-forward): mass properties, interference/clash detection, exploded views, Class 1 additive over the canonical oep-geo model
 - P10 oep-archive   -- export-all interop escape hatch: neutral STEP/3DXML/glTF/STL + JSON archive (P10-M3-T02)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per workstreams/pdm/service/web-stack-adr.md, AGPL-3.0; retained

@@ -1,0 +1,15 @@
+[package]
+name = "oep-analysis"
+description = "Editor-spine analysis (decision #19 pull-forward): mass properties, interference/clash detection, and exploded views as Class 1 additive consumers of the canonical oep-geo model (P6)."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+oep-geo = { path = "../oep-geo" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+serde_json = "1"

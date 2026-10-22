@@ -1,0 +1,21 @@
+{
+  "format": "oep-analysis-material",
+  "version": 1,
+  "units": "mm",
+  "materials": [
+    {
+      "id": "mat-al-6061",
+      "name": "aluminium-6061",
+      "density_g_cm3": 2.70
+    },
+    {
+      "id": "mat-steel-1018",
+      "name": "steel-1018",
+      "density_g_cm3": 7.85
+    }
+  ],
+  "body_material": {
+    "oep-body-base": "mat-al-6061",
+    "oep-body-block": "mat-steel-1018"
+  }
+}
