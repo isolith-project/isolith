@@ -1,21 +1,34 @@
 # oep-geo model schema and serialization format (P6-M1-T01)
 
-Version 1.0, 2026-10-16. Milestone: P6-M1-T01 (`oep-geo` model schema:
+Version 2.0, 2026-10-22. Milestone: P6-M1-T01 (`oep-geo` model schema:
 part, body, feature, assembly, instance; serde serialization in our own
-documented format). Program: Isolith / Open Engineering Platform (OEP),
-P6 geometry core. Clean-room, our own format — nothing here is a vendor
-format (no 3DXML, STEP, CGR, or Dassault-derived schema is embedded).
+documented format) plus the Class 2 **drawing** extension
+(EDITOR-2D-DRAFTING, documentation: `docs/geometry-drawing-schema.md`).
+Program: Isolith / Open Engineering Platform (OEP), P6 geometry core.
+Clean-room, our own format — nothing here is a vendor format (no 3DXML, STEP,
+CGR, or Dassault-derived schema is embedded).
 
 Reference implementation: `crates/oep-geo` (Rust, serde).
 Real-material gate: `crates/oep-geo/tests/golden/example-bracket.oepgeo.json`,
 byte-locked by `crates/oep-geo/tests/schema_serde.rs` and independently
 re-parsed by `tests/test_oep_geo_acceptance.py`.
 
+## Schema versions
+
+- **v1** (2026-10-16) — the five geometry classes below.
+- **v2** (2026-10-22, Class 2 extension) — adds the sixth class `drawing`
+  (sheets / standard views / dimensions / title blocks). The `drawings`
+  collection defaults empty, so a v1 payload deserializes unchanged and
+  [`Document::migrate`] promotes it to v2 on parse (v1 loads, v2 writes;
+  the P6-M1-T03 migration discipline). Goldens across the tree were migrated
+  through the canonical serializer.
+
 ---
 
-## 1. The five model classes
+## 1. The model classes
 
-An OEP document holds five geometry classes, stored flat (one id key per
+An OEP document holds six geometry classes (the original five plus the
+Class 2 `drawing` extension), stored flat (one id key per
 entry) and linked by id, never by ownership embedding:
 
 | class     | module     | role |
@@ -25,6 +38,7 @@ entry) and linked by id, never by ownership embedding:
 | Feature   | `feature`  | a modelling operation (open vocabulary kind + parameter map) that produced bodies |
 | Assembly  | `assembly` | a named frame holding an ordered list of child instances |
 | Instance  | `assembly` | one placement of a part or a nested sub-assembly, at a 4x4 transform |
+| Drawing   | `drawing`  | Class 2: sheets, standard views, variable-driven dimensions, title blocks (schema v2) |
 
 Deliberate scope: the B-Rep / geometry kernel slots, PMI (GD&T/datums,
 P6-M1-T02), the units + tolerance model (P6-M1-T03), and feature-graph replay

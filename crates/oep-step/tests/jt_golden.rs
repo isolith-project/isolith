@@ -83,7 +83,7 @@ fn to_document_maps_canonical_model() {
     let doc: Document = jt::to_document(&model);
 
     assert_eq!(doc.format(), "oep-geo");
-    assert_eq!(doc.version(), 1);
+    assert_eq!(doc.version(), oep_geo::document::VERSION);
     let errors = doc.validate();
     assert!(
         errors.is_empty(),

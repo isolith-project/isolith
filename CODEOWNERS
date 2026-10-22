@@ -20,6 +20,7 @@
 crates/oep-cgr/.* @don
 crates/oep-3dxml/.* @don
 crates/oep-geo/.* @don
+crates/oep-engine-occ/.* @don
 crates/oep-viewer/.* @don
 crates/oep-render-worker/.* @don
 crates/oep-web/.* @don
@@ -33,6 +34,7 @@ crates/oep-kinematics/.* @don
 crates/oep-assem/.* @don
 crates/oep-rules/.* @don
 crates/oep-sketch/.* @don
+crates/oep-drafting/.* @don
 crates/oep-archive/.* @don
 crates/oep-docs/.* @don
 crates/oep-pdm/.* @don

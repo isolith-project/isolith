@@ -57,7 +57,11 @@ fn assert_bbox_eq(actual: FacetBbox, min: [f64; 3], max: [f64; 3], label: &str) 
 
 fn is_canonical(doc: &Document) {
     assert_eq!(doc.format(), "oep-geo", "canonical format tag");
-    assert_eq!(doc.version(), 1, "canonical schema version");
+    assert_eq!(
+        doc.version(),
+        oep_geo::document::VERSION,
+        "canonical schema version"
+    );
     let errors = doc.validate();
     assert!(
         errors.is_empty(),

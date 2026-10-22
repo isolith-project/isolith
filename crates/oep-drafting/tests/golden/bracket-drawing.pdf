@@ -1,0 +1,78 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 297 210] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 1423 >>
+stream
+0.35 w
+10 10 277 190 re S
+127 10 160 32 re S
+127 34 m 287 34 l S
+BT /F1 3.5 Tf 117.32925 36.775 Td (TITLE: Bracket) Tj ET
+127 26 m 287 26 l S
+BT /F1 3.5 Tf 112.75825 28.775 Td (MATERIAL: 6061-T6) Tj ET
+207 26 m 367 26 l S
+BT /F1 3.5 Tf 199.85625 28.775 Td (SCALE: 1:1) Tj ET
+127 18 m 287 18 l S
+BT /F1 3.5 Tf 109.94075000000001 20.775 Td (PART NO: KW-BKT-001) Tj ET
+207 18 m 367 18 l S
+BT /F1 3.5 Tf 203.26175 20.775 Td (REV: A) Tj ET
+127 10 m 287 10 l S
+BT /F1 3.5 Tf 99.82225 12.775 Td (DRAWN BY: oep-drafting 2026-10-22) Tj ET
+207 10 m 367 10 l S
+BT /F1 3.5 Tf 197.814 12.775 Td (SHEET: 1 of 1) Tj ET
+BT /F1 3.5 Tf 210.429 20.775 Td (Isolith) Tj ET
+207 10 m 207 42 l S
+71 48.5 m 151 48.5 l S
+71 54.5 m 151 54.5 l S
+71 48.5 m 71 54.5 l S
+151 48.5 m 151 54.5 l S
+BT /F1 3.5 Tf 64.973 56.275 Td (FRONT) Tj ET
+71 69.5 m 151 69.5 l S
+151 69.5 m 151 109.5 l S
+71 109.5 m 151 109.5 l S
+71 69.5 m 71 109.5 l S
+BT /F1 3.5 Tf 67.402 111.275 Td (TOP) Tj ET
+166 48.5 m 206 48.5 l S
+166 54.5 m 206 54.5 l S
+166 48.5 m 166 54.5 l S
+206 48.5 m 206 54.5 l S
+BT /F1 3.5 Tf 160.55575 56.275 Td (RIGHT) Tj ET
+71 59.5 m 151 59.5 l S
+71 57.5 m 71 61.5 l S
+151 57.5 m 151 61.5 l S
+BT /F1 3.5 Tf 109.054 61.775 Td (80) Tj ET
+61 69.5 m 61 109.5 l S
+59 69.5 m 63 69.5 l S
+59 109.5 m 63 109.5 l S
+BT /F1 3.5 Tf 59.054 91.775 Td (40) Tj ET
+61 48.5 m 61 54.5 l S
+59 48.5 m 63 48.5 l S
+59 54.5 m 63 54.5 l S
+BT /F1 3.5 Tf 60.027 53.775 Td (6) Tj ET
+
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000338 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1813
+%%EOF

@@ -34,7 +34,7 @@ fn golden_copy_is_byte_identical_to_real_corpus_material() {
 #[test]
 fn demo_document_builds_from_real_model_and_validates() {
     let doc = demo::build_demo_document();
-    assert!(doc.format() == "oep-geo" && doc.version() == 1);
+    assert!(doc.format() == "oep-geo" && doc.version() == oep_geo::document::VERSION);
     // Re-parse the embedded golden independently.
     let golden = oep_geo::Document::from_json_pretty(GOLDEN_OEPGEO).unwrap();
     assert_eq!(golden.assemblies.len(), 2);

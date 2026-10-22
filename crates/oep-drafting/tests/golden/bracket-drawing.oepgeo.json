@@ -1,0 +1,246 @@
+{
+  "format": "oep-geo",
+  "version": 2,
+  "units": "mm",
+  "parts": [
+    {
+      "id": "oep-part-bracket",
+      "name": "bracket",
+      "part_number": "KW-BKT-001",
+      "body_ids": [
+        "oep-body-oep-part-bracket"
+      ],
+      "feature_ids": [
+        "oep-feature-sketch-bracket-profile",
+        "oep-feature-varset-depth",
+        "oep-feature-oep-part-bracket-extrude"
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "id": "oep-body-oep-part-bracket",
+      "name": "bracket solid",
+      "kind": "solid",
+      "bbox": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          80.0,
+          40.0,
+          6.0
+        ]
+      },
+      "feature_ids": [
+        "oep-feature-sketch-bracket-profile",
+        "oep-feature-varset-depth",
+        "oep-feature-oep-part-bracket-extrude"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "oep-feature-sketch-bracket-profile",
+      "name": "bracket-profile",
+      "kind": "Sketch",
+      "parameters": {
+        "sketch": {
+          "constraints": [
+            {
+              "Fixed": {
+                "point": "p0",
+                "x": 0.0,
+                "y": 0.0
+              }
+            },
+            {
+              "Horizontal": {
+                "line": "l0"
+              }
+            },
+            {
+              "Horizontal": {
+                "line": "l2"
+              }
+            },
+            {
+              "Vertical": {
+                "line": "l1"
+              }
+            },
+            {
+              "Vertical": {
+                "line": "l3"
+              }
+            },
+            {
+              "Length": {
+                "expr": {
+                  "Variable": "width"
+                },
+                "line": "l0"
+              }
+            },
+            {
+              "Length": {
+                "expr": {
+                  "Variable": "height"
+                },
+                "line": "l1"
+              }
+            }
+          ],
+          "id": "bracket-profile",
+          "lines": {
+            "l0": {
+              "end": "p1",
+              "id": "l0",
+              "start": "p0"
+            },
+            "l1": {
+              "end": "p2",
+              "id": "l1",
+              "start": "p1"
+            },
+            "l2": {
+              "end": "p3",
+              "id": "l2",
+              "start": "p2"
+            },
+            "l3": {
+              "end": "p0",
+              "id": "l3",
+              "start": "p3"
+            }
+          },
+          "points": {
+            "p0": {
+              "id": "p0",
+              "x": 0.0,
+              "y": 0.0
+            },
+            "p1": {
+              "id": "p1",
+              "x": 3.0,
+              "y": 1.0
+            },
+            "p2": {
+              "id": "p2",
+              "x": 4.0,
+              "y": 4.0
+            },
+            "p3": {
+              "id": "p3",
+              "x": 1.0,
+              "y": 5.0
+            }
+          }
+        }
+      },
+      "body_ids": []
+    },
+    {
+      "id": "oep-feature-varset-depth",
+      "name": "depth",
+      "kind": "VariableSet",
+      "parameters": {
+        "variables": {
+          "depth": 6.0,
+          "height": 40.0,
+          "width": 80.0
+        }
+      },
+      "body_ids": []
+    },
+    {
+      "id": "oep-feature-oep-part-bracket-extrude",
+      "name": "extrude-bracket",
+      "kind": "Extrude",
+      "parameters": {
+        "driven_by": "Sketch:oep-feature-sketch-bracket-profile",
+        "extent": 6.0
+      },
+      "body_ids": [
+        "oep-body-oep-part-bracket"
+      ]
+    }
+  ],
+  "assemblies": [],
+  "drawings": [
+    {
+      "id": "oep-drawing-oep-part-bracket",
+      "name": "bracket drawing",
+      "sheets": [
+        {
+          "id": "oep-sheet-1",
+          "name": "Sheet 1",
+          "size": {
+            "width_mm": 297,
+            "height_mm": 210
+          },
+          "projection": "third_angle",
+          "title_block": {
+            "title": "Bracket",
+            "part_number": "KW-BKT-001",
+            "material": "6061-T6",
+            "scale": "1:1",
+            "drawn_by": "oep-drafting",
+            "date": "2026-10-22",
+            "revision": "A",
+            "sheet": "1 of 1",
+            "company": "Isolith"
+          },
+          "views": [
+            {
+              "id": "oep-view-front",
+              "name": "Front",
+              "kind": "front",
+              "part_id": "oep-part-bracket",
+              "scale": 1.0
+            },
+            {
+              "id": "oep-view-top",
+              "name": "Top",
+              "kind": "top",
+              "part_id": "oep-part-bracket",
+              "scale": 1.0
+            },
+            {
+              "id": "oep-view-right",
+              "name": "Right",
+              "kind": "right",
+              "part_id": "oep-part-bracket",
+              "scale": 1.0
+            }
+          ],
+          "dimensions": [
+            {
+              "id": "oep-dim-length",
+              "name": "bracket length",
+              "view_id": "oep-view-top",
+              "kind": "horizontal",
+              "variable": "width"
+            },
+            {
+              "id": "oep-dim-width",
+              "name": "bracket width",
+              "view_id": "oep-view-top",
+              "kind": "vertical",
+              "variable": "height"
+            },
+            {
+              "id": "oep-dim-depth",
+              "name": "bracket depth",
+              "view_id": "oep-view-front",
+              "kind": "vertical",
+              "variable": "depth"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

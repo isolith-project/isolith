@@ -1,0 +1,79 @@
+{
+  "format": "oep-kernel-seam-golden",
+  "generator": "gen_kernel_seam_golden",
+  "measurements": {
+    "box": {
+      "edge_count": 24,
+      "face_count": 6,
+      "surface_area": 6.0,
+      "vertex_count": 48,
+      "volume": 0.9999999999999998
+    },
+    "chamfer": {
+      "edge_count": 30,
+      "face_count": 7,
+      "surface_area": 5.842842712474619,
+      "vertex_count": 60,
+      "volume": 0.98
+    },
+    "cylinder": {
+      "edge_count": 6,
+      "face_count": 3,
+      "surface_area": 4.71238898038469,
+      "vertex_count": 12,
+      "volume": 0.7853981633974482
+    },
+    "difference": {
+      "edge_count": 24,
+      "face_count": 6,
+      "surface_area": 4.0,
+      "vertex_count": 48,
+      "volume": 0.4999999999999999
+    },
+    "extrude": {
+      "edge_count": 24,
+      "face_count": 6,
+      "surface_area": 6.0,
+      "vertex_count": 48,
+      "volume": 0.9999999999999998
+    },
+    "fillet": {
+      "edge_count": 30,
+      "face_count": 7,
+      "surface_area": 5.896991118430775,
+      "vertex_count": 60,
+      "volume": 0.9914159265358977
+    },
+    "intersection": {
+      "edge_count": 24,
+      "face_count": 6,
+      "surface_area": 4.0,
+      "vertex_count": 48,
+      "volume": 0.4999999999999999
+    },
+    "revolve": {
+      "edge_count": 12,
+      "face_count": 4,
+      "surface_area": 14.074335088082274,
+      "vertex_count": 24,
+      "volume": 2.638937829015426
+    },
+    "sphere": {
+      "edge_count": 4,
+      "face_count": 1,
+      "surface_area": 3.141592653589794,
+      "vertex_count": 8,
+      "volume": 0.5235987755982989
+    },
+    "union": {
+      "edge_count": 56,
+      "face_count": 14,
+      "surface_area": 8.0,
+      "vertex_count": 112,
+      "volume": 1.4999999999999993
+    }
+  },
+  "occt_line": "8.0.x",
+  "source": "corpus/reference box-reference (unit cube 0..1)",
+  "version": 1
+}

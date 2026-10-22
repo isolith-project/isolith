@@ -6,7 +6,7 @@ Independent (stdlib-only) verification of the committed importer-hub golden
 license-clean Abaqus cube1 3DXML container:
 
   - the committed bytes parse as JSON with the canonical OEP header:
-      format == "oep-geo", version == 1, units == "mm"
+      format == "oep-geo", version == 2, units == "mm"
   - structural fidelity of the 3DXML -> canonical mapping:
       - 2 parts (the two Reference3D nodes Abaqus_Model / Abaqus_Geometry)
       - 1 solid body (the polygonal mesh rep) with a ~10-wide cube bbox
@@ -33,7 +33,7 @@ GOLDEN = os.path.join(
 
 EXPECTED_HEADER = {
     "format": "oep-geo",
-    "version": 1,
+    "version": 2,
     "units": "mm",
 }
 

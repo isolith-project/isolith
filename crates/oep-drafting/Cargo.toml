@@ -1,0 +1,22 @@
+[package]
+name = "oep-drafting"
+description = "P7: 2D drafting workbench (EDITOR-2D-DRAFTING): standard/projected views computed from the oep-geo feature graph; dimensions driven by the oep-sketch variable set (FreeCAD-v1 behavior); title block + sheet management; SVG/PDF vector export and an honest STEP/2D story. Consumes the oep-geo Class 2 model extension (drawings collection) and oep-sketch."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# The canonical model: the drawing record model (sheets/views/dimensions)
+# lives in oep-geo (Class 2 extension, schema v2); this crate draws it from
+# the oep-geo feature graph (SolidEvaluator) and the oep-sketch parametric
+# variable set (FreeCAD-v1 dimension wiring). oep-geo stays dependency-free.
+oep-geo = { path = "../oep-geo" }
+# The parametric variable-set lane: dimensions resolve against the SAME
+# VariableSet entries that drive the model (P7-M4-T01 semantics).
+oep-sketch = { path = "../oep-sketch" }
+
+[dev-dependencies]
+serde_json = "1"

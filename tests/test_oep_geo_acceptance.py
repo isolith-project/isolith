@@ -4,7 +4,7 @@ Independent (stdlib-only) verification of the committed canonical example
 document `crates/oep-geo/tests/golden/example-bracket.oepgeo.json`:
 
   - the committed bytes parse as JSON with a valid OEP header:
-      format == "oep-geo", version == 1, units == "mm"
+      format == "oep-geo", version == 2, units == "mm"
   - top-level layout is exactly the five schema collections under one Document:
       parts, bodies, features, assemblies  (+ header fields)
   - id discipline: every id is a non-empty string and the id space is unique
@@ -38,10 +38,10 @@ GOLDEN = os.path.join(REPO, "crates", "oep-geo", "tests", "golden", "example-bra
 
 EXPECTED_HEADER = {
     "format": "oep-geo",
-    "version": 1,
+    "version": 2,
     "units": "mm",
 }
-COLLECTIONS = ("parts", "bodies", "features", "assemblies")
+COLLECTIONS = ("parts", "bodies", "features", "assemblies", "drawings")
 BODY_KINDS = {"solid", "sheet", "wire"}
 
 

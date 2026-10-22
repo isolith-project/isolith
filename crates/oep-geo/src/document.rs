@@ -1,14 +1,25 @@
 //! [`Document`]: the unit of our own serializable model format.
 //!
-//! A document is a flat store for the five model classes — part, body,
-//! feature, assembly, instance — and is the object a file in our own format
-//! (`format = "oep-geo"`, `version = 1`) deserializes into. All links between
-//! classes are id references resolved at [`Document::validate`] time, never
-//! during deserialization, so a partially-linked document is still loadable
-//! (tolerant-failure doctrine).
+//! A document is a flat store for the six model classes — part, body,
+//! feature, assembly, instance, drawing — and is the object a file in our own
+//! format (`format = "oep-geo"`, `version = 2`) deserializes into. All links
+//! between classes are id references resolved at [`Document::validate`] time,
+//! never during deserialization, so a partially-linked document is still
+//! loadable (tolerant-failure doctrine).
+//!
+//! ## Schema versioning (Class 2 extension, P6-M1-T03 discipline)
+//!
+//! `version = 1` shipped the original five classes. EDITOR-2D-DRAFTING
+//! extends the model with the [`Drawing`] class (drafting workbench sheets /
+//! views / dimensions) as a **consumer-additive** change: the `drawings`
+//! collection defaults empty, so a v1 payload deserializes unchanged and
+//! [`Document::from_json_pretty`] promotes it to the current version in place
+//! (v1 loads, v2 writes — the documented migration; see
+//! `docs/geometry-drawing-schema.md`).
 
 use crate::assembly::Assembly;
 use crate::body::Body;
+use crate::drawing::Drawing;
 use crate::feature::Feature;
 use crate::part::Part;
 use crate::validate::ValidationError;
@@ -17,7 +28,10 @@ use serde::{Deserialize, Serialize};
 /// The canonical `format` header value identifying our own model format.
 pub const FORMAT: &str = "oep-geo";
 /// The current schema version of the format.
-pub const VERSION: u32 = 1;
+///
+/// v1: the original five classes. v2 (Class 2 extension): adds the
+/// [`Drawing`] class. Bumped with a tolerant migration — see module docs.
+pub const VERSION: u32 = 2;
 
 /// A complete OEP geometry document in our own serde format.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -41,6 +55,10 @@ pub struct Document {
     /// All assemblies in the document.
     #[serde(default)]
     pub assemblies: Vec<Assembly>,
+    /// All drawings in the document (Class 2 extension, schema v2; empty for
+    /// documents authored before drafting existed).
+    #[serde(default)]
+    pub drawings: Vec<Drawing>,
 }
 
 impl Document {
@@ -54,6 +72,7 @@ impl Document {
             bodies: Vec::new(),
             features: Vec::new(),
             assemblies: Vec::new(),
+            drawings: Vec::new(),
         }
     }
 
@@ -92,6 +111,24 @@ impl Document {
         self.assemblies.push(assembly);
     }
 
+    /// Append a drawing.
+    pub fn push_drawing(&mut self, drawing: Drawing) {
+        self.drawings.push(drawing);
+    }
+
+    /// Promote a parsed document to the current schema version (migration).
+    ///
+    /// Schema v1 had no `drawings` collection; a v1 payload deserializes with
+    /// `drawings` defaulted to empty and a `version` of `1`. `migrate` stamps
+    /// the current version and materializes anything an older schema omitted,
+    /// so a v1 file loads, validates, and re-serializes as v2 — the P6-M1-T03
+    /// migration discipline: tolerant read of older versions, forward write of
+    /// the current one.
+    pub fn migrate(mut self) -> Self {
+        self.version = VERSION;
+        self
+    }
+
     /// Serialize to our canonical pretty JSON (2-space indent, trailing LF).
     ///
     /// Output is deterministic: key order follows struct declaration order and
@@ -102,9 +139,10 @@ impl Document {
         Ok(text)
     }
 
-    /// Deserialize a document from our JSON format (accepts pretty or compact).
+    /// Deserialize a document from our JSON format (accepts pretty or compact),
+    /// promoting older schema versions to the current one in place.
     pub fn from_json_pretty(text: &str) -> Result<Self, serde_json::Error> {
-        serde_json::from_str(text)
+        serde_json::from_str(text).map(Self::migrate)
     }
 
     /// Validate structural invariants (see [`ValidationError`] rules).

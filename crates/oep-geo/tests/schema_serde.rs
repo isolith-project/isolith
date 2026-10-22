@@ -152,13 +152,153 @@ fn serialize_then_deserialize_is_identity() {
 fn golden_roundtrips_and_validates_clean() {
     let doc = Document::from_json_pretty(GOLDEN).expect("parse committed golden");
     assert_eq!(doc.format(), "oep-geo");
-    assert_eq!(doc.version(), 1);
+    assert_eq!(doc.version(), oep_geo::document::VERSION);
     assert_eq!(doc.units(), "mm");
     assert!(
         doc.validate().is_empty(),
         "unexpected issues: {:?}",
         doc.validate()
     );
+}
+
+// ---------------------------------------------------------------------------
+// schema versioning + migration (Class 2 extension, P6-M1-T03 discipline)
+// ---------------------------------------------------------------------------
+
+/// A v1 payload (the original five classes, no drawings collection) must
+/// still deserialize and be promoted to the current version in place.
+#[test]
+fn v1_payload_migrates_to_current_version() {
+    let v1 = r#"{
+  "format": "oep-geo",
+  "version": 1,
+  "units": "mm",
+  "parts": [
+    {"id": "oep-part-a", "name": "a", "body_ids": [], "feature_ids": []}
+  ],
+  "bodies": [],
+  "features": [],
+  "assemblies": []
+}"#;
+    let doc = Document::from_json_pretty(v1).expect("v1 payload loads");
+    assert_eq!(doc.version(), oep_geo::document::VERSION, "promoted to v2");
+    assert!(doc.drawings.is_empty(), "v1 has no drawings -> empty");
+    assert_eq!(doc.parts.len(), 1);
+    assert_eq!(doc.parts[0].id, "oep-part-a");
+    assert!(doc.validate().is_empty(), "{:?}", doc.validate());
+    // And it re-serializes at the current version with an empty drawings array.
+    let round = doc.to_json_pretty().expect("re-serialize");
+    assert!(round.contains("\"version\": 2"));
+    assert!(round.contains("\"drawings\": []"));
+    // A second round-trip is byte-identical (migration is idempotent).
+    let second = Document::from_json_pretty(&round)
+        .expect("re-parse")
+        .to_json_pretty()
+        .expect("re-serialize");
+    assert_eq!(round, second, "migration is idempotent and deterministic");
+}
+
+/// The drawing model round-trips identically inside a canonical document
+/// (deterministic serialization + tolerant validation).
+#[test]
+fn drawing_model_round_trips_in_document() {
+    use oep_geo::{
+        Dimension, DimensionKind, Drawing, ProjectionType, Sheet, SheetSize, TitleBlock, View,
+        ViewKind,
+    };
+    let mut doc = Document::new("mm");
+    doc.push_part(oep_geo::Part::new("oep-part-bracket", "bracket"));
+    let drawing = Drawing::new("oep-drawing-bracket", "bracket drawing").with_sheet(
+        Sheet::new("oep-sheet-1", "Sheet 1")
+            .with_size(SheetSize::A4_LANDSCAPE)
+            .with_projection(ProjectionType::ThirdAngle)
+            .with_title_block(
+                TitleBlock::new("Bracket")
+                    .with_part_number("KW-BKT-001")
+                    .with_material("6061-T6")
+                    .with_scale("1:1")
+                    .with_drawn_by("oep-drafting")
+                    .with_date("2026-10-22"),
+            )
+            .with_view(
+                View::new("oep-view-front", "Front", ViewKind::Front).with_part("oep-part-bracket"),
+            )
+            .with_view(View::new("oep-view-top", "Top", ViewKind::Top))
+            .with_dimension(
+                Dimension::new(
+                    "oep-dim-width",
+                    "bracket width",
+                    "oep-view-top",
+                    DimensionKind::Horizontal,
+                )
+                .with_variable("width"),
+            ),
+    );
+    doc.push_drawing(drawing);
+
+    assert!(doc.validate().is_empty(), "{:?}", doc.validate());
+    let a = doc.to_json_pretty().expect("serialize");
+    let b = doc.to_json_pretty().expect("serialize");
+    assert_eq!(a, b, "deterministic");
+    let back = Document::from_json_pretty(&a).expect("parse");
+    assert_eq!(back, doc, "round-trip identical");
+}
+
+/// The new drawing validation rules each reject a broken document.
+#[test]
+fn validate_rejects_broken_drawings() {
+    use oep_geo::{
+        Dimension, DimensionKind, Drawing, Sheet, SheetSize, TitleBlock, View, ViewKind,
+    };
+    fn codes(errors: Vec<oep_geo::ValidationError>) -> Vec<&'static str> {
+        let mut v: Vec<&'static str> = errors.iter().map(|e| e.code).collect();
+        v.sort_unstable();
+        v
+    }
+
+    // Zero-size sheet.
+    let d0 =
+        Drawing::new("oep-drawing-x", "d").with_sheet(Sheet::new("s", "s").with_size(SheetSize {
+            width_mm: 0,
+            height_mm: 210,
+        }));
+    let mut doc0 = Document::new("mm");
+    doc0.push_drawing(d0);
+    assert!(codes(doc0.validate()).contains(&"bad-sheet-size"));
+
+    // Non-positive view scale.
+    let d1 = Drawing::new("oep-drawing-x", "d").with_sheet(
+        Sheet::new("s", "s").with_view(View::new("v", "Front", ViewKind::Front).with_scale(0.0)),
+    );
+    let mut doc1 = Document::new("mm");
+    doc1.push_drawing(d1);
+    assert!(codes(doc1.validate()).contains(&"bad-scale"));
+
+    // Dimension referencing a view not on the sheet.
+    let d2 = Drawing::new("oep-drawing-x", "d").with_sheet(Sheet::new("s", "s").with_dimension(
+        Dimension::new("dim", "d", "oep-view-ghost", DimensionKind::Horizontal),
+    ));
+    let mut doc2 = Document::new("mm");
+    doc2.push_drawing(d2);
+    assert!(codes(doc2.validate()).contains(&"unresolved-view"));
+
+    // View referencing a missing part.
+    let d3 = Drawing::new("oep-drawing-x", "d").with_sheet(
+        Sheet::new("s", "s")
+            .with_view(View::new("v", "Front", ViewKind::Front).with_part("oep-part-ghost")),
+    );
+    let mut doc3 = Document::new("mm");
+    doc3.push_drawing(d3);
+    assert!(codes(doc3.validate()).contains(&"unresolved-part"));
+
+    // Default title block is allowed (tolerant), and a duplicate drawing id is
+    // caught by the one-document id space.
+    let d4 = Drawing::new("oep-drawing-x", "d")
+        .with_sheet(Sheet::new("s", "s").with_title_block(TitleBlock::new("wt")));
+    let mut doc4 = Document::new("mm");
+    doc4.push_drawing(d4.clone());
+    doc4.push_drawing(d4); // collide
+    assert!(codes(doc4.validate()).contains(&"duplicate-id"));
 }
 
 // ---------------------------------------------------------------------------

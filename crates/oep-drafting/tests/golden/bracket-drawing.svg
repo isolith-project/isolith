@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210">
+ <g fill="none" stroke="black" stroke-width="0.35">
+  <rect x="10" y="10" width="277" height="190"/>
+  <rect x="127" y="10" width="160" height="32"/>
+  <path d="M 127 34 L 287 34"/>
+  <text x="117.32925" y="38" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">TITLE: Bracket</text>
+  <path d="M 127 26 L 287 26"/>
+  <text x="112.75825" y="30" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">MATERIAL: 6061-T6</text>
+  <path d="M 207 26 L 367 26"/>
+  <text x="199.85625" y="30" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">SCALE: 1:1</text>
+  <path d="M 127 18 L 287 18"/>
+  <text x="109.94075000000001" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">PART NO: KW-BKT-001</text>
+  <path d="M 207 18 L 367 18"/>
+  <text x="203.26175" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">REV: A</text>
+  <path d="M 127 10 L 287 10"/>
+  <text x="99.82225" y="14" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">DRAWN BY: oep-drafting 2026-10-22</text>
+  <path d="M 207 10 L 367 10"/>
+  <text x="197.814" y="14" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">SHEET: 1 of 1</text>
+  <text x="210.429" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">Isolith</text>
+  <path d="M 207 10 L 207 42"/>
+  <g data-view="FRONT">
+  <path d="M 71 48.5 L 151 48.5"/>
+  <path d="M 71 54.5 L 151 54.5"/>
+  <path d="M 71 48.5 L 71 54.5"/>
+  <path d="M 151 48.5 L 151 54.5"/>
+  </g>
+  <text x="64.973" y="57.5" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">FRONT</text>
+  <g data-view="TOP">
+  <path d="M 71 69.5 L 151 69.5"/>
+  <path d="M 151 69.5 L 151 109.5"/>
+  <path d="M 71 109.5 L 151 109.5"/>
+  <path d="M 71 69.5 L 71 109.5"/>
+  </g>
+  <text x="67.402" y="112.5" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">TOP</text>
+  <g data-view="RIGHT">
+  <path d="M 166 48.5 L 206 48.5"/>
+  <path d="M 166 54.5 L 206 54.5"/>
+  <path d="M 166 48.5 L 166 54.5"/>
+  <path d="M 206 48.5 L 206 54.5"/>
+  </g>
+  <text x="160.55575" y="57.5" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">RIGHT</text>
+  <path d="M 71 59.5 L 151 59.5"/>
+  <path d="M 71 57.5 L 71 61.5"/>
+  <path d="M 151 57.5 L 151 61.5"/>
+  <text x="109.054" y="63" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">80</text>
+  <path d="M 61 69.5 L 61 109.5"/>
+  <path d="M 59 69.5 L 63 69.5"/>
+  <path d="M 59 109.5 L 63 109.5"/>
+  <text x="59.054" y="93" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">40</text>
+  <path d="M 61 48.5 L 61 54.5"/>
+  <path d="M 59 48.5 L 63 48.5"/>
+  <path d="M 59 54.5 L 63 54.5"/>
+  <text x="60.027" y="55" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">6</text>
+ </g>
+</svg>

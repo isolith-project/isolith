@@ -13,6 +13,7 @@ members = [
     "crates/oep-3dxml",
     "crates/oep-import",
     "crates/oep-geo",
+    "crates/oep-engine-occ",
     "crates/oep-viewer",
     "crates/oep-render-worker",
     "crates/oep-web",
@@ -38,6 +39,7 @@ members = [
     "crates/oep-gate",
     "crates/oep-update",
     "crates/oep-docs",
+    "crates/oep-drafting",
 ]
 
 [workspace.package]

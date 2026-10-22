@@ -5,9 +5,11 @@
 //! a [`ValidationError`], never panicking on malformed input (tolerant-failure
 //! doctrine). Rules and codes:
 //!
-//! - `bad-format` / `unsupported-version`: header is not `oep-geo` version 1.
+//! - `bad-format` / `unsupported-version`: header is not `oep-geo` at the
+//!   current schema version.
 //! - `duplicate-id`: an id is reused anywhere in the document's id space
-//!   (one document = one id space, across all five collections).
+//!   (one document = one id space, across all six collections and every
+//!   drawing/sheet/view/dimension id).
 //! - `duplicate-ref`: a reference list contains the same id twice.
 //! - `unresolved-body` / `unresolved-feature`: a part/body/feature references
 //!   an id that is not in the document's body/feature table.
@@ -18,6 +20,11 @@
 //!   component.
 //! - `assembly-cycle`: the instance graph (assemblies instancing assemblies)
 //!   contains a cycle — an assembly must not (transitively) instance itself.
+//! - `bad-sheet-size`: a sheet paper size has a zero dimension.
+//! - `bad-scale`: a view scale is not finite and positive.
+//! - `unresolved-part`: a view names a `part_id` that does not exist.
+//! - `unresolved-view`: a dimension names a `view_id` that is not on the same
+//!   sheet.
 
 use crate::assembly::InstanceSource;
 use crate::document::Document;
@@ -117,6 +124,18 @@ pub(crate) fn validate_document(doc: &Document) -> Vec<ValidationError> {
         record_id(&mut seen, "assemblies", &a.id, &mut errors);
         for i in &a.instances {
             record_id(&mut seen, "instances", &i.id, &mut errors);
+        }
+    }
+    for d in &doc.drawings {
+        record_id(&mut seen, "drawings", &d.id, &mut errors);
+        for s in &d.sheets {
+            record_id(&mut seen, "sheets", &s.id, &mut errors);
+            for v in &s.views {
+                record_id(&mut seen, "views", &v.id, &mut errors);
+            }
+            for dim in &s.dimensions {
+                record_id(&mut seen, "dimensions", &dim.id, &mut errors);
+            }
         }
     }
 
@@ -230,6 +249,49 @@ pub(crate) fn validate_document(doc: &Document) -> Vec<ValidationError> {
                         i.source.referenced_id()
                     ),
                 ));
+            }
+        }
+    }
+
+    // Drawings.
+    for d in &doc.drawings {
+        for s in &d.sheets {
+            if !s.size.is_valid() {
+                errors.push(ValidationError::new(
+                    "bad-sheet-size",
+                    format!(
+                        "sheet {} has a non-positive paper size {:?}x{:?} mm",
+                        s.id, s.size.width_mm, s.size.height_mm
+                    ),
+                ));
+            }
+            let view_ids: HashSet<&str> = s.views.iter().map(|v| v.id.as_str()).collect();
+            for v in &s.views {
+                if !v.scale.is_finite() || v.scale <= 0.0 {
+                    errors.push(ValidationError::new(
+                        "bad-scale",
+                        format!("view {} has an invalid scale {:?}", v.id, v.scale),
+                    ));
+                }
+                if let Some(pid) = &v.part_id {
+                    if !part_ids.contains(pid.as_str()) {
+                        errors.push(ValidationError::new(
+                            "unresolved-part",
+                            format!("view {} references missing part {pid:?}", v.id),
+                        ));
+                    }
+                }
+            }
+            for dim in &s.dimensions {
+                if !view_ids.contains(dim.view_id.as_str()) {
+                    errors.push(ValidationError::new(
+                        "unresolved-view",
+                        format!(
+                            "dimension {} references view {:?} not on sheet {}",
+                            dim.id, dim.view_id, s.id
+                        ),
+                    ));
+                }
             }
         }
     }

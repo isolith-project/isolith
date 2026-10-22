@@ -1,6 +1,6 @@
 {
   "format": "oep-geo",
-  "version": 1,
+  "version": 2,
   "units": "mm",
   "parts": [
     {
@@ -52,5 +52,6 @@
       ]
     }
   ],
-  "assemblies": []
+  "assemblies": [],
+  "drawings": []
 }
