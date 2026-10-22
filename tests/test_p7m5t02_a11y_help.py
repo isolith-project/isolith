@@ -54,12 +54,21 @@ CANONICAL_COMMANDS = [
     ("save", "save:cgr|3dxml|step", "interchange"),
     ("open-pdm", "open-pdm:ITEM_ID:REVISION", "pdm"),
     ("save-pdm", "save-pdm:ITEM_ID:REVISION[:SUMMARY]", "pdm"),
+    ("assem:open", "assem:open", "assembly"),
+    ("assem:instances", "assem:instances", "assembly"),
+    ("assem:mates", "assem:mates", "assembly"),
+    ("assem:mate-add", "assem:mate-add:KIND:ARGS...", "assembly"),
+    ("assem:mate-edit", "assem:mate-edit:INDEX:KIND:ARGS...", "assembly"),
+    ("assem:mate-del", "assem:mate-del:INDEX", "assembly"),
+    ("assem:solve", "assem:solve", "assembly"),
+    ("assem:render", "assem:render:PATH", "assembly"),
+    ("assem:animate", "assem:animate:FRAMES:OUT_DIR", "assembly"),
     ("journal", "journal", "inspection"),
     ("help", "help [COMMAND]", "help"),
 ]
 CANONICAL_NAMES = [c[0] for c in CANONICAL_COMMANDS]
 CANONICAL_USAGES = [c[1] for c in CANONICAL_COMMANDS]
-EXPECT_VERSION = "1.0.0"
+EXPECT_VERSION = "1.1.0"
 
 EM_DASH = "\u2014"
 CURLY = "\u201c\u201d\u2018\u2019"

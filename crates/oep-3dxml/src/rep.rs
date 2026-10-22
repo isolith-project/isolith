@@ -301,7 +301,10 @@ fn local_end(e: &quick_xml::events::BytesEnd<'_>) -> String {
 fn attr(e: &BytesStart<'_>, want: &str) -> Option<String> {
     for a in e.attributes().flatten() {
         if a.key.local_name().as_ref() == want.as_bytes() {
-            return a.unescape_value().ok().map(|c| c.into_owned());
+            return a
+                .normalized_value(quick_xml::XmlVersion::Explicit1_0)
+                .ok()
+                .map(|c| c.into_owned());
         }
     }
     None

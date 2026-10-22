@@ -19,7 +19,7 @@
 
 /// Version tag embedded in every generated help artifact and asserted by the
 /// drift-guard test. Bump when the help surface changes materially.
-pub const HELP_INDEX_VERSION: &str = "1.0.0";
+pub const HELP_INDEX_VERSION: &str = "1.1.0";
 
 /// Label of the surface this index documents (used in the JSON and markdown
 /// artifacts).
@@ -161,6 +161,184 @@ pub static COMMANDS: &[CommandSpec] = &[
         examples: &["open-pdm:BOX-01:A"],
     },
     CommandSpec {
+        name: "assem:open",
+        token: "assem",
+        usage: "assem:open",
+        category: "assembly",
+        summary: "Open the committed 3-part assembly fixture into the interactive surface",
+        long_help: concat!(
+            "Loads the committed editor fixture (oep-assem golden: base plate, ",
+            "cap, peg) plus its mate set into the assembly editing surface. ",
+            "The fixture opens deliberately mis-placed and tilted so a live ",
+            "solve has visible work to do. Instance placement is visible with ",
+            "assem:instances and in the viewport with assem:render."
+        ),
+        args: &[],
+        examples: &["assem:open"],
+    },
+    CommandSpec {
+        name: "assem:instances",
+        token: "assem",
+        usage: "assem:instances",
+        category: "assembly",
+        summary: "List the assembly instances and their current placements",
+        long_help: concat!(
+            "Prints one line per assembly instance: id, source part id and the ",
+            "world placement of the part origin. After a live solve the lines ",
+            "reflect the solved placements (the instances follow the mate edit)."
+        ),
+        args: &[],
+        examples: &["assem:open", "assem:solve", "assem:instances"],
+    },
+    CommandSpec {
+        name: "assem:mates",
+        token: "assem",
+        usage: "assem:mates",
+        category: "assembly",
+        summary: "List the current mate set (indexed)",
+        long_help: concat!(
+            "Prints one line per mate in the constraint set with its index and ",
+            "kind (fixed, coincident, on-plane, plane-distance, parallel). ",
+            "Indices are what assem:mate-edit and assem:mate-del consume."
+        ),
+        args: &[],
+        examples: &["assem:open", "assem:mates"],
+    },
+    CommandSpec {
+        name: "assem:mate-add",
+        token: "assem",
+        usage: "assem:mate-add:KIND:ARGS...",
+        category: "assembly",
+        summary: "Create a mate and re-solve live; instances follow or a typed error reports",
+        long_help: concat!(
+            "Appends a mate to the constraint set and immediately re-solves the ",
+            "assembly through the vendor-neutral seam. On a convergent solve the ",
+            "report prints and the instances follow. On a diverging solve the ",
+            "mate is kept, a typed error is reported (solver-failed and friends), ",
+            "and the previous converged placement is left untouched. KIND plus ",
+            "ARGS: fixed INSTANCE; coincident INSTA ANCHA INSTB ANCHB; on-plane ",
+            "INST ANCH P_INST P_ANCH; plane-distance INST ANCH P_INST P_ANCH DIST; ",
+            "parallel INSTA ANCHA INSTB ANCHB. Args are colon-separated."
+        ),
+        args: &[ArgSpec {
+            name: "KIND:ARGS...",
+            required: true,
+            help: "Mate kind and its colon-separated arguments (see long help)",
+        }],
+        examples: &[
+            "assem:open",
+            "assem:mate-add:plane-distance:cap:origin:base:inX:30",
+        ],
+    },
+    CommandSpec {
+        name: "assem:mate-edit",
+        token: "assem",
+        usage: "assem:mate-edit:INDEX:KIND:ARGS...",
+        category: "assembly",
+        summary: "Replace a mate by index and re-solve live",
+        long_help: concat!(
+            "Replaces the mate at INDEX in the constraint set and re-solves live. ",
+            "Same outcome rules as assem:mate-add. An out-of-range index is a ",
+            "typed rejection."
+        ),
+        args: &[ArgSpec {
+            name: "INDEX:KIND:ARGS...",
+            required: true,
+            help: "Mate index, then the replacement mate (same grammar as mate-add)",
+        }],
+        examples: &[
+            "assem:open",
+            "assem:mate-edit:2:plane-distance:cap:origin:base:inX:30",
+        ],
+    },
+    CommandSpec {
+        name: "assem:mate-del",
+        token: "assem",
+        usage: "assem:mate-del:INDEX",
+        category: "assembly",
+        summary: "Delete a mate by index and re-solve live",
+        long_help: concat!(
+            "Removes the mate at INDEX and re-solves live. Deleting a ",
+            "constraint relaxes the assembly, so this normally converges and ",
+            "the instances settle into the now-looser placement. Out-of-range ",
+            "indices are typed rejections."
+        ),
+        args: &[ArgSpec {
+            name: "INDEX",
+            required: true,
+            help: "Index into the mate set (see assem:mates)",
+        }],
+        examples: &["assem:open", "assem:mate-del:4", "assem:solve"],
+    },
+    CommandSpec {
+        name: "assem:solve",
+        token: "assem",
+        usage: "assem:solve",
+        category: "assembly",
+        summary: "Solve the current mate set and write placements back",
+        long_help: concat!(
+            "Runs the assembly solver over the current mate set through the ",
+            "vendor-neutral seam and, on success, writes the solved placements ",
+            "into the document. Prints the report (dof, moved instances, ",
+            "residuals). On divergence it prints a typed error and leaves the ",
+            "document poses untouched."
+        ),
+        args: &[],
+        examples: &["assem:open", "assem:solve"],
+    },
+    CommandSpec {
+        name: "assem:render",
+        token: "assem",
+        usage: "assem:render:PATH",
+        category: "assembly",
+        summary: "Render the current assembly pose to a PPM image (the viewport)",
+        long_help: concat!(
+            "Renders the current instance placements as bounding-box proxies to ",
+            "a P6 PPM file at PATH using the deterministic CPU raster. Prints ",
+            "the image SHA-256 so two consecutive renders prove whether the ",
+            "instances followed a solve."
+        ),
+        args: &[ArgSpec {
+            name: "PATH",
+            required: true,
+            help: "Output PPM path",
+        }],
+        examples: &[
+            "assem:open",
+            "assem:render:before.ppm",
+            "assem:solve",
+            "assem:render:after.ppm",
+        ],
+    },
+    CommandSpec {
+        name: "assem:animate",
+        token: "assem",
+        usage: "assem:animate:FRAMES:OUT_DIR",
+        category: "assembly",
+        summary: "Play mechanism motion (crank-slider) and record a deterministic trace",
+        long_help: concat!(
+            "Drives the kinematics lane (P7-M3-T02 damped Gauss-Newton) through ",
+            "a full crank turn of the committed crank-slider mechanism built ",
+            "from its joint set, recording FRAMES deterministic per-frame poses ",
+            "to OUT_DIR/trace.json plus rendered PPM frames and a manifest. ",
+            "Prints the trace SHA-256: identical on every run, which is the ",
+            "determinism proof."
+        ),
+        args: &[
+            ArgSpec {
+                name: "FRAMES",
+                required: true,
+                help: "Number of animation frames (one crank turn)",
+            },
+            ArgSpec {
+                name: "OUT_DIR",
+                required: true,
+                help: "Output directory for trace.json, manifest.json and frames",
+            },
+        ],
+        examples: &["assem:open", "assem:animate:36:demos/editor-assem-motion"],
+    },
+    CommandSpec {
         name: "save-pdm",
         token: "save-pdm",
         usage: "save-pdm:ITEM_ID:REVISION[:SUMMARY]",
@@ -258,8 +436,8 @@ pub fn validate_token(token: &str) -> Result<&'static str, String> {
 }
 
 /// The help-index categories in display order.
-pub fn categories() -> [&'static str; 4] {
-    ["interchange", "pdm", "inspection", "help"]
+pub fn categories() -> [&'static str; 5] {
+    ["interchange", "pdm", "assembly", "inspection", "help"]
 }
 
 /// Render the plain-text command index (the `help` output).
@@ -366,7 +544,7 @@ pub fn render_index_markdown() -> String {
     ));
     out.push_str("```\n");
     out.push_str(concat!(
-        "cargo run --example workbench -- --write-help-index ",
+        "cargo run --example workbench -- --write-help-index:",
         "docs/re-notes/oep-workbench-help-index.md\n"
     ));
     out.push_str("```\n\n");

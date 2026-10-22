@@ -195,7 +195,9 @@ fn read_attrs(start: &quick_xml::events::BytesStart) -> Result<Vec<(String, Stri
     for a in start.attributes() {
         let a = a.map_err(|e| Error::Xml(e.to_string()))?;
         let key = lname(a.key.as_ref());
-        let val = a.unescape_value().map_err(|e| Error::Xml(e.to_string()))?;
+        let val = a
+            .normalized_value(quick_xml::XmlVersion::Explicit1_0)
+            .map_err(|e| Error::Xml(e.to_string()))?;
         out.push((key, val.into_owned()));
     }
     Ok(out)

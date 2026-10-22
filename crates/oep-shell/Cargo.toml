@@ -14,5 +14,13 @@ repository.workspace = true
 # pass per the P7-M1 shell decision.
 oep-import = { path = "../oep-import" }
 oep-pdm = { path = "../oep-pdm" }
+# The assembly editing surface (EDITOR-ASSEM-EDIT): the solver seam lives in
+# oep-assem, the damped Gauss-Newton kinematics lane (P7-M3-T02) in
+# oep-kinematics (also its raster, the CPU viewport of this card), and the
+# canonical model in oep-geo.
+oep-assem = { path = "../oep-assem" }
+oep-kinematics = { path = "../oep-kinematics" }
+oep-geo = { path = "../oep-geo" }
 
 [dev-dependencies]
+serde_json = "1"

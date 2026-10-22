@@ -29,6 +29,9 @@ pending-corpus/
 # (offline image tarballs + checksums) are build artifacts, not source.
 P10-M1/deploy/.env
 P10-M1/releases/
+# Editor-assem mechanism motion recording frames: regenerated deterministically
+# by the performance/CI run; the trace + manifest are the committed record.
+/demos/editor-assem-motion/frames/
 # P10-M4 replication proof scratch (aggregated JSON/MD are the artifacts)
 P10-M4/proof/.local-rows.jsonl
 P10-M4/proof/.remote-rows.jsonl

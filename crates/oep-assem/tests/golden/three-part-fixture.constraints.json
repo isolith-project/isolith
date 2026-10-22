@@ -1,0 +1,56 @@
+{
+  "format": "oep-assem-constraints",
+  "version": 1,
+  "units": "mm",
+  "assembly": "oep-assembly-fixture3",
+  "mates": [
+    {
+      "kind": "fixed",
+      "instance": "base"
+    },
+    {
+      "kind": "on-plane",
+      "point": { "instance": "cap", "anchor": "origin" },
+      "plane": { "instance": "base", "anchor": "top" }
+    },
+    {
+      "kind": "plane-distance",
+      "point": { "instance": "cap", "anchor": "origin" },
+      "plane": { "instance": "base", "anchor": "inX" },
+      "distance": 36.0
+    },
+    {
+      "kind": "plane-distance",
+      "point": { "instance": "cap", "anchor": "origin" },
+      "plane": { "instance": "base", "anchor": "outY" },
+      "distance": 32.0
+    },
+    {
+      "kind": "parallel",
+      "a": { "instance": "cap", "anchor": "top" },
+      "b": { "instance": "base", "anchor": "top" }
+    },
+    {
+      "kind": "on-plane",
+      "point": { "instance": "peg", "anchor": "origin" },
+      "plane": { "instance": "base", "anchor": "top" }
+    },
+    {
+      "kind": "plane-distance",
+      "point": { "instance": "peg", "anchor": "origin" },
+      "plane": { "instance": "base", "anchor": "inX" },
+      "distance": 18.0
+    },
+    {
+      "kind": "plane-distance",
+      "point": { "instance": "peg", "anchor": "origin" },
+      "plane": { "instance": "base", "anchor": "outY" },
+      "distance": 28.0
+    },
+    {
+      "kind": "parallel",
+      "a": { "instance": "peg", "anchor": "top" },
+      "b": { "instance": "base", "anchor": "top" }
+    }
+  ]
+}

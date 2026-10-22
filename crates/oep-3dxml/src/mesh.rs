@@ -114,7 +114,9 @@ fn polygonal_type(start: &BytesStart<'_>) -> Option<bool> {
             continue;
         }
         saw_type = true;
-        let val = attr.unescape_value().unwrap_or_default();
+        let val = attr
+            .normalized_value(quick_xml::XmlVersion::Explicit1_0)
+            .unwrap_or_default();
         if val.ends_with("PolygonalRepType") {
             return Some(true);
         }
@@ -168,7 +170,9 @@ fn decode_face_triangles(start: &BytesStart<'_>) -> Vec<[u32; 3]> {
     for attr in start.attributes().flatten() {
         let name = attr.key.local_name();
         if name.as_ref() == b"triangles" {
-            let val = attr.unescape_value().unwrap_or_default();
+            let val = attr
+                .normalized_value(quick_xml::XmlVersion::Explicit1_0)
+                .unwrap_or_default();
             let nums: Vec<u32> = val
                 .split_whitespace()
                 .filter_map(|t| t.parse::<u32>().ok())
@@ -179,7 +183,9 @@ fn decode_face_triangles(start: &BytesStart<'_>) -> Vec<[u32; 3]> {
                 }
             }
         } else if name.as_ref() == b"strips" {
-            let val = attr.unescape_value().unwrap_or_default();
+            let val = attr
+                .normalized_value(quick_xml::XmlVersion::Explicit1_0)
+                .unwrap_or_default();
             for run in val.split(',') {
                 let inds: Vec<u32> = run
                     .split_whitespace()

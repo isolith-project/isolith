@@ -45,6 +45,7 @@
 //! Exit code: 0 when every command succeeded, 1 when any command Failed or
 //! the invocation was empty.
 
+use oep_shell::assem::{self, AssemblySession, MateOutcome, SolveOutcome};
 use oep_shell::commands;
 use oep_shell::workbench::{Interchange, Workbench, WorkbenchAction};
 
@@ -100,6 +101,250 @@ fn print_outcome(outcome: &oep_shell::workbench::WorkbenchOutcome) -> bool {
     }
 }
 
+/// Dispatch one `assem:` sub-command against the interactive assembly surface.
+/// Returns `true` when the command ran cleanly (a diverged solve is a valid
+/// edit outcome, not a command failure); `false` only for malformed input or
+/// missing session.
+fn dispatch_assem(asm: &mut Option<AssemblySession>, arg: &str) -> bool {
+    let (sub, rest) = match arg.split_once(':') {
+        Some((s, r)) => (s, Some(r)),
+        None => (arg, None),
+    };
+    match sub {
+        "open" => match AssemblySession::open_fixture() {
+            Ok(session) => {
+                println!(
+                    "assembled {}: instances={} mates={}",
+                    session.assembly_id(),
+                    session.instances().len(),
+                    session.mates().len()
+                );
+                *asm = Some(session);
+                true
+            }
+            Err(e) => {
+                println!("failed: {e}");
+                false
+            }
+        },
+        "instances" => {
+            let Some(session) = asm.as_ref() else {
+                println!("failed: run assem:open first to load the assembly fixture");
+                return false;
+            };
+            for info in session.instances() {
+                let t = &info.transform;
+                println!(
+                    "instance {} part={} at ({:.4}, {:.4}, {:.4})",
+                    info.id, info.source_id, t[12], t[13], t[14]
+                );
+            }
+            true
+        }
+        "mates" => {
+            let Some(session) = asm.as_ref() else {
+                println!("failed: run assem:open first to load the assembly fixture");
+                return false;
+            };
+            for (i, mate) in session.mates().iter().enumerate() {
+                println!("mate {}", assem::describe_mate(i, mate));
+            }
+            true
+        }
+        "solve" => {
+            let Some(session) = asm.as_mut() else {
+                println!("failed: run assem:open first to load the assembly fixture");
+                return false;
+            };
+            match session.solve() {
+                SolveOutcome::Solved(report) => {
+                    print_solve(&report);
+                    true
+                }
+                SolveOutcome::Diverged(error) => {
+                    println!("diverged: {}: {error}", assem::workbench_error_kind(&error));
+                    true
+                }
+            }
+        }
+        "render" => {
+            let Some(rest) = rest else {
+                println!("failed: assem:render expects a PATH");
+                return false;
+            };
+            let Some(session) = asm.as_ref() else {
+                println!("failed: run assem:open first to load the assembly fixture");
+                return false;
+            };
+            match session.render_ppm(rest) {
+                Ok(r) => {
+                    println!(
+                        "rendered {} sha256={} {}x{}",
+                        r.path, r.sha256, r.width, r.height
+                    );
+                    true
+                }
+                Err(e) => {
+                    println!("failed: {e}");
+                    false
+                }
+            }
+        }
+        "animate" => {
+            let Some(rest) = rest else {
+                println!("failed: assem:animate expects FRAMES:OUT_DIR");
+                return false;
+            };
+            let mut parts = rest.splitn(2, ':');
+            let frames: usize = match parts.next().and_then(|v| v.parse().ok()) {
+                Some(f) => f,
+                None => {
+                    println!("failed: assem:animate FRAMES must be a positive integer");
+                    return false;
+                }
+            };
+            let out_dir = parts.next().unwrap_or_default();
+            let Some(session) = asm.as_ref() else {
+                println!("failed: run assem:open first to load the assembly fixture");
+                return false;
+            };
+            match session.animate(frames, out_dir) {
+                Ok(a) => {
+                    println!(
+                        "motion frames={} worst_residual={:.3e} worst_translation_mm={:.3e} \
+                         worst_orientation_rad={:.3e} free_dof_undriven={} trace_sha256={} out={}",
+                        a.frames,
+                        a.worst_residual,
+                        a.worst_translation_error,
+                        a.worst_orientation_error,
+                        a.free_dof_undriven,
+                        a.trace_sha256,
+                        a.out_dir
+                    );
+                    true
+                }
+                Err(e) => {
+                    println!("failed: {e}");
+                    false
+                }
+            }
+        }
+        "mate-add" | "mate-edit" | "mate-del" => {
+            let Some(session) = asm.as_mut() else {
+                println!("failed: run assem:open first to load the assembly fixture");
+                return false;
+            };
+            let edit = sub != "mate-add";
+            let delete = sub == "mate-del";
+            let Some(rest) = rest else {
+                println!("failed: {sub} expects arguments");
+                return false;
+            };
+            if delete {
+                let index: usize = match rest.parse() {
+                    Ok(i) => i,
+                    Err(_) => {
+                        println!("failed: {sub} expects an integer INDEX");
+                        return false;
+                    }
+                };
+                return print_mate_outcome("removed", session.remove_mate(index));
+            }
+            let (index_part, kind_part_owned) = if edit {
+                match rest.split_once(':') {
+                    Some((i, k)) => (Some(i), k.to_string()),
+                    None => {
+                        println!("failed: {sub} expects INDEX:KIND:ARGS...");
+                        return false;
+                    }
+                }
+            } else {
+                (None, rest.to_string())
+            };
+            let kind_args: Vec<&str> = kind_part_owned.split(':').collect();
+            let kind = kind_args.first().copied().unwrap_or_default();
+            let args = &kind_args[if kind_args.len() > 1 { 1 } else { 0 }..];
+            if edit {
+                let index: usize = match index_part.unwrap_or_default().parse() {
+                    Ok(i) => i,
+                    Err(_) => {
+                        println!("failed: {sub} expects an integer INDEX");
+                        return false;
+                    }
+                };
+                let mate = match assem::parse_mate(kind, args) {
+                    Ok(m) => m,
+                    Err(e) => {
+                        println!("failed: {e}");
+                        return false;
+                    }
+                };
+                print_mate_outcome("edited", session.edit_mate(index, mate))
+            } else {
+                let mate = match assem::parse_mate(kind, args) {
+                    Ok(m) => m,
+                    Err(e) => {
+                        println!("failed: {e}");
+                        return false;
+                    }
+                };
+                print_mate_outcome("added", session.add_mate(mate))
+            }
+        }
+        other => {
+            println!(
+                "failed: unknown assem sub-command '{other}'; see help:assem:open for the surface"
+            );
+            false
+        }
+    }
+}
+
+/// Print the outcome of a live-solve mate edit. A diverged solve reports the
+/// typed error but is a valid session state (not a command failure).
+fn print_mate_outcome(verb: &str, outcome: MateOutcome) -> bool {
+    match outcome {
+        MateOutcome::AppliedAndSolved { mate_index, report } => {
+            println!(
+                "{verb} mate {mate_index}: solved dof={} moved={} max_dist={:.3e} max_angle={:.3e}",
+                report.dof,
+                report.moved.len(),
+                report.max_distance_error,
+                report.max_angle_error
+            );
+            for (id, t) in &report.moved {
+                println!("moved {id} to ({:.4}, {:.4}, {:.4})", t[12], t[13], t[14]);
+            }
+            true
+        }
+        MateOutcome::AppliedButDiverged { mate_index, error } => {
+            println!(
+                "diverged mate {mate_index}: {}: {error}",
+                assem::workbench_error_kind(&error)
+            );
+            true
+        }
+        MateOutcome::Rejected { mate_index, error } => {
+            println!("failed mate {mate_index}: {error}");
+            false
+        }
+    }
+}
+
+/// Print a successful solve report.
+fn print_solve(report: &oep_assem::SolveReport) {
+    println!(
+        "solved dof={} moved={} max_dist={:.3e} max_angle={:.3e}",
+        report.dof,
+        report.moved.len(),
+        report.max_distance_error,
+        report.max_angle_error
+    );
+    for (id, t) in &report.moved {
+        println!("moved {id} to ({:.4}, {:.4}, {:.4})", t[12], t[13], t[14]);
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
     if args.is_empty() {
@@ -108,6 +353,7 @@ fn main() {
     }
 
     let mut workbench = Workbench::with_local_vault();
+    let mut asm: Option<AssemblySession> = None;
     let mut ok = true;
 
     for arg in &args {
@@ -224,6 +470,9 @@ fn main() {
                     revision,
                 });
                 ok &= print_outcome(&out);
+            }
+            ("assem", Some(arg)) => {
+                ok &= dispatch_assem(&mut asm, arg);
             }
             ("journal", None) => {
                 for line in workbench.journal() {

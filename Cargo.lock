@@ -891,8 +891,12 @@ dependencies = [
 name = "oep-shell"
 version = "0.1.0"
 dependencies = [
+ "oep-assem",
+ "oep-geo",
  "oep-import",
+ "oep-kinematics",
  "oep-pdm",
+ "serde_json",
 ]
 
 [[package]]

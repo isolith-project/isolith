@@ -1,0 +1,10 @@
+{
+  "task": "editor-assem-motion",
+  "frames": 90,
+  "worst_residual_max": 3.480e-11,
+  "worst_translation_error_mm": 7.434e-11,
+  "worst_orientation_error_rad": 1.064e-12,
+  "free_dof_undriven": 1,
+  "trace": "demos/editor-assem-motion/trace.json",
+  "frame_dir": "demos/editor-assem-motion/frames"
+}

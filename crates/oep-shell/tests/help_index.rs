@@ -28,12 +28,23 @@ const CANONICAL_NAMES: &[&str] = &[
     "open-pdm",
     "save-pdm",
     "save",
+    "assem:open",
+    "assem:instances",
+    "assem:mates",
+    "assem:mate-add",
+    "assem:mate-edit",
+    "assem:mate-del",
+    "assem:solve",
+    "assem:render",
+    "assem:animate",
     "journal",
     "help",
 ];
 
 /// The canonical set of dispatch tokens (the text before the first ':').
-const CANONICAL_TOKENS: &[&str] = &["load", "open-pdm", "save-pdm", "save", "journal", "help"];
+const CANONICAL_TOKENS: &[&str] = &[
+    "load", "open-pdm", "save-pdm", "save", "assem", "journal", "help",
+];
 
 fn committed_index_path() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))

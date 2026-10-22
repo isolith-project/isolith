@@ -1,8 +1,8 @@
 ---
 title: Isolith P7-M5-T02 Accessibility Checklist (viewer and workbench surfaces)
-version: 1.0.0
-date: 2026-10-16
-status: Ratified for the P7-M5-T02 headless surfaces
+version: 1.1.0
+date: 2026-10-22
+status: Ratified for the P7-M5-T02 headless surfaces (v1.1.0 widens the workbench surface with the assembly editing commands and the typed-error guarantee)
 owner: Isolith program governance, P7 modeler lane (P7-M5-T02)
 applies_to: the oep-viewer surface (P6-M5-T02 preview viewer) and the oep-shell workbench command surface (P7-M2-T01), and the gated items that land when the P7-M5 immediate-mode interactive panel is delivered
 supersedes: nothing
@@ -43,7 +43,7 @@ this headless surface).
 
 | ID | Criterion | Status | Verified by |
 | --- | --- | --- | --- |
-| WB-A11Y-01 | Every command is discoverable from help: `help` prints the full command index, and every dispatchable command (load:cgr, load:3dxml, load:step, open-pdm, save-pdm, save, journal, help) exists in the registry. | PASS | crates/oep-shell/tests/help_index.rs (registry_covers_every_dispatchable_command); tests/test_p7m5t02_a11y_help.py cross-checks the committed index against the metadata |
+| WB-A11Y-01 | Every command is discoverable from help: `help` prints the full command index, and every dispatchable command (load:cgr, load:3dxml, load:step, open-pdm, save-pdm, save, assem:open, assem:instances, assem:mates, assem:mate-add, assem:mate-edit, assem:mate-del, assem:solve, assem:render, assem:animate, journal, help) exists in the registry. | PASS | crates/oep-shell/tests/help_index.rs (registry_covers_every_dispatchable_command); tests/test_p7m5t02_a11y_help.py cross-checks the committed index against the metadata |
 | WB-A11Y-02 | Per-command docs exist for every command and are GENERATED from command metadata (usage, arguments, description, examples); the committed index is byte-identical to a fresh render (drift-guarded). | PASS | crates/oep-shell/tests/help_index.rs (every_command_is_documented + help_index_generated_from_metadata_is_committed) |
 | WB-A11Y-03 | No color-only encoding: help and CLI output are plain text with no ANSI color escapes; nothing is conveyed by color alone. | PASS | crates/oep-shell/tests/help_index.rs (rendered_help_has_no_ansi_color_escapes) |
 | WB-A11Y-04 | Predictable syntax and actionable errors: consistent command:arg grammar; an unknown command fails with a message naming the token and pointing at `help`. | PASS | crates/oep-shell/tests/help_index.rs (unknown_command_error_points_to_help) + oep-shell/src/commands.rs validate_token |
@@ -51,6 +51,7 @@ this headless surface).
 | WB-A11Y-06 | Help exit codes are defined and measured: `help` and `help:NAME` exit 0; an empty invocation and an unknown command exit 1 with guidance (measured on the built oep-workbench binary). | PASS | measured in the P7-M5-T02 RE note (oep-workbench binary exit codes captured on the rebuilt example) |
 | WB-A11Y-07 | Keyboard/pointer independence: the entire surface is text-driven; no operation requires a pointer, a display, or a GUI (headless by construction, CI-safe). | PASS | headless by construction; exercised by the board's CI jobs (no display, no GUI deps) |
 | WB-A11Y-08 | Interactive panel accessibility (focus ring, keyboard focus order, screen-reader integration, GUI contrast themes) | DEFERRED | gated on the P7-M5 immediate-mode UI card |
+| WB-A11Y-09 | Assembly editing surface is text-callable and typed: every mate add/edit/delete and solve reports a typed result or typed error, and a diverging solve never fabricates a pose (last converged placement stays, named error kind). | PASS | crates/oep-shell/tests/assembly_surface.rs (diverging_mate_returns_typed_error_and_never_touches_poses) + tests/test_editor_assem_edit.py |
 
 ## Theme baseline (measured 2026-10-16)
 

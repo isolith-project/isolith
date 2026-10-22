@@ -3,10 +3,10 @@
 This file is GENERATED from the command metadata in `crates/oep-shell/src/commands.rs` (the single source of truth for the workbench help surface). Do not hand-edit. Regenerate and keep the committed copy in sync with:
 
 ```
-cargo run --example workbench -- --write-help-index docs/re-notes/oep-workbench-help-index.md
+cargo run --example workbench -- --write-help-index:docs/re-notes/oep-workbench-help-index.md
 ```
 
-help-index-version: 1.0.0
+help-index-version: 1.1.0
 
 surface: oep-shell workbench command surface
 
@@ -19,6 +19,15 @@ surface: oep-shell workbench command surface
 | load:step | `load:step:PATH` | interchange | Load an ISO 10303-21 STEP file into the workbench |
 | save | `save:cgr|3dxml|step` | interchange | Request an interchange save lane (honest pending where no writer exists yet) |
 | open-pdm | `open-pdm:ITEM_ID:REVISION` | pdm | Open a revision from the PDM vault and make it the current document |
+| assem:open | `assem:open` | assembly | Open the committed 3-part assembly fixture into the interactive surface |
+| assem:instances | `assem:instances` | assembly | List the assembly instances and their current placements |
+| assem:mates | `assem:mates` | assembly | List the current mate set (indexed) |
+| assem:mate-add | `assem:mate-add:KIND:ARGS...` | assembly | Create a mate and re-solve live; instances follow or a typed error reports |
+| assem:mate-edit | `assem:mate-edit:INDEX:KIND:ARGS...` | assembly | Replace a mate by index and re-solve live |
+| assem:mate-del | `assem:mate-del:INDEX` | assembly | Delete a mate by index and re-solve live |
+| assem:solve | `assem:solve` | assembly | Solve the current mate set and write placements back |
+| assem:render | `assem:render:PATH` | assembly | Render the current assembly pose to a PPM image (the viewport) |
+| assem:animate | `assem:animate:FRAMES:OUT_DIR` | assembly | Play mechanism motion (crank-slider) and record a deterministic trace |
 | save-pdm | `save-pdm:ITEM_ID:REVISION[:SUMMARY]` | pdm | Publish the current document as a new PDM vault revision |
 | journal | `journal` | inspection | Print the ordered operation journal |
 | help | `help [COMMAND]` | help | Print this command index, or the full help for one command |
@@ -105,6 +114,163 @@ Arguments:
 Examples:
 
 - `oep-workbench open-pdm:BOX-01:A`
+
+### assem:open
+
+Usage: `assem:open`
+
+Category: assembly
+
+Loads the committed editor fixture (oep-assem golden: base plate, cap, peg) plus its mate set into the assembly editing surface. The fixture opens deliberately mis-placed and tilted so a live solve has visible work to do. Instance placement is visible with assem:instances and in the viewport with assem:render.
+
+Arguments:
+
+- (none)
+
+Examples:
+
+- `oep-workbench assem:open`
+
+### assem:instances
+
+Usage: `assem:instances`
+
+Category: assembly
+
+Prints one line per assembly instance: id, source part id and the world placement of the part origin. After a live solve the lines reflect the solved placements (the instances follow the mate edit).
+
+Arguments:
+
+- (none)
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:solve`
+- `oep-workbench assem:instances`
+
+### assem:mates
+
+Usage: `assem:mates`
+
+Category: assembly
+
+Prints one line per mate in the constraint set with its index and kind (fixed, coincident, on-plane, plane-distance, parallel). Indices are what assem:mate-edit and assem:mate-del consume.
+
+Arguments:
+
+- (none)
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:mates`
+
+### assem:mate-add
+
+Usage: `assem:mate-add:KIND:ARGS...`
+
+Category: assembly
+
+Appends a mate to the constraint set and immediately re-solves the assembly through the vendor-neutral seam. On a convergent solve the report prints and the instances follow. On a diverging solve the mate is kept, a typed error is reported (solver-failed and friends), and the previous converged placement is left untouched. KIND plus ARGS: fixed INSTANCE; coincident INSTA ANCHA INSTB ANCHB; on-plane INST ANCH P_INST P_ANCH; plane-distance INST ANCH P_INST P_ANCH DIST; parallel INSTA ANCHA INSTB ANCHB. Args are colon-separated.
+
+Arguments:
+
+- `KIND:ARGS...` (required): Mate kind and its colon-separated arguments (see long help)
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:mate-add:plane-distance:cap:origin:base:inX:30`
+
+### assem:mate-edit
+
+Usage: `assem:mate-edit:INDEX:KIND:ARGS...`
+
+Category: assembly
+
+Replaces the mate at INDEX in the constraint set and re-solves live. Same outcome rules as assem:mate-add. An out-of-range index is a typed rejection.
+
+Arguments:
+
+- `INDEX:KIND:ARGS...` (required): Mate index, then the replacement mate (same grammar as mate-add)
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:mate-edit:2:plane-distance:cap:origin:base:inX:30`
+
+### assem:mate-del
+
+Usage: `assem:mate-del:INDEX`
+
+Category: assembly
+
+Removes the mate at INDEX and re-solves live. Deleting a constraint relaxes the assembly, so this normally converges and the instances settle into the now-looser placement. Out-of-range indices are typed rejections.
+
+Arguments:
+
+- `INDEX` (required): Index into the mate set (see assem:mates)
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:mate-del:4`
+- `oep-workbench assem:solve`
+
+### assem:solve
+
+Usage: `assem:solve`
+
+Category: assembly
+
+Runs the assembly solver over the current mate set through the vendor-neutral seam and, on success, writes the solved placements into the document. Prints the report (dof, moved instances, residuals). On divergence it prints a typed error and leaves the document poses untouched.
+
+Arguments:
+
+- (none)
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:solve`
+
+### assem:render
+
+Usage: `assem:render:PATH`
+
+Category: assembly
+
+Renders the current instance placements as bounding-box proxies to a P6 PPM file at PATH using the deterministic CPU raster. Prints the image SHA-256 so two consecutive renders prove whether the instances followed a solve.
+
+Arguments:
+
+- `PATH` (required): Output PPM path
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:render:before.ppm`
+- `oep-workbench assem:solve`
+- `oep-workbench assem:render:after.ppm`
+
+### assem:animate
+
+Usage: `assem:animate:FRAMES:OUT_DIR`
+
+Category: assembly
+
+Drives the kinematics lane (P7-M3-T02 damped Gauss-Newton) through a full crank turn of the committed crank-slider mechanism built from its joint set, recording FRAMES deterministic per-frame poses to OUT_DIR/trace.json plus rendered PPM frames and a manifest. Prints the trace SHA-256: identical on every run, which is the determinism proof.
+
+Arguments:
+
+- `FRAMES` (required): Number of animation frames (one crank turn)
+- `OUT_DIR` (required): Output directory for trace.json, manifest.json and frames
+
+Examples:
+
+- `oep-workbench assem:open`
+- `oep-workbench assem:animate:36:demos/editor-assem-motion`
 
 ### save-pdm
 

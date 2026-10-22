@@ -33,6 +33,14 @@ pub mod commands;
 /// The OEP interchange workbench command surface.
 pub mod workbench;
 
+/// The interactive assembly editing surface (EDITOR-ASSEM-EDIT): create,
+/// edit, delete mates in the viewport against the live solver.
+pub mod assem;
+
+/// Self-contained SHA-256 for content-hashing rendered frames and traces
+/// (std-only, so the surface needs no third-party crate on this lane).
+pub mod sha256;
+
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P7-SHELL";
 
