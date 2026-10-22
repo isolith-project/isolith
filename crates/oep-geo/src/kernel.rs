@@ -23,6 +23,8 @@ use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fmt;
 
+use crate::body::BoundingBox;
+
 /// The three exact B-Rep boolean operations (union, difference, intersection).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -33,6 +35,29 @@ pub enum BooleanOp {
     Difference,
     /// Common material of all operands (BRepAlgoAPI_Common behind the seam).
     Intersection,
+}
+
+/// The mirror plane normal for [`solid_mirror`]: one of the three model axes.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum MirrorAxis {
+    /// Mirror about the plane normal to X at coordinate `at`.
+    X,
+    /// Mirror about the plane normal to Y at coordinate `at`.
+    Y,
+    /// Mirror about the plane normal to Z at coordinate `at`.
+    Z,
+}
+
+impl MirrorAxis {
+    /// The engine's plane-normal code (0 = X, 1 = Y, 2 = Z).
+    pub(crate) fn code(self) -> i32 {
+        match self {
+            MirrorAxis::X => 0,
+            MirrorAxis::Y => 1,
+            MirrorAxis::Z => 2,
+        }
+    }
 }
 
 /// Caller-owned geometric tolerance (P6-M1-T03: tolerance lives in oep-geo,
@@ -547,6 +572,72 @@ mod engine_iface {
             Err(KernelError::EngineUnavailable)
         }
     }
+
+    /// Axis-aligned bounding box of a registered shape as `[xmin, ymin, zmin,
+    /// xmax, ymax, zmax]`.
+    pub fn bbox(sys: &SysHandle, subject: u64) -> Result<[f64; 6], KernelError> {
+        #[cfg(feature = "kernel")]
+        {
+            let (x0, y0, z0, x1, y1, z1) =
+                oep_engine_occ::occ_bbox(sys.id(), subject).map_err(super::kernel_err)?;
+            Ok([x0, y0, z0, x1, y1, z1])
+        }
+        #[cfg(not(feature = "kernel"))]
+        {
+            let _ = (sys, subject);
+            Err(KernelError::EngineUnavailable)
+        }
+    }
+
+    /// Rigid translation of a registered shape by `(dx, dy, dz)` (new token).
+    pub fn translate(
+        sys: &SysHandle,
+        subject: u64,
+        dx: f64,
+        dy: f64,
+        dz: f64,
+    ) -> Result<super::Measured, KernelError> {
+        #[cfg(feature = "kernel")]
+        {
+            let token = oep_engine_occ::occ_translate(sys.id(), subject, dx, dy, dz)
+                .map_err(super::kernel_err)?;
+            let info = oep_engine_occ::occ_info(sys.id(), token).map_err(super::kernel_err)?;
+            Ok(super::Measured {
+                token,
+                measures: super::to_measures(info),
+            })
+        }
+        #[cfg(not(feature = "kernel"))]
+        {
+            let _ = (sys, subject, dx, dy, dz);
+            Err(KernelError::EngineUnavailable)
+        }
+    }
+
+    /// Mirror a registered shape about an axis-aligned plane (axis code 0/1/2,
+    /// offset `at` along that axis); returns the new token.
+    pub fn mirror(
+        sys: &SysHandle,
+        subject: u64,
+        axis: i32,
+        at: f64,
+    ) -> Result<super::Measured, KernelError> {
+        #[cfg(feature = "kernel")]
+        {
+            let token = oep_engine_occ::occ_mirror_plane(sys.id(), subject, axis, at)
+                .map_err(super::kernel_err)?;
+            let info = oep_engine_occ::occ_info(sys.id(), token).map_err(super::kernel_err)?;
+            Ok(super::Measured {
+                token,
+                measures: super::to_measures(info),
+            })
+        }
+        #[cfg(not(feature = "kernel"))]
+        {
+            let _ = (sys, subject, axis, at);
+            Err(KernelError::EngineUnavailable)
+        }
+    }
 }
 
 /// Map an engine error to a [`KernelError`] (typed across the seam).
@@ -767,6 +858,63 @@ pub fn solid_revolve(
         ));
     }
     let m = engine_iface::revolve(sys, profile, angle, tolerance.get())?;
+    Ok(with_token(m.token, m.measures, sys))
+}
+
+/// Measure the axis-aligned bounding box of a solid as a closed corner box
+/// (`BRepBndLib`/`Bnd_Box` behind the seam). Shapes have exact planar extents;
+/// the caller-owned tolerance is carried for seam-signature consistency.
+pub fn solid_bbox(
+    sys: &SysHandle,
+    subject: &Solid,
+    _tolerance: Tolerance,
+) -> Result<BoundingBox, KernelError> {
+    let token = require_token(subject)?;
+    let [x0, y0, z0, x1, y1, z1] = engine_iface::bbox(sys, token)?;
+    Ok(BoundingBox::new([x0, y0, z0], [x1, y1, z1]))
+}
+
+/// Rigidly translate a solid by `(dx, dy, dz)` (by copy; the subject is
+/// untouched) into a new solid in the same session. The caller-owned
+/// tolerance is carried for seam-signature consistency (translation is a
+/// rigid placement, so the engine needs no fuzzy tolerance here).
+pub fn solid_translate(
+    sys: &SysHandle,
+    subject: &Solid,
+    dx: f64,
+    dy: f64,
+    dz: f64,
+    _tolerance: Tolerance,
+) -> Result<Solid, KernelError> {
+    if ![dx, dy, dz].iter().all(|v| v.is_finite()) {
+        return Err(KernelError::InvalidArgument(
+            "translate vector must be finite".to_string(),
+        ));
+    }
+    let token = require_token(subject)?;
+    let m = engine_iface::translate(sys, token, dx, dy, dz)?;
+    Ok(with_token(m.token, m.measures, sys))
+}
+
+/// Mirror a solid about an axis-aligned plane (by copy): the plane whose
+/// normal is the chosen [`MirrorAxis`] passes through coordinate `at` along
+/// that axis. Returns the mirrored solid in the same session. The caller-owned
+/// tolerance is carried for seam-signature consistency (mirror is a rigid
+/// placement, so the engine needs no fuzzy tolerance here).
+pub fn solid_mirror(
+    sys: &SysHandle,
+    subject: &Solid,
+    axis: MirrorAxis,
+    at: f64,
+    _tolerance: Tolerance,
+) -> Result<Solid, KernelError> {
+    if !at.is_finite() {
+        return Err(KernelError::InvalidArgument(
+            "mirror plane offset must be finite".to_string(),
+        ));
+    }
+    let token = require_token(subject)?;
+    let m = engine_iface::mirror(sys, token, axis.code(), at)?;
     Ok(with_token(m.token, m.measures, sys))
 }
 

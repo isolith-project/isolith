@@ -1,6 +1,7 @@
 # P6-M3-T03: Feature Graph (History) Model with Replay — Mini Feature Tree
 
-Status: implemented and verified (Isolith wave 1, P6), PR review pending.
+Status: implemented and verified (Isolith wave 1, P6); extended by KERNEL-REPLAY
+(ADR v1.3.0) so replay runs through the real kernel into solid B-Rep solids.
 
 ## Scope
 
@@ -12,9 +13,14 @@ recompute from nothing". This card delivers:
 - `oep_geo::feature_graph::FeatureGraph` — the tree + construction/validation.
 - `oep_geo::feature_graph::evaluate` — deterministic, tolerant replay through a
   pluggable `Evaluator` trait (kernel-agnostic seam).
-- `oep_geo::feature_graph::MiniBoxEvaluator` — an in-crate reference evaluator
-  (bbox stand-in) that makes replay testable **today**, before the real
-  geometry kernel (P6-M3-T01 Open CASCADE binding) exists.
+- `oep_geo::feature_graph::MiniBoxEvaluator` — the in-crate reference evaluator
+  (bbox fold) that makes the replay engine testable without a kernel. It is a
+  documented **test-only reference** for fast structure tests; it is NOT the
+  production replay path (ADR v1.3.0).
+- `oep_geo::kernel_eval::KernelEvaluator` — the **production replay evaluator**
+  (KERNEL-REPLAY): replays the same feature graph through the real OCCT 8.0.x
+  engine (KERNEL-BASE seam) into actual B-Rep solids. Its value type
+  (`KernelValue`) carries real solids, planar profiles, and empty stock.
 - Own-format serialization (`oep-feature-graph` v1): graph + canonical replay
   trace, byte-locked to a committed golden and independently re-derived by a
   stdlib Python acceptance test.
@@ -88,6 +94,36 @@ kernel, `MiniBoxEvaluator` folds each op into a bbox `[f64;6]`:
 
 These are documented **stand-in semantics** for a native mini modeler, not a
 claim about any kernel's behaviour.
+
+### Replay through the real kernel (`KernelEvaluator`, KERNEL-REPLAY)
+
+`oep_geo::kernel_eval::KernelEvaluator` implements the same `Evaluator` trait
+but produces **real B-Rep solids** computed by the pinned OCCT 8.0.x engine
+behind the oep-geo kernel seam (`oep_geo::kernel`). Its value type is
+`KernelValue` (`Empty` / `Profile` / `Solid`); it owns one kernel session for
+the whole replay so every solid token stays live for the next feature. The
+feature kinds it realises:
+
+| kind       | real-kernel effect (inputs already resolved)                       |
+|------------|-------------------------------------------------------------------|
+| `Sketch`   | yields a closed planar `Profile` from the `profile` param (`"x1,y1;x2,y2;..."`, loop closes implicitly) |
+| `Extrude`  | sweeps the profile (preceding `Sketch`, its own `profile`, or the mini length/width/height fallback) by `height` along +Z |
+| `Offset`   | rigid translation of the last solid input by `(dx, dy, dz)`       |
+| `Union`    | exact B-Rep boolean union of all solid inputs                     |
+| `Difference` | solid input 0 minus the rest (exact B-Rep difference)            |
+| `Trim`     | removes `dz` from the top of the last solid (boolean difference against a bounding slab over the measured bbox) |
+| `Mirror`   | reflects the last solid about plane `axis` (`x`/`y`/`z`) at `at`  |
+
+The open-kind tolerant-failure contract holds identically with the real
+evaluator: an unknown kind (or a kernel failure, e.g. a trim that consumes the
+whole solid) aborts **after the completed prefix** with a typed `ReplayError`,
+never a panic, never fabricated geometry. Deterministic replay is byte-locked
+through `KernelEvaluator::canonical_trace` against the committed `.oepkrt`
+golden, and the oep-feature-graph v1 format still round-trips byte-identically
+(the v1 trace section stays MiniBox-derived by design). The committed
+kernel-replay goldens (`tests/golden/kernel-replay-*`) are produced by the real
+engine (`examples/gen_kernel_replay_golden.rs`) and independently re-derived
+by `tests/test_oep_geo_kernel_replay_acceptance.py`.
 
 ### Own format (`oep-feature-graph` v1)
 
@@ -169,8 +205,11 @@ cargo run -p oep-geo --example gen_feature_graph_golden -- \
 
 ## Remaining seams (later cards)
 
-- Real geometry: `MiniBoxEvaluator` is the stand-in until the P6-M3-T01 Open
-  CASCADE binding provides a `Evaluator` over actual B-Reps.
+- Real geometry beyond the documented mini kinds: `KernelEvaluator` realises
+  Extrude/Offset/Union/Difference/Trim/Mirror over real solids; any other kind
+  (for example a future `Fillet` feature) still surfaces as
+  `ReplayError::UnknownKind` under the tolerant contract and is a natural next
+  addition as the seam grows (P6-M3-T04 / ADR v1.3.0).
 - PMI association: feature ids can later link to the P6-M1-T02 `oep-pmi`
   annotations (open vocabulary already tolerates any `kind`).
 - Importer hub (P6-M4-T02): readers map foreign histories (3DXML/CGR/STEP)

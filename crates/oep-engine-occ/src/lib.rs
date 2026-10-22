@@ -141,6 +141,17 @@ mod ffi {
         edges: Vec<u64>,
         message: String,
     }
+    struct BoxOut {
+        ok: bool,
+        code: i32,
+        xmin: f64,
+        ymin: f64,
+        zmin: f64,
+        xmax: f64,
+        ymax: f64,
+        zmax: f64,
+        message: String,
+    }
     unsafe extern "C++" {
         include!("cpp/glue.hh");
 
@@ -172,6 +183,9 @@ mod ffi {
         fn occRevolve(s: u64, xy: Vec<f64>, angle: f64, tol: f64) -> OpOut;
         fn occEdges(s: u64, subject: u64) -> EdgesOut;
         fn occInfo(s: u64, token: u64) -> InfoOut;
+        fn occBBox(s: u64, subject: u64) -> BoxOut;
+        fn occTranslate(s: u64, subject: u64, dx: f64, dy: f64, dz: f64) -> OpOut;
+        fn occMirrorPlane(s: u64, subject: u64, axis: i32, at: f64) -> OpOut;
         fn occCountShapes(s: u64) -> u64;
     }
 }
@@ -181,7 +195,7 @@ mod ffi {
 #[cfg(feature = "build-engine")]
 mod engine {
     use super::ffi;
-    use super::ffi::{EdgesOut, InfoOut, OpOut};
+    use super::ffi::{BoxOut, EdgesOut, InfoOut, OpOut};
     use super::{code_to_error, EngineError, ShapeInfo};
 
     fn op(out: OpOut) -> Result<u64, EngineError> {
@@ -209,6 +223,14 @@ mod engine {
     fn edges_out(out: EdgesOut) -> Result<Vec<u64>, EngineError> {
         if out.ok {
             Ok(out.edges)
+        } else {
+            Err(code_to_error(out.code, &out.message))
+        }
+    }
+
+    fn box_out(out: BoxOut) -> Result<(f64, f64, f64, f64, f64, f64), EngineError> {
+        if out.ok {
+            Ok((out.xmin, out.ymin, out.zmin, out.xmax, out.ymax, out.zmax))
         } else {
             Err(code_to_error(out.code, &out.message))
         }
@@ -280,6 +302,21 @@ mod engine {
     }
     pub fn revolve(sid: u64, coords: &[f64], angle: f64, tol: f64) -> Result<u64, EngineError> {
         op(ffi::occRevolve(sid, coords.to_vec(), angle, tol))
+    }
+    pub fn bbox(sid: u64, subject: u64) -> Result<(f64, f64, f64, f64, f64, f64), EngineError> {
+        box_out(ffi::occBBox(sid, subject))
+    }
+    pub fn translate(
+        sid: u64,
+        subject: u64,
+        dx: f64,
+        dy: f64,
+        dz: f64,
+    ) -> Result<u64, EngineError> {
+        op(ffi::occTranslate(sid, subject, dx, dy, dz))
+    }
+    pub fn mirror_plane(sid: u64, subject: u64, axis: i32, at: f64) -> Result<u64, EngineError> {
+        op(ffi::occMirrorPlane(sid, subject, axis, at))
     }
     pub fn edges(sid: u64, subject: u64) -> Result<Vec<u64>, EngineError> {
         edges_out(ffi::occEdges(sid, subject))
@@ -364,6 +401,26 @@ mod engine {
         Err(err())
     }
     pub fn revolve(_sid: u64, _coords: &[f64], _angle: f64, _tol: f64) -> Result<u64, EngineError> {
+        Err(err())
+    }
+    pub fn bbox(_sid: u64, _subject: u64) -> Result<(f64, f64, f64, f64, f64, f64), EngineError> {
+        Err(err())
+    }
+    pub fn translate(
+        _sid: u64,
+        _subject: u64,
+        _dx: f64,
+        _dy: f64,
+        _dz: f64,
+    ) -> Result<u64, EngineError> {
+        Err(err())
+    }
+    pub fn mirror_plane(
+        _sid: u64,
+        _subject: u64,
+        _axis: i32,
+        _at: f64,
+    ) -> Result<u64, EngineError> {
         Err(err())
     }
     pub fn edges(_sid: u64, _subject: u64) -> Result<Vec<u64>, EngineError> {
@@ -467,6 +524,31 @@ pub fn occ_revolve(sid: u64, coords: &[f64], angle: f64, tol: f64) -> Result<u64
 /// order) -- the edge references returned to callers for fillet/chamfer.
 pub fn occ_edges(sid: u64, subject: u64) -> Result<Vec<u64>, EngineError> {
     engine::edges(sid, subject)
+}
+
+/// Axis-aligned bounding box of a registered shape as the closed
+/// `(xmin, ymin, zmin, xmax, ymax, zmax)` extent (BRepBndLib + Bnd_Box).
+pub fn occ_bbox(sid: u64, subject: u64) -> Result<(f64, f64, f64, f64, f64, f64), EngineError> {
+    engine::bbox(sid, subject)
+}
+
+/// Rigid translation of a registered shape by `(dx, dy, dz)` (a new solid is
+/// registered; the subject is untouched).
+pub fn occ_translate(
+    sid: u64,
+    subject: u64,
+    dx: f64,
+    dy: f64,
+    dz: f64,
+) -> Result<u64, EngineError> {
+    engine::translate(sid, subject, dx, dy, dz)
+}
+
+/// Mirror a registered shape about an axis-aligned plane. `axis` selects the
+/// plane normal (0 = X through `at`, 1 = Y through `at`, 2 = Z through `at`);
+/// returns the new solid's token.
+pub fn occ_mirror_plane(sid: u64, subject: u64, axis: i32, at: f64) -> Result<u64, EngineError> {
+    engine::mirror_plane(sid, subject, axis, at)
 }
 
 /// Measured properties (volume, surface area, face/edge/vertex counts) of a

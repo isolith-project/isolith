@@ -43,6 +43,7 @@ pub mod feature;
 pub mod feature_graph;
 pub mod history;
 pub mod kernel;
+pub mod kernel_eval;
 pub mod math;
 pub mod nurbs;
 pub mod part;
@@ -77,10 +78,15 @@ pub use history::{History, HistoryState};
 /// ADR section 5). Without the `kernel` cargo feature every call is the typed
 /// [`kernel::KernelError::EngineUnavailable`] / [`kernel::BooleanError::EngineUnavailable`].
 pub use kernel::{
-    make_box, make_cylinder, make_sphere, solid_boolean, solid_chamfer, solid_edges, solid_extrude,
-    solid_fillet, solid_revolve, sys_drop, sys_new, BooleanError, BooleanOp, EdgeRef, KernelError,
-    Point2D, Solid, SolidMeasures, SysHandle, Tolerance,
+    make_box, make_cylinder, make_sphere, solid_bbox, solid_boolean, solid_chamfer, solid_edges,
+    solid_extrude, solid_fillet, solid_mirror, solid_revolve, solid_translate, sys_drop, sys_new,
+    BooleanError, BooleanOp, EdgeRef, KernelError, MirrorAxis, Point2D, Solid, SolidMeasures,
+    SysHandle, Tolerance,
 };
+/// KERNEL-REPLAY: the real kernel behind the feature-graph [`Evaluator`] seam
+/// (P6-M3-T03 + ADR v1.3.0). A feature graph replays through [`KernelEvaluator`]
+/// into real B-Rep solids; [`KernelValue`] is its value type.
+pub use kernel_eval::{KernelEvaluator, KernelValue};
 /// [`Part`]: engineering part owning bodies and a feature history.
 pub use part::Part;
 /// [`Transform`]: 4x4 row-major instance placement matrix.

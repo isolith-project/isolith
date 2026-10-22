@@ -21,9 +21,11 @@
 #include <BRepAlgoAPI_Common.hxx>
 #include <BRepAlgoAPI_Cut.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
+#include <BRepBndLib.hxx>
 #include <BRepBuilderAPI_MakeEdge.hxx>
 #include <BRepBuilderAPI_MakeFace.hxx>
 #include <BRepBuilderAPI_MakeWire.hxx>
+#include <BRepBuilderAPI_Transform.hxx>
 #include <BRepFilletAPI_MakeChamfer.hxx>
 #include <BRepFilletAPI_MakeFillet.hxx>
 #include <BRepGProp.hxx>
@@ -32,6 +34,7 @@
 #include <BRepPrimAPI_MakePrism.hxx>
 #include <BRepPrimAPI_MakeRevol.hxx>
 #include <BRepPrimAPI_MakeSphere.hxx>
+#include <Bnd_Box.hxx>
 #include <GProp_GProps.hxx>
 #include <NCollection_List.hxx>
 #include <TopAbs_ShapeEnum.hxx>
@@ -44,6 +47,7 @@
 #include <gp_Ax2.hxx>
 #include <gp_Dir.hxx>
 #include <gp_Pnt.hxx>
+#include <gp_Trsf.hxx>
 #include <gp_Vec.hxx>
 
 #include <atomic>
@@ -536,6 +540,106 @@ InfoOut occInfo(uint64_t s, uint64_t token) {
   out.nedges = countType(shape, TopAbs_EDGE);
   out.nverts = countType(shape, TopAbs_VERTEX);
   return out;
+}
+
+// --- bounding box -----------------------------------------------------------
+
+BoxOut occBBox(uint64_t s, uint64_t subject) {
+  BoxOut out;
+  out.ok = true;
+  out.code = 0;
+  out.xmin = out.ymin = out.zmin = out.xmax = out.ymax = out.zmax = 0.0;
+  out.message = rust::String();
+  std::shared_ptr<OepSession> sess = sessionFor(s);
+  if (!sess) {
+    out.ok = false;
+    out.code = 5;
+    out.message = rust::String("invalid session id");
+    return out;
+  }
+  TopoDS_Shape shape;
+  if (!sess->get(subject, shape) || shape.IsNull()) {
+    out.ok = false;
+    out.code = 5;
+    out.message = rust::String("missing shape");
+    return out;
+  }
+  Bnd_Box bx;
+  BRepBndLib::Add(shape, bx, false /* useTriangulation */);
+  if (bx.IsVoid()) {
+    out.ok = false;
+    out.code = 3;
+    out.message = rust::String("shape has a void bounding box");
+    return out;
+  }
+  bx.Get(out.xmin, out.ymin, out.zmin, out.xmax, out.ymax, out.zmax);
+  return out;
+}
+
+// --- rigid placement (translate / mirror), by copy ------------------------------
+
+OpOut occTranslate(uint64_t s, uint64_t subject, double dx, double dy, double dz) {
+  std::shared_ptr<OepSession> sess = sessionFor(s);
+  if (!sess) {
+    return fail(5, 0, "invalid session id");
+  }
+  if (!std::isfinite(dx) || !std::isfinite(dy) || !std::isfinite(dz)) {
+    return fail(3, 0, "translate vector must be finite");
+  }
+  TopoDS_Shape base;
+  if (!sess->get(subject, base)) {
+    return fail(5, 0, "missing subject shape");
+  }
+  if (isEmptyOfFaces(base)) {
+    return fail(3, 0, "translate subject has no faces");
+  }
+  gp_Trsf t;
+  t.SetTranslation(gp_Vec(dx, dy, dz));
+  BRepBuilderAPI_Transform tr(base, t, true /* copy */);
+  tr.Build();
+  if (!tr.IsDone()) {
+    return fail(2, 0, "translate transform not done");
+  }
+  const TopoDS_Shape result = tr.Shape();
+  if (isEmptyOfFaces(result)) {
+    return fail(4, 0, "translate produced an empty result (no faces)");
+  }
+  return okToken(sess->add(result));
+}
+
+OpOut occMirrorPlane(uint64_t s, uint64_t subject, int32_t axis, double at) {
+  std::shared_ptr<OepSession> sess = sessionFor(s);
+  if (!sess) {
+    return fail(5, 0, "invalid session id");
+  }
+  if (axis < 0 || axis > 2) {
+    return fail(1, 0, "unknown mirror axis");
+  }
+  if (!std::isfinite(at)) {
+    return fail(3, 0, "mirror plane offset must be finite");
+  }
+  TopoDS_Shape base;
+  if (!sess->get(subject, base)) {
+    return fail(5, 0, "missing subject shape");
+  }
+  if (isEmptyOfFaces(base)) {
+    return fail(3, 0, "mirror subject has no faces");
+  }
+  const double nx = axis == 0 ? 1.0 : 0.0;
+  const double ny = axis == 1 ? 1.0 : 0.0;
+  const double nz = axis == 2 ? 1.0 : 0.0;
+  gp_Trsf t;
+  t.SetMirror(gp_Ax2(gp_Pnt(nx * at, ny * at, nz * at), gp_Dir(nx, ny, nz)));
+  BRepBuilderAPI_Transform tr(base, t, true /* copy */);
+  tr.Build();
+  if (!tr.IsDone()) {
+    return fail(2, 0, "mirror transform not done");
+  }
+  const TopoDS_Shape result = tr.Shape();
+  if (isEmptyOfFaces(result)) {
+    return fail(4, 0, "mirror produced an empty result (no faces)");
+  }
+  return okToken(sess->add(result));
 }
 
 uint64_t occCountShapes(uint64_t s) {

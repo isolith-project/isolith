@@ -34,6 +34,7 @@ namespace oep::occ {
 struct OpOut;
 struct InfoOut;
 struct EdgesOut;
+struct BoxOut;
 
 // Session lifecycle.
 uint64_t occNewSession();
@@ -67,6 +68,17 @@ EdgesOut occEdges(uint64_t s, uint64_t subject);
 
 // Measured properties (BRepGProp volume + surface area, topology counts).
 InfoOut occInfo(uint64_t s, uint64_t token);
+
+// Axis-aligned bounding box of a shape as a closed extent (`Bnd_Box` +
+// `BRepBndLib`), used by feature-graph replay trims and goldens.
+BoxOut occBBox(uint64_t s, uint64_t subject);
+
+// Rigid placement by copy (BRepBuilderAPI_Transform with a gp_Trsf):
+//   - occTranslate: translate by the vector (dx, dy, dz);
+//   - occMirrorPlane: mirror about the axis-aligned plane whose normal is the
+//     axis UNIT direction (axis 0=x, 1=y, 2=z) through coordinate `at`.
+OpOut occTranslate(uint64_t s, uint64_t subject, double dx, double dy, double dz);
+OpOut occMirrorPlane(uint64_t s, uint64_t subject, int32_t axis, double at);
 
 // Number of shapes currently held in the session registry (diagnostic/test).
 uint64_t occCountShapes(uint64_t s);
