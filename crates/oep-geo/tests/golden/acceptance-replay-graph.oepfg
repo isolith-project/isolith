@@ -1,0 +1,60 @@
+format oep-feature-graph
+version 1
+nodes 6
+node 0
+id oep-feature-shelf-sketch
+name shelf-sketch
+kind Sketch
+parent -
+refs 0
+params 1
+profile=str:0,0;80,0;80,40;0,40
+node 1
+id oep-feature-shelf-body
+name shelf-body
+kind Extrude
+parent oep-feature-shelf-sketch
+refs 1
+oep-feature-shelf-sketch
+params 1
+height=6
+node 2
+id oep-feature-side-shelf
+name side-shelf
+kind Offset
+parent oep-feature-shelf-body
+refs 1
+oep-feature-shelf-body
+params 3
+dx=80
+dy=0
+dz=0
+node 3
+id oep-feature-body-union
+name body-union
+kind Union
+parent oep-feature-shelf-body
+refs 2
+oep-feature-shelf-body
+oep-feature-side-shelf
+params 0
+node 4
+id oep-feature-top-trim
+name top-trim
+kind Trim
+parent oep-feature-body-union
+refs 1
+oep-feature-body-union
+params 1
+dz=3
+node 5
+id oep-feature-hub-mirror
+name hub-mirror
+kind Mirror
+parent oep-feature-top-trim
+refs 1
+oep-feature-top-trim
+params 2
+at=90
+axis=str:x
+trace 0

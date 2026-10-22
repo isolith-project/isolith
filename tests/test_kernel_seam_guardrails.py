@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""P6-M3-T04 / ADR v1.2.0 guardrails, enforced in CI (red-on-leak).
+"""P6-M3-T04 / ADR v1.3.0 guardrails, enforced in CI (red-on-leak).
 
 Four independent gates, all real-material (no mocks):
 
   1. ADR contract  -- workstreams/geometry-core/kernel/boolean-ops-occ-adr.md
-     is v1.2.0, Ratified, and actually names the delivered seam:
-     oep-engine-occ, booleans + fillet/chamfer + primitives + extrude/revolve,
-     the OCCT 8.0.x pin, the guardrails this file enforces, and the
-     license/clean-room stance (LGPL-2.1 + exception as a separate kernel
-     crate, no GPL-3.0, no reintroduced GPL tree).
+     is v1.3.0, Ratified, and actually names the delivered seam:
+     oep-engine-occ, booleans + fillet/chamfer + primitives + extrude/revolve
+     + bounding-box measurement + translate/mirror placement, the OCCT 8.0.x
+     pin, the guardrails this file enforces, and the license/clean-room stance
+     (LGPL-2.1 + exception as a separate kernel crate, no GPL-3.0, no
+     reintroduced GPL tree).
 
   2. Seam denial   -- NO OCCT identifier (TopoDS_, Handle_, BRepAlgo,
      BRepFilletAPI, BRepPrimAPI, gp_) appears in ANY oep-geo public item.
@@ -30,6 +31,8 @@ Four independent gates, all real-material (no mocks):
 
 Plus: the typed-error surface the seam must expose (BooleanError / KernelError
 with a typed result, never a panic) and the pinned no-"latest" 8.0.x manifest.
+v1.3.0 also gates the feature-graph replay deliverables (kernel evaluator
+goldens + acceptance matrix).
 """
 import os
 import re
@@ -157,8 +160,8 @@ def check_adr():
     meta, body = split_front_matter(text)
     low = text.lower()
 
-    check(meta.get("version") == "1.2.0",
-          "ADR must be v1.2.0 (extrude/revolve + license confirmation); got %r"
+    check(meta.get("version") == "1.3.0",
+          "ADR must be v1.3.0 (replay bbox/placement + feature-graph replay gate); got %r"
           % meta.get("version"))
     check(meta.get("status", "").strip().lower() in ("ratified",),
           "ADR must be Ratified")
@@ -384,6 +387,18 @@ def check_manifest_and_surface():
                          "pub struct Solid", "pub struct Tolerance",
                          "pub struct Point2D"):
                 check(name in src, "kernel seam must expose %r" % name)
+            # v1.3.0: the feature-graph replay additions.
+            for name in ("pub enum MirrorAxis", "pub fn solid_bbox",
+                         "pub fn solid_translate", "pub fn solid_mirror",
+                         "pub fn solid_bbox"):
+                check(name in src, "kernel seam must expose %r (v1.3.0 replay)" % name)
+            replay_eval = os.path.join(ROOT, "crates", "oep-geo", "src", "kernel_eval.rs")
+            check(os.path.isfile(replay_eval), "missing kernel replay evaluator kernel_eval.rs")
+            if os.path.isfile(replay_eval):
+                rev = open(replay_eval, encoding="utf-8").read()
+                for name in ("pub struct KernelEvaluator", "pub enum KernelValue",
+                             "impl Evaluator for KernelEvaluator"):
+                    check(name in rev, "kernel_eval.rs must expose %r" % name)
         geo_cargo = os.path.join(ROOT, "crates", "oep-geo", "Cargo.toml")
         if os.path.isfile(geo_cargo):
             gt = open(geo_cargo, encoding="utf-8").read()
@@ -397,6 +412,16 @@ def check_manifest_and_surface():
                           "kernel-seam-golden.json")
     check(os.path.isfile(matrix), "missing kernel acceptance matrix kernel_seam.rs")
     check(os.path.isfile(golden), "missing committed kernel golden kernel-seam-golden.json")
+
+    # v1.3.0: the feature-graph replay acceptance matrix + its committed goldens.
+    replay = os.path.join(ROOT, "crates", "oep-geo", "tests", "kernel_replay.rs")
+    check(os.path.isfile(replay), "missing kernel-replay acceptance matrix kernel_replay.rs")
+    for fn in ("kernel-replay-golden.json", "kernel-replay-trace.oepkrt",
+               "acceptance-replay-graph.oepfg", "kernel-replay-bracket-golden.json"):
+        check(os.path.isfile(os.path.join(ROOT, "crates", "oep-geo", "tests", "golden", fn)),
+              "missing committed kernel-replay golden %s" % fn)
+    gen = os.path.join(ROOT, "crates", "oep-geo", "examples", "gen_kernel_replay_golden.rs")
+    check(os.path.isfile(gen), "missing kernel-replay golden generator example")
 
 
 # ---------------------------------------------------------------------------
@@ -413,7 +438,7 @@ def check_prose_rules():
 
 
 def run_checks():
-    print("P6-M3-T04 kernel seam guardrails (ADR v1.2.0)")
+    print("P6-M3-T04 kernel seam guardrails (ADR v1.3.0)")
     print("adr: %s" % ADR)
     print("=" * 66)
     check_adr()
@@ -432,9 +457,9 @@ def main():
         for f in failures:
             print("  -", f)
         sys.exit(1)
-    print("KERNEL SEAM GUARDRAILS PASSED: ADR v1.2.0 ratified and complete, "
+    print("KERNEL SEAM GUARDRAILS PASSED: ADR v1.3.0 ratified and complete, "
           "seam denial clean, no vendored OCCT, license gate permissive, "
-          "pinned 8.0.x, typed surface + matrix present.")
+          "pinned 8.0.x, typed surface + matrix + replay goldens present.")
     return 0
 
 

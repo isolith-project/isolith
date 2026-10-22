@@ -22,13 +22,17 @@
 //! forward dependency aborts *after* the completed prefix and returns the
 //! partial trace alongside the error — it never panics.
 //!
-//! [`MiniBoxEvaluator`] is an in-crate reference evaluator that folds each
-//! feature into a bounding box; it stands in for the real geometry kernel
-//! until the P6-M3-T01 Open CASCADE binding lands. The committed golden
+//! [`MiniBoxEvaluator`] is the in-crate reference evaluator: it folds each
+//! feature into a bounding box and is documented as a TEST-ONLY reference for
+//! fast structure tests (post KERNEL-BASE / ADR v1.3.0: the production replay
+//! path is [`KernelEvaluator`](crate::kernel_eval::KernelEvaluator), which replays
+//! the same graph through the real OCCT 8.0.x engine into actual B-Rep
+//! solids). The committed golden
 //! (`tests/golden/bracket-feature-graph.oepfg`) is produced by the
 //! `gen_feature_graph_golden` example and independently re-derived by the
 //! stdlib Python acceptance test — a self-consistent but wrong evaluator
-//! cannot satisfy both sides.
+//! cannot satisfy both sides. The feature-graph replay goldens for the real
+//! kernel live in `tests/golden/kernel-replay-*` (see `kernel_replay.rs`).
 //!
 //! ## Own format (`oep-feature-graph` v1)
 //!

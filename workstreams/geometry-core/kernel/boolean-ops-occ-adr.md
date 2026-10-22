@@ -1,12 +1,12 @@
 ---
 title: Isolith B-Rep Kernel Operations Decision (Open CASCADE)
 decision: bind_opencascade_occ_for_b_rep_operations_behind_clean_interface
-version: 1.2.0
+version: 1.3.0
 date: 2026-10-18
 status: Ratified
 owner: Isolith program governance, P6-M3 (B-Rep ops)
 applies_to: oep-geo (adopting crate), the oep-engine-occ FFI crate (P6-M3-T04), the STEP interop lane (P4), and the P6 feature-graph replay (P6-M3-T03)
-supersedes: version 1.1.0 of this record (fillet/chamfer/primitive widening); 1.2.0 adds the extrude and revolve sweeps to the seam and records the confirmed license disposition (no GPL-3.0 anywhere, no reintroduction of a GPL tree)
+supersedes: version 1.2.0 of this record (extrude/revolve sweeps + license disposition); 1.3.0 adds the boundary-measurement (axis-aligned bounding box) and rigid-placement (translate, mirror) operations the P6-M3-T03 feature-graph replay evaluator needs to trim slices and place copies of real solids
 ---
 
 # Isolith B-Rep Kernel Operations Decision
@@ -18,7 +18,12 @@ intersection of solids and shells); version 1.1.0 widened the scope to the
 kernel operations the modeler actually needs at the seam: the three booleans,
 plus fillet, chamfer, and primitive creation (box, cylinder, sphere), and
 version 1.2.0 adds the two sweep operations the feature vocabulary names next:
-extrude and revolve. It is the answer to the P6-M3-T01 question "adopt/tie
+extrude and revolve. Version 1.3.0 adds the boundary-measurement operation
+the feature-graph replay and the modeler both call (the axis-aligned bounding
+box of a solid) and the rigid-placement operations (translate, mirror about
+an axis-aligned plane) the P6-M3-T03 `Trim` / `Offset` / `Mirror` feature
+kinds need to slice a slab off a top surface and place copies of a real
+solid. It is the answer to the P6-M3-T01 question "adopt/tie
 Open CASCADE for B-Rep ops, or build an own kernel-lite", and it is the
 decision that P6-M3-T04 implements. It is versioned like the telemetry
 decision (P0-M5-T02) and the release train decision (P0-M5-T03); any material
@@ -69,6 +74,25 @@ lane sketches a 2D profile and the feature tree extrudes or revolves it into
 a solid, so the seam those callers hit must make the sweep real. The same
 engine, license, seam, and guardrails cover the widened set; nothing about
 the adoption rationale changes.
+
+Version 1.3.0 (KERNEL-REPLAY) adds three operations the P6-M3-T03 feature-graph
+replay needs to produce real solids once the kernel is wired behind the
+evaluator seam:
+
+- `solid_bbox`: the axis-aligned bounding box of a solid (BRepBndLib /
+  Bnd_Box behind the seam). The `Trim` feature kind slices a slab off the top
+  of a real solid, which requires knowing the solid's measured extent.
+- `solid_translate`: rigid translation by a vector (BRepBuilderAPI_Transform
+  with a gp_Trsf), realizing the `Offset` feature kind as a real placement.
+- `solid_mirror`: reflection about an axis-aligned plane (mirror transform),
+  realizing the `Mirror` feature kind as a real placement (a copied solid).
+
+These join booleans/fillet/chamfer/primitives/sweeps behind the same seam with
+the same typed-error posture: the binding (`KERNEL-REPLAY`) replays a feature
+graph through a real evaluator whose value type carries real solids, and a
+kernel failure is a typed `KernelError` / `BooleanError` mapped to a replay
+`Evaluator` error, never a panic. Nothing about the adoption rationale
+changes; the same engine, license, seam, and guardrails cover the widened set.
 
 Building an own "kernel-lite" engine in wave 1 is the explicitly weighed
 alternative and is REJECTED for this milestone (section 4). It remains the
@@ -318,6 +342,18 @@ These keep the decision honest in code, CI, and future reviews:
   - a known-failing geometry returns BooleanError / KernelError, not a panic.
   OCCT has its own growing test suite; we do not rely on it as our gate, we
   use it as upstream confidence only.
+- Feature-graph replay gate (v1.3.0): the `KERNEL-REPLAY` binding adds a
+  through-the-seam acceptance over the real kernel -- a Sketch + Extrude +
+  Offset + Union + Trim + Mirror feature graph replays to real solids whose
+  per-step volume and bounding box match committed kernel goldens (JSON) and
+  whose canonical replay trace is byte-locked to a committed text golden
+  (`.oepkrt`), mirroring the MiniBox byte-lock; an edit to a driven dimension
+  re-solves the graph; an unknown feature kind aborts after the completed
+  prefix with a typed error (never a panic, never fabricated geometry); and
+  the P6-M3-T02 undo/redo stack navigates those real-solid states (time
+  navigation re-derives each state's solid by replay). The MiniBox evaluator
+  remains only as the documented, test-only reference so structure tests stay
+  fast; the kernel evaluator is the production replay path.
 
 ## 10. Enforcement in the plan
 
@@ -368,3 +404,14 @@ Adopting OCCT for kernel operations:
   GPL-3.0 in any build path, and no reintroduction of a GPL tree (decision #16
   and the solver-adr precedent). Test gate extended: the extrude/revolve
   assertions join the committed kernel golden matrix.
+- 1.3.0 (2026-10-22): KERNEL-REPLAY landing (card KERNEL-REPLAY). Adds the
+  boundary-measurement and rigid-placement operations the P6-M3-T03
+  feature-graph replay evaluator needs to produce real solids: solid_bbox
+  (axis-aligned bounding box, BRepBndLib / Bnd_Box), solid_translate (rigid
+  translation), and solid_mirror (reflection about an axis-aligned plane).
+  The engine binding exposes occBBox / occTranslate / occMirrorPlane behind
+  the same typed seam. Test gate extended: the feature-graph replay acceptance
+  (real-solid goldens, byte-locked canonical trace, driven-dimension re-solve,
+  tolerant-failure prefix, undo/redo composition) joins the committed kernel
+  goldens, and the MiniBox evaluator is explicitly recorded as the
+  documented test-only reference rather than a production path.

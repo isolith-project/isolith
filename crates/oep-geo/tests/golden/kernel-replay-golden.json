@@ -1,0 +1,84 @@
+{
+  "format": "oep-kernel-replay-golden",
+  "generator": "gen_kernel_replay_golden",
+  "occt_line": "8.0.x",
+  "steps": {
+    "oep-feature-body-union": {
+      "bbox": {
+        "xmax": 160.0000001,
+        "xmin": -1.0000000266453525e-7,
+        "ymax": 40.0000001,
+        "ymin": -1.0000000266453525e-7,
+        "zmax": 6.000000100000003,
+        "zmin": -1.0000000266453525e-7
+      },
+      "edge_count": 40,
+      "face_count": 10,
+      "surface_area": 15199.999999999998,
+      "vertex_count": 80,
+      "volume": 38399.99999999999
+    },
+    "oep-feature-hub-mirror": {
+      "bbox": {
+        "xmax": 180.0000006,
+        "xmin": 19.9999994,
+        "ymax": 40.0000006,
+        "ymin": -6e-7,
+        "zmax": 3.000000700000003,
+        "zmin": -6e-7
+      },
+      "edge_count": 38,
+      "face_count": 9,
+      "surface_area": 14000.000039999999,
+      "vertex_count": 76,
+      "volume": 19200.000640000017
+    },
+    "oep-feature-shelf-body": {
+      "bbox": {
+        "xmax": 80.0000001,
+        "xmin": -1.0000000000000002e-7,
+        "ymax": 40.0000001,
+        "ymin": -1.0000000000000002e-7,
+        "zmax": 6.0000001,
+        "zmin": -1.0000000000000002e-7
+      },
+      "edge_count": 24,
+      "face_count": 6,
+      "surface_area": 7839.999999999998,
+      "vertex_count": 48,
+      "volume": 19199.999999999996
+    },
+    "oep-feature-side-shelf": {
+      "bbox": {
+        "xmax": 160.0000001,
+        "xmin": 79.9999999,
+        "ymax": 40.0000001,
+        "ymin": -1.0000000000000002e-7,
+        "zmax": 6.0000001,
+        "zmin": -1.0000000000000002e-7
+      },
+      "edge_count": 24,
+      "face_count": 6,
+      "surface_area": 7839.999999999998,
+      "vertex_count": 48,
+      "volume": 19199.999999999996
+    },
+    "oep-feature-top-trim": {
+      "bbox": {
+        "xmax": 160.0000006,
+        "xmin": -6e-7,
+        "ymax": 40.0000006,
+        "ymin": -6e-7,
+        "zmax": 3.000000700000003,
+        "zmin": -6e-7
+      },
+      "edge_count": 38,
+      "face_count": 9,
+      "surface_area": 14000.000039999999,
+      "vertex_count": 76,
+      "volume": 19200.000640000017
+    }
+  },
+  "story": "sketch+extrude+offset+union+trim+mirror over an 80x40x6 footprint (acceptance width 40)",
+  "version": 1
+}
