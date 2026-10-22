@@ -26,6 +26,9 @@
 //! - [`units`]/[`tolerance`]: units and accuracy discipline (P6-M1-T03).
 //! - [`history`]/[`topology_state`]: serializable undo/redo topology stack (P6-M3-T02).
 //! - [`feature_graph`]: feature-graph (history) model with replay (P6-M3-T03).
+//! - [`kernel`]: the geometry-kernel seam (P6-M3-T04 / ADR v1.2.0) -- exact
+//!   B-Rep booleans, fillet/chamfer, primitives, extrude and revolve, typed
+//!   errors, implemented by the oep-engine-occ OCCT binding behind the seam.
 //! - [`export`]: STL/glTF/OBJ/SVG/PDF/STEP exporters on the model (P6-M4-T01).
 #![deny(missing_docs)]
 
@@ -36,6 +39,7 @@ pub mod export;
 pub mod feature;
 pub mod feature_graph;
 pub mod history;
+pub mod kernel;
 pub mod math;
 pub mod nurbs;
 pub mod part;
@@ -61,6 +65,15 @@ pub use feature_graph::{
 };
 /// [`History`]/[`HistoryState`]: serializable topology undo/redo stack (P6-M3-T02).
 pub use history::{History, HistoryState};
+/// Kernel seam: the geometry-kernel seam (P6-M3-T04 / ADR v1.2.0), exposed as
+/// oep-geo-typed types and free functions only (no kernel identifier leaks,
+/// ADR section 5). Without the `kernel` cargo feature every call is the typed
+/// [`kernel::KernelError::EngineUnavailable`] / [`kernel::BooleanError::EngineUnavailable`].
+pub use kernel::{
+    make_box, make_cylinder, make_sphere, solid_boolean, solid_chamfer, solid_edges, solid_extrude,
+    solid_fillet, solid_revolve, sys_drop, sys_new, BooleanError, BooleanOp, EdgeRef, KernelError,
+    Point2D, Solid, SolidMeasures, SysHandle, Tolerance,
+};
 /// [`Part`]: engineering part owning bodies and a feature history.
 pub use part::Part;
 /// [`Transform`]: 4x4 row-major instance placement matrix.

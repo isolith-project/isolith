@@ -1,0 +1,30 @@
+[package]
+name = "oep-engine-occ"
+description = "P6-M3-T04 / ADR v1.2.0: Open CASCADE Technology (OCCT) 8.0.x geometry-kernel binding behind the oep-geo seam -- exact B-Rep booleans, fillet/chamfer, primitives, and extrude/revolve sweeps."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+publish = false
+
+# The pin lives here (ADR section 9: no floating "latest"). The build.rs +
+# scripts/kernel/{fetch,build}-occt.sh turn it into a fetched/built dependency;
+# the repo never vendors OCCT source (CI-enforced by tests/test_kernel_seam_guardrails.py).
+#
+# License posture (ADR section 7): OCCT is LGPL-2.1 + OCCT Exception 1.0, kept
+# as a separate engine dependency so the crates we author stay Apache-2.0. The
+# C++ glue here binds through the public OCCT API only; the P0-M2 legal pass
+# writes the required OCCT notice before any release.
+
+# Feature-gated on purpose: the workspace builds WITHOUT a C++/OCCT toolchain
+# unless `build-engine` is requested (the seam's typed surface still compiles,
+# returning EngineUnavailable). The kernel acceptance job enables it.
+[features]
+default = []
+build-engine = ["dep:cxx", "dep:cxx-build"]
+
+[dependencies]
+cxx = { version = "1.0", optional = true }
+
+[build-dependencies]
+cxx-build = { version = "1.0", optional = true }
