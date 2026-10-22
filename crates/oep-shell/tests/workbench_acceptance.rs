@@ -54,7 +54,10 @@ fn find_sample(env_name: &str, name: &str) -> Option<std::path::PathBuf> {
 
 fn is_canonical(doc: &Document) {
     assert_eq!(doc.format(), "oep-geo");
-    assert_eq!(doc.version(), 1);
+    // Derive the current schema version from the canonical type itself (the
+    // shell consumes oep-geo via oep-import's re-export, so no direct oep_geo
+    // dependency path is available here).
+    assert_eq!(doc.version(), Document::new("mm").version());
     assert!(doc.validate().is_empty(), "document must validate cleanly");
 }
 
@@ -131,7 +134,7 @@ fn workbench_loads_real_latched_modern_cgr_mesh_with_golden_counts() {
     // property, unrelated to this card); the real-material verification is the
     // counts below plus the importer-hub byte lock on the same material.
     assert_eq!(document.format(), "oep-geo");
-    assert_eq!(document.version(), 1);
+    assert_eq!(document.version(), Document::new("mm").version());
     assert!(
         document.validate().is_empty(),
         "STC-06 document must validate: {:?}",

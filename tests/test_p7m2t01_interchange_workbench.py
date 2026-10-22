@@ -110,7 +110,7 @@ def run_checks():
     # 4. Committed modern CGR golden carries the real latch counts.
     cgr = json.loads(read(CGR_GOLDEN))
     check(cgr.get("format") == "oep-geo", "CGR golden: canonical format tag")
-    check(cgr.get("version") == 1, "CGR golden: schema version 1")
+    check(cgr.get("version") == 2, "CGR golden: schema version 2")
     check(len(cgr.get("parts", [])) == 1, "CGR golden: one part")
     params = cgr["features"][0]["parameters"]
     expected = {"records": 18, "index_count": 2003, "vertex_count": 1037,

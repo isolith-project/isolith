@@ -46,7 +46,11 @@ fn golden_path() -> std::path::PathBuf {
 
 fn is_canonical(doc: &Document) {
     assert_eq!(doc.format(), "oep-geo", "canonical format tag");
-    assert_eq!(doc.version(), 1, "canonical schema version");
+    assert_eq!(
+        doc.version(),
+        oep_geo::document::VERSION,
+        "canonical schema version"
+    );
     let errors = doc.validate();
     assert!(
         errors.is_empty(),
@@ -320,7 +324,7 @@ fn p2_modern_cgr_live_import_reproduces_committed_golden() {
     // property unrelated to this card. The REAL verification here is the byte
     // lock below: the live serialization must equal the committed golden.
     assert_eq!(document.format(), "oep-geo");
-    assert_eq!(document.version(), 1);
+    assert_eq!(document.version(), oep_geo::document::VERSION);
     assert!(
         document.validate().is_empty(),
         "STC-06 document must validate: {:?}",

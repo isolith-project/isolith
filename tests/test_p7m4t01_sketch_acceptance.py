@@ -7,7 +7,7 @@ profile sketch (constrained 2D rectangle) is driven by variable sets
 `width=80` / `height=40` and the solved width drives the model body:
 
   - the committed bytes parse as JSON with the canonical OEP header
-      format == "oep-geo", version == 1, units == "mm"
+      format == "oep-geo", version == 2, units == "mm"
   - the part's feature history carries the sketch semantics as oep-geo
       FEATURES (the chosen shell contract): one feature kind "Sketch"
       (the profile constraints, including the two Length dimensions that
@@ -36,7 +36,7 @@ GOLDEN = os.path.join(
 
 EXPECTED_HEADER = {
     "format": "oep-geo",
-    "version": 1,
+    "version": 2,
     "units": "mm",
 }
 

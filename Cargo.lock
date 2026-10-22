@@ -876,6 +876,16 @@ name = "oep-docs"
 version = "0.1.0"
 
 [[package]]
+name = "oep-drafting"
+version = "0.1.0"
+dependencies = [
+ "oep-geo",
+ "oep-sketch",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "oep-engine-occ"
 version = "0.1.0"
 dependencies = [

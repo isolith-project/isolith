@@ -7,7 +7,7 @@
 //! surface over the P2 (CGR), P3 (3DXML) and P4 (STEP) reader crates.
 //!
 //! Canonical internal format: every successful import yields an
-//! [`oep_geo::Document`] (`format = "oep-geo"`, `version = 1`) that
+//! [`oep_geo::Document`] (`format = "oep-geo"`, current schema version) that
 //! `validate()`s clean and serializes deterministically — ONE model shape for
 //! every source, no per-source intermediate formats leaking out of this crate.
 //! Adapters use the readers' own clean-room outputs (mesh/rep structures);
@@ -121,7 +121,12 @@ impl ImportReport {
 }
 
 /// The typed result of an import.
+///
+/// `Imported` carries the whole canonical model (large) next to the two small
+/// outcome variants; boxing just `document` would churn every caller for no
+/// runtime benefit, so the size lint is waived deliberately.
 #[derive(Debug, Clone)]
+#[allow(clippy::large_enum_variant)]
 pub enum ImportOutcome {
     /// A canonical `oep_geo::Document` plus its import report.
     Imported {

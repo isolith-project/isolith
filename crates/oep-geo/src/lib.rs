@@ -1,12 +1,13 @@
 //! P6 -- Geometry core and model representation (workstream P6).
 //!
-//! P6-M1-T01 delivers the `oep-geo` model schema — the five OEP geometry
-//! classes **part, body, feature, assembly, instance** — plus serde
+//! P6-M1-T01 delivers the `oep-geo` model schema — the six OEP geometry
+//! classes **part, body, feature, assembly, instance, drawing** — plus serde
 //! serialization in our own documented format (JSON, `format = "oep-geo"`,
-//! `version = 1`; spec in `docs/geometry-model-schema.md`).
+//! `version = 2`; spec in `docs/geometry-model-schema.md` and the Class 2
+//! drawing extension in `docs/geometry-drawing-schema.md`).
 //!
-//! The schema is a flat store: a [`Document`] owns five id-keyed collections
-//! and every link between classes is an id reference resolved by
+//! The schema is a flat store: a [`Document`] owns id-keyed collections for
+//! every class and every link between classes is an id reference resolved by
 //! [`Document::validate`] (never during deserialization, so partially-linked
 //! files still load — tolerant-failure doctrine). Geometry kernel slots /
 //! PMI / units model / feature replay land in later cards (P6-M1-T02/T03,
@@ -18,6 +19,7 @@
 //! - [`body`]: [`Body`], [`BodyKind`], [`BoundingBox`].
 //! - [`feature`]: [`Feature`] with a deterministic parameter map.
 //! - [`assembly`]: [`Assembly`], [`Instance`], [`InstanceSource`].
+//! - [`drawing`] — the Class 2 drafting model ([`Sheet`]/[`View`]/[`Dimension`]/[`TitleBlock`])
 //! - [`transform`]: the 4x4 row-major [`Transform`].
 //! - [`validate`]: structural invariant rules as [`ValidationError`]s.
 //! - [`math`]: vendored std-only f64 math core (P6-M2-T01).
@@ -35,6 +37,7 @@
 pub mod assembly;
 pub mod body;
 pub mod document;
+pub mod drawing;
 pub mod export;
 pub mod feature;
 pub mod feature_graph;
@@ -56,6 +59,10 @@ pub use assembly::{Assembly, Instance, InstanceSource};
 pub use body::{Body, BodyKind, BoundingBox};
 /// [`Document`]: the unit of our own serializable model format.
 pub use document::Document;
+/// Class 2 drafting model (schema v2): sheets, views, dimensions, title block.
+pub use drawing::{
+    Dimension, DimensionKind, Drawing, ProjectionType, Sheet, SheetSize, TitleBlock, View, ViewKind,
+};
 /// [`Feature`]: a modelling operation in a part's history.
 pub use feature::Feature;
 /// P6-M3-T03 feature-graph model with replay.
