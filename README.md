@@ -1,10 +1,19 @@
 # Isolith
 
-Isolith is an open-source engineering platform you run on your own machines,
-built for teams that need to own their CAD data. It reads the proprietary
-geometry files suppliers actually exchange (CGR, 3DXML, CATPart), gives you a
-geometry core, a self-hosted PDM, and peer-to-peer compute, and it replaces
-per-seat license fees with software you install yourself.
+Isolith is an open-source engineering design program. It does the everyday job
+of professional CAD: you create and edit 3D parts, put them into assemblies,
+and turn them into drawings, without the subscriptions, per-seat fees, or
+forced cloud accounts that ship with commercial CAD. Your software and your
+data stay on machines you control: it runs entirely inside your own network and
+works fully air-gapped, which is why defense teams and suppliers that handle
+ITAR data can consider it at all.
+
+It opens the files engineers actually exchange: STEP, CATIA CGR and 3DXML, and
+it can pull geometry out of native CATPart files. It gives you a real geometry
+kernel (OCCT behind the vendor-neutral `oep-geo` seam), a self-hosted PDM, and
+peer-to-peer compute. The docs-site front door carries this same description
+and the honest media package (see
+`docs-site/assets/media-manifest.md` for the provenance of every capture).
 
 "Isolith" is the name of the program and the product. Its former working
 codename (Keelworks) was retired in October 2026 because it collided with a

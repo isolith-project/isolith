@@ -14,6 +14,9 @@ the PDM, viewer and P2P services - "docs from the sum, no separate infra".
     format-matrix.html    the honest format capability table (rendered)
     format-matrix.json    machine-checkable copy of the table + truth anchors
     assets/style.css      self-contained styling (no external assets, air-gap safe)
+    assets/images/        real captures used on the landing page (drawing sheet,
+                          mechanism animation + GIF + contact sheet, editor pair)
+    assets/media-manifest.md  provenance and source of truth for every capture
     proof/                committed QA output (format-matrix-check.json)
 
 ## How it is served

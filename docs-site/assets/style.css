@@ -89,3 +89,10 @@ tr:nth-child(even) td { background: #f6f6f6; }
 .card a:hover { text-decoration: underline; }
 a { color: var(--accent); }
 a:hover { text-decoration: underline; }
+
+figure.media { margin: 1.5rem 0; }
+figure.media img,
+figure.media video { display: block; max-width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px; background: #fff; }
+figure.media figcaption { margin-top: 0.5rem; font-size: 0.88rem; color: var(--muted); }
+.media-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.media-pair img { width: 100%; }

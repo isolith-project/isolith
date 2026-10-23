@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Open Engineering Platform - Documentation</title>
-<meta name="description" content="Open Engineering Platform (OEP): self-hosted, interoperable engineering software. Getting started, admin guide, and the honest format capability matrix.">
+<title>Isolith: Open Engineering Platform - Documentation</title>
+<meta name="description" content="Isolith is an open-source engineering design program: create and edit 3D parts, put them into assemblies, and turn them into drawings, without the subscriptions or forced cloud accounts. It runs fully inside your own network. Getting started, admin guide, and the honest format capability matrix.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <div class="brand"><a href="index.html">Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <div class="brand"><a href="index.html">Isolith: Open Engineering Platform (OEP)</a><small>documentation</small></div>
     <nav class="site">
       <a href="index.html">Home</a>
       <a href="getting-started.html">Getting started</a>
@@ -22,16 +22,115 @@
 
 <div class="wrap">
   <p class="kicker">Welcome</p>
-  <h1>Open Engineering Platform</h1>
+  <h1>Isolith: Open Engineering Platform</h1>
   <p class="lead">
-    Open Engineering Platform (OEP) is a self-hosted, interoperable engineering
-    suite: open format readers for the geometry files engineering teams actually
-    exchange, a geometry core, a self-hosted PDM, and P2P compute. It runs inside
-    your own network. The 2027.1 train is the interop/PDM foundation release; the
-    editor is the product spine. This documentation covers the three things a new
-    team needs first: getting started, the admin and install guide, and the
-    honest format capability matrix.
+    Isolith is an open-source engineering design program. It does the everyday
+    job of professional CAD: you create and edit 3D parts, put them into
+    assemblies, and turn them into drawings, without the subscriptions,
+    per-seat fees, or forced cloud accounts that ship with commercial CAD.
   </p>
+  <p>
+    Your software and your data stay on machines you control. Isolith runs
+    entirely inside your own network and works fully air-gapped, which is why
+    defense teams and suppliers that handle ITAR data can consider it at all.
+  </p>
+  <p>
+    It opens the files engineers actually exchange: STEP, CATIA CGR and 3DXML,
+    and it can pull geometry out of native CATPart files. When a supplier
+    sends a part, you open it, inspect it, and build on it.
+  </p>
+
+  <h2>What you can do with it</h2>
+  <ul>
+    <li>Open a model and explore: rotate, zoom, walk the feature history.</li>
+    <li>Design parts: draw a 2D sketch, constrain it, drive dimensions with
+        named variables, push the sketch into a solid with extrude and revolve,
+        add fillets and chamfers, combine solids with add and subtract. Change
+        one variable and the part updates live. Undo works.</li>
+    <li>Assemble: mate parts (coincident, on a plane, at a set distance,
+        parallel) and let the constraint solver keep the assembly consistent;
+        play a mechanism to check how it moves.</li>
+    <li>Produce shop deliverables: projected-view drawings with dimensions and
+        a title block, export to PDF or SVG, export the solid to STEP.</li>
+    <li>Check the design: mass, center of gravity, part interference, exploded
+        views.</li>
+    <li>Manage data: save revisions to a vault, control who changes what, keep
+        an audit trail.</li>
+    <li>Automate: everything you can do by mouse you can do by command line, so
+        scripts and agents drive the same work.</li>
+  </ul>
+
+  <h2>See it working <span class="muted">(real captures, not renders)</span></h2>
+  <p>
+    Every image and video on this page is a real capture from the running
+    software on main commit <code>e2a8ef9</code>, with its provenance listed in
+    the <a href="assets/media-manifest.md">media manifest</a>. This is a young
+    editor surface; the captures show exactly what it produces.
+  </p>
+
+  <figure class="media">
+    <img src="assets/images/03-drawing-sheet.png" alt="Drawing sheet produced by oep-drafting: title block and top/front/right projected views with dimensions" loading="lazy">
+    <figcaption>
+      Real drafting output from <code>oep-drafting</code>: a 1:1 sheet with a
+      title block (part, material, scale) and top/front/right projected views
+      with dimensions. Vector-crisp SVG golden rendered to PNG (1800x1272).
+    </figcaption>
+  </figure>
+
+  <figure class="media">
+    <video controls muted loop playsinline preload="none"
+           poster="assets/images/06-mechanism-contact-sheet.png">
+      <source src="assets/images/04-mechanism-animation.mp4" type="video/mp4">
+      Your browser does not support the video tag. See the
+      <a href="assets/images/05-mechanism-loop.gif">compact GIF loop</a> or the
+      <a href="assets/images/06-mechanism-contact-sheet.png">contact sheet</a>.
+    </video>
+    <figcaption>
+      Mechanism motion study from the kinematics lane (P7-M3-T02): all 90 frames
+      solved by the real constraint solver (worst residual below 1e-8), loopable.
+      Encoded at 1280x960 (upscaled from the 640x480 solver raster). A compact
+      <a href="assets/images/05-mechanism-loop.gif">GIF loop</a> and a
+      3x3 <a href="assets/images/06-mechanism-contact-sheet.png">contact sheet</a>
+      are also available.
+    </figcaption>
+  </figure>
+
+  <figure class="media">
+    <div class="media-pair">
+      <img src="assets/images/01-editor-sketch-before.png" alt="Editor viewport: part before a driven dimension change" loading="lazy">
+      <img src="assets/images/02-editor-solid-after.png" alt="Editor viewport: the same part after the driven dimension change" loading="lazy">
+    </div>
+    <figcaption>
+      Editor live recompute: the same part before and after a driven variable
+      change, shown as a pair to demonstrate the editor updating the solid. These
+      are honest 640x480 viewport rasters, no anti-aliasing and no UI chrome -
+      the actual frames the editor produces, not hero art.
+    </figcaption>
+  </figure>
+
+  <h2>Install</h2>
+  <p>
+    Install it on machines you own. One workstation is enough to design; a
+    full setup adds a small server for the data vault and optional worker nodes
+    for heavier jobs. Releases ship as signed binaries, and every release is
+    rehearsed by installing on clean machines and verifying before it is
+    offered. No account, no activation, no phone-home. It runs offline. The
+    <a href="getting-started.html">getting-started guide</a> is the verified
+    eight-step install checklist; the <a href="admin-guide.html">admin guide</a>
+    covers the online and air-gap paths in full.
+  </p>
+
+  <div class="note">
+    <strong>Maturity and roadmap (honest).</strong>
+    Isolith is a young, pre-release project. The 2027.1 train is the foundation
+    release: read, inspect, manage. The editor that sketches, extrudes, drafts,
+    measures, and assembles is new and real, but not yet at full CATIA or
+    SolidWorks breadth. Not yet: sheet metal, weldments, mold tooling, CAM
+    toolpaths, FEA (planned for later trains), and Class-A surface styling (a
+    long-term program). Native CATPart files are readable; native editing is
+    not. If a team's core job is part design, drafting, assembly, and checks,
+    Isolith now covers that workflow on a real geometry kernel.
+  </div>
 
   <div class="grid">
     <div class="card">
@@ -76,19 +175,22 @@
 
   <h2>Posture, in plain words</h2>
   <p>
-    OEP is positioned on what it is, not on who it replaces: engineering data
-    stays on your network, under your control; the software is open and
+    Isolith is positioned on what it is, not on who it replaces: engineering
+    data stays on your network, under your control; the software is open and
     self-hostable; and an air-gap path is a first-class install option. Readers
     are clean-room implementations of public file formats where the file format
     is public, and lawful observation of proprietary formats where it is not.
     The format matrix is written to match the measured capability of those
     readers, including what they cannot do yet.
+    The product name is <strong>Isolith</strong>; "OEP" (Open Engineering
+    Platform) remains the working name of the delivery stack and this
+    documentation site.
   </p>
 </div>
 
 <footer class="site">
   <div class="wrap">
-    Open Engineering Platform documentation - version 0.1.0. Served from the same
+    Isolith: Open Engineering Platform documentation - version 0.1.0. Served from the same
     delivery stack as the product (no separate docs infrastructure).
   </div>
 </footer>
