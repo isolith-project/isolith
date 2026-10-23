@@ -51,9 +51,11 @@ pub const BODY_ID: &str = "body-1";
 pub const SKETCH_ID: &str = "sketch-1";
 /// Undo/redo capacity (number of document snapshots retained each way).
 pub const HISTORY_CAPACITY: usize = 32;
-/// Viewport width used by [`EditorSession::render`].
+/// Viewport width used by [`EditorSession::render`] when no width is given
+/// (the config default; `OEP_VIEWPORT_WIDTH` overrides).
 pub const VIEWPORT_WIDTH: u32 = 640;
-/// Viewport height used by [`EditorSession::render`].
+/// Viewport height used by [`EditorSession::render`] when no height is given
+/// (the config default; `OEP_VIEWPORT_HEIGHT` overrides).
 pub const VIEWPORT_HEIGHT: u32 = 480;
 
 /// Feature kind tag for the sketch feature (must equal oep-sketch's).
@@ -215,6 +217,14 @@ pub struct RenderResult {
     pub width: u32,
     /// Image height in pixels.
     pub height: u32,
+    /// Whether the present-mode overlays (grid, axes, labels) were drawn.
+    pub present: bool,
+    /// Number of world grid segments drawn (0 when not present).
+    pub grid_lines: usize,
+    /// Number of axis arms drawn (0 or 3).
+    pub axis_arms: usize,
+    /// Number of dimension/selection label lines drawn.
+    pub label_count: usize,
 }
 
 /// Result of a STEP export of the derived solid.
@@ -289,6 +299,8 @@ pub struct EditorSession {
     last_solve: Option<SolveReport>,
     point_counter: usize,
     line_counter: usize,
+    viewport_width: u32,
+    viewport_height: u32,
 }
 
 impl EditorSession {
@@ -322,6 +334,8 @@ impl EditorSession {
             last_solve: None,
             point_counter: 0,
             line_counter: 0,
+            viewport_width: config_dim("OEP_VIEWPORT_WIDTH", VIEWPORT_WIDTH),
+            viewport_height: config_dim("OEP_VIEWPORT_HEIGHT", VIEWPORT_HEIGHT),
         }
     }
 
@@ -668,8 +682,8 @@ impl EditorSession {
             &self.camera,
             x,
             y,
-            VIEWPORT_WIDTH as f64,
-            VIEWPORT_HEIGHT as f64,
+            self.viewport_width as f64,
+            self.viewport_height as f64,
         )?;
         self.selected = Some(sel.id.clone());
         self.journal
@@ -728,14 +742,50 @@ impl EditorSession {
         Ok(scene)
     }
 
-    /// Render the current viewport to an image at `path`. The extension picks
-    /// the format: `.ppm` writes a P6 PPM, `.png` writes a PNG (via the
-    /// viewer's deterministic encoder). Returns the image SHA-256 so two
-    /// consecutive renders prove whether the model moved.
+    /// Render the current viewport to an image at `path` at the session's
+    /// configured resolution (config default [`VIEWPORT_WIDTH`] /
+    /// [`VIEWPORT_HEIGHT`], overridable via `OEP_VIEWPORT_WIDTH` /
+    /// `OEP_VIEWPORT_HEIGHT`) with no overlays. The extension picks the
+    /// format: `.ppm` writes a P6 PPM, `.png` writes a PNG (via the viewer's
+    /// deterministic encoder). Returns the image SHA-256 so two consecutive
+    /// renders prove whether the model moved.
     pub fn render(&self, path: &str) -> Result<RenderResult, EditorError> {
+        self.render_sized(path, None, None, false)
+    }
+
+    /// Render the current viewport to an image at `path`, optionally at an
+    /// explicit `width`/`height` (a real render, never an upscale) and with
+    /// the present-mode overlays (world grid, XYZ axes triad and the
+    /// dimension/selection labels sourced from the resolved variable set).
+    /// When `width`/`height` are `None` the session's configured resolution
+    /// is used. `present` forces the overlays on; the default path (no
+    /// present) is byte-identical to the pre-MEDIA-RENDERER output.
+    pub fn render_sized(
+        &self,
+        path: &str,
+        width: Option<u32>,
+        height: Option<u32>,
+        present: bool,
+    ) -> Result<RenderResult, EditorError> {
+        let w = width.unwrap_or(self.viewport_width).max(1);
+        let h = height.unwrap_or(self.viewport_height).max(1);
         let scene = self.build_scene()?;
-        let img: RgbaImage =
-            oep_viewer::render::render(&scene, &self.camera, &[], VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        let (img, grid_lines, axis_arms, label_count) = if present {
+            let opts = oep_viewer::render::PresentOptions {
+                grid: true,
+                axes: true,
+                labels: self.present_labels(),
+            };
+            let fr = oep_viewer::render::render_present(&scene, &self.camera, &[], w, h, &opts);
+            (fr.img, fr.grid_lines, fr.axis_arms, fr.labels)
+        } else {
+            (
+                oep_viewer::render::render(&scene, &self.camera, &[], w, h),
+                0,
+                0,
+                0,
+            )
+        };
         let bytes = if path.ends_with(".png") {
             oep_viewer::render::encode_png(&img)
         } else {
@@ -747,7 +797,27 @@ impl EditorSession {
             sha256: sha256::sha256_hex(&bytes),
             width: img.width,
             height: img.height,
+            present,
+            grid_lines,
+            axis_arms,
+            label_count,
         })
+    }
+
+    /// The present-mode dimension/selection label lines, sourced from the
+    /// REAL resolved state: the driven dimensions of the last solve (which
+    /// reference the oep-sketch variable set) and the current selection id.
+    fn present_labels(&self) -> Vec<String> {
+        let mut labels = Vec::new();
+        if let Some(solve) = &self.last_solve {
+            for (name, value) in &solve.dimensions {
+                labels.push(format!("{name} = {value:.3}"));
+            }
+        }
+        if let Some(sel) = &self.selected {
+            labels.push(format!("sel {sel}"));
+        }
+        labels
     }
 
     // ------------------------------------------------------------------
@@ -1364,6 +1434,17 @@ pub fn encode_ppm(img: &RgbaImage) -> Vec<u8> {
         out.push(img.data[i + 2]);
     }
     out
+}
+
+/// Read a positive viewport dimension from an env-var config default, falling
+/// back to `default` when unset, empty or non-numeric. This is the session's
+/// "config default": the CLI can still override it per render with an
+/// explicit WIDTH:HEIGHT.
+fn config_dim(name: &str, default: u32) -> u32 {
+    match std::env::var(name) {
+        Ok(v) => v.parse::<u32>().ok().filter(|d| *d > 0).unwrap_or(default),
+        Err(_) => default,
+    }
 }
 
 /// Wrapper used by the CLI/tests to build a dimension from a text token: a

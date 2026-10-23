@@ -6,7 +6,7 @@ This file is GENERATED from the command metadata in `crates/oep-shell/src/comman
 cargo run --example workbench -- --write-help-index:docs/re-notes/oep-workbench-help-index.md
 ```
 
-help-index-version: 1.2.0
+help-index-version: 1.3.0
 
 surface: oep-shell workbench command surface
 
@@ -34,7 +34,7 @@ surface: oep-shell workbench command surface
 | sk:line | `sk:line:START:END` | editor | Add a line segment between two existing points; returns its id (l0, l1, ...) |
 | sk:constrain | `sk:constrain:KIND:ARGS...` | editor | Add a sketch constraint (fixed, horizontal, vertical, coincident, length, distance) |
 | sk:solve | `sk:solve` | editor | Solve the sketch against the variable set and write solved coordinates back |
-| sk:render | `sk:render:PATH` | editor | Render the current viewport (solid + sketch overlay) to PPM or PNG |
+| sk:render | `sk:render:PATH[:WIDTH:HEIGHT][:present]` | editor | Render the current viewport to PPM or PNG; WIDTH:HEIGHT selects a real resolution, present adds grid/axes/label overlays |
 | sk:props | `sk:props` | editor | Print the sketch summary (points, lines, constraints, solved dof) |
 | vars:list | `vars:list` | editor | List the variable-set entries (sorted by name) |
 | vars:set | `vars:set:NAME:VALUE` | editor | Set (or add) a variable; a solid feature recomputes live |
@@ -406,21 +406,23 @@ Examples:
 
 ### sk:render
 
-Usage: `sk:render:PATH`
+Usage: `sk:render:PATH[:WIDTH:HEIGHT][:present]`
 
 Category: editor
 
-Renders the current scene through the deterministic CPU raster to PATH. .ppm writes a P6 PPM, .png a PNG. Prints the image SHA-256 so two consecutive renders prove whether the model moved.
+Renders the current scene through the deterministic CPU raster to PATH. .ppm writes a P6 PPM, .png a PNG. The resolution is a REAL render, never an upscale: without WIDTH:HEIGHT the session's configured resolution is used (config default 640x480, overridable for the session via the OEP_VIEWPORT_WIDTH / OEP_VIEWPORT_HEIGHT environment variables). Appending 'present' forces the present-mode overlays into the same raster: the world grid on the sketch plane, the XYZ axes triad, and the dimension/selection labels sourced from the resolved variable set (e.g. width = 80.000) and the current selection. Prints the image SHA-256 so two consecutive renders prove whether the model moved.
 
 Arguments:
 
-- `PATH` (required): Output image path (.ppm or .png)
+- `PATH` (required): Output image path (.ppm or .png); must not contain ':'
+- `WIDTH` (optional): Render width in pixels (a real render at that resolution)
+- `HEIGHT` (optional): Render height in pixels
 
 Examples:
 
 - `oep-workbench sk:render:before.png`
-- `oep-workbench vars:set:width:120`
-- `oep-workbench sk:render:after.png`
+- `oep-workbench sk:render:before.png:1920:1080`
+- `oep-workbench sk:render:before.png:1920:1080:present`
 
 ### sk:props
 

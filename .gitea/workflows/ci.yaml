@@ -3,6 +3,13 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+# Every run step executes under bash so `set -o pipefail` is legal: the slim
+# Debian job images ship /bin/sh as dash, which rejects the option and made
+# the lint/unit/integration jobs fail before running anything (repo-wide, on
+# every ref). bash is present in both rust:1-slim-bookworm and python:3.12-slim.
+defaults:
+  run:
+    shell: bash
 jobs:
   # Toolchain: the general rust:1-slim-bookworm image provides rustup; the
   # repo's rust-toolchain.toml (P0-M3-T02) is the single source of truth for
@@ -14,10 +21,13 @@ jobs:
     container:
       image: rust:1-slim-bookworm
     steps:
-      - name: Checkout
+      - name: Checkout triggering ref
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates
-          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git" .
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
           git log --oneline -1
       - name: rustfmt check
         run: cargo fmt --all -- --check
@@ -32,10 +42,13 @@ jobs:
     container:
       image: rust:1-slim-bookworm
     steps:
-      - name: Checkout
+      - name: Checkout triggering ref
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates
-          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git" .
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
           git log --oneline -1
       - name: Unit tests
         run: |
@@ -48,10 +61,13 @@ jobs:
     container:
       image: rust:1-slim-bookworm
     steps:
-      - name: Checkout
+      - name: Checkout triggering ref
         run: |
           apt-get update -qq && apt-get install -y -qq git ca-certificates
-          git clone --depth 1 "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git" .
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
           git log --oneline -1
       - name: Integration tests
         run: |

@@ -23,6 +23,7 @@
 
 pub mod camera;
 pub mod clip;
+pub mod overlay;
 pub mod pick;
 pub mod render;
 pub mod scene;
@@ -34,6 +35,9 @@ pub const WORKSTREAM: &str = "P6-VIEWER";
 
 pub use camera::Camera;
 pub use clip::{ClipPlane, Side};
+pub use overlay::{
+    axis_arms, draw_label_chip, draw_text, fill_rect, grid_segments, nice_spacing, text_width,
+};
 pub use pick::{pick, pick_ray, Ray, Selection};
-pub use render::{render, RgbaImage};
+pub use render::{render, render_present, PresentFrame, PresentOptions, RgbaImage};
 pub use scene::{build_scene, Aabb, MeshData, Primitive, Scene};

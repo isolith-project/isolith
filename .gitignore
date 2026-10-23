@@ -49,3 +49,6 @@ server.key
 # P11-T02: the rustsec advisory-db is a shallow clone cache, never committed
 # (source of truth is upstream rustsec/advisory-db at scan time).
 P11/.advisory-db/
+
+# Local venv symlink (uv shares the main worktree env; never commit machine paths)
+.venv

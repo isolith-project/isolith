@@ -68,7 +68,7 @@ CANONICAL_COMMANDS = [
     ("sk:line", "sk:line:START:END", "editor"),
     ("sk:constrain", "sk:constrain:KIND:ARGS...", "editor"),
     ("sk:solve", "sk:solve", "editor"),
-    ("sk:render", "sk:render:PATH", "editor"),
+    ("sk:render", "sk:render:PATH[:WIDTH:HEIGHT][:present]", "editor"),
     ("sk:props", "sk:props", "editor"),
     ("vars:list", "vars:list", "editor"),
     ("vars:set", "vars:set:NAME:VALUE", "editor"),
@@ -89,7 +89,7 @@ CANONICAL_COMMANDS = [
 ]
 CANONICAL_NAMES = [c[0] for c in CANONICAL_COMMANDS]
 CANONICAL_USAGES = [c[1] for c in CANONICAL_COMMANDS]
-EXPECT_VERSION = "1.2.0"
+EXPECT_VERSION = "1.3.0"
 
 EM_DASH = "\u2014"
 CURLY = "\u201c\u201d\u2018\u2019"

@@ -1,8 +1,8 @@
 ---
 title: Isolith P7-M5-T02 Accessibility Checklist (viewer and workbench surfaces)
-version: 1.2.0
+version: 1.3.0
 date: 2026-10-22
-status: Ratified for the P7-M5-T02 headless surfaces (v1.2.0 widens the workbench surface with the interactive editor commands: editor, sk, vars, feat, view, export, props, undo, redo, and the typed-error guarantee)
+status: Ratified for the P7-M5-T02 headless surfaces (v1.3.0 covers the MEDIA-RENDERER present mode: explicit-width real renders and the grid/axes/label overlays keep only the documented contrast floor and stay deterministic; v1.2.0 widened the workbench surface with the interactive editor commands and the typed-error guarantee)
 owner: Isolith program governance, P7 modeler lane (P7-M5-T02)
 applies_to: the oep-viewer surface (P6-M5-T02 preview viewer) and the oep-shell workbench command surface (P7-M2-T01), and the gated items that land when the P7-M5 immediate-mode interactive panel is delivered
 supersedes: nothing

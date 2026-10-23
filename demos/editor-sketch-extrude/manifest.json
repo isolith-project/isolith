@@ -42,6 +42,20 @@
     "after_sha256": "657b12548af5b171934b8b55bf30272ada0faaa75b2e4f0f0241754fa9ebc1c6",
     "before_ne_after": true
   },
+  "present_render": {
+    "viewport": "1920x1080",
+    "overlays": ["grid", "axes_triad (X red, Y green, Z blue)", "dimension labels from the variable set"],
+    "before_sha256": "84adda8768b2e458748b5b8deb07ba10d7f8176365d46e7dd1846623768fbf0e",
+    "after_sha256": "f58523a61919ca8a1cc295be483f7788b4915f4a8d15c042d0c00539049a5f64",
+    "before_grid_lines": 22,
+    "after_grid_lines": 30,
+    "axes": 3,
+    "labels": 2,
+    "before_labels": ["HEIGHT = 40.000", "WIDTH = 80.000"],
+    "after_labels": ["HEIGHT = 40.000", "WIDTH = 120.000"],
+    "before_ne_after": true,
+    "honesty": "a real 1920x1080 raster render, never an upscale; deterministic and byte-regenerable (see regenerate)"
+  },
   "step_export": {
     "path": "edpart.step",
     "faces": 12,
