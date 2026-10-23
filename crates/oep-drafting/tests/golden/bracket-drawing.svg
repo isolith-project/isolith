@@ -4,20 +4,20 @@
   <rect x="10" y="10" width="277" height="190"/>
   <rect x="127" y="10" width="160" height="32"/>
   <path d="M 127 34 L 287 34"/>
-  <text x="117.32925" y="38" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">TITLE: Bracket</text>
-  <path d="M 127 26 L 287 26"/>
-  <text x="112.75825" y="30" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">MATERIAL: 6061-T6</text>
-  <path d="M 207 26 L 367 26"/>
-  <text x="199.85625" y="30" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">SCALE: 1:1</text>
-  <path d="M 127 18 L 287 18"/>
-  <text x="109.94075000000001" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">PART NO: KW-BKT-001</text>
-  <path d="M 207 18 L 367 18"/>
-  <text x="203.26175" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">REV: A</text>
-  <path d="M 127 10 L 287 10"/>
-  <text x="99.82225" y="14" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">DRAWN BY: oep-drafting 2026-10-22</text>
-  <path d="M 207 10 L 367 10"/>
-  <text x="197.814" y="14" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">SHEET: 1 of 1</text>
-  <text x="210.429" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">Isolith</text>
+  <text x="129" y="38" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">TITLE: Bracket</text>
+  <path d="M 127 26 L 207 26"/>
+  <text x="129" y="30" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">MATERIAL: 6061-T6</text>
+  <path d="M 207 26 L 287 26"/>
+  <text x="209" y="30" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">SCALE: 1:1</text>
+  <path d="M 127 18 L 207 18"/>
+  <text x="129" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">PART NO: KW-BKT-001</text>
+  <path d="M 207 18 L 287 18"/>
+  <text x="209" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">REV: A</text>
+  <path d="M 127 10 L 207 10"/>
+  <text x="129" y="14" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">DRAWN BY: oep-drafting 2026-10-22</text>
+  <path d="M 207 10 L 287 10"/>
+  <text x="209" y="14" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">SHEET: 1 of 1</text>
+  <text x="215" y="22" font-family="Helvetica,Arial,sans-serif" font-size="3.5" fill="black" stroke="none">Isolith</text>
   <path d="M 207 10 L 207 42"/>
   <g data-view="FRONT">
   <path d="M 71 48.5 L 151 48.5"/>

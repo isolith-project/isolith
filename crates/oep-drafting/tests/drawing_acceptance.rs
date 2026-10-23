@@ -24,6 +24,8 @@
 
 use oep_drafting::builder::drive_bracket_drawing;
 use oep_drafting::export::drawing_primitives;
+use oep_drafting::export::metrics::text_width;
+use oep_drafting::export::{BORDER_MM, TEXT_MM, TITLE_BLOCK_H, TITLE_BLOCK_W};
 use oep_drafting::view::{bounds2, extent, project_edges, Edge2};
 use oep_drafting::{
     render_document, render_sheet, solid_from_graph, write_drawing_pdf, write_drawing_svg,
@@ -383,6 +385,136 @@ fn title_block_is_drawn_and_the_document_is_canonical_v2() {
     let a = driven.to_json_pretty().expect("serialize");
     let back = Document::from_json_pretty(&a).expect("parse");
     assert_eq!(back, driven, "document round-trip identical");
+}
+
+// ---------------------------------------------------------------------------
+// layout: title-block labels stay in their cells; no line leaves the sheet
+// (regression for the DRAFTING-TITLEBLOCK defect — the pre-fix emitter
+// centre-anchored title labels and overran the block with the right-column
+// dividers, and the goldens had byte-locked that buggy output).
+// ---------------------------------------------------------------------------
+
+/// A parsed SVG `<text>`: (left-edge x, centre y, content).
+type SvgText = (f64, f64, String);
+/// A parsed SVG `<path>`: (x1, y1, x2, y2).
+type SvgLine = (f64, f64, f64, f64);
+
+/// Parse the rendered SVG's `<text>` and `<path>` elements (stdlib only).
+fn parse_svg(svg: &str) -> (Vec<SvgText>, Vec<SvgLine>) {
+    let mut texts = Vec::new();
+    let mut paths = Vec::new();
+    for chunk in svg.split('<') {
+        if let Some(attrs_and_body) = chunk.strip_prefix("text ") {
+            let (attrs, body) = attrs_and_body.split_once('>').expect("text attrs");
+            // `split('<')` already cut at the element's own `</text`, so the
+            // body IS the text content.
+            let text = body.trim_end().to_string();
+            let x: f64 = attr(attrs, "x").parse().expect("text x");
+            let y: f64 = attr(attrs, "y").parse().expect("text y");
+            texts.push((x, y, text));
+        } else if let Some(attrs) = chunk.strip_prefix("path ") {
+            let d = attr(attrs, "d");
+            let nums: Vec<f64> = d
+                .split_whitespace()
+                .filter_map(|t| t.parse::<f64>().ok())
+                .collect();
+            assert_eq!(nums.len(), 4, "path d must hold 4 numbers: {d:?}");
+            paths.push((nums[0], nums[1], nums[2], nums[3]));
+        }
+    }
+    (texts, paths)
+}
+
+/// The value of `key="..."` in an SVG attribute list.
+fn attr(attrs: &str, key: &str) -> String {
+    let pat = format!("{key}=\"");
+    let s = attrs
+        .find(&pat)
+        .unwrap_or_else(|| panic!("attr {key} in {attrs:?}"))
+        + pat.len();
+    let e = attrs[s..].find('"').expect("closing quote");
+    attrs[s..s + e].to_string()
+}
+
+#[test]
+fn title_block_text_and_dividers_stay_in_bounds_and_cells() {
+    let driven = drive(80.0);
+    let render = render_document_with_graph(&driven);
+    let mut svg = Vec::new();
+    write_drawing_svg(&render, &mut svg).expect("svg");
+    let (texts, paths) = parse_svg(&String::from_utf8(svg).expect("utf-8"));
+
+    // Title-block geometry on the sheet (mm).
+    let (sw, sh) = (render.width_mm as f64, render.height_mm as f64);
+    let left = sw - BORDER_MM - TITLE_BLOCK_W;
+    let col = TITLE_BLOCK_W / 2.0;
+    let tb_right = left + TITLE_BLOCK_W;
+    let bottom = BORDER_MM;
+    let tb_top = bottom + TITLE_BLOCK_H;
+    let eps = 1e-6;
+    assert_eq!(left, 127.0, "title block left edge");
+    assert_eq!(col, 80.0, "column width");
+    assert_eq!(tb_right, 287.0, "title block right edge");
+
+    // 1. Every title-block label sits inside its cell: x0 >= cell left edge
+    //    and x0 + text_width <= cell right edge. (Pre-fix the emitter shifted
+    //    every label LEFT by half its own width, so e.g. "DRAWN BY:
+    //    oep-drafting 2026-10-22" began at x=99.8 while its box starts at
+    //    127.) Title-block labels are the texts whose (centre-anchored) y
+    //    falls inside the block's band; view and dimension labels sit above
+    //    it and are intentionally centre-anchored.
+    let mut title_texts = 0;
+    for (x0, y, text) in &texts {
+        if *y <= tb_top + eps {
+            let w = text_width(text, TEXT_MM);
+            let (cell_l, cell_r) = if *x0 < left + col {
+                (left, left + col)
+            } else {
+                (left + col, tb_right)
+            };
+            assert!(
+                *x0 >= cell_l - eps && *x0 + w <= cell_r + eps,
+                "title-block label {text:?} escapes its cell: x0={x0} (+width {w}) not within [{cell_l}, {cell_r}]",
+            );
+            title_texts += 1;
+        }
+    }
+    assert!(
+        title_texts >= 7,
+        "expected >=7 title-block labels, saw {title_texts}"
+    );
+
+    // 2. Every line stays inside the sheet. (Pre-fix the right-column row
+    //    dividers ran from x=207 to x=367, past the 297-wide sheet.)
+    for (x1, y1, x2, y2) in &paths {
+        for c in [*x1, *x2] {
+            assert!(
+                c >= -eps && c <= sw + eps,
+                "line x={c} leaves the sheet width [0, {sw}]"
+            );
+        }
+        for c in [*y1, *y2] {
+            assert!(
+                c >= -eps && c <= sh + eps,
+                "line y={c} leaves the sheet height [0, {sh}]"
+            );
+        }
+    }
+
+    // 3. Exactly one vertical column divider at x = left+col across the block.
+    let vdiv = paths
+        .iter()
+        .filter(|(x1, y1, x2, y2)| {
+            (*x1 - (left + col)).abs() < 1e-9
+                && (*x2 - (left + col)).abs() < 1e-9
+                && (*y1 - bottom).abs() < 1e-9
+                && (*y2 - tb_top).abs() < 1e-9
+        })
+        .count();
+    assert_eq!(
+        vdiv, 1,
+        "expected exactly one vertical column divider, saw {vdiv}"
+    );
 }
 
 // ---------------------------------------------------------------------------

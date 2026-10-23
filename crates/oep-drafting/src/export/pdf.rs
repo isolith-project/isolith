@@ -18,7 +18,7 @@ use std::fmt::Write as _;
 use std::io::Write;
 
 use super::metrics::text_width;
-use super::{drawing_primitives, Prim};
+use super::{drawing_primitives, Prim, TextAnchor};
 use crate::render::RenderedDrawing;
 
 /// Escape a text string for a PDF literal (parens and backslash).
@@ -53,9 +53,20 @@ pub fn write_drawing_pdf(dr: &RenderedDrawing, w: &mut dyn Write) -> std::io::Re
             Prim::Rect { x, y, w, h } => {
                 writeln!(content, "{x} {y} {w} {h} re S").unwrap();
             }
-            Prim::Text { x, y, text, size } => {
-                // Centre at (x, y): left-align by half the text width.
-                let x0 = x - text_width(&text, size) / 2.0;
+            Prim::Text {
+                x,
+                y,
+                text,
+                size,
+                anchor,
+            } => {
+                // Resolve the label's LEFT edge from its anchor (mirrors the
+                // SVG writer: centre-anchored labels shift by half their
+                // width, title-block labels start at x).
+                let x0 = match anchor {
+                    TextAnchor::Center => x - text_width(&text, size) / 2.0,
+                    TextAnchor::Left => x,
+                };
                 // Baseline slightly below the centre anchor so the label reads
                 // centred on the line (cap height ~ 0.7 em).
                 let y0 = y - 0.35 * size;

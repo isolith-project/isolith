@@ -12,26 +12,26 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
 endobj
 5 0 obj
-<< /Length 1423 >>
+<< /Length 1371 >>
 stream
 0.35 w
 10 10 277 190 re S
 127 10 160 32 re S
 127 34 m 287 34 l S
-BT /F1 3.5 Tf 117.32925 36.775 Td (TITLE: Bracket) Tj ET
-127 26 m 287 26 l S
-BT /F1 3.5 Tf 112.75825 28.775 Td (MATERIAL: 6061-T6) Tj ET
-207 26 m 367 26 l S
-BT /F1 3.5 Tf 199.85625 28.775 Td (SCALE: 1:1) Tj ET
-127 18 m 287 18 l S
-BT /F1 3.5 Tf 109.94075000000001 20.775 Td (PART NO: KW-BKT-001) Tj ET
-207 18 m 367 18 l S
-BT /F1 3.5 Tf 203.26175 20.775 Td (REV: A) Tj ET
-127 10 m 287 10 l S
-BT /F1 3.5 Tf 99.82225 12.775 Td (DRAWN BY: oep-drafting 2026-10-22) Tj ET
-207 10 m 367 10 l S
-BT /F1 3.5 Tf 197.814 12.775 Td (SHEET: 1 of 1) Tj ET
-BT /F1 3.5 Tf 210.429 20.775 Td (Isolith) Tj ET
+BT /F1 3.5 Tf 129 36.775 Td (TITLE: Bracket) Tj ET
+127 26 m 207 26 l S
+BT /F1 3.5 Tf 129 28.775 Td (MATERIAL: 6061-T6) Tj ET
+207 26 m 287 26 l S
+BT /F1 3.5 Tf 209 28.775 Td (SCALE: 1:1) Tj ET
+127 18 m 207 18 l S
+BT /F1 3.5 Tf 129 20.775 Td (PART NO: KW-BKT-001) Tj ET
+207 18 m 287 18 l S
+BT /F1 3.5 Tf 209 20.775 Td (REV: A) Tj ET
+127 10 m 207 10 l S
+BT /F1 3.5 Tf 129 12.775 Td (DRAWN BY: oep-drafting 2026-10-22) Tj ET
+207 10 m 287 10 l S
+BT /F1 3.5 Tf 209 12.775 Td (SHEET: 1 of 1) Tj ET
+BT /F1 3.5 Tf 215 20.775 Td (Isolith) Tj ET
 207 10 m 207 42 l S
 71 48.5 m 151 48.5 l S
 71 54.5 m 151 54.5 l S
@@ -74,5 +74,5 @@ xref
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-1813
+1761
 %%EOF

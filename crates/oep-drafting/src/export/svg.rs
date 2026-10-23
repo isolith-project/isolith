@@ -15,7 +15,7 @@ use std::fmt::Write as _;
 use std::io::Write;
 
 use super::metrics::text_width;
-use super::{drawing_primitives, Prim};
+use super::{drawing_primitives, Prim, TextAnchor};
 use crate::render::RenderedDrawing;
 
 /// Write the drawing as an SVG document to `w`.
@@ -46,10 +46,21 @@ pub fn write_drawing_svg(dr: &RenderedDrawing, w: &mut dyn Write) -> std::io::Re
                 )
                 .unwrap();
             }
-            Prim::Text { x, y, text, size } => {
-                // Left-align the text by shifting the centre anchor by half its
-                // measured width (shared Helvetica metrics with the PDF export).
-                let x0 = x - text_width(&text, size) / 2.0;
+            Prim::Text {
+                x,
+                y,
+                text,
+                size,
+                anchor,
+            } => {
+                // Resolve the label's LEFT edge from its anchor: a
+                // centre-anchored label is left-aligned by shifting half its
+                // measured width (shared Helvetica metrics with the PDF
+                // export); a left-anchored one (title block) starts at x.
+                let x0 = match anchor {
+                    TextAnchor::Center => x - text_width(&text, size) / 2.0,
+                    TextAnchor::Left => x,
+                };
                 writeln!(
                     s,
                     "  <text x=\"{x0}\" y=\"{y}\" font-family=\"Helvetica,Arial,sans-serif\" font-size=\"{size}\" fill=\"black\" stroke=\"none\">{text}</text>"

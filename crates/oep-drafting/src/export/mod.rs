@@ -6,7 +6,7 @@
 //! it). Both are deterministic (byte-for-byte for a given input) and typed —
 //! text is ASCII-only so both stay unambiguous and byte-stable.
 
-mod metrics;
+pub mod metrics;
 
 pub mod pdf;
 pub mod svg;
@@ -61,17 +61,31 @@ pub enum Prim {
         /// Height.
         h: f64,
     },
-    /// A centred-aligned text label (x/y is the CENTRE anchor, Y up).
+    /// A text label at an explicit horizontal anchor (see [`TextAnchor`]).
     Text {
-        /// Centre x.
+        /// Anchor x: the label's LEFT edge or its CENTRE per `anchor`.
         x: f64,
-        /// Centre y.
+        /// Anchor y (the CENTRE of the label's line height).
         y: f64,
         /// The text.
         text: String,
         /// Font size.
         size: f64,
+        /// Horizontal anchor semantics for `x`.
+        anchor: TextAnchor,
     },
+}
+
+/// Horizontal anchoring of a text label in the paper coordinate space.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum TextAnchor {
+    /// The anchor x is the label's LEFT edge (the label runs right of x);
+    /// used by the title block, where each label starts 2mm into its cell.
+    Left,
+    /// The anchor x is the label's CENTRE; used by view labels and dimension
+    /// values, which are intentionally centred over their geometry.
+    #[default]
+    Center,
 }
 
 /// Build the full primitive list for a rendered drawing: border frame, title
@@ -105,12 +119,14 @@ pub fn drawing_primitives(dr: &RenderedDrawing) -> Vec<Prim> {
             });
         }
         out.push(Prim::EndGroup);
-        // View label anchored above-left of the view bbox.
+        // View label anchored above-left of the view bbox, centre-anchored
+        // on that point (intentionally centred like the dimension values).
         out.push(Prim::Text {
             x: v.cx - v.extent_w / 2.0,
             y: v.cy + v.extent_h / 2.0 + 3.0,
             text: v.label.clone(),
             size: TEXT_MM,
+            anchor: TextAnchor::Center,
         });
     }
 
@@ -146,10 +162,44 @@ pub fn drawing_primitives(dr: &RenderedDrawing) -> Vec<Prim> {
             y: (d.ay + d.by) / 2.0 + TEXT_MM,
             text: d.label.clone(),
             size: TEXT_MM,
+            anchor: TextAnchor::Center,
         });
     }
 
+    // Bound check (debug builds): no primitive the writers emit may fall
+    // outside the sheet, so a stray divider can never silently run off the
+    // paper again. Enforced on the rendered output by the layout acceptance
+    // test regardless of build profile.
+    for p in &out {
+        match p {
+            Prim::Line { x1, y1, x2, y2 } => {
+                debug_assert!(
+                    in_bounds(*x1, *y1, w, h) && in_bounds(*x2, *y2, w, h),
+                    "line endpoint leaves the sheet: ({x1}, {y1}) -> ({x2}, {y2}) on {w}x{h}"
+                );
+            }
+            Prim::Rect { x, y, w: rw, h: rh } => {
+                debug_assert!(
+                    in_bounds(*x, *y, w, h) && in_bounds(*x + *rw, *y + *rh, w, h),
+                    "rect corner leaves the sheet: ({x}, {y}) +{rw}x{rh} on {w}x{h}"
+                );
+            }
+            Prim::Text { x, y, .. } => {
+                debug_assert!(
+                    in_bounds(*x, *y, w, h),
+                    "text anchor leaves the sheet: ({x}, {y}) on {w}x{h}"
+                );
+            }
+            Prim::BeginGroup { .. } | Prim::EndGroup => {}
+        }
+    }
+
     out
+}
+
+/// Whether a paper point lies on (or inside) the sheet.
+fn in_bounds(x: f64, y: f64, w: f64, h: f64) -> bool {
+    x.is_finite() && y.is_finite() && (0.0..=w).contains(&x) && (0.0..=h).contains(&y)
 }
 
 /// The title block table: an outer frame plus "LABEL: value" rows.
@@ -163,15 +213,19 @@ fn title_block_primitives(tb: &TitleBlock, sheet_w: f64, _sheet_h: f64) -> Vec<P
         h: TITLE_BLOCK_H,
     }];
 
-    // Rows: title spans the full width; the rest share two columns.
+    // Rows: title spans the full width; the rest share two columns. Every
+    // divider spans its own CELL (so the right-column rows end at the block's
+    // right edge, never past it), and labels are LEFT-anchored 2mm into the
+    // cell (the pre-fix emitters re-anchored every label to its centre,
+    // shifting each one left out of its box).
     let row_h = TITLE_BLOCK_H / 4.0;
     let col = TITLE_BLOCK_W / 2.0;
-    let mut row = |label: &str, value: &str, x: f64, y_top: f64| {
+    let mut row = |label: &str, value: &str, x: f64, y_top: f64, cell_w: f64| {
         let y = y_top - row_h;
         out.push(Prim::Line {
             x1: x,
             y1: y,
-            x2: x + TITLE_BLOCK_W,
+            x2: x + cell_w,
             y2: y,
         });
         out.push(Prim::Text {
@@ -179,24 +233,27 @@ fn title_block_primitives(tb: &TitleBlock, sheet_w: f64, _sheet_h: f64) -> Vec<P
             y: y + row_h / 2.0,
             text: format!("{label}: {value}"),
             size: TEXT_MM,
+            anchor: TextAnchor::Left,
         });
     };
 
     let top = bottom + TITLE_BLOCK_H;
-    // Title row (full width).
-    row("TITLE", &tb.title, left, top);
+    // Title row (full width, one cell).
+    row("TITLE", &tb.title, left, top, TITLE_BLOCK_W);
     // Material | scale row.
     row(
         "MATERIAL",
         tb.material.as_deref().unwrap_or(""),
         left,
         top - row_h,
+        col,
     );
     row(
         "SCALE",
         tb.scale.as_deref().unwrap_or(""),
         left + col,
         top - row_h,
+        col,
     );
     // Part no | revision row.
     row(
@@ -204,12 +261,14 @@ fn title_block_primitives(tb: &TitleBlock, sheet_w: f64, _sheet_h: f64) -> Vec<P
         tb.part_number.as_deref().unwrap_or(""),
         left,
         top - 2.0 * row_h,
+        col,
     );
     row(
         "REV",
         tb.revision.as_deref().unwrap_or(""),
         left + col,
         top - 2.0 * row_h,
+        col,
     );
     // Drawn by/date | sheet row.
     let drawn = match (&tb.drawn_by, &tb.date) {
@@ -218,12 +277,13 @@ fn title_block_primitives(tb: &TitleBlock, sheet_w: f64, _sheet_h: f64) -> Vec<P
         (None, Some(dt)) => dt.clone(),
         (None, None) => String::new(),
     };
-    row("DRAWN BY", &drawn, left, top - 3.0 * row_h);
+    row("DRAWN BY", &drawn, left, top - 3.0 * row_h, col);
     row(
         "SHEET",
         tb.sheet.as_deref().unwrap_or(""),
         left + col,
         top - 3.0 * row_h,
+        col,
     );
     if let Some(company) = &tb.company {
         out.push(Prim::Text {
@@ -231,6 +291,7 @@ fn title_block_primitives(tb: &TitleBlock, sheet_w: f64, _sheet_h: f64) -> Vec<P
             y: top - 3.0 * row_h + row_h / 2.0,
             text: company.clone(),
             size: TEXT_MM,
+            anchor: TextAnchor::Left,
         });
     }
 
