@@ -17,7 +17,7 @@ air-gap by the delivery stack's `docs` service, `oep-docs --root docs-site`).
 | --- | --- | --- | --- | --- |
 | `images/01-editor-sketch-before.png` | Editor viewport, part before a dimension edit | Isolith editor demo (oep-shell + oep-viewer), live recompute demo | 640x480 | Real viewport raster, aliased edges, no UI chrome. Shows the actual model the editor produces. |
 | `images/02-editor-solid-after.png` | Same part after the driven dimension changed, with selection frame | Same as above | 640x480 | Same limitations. Best used as a pair with 01 to show live recompute. |
-| `images/03-drawing-sheet.png` | 1:1 drawing sheet: title block (part, material, scale), top/front/right views, dimensions | oep-drafting, rendered from its SVG golden via headless Chrome | 1800x1272 | Real drafting output, vector-crisp. Strongest product shot in the pack. |
+| `images/03-drawing-sheet.png` | 1:1 drawing sheet: title block (part, material, scale), top/front/right views, dimensions | oep-drafting, rendered from its SVG golden via headless Chrome | 1800x1272 | Real drafting output, vector-crisp. Drawing sheet produced by oep-drafting (title block, projected views, dimensions). |
 | `images/04-mechanism-animation.mp4` | Mechanism motion study (kinematics lane), all 90 frames, loopable | oep-kinematics demo (P7-M3-T02), ffmpeg h264 encode | 1280x960 (upscaled from 640x480) | Real solved motion, residual ~1e-11. Upscaled for presentation. |
 | `images/05-mechanism-loop.gif` | Compact loop of the same mechanism for docs/embed | Same frames, paletted GIF | 960x720 | 272 KB, embed-friendly. |
 | `images/06-mechanism-contact-sheet.png` | 3x3 grid of nine mechanism poses | PIL from the real frames | 1318x1000 | Convenience contact sheet. |
@@ -37,7 +37,10 @@ kinematics residual, mass properties):
   in `crates/oep-kinematics/tests/kinematics.rs`.
 - Drawing sheet: `crates/oep-drafting/tests/golden/bracket-drawing.svg`
   (also `.pdf` and `.oepgeo.json`); byte-locked by
-  `crates/oep-drafting/tests/drawing_acceptance.rs`.
+  `crates/oep-drafting/tests/drawing_acceptance.rs`. The `03-drawing-sheet.png`
+  in this pack was re-rendered from the post-fix golden (DRAFTING-TITLEBLOCK
+  b9c139d); the first capture embedded the pre-fix buggy labels (shifted out of
+  their cells), which is why it was regenerated.
 - Editor viewport pair: produced by the skew-extrude editor demo
   (`demos/editor-sketch-extrude`), attached to kanban card t_0e2a6fa7 as
   `edpart-before.png` / `edpart-after.png` (byte-identical). The live
