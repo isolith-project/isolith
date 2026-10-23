@@ -162,15 +162,45 @@ fn dispatch_editor(session: &mut Option<EditorSession>, token: &str, arg: Option
                 let Some(s) = session.as_ref() else {
                     return err_none("run editor:open first");
                 };
-                let Some(path) = rest else {
-                    return err_none("sk:render expects PATH");
+                let Some(arg) = rest else {
+                    return err_none("sk:render expects PATH[:WIDTH:HEIGHT][:present]");
                 };
-                match s.render(&path) {
+                // Trailing tokens after the path (split on ':'): the path
+                // itself must not contain a colon.
+                let mut parts: Vec<&str> = arg.split(':').collect();
+                let present = parts.last().map(|t| *t == "present").unwrap_or(false);
+                if present {
+                    parts.pop();
+                }
+                let (path, width, height) = match parts.len() {
+                    1 => (parts[0].to_string(), None, None),
+                    3 => match (parts[1].parse::<u32>().ok(), parts[2].parse::<u32>().ok()) {
+                        (Some(w), Some(h)) if w > 0 && h > 0 => {
+                            (parts[0].to_string(), Some(w), Some(h))
+                        }
+                        _ => return err_none("sk:render WIDTH:HEIGHT must be positive integers"),
+                    },
+                    _ => return err_none("sk:render expects PATH[:WIDTH:HEIGHT][:present]"),
+                };
+                match s.render_sized(&path, width, height, present) {
                     Ok(r) => {
-                        println!(
-                            "rendered {} sha256={} {}x{}",
-                            r.path, r.sha256, r.width, r.height
-                        );
+                        if r.present {
+                            println!(
+                                "rendered {} sha256={} {}x{} present grid={} axes={} labels={}",
+                                r.path,
+                                r.sha256,
+                                r.width,
+                                r.height,
+                                r.grid_lines,
+                                r.axis_arms,
+                                r.label_count
+                            );
+                        } else {
+                            println!(
+                                "rendered {} sha256={} {}x{}",
+                                r.path, r.sha256, r.width, r.height
+                            );
+                        }
                         true
                     }
                     Err(e) => err_none(&e.to_string()),

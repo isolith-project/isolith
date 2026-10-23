@@ -152,11 +152,96 @@ def test_surface_files_carry_no_em_dashes_or_curly_quotes():
         os.path.join(SHELL, "examples", "workbench.rs"): "workbench example",
         os.path.join(SHELL, "tests", "editor_surface.rs"): "editor_surface.rs",
         os.path.join(SHELL, "src", "commands.rs"): "commands.rs",
+        os.path.join(REPO, "crates", "oep-viewer", "src", "overlay.rs"): "overlay.rs",
     }
     for path, label in files.items():
         text = open(path, encoding="utf-8").read()
         assert EM_DASH not in text, f"{label}: em dash present"
         assert not any(c in CURLY for c in text), f"{label}: curly quote present"
+
+
+def present_commands(directory):
+    """The acceptance path plus the 1080p present before/after pair."""
+    return ACCEPTANCE_COMMANDS + [
+        "sk:render:%s:1920:1080:present"
+        % os.path.join(directory, "present-1080p-before.png"),
+        "vars:set:width:120",
+        "sk:render:%s:1920:1080:present"
+        % os.path.join(directory, "present-1080p-after.png"),
+    ]
+
+
+def test_present_hd_render_is_real_and_driven_by_the_variable_set():
+    """MEDIA-RENDERER: a 1920x1080 --present render is a REAL raster with the
+    grid, XYZ axes triad and dimension labels sourced from the variable set;
+    editing the variable changes the HD frame (before/after pair)."""
+    with tempfile.TemporaryDirectory() as td:
+        rc, out, err = run(*present_commands(td))
+        assert rc == 0, "nonzero exit:\n%s\n%s" % (out, err)
+        # Two present renders at a real HD resolution with full overlay
+        # composition (grid + 3-axis triad + the driven dimension labels).
+        for name in ("present-1080p-before.png", "present-1080p-after.png"):
+            m = re.search(
+                r"rendered \S+%s sha256=([0-9a-f]{64}) 1920x1080 present "
+                r"grid=(\d+) axes=3 labels=(\d+)" % re.escape(name),
+                out,
+            )
+            assert m, "present marker missing for %s in:\n%s" % (name, out)
+            png = os.path.join(td, name)
+            assert os.path.isfile(png)
+            with open(png, "rb") as fh:
+                head = fh.read(33)
+            assert head[16:20] == b"\x00\x00\x07\x80", "1920 wide IHDR"  # 1920
+            assert head[20:24] == b"\x00\x00\x04\x38", "1080 tall IHDR"  # 1080
+        sha_before_m = re.search(
+            r"present-1080p-before\.png sha256=([0-9a-f]{64})", out
+        )
+        sha_after_m = re.search(
+            r"present-1080p-after\.png sha256=([0-9a-f]{64})", out
+        )
+        assert sha_before_m and sha_after_m, "present sha missing"
+        assert sha_before_m.group(1) != sha_after_m.group(
+            1
+        ), "width edit must change the present frame"
+
+
+def test_present_hd_committed_artifacts_regenerate_byte_identical():
+    """The committed demos/editor-sketch-extrude 1080p present pair must be
+    byte-identical to a fresh render (deterministic, regenerable by script)."""
+    with tempfile.TemporaryDirectory() as td:
+        rc, out, err = run(*present_commands(td))
+        assert rc == 0, "nonzero exit:\n%s\n%s" % (out, err)
+        fresh_before = open(os.path.join(td, "present-1080p-before.png"), "rb").read()
+        fresh_after = open(os.path.join(td, "present-1080p-after.png"), "rb").read()
+        committed_before = open(
+            os.path.join(DEMO, "present-1080p-before.png"), "rb"
+        ).read()
+        committed_after = open(
+            os.path.join(DEMO, "present-1080p-after.png"), "rb"
+        ).read()
+        assert fresh_before == committed_before, "present before drifted from commit"
+        assert fresh_after == committed_after, "present after drifted from commit"
+        assert fresh_before != fresh_after
+
+
+def test_env_config_default_sets_session_viewport():
+    """OEP_VIEWPORT_WIDTH/HEIGHT are the session config default: with them set,
+    a bare sk:render:PATH renders at that real resolution (no upscale)."""
+    env = dict(os.environ)
+    env["OEP_VIEWPORT_WIDTH"] = "320"
+    env["OEP_VIEWPORT_HEIGHT"] = "240"
+    with tempfile.TemporaryDirectory() as td:
+        out_dir = os.path.join(td, "cfg")
+        os.makedirs(out_dir)
+        cmds = ACCEPTANCE_COMMANDS + [
+            "sk:render:%s" % os.path.join(out_dir, "cfg.png"),
+        ]
+        r = subprocess.run(
+            ["cargo", "run", "--quiet", "-p", "oep-shell", "--example", "workbench", "--", *cmds],
+            cwd=REPO, env=env, capture_output=True, text=True, timeout=2400,
+        )
+        assert r.returncode == 0, r.stdout + r.stderr
+        assert "cfg.png sha256=" in r.stdout and " 320x240" in r.stdout, r.stdout
 
 
 if __name__ == "__main__":

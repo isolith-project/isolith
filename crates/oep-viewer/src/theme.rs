@@ -30,6 +30,22 @@ pub const HIGHLIGHT_RGB: [u8; 3] = [242, 186, 70];
 /// WCAG 1.4.11 non-text contrast floor for graphical objects (3.0:1).
 pub const MIN_NON_TEXT_CONTRAST: f64 = 3.0;
 
+/// Present-overlay: world grid line color (muted neutral, still above the
+/// non-text contrast floor against [`BACKGROUND_RGB`]).
+pub const GRID_RGB: [u8; 3] = [112, 120, 132];
+/// Present-overlay: X axis of the triad (CAD convention, red).
+pub const AXIS_X_RGB: [u8; 3] = [224, 92, 92];
+/// Present-overlay: Y axis of the triad (CAD convention, green).
+pub const AXIS_Y_RGB: [u8; 3] = [96, 199, 128];
+/// Present-overlay: Z axis of the triad (CAD convention, blue).
+pub const AXIS_Z_RGB: [u8; 3] = [92, 156, 232];
+/// Present-overlay: dimension/selection label text (near-white, high
+/// contrast on the dark chip and background).
+pub const LABEL_RGB: [u8; 3] = [235, 238, 244];
+/// Present-overlay: label chip backdrop (darker than the viewport bg so the
+/// text always reads).
+pub const LABEL_BG_RGB: [u8; 3] = [18, 20, 24];
+
 /// Saturation of the part palette, fixed so all hues stay bright enough.
 const PALETTE_SATURATION: f64 = 0.65;
 

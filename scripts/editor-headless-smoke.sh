@@ -113,16 +113,81 @@ drive_acceptance() {
   return $(( 1 - ok ))
 }
 
+# MEDIA-RENDERER: regenerate the committed 1080p present demo pair (world
+# grid + XYZ axes triad + dimension labels resolved from the variable set)
+# and prove it is a REAL HD render (1920x1080 raster, never an upscale) that
+# is byte-identical to the committed artifact (regenerable by this script).
+# Writes the pair into demos/editor-sketch-extrude/present-1080p-{before,after}.png.
+drive_present_demo() {
+  local demo="$1"   # committed demo dir
+  local fresh="$2"  # scratch dir for the fresh render
+  mkdir -p "$demo" "$fresh"
+  if ! cargo build --quiet -p oep-shell --example workbench 2>/dev/null; then
+    echo "FAIL: workbench example did not build" >&2
+    return 1
+  fi
+  local bin="target/debug/examples/workbench"
+  if [ ! -x "$bin" ]; then
+    bin="$(find . -path ./.worktrees -prune -o -type f -name workbench -print 2>/dev/null | head -1)"
+    [ -n "$bin" ] && [ -x "$bin" ] || { echo "FAIL: workbench binary not found" >&2; return 1; }
+  fi
+  local out rc b a
+  out="$("$bin" \
+    editor:open \
+    sk:point:0:0 sk:point:3:1 sk:point:4:4 sk:point:1:5 \
+    sk:line:p0:p1 sk:line:p1:p2 sk:line:p2:p3 sk:line:p3:p0 \
+    sk:constrain:fixed:p0:0:0 sk:constrain:horizontal:l0 sk:constrain:horizontal:l2 \
+    sk:constrain:vertical:l1 sk:constrain:vertical:l3 \
+    sk:constrain:length:l0:width sk:constrain:length:l1:height \
+    vars:set:width:80 vars:set:height:40 \
+    sk:solve feat:extrude:10 view:frame \
+    sk:render:"$fresh/present-1080p-before.png:1920:1080:present" \
+    vars:set:width:120 \
+    sk:render:"$fresh/present-1080p-after.png:1920:1080:present" 2>&1)"; rc=$?
+  if [ $rc -ne 0 ]; then
+    echo "FAIL: present drive exited $rc" >&2
+    echo "$out" >&2
+    return 1
+  fi
+  local ok=1
+  # Real HD raster + overlay composition (grid + axes triad + dim labels).
+  echo "$out" | grep -q "1920x1080 present grid=[0-9]* axes=3 labels=2" || { echo "FAIL: present overlay composition (expected 1920x1080 present grid=N axes=3 labels=2)" >&2; ok=0; }
+  # Before/after dimension edit pair: two different HD present frames.
+  b="$(echo "$out" | grep -o "present-1080p-before.png sha256=[0-9a-f]*" | grep -o '[0-9a-f]\{64\}')"
+  a="$(echo "$out" | grep -o "present-1080p-after.png sha256=[0-9a-f]*" | grep -o '[0-9a-f]\{64\}')"
+  { [ -n "$b" ] && [ -n "$a" ] && [ "$b" != "$a" ]; } || { echo "FAIL: present before/after differ ($b vs $a)" >&2; ok=0; }
+  # The on-disk bytes match what the renderer reported (sha256sum confirms).
+  local bs as
+  bs="$(sha256sum "$fresh/present-1080p-before.png" 2>/dev/null | cut -d' ' -f1)"
+  as="$(sha256sum "$fresh/present-1080p-after.png" 2>/dev/null | cut -d' ' -f1)"
+  { [ -n "$bs" ] && [ "$bs" = "$b" ] && [ -n "$as" ] && [ "$as" = "$a" ]; } || { echo "FAIL: present raster sha mismatch" >&2; ok=0; }
+  # Regenerability: the fresh render is byte-identical to the committed pair.
+  if cmp -s "$fresh/present-1080p-before.png" "$demo/present-1080p-before.png" &&
+     cmp -s "$fresh/present-1080p-after.png" "$demo/present-1080p-after.png"; then
+    :
+  else
+    echo "FAIL: committed present artifacts differ from a fresh render (regenerate)" >&2
+    ok=0
+  fi
+  cp "$fresh/present-1080p-before.png" "$demo/present-1080p-before.png"
+  cp "$fresh/present-1080p-after.png" "$demo/present-1080p-after.png"
+  echo "$out" > "$fresh/present-trace.txt"
+  echo "$b" "$a" > "$fresh/present-before-after.sha256"
+  return $(( 1 - ok ))
+}
+
 # --- docs leg (always runs, docker-free) -------------------------------------
 DOCS_OK=true
 for f in "demos/editor-sketch-extrude/manifest.json" \
          "demos/editor-sketch-extrude/edpart.step" \
+         "demos/editor-sketch-extrude/present-1080p-before.png" \
+         "demos/editor-sketch-extrude/present-1080p-after.png" \
          "workstreams/modeler/editor/interactive-shell.md"; do
   [ -f "$f" ] || { echo "missing $f"; DOCS_OK=false; }
 done
-grep -q "help-index-version: 1.2.0" docs/re-notes/oep-workbench-help-index.md || DOCS_OK=false
+grep -q "help-index-version: 1.3.0" docs/re-notes/oep-workbench-help-index.md || DOCS_OK=false
 if $DOCS_OK; then
-  row "DOCS" "docs" "PASS" "demo manifest + STEP + workstream doc present; help index at 1.2.0"
+  row "DOCS" "docs" "PASS" "demo manifest + STEP + present HD pair + workstream doc present; help index at 1.3.0"
 else
   row "DOCS" "docs" "FAIL" "committed demo/doc artifacts missing"
 fi
@@ -133,12 +198,22 @@ command -v cargo >/dev/null 2>&1 && CARGO_OK=true
 if $SELFCHECK; then
   row "DRIVE-A" "drive-A" "SKIP" "no-host (CI-safe degraded mode)"
   row "DRIVE-B" "drive-B" "SKIP" "no-host (CI-safe degraded mode)"
+  row "PRESENT-A" "present-A" "SKIP" "no-host (CI-safe degraded mode)"
 elif $CARGO_OK; then
   TMP="$(mktemp -d)"
   if drive_acceptance "$TMP"; then
     row "DRIVE-A" "drive-A" "PASS" "full acceptance path on machine A (U1): solve -> extrude -> live edit -> STEP + reimport"
   else
     row "DRIVE-A" "drive-A" "FAIL" "acceptance drive failed (trace at $TMP/trace.txt)"
+  fi
+
+  # MEDIA-RENDERER: real 1080p present frame (grid + axes triad + dimension
+  # labels), before/after dimension-edit pair, byte-identical to the committed
+  # demo artifact (regenerable by this script).
+  if drive_present_demo "demos/editor-sketch-extrude" "$TMP/present"; then
+    row "PRESENT-A" "present-A" "PASS" "1920x1080 present render regenerated: grid + axes=3 + dims labels; committed pair byte-identical"
+  else
+    row "PRESENT-A" "present-A" "FAIL" "1080p present demo drive failed"
   fi
 
   if $DRIVE_ONLY; then

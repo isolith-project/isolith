@@ -85,9 +85,36 @@ the oep-viewer camera/render/pick (P6-M5), and the oep-shell command surface
   `vars:set`, `feat:extrude`, `feat:revolve`, `feat:recompute`, `view:frame`,
   `view:orbit`, `view:zoom`, `view:pan`, `view:pick`, `export:step`, `props`,
   `undo`, `redo`). Every command is registered in the single-source command
-  metadata (`crates/oep-shell/src/commands.rs`, version 1.2.0), the committed
+  metadata (`crates/oep-shell/src/commands.rs`, version 1.3.0), the committed
   help index is regenerated from it, and both drift-guard tests (Rust +
   Python) cover every command. Accessibility checklist widened to WB-A11Y-10.
+
+## Present render (MEDIA-RENDERER follow-on)
+
+The default viewport render is a deterministic 640x480 CPU raster. To lift the
+media-package quality ceiling the viewport gained a present mode that is a
+REAL render, never an upscale:
+
+- **Configurable resolution.** `sk:render:PATH[:WIDTH:HEIGHT][:present]`
+  renders at an explicit size (any size, e.g. `:1920:1080`). Without explicit
+  size the session renders at its configured resolution: the config default
+  is 640x480, overridable per session via the `OEP_VIEWPORT_WIDTH` /
+  `OEP_VIEWPORT_HEIGHT` environment variables. Determinism and the committed
+  goldens are unchanged: a plain `sk:render:PATH` is byte-identical to the
+  pre-MEDIA-RENDERER output (verified against the recorded demo hashes).
+- **Present overlays**, off by default, forced by the trailing `present`
+  token, drawn into the same raster: a world grid on the sketch plane
+  (spacing derived from the model extent), an XYZ axes triad through the
+  model origin (X red, Y green, Z blue, fixed on-screen arm length), and
+  screen-space dimension labels sourced from the REAL resolved variable set
+  (e.g. `WIDTH = 80.000`) plus the current selection id, rendered with a
+  dependency-free deterministic 5x7 font on a dark chip.
+- **Committed artifacts.** `demos/editor-sketch-extrude/present-1080p-before.png`
+  and `present-1080p-after.png` are the real 1920x1080 present render pair
+  for the sketch-extrude demo (before and after the width 80 -> 120 variable
+  edit). They are byte-regenerable: `scripts/editor-headless-smoke.sh`
+  re-drives them and asserts byte-identity with the committed pair, so the
+  committed HD frames cannot drift from the live binary.
 
 ## Honesty contract
 

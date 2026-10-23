@@ -216,6 +216,84 @@ fn acceptance_sketch_constrain_extrude_edit_export_step() {
 }
 
 #[test]
+fn render_hd_is_a_real_render_not_an_upscale() {
+    let mut session = EditorSession::new();
+    build_rectangle(&mut session);
+    session.solve().unwrap();
+    session.extrude(DimExpr::Literal(10.0)).unwrap();
+    session.frame();
+    let dir = std::env::temp_dir().join(format!("oep-editor-hd-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).unwrap();
+    let hd = dir.join("hd-before.png");
+    let r = session
+        .render_sized(hd.to_str().unwrap(), Some(1920), Some(1080), false)
+        .unwrap();
+    assert_eq!(r.width, 1920, "real 1920-wide raster");
+    assert_eq!(r.height, 1080, "real 1080-tall raster");
+    assert!(!r.present);
+    assert_eq!(r.grid_lines, 0);
+    assert_eq!(r.axis_arms, 0);
+    assert_eq!(r.label_count, 0);
+    // NOTE: the real determinism/golden guard for the default path is the
+    // recorded 640x480 sha256 in demos/editor-sketch-extrude/manifest.json,
+    // asserted byte-for-byte by the pytest drive; here we only prove the HD
+    // path reports real dimensions.
+}
+
+#[test]
+fn present_render_sources_labels_from_the_variable_set() {
+    let mut session = EditorSession::new();
+    build_rectangle(&mut session);
+    session.solve().unwrap();
+    session.extrude(DimExpr::Literal(10.0)).unwrap();
+    session.frame();
+    let dir = std::env::temp_dir().join(format!("oep-editor-present-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).unwrap();
+
+    // Present render draws grid + triad + the two driven dimension labels.
+    let before = dir.join("present-before.png");
+    let r = session
+        .render_sized(before.to_str().unwrap(), Some(1280), Some(720), true)
+        .unwrap();
+    assert!(r.present);
+    assert_eq!(r.width, 1280);
+    assert_eq!(r.height, 720);
+    assert!(r.grid_lines > 0, "world grid segments drawn");
+    assert_eq!(r.axis_arms, 3, "XYZ axes triad drawn");
+    assert_eq!(
+        r.label_count, 2,
+        "width + height labels from the variable set"
+    );
+
+    // Selection adds a label line (sourced from the real selection state).
+    // Picking is done through the session viewport, so aim at its centre and
+    // render the present frame at the same size.
+    session.select_at(320.0, 240.0);
+    let selected = dir.join("present-selected.png");
+    let r2 = session
+        .render_sized(selected.to_str().unwrap(), None, None, true)
+        .unwrap();
+    assert_eq!(r2.label_count, 3, "selection id becomes a third label");
+
+    // Editing the variable moves the solid AND the labels: the present frame
+    // changes (same overlay composition, different raster).
+    session.set_var("width", 120.0).unwrap();
+    let after = dir.join("present-after.png");
+    let r3 = session
+        .render_sized(after.to_str().unwrap(), Some(1280), Some(720), true)
+        .unwrap();
+    assert_eq!(r3.label_count, 3);
+    assert_eq!(r3.axis_arms, 3);
+    assert!(r3.grid_lines > 0);
+    assert_ne!(
+        r2.sha256, r3.sha256,
+        "the variable edit must move the present frame (solid + labels)"
+    );
+
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
+#[test]
 fn camera_orbit_zoom_pan_are_deterministic() {
     let mut session = EditorSession::new();
     session.frame();

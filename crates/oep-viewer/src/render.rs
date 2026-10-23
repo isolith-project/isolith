@@ -18,6 +18,7 @@
 
 use crate::camera::Camera;
 use crate::clip::ClipPlane;
+use crate::overlay;
 use crate::scene::{Primitive, Scene};
 use crate::theme;
 use oep_geo::math::{Mat4, Vec3};
@@ -168,6 +169,171 @@ pub fn render(
         draw_wire(&mut img, seg, &world_to_view, &vp, color);
     }
     img
+}
+
+/// Which overlays a [`render_present`] call draws, and what data feeds them.
+#[derive(Debug, Clone, Default)]
+pub struct PresentOptions {
+    /// Draw the world grid on the sketch plane (Z=0), spaced from the model.
+    pub grid: bool,
+    /// Draw the XYZ axes triad through the projected model origin.
+    pub axes: bool,
+    /// Screen-space label lines (dimension values from the variable set and
+    /// the current selection id), drawn on a dark chip in the top-left.
+    pub labels: Vec<String>,
+}
+
+/// The rendered present-mode frame plus the overlay composition counts, so
+/// callers can report (and tests can assert) exactly what was drawn.
+#[derive(Debug, Clone)]
+pub struct PresentFrame {
+    /// The composited RGBA raster.
+    pub img: RgbaImage,
+    /// Number of world grid segments drawn.
+    pub grid_lines: usize,
+    /// Number of axis arms drawn (0 or 3).
+    pub axis_arms: usize,
+    /// Number of label lines drawn.
+    pub labels: usize,
+}
+
+/// Render `scene` at `width`x`height` and composite the present-mode viewport
+/// overlays (grid, axes triad, labels) into the SAME raster.
+///
+/// The base render is byte-identical to [`render`] with the same inputs; the
+/// overlays are composited afterward. Grid spacing is derived from the model
+/// bounds with a deterministic 1/2/5 step; label text is rendered with the
+/// crate's dependency-free 5x7 font. Deterministic end-to-end, so an HD
+/// present frame is byte-reproducible and safe to commit as a regenerable
+/// demo artifact.
+pub fn render_present(
+    scene: &Scene,
+    cam: &Camera,
+    clips: &[ClipPlane],
+    width: u32,
+    height: u32,
+    opts: &PresentOptions,
+) -> PresentFrame {
+    let mut img = render(scene, cam, clips, width, height);
+    let aspect = width as f64 / height as f64;
+    let world_to_view = cam.view_matrix();
+    let vp = cam.view_projection(aspect);
+    let opacity = 255u8;
+    let grid_color = theme::GRID_RGB;
+    let mut grid_lines = 0usize;
+    let mut axis_arms = 0usize;
+
+    if opts.grid {
+        // Extent from the model bounds on the sketch plane (X and Y), padded
+        // so the grid reads as a surround, not a tight cage.
+        let raw_extent = scene
+            .bounds
+            .map(|b| {
+                [
+                    b.min.x.abs().max(b.max.x.abs()),
+                    b.min.y.abs().max(b.max.y.abs()),
+                ]
+            })
+            .unwrap_or([100.0, 100.0]);
+        let extent = raw_extent.into_iter().fold(1.0f64, f64::max);
+        let spacing = overlay::nice_spacing(extent / 4.0);
+        let segs = overlay::grid_segments(extent * 1.3, spacing);
+        grid_lines = segs.len();
+        for seg in &segs {
+            draw_wire(
+                &mut img,
+                *seg,
+                &world_to_view,
+                &vp,
+                [grid_color[0], grid_color[1], grid_color[2], opacity],
+            );
+        }
+    }
+    if opts.axes {
+        let origin = scene
+            .bounds
+            .map(|b| Vec3::new(0.0, 0.0, b.min.z.min(0.0)))
+            .unwrap_or_else(Vec3::zero);
+        // Anchor at the projected origin, clamped into the frame.
+        let proj_origin = to_px(world_to_view.transform_point(&origin), &vp, width, height);
+        let (ax, ay) = proj_origin.unwrap_or((0.0, 0.0));
+        let ax = ax.clamp(8.0, width.saturating_sub(8) as f64);
+        let ay = ay.clamp(8.0, height.saturating_sub(8) as f64);
+        let arm_px = (width.min(height) as f64 * 0.07).max(24.0);
+        let arm_world = scene
+            .bounds
+            .map(|b| b.sphere_radius())
+            .unwrap_or(10.0)
+            .max(1e-3);
+        let axes = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]];
+        let colors = [theme::AXIS_X_RGB, theme::AXIS_Y_RGB, theme::AXIS_Z_RGB];
+        let labels = ["X", "Y", "Z"];
+        for (i, axis) in axes.iter().enumerate() {
+            let p = origin.add(&Vec3::new(axis[0], axis[1], axis[2]).mul(arm_world));
+            let Some(pp) = to_px(world_to_view.transform_point(&p), &vp, width, height) else {
+                continue;
+            };
+            let anchor = proj_origin.unwrap_or((0.0, 0.0));
+            let (dx, dy) = (pp.0 - anchor.0, pp.1 - anchor.1);
+            let len = (dx * dx + dy * dy).sqrt();
+            if len < 1e-6 {
+                continue;
+            }
+            let (ux, uy) = (dx / len, dy / len);
+            let (ex, ey) = (ax + ux * arm_px, ay + uy * arm_px);
+            rasterize_line(
+                &mut img,
+                ax,
+                ay,
+                ex,
+                ey,
+                [colors[i][0], colors[i][1], colors[i][2], opacity],
+            );
+            // Axis letter at the tip, offset a little past it.
+            let (tx, ty) = (ex + ux * 3.0, ey + uy * 3.0);
+            let c = [colors[i][0], colors[i][1], colors[i][2], opacity];
+            overlay::draw_text(&mut img, tx.round() as i64, ty.round() as i64, labels[i], c);
+            axis_arms += 1;
+        }
+    }
+    let label_color = theme::LABEL_RGB;
+    let label_bg = theme::LABEL_BG_RGB;
+    let label_n = opts.labels.len();
+    if label_n > 0 {
+        overlay::draw_label_chip(
+            &mut img,
+            12,
+            12,
+            &opts.labels,
+            [label_color[0], label_color[1], label_color[2], opacity],
+            [label_bg[0], label_bg[1], label_bg[2], opacity],
+        );
+    }
+    PresentFrame {
+        img,
+        grid_lines,
+        axis_arms,
+        labels: label_n,
+    }
+}
+
+/// Project a view-space point to pixel coordinates (top-left origin).
+fn to_px(view: oep_geo::math::Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
+    let clip = vp.transform_point(&view);
+    let w = clip_w(vp, &view);
+    if w.abs() < 1e-9 {
+        return None;
+    }
+    let nx = clip.x / w;
+    let ny = clip.y / w;
+    let nz = clip.z / w;
+    if nz < -1.0 || nz > 1.0 {
+        return None;
+    }
+    Some((
+        (nx * 0.5 + 0.5) * width as f64,
+        (0.5 - ny * 0.5) * height as f64,
+    ))
 }
 
 /// The world-space polygon of one indexed mesh triangle.

@@ -20,8 +20,9 @@
 //! for assistive tooling and agent automation.
 
 /// Version tag embedded in every generated help artifact and asserted by the
-/// drift-guard test. Bump when the help surface changes materially.
-pub const HELP_INDEX_VERSION: &str = "1.2.0";
+/// drift-guard test. Bump when the help surface changes materially (1.3.0:
+/// MEDIA-RENDERER adds optional WIDTH:HEIGHT and present overlays to sk:render).
+pub const HELP_INDEX_VERSION: &str = "1.3.0";
 
 /// Label of the surface this index documents (used in the JSON and markdown
 /// artifacts).
@@ -479,20 +480,45 @@ pub static COMMANDS: &[CommandSpec] = &[
     CommandSpec {
         name: "sk:render",
         token: "sk",
-        usage: "sk:render:PATH",
+        usage: "sk:render:PATH[:WIDTH:HEIGHT][:present]",
         category: "editor",
-        summary: "Render the current viewport (solid + sketch overlay) to PPM or PNG",
+        summary:
+            "Render the current viewport to PPM or PNG; WIDTH:HEIGHT selects a real resolution, present adds grid/axes/label overlays",
         long_help: concat!(
             "Renders the current scene through the deterministic CPU raster to PATH. ",
-            ".ppm writes a P6 PPM, .png a PNG. Prints the image SHA-256 so two ",
-            "consecutive renders prove whether the model moved."
+            ".ppm writes a P6 PPM, .png a PNG. The resolution is a REAL render, ",
+            "never an upscale: without WIDTH:HEIGHT the session's configured ",
+            "resolution is used (config default 640x480, overridable for the ",
+            "session via the OEP_VIEWPORT_WIDTH / OEP_VIEWPORT_HEIGHT ",
+            "environment variables). Appending 'present' forces the present-mode ",
+            "overlays into the same raster: the world grid on the sketch plane, ",
+            "the XYZ axes triad, and the dimension/selection labels sourced from ",
+            "the resolved variable set (e.g. width = 80.000) and the current ",
+            "selection. Prints the image SHA-256 so two consecutive renders prove ",
+            "whether the model moved."
         ),
-        args: &[ArgSpec {
-            name: "PATH",
-            required: true,
-            help: "Output image path (.ppm or .png)",
-        }],
-        examples: &["sk:render:before.png", "vars:set:width:120", "sk:render:after.png"],
+        args: &[
+            ArgSpec {
+                name: "PATH",
+                required: true,
+                help: "Output image path (.ppm or .png); must not contain ':'",
+            },
+            ArgSpec {
+                name: "WIDTH",
+                required: false,
+                help: "Render width in pixels (a real render at that resolution)",
+            },
+            ArgSpec {
+                name: "HEIGHT",
+                required: false,
+                help: "Render height in pixels",
+            },
+        ],
+        examples: &[
+            "sk:render:before.png",
+            "sk:render:before.png:1920:1080",
+            "sk:render:before.png:1920:1080:present",
+        ],
     },
     CommandSpec {
         name: "sk:props",
