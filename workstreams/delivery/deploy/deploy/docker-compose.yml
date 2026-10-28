@@ -38,7 +38,7 @@ name: isolith
 services:
   pdm:
     build:
-      context: ../../..
+      context: ../../../..
       dockerfile: workstreams/delivery/deploy/deploy/Dockerfile
       args:
         OEP_VERSION: ${OEP_VERSION:-0.1.0}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install on a NAS or homelab server - Open Engineering Platform</title>
+<meta name="description" content="Host the Isolith PDM, viewer and docs on your own NAS (Synology Container Manager, QNAP, TrueNAS, Unraid) or any Linux server with docker compose. Pull the GHCR image, run one compose file, all health checks green.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="install-on-nas.html">Install on a NAS</a>
+      <a href="format-matrix.html">Format matrix</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Guide 3 of 4</p>
+  <h1>Install on a NAS or homelab server</h1>
+  <p class="lead">
+    Isolith's server component (PDM, P6 preview viewer, docs, workers) is one
+    Docker image, <code>isolith/oep-stack</code>, published to GHCR per
+    release. You host it on <em>your own</em> NAS or server - Synology Container
+    Manager, QNAP Container Station, TrueNAS, Unraid, or plain
+    <code>docker compose</code> on any Linux host. There is no Docker Hub, no
+    forced cloud account, and nothing phones home.
+  </p>
+  <p class="note"><strong>What this is not:</strong> this page is for
+    <em>you</em> hosting Isolith on <em>your</em> hardware. It has nothing to do
+    with the Isolith team's own infrastructure and does not change any of their
+    policies.</p>
+
+  <h2>1. Prerequisites</h2>
+  <ul>
+    <li>Docker (Container Manager on Synology, Container Station on QNAP, or
+        Docker Engine + Compose v2 on Linux).</li>
+    <li>About 220 MB free disk for the image, plus space for your vault blobs.</li>
+    <li>1 GB free RAM is far more than the whole stack needs (it idles under
+        30 MB across PDM + viewer + docs).</li>
+    <li><strong>Architecture:</strong> the image runs on <code>arm64</code>
+        (build-verified and run-verified on the delivery reference host) and is
+        built for <code>amd64</code> by the same Dockerfile. See
+        <code>workstreams/delivery/deploy/nas-deployment.md</code> section 2 for
+        the honest status if your NAS is x86_64.</li>
+  </ul>
+
+  <h2>2. Plain docker compose (any Linux host)</h2>
+  <pre><code># 1. get the compose file and env template
+curl -O https://raw.githubusercontent.com/isolith/isolith/main/workstreams/delivery/deploy/deploy/docker-compose.nas.yml
+curl -O https://raw.githubusercontent.com/isolith/isolith/main/workstreams/delivery/deploy/deploy/.env.nas.example
+cp .env.nas.example .env
+
+# 2. (optional) to serve the team on the LAN, edit .env: set OEP_*_BIND to your
+#    NAS LAN IP (default is 127.0.0.1 = LAN-off until you publish it)
+
+# 3. pull the image and start the stack
+docker compose -f docker-compose.nas.yml pull
+docker compose -f docker-compose.nas.yml up -d
+
+# 4. wait until every service is healthy
+docker compose -f docker-compose.nas.yml ps   # all four show (healthy)</code></pre>
+
+  <h2>3. Synology Container Manager (or QNAP / TrueNAS / Unraid)</h2>
+  <ol>
+    <li>In Container Manager, open <strong>Project</strong> &rarr;
+        <strong>Create</strong>.</li>
+    <li>Name the project, e.g. <code>isolith</code>.</li>
+    <li><strong>Path:</strong> point it at a folder you created that holds
+        <code>docker-compose.nas.yml</code> and <code>.env</code> (copy the two
+        files from section 2 into that folder first).</li>
+    <li>Container Manager reads the compose file, creates the
+        <code>pdm_data</code> and <code>viewer_data</code> volumes, and starts
+        the four services.</li>
+    <li>Open the project's <strong>Log</strong> / <strong>Container</strong>
+        tabs and confirm all four containers report
+        <code>healthy</code> (the health checks run every 5s).</li>
+    <li>For TLS, use Container Manager's or DSM's built-in reverse proxy in
+        front of ports 8787/8790/8792 - details in the admin guide and
+        <code>nas-deployment.md</code> section 4.</li>
+  </ol>
+  <p>The compose-equivalent view of a green stack (real output from the
+     delivery reference host):</p>
+  <p><img src="assets/images/07-nas-compose-equivalent.png"
+          alt="docker compose ps showing all four Isolith containers healthy, with health check curls and GHCR image refs" style="max-width:100%;border:1px solid #ddd;border-radius:6px;"></p>
+
+  <h2>4. What you get, and the health contract</h2>
+  <table>
+    <thead><tr><th>Service</th><th>Binary</th><th>Host address (default)</th><th>Health surface</th></tr></thead>
+    <tbody>
+      <tr><td><code>pdm</code></td><td><code>oep-pdm</code></td><td><code>127.0.0.1:8787</code></td><td><code>GET /api/v1/health</code></td></tr>
+      <tr><td><code>viewer</code></td><td><code>oep-web</code></td><td><code>127.0.0.1:8790</code></td><td><code>GET /</code> (200)</td></tr>
+      <tr><td><code>p2p</code></td><td><code>oep-opsdash</code></td><td><code>127.0.0.1:8080</code></td><td><code>GET /healthz</code></td></tr>
+      <tr><td><code>docs</code></td><td><code>oep-docs</code></td><td><code>127.0.0.1:8792</code></td><td><code>GET /healthz</code></td></tr>
+    </tbody>
+  </table>
+  <p>
+    PDM authorization is <strong>on by default</strong> (the REST v1 surface
+    requires the identity headers); the stack never adds
+    <code>--no-auth</code>, so your vault is not left open on the LAN.
+  </p>
+
+  <h2>5. Back it up and upgrade</h2>
+  <p>
+    Back up the named volume <code>pdm_data</code> (the whole vault: metadata,
+    content-addressed blobs, audit chain) plus your <code>.env</code>; put the
+    copies on a different physical disk/volume set. For upgrades: edit
+    <code>OEP_VERSION</code> in <code>.env</code>, <code>docker compose pull</code>,
+    then <code>up -d</code>. To roll back, keep the previous version in
+    <code>.env</code> and restart - the volume is untouched. Full details:
+    <code>workstreams/delivery/deploy/nas-deployment.md</code> sections 5-6.
+  </p>
+
+  <p><a href="format-matrix.html">Next: the honest format capability matrix</a></p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Open Engineering Platform documentation - version 0.1.0. Sourced from the
+    delivery stack documentation and the DOCKER-NAS-DEPLOYMENT card
+    (t_82f606dd).
+  </div>
+</footer>
+</body>
+</html>

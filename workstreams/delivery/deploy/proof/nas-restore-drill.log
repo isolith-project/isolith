@@ -1,0 +1,59 @@
+NAS RESTORE DRILL LOG - DOCKER-NAS-DEPLOYMENT (t_82f606dd)
+Date: 2026-10-27
+Host: U1 (promaxgb10-83f1, aarch64) - a permitted test host, NOT Don's NAS.
+Goal: prove one restore from the backup on a clean host (fresh persist dir,
+      fresh oep-pdm binary), without violating decision #9 producer rules.
+
+--- 0. Seed the live vault (running stack container isolith-pdm) ---
+$ curl -X POST /api/v1/items -H "X-Oep-User: nas-drill" -H "X-Oep-Roles: admin" \
+       -H "X-Oep-Tenant: Team-NAS" -d '{"kind":"part","name":"NAS-drill-part"}'
+-> {"id":"item-0-f03cab68123b", ...}
+$ curl -X POST /api/v1/items/item-0-f03cab68123b/revisions ... (csv file, base64)
+-> {"number":"1", "files":[{"filename":"nas-drill.csv","blob_sha256":"bc7d34068dccaf7f701d696f22cd04cb9fc7dbf7760440121599b241f03bfd32"}]}
+$ curl /api/v1/audit/verify -> {"ok":true,"count":2,"head_hash":"d15bc7bf3bed3c8146d0955a763832c1a94416a4ca04fc4f7b925a809b988de7"}
+
+--- 1. Snapshot the live vault from the named volume (pdm_data) ---
+$ docker run --rm -v isolith_pdm_data:/data:ro -v /tmp/nas-live:/dump alpine sh -c 'cp -a /data/. /dump/'
+/tmp/nas-live/{store.json, blobs/bc7d34..., audit/audit.log, audit/audit.head}
+
+--- 2. Run the canonical backup producer (decision #9 guard) ---
+$ bash scripts/backup/vault-backup.sh /tmp/nas-live /tmp/nas-bk NASDRILL-101027
+[vault-backup] snapshotting blobs ...
+[vault-backup]   1 blobs copied
+[vault-backup] verifying content-addressed blob names ...
+[vault-backup]   1 blobs self-verified
+[vault-backup] writing manifest.sha256 ...
+[vault-backup]   seq=1 blobs=1
+[vault-backup] verifying manifest ... verification OK
+[vault-backup] DONE
+
+--- 3. Producer refuses NAS targets (decision #9 intact) ---
+$ bash scripts/backup/vault-backup.sh /tmp/nas-live /mnt/nas/backup-test
+[vault-backup] FAIL: NAS is not an approved backup target (decision #9)
+
+--- 4. Restore into a FRESH persist dir with a FRESH oep-pdm on a clean host ---
+$ bash scripts/backup/vault-restore-check.sh /tmp/nas-bk /tmp/nas-tools/oep-pdm
+[restore-check] backup root : /tmp/nas-bk/isolith-vault-backup
+[restore-check] restore dir : /home/r1a/.hermes/cache/scratch/tmp.xxx   (fresh)
+[restore-check] verifying manifest integrity ... manifest OK
+[restore-check] restoring store.json + blobs + audit ...
+[restore-check] booting oep-pdm on restored vault (port 51727) ...
+[restore-check] health : ok
+[restore-check] health json: {"status":"ok","service":"oep-pdm","version":"1.0.0"}
+[restore-check] restored item count: 1
+[restore-check] audit chain ok (2 entries)
+[restore-check] real read item-0-f03cab68123b rev1: \
+    expected=bc7d34068dccaf7f701d696f22cd04cb9fc7dbf7760440121599b241f03bfd32 \
+    actual=bc7d34068dccaf7f701d696f22cd04cb9fc7dbf7760440121599b241f03bfd32 size=19
+[restore-check] real vault read round-trips against the backup manifest
+[restore-check] PASS: restore round-trips on this U1/VM host
+
+--- Result ---
+PASS. A restore from the checksummed backup onto a clean persist dir with a
+fresh binary boots healthy, serves the real vault, verifies the audit chain,
+and the served file bytes hash back to a blob named in the backup manifest.
+Decision #9 producer rules hold (NAS target refused). Note: this restore-check
+was updated during this card to carry the P11-T03 RBAC identity headers on the
+authenticated reads (items/audit/file) so the drill passes against the
+auth-on-by-default boundary that P2T-04-AZ fixed - the health endpoint stays
+public for the compose healthchecks.
