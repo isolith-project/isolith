@@ -56,6 +56,10 @@ ALLOWED_DIR_PREFIXES = (
 ALLOWED_FILES = (
     # The charter carries the retirement statement.
     "charter.md",
+    # The competitive parity research document records the identity-conformance
+    # audit finding (retired KW- prefix) and its resolution; it is the docs-side
+    # retirement record and must be able to name the codename it documents.
+    "docs/competitive/parity-2026-10.md",
     # The trademark acceptance test uses the retired codename as its control
     # term to prove the collision-detection method is sensitive.
     "tests/test_brand_trademark_acceptance.py",
