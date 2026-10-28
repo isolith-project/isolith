@@ -1,0 +1,36 @@
+{
+  "purpose": "Isolith public-identity handle and name availability evidence",
+  "checked_at_utc": "2026-10-28T06:24:42.140535+00:00",
+  "checked_by": "kanban t_a15e108f (NAME-AND-ASSET-RESERVATIONS)",
+  "method": {
+    "github": "api.github.com/users/<h> and /orgs/<h>; a handle is free only when BOTH return 404 (users and orgs share the GitHub namespace). Base control: api.github.com/users/isolith = 200 (User 'Isolith', created 2014-11-24), proving the method catches a taken handle.",
+    "crates_io": "https://crates.io/api/v1/crates/<h>; 404 = crate does not exist = free.",
+    "npm": "https://registry.npmjs.org/<h>; 404 = free.",
+    "pypi": "https://pypi.org/pypi/<h>/json; 404 = free.",
+    "dockerhub": "https://hub.docker.com/v2/users/<h>/ and /v2/orgs/<h>/; 404 on both = namespace free. NOTE: /v2/repositories/<h> answers 200-empty even for a free namespace, so /users and /orgs are the authoritative probes for a namespace claim.",
+    "ghcr": "GHCR namespaces are owned by GitHub accounts: ghcr.io/<handle> is available iff the GitHub account/org <handle> is available. No independent GHCR availability registry exists; the GitHub user/org probe is the binding check for ghcr.io/<handle>/oep-stack."
+  },
+  "results": {
+    "isolith-cad":      {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolith-project":  {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "getisolith":       {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolithio":        {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolithdev":       {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolith-app":      {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolithhq":        {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolithmesh":      {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolithapp":       {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"},
+    "isolithmod":       {"github": "free", "crates_io": "free", "npm": "free", "pypi": "free", "dockerhub": "free", "ghcr": "follows github"}
+  },
+  "control": {
+    "base_handle": "isolith",
+    "github": "TAKEN (User 'Isolith', created 2014-11-24T16:15:37Z, 2 public repos, no name/bio/blog)",
+    "dockerhub_base_isolith": "free (404 on /v2/users/isolith/ and /v2/orgs/isolith/)"
+  },
+  "summary": [
+    "All ten candidate handles are free on GitHub (user and org), crates.io, npm, PyPI and Docker Hub at the recorded timestamp.",
+    "The exact handle 'isolith' is taken on GitHub only (a dormant 2014 User account); it is free on crates.io, npm, PyPI and Docker Hub.",
+    "GHCR image paths (ghcr.io/<handle>/oep-stack) are available exactly when the GitHub account/org is available, so the GitHub probe is the binding pre-check for the image path.",
+    "No reservation was executed from this evidence pass. Publishing a 0.0.0 placeholder crate, claiming an npm name, or holding a PyPI name each require a registry account/token which is not present on this host, and require Don's chosen handle first."
+  ]
+}
