@@ -1,0 +1,30 @@
+{
+  "repro": "LICENSE-FILES-AND-BOUNDARY deliberate-failure: a tree that violates the per-crate boundary, the dependency allow-list, or the root-file set MUST fail scripts/licensing-check.py (exit 1)",
+  "timestamp": "2026-10-28T05:17:18Z",
+  "legs": [
+    {
+      "id": "crate-boundary",
+      "seed": "crates/oep-cgr/Cargo.toml license flipped Apache-2.0 -> AGPL-3.0",
+      "expected_rc": 1,
+      "gate_alive": true
+    },
+    {
+      "id": "dependency-allowlist",
+      "seed": "isolith-fixture-gpl@0.9.9 with license GPL-3.0 injected into Cargo.lock + dependency-licenses.json",
+      "expected_rc": 1,
+      "gate_alive": true
+    },
+    {
+      "id": "root-files",
+      "seed": "LICENSE-AGPL removed from the tree",
+      "expected_rc": 1,
+      "gate_alive": true
+    }
+  ],
+  "boundary_map": {
+    "rows": 32,
+    "apache": 20,
+    "agpl": 12
+  },
+  "result": "PASS (the check failed on every seeded tree; the gate is alive)"
+}

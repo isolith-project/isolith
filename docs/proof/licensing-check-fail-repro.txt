@@ -1,0 +1,8 @@
+LICENSE-FILES-AND-BOUNDARY deliberate-failure repro
+timestamp: 2026-10-28T05:17:18Z
+
+Every seeded tree MUST fail scripts/licensing-check.py (exit 1):
+  crate-boundary     : oep-cgr declared AGPL-3.0 vs map Apache-2.0
+  dependency-allowlist: GPL-3.0 dependency injected into the lock
+  root-files         : LICENSE-AGPL removed
+Result: PASS - the gate failed on every seeded tree.
