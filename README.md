@@ -100,3 +100,6 @@ classified per release.
 - Docs site (getting started, admin guide, format matrix):
   `docs-site/index.html`
 - Repo layout: `docs/layout.md`
+- Competitive parity matrix (2026-10, the feature-for-feature deep dive
+  against the clone wave and incumbents): `docs/competitive/parity-2026-10.md`,
+  refreshed quarterly per `docs/competitive/README.md`

@@ -19,6 +19,18 @@ read to judge whether Isolith covers their main job. Every named capability
 is tracked with its CATIA status, SolidWorks status, cost class, owning
 workstream, and a current-state token.
 
+**Why is a row planned?** Each row's `planned` status is a decision about the
+competitive landscape, not a preference: `docs/competitive/parity-2026-10.md`
+is the feature-for-feature evidence against the 2026-10 clone wave
+(SolidCraft, Purrametric, CADCraft, Open CAD Studio, MitCad) and the
+incumbent bar (Fusion, SOLIDWORKS, CATIA), capped by this register. Read it
+before re-sequencing a row or answering "why is this planned and not
+building".
+
+The competitive copy is refreshed quarterly
+(`docs/competitive/README.md`), so the matrix stays the standing answer to
+that question between refreshes.
+
 The machine-checkable copy is `docs/scope-register.json`; this document is the
 human rendering and must stay in sync with it. The drift guard
 (`python/oep_tooling/scope_register_check.py`, acceptance
