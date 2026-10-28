@@ -47,6 +47,11 @@ pub mod assem;
 /// (std-only, so the surface needs no third-party crate on this lane).
 pub mod sha256;
 
+/// The startup update-check surface (decision #20): the workbench calls
+/// [`update::run_startup_check`] once at launch and renders a non-modal
+/// notice when an update is available. Advisory only.
+pub mod update;
+
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P7-SHELL";
 

@@ -27,6 +27,9 @@ oep-geo = { path = "../oep-geo" }
 # oep-viewer, both over the same canonical oep-geo model.
 oep-sketch = { path = "../oep-sketch" }
 oep-viewer = { path = "../oep-viewer" }
+# The advisory update-check surface (decision #20): the workbench calls
+# Probe::preflight once at startup and surfaces a non-modal notice.
+oep-update = { path = "../oep-update" }
 serde_json = "1"
 
 [dev-dependencies]

@@ -813,6 +813,16 @@ fn main() {
         std::process::exit(1);
     }
 
+    // Decision #20: run the advisory update check ONCE at startup. Log one
+    // advisory line on stderr; when an update is available print a NON-MODAL
+    // notice with version, release date and the release-notes link. Nothing
+    // here can block launch or change the exit code below.
+    let update_config = oep_update::config::resolve();
+    let update_status = oep_shell::update::run_startup_check(&update_config);
+    if let Some(notice) = oep_shell::update::render_notice(&update_status) {
+        println!("{notice}");
+    }
+
     let mut workbench = Workbench::with_local_vault();
     let mut asm: Option<AssemblySession> = None;
     let mut editor_session: Option<EditorSession> = None;
