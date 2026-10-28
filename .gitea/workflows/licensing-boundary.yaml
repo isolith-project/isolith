@@ -1,0 +1,45 @@
+# LICENSE-FILES-AND-BOUNDARY (t_fb3a286b): per-crate licence boundary + deps.
+#
+# Fails CI when the licence posture drifts from the map, so the licence is the
+# code, not prose:
+#   leg A  a crate's Cargo.toml [package].license disagrees with
+#          docs/licensing-boundary.json, or a workspace crate is absent from
+#          the map / a mapped crate does not exist
+#   leg B  docs/licensing-boundary.md drifts from the JSON map
+#   leg C  a dependency in the committed Cargo.lock has no exact
+#          name@version entry in docs/dependency-licenses.json, or its SPDX
+#          expression resolves outside the pure-permissive allow-list
+#          (a sole copyleft option, e.g. GPL-3.0 or AGPL-3.0, fails)
+#   leg D  NOTICE is not in sync with the dependency manifest (name version -
+#          licence) and drops the native OCCT component
+#   leg E  LICENSE, LICENSE-APACHE, LICENSE-AGPL or NOTICE is missing at the
+#          root, or the LICENSE index stops naming the texts
+# The check is entirely offline against committed files (tomllib, stdlib) and
+# exits 0 iff no FAIL row: the check is the evidence, not the document. The
+# --regen path (rebuild docs/dependency-licenses.json + NOTICE from cargo
+# metadata) is a maintainer action and is never run by CI.
+name: License boundary
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  licensing-boundary:
+    name: licensing-boundary
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Enforce the per-crate licence boundary and dependency allow-list
+        run: |
+          python3 scripts/licensing-check.py --repo "$PWD" --out -
+        shell: bash

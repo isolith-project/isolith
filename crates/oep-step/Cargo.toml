@@ -1,5 +1,6 @@
 [package]
 name = "oep-step"
+license = "Apache-2.0"
 description = "P4: STEP AP242/QIF/JT read lane - vendor-neutral wrapper over an OSS STEP library, mapping faceted parts onto the oep-geo native model."
 version.workspace = true
 edition.workspace = true

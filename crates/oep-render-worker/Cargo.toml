@@ -1,5 +1,6 @@
 [package]
 name = "oep-render-worker"
+license = "AGPL-3.0"
 description = "P9-M3-T01: headless oep-geo render worker - renders a real oep-geo model to a PNG image behind the P6-M5-T01 render seam, at parameterized resolution and fidelity, and registers with the P9 scheduler as render/oep-geo-render."
 version.workspace = true
 edition.workspace = true

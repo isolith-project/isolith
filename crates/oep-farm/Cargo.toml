@@ -1,5 +1,6 @@
 [package]
 name = "oep-farm"
+license = "AGPL-3.0"
 description = "P9-M4-T02: beam/farm-style checkpoint + resume for long P9 jobs - a long job survives worker eviction via durable checkpoints and resumes from the last checkpoint; resume is verified byte-equivalent to a clean run on output."
 version.workspace = true
 edition.workspace = true

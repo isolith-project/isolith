@@ -1,5 +1,6 @@
 [package]
 name = "oep-shell"
+license = "Apache-2.0"
 description = "P7: OEP modeler shell - the adopted thin own shell hosting the OEP interchange workbench command surface (P7-M2-T01) over the importer hub and the P8 PDM API contract."
 version.workspace = true
 edition.workspace = true

@@ -161,8 +161,14 @@ P11 supply-chain / release gating ships as tooling + docs, not new crates:
   Rust-first (decision 6).
 - Docs: per-workstream notes under `docs/`. `layout.md` stays in sync with the
   workspace member list.
-- License: posted per module by the P0-M2 legal pass. Coarse posture (decided
-  2026-10-15): Apache-2.0 applications/libraries, AGPL-3.0 server/PDM + P2P.
+- License: declared per crate in the `license` field of each
+  `crates/*/Cargo.toml`, fixed in the per-crate boundary map
+  `docs/licensing-boundary.md` (JSON copy `docs/licensing-boundary.json`,
+  enforced in CI by `scripts/licensing-check.py`). Full texts:
+  `LICENSE-APACHE`, `LICENSE-AGPL`; index: `LICENSE`; third-party
+  attribution: `NOTICE` (generated from Cargo.lock). Coarse posture (decided
+  2026-10-15, boundary implemented 2026-10-27): Apache-2.0
+  applications/libraries, AGPL-3.0 server/PDM + P2P.
 
 ## Reserving a new crate
 

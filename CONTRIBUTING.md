@@ -1,6 +1,6 @@
 ---
 title: Isolith Contributing Guide
-version: 1.1.0
+version: 1.2.0
 date: 2026-10-27
 status: Ratified
 owner: Isolith program (Open Engineering Platform), P0-M1 (program governance and foundations)
@@ -48,9 +48,12 @@ That appends a line like this to the commit message:
 By adding it you certify the DCO facts: you authored the contribution or have
 the right to submit it; it is original work or correctly attributed prior work;
 and it is submitted under the project license for the directory it lands in
-(the hybrid Apache-2.0 / AGPL-3.0 posture from the charter). The sign-off is a
-statement of origin and right, not a copyright assignment. You keep your
-copyright; your code stays under the same open license as everyone else's.
+(the per-crate hybrid posture fixed in `LICENSE` and
+`docs/licensing-boundary.md`: Apache-2.0 for applications and libraries,
+AGPL-3.0 for the server, the PDM, and the P2P orchestration components). The
+sign-off is a statement of origin and right, not a copyright assignment. You
+keep your copyright; your code stays under the same open license as everyone
+else's.
 
 If a commit is missing its sign-off, CI fails the status on the pull request
 and a maintainer will ask you to fix it before review. Fix it with:
@@ -189,6 +192,10 @@ not scheduled from this public-surface card.
 ## Where things live
 
 - `charter.md`       program mission, non-goals, license posture
+- `LICENSE`          license index: which license applies where
+- `LICENSE-APACHE`, `LICENSE-AGPL`  the full license texts, unmodified
+- `NOTICE`           third-party attribution, generated from `Cargo.lock`
+- `docs/licensing-boundary.md`  per-crate license boundary map (+ JSON copy)
 - `CODE_OF_CONDUCT.md`  community standards and how to report a violation
 - `SECURITY.md`      private disclosure path and supported-version policy
 - `SUPPORT.md`       what support exists and what does not
@@ -216,6 +223,11 @@ whose license does not allow contribution here.
 
 ## Change log
 
+- 1.2.0 (2026-10-27): pointed the license posture at the actual license files
+  (`LICENSE`, `LICENSE-APACHE`, `LICENSE-AGPL`, `NOTICE`) and the per-crate
+  boundary map (`docs/licensing-boundary.md`), and indexed them under "Where
+  things live"; the DCO section now references the boundary map rather than
+  the charter prose.
 - 1.1.0 (2026-10-27): added the triage rule (what gets accepted, what gets
   declined and why, the labels to use, and the weekly triage pass), indexed
   the new community files (`CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`,

@@ -1,5 +1,6 @@
 [package]
 name = "oep-geo"
+license = "Apache-2.0"
 description = "P6: Geometry core and model representation (part/body/feature/assembly/instance schema + our-own-format serde serialization)."
 version.workspace = true
 edition.workspace = true

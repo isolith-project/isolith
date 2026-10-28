@@ -1,5 +1,6 @@
 [package]
 name = "oep-sandbox"
+license = "AGPL-3.0"
 description = "P9: P2P compute lane - worker sandbox: RLIMIT CPU/RAM/disk caps + seccomp no-network-egress-by-default, escaping fails a test."
 version.workspace = true
 edition.workspace = true

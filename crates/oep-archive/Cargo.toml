@@ -1,5 +1,6 @@
 [package]
 name = "oep-archive"
+license = "Apache-2.0"
 description = "P10-M3-T02: export-all interop escape hatch - documented neutral archive (STEP/3DXML/glTF/STL geometry + JSON vault metadata) + retention/archive policy defaults."
 version.workspace = true
 edition.workspace = true

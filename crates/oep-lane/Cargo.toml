@@ -1,5 +1,6 @@
 [package]
 name = "oep-lane"
+license = "AGPL-3.0"
 description = "P9: P2P compute lane. Scheduler (P9-M2-T01): priority queue, dependency DAG, retries with backoff, dead-letter for poison jobs; lease/ack contract provides the at-least-once seam for P9-M2-T03."
 version.workspace = true
 edition.workspace = true

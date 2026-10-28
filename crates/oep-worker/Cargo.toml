@@ -1,5 +1,6 @@
 [package]
 name = "oep-worker"
+license = "AGPL-3.0"
 description = "P9: P2P compute lane - export/convert worker functions (CGR->glTF, STEP->mesh) + batch convert driver. Dogfoods P2 oep-cgr and P4 oep-step against the P8 vault."
 version.workspace = true
 edition.workspace = true

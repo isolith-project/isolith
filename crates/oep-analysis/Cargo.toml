@@ -1,5 +1,6 @@
 [package]
 name = "oep-analysis"
+license = "Apache-2.0"
 description = "Editor-spine analysis (decision #19 pull-forward): mass properties, interference/clash detection, and exploded views as Class 1 additive consumers of the canonical oep-geo model (P6)."
 version.workspace = true
 edition.workspace = true

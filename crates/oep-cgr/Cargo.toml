@@ -1,5 +1,6 @@
 [package]
 name = "oep-cgr"
+license = "Apache-2.0"
 description = "P2: CGR reader (mesh extraction + glTF/GLB export)."
 version.workspace = true
 edition.workspace = true

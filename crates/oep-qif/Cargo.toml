@@ -1,5 +1,6 @@
 [package]
 name = "oep-qif"
+license = "Apache-2.0"
 description = "P4: QIF (Quality Information Framework) MBD quality-data import/export basic cut (XML/XSD)."
 version.workspace = true
 edition.workspace = true
