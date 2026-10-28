@@ -53,8 +53,11 @@
 
   <h2>2. Plain docker compose (any Linux host)</h2>
   <pre><code># 1. get the compose file and env template
-curl -O https://raw.githubusercontent.com/isolith/isolith/main/workstreams/delivery/deploy/deploy/docker-compose.nas.yml
-curl -O https://raw.githubusercontent.com/isolith/isolith/main/workstreams/delivery/deploy/deploy/.env.nas.example
+#    SITE-REPO-URL is the single repository placeholder constant in
+#    docs-site/site.json; substitute the real address when the GitHub
+#    migration completes (no account name is invented here).
+curl -O SITE-REPO-URL/raw/main/workstreams/delivery/deploy/deploy/docker-compose.nas.yml
+curl -O SITE-REPO-URL/raw/main/workstreams/delivery/deploy/deploy/.env.nas.example
 cp .env.nas.example .env
 
 # 2. (optional) to serve the team on the LAN, edit .env: set OEP_*_BIND to your

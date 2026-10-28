@@ -52,6 +52,8 @@ PUBLIC_PAGES = [
     "format-matrix.html",
     "what-it-does-not-do.html",
     "download.html",
+    "downloads.html",
+    "install-on-nas.html",
     "releases.html",
     "license.html",
     "security.html",
