@@ -16,13 +16,19 @@ name: License boundary
 on:
   push:
   pull_request:
+# PUBLIC-REPO-HARDENING: least privilege and SHA-pinned checkout (R1/R2).
+permissions:
+  contents: read
 jobs:
   licensing-boundary:
     name: licensing-boundary
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        # actions/checkout v4 (release line the SHA pins)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Enforce the per-crate licence boundary and dependency allow-list
         run: python3 scripts/licensing-check.py --repo "$PWD" --out -
         shell: bash

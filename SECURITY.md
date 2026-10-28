@@ -1,6 +1,6 @@
 ---
 title: "Isolith Security Policy"
-version: 1.0.0
+version: 1.1.0
 date: 2026-10-27
 status: Ratified
 owner: Isolith program governance, P11 security lane (P11-T08 disclosure lane)
@@ -93,6 +93,27 @@ security findings, and reporting never implies one. We are grateful for
 responsible reports, and we will attribute findings in the pentest and
 release records when the reporter wants credit.
 
+## Verify releases: signing key
+
+Every Isolith release artifact is signed, and the key is published so a
+download can be verified by anyone who receives it.
+
+- Fingerprint: `9898A66D42D6FFD3EC5EA78278110F3ADAC1EE92`
+- Public key: `keys/oep-airgap-signing.pub.asc` in the repository.
+- Full custody, rotation and compromise procedure: `docs/release-signing.md`.
+
+Verify a release with:
+
+```sh
+gpg --import keys/oep-airgap-signing.pub.asc
+gpg --verify-options show-fingerprint --verify <file>.sig <file>
+```
+
+A signed artifact claims the release lane vouches for it. A download without
+a valid signature by the key above is not verifiable and must be treated as
+untrusted. A harness that wants to skip manual verification imports the key
+and checks the fingerprint before trusting a bundle signature.
+
 ## What backs these claims: dispositions, SBOM, export control
 
 The security posture is documented and largely machine-gated. The honest
@@ -126,6 +147,8 @@ vulnerability always goes to the private path first.
 
 ## Version history
 
+- 1.1.0 (2026-10-27): add release verification section that publishes the
+  release signing key fingerprint and the verify path (PUBLIC-REPO-HARDENING).
 - 1.0.0 (2026-10-27): first security policy. Implements the P11-T08
   disclosure lane: private path, supported versions, response expectation,
   no bug bounty, pointers to dispositions, SBOM and export-control records.

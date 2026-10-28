@@ -1,65 +1,133 @@
 # Isolith CODEOWNERS
 #
-# Policy record for P0-M1-T04 (contributor rules decision). Mirrors
-# docs/layout.md: one owner row per Cargo workspace workstream plus the
-# governance directories, and a catch-all default so nothing falls between
-# rows. Rules are Gitea regexp patterns (golang regexp); last match for a file
-# wins, and rules are composable across a multi-path pull request.
+# Review policy record for P0-M1-T04 (contributor rules) as extended by the
+# PUBLIC-REPO-HARDENING baseline: one owner row per Cargo workspace
+# workstream plus the governance directories, a catch-all default so nothing
+# falls between rows, and explicit rows for the release lane, the governance
+# records and the brand assets.
 #
-# Wave 1 is single-maintainer: @don owns every row today. Rows are
-# forward-declared so a workstream lead slots in as a one-line owner edit.
-# Refinement and sync with docs/layout.md lands under P13-T01.
+# Dual syntax, because two hosts read this file:
+#   - the internal Gitea mirror parses each pattern as a Go regexp and the
+#     P0-M1-T04 acceptance test pins those rows ('.*' catch-all and the
+#     'crates/<name>/.*' per-workstream rows);
+#   - the public GitHub primary parses gitignore globs, so each pinned row
+#     has a GitHub twin (catch-all '*' and 'crates/<name>/' directory rows)
+#     plus explicit rows for release, governance and brand coverage.
+# GitHub resolves the most specific pattern for a path; today every row
+# resolves to the same maintainer (see GOVERNANCE.md), and a workstream lead
+# slots in by adding their handle to their rows.
 #
-# Rows track the Cargo workspace member list (INTEGRATION-T02 forward-ported
-# oep-step-pmi / oep-pmi / oep-qif rows in with the P4 lane).
+# Team dependency: @isolith/Owners references the Owners team under the
+# Isolith account or org the owner names (GATE-PUBLIC-SURFACE,
+# GITHUB-PRIMARY-MIGRATION). Until it exists this is a forward declaration.
 
-# Catch-all default: the isolith owners team governs everything below.
+# Catch-all defaults: Gitea regexp (.+) and GitHub glob (*).
 .* @isolith/Owners
+* @isolith/Owners
 
-# Per workstream (every Cargo.toml workspace member crate).
+# Governance records (GitHub primary).
+/GOVERNANCE.md @isolith/Owners
+/charter.md @isolith/Owners
+/CODE_OF_CONDUCT.md @isolith/Owners
+/SECURITY.md @isolith/Owners
+/SUPPORT.md @isolith/Owners
+/CONTRIBUTING.md @isolith/Owners
+/NOTICE @isolith/Owners
+/docs/decision-records.md @isolith/Owners
+/workstreams/governance/ @isolith/Owners
+/P0-* @isolith/Owners
+
+# Release lane (GitHub primary).
+/release/ @isolith/Owners
+/cliff.toml @isolith/Owners
+/CHANGELOG-* @isolith/Owners
+/scripts/airgap/ @isolith/Owners
+/scripts/harden-public-repo.sh @isolith/Owners
+/scripts/hardening/ @isolith/Owners
+/workstreams/release-engineering/ @isolith/Owners
+/workstreams/security/ @isolith/Owners
+
+# Brand assets and the public-facing site (GitHub primary).
+/assets/brand/ @isolith/Owners
+/docs-site/assets/ @isolith/Owners
+/docs-site/index.html @isolith/Owners
+/docs-site/security.html @isolith/Owners
+
+# Per Cargo workspace workstream, one row per crate. Gitea regexp row
+# (P0-M1-T04 pin) then its GitHub glob row, for every workspace member.
 crates/oep-cgr/.* @don
+/crates/oep-cgr/ @don
 crates/oep-3dxml/.* @don
-crates/oep-geo/.* @don
-crates/oep-engine-occ/.* @don
-crates/oep-viewer/.* @don
-crates/oep-render-worker/.* @don
-crates/oep-web/.* @don
-crates/oep-step/.* @don
-crates/oep-step-pmi/.* @don
+/crates/oep-3dxml/ @don
 crates/oep-import/.* @don
+/crates/oep-import/ @don
+crates/oep-geo/.* @don
+/crates/oep-geo/ @don
+crates/oep-engine-occ/.* @don
+/crates/oep-engine-occ/ @don
+crates/oep-viewer/.* @don
+/crates/oep-viewer/ @don
+crates/oep-render-worker/.* @don
+/crates/oep-render-worker/ @don
+crates/oep-web/.* @don
+/crates/oep-web/ @don
+crates/oep-step/.* @don
+/crates/oep-step/ @don
+crates/oep-step-pmi/.* @don
+/crates/oep-step-pmi/ @don
 crates/oep-pmi/.* @don
+/crates/oep-pmi/ @don
 crates/oep-qif/.* @don
-crates/oep-shell/.* @don
-crates/oep-kinematics/.* @don
-crates/oep-assem/.* @don
-crates/oep-analysis/.* @don
-crates/oep-rules/.* @don
-crates/oep-sketch/.* @don
-crates/oep-drafting/.* @don
-crates/oep-archive/.* @don
-crates/oep-docs/.* @don
+/crates/oep-qif/ @don
 crates/oep-pdm/.* @don
+/crates/oep-pdm/ @don
+crates/oep-archive/.* @don
+/crates/oep-archive/ @don
+crates/oep-shell/.* @don
+/crates/oep-shell/ @don
+crates/oep-kinematics/.* @don
+/crates/oep-kinematics/ @don
+crates/oep-rules/.* @don
+/crates/oep-rules/ @don
+crates/oep-sketch/.* @don
+/crates/oep-sketch/ @don
+crates/oep-assem/.* @don
+/crates/oep-assem/ @don
+crates/oep-analysis/.* @don
+/crates/oep-analysis/ @don
 crates/oep-job/.* @don
+/crates/oep-job/ @don
 crates/oep-lane/.* @don
+/crates/oep-lane/ @don
 crates/oep-farm/.* @don
+/crates/oep-farm/ @don
 crates/oep-worker/.* @don
+/crates/oep-worker/ @don
 crates/oep-sandbox/.* @don
+/crates/oep-sandbox/ @don
 crates/oep-state/.* @don
+/crates/oep-state/ @don
 crates/oep-fairshare/.* @don
+/crates/oep-fairshare/ @don
 crates/oep-opsdash/.* @don
+/crates/oep-opsdash/ @don
 crates/oep-gate/.* @don
+/crates/oep-gate/ @don
 crates/oep-update/.* @don
+/crates/oep-update/ @don
+crates/oep-docs/.* @don
+/crates/oep-docs/ @don
+crates/oep-drafting/.* @don
+/crates/oep-drafting/ @don
 
 # Python tooling and harnesses.
 python/.* @don
+/python/ @don
 
 # Documentation, tests, and standards material.
 docs/.* @don
+/docs/ @don
 tests/.* @don
+/tests/ @don
 standards/.* @don
-
-# P0 governance decision records.
-workstreams/governance/contributor-rules/.* @don
-workstreams/governance/export-and-legal/.* @don
-P0-M4/.* @don
-workstreams/governance/decisions/.* @don
+/standards/ @don

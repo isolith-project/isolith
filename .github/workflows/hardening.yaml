@@ -1,0 +1,32 @@
+# Workflow hardening gate (public-repo baseline section 4).
+#
+# Enforces over every workflow in .github/workflows that the Actions
+# hardening rows of docs/hardening/public-repo-hardening.md hold:
+#   R1  every job declares explicit permissions (read-only default),
+#   R2  every out-of-repo action is pinned to a 40-hex commit SHA,
+#   R3  no pull_request_target workflow that executes contributor code.
+# The check is itself pinned to a SHA and declares the least permissions it
+# needs to run. Runs on push and pull_request; branch protection requires it
+# on every merge to main.
+name: Workflow hardening
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  workflow-hardening:
+    name: workflow-hardening
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        # actions/checkout v4 (release line the SHA pins)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Enforce workflow hardening rows (SHA pinning, per-job permissions, no trusted-PR)
+        run: bash scripts/hardening/check-workflow-hardening.sh "$PWD"
+        shell: bash

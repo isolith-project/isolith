@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isolith: Security and release verification - Documentation</title>
+<meta name="description" content="Isolith security policy and how to verify that a downloaded release was signed by the Isolith release lane.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Isolith: Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="format-matrix.html">Format matrix</a>
+      <a href="security.html">Security</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Security</p>
+  <h1>Security and release verification</h1>
+
+  <p class="lead">
+    This page tells you two things: how to report a security issue, and how to
+    prove that a release you downloaded was really made by the Isolith release
+    lane. The full policy lives in <code>SECURITY.md</code> in the repository.
+  </p>
+
+  <h2>Reporting a security issue</h2>
+  <p>
+    Do not open a public issue or pull request for an exploitable weakness.
+    Report it privately to the maintainers at the address in
+    <code>SECURITY.md</code>, and expect a reply within the response window the
+    policy commits to. A report reaches the maintainer explicitly, so the safe
+    harbor in the policy applies from the moment it is sent privately.
+  </p>
+
+  <h2>Release signing key</h2>
+  <p>
+    Every Isolith release artifact is signed with the release signing key
+    before it is published. The fingerprint is published here so the key that
+    signed your download is checkable:
+  </p>
+  <pre>
+  Fingerprint: 9898A66D42D6FFD3EC5EA78278110F3ADAC1EE92
+  Key id:      0x78110F3ADAC1EE92
+  </pre>
+  <p>
+    The public key ships in the source repository at
+    <code>keys/oep-airgap-signing.pub.asc</code>. Import it and retain only
+    the fingerprint above; a signature by any other key means the artifact did
+    not come from the Isolith release lane.
+  </p>
+  <p>
+    Where the private key lives, who may use it, and the rotation and
+    compromise procedure are documented in
+    <code>docs/release-signing.md</code> in the repository. In short: the
+    private key lives on the release lane build host, never in a repository,
+    never in CI, and only the release lane may sign with it.
+  </p>
+
+  <h2>How to verify a download</h2>
+  <pre>
+gpg --import keys/oep-airgap-signing.pub.asc
+# confirm the imported fingerprint is:
+# 9898A66D42D6FFD3EC5EA78278110F3ADAC1EE92
+gpg --verify-options show-fingerprint --verify &lt;file&gt;.sig &lt;file&gt;
+  </pre>
+  <p>
+    For the air-gap bundle, the included <code>airgap-verify.sh</code> script
+    imports the key and performs the detached verification for you. The
+    measured capability matrix and the install paths are on the other pages;
+    verification is the step that makes a download trustworthy before any of
+    them run.
+  </p>
+
+  <h2>Security posture, in plain words</h2>
+  <p>
+    Telemetry is off by default. No component phones home. Releases carry an
+    SBOM derived from the committed dependency lock, a CVE scan, and an
+    export-control classification file, checked in CI before anything ships.
+    The attestations behind each claim, including what is <em>not</em>
+    claimed, are the records cited in <code>SECURITY.md</code>.
+  </p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Isolith: Open Engineering Platform documentation - version 0.1.0. Served from the same
+    delivery stack as the product (no separate docs infrastructure).
+  </div>
+</footer>
+</body>
+</html>

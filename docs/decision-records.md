@@ -1,6 +1,6 @@
 ---
 title: "Isolith Decision Record Index"
-version: 1.0.1
+version: 1.0.2
 date: 2026-10-27
 status: Ratified
 owner: Isolith program governance
@@ -35,6 +35,7 @@ in the program vault, not in this repository.
 | [Export-control classification](workstreams/security/export-control.md) | 2026-10-18 | 1.0.0, Ratified | Every release carries a CI-checked ITAR/EAR classification file asserting data locality and no restricted content; absence fails the release. |
 | [Export-control memo (P0-M2-T04)](workstreams/governance/export-and-legal/export-control-itar-eccn.md) | 2026-10-15 | 1.0, memo | The internal posture: how Isolith engineering data flows classify under ITAR/EAR and the air-gap posture; code and general-purpose data are not ITAR technical data by default. |
 | [Name and brand (0001)](assets/brand/NAME.md) | 2026-10-20 | 1.1 | The program name is Isolith; the former codename retired after a trademark collision (decision record 0001). |
+| [Public repository hardening](workstreams/governance/decisions/public-repo-hardening.md) | 2026-10-27 | 1.0.0, Ratified | Before visibility: harden the public repo to the baseline (account security, branch and tag protection, Actions hardening, supply chain, release key publication, CODEOWNERS); GitHub-side rows apply when the account exists. |
 
 ## Technical decision records (ADRs)
 
@@ -68,5 +69,6 @@ in the program vault, not in this repository.
 
 ## Version history
 
+- 1.0.2 (2026-10-27): add the public repository hardening decision row.
 - 1.0.0 (2026-10-27): first index of the in-tree decision records with
   one-line summaries and the numbered-decisions note.

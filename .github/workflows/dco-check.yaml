@@ -15,13 +15,21 @@
 name: DCO sign-off
 on:
   pull_request:
+# PUBLIC-REPO-HARDENING: least privilege (contents read only) and the
+# checkout action pinned to the commit SHA behind the release line it
+# stands for. See scripts/hardening/check-workflow-hardening.sh (R1/R2).
+permissions:
+  contents: read
 jobs:
   dco-sign-off:
     name: dco-sign-off
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout with full history
-        uses: actions/checkout@v4
+        # actions/checkout v4 (release line the SHA pins)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
       - name: Save PR body

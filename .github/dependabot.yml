@@ -1,0 +1,19 @@
+# Isolith Dependabot configuration (public-repo supply-chain guard).
+#
+# Enabled by the PUBLIC-REPO-HARDENING baseline (docs/hardening/
+# public-repo-hardening.md, section 5). Dependabot keeps the Cargo workspace
+# dependencies and the pinned GitHub Actions current on a weekly cadence.
+# Merging its pull requests still passes every required check on main, so an
+# update that breaks the licence allow-list or a pinned build cannot land.
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
