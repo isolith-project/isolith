@@ -22,7 +22,14 @@ APPID="org.isolith.oep.$BIN"
 command -v flatpak-builder >/dev/null || { echo "flatpak-builder not installed" >&2; exit 2; }
 
 SRC_BIN="$REPO/target/release/$BIN"
-test -x "$SRC_BIN" || (cd "$REPO" && cargo build --release --offline --bin "$BIN")
+# UPDATE-CHANNEL (decision #20): ISOLITH_PUBLIC_BUILD=1 bakes the default remote
+# update source into the shipped binary (public channel); private/air-gapped
+# builds omit it and stay Off.
+PUBLIC_FEATURES=""
+if [ "${ISOLITH_PUBLIC_BUILD:-0}" = "1" ]; then
+  PUBLIC_FEATURES="--features oep-update/public-default-source"
+fi
+test -x "$SRC_BIN" || (cd "$REPO" && cargo build --release --offline --bin "$BIN" $PUBLIC_FEATURES)
 
 # prep a staging dir with the artifacts the manifest references (manifest and
 # payload in the SAME dir: flatpak-builder resolves relative path: against the

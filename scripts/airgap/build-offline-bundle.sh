@@ -48,6 +48,7 @@ IMAGES=()
 COMPOSE=""
 OUT="dist"
 SIGN_KEY_ID="${SIGN_KEY_ID:-oep-airgap-signing}"
+UPDATE_BUNDLE=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -56,6 +57,7 @@ while [ $# -gt 0 ]; do
         --compose) COMPOSE="${2:?--compose needs a path}"; shift 2;;
         --out) OUT="${2:?--out needs a path}"; shift 2;;
         --sign-key) SIGN_KEY_ID="${2:?--sign-key needs a uid}"; shift 2;;
+        --update-bundle) UPDATE_BUNDLE="${2:?--update-bundle needs a path}"; shift 2;;
         *) echo "unknown arg: $1" >&2; exit 2;;
     esac
 done
@@ -93,6 +95,22 @@ if [ -n "$COMPOSE" ]; then
     [ -f "$COMPOSE" ] || die "compose file not found: $COMPOSE"
     cp "$COMPOSE" "$BUNDLE/compose.yaml"
     log "embedded compose stack: $COMPOSE"
+fi
+
+# UPDATE-CHANNEL (decision #20): carry the SAME signed update.bundle.json the
+# connected build published to its release store, so an air-gapped admin points
+# OEP_UPDATE_OFFLINE_BUNDLE at the identical verified bytes. When neither
+# --update-bundle nor a versioned dist copy is available, this step is skipped
+# (the bundle still carries the env.example that keeps update-check OFF).
+if [ -n "$UPDATE_BUNDLE" ]; then
+    [ -f "$UPDATE_BUNDLE" ] || die "update bundle not found: $UPDATE_BUNDLE"
+    cp "$UPDATE_BUNDLE" "$BUNDLE/update.bundle.json"
+    log "embedded signed update manifest: $UPDATE_BUNDLE"
+elif [ -f "$OUT/$VERSION/update.bundle.json" ]; then
+    cp "$OUT/$VERSION/update.bundle.json" "$BUNDLE/update.bundle.json"
+    log "embedded signed update manifest: $OUT/$VERSION/update.bundle.json"
+else
+    log "no update.bundle.json found; air-gap bundle carries only the OFF-by-default env template"
 fi
 
 # 3. Manifest + checksums.

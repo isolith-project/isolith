@@ -18,7 +18,11 @@ use oep_pdm::graph::RelationshipGraph;
 use oep_pdm::service::Store;
 
 use crate::web::preview::render_document_png;
-use crate::web::update::{check_now, dismiss_banner, UpdateBanner};
+use crate::web::update::{
+    accept_offer as update_offer_accept, check_now, decline_offer as update_offer_decline,
+    dismiss_banner, set_source as update_set_source, settings_page as update_settings_page,
+    toggle_update, UpdateBanner,
+};
 
 /// The viewer-embed preview renderer (P6 oep-viewer seam).
 pub mod preview;
@@ -96,6 +100,12 @@ fn merged_router(
         .route("/ui/compare", get(compare_page))
         .route("/ui/update/check", get(check_now))
         .route("/ui/update/dismiss", get(dismiss_banner))
+        // UPDATE-CHANNEL (decision #20): settings + one-off failure offer.
+        .route("/ui/update/settings", get(update_settings_page))
+        .route("/ui/update/toggle", get(toggle_update))
+        .route("/ui/update/source", get(update_set_source))
+        .route("/ui/update/offer/accept", get(update_offer_accept))
+        .route("/ui/update/offer/decline", get(update_offer_decline))
         .with_state((store, banner));
     api.merge(ui)
 }
@@ -129,7 +139,7 @@ pub(crate) fn esc(s: &str) -> String {
     out
 }
 
-fn page(title: &str, body: &str) -> Response {
+pub(crate) fn page(title: &str, body: &str) -> Response {
     let html = format!(
         "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">\
          <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\

@@ -37,6 +37,10 @@ fn main() {
     let mut addr = "127.0.0.1:8787".to_string();
     let mut persist_dir: Option<PathBuf> = None;
     let mut update_config: Option<PathBuf> = None;
+    // UPDATE-CHANNEL (decision #20): explicit persisted-settings path for the
+    // toggle and the one-off failure-offer ledger.
+    let mut update_settings: Option<PathBuf> = None;
+    let mut update_offers: Option<PathBuf> = None;
     // SEC-AUTHZ-RESIDUAL: authorization is ON unless explicitly disabled.
     let mut no_auth = false;
     let args: Vec<String> = std::env::args().skip(1).collect();
@@ -55,6 +59,14 @@ fn main() {
             "--update-config" => {
                 i += 1;
                 update_config = args.get(i).map(PathBuf::from);
+            }
+            "--update-settings" => {
+                i += 1;
+                update_settings = args.get(i).map(PathBuf::from);
+            }
+            "--update-offers" => {
+                i += 1;
+                update_offers = args.get(i).map(PathBuf::from);
             }
             "--no-auth" => {
                 no_auth = true;
@@ -82,11 +94,21 @@ fn main() {
     // Decision #20: compute the advisory update status ONCE at startup from
     // the resolved config, log its single advisory line, and bind the banner
     // to the UI pages. Page loads never re-probe; only the explicit 'check
-    // now' route touches the source again.
+    // now' route touches the source again. UPDATE-CHANNEL: the toggle writes
+    // the persisted settings file and the one-off offer ledger.
     let dismissals_file = persist_dir.map(|d| d.join("update-dismissals.json"));
-    let update_banner = Arc::new(oep_web::UpdateBanner::from_settings(
+    let settings_file = update_settings
+        .or_else(|| oep_update::config::settings_path_from(&|k| std::env::var(k).ok()));
+    let offers_file = update_offers.or_else(|| {
+        settings_file
+            .as_ref()
+            .map(|p| p.with_file_name("update-offers.json"))
+    });
+    let update_banner = Arc::new(oep_web::UpdateBanner::with_channel_files(
         update_config,
+        settings_file,
         dismissals_file,
+        offers_file,
     ));
 
     // SEC-AUTHZ-RESIDUAL: the default start path enforces the P11-T03 RBAC
@@ -148,6 +170,7 @@ fn print_help() {
         "oep-web - OEP PDM web UI (P8-M4-T01)\n\
          \n\
          usage: oep-web [--addr HOST:PORT] [--persist-dir DIR] [--update-config PATH]\n\
+         \x20                [--update-settings PATH] [--update-offers PATH]\n\
          \n\
          options:\n\
          \x20 --addr HOST:PORT   listen address (default 127.0.0.1:8787)\n\
@@ -156,6 +179,11 @@ fn print_help() {
          \x20 --update-config PATH  update-check config (JSON, update-check.sample.json\n\
          \x20                     shape); default resolves the OEP_UPDATE_* env contract\n\
          \x20                     and runs OFF with zero I/O. Advisory only (decision #20)\n\
+         \x20 --update-settings PATH  persisted settings file for the on/off toggle\n\
+         \x20                     (UPDATE-CHANNEL; default: OEP_UPDATE_SETTINGS or the\n\
+         \x20                     config-dir update-check.json). The UI toggle writes here.\n\
+         \x20 --update-offers PATH  one-off failure-offer ledger (default: update-offers.json\n\
+         \x20                     next to the settings file; answers persist across restarts)\n\
          \x20 --no-auth          DISABLE authorization (SECURITY WARNING): serve\n\
          \x20                     the open contract for controlled test / air-gap\n\
          \x20                     use only. The default serves the P11-T03 RBAC\n\

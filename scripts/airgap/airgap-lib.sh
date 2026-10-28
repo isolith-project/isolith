@@ -44,6 +44,11 @@ OEP_UPDATE_CHECK=off
 # When ON, one of (must be reachable without the public internet):
 #   OEP_UPDATE_MIRROR_URL=https://updates.example.local/isolith   (on-site)
 #   OEP_UPDATE_OFFLINE_BUNDLE=/path/to/isolith-offline-<ver>.tar.gz (local)
+# UPDATE-CHANNEL (decision #20): the offline bundle produced by
+# build-offline-bundle.sh carries the SAME signed update.bundle.json the
+# connected build published, at $BUNDLE_ROOT/update.bundle.json - point
+# OEP_UPDATE_OFFLINE_BUNDLE at that identical file to enable checking from
+# offline bytes that verify against the committed release key.
 OEP_UPDATE_MIRROR_URL=
 OEP_UPDATE_OFFLINE_BUNDLE=
 EOF

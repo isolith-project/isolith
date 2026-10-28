@@ -1,5 +1,5 @@
 {
-  "//": "P10-M5-T01 sample config. Default deployment is OFF and non-phoning:",
+  "//": "P10-M5-T01 sample config. The shipped DEFAULT is OFF and non-phoning:",
   "enabled": false,
   "//source": "Unset = Off. Examples:",
   "//": "  On-site mirror:  {\"mirror\": \"/srv/isolith/updates\"}",
@@ -8,6 +8,11 @@
   "source": null,
   "//public_key": "Hex-encoded Ed25519 public key that signs every manifest. See workstreams/security/keys/oep-update-signing.pub (P11-T04 committed release key).",
   "public_key": null,
+  "//current_version": "Optional; defaults to the crate build version when null.",
   "current_version": "0.1.0",
-  "timeout_ms": 3000
+  "//timeout_ms": "Remote fetch timeout for a url: source (default 3000).",
+  "timeout_ms": 3000,
+  "//channel_note": "UPDATE-CHANNEL (decision #20): this SAME shape is what the settings toggle writes and reads, so update-check.sample.json stays truthful about the persisted format. Three states are distinguishable at runtime: On (enabled=true + a source), OffByUser (this file PRESENT with enabled=false, written by the toggle), OffNeverConfigured (no settings file exists and the build has no public default). A public build resolves the never-configured state to ON with its baked default remote source; private/air-gapped builds stay OFF here. Persisted settings path: OEP_UPDATE_SETTINGS, else $XDG_CONFIG_HOME (or $HOME/.config)/isolith/update-check.json.",
+  "//offer_note": "When a check returns Unreachable or Untrusted, the program OFFERS ONCE to turn update checking off; the answer persists in update-offers.json (or OEP_UPDATE_OFFERS) and never repeats for that condition.",
+  "//feed_note": "The signed update.bundle.json a release cut publishes to its artifact store (dist/<version>/) is the SAME file listed in docs-site/downloads.json and carried inside air-gap bundles, so the site, the in-program check and an air-gapped install read identical signed bytes."
 }

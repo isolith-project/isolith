@@ -1,0 +1,90 @@
+
+===== 0. Environment =====
+repo: /home/r1a/isolith-main/.worktrees/update-channel-1028a
+oep:  /home/r1a/isolith-main/.worktrees/update-channel-1028a/target/debug/oep
+real bundle: /home/r1a/isolith-main/.worktrees/update-channel-1028a/dist/2027.1.0-rc2/update.bundle.json
+verify key:  e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811
+
+===== 1. PRIVATE build, fresh first launch, NO configuration =====
+  - this worktree build has NO public-default-source feature.
+  - env -i (empty)  oep update config --status:
+update check: OFF (never configured)
+  - env -i (empty)  oep update status (advisory line):
+update check: OFF (no source configured; non-phoning default)
+  => tri-state OFF (never configured); zero sockets (crate gating:
+     disabled/source-Off config does zero I/O).
+
+===== 2. Toggle: enable+source, persist, re-read in a FRESH process =====
+update check: enabled (settings /home/r1a/.hermes/cache/scratch/tmp.8jUlwaciEy/update-check.json)
+update check: ON (source: mirror /srv/updates)
+
+=====    Toggle: disable, persist, re-read in a FRESH process (OFF by user) =====
+update check: disabled (settings /home/r1a/.hermes/cache/scratch/tmp.8jUlwaciEy/update-check.json)
+update check: OFF (disabled by user)
+    - persisted settings file:
+{
+  "enabled": false,
+  "source": {"mirror": "/srv/updates"}
+}
+
+===== 3. Offer (a): failing check offers the toggle once =====
+    - settings point at a missing bundle -> Unreachable; running 'oep update check':
+update check: unavailable (cannot read /does/not/exist/update.bundle.json: No such file or directory (os error 2))
+update check: offer: turn update checking off for 'unreachable'? run 'oep update config --disable' to accept, or 'oep update config --decline-offer unreachable'
+
+=====    Offer (b): decline persists and never re-asks (fresh process, same files) =====
+update check: offer declined for 'unreachable' (will not re-ask for this condition)
+    - fresh process check (no re-offer):
+update check: unavailable (cannot read /does/not/exist/update.bundle.json: No such file or directory (os error 2))
+    - ledger file:
+{
+  "schema": "isolith.update-offers.v1",
+  "answers": {
+    "unreachable": "Declined"
+  }
+}    - settings untouched by a decline (still enabled):
+update check: ON (source: bundle /does/not/exist/update.bundle.json)
+
+=====    Offer (c): accept disables AND persists (never re-asks) =====
+update check: disabled (offer accepted for 'unreachable')
+    - fresh process status after accept (OFF by user):
+update check: OFF (disabled by user)
+    - offer ledger after accept:
+{
+  "schema": "isolith.update-offers.v1",
+  "answers": {
+    "unreachable": "Accepted"
+  }
+}    - persisted settings after accept (enabled: false):
+{
+  "enabled": false,
+  "source": {"bundle": "/does/not/exist/update.bundle.json"}
+}
+
+===== 4. Precedence: persisted user source beats the public build default =====
+    - (the injected build-default vs persisted settings ladder is proven in
+      crates/oep-update/tests/update_channel.rs; the binary uses the same code)
+update check: ON (source: mirror /user/updates)
+
+=====    Precedence: admin env mirror beats the public build default =====
+update check: ON (source: mirror /admin/mirror)
+
+===== 5. PUBLIC build (public-default-source feature) + local store =====
+    public oep built
+    - fresh PUBLIC build, no configuration: status + check:
+update check: ON (source: http://127.0.0.1:57077/update.bundle.json)
+    - advisory line (the check ran against the default source):
+update check: update available -> 2027.1.0-rc2 (advisory; install is a separate operator action)
+    - UpdateAvailable JSON, truncated (payloads elided to keep this log small):
+UpdateAvailable { version=2027.1.0-rc2, released=2026-10-19, payload_count=21 }
+
+===== 6. Feed: same signed file in downloads.json + air-gap bundle =====
+    update-feed rows in downloads.json: 1
+    release-store sha256: 4df5f764ec346b4c21a5e52303f9883bfa3a74b654f6ab22e9cec5415aa6ddbf
+    manifest lists the SAME signed file: OK
+    100:# UPDATE-CHANNEL (decision #20): carry the SAME signed update.bundle.json the
+    107:    cp "$UPDATE_BUNDLE" "$BUNDLE/update.bundle.json"
+    109:elif [ -f "$OUT/$VERSION/update.bundle.json" ]; then
+    110:    cp "$OUT/$VERSION/update.bundle.json" "$BUNDLE/update.bundle.json"
+    111:    log "embedded signed update manifest: $OUT/$VERSION/update.bundle.json"
+    113:    log "no update.bundle.json found; air-gap bundle carries only the OFF-by-default env template"

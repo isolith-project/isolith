@@ -23,6 +23,7 @@
 //!   decision covers update checking, not analytics reach-back).
 
 pub mod config;
+pub mod offer;
 pub mod signing;
 
 use std::io::{Read, Write};

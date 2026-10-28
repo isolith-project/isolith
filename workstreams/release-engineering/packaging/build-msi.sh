@@ -28,9 +28,16 @@ VERSION="${OEP_VERSION:-0.1.0}"
 
 # --- 1. cross-compile ---------------------------------------------------------
 EXE="$REPO/target/$TRIPLE/release/$BIN.exe"
+# UPDATE-CHANNEL (decision #20): ISOLITH_PUBLIC_BUILD=1 bakes the default remote
+# update source into the shipped binary (public channel); private/air-gapped
+# builds omit it and stay Off.
+PUBLIC_FEATURES=""
+if [ "${ISOLITH_PUBLIC_BUILD:-0}" = "1" ]; then
+  PUBLIC_FEATURES="--features oep-update/public-default-source"
+fi
 if [[ ! -x "$EXE" ]]; then
   echo "cross-compiling $BIN for $TRIPLE ..." >&2
-  (cd "$REPO" && cargo build --release --offline --target "$TRIPLE" --bin "$BIN") >&2
+  (cd "$REPO" && cargo build --release --offline --target "$TRIPLE" --bin "$BIN" $PUBLIC_FEATURES) >&2
 fi
 test -x "$EXE" || { echo "no output: $EXE" >&2; exit 1; }
 

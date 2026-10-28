@@ -19,9 +19,18 @@ OUT="${OUT_DIR:-$PWD}"
 
 # --- resolve the release binary ---------------------------------------------
 SRC_BIN="$REPO/target/release/$BIN"
+# UPDATE-CHANNEL (decision #20): a PUBLIC build bakes in the default remote
+# update source. Set ISOLITH_PUBLIC_BUILD=1 (along with, when testing,
+# ISOLITH_UPDATE_DEFAULT_REMOTE to point at a reachable store) to compile the
+# public-default-source feature in; private/air-gapped builds omit it and stay
+# Off.
+PUBLIC_FEATURES=""
+if [ "${ISOLITH_PUBLIC_BUILD:-0}" = "1" ]; then
+  PUBLIC_FEATURES="--features oep-update/public-default-source"
+fi
 if [[ ! -x "$SRC_BIN" ]]; then
   echo "building $BIN (release) ..." >&2
-  (cd "$REPO" && cargo build --release --offline --bin "$BIN") >&2
+  (cd "$REPO" && cargo build --release --offline --bin "$BIN" $PUBLIC_FEATURES) >&2
 fi
 
 # --- appimagetool ------------------------------------------------------------

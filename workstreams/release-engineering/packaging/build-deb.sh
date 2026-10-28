@@ -49,11 +49,18 @@ Description: Isolith Open Engineering Platform desktop tools
 EOF
 
 # --- payload binaries ---------------------------------------------------
+# UPDATE-CHANNEL (decision #20): ISOLITH_PUBLIC_BUILD=1 bakes the default remote
+# update source into the shipped binaries (public channel); private/air-gapped
+# builds omit it and stay Off.
+PUBLIC_FEATURES=""
+if [ "${ISOLITH_PUBLIC_BUILD:-0}" = "1" ]; then
+  PUBLIC_FEATURES="--features oep-update/public-default-source"
+fi
 for BIN in "$@"; do
   SRC="$REPO/target/release/$BIN"
   if [ ! -x "$SRC" ]; then
     echo "building $BIN (release) ..." >&2
-    (cd "$REPO" && cargo build --release --offline --bin "$BIN") >&2
+    (cd "$REPO" && cargo build --release --offline --bin "$BIN" $PUBLIC_FEATURES) >&2
   fi
   test -x "$SRC" || { echo "no release binary: $SRC" >&2; exit 1; }
   cp "$SRC" "$STAGE/usr/bin/$BIN"

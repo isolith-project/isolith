@@ -40,6 +40,15 @@
       "version": "2027.1.0",
       "sha256": "3bf2b1923604edb4a5c7977343be16657646c21087324575b36244877413c181",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
+    },
+    {
+      "platform": "update-feed",
+      "artifact": "update.bundle.json",
+      "kind": "update-feed",
+      "version": "2027.1.0-rc2",
+      "sha256": "4df5f764ec346b4c21a5e52303f9883bfa3a74b654f6ab22e9cec5415aa6ddbf",
+      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes; air-gap bundles carry this identical file.",
+      "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     }
   ]
 }

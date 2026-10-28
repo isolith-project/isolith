@@ -17,6 +17,14 @@ base64 = "0.22"
 # Pure-Rust Ed25519; the exact resolution is pinned in the workspace lockfile.
 ed25519-dalek = "3"
 
+[features]
+# Public builds compile with a baked default remote source (release store
+# today, GitHub Releases after the migration - one-line change of
+# config::default_public_remote_url). Private / air-gapped / plain source
+# builds default to `Off` (non-phoning). See workstreams/delivery/update-checker/update-checker.md.
+default = []
+public-default-source = []
+
 [dev-dependencies]
 # Integration tests generate/sign bundles for the acceptance scenarios.
 serde_json = "1"
