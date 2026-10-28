@@ -115,7 +115,7 @@ Measured on U1 (Ubuntu 24.04 ARM64, 20 cores) for the 2027.1 train with the
 
 - Devcontainer image build: about 2 minutes (118 s: apt + rustup + uv, all pinned).
 - First `cargo xtask ci` in a fresh container (empty cargo registry, empty
-  target): about 3 to 4 minutes (207 s): crates download plus a full
+  target): about 3 minutes (173 s): crates download plus a full
   workspace + all test-target compile.
 - Subsequent `cargo xtask ci`: seconds to a couple of minutes (incremental).
 - `cargo xtask ci --kernel` OCCT one-time fetch/build: about 2 to 3 minutes
@@ -127,7 +127,8 @@ Measured on U1 (Ubuntu 24.04 ARM64, 20 cores) for the 2027.1 train with the
 
 - Devcontainer image: about 1.6 GB on disk.
 - Cargo registry + build target for the full workspace + test binaries: about
-  [CARGO_GB] GB inside the container (or under your CARGO_TARGET_DIR).
+  13 GB inside the container (measured: registry 0.2 GB, workspace target
+  12 GB), or wherever your CARGO_TARGET_DIR points for manual setups.
 - OCCT source + static build + install, when you run the kernel tier: about
   0.9 GB (885 MB) under `~/.cache/oep-occt`, of which the static install is
   169 MB.

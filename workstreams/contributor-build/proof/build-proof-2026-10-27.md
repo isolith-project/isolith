@@ -16,10 +16,11 @@ contributor runs; nothing was special-cased.
    See `image-build.log`.
 2. A fresh `cargo xtask ci` (the whole gate) runs inside a clean container
    and passes every leg: rustfmt, xtask rustfmt, workspace clippy (deny
-   warnings), xtask clippy, unit tests, integration tests, pytest. First-run
-   wall clock: 207 s. See `gate-clean-container.log`.
+   warnings), xtask clippy, unit tests, integration tests, pytest (542
+   passed, 28 skipped). First-run wall clock: 173 s, exit 0, gate PASS.
+   See `gate-clean-container.log`.
 3. Pytest alone on a clean source tree, empty HOME and no machine
-   credentials: 542 passed, 28 skipped, 141.8 s.
+   credentials: 542 passed, 28 skipped.
 4. The OCCT tier (only for geometry-kernel changes) works clean:
    `cargo xtask occt` / `scripts/kernel/build-occt.sh` fetched and built the
    pinned OCCT 8.0.1 in 137 s (885 MB cache total, 169 MB static install),
@@ -31,12 +32,15 @@ contributor runs; nothing was special-cased.
 | Quantity | Value |
 | --- | --- |
 | Devcontainer image build | 118 s, 1.61 GB |
-| First `cargo xtask ci` in a clean container | 207 s |
+| First `cargo xtask ci` in a clean container | 173 s, gate PASS (exit 0) |
+| `uv sync` (pinned python + pytest) | 2 s |
 | `cargo xtask check-sysdeps` | ~2 s |
 | OCCT fetch + static build (20 cores) | 137 s |
 | OCCT cache total / static install | 885 MB / 169 MB |
-| Kernel seam + replayer test runs | 16 + 9 passed, ~7 s |
-| pytest full suite (clean tree, empty HOME) | 542 passed, 28 skipped, 141.8 s |
+| Kernel seam + replayer test runs | 16 + 9 passed |
+| pytest full suite inside the clean container | 542 passed, 28 skipped, 95.95 s |
+| Cargo registry inside the container | 0.2 GB |
+| Workspace target dir (full workspace + test binaries) | 12 GB |
 
 ## Real failures found and fixed while proving (not cosmetic)
 
