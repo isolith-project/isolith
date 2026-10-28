@@ -1045,6 +1045,7 @@ dependencies = [
  "oep-kinematics",
  "oep-pdm",
  "oep-sketch",
+ "oep-update",
  "oep-viewer",
  "serde_json",
 ]
@@ -1113,6 +1114,7 @@ dependencies = [
  "base64",
  "oep-geo",
  "oep-pdm",
+ "oep-update",
  "oep-viewer",
  "serde",
  "serde_json",

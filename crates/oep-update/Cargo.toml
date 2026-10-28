@@ -28,3 +28,7 @@ path = "src/bin/oep-update-check.rs"
 [[bin]]
 name = "oep-update-sign"
 path = "src/bin/oep-update-sign.rs"
+
+[[bin]]
+name = "oep"
+path = "src/bin/oep.rs"

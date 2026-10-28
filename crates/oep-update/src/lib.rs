@@ -22,6 +22,7 @@
 //!   surface anywhere in this crate (P0-M5-T02 none-by-default stands; this
 //!   decision covers update checking, not analytics reach-back).
 
+pub mod config;
 pub mod signing;
 
 use std::io::{Read, Write};
@@ -72,9 +73,73 @@ pub enum UpdateStatus {
     /// Source reached, trusted, and offers a newer version. Advisory only;
     /// applying the payload is a separate, operator-gated step.
     UpdateAvailable {
+        /// The offered version string.
         version: String,
+        /// The offered release date (ISO-8601, from the signed manifest).
+        released: String,
+        /// Release-notes URL when the signed manifest carries one (its
+        /// `notes` field; release cuts set it to the notes page).
+        release_notes_url: Option<String>,
+        /// The payloads the trusted manifest advertises. Never applied
+        /// automatically.
         payloads: Vec<PayloadMeta>,
     },
+}
+
+/// The user-facing content a surface renders when an update is available.
+/// Derived from [`UpdateStatus::UpdateAvailable`]; never blocks and never
+/// triggers any download or install.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct UpdateNotice {
+    /// The offered version string.
+    pub version: String,
+    /// The offered release date (ISO-8601).
+    pub released: String,
+    /// Release-notes URL when the signed manifest carries one.
+    pub release_notes_url: Option<String>,
+}
+
+impl UpdateStatus {
+    /// One advisory line describing this status: the single source of the
+    /// human text every surface logs (workbench startup, oep-web startup,
+    /// the `oep update` CLI). Byte-stable so scripts and proofs can assert
+    /// on it.
+    pub fn advisory_line(&self) -> String {
+        match self {
+            UpdateStatus::Off => {
+                "update check: OFF (no source configured; non-phoning default)".to_string()
+            }
+            UpdateStatus::Unreachable { detail } => {
+                format!("update check: unavailable ({detail})")
+            }
+            UpdateStatus::Untrusted { detail } => {
+                format!("update check: source NOT TRUSTED - no payloads consumed ({detail})")
+            }
+            UpdateStatus::UpToDate => "update check: up to date".to_string(),
+            UpdateStatus::UpdateAvailable { version, .. } => {
+                format!("update check: update available -> {version} (advisory; install is a separate operator action)")
+            }
+        }
+    }
+
+    /// The non-modal notice to show when an update is available. `None` for
+    /// every other advisory status: an unavailable or untrusted source shows
+    /// nothing.
+    pub fn notice(&self) -> Option<UpdateNotice> {
+        match self {
+            UpdateStatus::UpdateAvailable {
+                version,
+                released,
+                release_notes_url,
+                ..
+            } => Some(UpdateNotice {
+                version: version.clone(),
+                released: released.clone(),
+                release_notes_url: release_notes_url.clone(),
+            }),
+            _ => None,
+        }
+    }
 }
 
 /// The CONFIGURABLE source of an update check.
@@ -123,6 +188,16 @@ impl Default for UpdateConfig {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LaunchDecision {
     Proceed { status: UpdateStatus },
+}
+
+impl LaunchDecision {
+    /// The advisory status behind this launch decision. Every status is
+    /// advisory: there is deliberately no blocking variant.
+    pub fn status(&self) -> &UpdateStatus {
+        match self {
+            LaunchDecision::Proceed { status } => status,
+        }
+    }
 }
 
 /// The launcher seam: callers run `preflight` at launch, log/display the
@@ -208,6 +283,8 @@ fn verify_and_report(config: &UpdateConfig, raw: &[u8]) -> UpdateStatus {
     }
     UpdateStatus::UpdateAvailable {
         version: bundle.version.clone(),
+        released: bundle.released.clone(),
+        release_notes_url: bundle.notes.clone(),
         payloads: bundle.payloads.clone(),
     }
 }
