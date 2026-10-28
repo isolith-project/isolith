@@ -1,0 +1,74 @@
+{
+  "card": "t_82f606dd",
+  "title": "DOCKER-NAS-DEPLOYMENT: GHCR image + NAS-ready compose + measured resource floor + restore drill + corrected policy note",
+  "date": "2026-10-27",
+  "host": "promaxgb10-83f1 (U1, aarch64, Ubuntu 24.04) - a permitted test host (decision #9)",
+  "gate_note": "Decision #9 unchanged for our infrastructure. This card is for THIRD-PARTY customer hosts. Testing ran on U1, not on Don's NAS. No public GHCR push performed; the push+gated mechanism verified against a local OCI registry. Image digest and release-body wiring are recorded below.",
+  "image": {
+    "local_ref": "isolith/oep-stack:0.1.0",
+    "digest": "sha256:36f058ae0630505813ce4eedf030432419a45fba97ead7f0c6fa6925563ed2ef",
+    "ghcr_ref_after_first_public_push": "ghcr.io/isolith/oep-stack:<ver> (+ latest)",
+    "size_uncompressed_bytes": 218000000,
+    "size_compressed_bytes": 47825638,
+    "architecture": "linux/arm64 - build-verified and run-verified on U1",
+    "architecture_amd64": "supported by the same arch-neutral Dockerfile; NOT build-verified in this run (QEMU-emulated cargo build segfaulted with exit 139 on the only available test host; retried with a dedicated builder, same result). Honest status: arm64 verified today; amd64 requires a native/CI amd64 runner for its first green build.",
+    "push_mechanism": "release.sh --push-ghcr --ghcr-org <org> --digest-out <file>; preflight requires docker login with write:packages; repo digest written to digest-out for the release body. Verified end-to-end against 127.0.0.1:5000 (local OCI registry): tag -> push -> digest sha256:36f058... captured.",
+    "gate": "First PUBLIC GHCR push waits for Don opening the surface (2026-10-27)."
+  },
+  "compose": {
+    "nas_file": "workstreams/delivery/deploy/deploy/docker-compose.nas.yml",
+    "env_template": "workstreams/delivery/deploy/deploy/.env.nas.example",
+    "install_nas": "workstreams/delivery/deploy/deploy/install-nas.sh (pull-based; --down/--dry-run; waits for 4 healthy)",
+    "pull_based": "true (no build on the NAS; pulls ${OEP_IMAGE:-ghcr.io/isolith/oep-stack:0.1.0})",
+    "named_volumes": ["pdm_data (the vault: store.json + blobs/ + audit/)", "viewer_data"],
+    "explicit_port_bindings": "127.0.0.1 defaults via OEP_PDM_BIND/OEP_VIEWER_BIND/OEP_P2P_BIND/OEP_DOCS_BIND - LAN-off until operator publishes",
+    "health_check_per_service": "pdm /api/v1/health, viewer GET /, p2p /healthz, docs /healthz (5s interval)",
+    "synology": "Container Manager Project import reads the same compose; health shows in the project container list",
+    "compose_config_validation": "docker compose -f docker-compose.nas.yml config --quiet -> VALID; config --images -> 4x ghcr.io/isolith/oep-stack:0.1.0",
+    "auth_on_by_default": "true; pdm/viewer commands carry no --no-auth (SEC-AUTHZ-DEFAULT; P2T-04-AZ must not regress)"
+  },
+  "resource_floor_measured": {
+    "method": "docker stats --no-stream on the running stack (arm64 image 0.1.0, idle) on 2026-10-27, two samples",
+    "sample_1_rss_mib": {"pdm": 8.37, "viewer": 5.95, "docs": 7.59, "p2p": 3.88},
+    "sample_2_rss_mib": {"pdm": 7.18, "viewer": 5.96, "docs": 7.20, "p2p": 21.16},
+    "pdm_viewer_docs_total_rss_mib": "20.3 - 21.9 MiB (two samples)",
+    "cpu_idle_percent": "pdm ~0.1-1%, viewer ~1.4-1.7%, docs ~0.8-2.2% (one vCPU or less combined)",
+    "image_on_disk": "218 MB uncompressed / 47.8 MB compressed",
+    "vault_volume_at_rest": "pdm_data 16 KB with one seeded item + one blob + 2 audit entries",
+    "stated_floor": "1 GB RAM free (whole stack idles < 30 MiB RSS; even 512 MB is ample), 1 GB free disk beyond the image day-1, 1 vCPU for the server component; CPU is dominated by on-demand batch-convert/render workers when actually used, which are one-shot binaries sized separately"
+  },
+  "security_posture": {
+    "pdm_auth": "ON by default; verified live: unauthenticated / wrong-role call -> 403 {\"error\":{\"code\":\"forbidden\"}} on POST items; items/audit/file 403 without identity headers",
+    "no_internet_exposure": "host binds default to 127.0.0.1 (decision #10)",
+    "lan_bind_guidance": "set OEP_*_BIND to the NAS LAN IP behind a reverse proxy; never 0.0.0.0 on a WAN interface",
+    "tls_options": ["reverse proxy on the NAS (Synology Reverse Proxy etc.)", "Caddy in front", "native oep-pdm --tls-cert/--tls-key (gen-stack-certs.sh or real PKI)"],
+    "air_gap_statement": "air-gap holds ONLY when the host itself is isolated (no default route/DNS/registry); GHCR pull is NOT air-gap; air-gap install = signed offline bundle"
+  },
+  "backup_restore": {
+    "what_to_back_up": "named volume pdm_data (store.json + blobs/ + audit/) + .env/compose override; image is re-pullable",
+    "where_it_may_go": "different physical disk/volume set or another NAS/offsite; NOT the same volume set that is the failure domain; for our infra NAS is never a target (vault-backup.sh guard refuses /mnt/nas*)",
+    "producer": "scripts/backup/vault-backup.sh (sha256 manifest, blob name == content hash, self-verifying)",
+    "restore_proof": "workstreams/delivery/deploy/proof/nas-restore-drill.log - PASS: fresh persist dir, fresh oep-pdm, health ok, item count 1, audit chain ok (2 entries), served file bytes hash bc7d34068dccaf7f701d696f22cd04cb9fc7dbf7760440121599b241f03bfd32 match the backup manifest",
+    "run_restore_check_after_changes": "run scripts/backup/vault-restore-check.sh after any schema/migration/release change before the round-trip claim holds for the new train"
+  },
+  "upgrade_path": {
+    "steps": ["edit OEP_VERSION / OEP_IMAGE in .env", "docker compose -f docker-compose.nas.yml pull", "up -d", "wait all 4 healthy", "run scripts/backup/vault-restore-check.sh if release notes say a migration is required"],
+    "migrations": "vault schema is versioned + forward-compatible (additive); oep-vault-migrate handles V5-era tree imports, not in-place downgrade; no destructive migration step on the NAS",
+    "rollback": "keep previous OEP_VERSION/OEP_IMAGE, up -d with it; named volume pdm_data is untouched by an image swap"
+  },
+  "docs_page": {
+    "file": "docs-site/install-on-nas.html",
+    "screenshot": "docs-site/assets/images/07-nas-compose-equivalent.png (real U1 stack output rendered via headless Chrome; media-manifest.md records provenance)",
+    "nav": "linked from index/getting-started/admin-guide/format-matrix (Install on a NAS)"
+  },
+  "policy_note": "Decision #9 (NAS is repo/storage only, never host services, never a backup target) applies to OUR infrastructure and stands as written. This card is for customers hosting Isolith on THEIR OWN NAS/server; none of these instructions change our policy. Contracted at card top + nas-deployment.md section 0.",
+  "artifacts": [
+    "workstreams/delivery/deploy/nas-deployment.md",
+    "workstreams/delivery/deploy/deploy/docker-compose.nas.yml",
+    "workstreams/delivery/deploy/deploy/.env.nas.example",
+    "workstreams/delivery/deploy/deploy/install-nas.sh",
+    "workstreams/delivery/deploy/deploy/release.sh (GHCR flag added)",
+    "docs-site/install-on-nas.html",
+    "docs-site/assets/images/07-nas-compose-equivalent.png"
+  ]
+}

@@ -70,20 +70,31 @@ done
 echo "[restore-check] health : ok"
 
 # ---- 4. The real vault read (the round-trip acceptance) ----------------------
+# SEC-AUTHZ-DEFAULT (P2T-04-AZ, 2026-10-18): the REST v1 surface is
+# authorization-bound by default. `/api/v1/health` stays public (the compose
+# healthcheck depends on it); the data reads the drill performs (items,
+# audit, file) must carry the identity headers. The drill authenticates as a
+# per-run generated admin principal, no `--no-auth` anywhere: the restored
+# vault must serve over the SAME guarded boundary as production.
+RESTORE_USER="${RESTORE_USER:-restore-drill}"
+RESTORE_ROLE="${RESTORE_ROLE:-admin}"
+RESTORE_TENANT="${RESTORE_TENANT:-default}"
+AUTH_HDRS=(-H "X-Oep-User: $RESTORE_USER" -H "X-Oep-Roles: $RESTORE_ROLE" -H "X-Oep-Tenant: $RESTORE_TENANT")
+
 HEALTH=$(curl -fsS -m 5 "http://127.0.0.1:$HOST_PORT/api/v1/health")
 echo "[restore-check] health json: $HEALTH"
 echo "$HEALTH" | grep -q '"status":"ok"' || { echo "FAIL: health not ok" >&2; exit 1; }
 
-ITEMS=$(curl -fsS -m 5 "http://127.0.0.1:$HOST_PORT/api/v1/items")
+ITEMS=$(curl -fsS -m 5 "${AUTH_HDRS[@]}" "http://127.0.0.1:$HOST_PORT/api/v1/items")
 N_ITEMS=$(echo "$ITEMS" | python3 -c "import sys,json;print(len(json.load(sys.stdin)['items']))")
 echo "[restore-check] restored item count: $N_ITEMS"
 [ "$N_ITEMS" -gt 0 ] || { echo "FAIL: restored catalogue empty" >&2; exit 1; }
 
-AUDIT=$(curl -fsS -m 5 "http://127.0.0.1:$HOST_PORT/api/v1/audit/verify" || echo '{"ok":false}')
+AUDIT=$(curl -fsS -m 5 "${AUTH_HDRS[@]}" "http://127.0.0.1:$HOST_PORT/api/v1/audit/verify" || echo '{"ok":false}')
 echo "$AUDIT" | python3 -c "import sys,json; d=json.load(sys.stdin); assert d.get('ok'), d; print('[restore-check] audit chain ok (%d entries)' % d.get('count'))"
 
 ITEM_ID=$(echo "$ITEMS" | python3 -c "import sys,json;print(json.load(sys.stdin)['items'][0]['id'])")
-curl -fsS -m 10 -D "$RESTORE_DIR/hdr.txt" \
+curl -fsS -m 10 "${AUTH_HDRS[@]}" -D "$RESTORE_DIR/hdr.txt" \
   "http://127.0.0.1:$HOST_PORT/api/v1/items/$ITEM_ID/revisions/1/file" \
   -o "$RESTORE_DIR/file.bin"
 EXPECTED=$(awk 'tolower($1)=="x-blob-sha256:"{print $2}' "$RESTORE_DIR/hdr.txt" | tr -d '\r')

@@ -1,0 +1,108 @@
+# Isolith OEP stack for a customer NAS / homelab server (DOCKER-NAS-DEPLOYMENT).
+#
+# Pull-based compose: unlike deploy/docker-compose.yml (which builds the image
+# from source for U1/dev), this stack PULLS the published GHCR image on the NAS
+# host - no build, no Rust toolchain on the NAS. Covers Synology Container
+# Manager (Project -> import), QNAP Container Station, TrueNAS/Unraid apps, or
+# plain `docker compose` on any Linux host.
+#
+#   cp .env.nas.example .env
+#   # edit OEP_IMAGE / OEP_*_BIND / OEP_*_PORT for your host
+#   docker compose -f docker-compose.nas.yml pull
+#   docker compose -f docker-compose.nas.yml up -d
+#   docker compose -f docker-compose.nas.yml ps        # all healthy
+#
+# One image carries PDM + P6 preview viewer + docs + worker binaries. The default
+# OEP_IMAGE below is the GHCR reference after the first public push (the gated
+# step in nas-deployment.md); until then a locally/privately published tag or an
+# offline bundle is used with the same compose (change OEP_IMAGE only).
+#
+# Security defaults (do not weaken):
+#   * PDM auth ON by default (SEC-AUTHZ-DEFAULT, P2T-04-AZ resolved). The pdm
+#     and viewer commands must NOT gain --no-auth; the RBAC boundary is the
+#     deliverable.
+#   * Every host bind defaults to 127.0.0.1 (decision #10): nothing is exposed
+#     to the LAN until the operator sets OEP_*_BIND to the NAS LAN IP (behind a
+#     reverse proxy) and/or 0.0.0.0 deliberately.
+#   * Health check per service (the accept surface).
+#
+# Architecture: see nas-deployment.md section 2 - arm64 build-verified + run
+# verified on U1; amd64 supported by the same Dockerfile, not yet build-verified
+# in this run (asserted once an amd64-native build passes health checks).
+name: isolith
+
+services:
+  pdm:
+    image: ${OEP_IMAGE:-ghcr.io/isolith/oep-stack:0.1.0}
+    container_name: isolith-pdm
+    command: ["oep-pdm", "--addr", "0.0.0.0:8787", "--persist-dir", "/data"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: pdm
+    volumes:
+      - pdm_data:/data          # the VAULT: store.json + blobs/ + audit/ (back me up)
+    ports:
+      - "${OEP_PDM_BIND:-127.0.0.1}:${OEP_PDM_PORT:-8787}:8787"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8787/api/v1/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  viewer:
+    image: ${OEP_IMAGE:-ghcr.io/isolith/oep-stack:0.1.0}
+    container_name: isolith-viewer
+    command: ["oep-web", "--addr", "0.0.0.0:8790", "--persist-dir", "/data"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: viewer
+    volumes:
+      - viewer_data:/data
+    ports:
+      - "${OEP_VIEWER_BIND:-127.0.0.1}:${OEP_VIEWER_PORT:-8790}:8790"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8790/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    depends_on:
+      pdm:
+        condition: service_started
+
+  p2p:
+    image: ${OEP_IMAGE:-ghcr.io/isolith/oep-stack:0.1.0}
+    container_name: isolith-p2p
+    command: ["oep-opsdash", "serve", "--listen", "0.0.0.0:8080", "--live"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: p2p
+    ports:
+      - "${OEP_P2P_BIND:-127.0.0.1}:${OEP_P2P_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  docs:
+    image: ${OEP_IMAGE:-ghcr.io/isolith/oep-stack:0.1.0}
+    container_name: isolith-docs
+    command: ["oep-docs", "--root", "/srv/docs", "--addr", "0.0.0.0:8792"]
+    restart: unless-stopped
+    environment:
+      OEP_SERVICE: docs
+    ports:
+      - "${OEP_DOCS_BIND:-127.0.0.1}:${OEP_DOCS_PORT:-8792}:8792"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8792/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+volumes:
+  pdm_data:
+  viewer_data:

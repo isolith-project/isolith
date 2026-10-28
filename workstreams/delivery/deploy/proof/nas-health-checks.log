@@ -1,0 +1,24 @@
+NAS DEPLOYMENT - HEALTH-CHECK OUTPUT (DOCKER-NAS-DEPLOYMENT, t_82f606dd)
+Date: 2026-10-27  Host: U1 (promaxgb10-83f1, aarch64) - permitted test host
+
+docker compose -f docker-compose.nas.yml ps  (via the stack running on U1):
+NAME             STATUS                    PORTS
+isolith-docs     Up 40 minutes (healthy)   127.0.0.1:8792->8792/tcp
+isolith-p2p      Up 40 minutes (healthy)   127.0.0.1:8080->8080/tcp
+isolith-pdm      Up 40 minutes (healthy)   127.0.0.1:8787->8787/tcp
+isolith-viewer   Up 40 minutes (healthy)   127.0.0.1:8790->8790/tcp
+
+Per-service health endpoints (the accept surface):
+  pdm    GET http://127.0.0.1:8787/api/v1/health -> {"status":"ok","service":"oep-pdm","version":"1.0.0"}
+  viewer GET http://127.0.0.1:8790/             -> HTTP 200
+  p2p    GET http://127.0.0.1:8080/healthz      -> {"status":"ok"}
+  docs   GET http://127.0.0.1:8792/healthz      -> {"status":"ok"}
+
+Compose health state, 5 consecutive samples (2s apart): all four healthy
+on every sample.
+
+Security check (auth on by default, P2T-04-AZ not regressed):
+  POST /api/v1/items with X-Oep-Roles: engineer  -> 403 {"error":{"code":"forbidden",
+         "message":"unknown role \"engineer\" in X-Oep-Roles"}}
+  GET/POST data + audit + file surfaces without identity headers -> 403
+  (health endpoint stays public for the compose healthchecks)

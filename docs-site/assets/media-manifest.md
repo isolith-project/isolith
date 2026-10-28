@@ -21,6 +21,7 @@ air-gap by the delivery stack's `docs` service, `oep-docs --root docs-site`).
 | `images/04-mechanism-animation.mp4` | Mechanism motion study (kinematics lane), all 90 frames, loopable | oep-kinematics demo (P7-M3-T02), ffmpeg h264 encode | 1280x960 (upscaled from 640x480) | Real solved motion, residual ~1e-11. Upscaled for presentation. |
 | `images/05-mechanism-loop.gif` | Compact loop of the same mechanism for docs/embed | Same frames, paletted GIF | 960x720 | 272 KB, embed-friendly. |
 | `images/06-mechanism-contact-sheet.png` | 3x3 grid of nine mechanism poses | PIL from the real frames | 1318x1000 | Convenience contact sheet. |
+| `images/07-nas-compose-equivalent.png` | Compose-equivalent quickstart terminal: `docker compose ps` + health curls + GHCR image refs | headless Chrome render of the real U1 stack output (DOCKER-NAS-DEPLOYMENT, t_82f606dd) | 1100x560 | Real command output from the running arm64 stack on U1, not a mockup. The GHCR ref shown is the default until the gated first public push. |
 
 The `01`/`02` editor viewport pair is presented only together, labeled
 "editor live recompute", never as polished hero art: it is an honest 640x480
