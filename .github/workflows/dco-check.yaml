@@ -1,0 +1,40 @@
+# DCO sign-off gate (public-surface port of .gitea/workflows/dco.yaml).
+#
+# The live CI runs on Gitea Actions (.gitea/workflows/dco.yaml). If the public
+# repository is hosted on GitHub, this file becomes the active enforcement:
+# every commit on the PR branch must carry a `Signed-off-by:` line (the DCO)
+# and the PR body must carry one too, gated by branch protection on the
+# `dco-sign-off` check.
+#
+# same scope decision as the Gitea workflow: pull_request events only, never
+# push. Merges onto main are the maintainer's lane and the repo's own merge
+# commits are not contributor-authored.
+#
+# The scan logic is shared with the acceptance test (tests/test_dco_check.py)
+# via python/oep_tooling/dco_check.py.
+name: DCO sign-off
+on:
+  pull_request:
+jobs:
+  dco-sign-off:
+    name: dco-sign-off
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Save PR body
+        run: |
+          python3 - <<'PY'
+          import json
+          body = json.loads('${{ toJSON(github.event.pull_request.body) }}')
+          with open('/tmp/pr-body.txt', 'w', encoding='utf-8') as fh:
+              fh.write(body or '')
+          PY
+      - name: Run DCO check (commits + PR body)
+        run: |
+          python3 python/oep_tooling/dco_check.py --repo "$PWD" \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --body-file /tmp/pr-body.txt

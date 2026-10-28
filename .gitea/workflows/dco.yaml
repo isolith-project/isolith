@@ -1,0 +1,49 @@
+# DCO sign-off gate (community intake, item 8).
+#
+# Enforces the CONTRIBUTING.md promise that commit sign-off is checked before
+# a pull request can merge: every commit on the PR branch must carry a
+# `Signed-off-by:` line (the DCO) and the PR body must carry one too.
+#
+# Scope decision (recorded so nobody "fixes" it into a deadlock): this job
+# runs on pull_request events ONLY, never on push. Merges onto main are the
+# maintainer's lane; the commits were already gated on the PR branch, and the
+# repo's own merge commits are not authored by contributors, so running a
+# sign-off scan on every push to main would fail the repo's own merges.
+# Direct pushes are the maintainer's responsibility (decision #15 gate).
+#
+# The scan is performed by python/oep_tooling/dco_check.py (stdlib, tested by
+# tests/test_dco_check.py) so the CI call and the acceptance test exercise the
+# same logic. Checkout fetches the PR base and head SHAs explicitly (not a
+# shallow default-branch clone) so the base..head range is exact.
+name: DCO sign-off
+on:
+  pull_request:
+jobs:
+  dco-sign-off:
+    name: dco-sign-off
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Checkout PR base and head
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
+          git fetch -q --no-tags origin "${{ github.event.pull_request.base.sha }}"
+          git fetch -q --no-tags origin "${{ github.event.pull_request.head.sha }}"
+          git checkout -q -b pr-head "${{ github.event.pull_request.head.sha }}"
+      - name: Save PR body
+        run: |
+          python3 - <<'PY'
+          import json
+          body = json.loads('${{ toJSON(github.event.pull_request.body) }}')
+          with open('/tmp/pr-body.txt', 'w', encoding='utf-8') as fh:
+              fh.write(body or '')
+          PY
+      - name: Run DCO check (commits + PR body)
+        run: |
+          python3 python/oep_tooling/dco_check.py --repo "$PWD" \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --body-file /tmp/pr-body.txt

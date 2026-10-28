@@ -1,0 +1,845 @@
+=== difftest --green (Rust vs C++ reference, all green+partial units) ===
+start: 2026-10-28T01:54:02Z
+ Downloading crates ...
+  Downloaded serde_spanned v0.6.9
+  Downloaded toml_write v0.1.2
+  Downloaded toml v0.8.23
+  Downloaded toml_edit v0.22.27
+  Downloaded winnow v0.7.15
+  Downloaded toml_datetime v0.6.11
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling zmij v1.0.23
+   Compiling serde_core v1.0.229
+   Compiling libc v0.2.190
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling find-msvc-tools v0.1.14
+   Compiling shlex v2.0.1
+   Compiling thiserror v2.0.21
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.2
+   Compiling winnow v0.7.15
+   Compiling toml_write v0.1.2
+   Compiling difftest v0.1.0 (/home/r1a/.hermes/cache/scratch/solidcore/crates/difftest)
+   Compiling step-import v0.1.0 (/home/r1a/.hermes/cache/scratch/solidcore/crates/step-import)
+   Compiling ssi v0.1.0 (/home/r1a/.hermes/cache/scratch/solidcore/crates/ssi)
+   Compiling indexmap v2.14.2
+   Compiling syn v3.0.9
+   Compiling jobserver v0.1.35
+   Compiling cc v1.8.0
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling solidcore-ffi v0.1.0 (/home/r1a/.hermes/cache/scratch/solidcore/crates/solidcore-ffi)
+   Compiling solidcore v0.0.1 (/home/r1a/.hermes/cache/scratch/solidcore/crates/solidcore)
+   Compiling serde_spanned v0.6.9
+   Compiling toml_datetime v0.6.11
+   Compiling toml_edit v0.22.27
+   Compiling toml v0.8.23
+   Compiling solidcore-ssi v0.1.0 (/home/r1a/.hermes/cache/scratch/solidcore/crates/solidcore-ssi)
+    Finished `difftest` profile [optimized] target(s) in 2m 13s
+     Running `bin/difftest/difftest --green --jobs 4`
+PASS blend.fillet_corner_p1 cases=308 passed=308 failed=0 deferred=0 max_rel_err=0e0 with_values=290 no_values=18 vacuous=0
+  report: reports/difftest/blend.fillet_corner_p1.json
+TIME blend.fillet_corner_p1 n=308 cases=0.074232 cpp=1.804834 rust=1.012639 compare=0.003079 ratio=0.561 slowest_rust=gen0008:0.039927
+PASS blend.fillet_corner_p2 cases=630 passed=606 failed=0 deferred=0 max_rel_err=0e0 with_values=595 no_values=11 vacuous=0 rejected=24
+  report: reports/difftest/blend.fillet_corner_p2.json
+TIME blend.fillet_corner_p2 n=630 cases=0.843430 cpp=3.397526 rust=1.925384 compare=0.005610 ratio=0.567 slowest_rust=find_concave_box_w_slot_v5_ring:0.040318
+PASS blend.fillet_corner_p3 cases=1013 passed=994 failed=0 deferred=0 max_rel_err=0e0 with_values=994 no_values=0 vacuous=0 rejected=19
+  report: reports/difftest/blend.fillet_corner_p3.json
+TIME blend.fillet_corner_p3 n=1013 cases=0.098321 cpp=7.449180 rust=1.291069 compare=0.014049 ratio=0.173 slowest_rust=box_w_slot_eu0_m4_circ:0.011996
+PASS blend.fillet_custom_solver cases=451 passed=451 failed=0 deferred=0 max_rel_err=0e0 with_values=451 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_custom_solver.json
+TIME blend.fillet_custom_solver n=451 cases=0.009289 cpp=0.051868 rust=0.024591 compare=0.004990 ratio=0.474 slowest_rust=init_eiffel_rail1:0.000161
+PASS blend.fillet_executive_p1 cases=155 passed=155 failed=0 deferred=0 max_rel_err=0e0 with_values=155 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_executive_p1.json
+TIME blend.fillet_executive_p1 n=155 cases=0.450534 cpp=0.612744 rust=0.875588 compare=0.002530 ratio=1.429 slowest_rust=topo0038:0.112973
+PASS blend.fillet_executive_p2 cases=278 passed=278 failed=0 deferred=0 max_rel_err=0e0 with_values=275 no_values=3 vacuous=0
+  report: reports/difftest/blend.fillet_executive_p2.json
+TIME blend.fillet_executive_p2 n=278 cases=0.005026 cpp=0.011572 rust=0.020853 compare=0.002176 ratio=1.802 slowest_rust=set_params_empty:0.000674
+PASS blend.fillet_executive_p3 cases=594 passed=592 failed=0 deferred=0 max_rel_err=0e0 with_values=592 no_values=0 vacuous=0 rejected=2
+  report: reports/difftest/blend.fillet_executive_p3.json
+TIME blend.fillet_executive_p3 n=594 cases=0.022413 cpp=12.422471 rust=33.770329 compare=0.014318 ratio=2.718 slowest_rust=sweep4-sphere_diff_3cylinders-all-r0.1:2.853036
+PASS blend.fillet_geom_p1 cases=490 passed=477 failed=0 deferred=0 max_rel_err=0e0 with_values=477 no_values=0 vacuous=0 rejected=13
+  report: reports/difftest/blend.fillet_geom_p1.json
+TIME blend.fillet_geom_p1 n=490 cases=0.069903 cpp=0.070378 rust=0.685604 compare=0.009137 ratio=9.742 slowest_rust=surface_drop_point_endsnap_v_knot_control:0.386071
+PASS blend.fillet_geom_p2 cases=351 passed=351 failed=0 deferred=0 max_rel_err=0e0 with_values=351 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_geom_p2.json
+TIME blend.fillet_geom_p2 n=351 cases=2.464209 cpp=1.825654 rust=4.243006 compare=0.011935 ratio=2.324 slowest_rust=gen0089:3.118737
+PASS blend.fillet_geom_p3 cases=325 passed=318 failed=0 deferred=0 max_rel_err=0e0 with_values=318 no_values=0 vacuous=0 rejected=7
+  report: reports/difftest/blend.fillet_geom_p3.json
+TIME blend.fillet_geom_p3 n=325 cases=0.020723 cpp=2.964676 rust=1.423744 compare=0.003555 ratio=0.480 slowest_rust=gen0038:0.031651
+PASS blend.fillet_geom_p4 cases=400 passed=400 failed=0 deferred=0 max_rel_err=0e0 with_values=400 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_geom_p4.json
+TIME blend.fillet_geom_p4 n=400 cases=0.036523 cpp=0.049766 rust=0.081298 compare=0.002595 ratio=1.634 slowest_rust=make_face_cliff_join:0.004992
+PASS blend.fillet_geom_p5 cases=300 passed=300 failed=0 deferred=0 max_rel_err=0e0 with_values=300 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_geom_p5.json
+TIME blend.fillet_geom_p5 n=300 cases=0.257770 cpp=0.258064 rust=0.398546 compare=0.010017 ratio=1.544 slowest_rust=gen0127:0.077900
+PASS blend.fillet_geom_p6 cases=400 passed=400 failed=0 deferred=0 max_rel_err=0e0 with_values=400 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_geom_p6.json
+TIME blend.fillet_geom_p6 n=400 cases=0.020930 cpp=4.474442 rust=2.395610 compare=0.012712 ratio=0.535 slowest_rust=gen0306:0.021262
+PASS blend.fillet_intersector cases=1292 passed=1292 failed=0 deferred=0 max_rel_err=0e0 with_values=1292 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_intersector.json
+TIME blend.fillet_intersector n=1292 cases=0.079272 cpp=3.917603 rust=0.272126 compare=0.021364 ratio=0.069 slowest_rust=gen0715:0.000825
+PASS blend.fillet_solver_p1 cases=351 passed=351 failed=0 deferred=0 max_rel_err=0e0 with_values=351 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_solver_p1.json
+TIME blend.fillet_solver_p1 n=351 cases=0.009192 cpp=0.773899 rust=0.056571 compare=0.001077 ratio=0.073 slowest_rust=gen0029:0.006358
+PASS blend.fillet_solver_p2 cases=311 passed=311 failed=0 deferred=0 max_rel_err=6.447848034425354e-16 with_values=311 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_solver_p2.json
+TIME blend.fillet_solver_p2 n=311 cases=0.016983 cpp=0.137918 rust=0.137013 compare=0.001133 ratio=0.993 slowest_rust=gen0016_rail_eu:0.036363
+PASS blend.fillet_solver_p3 cases=400 passed=400 failed=0 deferred=0 max_rel_err=1.8011683050692552e-15 with_values=400 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_solver_p3.json
+TIME blend.fillet_solver_p3 n=400 cases=0.022159 cpp=0.023968 rust=0.038218 compare=0.000898 ratio=1.595 slowest_rust=gen0204:0.000548
+PASS blend.fillet_solver_p4 cases=651 passed=651 failed=0 deferred=0 max_rel_err=0e0 with_values=651 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_solver_p4.json
+TIME blend.fillet_solver_p4 n=651 cases=0.021720 cpp=1.007137 rust=0.167816 compare=0.012341 ratio=0.167 slowest_rust=gen0583:0.001368
+PASS blend.fillet_solver_p5 cases=100 passed=100 failed=0 deferred=0 max_rel_err=0e0 with_values=100 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_solver_p5.json
+TIME blend.fillet_solver_p5 n=100 cases=0.006785 cpp=0.140315 rust=0.151365 compare=0.001180 ratio=1.079 slowest_rust=review_classify_2_6:0.002329
+PASS blend.fillet_standard_solver_p1 cases=3839 passed=3828 failed=0 deferred=0 max_rel_err=0e0 with_values=3826 no_values=2 vacuous=0 rejected=11
+  report: reports/difftest/blend.fillet_standard_solver_p1.json
+TIME blend.fillet_standard_solver_p1 n=3839 cases=0.277991 cpp=1.099143 rust=0.661986 compare=0.031276 ratio=0.602 slowest_rust=gen0336:0.003844
+PASS blend.fillet_standard_solver_p2 cases=525 passed=525 failed=0 deferred=0 max_rel_err=0e0 with_values=525 no_values=0 vacuous=0
+  report: reports/difftest/blend.fillet_standard_solver_p2.json
+TIME blend.fillet_standard_solver_p2 n=525 cases=0.015672 cpp=0.529105 rust=0.300209 compare=0.003283 ratio=0.567 slowest_rust=gen0339:0.031977
+PASS blend.hcr cases=434 passed=434 failed=0 deferred=0 max_rel_err=0e0 with_values=406 no_values=28 vacuous=0
+  report: reports/difftest/blend.hcr.json
+TIME blend.hcr n=434 cases=0.008846 cpp=2.530069 rust=1.235831 compare=0.002409 ratio=0.488 slowest_rust=gen0011:0.048516
+PASS boolean.api_brep cases=337 passed=324 failed=0 deferred=0 max_rel_err=0e0 with_values=324 no_values=0 vacuous=0 rejected=13
+  report: reports/difftest/boolean.api_brep.json
+TIME boolean.api_brep n=337 cases=0.016841 cpp=21.242050 rust=13.800957 compare=0.002661 ratio=0.650 slowest_rust=torus_guard_huge_scale_box_intersection:4.051386
+PASS boolean.merge_p1 cases=248 passed=248 failed=0 deferred=0 max_rel_err=0e0 with_values=236 no_values=12 vacuous=0
+  report: reports/difftest/boolean.merge_p1.json
+TIME boolean.merge_p1 n=248 cases=0.004713 cpp=0.059237 rust=0.037924 compare=0.001207 ratio=0.640 slowest_rust=regions_file_sphere.smb:0.012669
+PASS boolean.merge_p2 cases=45 passed=45 failed=0 deferred=0 max_rel_err=0e0 with_values=45 no_values=0 vacuous=0
+  report: reports/difftest/boolean.merge_p2.json
+TIME boolean.merge_p2 n=45 cases=0.009353 cpp=0.115047 rust=0.091643 compare=0.000391 ratio=0.797 slowest_rust=make_faceuse_sphere:0.023013
+PASS boolean.merge_p3 cases=423 passed=423 failed=0 deferred=0 max_rel_err=0e0 with_values=333 no_values=90 vacuous=0
+  report: reports/difftest/boolean.merge_p3.json
+TIME boolean.merge_p3 n=423 cases=0.009609 cpp=0.072097 rust=0.091178 compare=0.002145 ratio=1.265 slowest_rust=upstream_piecewise_boxes_0:0.026388
+PASS boolean.merge_p4 cases=311 passed=308 failed=0 deferred=0 max_rel_err=0e0 with_values=308 no_values=0 vacuous=0 rejected=3
+  report: reports/difftest/boolean.merge_p4.json
+TIME boolean.merge_p4 n=311 cases=0.008392 cpp=0.066035 rust=0.076388 compare=0.009306 ratio=1.157 slowest_rust=op9-option4:0.001111
+PASS boolean.merge_p5 cases=140 passed=140 failed=0 deferred=0 max_rel_err=0e0 with_values=140 no_values=0 vacuous=0
+  report: reports/difftest/boolean.merge_p5.json
+TIME boolean.merge_p5 n=140 cases=0.005801 cpp=0.089033 rust=0.046945 compare=0.001080 ratio=0.527 slowest_rust=upstream_solid_box_op1:0.008497
+PASS boolean.topology_intersector_p1 cases=845 passed=845 failed=0 deferred=0 max_rel_err=0e0 with_values=842 no_values=3 vacuous=0
+  report: reports/difftest/boolean.topology_intersector_p1.json
+TIME boolean.topology_intersector_p1 n=845 cases=0.012884 cpp=9.703463 rust=1.338643 compare=0.005706 ratio=0.138 slowest_rust=gen0339:0.109107
+PASS boolean.topology_intersector_p2 cases=910 passed=910 failed=0 deferred=0 max_rel_err=0e0 with_values=908 no_values=2 vacuous=0
+  report: reports/difftest/boolean.topology_intersector_p2.json
+TIME boolean.topology_intersector_p2 n=910 cases=0.019001 cpp=10.977593 rust=2.224075 compare=0.006539 ratio=0.203 slowest_rust=gen0417:0.102459
+PASS boolean.topology_intersector_p3 cases=271 passed=271 failed=0 deferred=0 max_rel_err=0e0 with_values=271 no_values=0 vacuous=0
+  report: reports/difftest/boolean.topology_intersector_p3.json
+TIME boolean.topology_intersector_p3 n=271 cases=0.005263 cpp=4.646140 rust=3.137952 compare=0.003142 ratio=0.675 slowest_rust=gen0251:0.084305
+PASS curve.composite_curve_p1 cases=3096 passed=3096 failed=0 deferred=0 max_rel_err=0e0 with_values=3096 no_values=0 vacuous=0
+  report: reports/difftest/curve.composite_curve_p1.json
+TIME curve.composite_curve_p1 n=3096 cases=0.038383 cpp=0.122622 rust=0.153833 compare=0.009979 ratio=1.255 slowest_rust=gen2562:0.002359
+PASS curve.composite_curve_p2 cases=676 passed=676 failed=0 deferred=0 max_rel_err=0e0 with_values=676 no_values=0 vacuous=0
+  report: reports/difftest/curve.composite_curve_p2.json
+TIME curve.composite_curve_p2 n=676 cases=0.019635 cpp=0.490898 rust=0.746127 compare=0.007524 ratio=1.520 slowest_rust=gen0393:0.028731
+PASS curve.conic cases=3240 passed=3240 failed=0 deferred=0 max_rel_err=0e0 with_values=3209 no_values=31 vacuous=0
+  report: reports/difftest/curve.conic.json
+TIME curve.conic n=3240 cases=0.041828 cpp=0.018041 rust=0.016639 compare=0.004880 ratio=0.922 slowest_rust=smcurvetest_6053_intersect:0.000031
+PASS curve.crv_in_volume cases=2477 passed=2477 failed=0 deferred=0 max_rel_err=0e0 with_values=2477 no_values=0 vacuous=0
+  report: reports/difftest/curve.crv_in_volume.json
+TIME curve.crv_in_volume n=2477 cases=0.026882 cpp=0.032163 rust=0.029206 compare=0.006653 ratio=0.908 slowest_rust=clone_ctor_raw_gap1.5e-12_owner0_param_space:0.000092
+PASS curve.crv_on_surf cases=2107 passed=2107 failed=0 deferred=0 max_rel_err=0e0 with_values=2107 no_values=0 vacuous=0
+  report: reports/difftest/curve.crv_on_surf.json
+TIME curve.crv_on_surf n=2107 cases=0.078597 cpp=0.215415 rust=0.355407 compare=0.026314 ratio=1.650 slowest_rust=gen0972:0.008789
+PASS curve.curve_cache cases=642 passed=642 failed=0 deferred=0 max_rel_err=0e0 with_values=642 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_cache.json
+TIME curve.curve_cache n=642 cases=0.007787 cpp=0.027838 rust=0.059550 compare=0.013734 ratio=2.139 slowest_rust=gen0034:0.001263
+PASS curve.curve_p1 cases=3091 passed=3091 failed=0 deferred=0 max_rel_err=0e0 with_values=3091 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p1.json
+TIME curve.curve_p1 n=3091 cases=0.054841 cpp=0.145231 rust=0.304215 compare=0.014261 ratio=2.095 slowest_rust=cp_nurb_min_transformed:0.029348
+PASS curve.curve_p2 cases=3029 passed=3029 failed=0 deferred=0 max_rel_err=0e0 with_values=3029 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p2.json
+TIME curve.curve_p2 n=3029 cases=0.024243 cpp=0.028863 rust=0.025326 compare=0.006995 ratio=0.877 slowest_rust=cov_best_subdiv_angle_child1_on_axis:0.000087
+PASS curve.curve_p3 cases=3081 passed=3081 failed=0 deferred=0 max_rel_err=0e0 with_values=3081 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p3.json
+TIME curve.curve_p3 n=3081 cases=0.044686 cpp=0.061892 rust=0.079171 compare=0.007593 ratio=1.279 slowest_rust=gen0961:0.000938
+PASS curve.curve_p4 cases=3260 passed=3260 failed=0 deferred=0 max_rel_err=0e0 with_values=3260 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p4.json
+TIME curve.curve_p4 n=3260 cases=0.060133 cpp=0.045332 rust=0.044492 compare=0.007604 ratio=0.981 slowest_rust=gen0119:0.000256
+PASS curve.curve_p5 cases=3140 passed=3140 failed=0 deferred=0 max_rel_err=0e0 with_values=3140 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p5.json
+TIME curve.curve_p5 n=3140 cases=0.031642 cpp=0.050039 rust=0.053747 compare=0.007657 ratio=1.074 slowest_rust=gen0434:0.000674
+PASS curve.curve_p6 cases=3138 passed=3138 failed=0 deferred=0 max_rel_err=0e0 with_values=3138 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p6.json
+TIME curve.curve_p6 n=3138 cases=0.057683 cpp=0.064860 rust=0.084559 compare=0.007758 ratio=1.304 slowest_rust=gen1901:0.007938
+PASS curve.curve_p7 cases=3067 passed=3067 failed=0 deferred=0 max_rel_err=0e0 with_values=3067 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p7.json
+TIME curve.curve_p7 n=3067 cases=0.209574 cpp=0.308536 rust=0.881696 compare=0.016243 ratio=2.858 slowest_rust=gen0027:0.031041
+PASS curve.curve_p8 cases=3068 passed=3068 failed=0 deferred=0 max_rel_err=0e0 with_values=3068 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p8.json
+TIME curve.curve_p8 n=3068 cases=0.062008 cpp=0.389196 rust=1.100499 compare=0.009111 ratio=2.828 slowest_rust=gen1680:0.041874
+PASS curve.curve_p9 cases=3126 passed=3126 failed=0 deferred=0 max_rel_err=0e0 with_values=3126 no_values=0 vacuous=0
+  report: reports/difftest/curve.curve_p9.json
+TIME curve.curve_p9 n=3126 cases=0.068915 cpp=0.441122 rust=2.108293 compare=0.010342 ratio=4.779 slowest_rust=gen0282:0.128386
+PASS curve.ellipse_p1 cases=2031 passed=2031 failed=0 deferred=0 max_rel_err=0e0 with_values=2031 no_values=0 vacuous=0
+  report: reports/difftest/curve.ellipse_p1.json
+TIME curve.ellipse_p1 n=2031 cases=0.080342 cpp=0.039541 rust=0.047603 compare=0.006734 ratio=1.204 slowest_rust=gen0098:0.000398
+PASS curve.ellipse_p2 cases=2107 passed=2107 failed=0 deferred=0 max_rel_err=0e0 with_values=2107 no_values=0 vacuous=0
+  report: reports/difftest/curve.ellipse_p2.json
+TIME curve.ellipse_p2 n=2107 cases=0.022578 cpp=0.028958 rust=0.030261 compare=0.006719 ratio=1.045 slowest_rust=gen0369:0.000252
+PASS curve.hermite_curve cases=2431 passed=2431 failed=0 deferred=0 max_rel_err=0e0 with_values=2431 no_values=0 vacuous=0
+  report: reports/difftest/curve.hermite_curve.json
+TIME curve.hermite_curve n=2431 cases=0.017240 cpp=0.026904 rust=0.020523 compare=0.008655 ratio=0.763 slowest_rust=wr0138:0.000250
+PASS curve.hyperbola cases=2062 passed=2062 failed=0 deferred=0 max_rel_err=0e0 with_values=2062 no_values=0 vacuous=0
+  report: reports/difftest/curve.hyperbola.json
+TIME curve.hyperbola n=2062 cases=0.024926 cpp=0.016176 rust=0.016594 compare=0.004672 ratio=1.026 slowest_rust=adjusted_gps_intersect_0:0.000145
+PASS curve.iso_curve cases=2874 passed=2874 failed=0 deferred=0 max_rel_err=0e0 with_values=2874 no_values=0 vacuous=0
+  report: reports/difftest/curve.iso_curve.json
+TIME curve.iso_curve n=2874 cases=0.044724 cpp=0.098998 rust=0.099082 compare=0.004674 ratio=1.001 slowest_rust=offset_nurb_sp1_mid_clamp_state:0.000485
+PASS curve.line cases=2103 passed=2103 failed=0 deferred=0 max_rel_err=0e0 with_values=2103 no_values=0 vacuous=0
+  report: reports/difftest/curve.line.json
+TIME curve.line n=2103 cases=0.021179 cpp=0.026478 rust=0.026297 compare=0.005613 ratio=0.993 slowest_rust=reversed_line_join_00:0.000066
+PASS curve.offset_curve cases=2823 passed=2823 failed=0 deferred=0 max_rel_err=0e0 with_values=2823 no_values=0 vacuous=0
+  report: reports/difftest/curve.offset_curve.json
+TIME curve.offset_curve n=2823 cases=0.069760 cpp=0.034090 rust=0.031475 compare=0.007290 ratio=0.923 slowest_rust=clone_ctor_raw_gap1.5e-12_owns0:0.000161
+PASS curve.parabola cases=3044 passed=3044 failed=0 deferred=0 max_rel_err=0e0 with_values=3044 no_values=0 vacuous=0
+  report: reports/difftest/curve.parabola.json
+TIME curve.parabola n=3044 cases=0.023729 cpp=0.030893 rust=0.029132 compare=0.005811 ratio=0.943 slowest_rust=analytic_gps_intersect_0:0.000124
+PASS curve.projected_curve cases=2747 passed=2746 failed=0 deferred=0 max_rel_err=0e0 with_values=2746 no_values=0 vacuous=0 rejected=1
+  report: reports/difftest/curve.projected_curve.json
+TIME curve.projected_curve n=2747 cases=0.037680 cpp=0.033975 rust=0.029998 compare=0.007500 ratio=0.883 slowest_rust=clone_ctor_raw_projected_gap1.5e-12_owns0:0.000088
+PASS curve.tangent_field cases=1355 passed=1355 failed=0 deferred=0 max_rel_err=0e0 with_values=1355 no_values=0 vacuous=0
+  report: reports/difftest/curve.tangent_field.json
+TIME curve.tangent_field n=1355 cases=0.026465 cpp=0.130647 rust=0.155268 compare=0.016231 ratio=1.188 slowest_rust=rt0179:0.007109
+PASS geom.a_object cases=2040 passed=2040 failed=0 deferred=0 max_rel_err=0e0 with_values=2040 no_values=0 vacuous=0
+  report: reports/difftest/geom.a_object.json
+TIME geom.a_object n=2040 cases=0.021638 cpp=0.035096 rust=0.044604 compare=0.015817 ratio=1.271 slowest_rust=notify_unknown_and_noop_events:0.000132
+PASS geom.assert_array cases=3735 passed=3735 failed=0 deferred=0 max_rel_err=0e0 with_values=3735 no_values=0 vacuous=0
+  report: reports/difftest/geom.assert_array.json
+TIME geom.assert_array n=3735 cases=0.073761 cpp=0.071549 rust=0.071679 compare=0.024002 ratio=1.002 slowest_rust=gen2502:0.000123
+PASS geom.attribute cases=2029 passed=2029 failed=0 deferred=0 max_rel_err=0e0 with_values=2029 no_values=0 vacuous=0
+  report: reports/difftest/geom.attribute.json
+TIME geom.attribute n=2029 cases=0.049993 cpp=0.090361 rust=0.100916 compare=0.021910 ratio=1.117 slowest_rust=gen1739:0.000223
+PASS geom.axis2_placement cases=4051 passed=4051 failed=0 deferred=0 max_rel_err=0e0 with_values=4051 no_values=0 vacuous=0
+  report: reports/difftest/geom.axis2_placement.json
+TIME geom.axis2_placement n=4051 cases=0.041588 cpp=0.028029 rust=0.031291 compare=0.007623 ratio=1.116 slowest_rust=refframe_rotate_at:0.000048
+PASS geom.context cases=2013 passed=2013 failed=0 deferred=0 max_rel_err=0e0 with_values=2013 no_values=0 vacuous=0
+  report: reports/difftest/geom.context.json
+TIME geom.context n=2013 cases=0.089150 cpp=0.103274 rust=0.111956 compare=0.027157 ratio=1.084 slowest_rust=gen0010:0.000122
+PASS geom.extent1d cases=3091 passed=3091 failed=0 deferred=0 max_rel_err=0e0 with_values=3091 no_values=0 vacuous=0
+  report: reports/difftest/geom.extent1d.json
+TIME geom.extent1d n=3091 cases=0.008238 cpp=0.173665 rust=0.054758 compare=0.006910 ratio=0.315 slowest_rust=gen2128:0.011049
+PASS geom.extent2d cases=3069 passed=3069 failed=0 deferred=0 max_rel_err=0e0 with_values=3069 no_values=0 vacuous=0
+  report: reports/difftest/geom.extent2d.json
+TIME geom.extent2d n=3069 cases=0.008666 cpp=0.009964 rust=0.009071 compare=0.007350 ratio=0.910 slowest_rust=my_test_extent2d_e1_from_points:0.000023
+PASS geom.extent3d cases=3086 passed=3086 failed=0 deferred=0 max_rel_err=0e0 with_values=3086 no_values=0 vacuous=0
+  report: reports/difftest/geom.extent3d.json
+TIME geom.extent3d n=3086 cases=0.007180 cpp=0.010543 rust=0.009882 compare=0.007765 ratio=0.937 slowest_rust=my_test_extent3d_e1_from_points:0.000024
+PASS geom.geom_utility_p1 cases=4185 passed=4185 failed=0 deferred=0 max_rel_err=0e0 with_values=4185 no_values=0 vacuous=0
+  report: reports/difftest/geom.geom_utility_p1.json
+TIME geom.geom_utility_p1 n=4185 cases=0.027786 cpp=0.009808 rust=0.010531 compare=0.008585 ratio=1.074 slowest_rust=rect_area:0.000029
+PASS geom.geom_utility_p2 cases=3282 passed=3282 failed=0 deferred=0 max_rel_err=0e0 with_values=3111 no_values=171 vacuous=0
+  report: reports/difftest/geom.geom_utility_p2.json
+TIME geom.geom_utility_p2 n=3282 cases=0.026750 cpp=0.011140 rust=0.010707 compare=0.009340 ratio=0.961 slowest_rust=gen0396:0.000125
+PASS geom.global_solver cases=620 passed=620 failed=0 deferred=0 max_rel_err=0e0 with_values=620 no_values=0 vacuous=0
+  report: reports/difftest/geom.global_solver.json
+TIME geom.global_solver n=620 cases=0.036396 cpp=0.066188 rust=0.074820 compare=0.007167 ratio=1.130 slowest_rust=gen0111:0.003309
+PASS geom.grid cases=621 passed=621 failed=0 deferred=0 max_rel_err=0e0 with_values=621 no_values=0 vacuous=0
+  report: reports/difftest/geom.grid.json
+TIME geom.grid n=621 cases=0.031801 cpp=0.055409 rust=0.056958 compare=0.007241 ratio=1.028 slowest_rust=raytracer_surface_hierarchy_expand:0.001032
+SKIP geom.hash_table skipped(platform): C++ float-to-ULONG conversions require x86-64 (UB-35, #448)
+  report: reports/difftest/geom.hash_table.json
+TIME geom.hash_table n=0 cases=0.000000 cpp=0.000000 rust=0.000000 compare=0.000000 ratio=NaN
+PASS geom.local_solve1d cases=3317 passed=3317 failed=0 deferred=0 max_rel_err=0e0 with_values=3317 no_values=0 vacuous=0
+  report: reports/difftest/geom.local_solve1d.json
+TIME geom.local_solve1d n=3317 cases=0.038262 cpp=0.041608 rust=0.038603 compare=0.022427 ratio=0.928 slowest_rust=bad_first_eval_no_interval:0.000099
+PASS geom.local_solve_nd cases=3043 passed=3043 failed=0 deferred=0 max_rel_err=0e0 with_values=2986 no_values=57 vacuous=0
+  report: reports/difftest/geom.local_solve_nd.json
+TIME geom.local_solve_nd n=3043 cases=0.058127 cpp=0.057287 rust=0.143400 compare=0.025282 ratio=2.503 slowest_rust=gen2744:0.018925
+PASS geom.matrix cases=4044 passed=4044 failed=0 deferred=0 max_rel_err=0e0 with_values=3304 no_values=740 vacuous=0
+  report: reports/difftest/geom.matrix.json
+TIME geom.matrix n=4044 cases=0.022496 cpp=0.028160 rust=0.027513 compare=0.009079 ratio=0.977 slowest_rust=gen1586:0.000084
+PASS geom.object cases=624 passed=624 failed=0 deferred=0 max_rel_err=0e0 with_values=624 no_values=0 vacuous=0
+  report: reports/difftest/geom.object.json
+TIME geom.object n=624 cases=0.007876 cpp=0.024593 rust=0.051798 compare=0.001543 ratio=2.106 slowest_rust=shape_whole_box_brep:0.001704
+PASS geom.periodic_extent1d cases=4054 passed=4054 failed=0 deferred=0 max_rel_err=0e0 with_values=4054 no_values=0 vacuous=0
+  report: reports/difftest/geom.periodic_extent1d.json
+TIME geom.periodic_extent1d n=4054 cases=0.019651 cpp=0.013101 rust=0.012904 compare=0.010248 ratio=0.985 slowest_rust=gen0186:0.000016
+PASS geom.point_set cases=2032 passed=2032 failed=0 deferred=0 max_rel_err=0e0 with_values=2032 no_values=0 vacuous=0
+  report: reports/difftest/geom.point_set.json
+TIME geom.point_set n=2032 cases=0.038649 cpp=0.029193 rust=0.028829 compare=0.008716 ratio=0.988 slowest_rust=gen0426:0.000079
+PASS geom.polar_box cases=3033 passed=3033 failed=0 deferred=0 max_rel_err=0e0 with_values=3033 no_values=0 vacuous=0
+  report: reports/difftest/geom.polar_box.json
+TIME geom.polar_box n=3033 cases=0.066066 cpp=0.130798 rust=0.131011 compare=0.060522 ratio=1.002 slowest_rust=points_edges_0:0.000111
+PASS geom.polynomial cases=6038 passed=6038 failed=0 deferred=0 max_rel_err=0e0 with_values=6038 no_values=0 vacuous=0
+  report: reports/difftest/geom.polynomial.json
+TIME geom.polynomial n=6038 cases=0.011830 cpp=0.008494 rust=0.007906 compare=0.015752 ratio=0.931 slowest_rust=quad_roots_m1_m2:0.000007
+PASS geom.pseudo_box cases=3012 passed=3012 failed=0 deferred=0 max_rel_err=0e0 with_values=3012 no_values=0 vacuous=0
+  report: reports/difftest/geom.pseudo_box.json
+TIME geom.pseudo_box n=3012 cases=0.064610 cpp=0.133935 rust=0.139632 compare=0.048452 ratio=1.043 slowest_rust=my_test_pseudobox:0.000188
+PASS geom.solution_array cases=810 passed=810 failed=0 deferred=0 max_rel_err=0e0 with_values=810 no_values=0 vacuous=0
+  report: reports/difftest/geom.solution_array.json
+TIME geom.solution_array n=810 cases=0.052205 cpp=0.067857 rust=0.065464 compare=0.006495 ratio=0.965 slowest_rust=gen0189:0.000303
+PASS geom.tol cases=3456 passed=3456 failed=0 deferred=0 max_rel_err=0e0 with_values=3456 no_values=0 vacuous=0
+  report: reports/difftest/geom.tol.json
+TIME geom.tol n=3456 cases=0.023714 cpp=0.016388 rust=0.016315 compare=0.005044 ratio=0.996 slowest_rust=gen0007:0.000052
+PASS geom.tools cases=915 passed=915 failed=0 deferred=0 max_rel_err=0e0 with_values=915 no_values=0 vacuous=0
+  report: reports/difftest/geom.tools.json
+TIME geom.tools n=915 cases=0.026543 cpp=0.026347 rust=3.747220 compare=0.005223 ratio=142.225 slowest_rust=face_torus_p0:0.166478
+PASS geom.transform cases=3042 passed=3042 failed=0 deferred=0 max_rel_err=0e0 with_values=3042 no_values=0 vacuous=0
+  report: reports/difftest/geom.transform.json
+TIME geom.transform n=3042 cases=0.028909 cpp=0.027952 rust=0.028007 compare=0.005352 ratio=1.002 slowest_rust=api_transform_rot45y_state:0.000082
+PASS geom.tree cases=639 passed=639 failed=0 deferred=0 max_rel_err=0e0 with_values=639 no_values=0 vacuous=0
+  report: reports/difftest/geom.tree.json
+TIME geom.tree n=639 cases=0.074863 cpp=0.119884 rust=0.162541 compare=0.017591 ratio=1.356 slowest_rust=gen0557:0.001150
+PASS geom.vector2d cases=4060 passed=4060 failed=0 deferred=0 max_rel_err=0e0 with_values=4029 no_values=31 vacuous=0
+  report: reports/difftest/geom.vector2d.json
+TIME geom.vector2d n=4060 cases=0.015820 cpp=0.011418 rust=0.010587 compare=0.009400 ratio=0.927 slowest_rust=gen0184:0.000016
+PASS geom.vector3d cases=6114 passed=6114 failed=0 deferred=0 max_rel_err=0e0 with_values=6071 no_values=43 vacuous=0
+  report: reports/difftest/geom.vector3d.json
+TIME geom.vector3d n=6114 cases=0.042861 cpp=0.019252 rust=0.018622 compare=0.008137 ratio=0.967 slowest_rust=unit_ortho_ref:0.000023
+PASS heal.face_props cases=1873 passed=1873 failed=0 deferred=0 max_rel_err=0e0 with_values=1864 no_values=9 vacuous=0
+  report: reports/difftest/heal.face_props.json
+TIME heal.face_props n=1873 cases=0.022596 cpp=1.580544 rust=10.458160 compare=0.020686 ratio=6.617 slowest_rust=gen0329:1.540417
+PASS heal.gap cases=721 passed=721 failed=0 deferred=0 max_rel_err=0e0 with_values=721 no_values=0 vacuous=0
+  report: reports/difftest/heal.gap.json
+TIME heal.gap n=721 cases=0.024926 cpp=1.085139 rust=0.571786 compare=0.005813 ratio=0.527 slowest_rust=gen0124:0.032342
+SKIP heal.heal_data_p1 skipped(platform): C++ float-to-ULONG conversions require x86-64 (UB-35, #448)
+  report: reports/difftest/heal.heal_data_p1.json
+TIME heal.heal_data_p1 n=0 cases=0.000000 cpp=0.000000 rust=0.000000 compare=0.000000 ratio=NaN
+SKIP heal.heal_data_p2 skipped(platform): C++ float-to-ULONG conversions require x86-64 (UB-35, #448)
+  report: reports/difftest/heal.heal_data_p2.json
+TIME heal.heal_data_p2 n=0 cases=0.000000 cpp=0.000000 rust=0.000000 compare=0.000000 ratio=NaN
+SKIP heal.heal_data_p3 skipped(platform): C++ float-to-ULONG conversions require x86-64 (UB-35, #448)
+  report: reports/difftest/heal.heal_data_p3.json
+TIME heal.heal_data_p3 n=0 cases=0.000000 cpp=0.000000 rust=0.000000 compare=0.000000 ratio=NaN
+PASS heal.stitch_p1 cases=300 passed=300 failed=0 deferred=0 max_rel_err=0e0 with_values=299 no_values=1 vacuous=0
+  report: reports/difftest/heal.stitch_p1.json
+TIME heal.stitch_p1 n=300 cases=0.013065 cpp=0.090111 rust=0.051389 compare=0.000941 ratio=0.570 slowest_rust=gen0007:0.003766
+PASS heal.stitch_p2 cases=556 passed=556 failed=0 deferred=0 max_rel_err=0e0 with_values=555 no_values=1 vacuous=0
+  report: reports/difftest/heal.stitch_p2.json
+TIME heal.stitch_p2 n=556 cases=0.055464 cpp=0.191475 rust=0.114422 compare=0.002292 ratio=0.598 slowest_rust=gen0013:0.001464
+PASS intersect.adv_surface_intersector cases=1931 passed=1931 failed=0 deferred=0 max_rel_err=0e0 with_values=1931 no_values=0 vacuous=0
+  report: reports/difftest/intersect.adv_surface_intersector.json
+TIME intersect.adv_surface_intersector n=1931 cases=0.131386 cpp=0.101178 rust=0.123881 compare=0.009425 ratio=1.224 slowest_rust=gen1475:0.000736
+PASS intersect.curve_class_p1 cases=2131 passed=2131 failed=0 deferred=0 max_rel_err=0e0 with_values=2131 no_values=0 vacuous=0
+  report: reports/difftest/intersect.curve_class_p1.json
+TIME intersect.curve_class_p1 n=2131 cases=0.643551 cpp=0.600008 rust=1.325772 compare=0.143233 ratio=2.210 slowest_rust=gen0657:0.063796
+PASS intersect.curve_class_p2 cases=1671 passed=1671 failed=0 deferred=0 max_rel_err=0e0 with_values=1671 no_values=0 vacuous=0
+  report: reports/difftest/intersect.curve_class_p2.json
+TIME intersect.curve_class_p2 n=1671 cases=0.217016 cpp=0.151704 rust=0.168244 compare=0.019399 ratio=1.109 slowest_rust=gen0009:0.000316
+PASS intersect.curve_class_p3 cases=3708 passed=3708 failed=0 deferred=0 max_rel_err=0e0 with_values=3708 no_values=0 vacuous=0
+  report: reports/difftest/intersect.curve_class_p3.json
+TIME intersect.curve_class_p3 n=3708 cases=0.457434 cpp=0.488011 rust=0.777488 compare=0.528030 ratio=1.593 slowest_rust=edge_find_huge:0.000732
+PASS intersect.curve_class_p4 cases=5410 passed=5410 failed=0 deferred=0 max_rel_err=0e0 with_values=5410 no_values=0 vacuous=0
+  report: reports/difftest/intersect.curve_class_p4.json
+TIME intersect.curve_class_p4 n=5410 cases=2.985496 cpp=4.743755 rust=12.932923 compare=0.989905 ratio=2.726 slowest_rust=gen2258:0.092663
+PASS intersect.curve_class_p5 cases=1411 passed=1409 failed=0 deferred=0 max_rel_err=0e0 with_values=1409 no_values=0 vacuous=0 rejected=2
+  report: reports/difftest/intersect.curve_class_p5.json
+TIME intersect.curve_class_p5 n=1411 cases=0.511899 cpp=0.546250 rust=0.108056 compare=0.011800 ratio=0.198 slowest_rust=sss_edit_one_span_knot:0.000764
+PASS intersect.curve_class_p6 cases=4470 passed=4470 failed=0 deferred=0 max_rel_err=0e0 with_values=4464 no_values=6 vacuous=0
+  report: reports/difftest/intersect.curve_class_p6.json
+TIME intersect.curve_class_p6 n=4470 cases=0.069506 cpp=0.923119 rust=0.128800 compare=0.024969 ratio=0.140 slowest_rust=paired-fillet-real-boxes:0.001053
+PASS intersect.curve_class_p7 cases=1516 passed=1516 failed=0 deferred=0 max_rel_err=0e0 with_values=1516 no_values=0 vacuous=0
+  report: reports/difftest/intersect.curve_class_p7.json
+TIME intersect.curve_class_p7 n=1516 cases=0.250266 cpp=0.151263 rust=0.166997 compare=0.016361 ratio=1.104 slowest_rust=gen1279:0.000389
+PASS intersect.curve_class_p8 cases=1127 passed=1127 failed=0 deferred=0 max_rel_err=0e0 with_values=1127 no_values=0 vacuous=0
+  report: reports/difftest/intersect.curve_class_p8.json
+TIME intersect.curve_class_p8 n=1127 cases=0.008765 cpp=0.048754 rust=0.112709 compare=0.003494 ratio=2.312 slowest_rust=gen0765:0.000971
+PASS intersect.curve_class_p9 cases=438 passed=436 failed=0 deferred=0 max_rel_err=0e0 with_values=436 no_values=0 vacuous=0 rejected=2
+  report: reports/difftest/intersect.curve_class_p9.json
+TIME intersect.curve_class_p9 n=438 cases=0.006351 cpp=0.014957 rust=0.023657 compare=0.003147 ratio=1.582 slowest_rust=fuzz_tiny_plane_vertex_cache_state4:0.000445
+PASS intersect.point_class cases=2520 passed=2520 failed=0 deferred=0 max_rel_err=0e0 with_values=2520 no_values=0 vacuous=0
+  report: reports/difftest/intersect.point_class.json
+TIME intersect.point_class n=2520 cases=0.170619 cpp=0.094881 rust=0.116875 compare=0.013453 ratio=1.232 slowest_rust=gen0545:0.000523
+PASS intersect.ray_tracer cases=433 passed=433 failed=0 deferred=0 max_rel_err=0e0 with_values=433 no_values=0 vacuous=0
+  report: reports/difftest/intersect.ray_tracer.json
+TIME intersect.ray_tracer n=433 cases=0.074922 cpp=0.086550 rust=0.092217 compare=0.003226 ratio=1.065 slowest_rust=tess_test10_extrusion:0.002410
+PASS intersect.surface_drop_curve cases=547 passed=547 failed=0 deferred=0 max_rel_err=0e0 with_values=547 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_drop_curve.json
+TIME intersect.surface_drop_curve n=547 cases=0.013317 cpp=0.030582 rust=0.030175 compare=0.002413 ratio=0.987 slowest_rust=gen0057:0.002662
+PASS intersect.surface_drop_lib_p1 cases=2926 passed=2926 failed=0 deferred=0 max_rel_err=0e0 with_values=2926 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_drop_lib_p1.json
+TIME intersect.surface_drop_lib_p1 n=2926 cases=0.066848 cpp=0.556202 rust=1.411673 compare=0.009412 ratio=2.538 slowest_rust=trim0343:0.244936
+PASS intersect.surface_drop_lib_p2 cases=1531 passed=1531 failed=0 deferred=0 max_rel_err=0e0 with_values=1531 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_drop_lib_p2.json
+TIME intersect.surface_drop_lib_p2 n=1531 cases=0.088868 cpp=0.131361 rust=0.142797 compare=0.026809 ratio=1.087 slowest_rust=gen0222:0.004336
+PASS intersect.surface_drop_lib_p3 cases=1529 passed=1529 failed=0 deferred=0 max_rel_err=0e0 with_values=1529 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_drop_lib_p3.json
+TIME intersect.surface_drop_lib_p3 n=1529 cases=0.026738 cpp=0.321514 rust=0.682791 compare=0.015832 ratio=2.124 slowest_rust=gen0805:0.073253
+PASS intersect.surface_intersector_p1 cases=1510 passed=1510 failed=0 deferred=0 max_rel_err=0e0 with_values=1510 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_intersector_p1.json
+TIME intersect.surface_intersector_p1 n=1510 cases=0.105613 cpp=0.102298 rust=0.148331 compare=0.023958 ratio=1.450 slowest_rust=gen0879:0.000474
+PASS intersect.surface_intersector_p2 cases=1660 passed=1660 failed=0 deferred=0 max_rel_err=0e0 with_values=1660 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_intersector_p2.json
+TIME intersect.surface_intersector_p2 n=1660 cases=0.136411 cpp=0.144637 rust=0.242654 compare=0.048031 ratio=1.678 slowest_rust=gen1228:0.001410
+PASS intersect.surface_intersector_p3 cases=1527 passed=1527 failed=0 deferred=0 max_rel_err=0e0 with_values=1527 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_intersector_p3.json
+TIME intersect.surface_intersector_p3 n=1527 cases=0.079962 cpp=0.457770 rust=1.683350 compare=0.050261 ratio=3.677 slowest_rust=gen0210:0.404202
+PASS intersect.surface_intersector_p4 cases=1542 passed=1542 failed=0 deferred=0 max_rel_err=0e0 with_values=1542 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_intersector_p4.json
+TIME intersect.surface_intersector_p4 n=1542 cases=0.046253 cpp=0.443862 rust=0.332208 compare=0.053592 ratio=0.748 slowest_rust=gen1354:0.051247
+PASS intersect.surface_intersector_p5 cases=1731 passed=1731 failed=0 deferred=0 max_rel_err=0e0 with_values=1731 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_intersector_p5.json
+TIME intersect.surface_intersector_p5 n=1731 cases=0.135220 cpp=0.277358 rust=0.594620 compare=0.008125 ratio=2.144 slowest_rust=gen1277:0.022096
+PASS intersect.surface_silhouette cases=709 passed=709 failed=0 deferred=0 max_rel_err=0e0 with_values=709 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_silhouette.json
+TIME intersect.surface_silhouette n=709 cases=0.025957 cpp=0.081725 rust=0.027467 compare=0.002401 ratio=0.336 slowest_rust=gen0215:0.000441
+PASS intersect.surface_tracer cases=427 passed=427 failed=0 deferred=0 max_rel_err=0e0 with_values=427 no_values=0 vacuous=0
+  report: reports/difftest/intersect.surface_tracer.json
+TIME intersect.surface_tracer n=427 cases=0.026658 cpp=0.096830 rust=0.121138 compare=0.004467 ratio=1.251 slowest_rust=gen0396:0.014167
+PASS intersect.topology_solver_p1 cases=3532 passed=3532 failed=0 deferred=0 max_rel_err=0e0 with_values=3532 no_values=0 vacuous=0
+  report: reports/difftest/intersect.topology_solver_p1.json
+TIME intersect.topology_solver_p1 n=3532 cases=0.078291 cpp=0.107984 rust=0.196245 compare=0.009567 ratio=1.817 slowest_rust=adv_ee_line_circle_3_False:0.001736
+PASS intersect.topology_solver_p2 cases=2429 passed=2429 failed=0 deferred=0 max_rel_err=0e0 with_values=2429 no_values=0 vacuous=0
+  report: reports/difftest/intersect.topology_solver_p2.json
+TIME intersect.topology_solver_p2 n=2429 cases=0.124885 cpp=0.156331 rust=1.194974 compare=0.009906 ratio=7.644 slowest_rust=subdivided_2_9_1_40_30_50_3:0.056186
+PASS mass.integrator cases=1528 passed=1528 failed=0 deferred=0 max_rel_err=0e0 with_values=1528 no_values=0 vacuous=0
+  report: reports/difftest/mass.integrator.json
+TIME mass.integrator n=1528 cases=0.020310 cpp=0.883289 rust=1.412915 compare=0.004705 ratio=1.600 slowest_rust=review_face_tight_accuracy_kind3_1e-12:1.189616
+PASS nlib.basis_adv cases=1751 passed=1751 failed=0 deferred=0 max_rel_err=0e0 with_values=1469 no_values=282 vacuous=0
+  report: reports/difftest/nlib.basis_adv.json
+TIME nlib.basis_adv n=1751 cases=0.022629 cpp=0.012299 rust=0.012301 compare=0.006110 ratio=1.000 slowest_rust=gen1118:0.000435
+PASS nlib.basis_basic cases=2605 passed=2605 failed=0 deferred=0 max_rel_err=0e0 with_values=2399 no_values=206 vacuous=0
+  report: reports/difftest/nlib.basis_basic.json
+TIME nlib.basis_basic n=2605 cases=0.054212 cpp=0.016777 rust=0.015649 compare=0.007241 ratio=0.933 slowest_rust=gen0202:0.000093
+PASS nlib.bezier cases=2223 passed=2223 failed=0 deferred=0 max_rel_err=0e0 with_values=2223 no_values=0 vacuous=0
+  report: reports/difftest/nlib.bezier.json
+TIME nlib.bezier n=2223 cases=0.013555 cpp=0.017747 rust=0.015687 compare=0.006350 ratio=0.884 slowest_rust=surface_extend_v_1_0_0:0.000103
+PASS nlib.crv_adv_p1 cases=2670 passed=2670 failed=0 deferred=0 max_rel_err=0e0 with_values=2670 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_adv_p1.json
+TIME nlib.crv_adv_p1 n=2670 cases=0.049699 cpp=0.277545 rust=0.250441 compare=0.013824 ratio=0.902 slowest_rust=gen0480:0.006277
+PASS nlib.crv_adv_p2 cases=2820 passed=2820 failed=0 deferred=0 max_rel_err=0e0 with_values=2820 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_adv_p2.json
+TIME nlib.crv_adv_p2 n=2820 cases=0.035060 cpp=0.311138 rust=0.272620 compare=0.016273 ratio=0.876 slowest_rust=curve0_offset_max2nd:0.009655
+PASS nlib.crv_approx cases=1646 passed=1646 failed=0 deferred=0 max_rel_err=0e0 with_values=1646 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_approx.json
+TIME nlib.crv_approx n=1646 cases=0.009864 cpp=0.865123 rust=0.893131 compare=0.010893 ratio=1.032 slowest_rust=nonrat_curve0_d3_inherited_tan:0.132025
+PASS nlib.crv_basic cases=3417 passed=3417 failed=0 deferred=0 max_rel_err=0e0 with_values=3417 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_basic.json
+TIME nlib.crv_basic n=3417 cases=0.047441 cpp=0.166148 rust=0.160193 compare=0.018921 ratio=0.964 slowest_rust=curve0_equal_self:0.007956
+PASS nlib.crv_common cases=2140 passed=2140 failed=0 deferred=0 max_rel_err=0e0 with_values=2140 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_common.json
+TIME nlib.crv_common n=2140 cases=0.010547 cpp=0.014863 rust=0.014228 compare=0.007995 ratio=0.957 slowest_rust=create_circle_r10_ctp2:0.000032
+PASS nlib.crv_fit_p1 cases=2089 passed=2089 failed=0 deferred=0 max_rel_err=0e0 with_values=2089 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_fit_p1.json
+TIME nlib.crv_fit_p1 n=2089 cases=0.013386 cpp=0.025489 rust=0.028723 compare=0.006368 ratio=1.127 slowest_rust=gen1492:0.000103
+PASS nlib.crv_fit_p2 cases=2109 passed=2109 failed=0 deferred=0 max_rel_err=0e0 with_values=2109 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_fit_p2.json
+TIME nlib.crv_fit_p2 n=2109 cases=0.027176 cpp=0.029854 rust=0.038384 compare=0.008394 ratio=1.286 slowest_rust=points_weighted_n12_p4_uniform_weights:0.000236
+PASS nlib.crv_fit_p3 cases=2242 passed=2242 failed=0 deferred=0 max_rel_err=0e0 with_values=2242 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_fit_p3.json
+TIME nlib.crv_fit_p3 n=2242 cases=0.020459 cpp=0.024958 rust=0.025702 compare=0.011031 ratio=1.030 slowest_rust=end_derivs_fit_p2_par1_given:0.000095
+PASS nlib.crv_geom cases=1725 passed=1725 failed=0 deferred=0 max_rel_err=0e0 with_values=1725 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_geom.json
+TIME nlib.crv_geom n=1725 cases=0.016105 cpp=2.037757 rust=1.222169 compare=0.009638 ratio=0.600 slowest_rust=curve0_arc_knot_span:0.168622
+PASS nlib.crv_nurb cases=2886 passed=2886 failed=0 deferred=0 max_rel_err=0e0 with_values=2886 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_nurb.json
+TIME nlib.crv_nurb n=2886 cases=0.029148 cpp=0.391954 rust=0.387432 compare=0.009386 ratio=0.988 slowest_rust=curve0_transform:0.004083
+PASS nlib.crv_offset cases=1555 passed=1555 failed=0 deferred=0 max_rel_err=0e0 with_values=1555 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_offset.json
+TIME nlib.crv_offset n=1555 cases=0.061869 cpp=0.902683 rust=0.948927 compare=0.008563 ratio=1.051 slowest_rust=gen0004:0.056766
+PASS nlib.crv_tool_p1 cases=2143 passed=2143 failed=0 deferred=0 max_rel_err=0e0 with_values=2143 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_tool_p1.json
+TIME nlib.crv_tool_p1 n=2143 cases=0.015514 cpp=0.135415 rust=0.133647 compare=0.014523 ratio=0.987 slowest_rust=curve0_decompose_bez:0.004883
+PASS nlib.crv_tool_p2 cases=2126 passed=2126 failed=0 deferred=0 max_rel_err=0e0 with_values=2126 no_values=0 vacuous=0
+  report: reports/difftest/nlib.crv_tool_p2.json
+TIME nlib.crv_tool_p2 n=2126 cases=0.043512 cpp=0.137605 rust=0.134637 compare=0.019299 ratio=0.978 slowest_rust=curve0_remove_knots_1:0.009679
+PASS nlib.funcs_adv cases=2080 passed=2080 failed=0 deferred=0 max_rel_err=0e0 with_values=2080 no_values=0 vacuous=0
+  report: reports/difftest/nlib.funcs_adv.json
+TIME nlib.funcs_adv n=2080 cases=0.012465 cpp=0.077661 rust=0.074674 compare=0.016486 ratio=0.962 slowest_rust=curve0_mul_crv:0.008251
+PASS nlib.funcs_basic cases=3130 passed=3130 failed=0 deferred=0 max_rel_err=0e0 with_values=3130 no_values=0 vacuous=0
+  report: reports/difftest/nlib.funcs_basic.json
+TIME nlib.funcs_basic n=3130 cases=0.056787 cpp=0.057890 rust=0.052627 compare=0.013493 ratio=0.909 slowest_rust=curve0_c0_eval:0.000384
+PASS nlib.geom cases=3176 passed=3176 failed=0 deferred=0 max_rel_err=0e0 with_values=3176 no_values=0 vacuous=0
+  report: reports/difftest/nlib.geom.json
+TIME nlib.geom n=3176 cases=0.014515 cpp=0.020870 rust=0.018631 compare=0.014906 ratio=0.893 slowest_rust=rect_polygon_bbox:0.000026
+PASS nlib.iges cases=2029 passed=2029 failed=0 deferred=0 max_rel_err=0e0 with_values=2029 no_values=0 vacuous=0
+  report: reports/difftest/nlib.iges.json
+TIME nlib.iges n=2029 cases=0.029640 cpp=0.031015 rust=0.032680 compare=0.008783 ratio=1.054 slowest_rust=silhouette_surface:0.000125
+PASS nlib.knots cases=2959 passed=2959 failed=0 deferred=0 max_rel_err=0e0 with_values=2391 no_values=568 vacuous=0
+  report: reports/difftest/nlib.knots.json
+TIME nlib.knots n=2959 cases=0.033529 cpp=0.009746 rust=0.009176 compare=0.003979 ratio=0.942 slowest_rust=short_ieval_index_error:0.000015
+PASS nlib.math cases=3086 passed=3086 failed=0 deferred=0 max_rel_err=0e0 with_values=2802 no_values=284 vacuous=0
+  report: reports/difftest/nlib.math.json
+TIME nlib.math n=3086 cases=0.019623 cpp=0.054256 rust=0.035861 compare=0.022597 ratio=0.661 slowest_rust=gen2014:0.000058
+PASS nlib.spiral cases=2032 passed=2032 failed=0 deferred=0 max_rel_err=0e0 with_values=2032 no_values=0 vacuous=0
+  report: reports/difftest/nlib.spiral.json
+TIME nlib.spiral n=2032 cases=0.016223 cpp=0.099351 rust=0.077835 compare=0.032288 ratio=0.783 slowest_rust=helix_r0_1e18:0.000635
+PASS nlib.srf_adv_p1 cases=2886 passed=2886 failed=0 deferred=0 max_rel_err=0e0 with_values=2886 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_adv_p1.json
+TIME nlib.srf_adv_p1 n=2886 cases=0.077159 cpp=0.235851 rust=0.255953 compare=0.036096 ratio=1.085 slowest_rust=vfield_curve0.smc_self_b4:0.008075
+PASS nlib.srf_adv_p2 cases=1695 passed=1695 failed=0 deferred=0 max_rel_err=0e0 with_values=1695 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_adv_p2.json
+TIME nlib.srf_adv_p2 n=1695 cases=0.055407 cpp=1.027847 rust=0.463026 compare=0.010859 ratio=0.450 slowest_rust=gen0627:0.078662
+PASS nlib.srf_adv_p3 cases=3275 passed=3275 failed=0 deferred=0 max_rel_err=0e0 with_values=3275 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_adv_p3.json
+TIME nlib.srf_adv_p3 n=3275 cases=0.060192 cpp=0.124916 rust=0.120251 compare=0.026290 ratio=0.963 slowest_rust=sweep_curve0_line:0.004050
+PASS nlib.srf_adv_p4 cases=3164 passed=3164 failed=0 deferred=0 max_rel_err=0e0 with_values=3164 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_adv_p4.json
+TIME nlib.srf_adv_p4 n=3164 cases=0.032226 cpp=0.152226 rust=0.150467 compare=0.026677 ratio=0.988 slowest_rust=curve0_rot_self:0.007919
+PASS nlib.srf_adv_p5 cases=3086 passed=3086 failed=0 deferred=0 max_rel_err=0e0 with_values=3086 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_adv_p5.json
+TIME nlib.srf_adv_p5 n=3086 cases=0.101286 cpp=0.182526 rust=0.172361 compare=0.069351 ratio=0.944 slowest_rust=files2_der_flip_d2_c2:0.000658
+PASS nlib.srf_adv_p6 cases=1020 passed=1020 failed=0 deferred=0 max_rel_err=0e0 with_values=1020 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_adv_p6.json
+TIME nlib.srf_adv_p6 n=1020 cases=0.018599 cpp=0.178602 rust=0.213071 compare=0.051183 ratio=1.193 slowest_rust=pipe_sweep_circle_along_wave:0.001202
+PASS nlib.srf_basic cases=3220 passed=3220 failed=0 deferred=0 max_rel_err=0e0 with_values=3220 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_basic.json
+TIME nlib.srf_basic n=3220 cases=0.040461 cpp=0.081159 rust=0.071110 compare=0.018211 ratio=0.876 slowest_rust=surface_sms_equal_self:0.000230
+PASS nlib.srf_common cases=1550 passed=1550 failed=0 deferred=0 max_rel_err=0e0 with_values=1550 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_common.json
+TIME nlib.srf_common n=1550 cases=0.011757 cpp=0.038862 rust=0.040248 compare=0.015372 ratio=1.036 slowest_rust=revolve_curve0:0.005132
+PASS nlib.srf_fit cases=1556 passed=1556 failed=0 deferred=0 max_rel_err=0e0 with_values=1556 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_fit.json
+TIME nlib.srf_fit n=1556 cases=0.041312 cpp=0.069032 rust=0.072978 compare=0.007316 ratio=1.057 slowest_rust=pointset_interp_p3q3:0.000984
+PASS nlib.srf_nurb cases=2711 passed=2711 failed=0 deferred=0 max_rel_err=0e0 with_values=2711 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_nurb.json
+TIME nlib.srf_nurb n=2711 cases=0.036659 cpp=0.078844 rust=0.072345 compare=0.012418 ratio=0.918 slowest_rust=Surface_basis_mid:0.000233
+PASS nlib.srf_offset cases=438 passed=438 failed=0 deferred=0 max_rel_err=0e0 with_values=438 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_offset.json
+TIME nlib.srf_offset n=438 cases=0.016142 cpp=0.408623 rust=0.716391 compare=0.006275 ratio=1.753 slowest_rust=Surface.sms_par4_d-0.25_tol0.01:0.017311
+PASS nlib.srf_tool_p1 cases=3133 passed=3133 failed=0 deferred=0 max_rel_err=0e0 with_values=3133 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_tool_p1.json
+TIME nlib.srf_tool_p1 n=3133 cases=0.052920 cpp=0.121996 rust=0.111709 compare=0.041018 ratio=0.916 slowest_rust=gen2627:0.000309
+PASS nlib.srf_tool_p2 cases=3102 passed=3102 failed=0 deferred=0 max_rel_err=0e0 with_values=3102 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_tool_p2.json
+TIME nlib.srf_tool_p2 n=3102 cases=0.073050 cpp=0.130491 rust=0.116201 compare=0.021861 ratio=0.890 slowest_rust=gen1464:0.000158
+PASS nlib.srf_tool_p3 cases=2524 passed=2524 failed=0 deferred=0 max_rel_err=0e0 with_values=2524 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_tool_p3.json
+TIME nlib.srf_tool_p3 n=2524 cases=0.092958 cpp=0.231442 rust=0.233606 compare=0.057027 ratio=1.009 slowest_rust=gen1211:0.001522
+PASS nlib.srf_tool_p4 cases=2681 passed=2681 failed=0 deferred=0 max_rel_err=0e0 with_values=2681 no_values=0 vacuous=0
+  report: reports/difftest/nlib.srf_tool_p4.json
+TIME nlib.srf_tool_p4 n=2681 cases=0.095608 cpp=0.252717 rust=0.267415 compare=0.078597 ratio=1.058 slowest_rust=gen1445:0.001798
+PASS nurbs.b_spline_curve_n_lib cases=2338 passed=2338 failed=0 deferred=0 max_rel_err=0e0 with_values=2338 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_curve_n_lib.json
+TIME nurbs.b_spline_curve_n_lib n=2338 cases=0.062596 cpp=0.446142 rust=0.470487 compare=0.018623 ratio=1.055 slowest_rust=curve0_rational:0.132623
+PASS nurbs.b_spline_curve_p1 cases=2216 passed=2216 failed=0 deferred=0 max_rel_err=0e0 with_values=2216 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_curve_p1.json
+TIME nurbs.b_spline_curve_p1 n=2216 cases=0.015005 cpp=0.132371 rust=0.132280 compare=0.014833 ratio=0.999 slowest_rust=curve0_eq_self_copy:0.008036
+PASS nurbs.b_spline_curve_p2 cases=2335 passed=2335 failed=0 deferred=0 max_rel_err=0e0 with_values=2335 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_curve_p2.json
+TIME nurbs.b_spline_curve_p2 n=2335 cases=0.051479 cpp=0.198771 rust=0.343537 compare=0.020953 ratio=1.728 slowest_rust=curve0_match_self:0.016034
+PASS nurbs.b_spline_curve_p3 cases=2195 passed=2195 failed=0 deferred=0 max_rel_err=0e0 with_values=2195 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_curve_p3.json
+TIME nurbs.b_spline_curve_p3 n=2195 cases=0.019240 cpp=0.275796 rust=0.310746 compare=0.024529 ratio=1.127 slowest_rust=curve0_assert_level0:0.042012
+PASS nurbs.b_spline_surface_n_lib_p1 cases=702 passed=702 failed=0 deferred=0 max_rel_err=0e0 with_values=702 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_surface_n_lib_p1.json
+TIME nurbs.b_spline_surface_n_lib_p1 n=702 cases=0.032310 cpp=0.181919 rust=0.235180 compare=0.006404 ratio=1.293 slowest_rust=curve0_non_rational:0.129067
+PASS nurbs.b_spline_surface_n_lib_p2 cases=774 passed=774 failed=0 deferred=0 max_rel_err=0e0 with_values=774 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_surface_n_lib_p2.json
+TIME nurbs.b_spline_surface_n_lib_p2 n=774 cases=0.030776 cpp=0.081821 rust=0.095431 compare=0.013937 ratio=1.166 slowest_rust=analytic064:0.004009
+PASS nurbs.b_spline_surface_p1 cases=2126 passed=2126 failed=0 deferred=0 max_rel_err=0e0 with_values=2126 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_surface_p1.json
+TIME nurbs.b_spline_surface_p1 n=2126 cases=0.028745 cpp=0.074363 rust=0.067995 compare=0.018689 ratio=0.914 slowest_rust=gen1134:0.000340
+PASS nurbs.b_spline_surface_p2 cases=815 passed=815 failed=0 deferred=0 max_rel_err=0e0 with_values=815 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.b_spline_surface_p2.json
+TIME nurbs.b_spline_surface_p2 n=815 cases=0.029083 cpp=0.026961 rust=0.025614 compare=0.005566 ratio=0.950 slowest_rust=Surface.sms_swap:0.000199
+PASS nurbs.nurbs_crv cases=4113 passed=4113 failed=0 deferred=0 max_rel_err=0e0 with_values=4113 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.nurbs_crv.json
+TIME nurbs.nurbs_crv n=4113 cases=0.055889 cpp=0.825551 rust=0.821142 compare=0.016115 ratio=0.995 slowest_rust=curve0_remove_knots_1:0.009823
+PASS nurbs.nurbs_srf cases=3092 passed=3092 failed=0 deferred=0 max_rel_err=0e0 with_values=3092 no_values=0 vacuous=0
+  report: reports/difftest/nurbs.nurbs_srf.json
+TIME nurbs.nurbs_srf n=3092 cases=0.062689 cpp=0.123633 rust=0.112266 compare=0.031373 ratio=0.908 slowest_rust=gen1738:0.000279
+PASS offset.offset_executive_p1 cases=1048 passed=1047 failed=0 deferred=0 max_rel_err=1.850371707708594e-16 with_values=1047 no_values=0 vacuous=0 rejected=1
+  report: reports/difftest/offset.offset_executive_p1.json
+TIME offset.offset_executive_p1 n=1048 cases=0.040460 cpp=0.105097 rust=0.171674 compare=0.020617 ratio=1.633 slowest_rust=gen0504:0.009131
+PASS offset.offset_executive_p2 cases=358 passed=354 failed=0 deferred=0 max_rel_err=0e0 with_values=354 no_values=0 vacuous=0 rejected=4
+  report: reports/difftest/offset.offset_executive_p2.json
+TIME offset.offset_executive_p2 n=358 cases=0.013203 cpp=1.064946 rust=2.651933 compare=0.010568 ratio=2.490 slowest_rust=static_offset_box_round_outset:0.138289
+PASS offset.offset_geometry_creation cases=926 passed=910 failed=0 deferred=0 max_rel_err=0e0 with_values=910 no_values=0 vacuous=0 rejected=16
+  report: reports/difftest/offset.offset_geometry_creation.json
+TIME offset.offset_geometry_creation n=926 cases=0.018498 cpp=52.817069 rust=22.419299 compare=0.022635 ratio=0.424 slowest_rust=gen0577:18.385589
+PASS primitive.api_curves cases=1629 passed=1629 failed=0 deferred=0 max_rel_err=0e0 with_values=1629 no_values=0 vacuous=0
+  report: reports/difftest/primitive.api_curves.json
+TIME primitive.api_curves n=1629 cases=0.006089 cpp=0.029187 rust=0.027141 compare=0.006097 ratio=0.930 slowest_rust=gen0142:0.001528
+PASS primitive.api_primitives cases=2035 passed=2030 failed=0 deferred=0 max_rel_err=0e0 with_values=2030 no_values=0 vacuous=0 rejected=5
+  report: reports/difftest/primitive.api_primitives.json
+TIME primitive.api_primitives n=2035 cases=0.019092 cpp=1.523688 rust=5.160143 compare=0.011607 ratio=3.387 slowest_rust=gen0555:1.136907
+PASS primitive.primitive_creation_p1 cases=773 passed=768 failed=0 deferred=0 max_rel_err=0e0 with_values=768 no_values=0 vacuous=0 rejected=5
+  report: reports/difftest/primitive.primitive_creation_p1.json
+TIME primitive.primitive_creation_p1 n=773 cases=0.011938 cpp=0.039981 rust=0.081291 compare=0.002673 ratio=2.033 slowest_rust=primitive_7:0.011165
+PASS primitive.primitive_creation_p2 cases=374 passed=354 failed=0 deferred=0 max_rel_err=0e0 with_values=354 no_values=0 vacuous=0 rejected=20
+  report: reports/difftest/primitive.primitive_creation_p2.json
+TIME primitive.primitive_creation_p2 n=374 cases=0.005274 cpp=1.994861 rust=4.818486 compare=0.001614 ratio=2.415 slowest_rust=gen0003:0.745609
+PASS primitive.primitive_creation_p3 cases=330 passed=329 failed=0 deferred=0 max_rel_err=0e0 with_values=329 no_values=0 vacuous=0 rejected=1
+  report: reports/difftest/primitive.primitive_creation_p3.json
+TIME primitive.primitive_creation_p3 n=330 cases=0.006619 cpp=0.055532 rust=0.096796 compare=0.001844 ratio=1.743 slowest_rust=capped_rot_disc_axis_z_inside_90:0.017439
+PASS query.api_queries cases=1203 passed=1203 failed=0 deferred=0 max_rel_err=0e0 with_values=1203 no_values=0 vacuous=0
+  report: reports/difftest/query.api_queries.json
+TIME query.api_queries n=1203 cases=0.007228 cpp=0.165965 rust=0.553007 compare=0.004836 ratio=3.332 slowest_rust=relationship_coincident_scale16_op8:0.010016
+PASS query.brep cases=1172 passed=1172 failed=0 deferred=0 max_rel_err=0e0 with_values=1172 no_values=0 vacuous=0
+  report: reports/difftest/query.brep.json
+TIME query.brep n=1172 cases=0.041755 cpp=5.198583 rust=4.997568 compare=0.004913 ratio=0.961 slowest_rust=gen0204:0.078687
+PASS query.edge cases=1368 passed=1368 failed=0 deferred=0 max_rel_err=0e0 with_values=1368 no_values=0 vacuous=0
+  report: reports/difftest/query.edge.json
+TIME query.edge n=1368 cases=0.022902 cpp=12.287371 rust=0.803318 compare=0.009398 ratio=0.065 slowest_rust=gen0197:0.006618
+PASS query.face_p1 cases=2266 passed=2266 failed=0 deferred=0 max_rel_err=0e0 with_values=2266 no_values=0 vacuous=0
+  report: reports/difftest/query.face_p1.json
+TIME query.face_p1 n=2266 cases=0.029816 cpp=13.111712 rust=9.344408 compare=0.012682 ratio=0.713 slowest_rust=gen1161:0.078293
+PASS query.face_p2 cases=1401 passed=1401 failed=0 deferred=0 max_rel_err=0e0 with_values=1401 no_values=0 vacuous=0
+  report: reports/difftest/query.face_p2.json
+TIME query.face_p2 n=1401 cases=0.041704 cpp=12.247745 rust=0.410371 compare=0.010740 ratio=0.034 slowest_rust=curve_ellips_ts2_2d:0.003752
+PASS query.face_p3 cases=1199 passed=1199 failed=0 deferred=0 max_rel_err=0e0 with_values=1161 no_values=38 vacuous=0
+  report: reports/difftest/query.face_p3.json
+TIME query.face_p3 n=1199 cases=0.046159 cpp=1.735799 rust=3.962188 compare=0.006904 ratio=2.283 slowest_rust=gen0325:0.583615
+PASS query.face_p4 cases=503 passed=503 failed=0 deferred=0 max_rel_err=0e0 with_values=476 no_values=27 vacuous=0
+  report: reports/difftest/query.face_p4.json
+TIME query.face_p4 n=503 cases=0.008646 cpp=1.243459 rust=9.051711 compare=0.007048 ratio=7.279 slowest_rust=gen0018:0.826937
+PASS query.loop cases=3040 passed=3040 failed=0 deferred=0 max_rel_err=0e0 with_values=3040 no_values=0 vacuous=0
+  report: reports/difftest/query.loop.json
+TIME query.loop n=3040 cases=0.229472 cpp=0.257034 rust=0.296857 compare=0.012897 ratio=1.155 slowest_rust=gen0991:0.000353
+PASS query.poly cases=966 passed=964 failed=0 deferred=0 max_rel_err=0e0 with_values=964 no_values=0 vacuous=0 rejected=2
+  report: reports/difftest/query.poly.json
+TIME query.poly n=966 cases=0.060137 cpp=0.041430 rust=0.051211 compare=0.021202 ratio=1.236 slowest_rust=adv_hole_contains:0.000306
+PASS query.tess cases=676 passed=676 failed=0 deferred=0 max_rel_err=0e0 with_values=676 no_values=0 vacuous=0
+  report: reports/difftest/query.tess.json
+TIME query.tess n=676 cases=0.030271 cpp=0.421111 rust=0.230946 compare=0.022595 ratio=0.548 slowest_rust=DropCurveSurface_build_rect:0.018333
+PASS surface.b_spline_volume cases=2333 passed=2333 failed=0 deferred=0 max_rel_err=0e0 with_values=2333 no_values=0 vacuous=0
+  report: reports/difftest/surface.b_spline_volume.json
+TIME surface.b_spline_volume n=2333 cases=0.045270 cpp=0.061931 rust=0.056174 compare=0.007641 ratio=0.907 slowest_rust=gen0562:0.000117
+PASS surface.b_spline_volume_n_lib cases=2420 passed=2420 failed=0 deferred=0 max_rel_err=0e0 with_values=2420 no_values=0 vacuous=0
+  report: reports/difftest/surface.b_spline_volume_n_lib.json
+TIME surface.b_spline_volume_n_lib n=2420 cases=0.094475 cpp=0.208023 rust=0.306591 compare=0.006013 ratio=1.474 slowest_rust=gen0234:0.100384
+PASS surface.bend_volume cases=2347 passed=2347 failed=0 deferred=0 max_rel_err=0e0 with_values=2347 no_values=0 vacuous=0
+  report: reports/difftest/surface.bend_volume.json
+TIME surface.bend_volume n=2347 cases=0.129835 cpp=0.018669 rust=0.017295 compare=0.006369 ratio=0.926 slowest_rust=curve_in_in:0.000114
+PASS surface.cone_p1 cases=20702 passed=20702 failed=0 deferred=0 max_rel_err=0e0 with_values=20702 no_values=0 vacuous=0
+  report: reports/difftest/surface.cone_p1.json
+TIME surface.cone_p1 n=20702 cases=1.167262 cpp=0.565009 rust=0.595053 compare=0.072178 ratio=1.053 slowest_rust=cross_deriv_build:0.000193
+PASS surface.cone_p2 cases=1596 passed=1596 failed=0 deferred=0 max_rel_err=0e0 with_values=1596 no_values=0 vacuous=0
+  report: reports/difftest/surface.cone_p2.json
+TIME surface.cone_p2 n=1596 cases=0.022786 cpp=0.043022 rust=0.045918 compare=0.007716 ratio=1.067 slowest_rust=adv_off_can_s0i0_id_0.5_1e-06:0.000184
+PASS surface.cone_p3 cases=1490 passed=1490 failed=0 deferred=0 max_rel_err=0e0 with_values=1474 no_values=16 vacuous=0
+  report: reports/difftest/surface.cone_p3.json
+TIME surface.cone_p3 n=1490 cases=0.026588 cpp=0.340561 rust=0.636639 compare=0.006722 ratio=1.869 slowest_rust=fuzz_general_07170:0.547190
+PASS surface.curve_bounded_surface cases=537 passed=537 failed=0 deferred=0 max_rel_err=0e0 with_values=537 no_values=0 vacuous=0
+  report: reports/difftest/surface.curve_bounded_surface.json
+TIME surface.curve_bounded_surface n=537 cases=0.013443 cpp=0.033083 rust=0.030366 compare=0.001968 ratio=0.918 slowest_rust=eq_other_3d_boundaries_swapped:0.000346
+PASS surface.offset_surface cases=3082 passed=3082 failed=0 deferred=0 max_rel_err=0e0 with_values=3082 no_values=0 vacuous=0
+  report: reports/difftest/surface.offset_surface.json
+TIME surface.offset_surface n=3082 cases=0.352926 cpp=0.249414 rust=0.312801 compare=0.010725 ratio=1.254 slowest_rust=gen0112:0.044448
+PASS surface.plane_p1 cases=2706 passed=2706 failed=0 deferred=0 max_rel_err=0e0 with_values=2706 no_values=0 vacuous=0
+  report: reports/difftest/surface.plane_p1.json
+TIME surface.plane_p1 n=2706 cases=0.077086 cpp=0.046119 rust=0.052694 compare=0.009938 ratio=1.143 slowest_rust=edge_line_in_plane_point:0.000735
+PASS surface.plane_p2 cases=2228 passed=2228 failed=0 deferred=0 max_rel_err=0e0 with_values=2228 no_values=0 vacuous=0
+  report: reports/difftest/surface.plane_p2.json
+TIME surface.plane_p2 n=2228 cases=0.039559 cpp=0.040569 rust=0.045874 compare=0.004865 ratio=1.131 slowest_rust=gen0045:0.000822
+PASS surface.sphere cases=816 passed=816 failed=0 deferred=0 max_rel_err=0e0 with_values=816 no_values=0 vacuous=0
+  report: reports/difftest/surface.sphere.json
+TIME surface.sphere n=816 cases=0.016856 cpp=0.020645 rust=0.020707 compare=0.003321 ratio=1.003 slowest_rust=gen0047:0.000087
+PASS surface.srf_in_volume cases=2567 passed=2567 failed=0 deferred=0 max_rel_err=1.5735894802998408e-14 with_values=2567 no_values=0 vacuous=0
+  report: reports/difftest/surface.srf_in_volume.json
+TIME surface.srf_in_volume n=2567 cases=0.085759 cpp=0.091347 rust=0.090292 compare=0.010172 ratio=0.988 slowest_rust=exact_volume_75:0.002178
+PASS surface.surf_of_extrusion_p1 cases=2071 passed=2071 failed=0 deferred=0 max_rel_err=0e0 with_values=2071 no_values=0 vacuous=0
+  report: reports/difftest/surface.surf_of_extrusion_p1.json
+TIME surface.surf_of_extrusion_p1 n=2071 cases=0.076212 cpp=0.040161 rust=0.050082 compare=0.008000 ratio=1.247 slowest_rust=gen0263:0.000619
+PASS surface.surf_of_extrusion_p2 cases=1548 passed=1548 failed=0 deferred=0 max_rel_err=0e0 with_values=1548 no_values=0 vacuous=0
+  report: reports/difftest/surface.surf_of_extrusion_p2.json
+TIME surface.surf_of_extrusion_p2 n=1548 cases=0.075878 cpp=0.905703 rust=2.297550 compare=0.005986 ratio=2.537 slowest_rust=global_cylinder_class:0.715433
+PASS surface.surf_of_revolution_p1 cases=894 passed=894 failed=0 deferred=0 max_rel_err=0e0 with_values=894 no_values=0 vacuous=0
+  report: reports/difftest/surface.surf_of_revolution_p1.json
+TIME surface.surf_of_revolution_p1 n=894 cases=0.046441 cpp=0.025606 rust=0.026738 compare=0.003368 ratio=1.044 slowest_rust=adv_sor_line_axial_small:0.000185
+PASS surface.surf_of_revolution_p2 cases=1167 passed=1167 failed=0 deferred=0 max_rel_err=0e0 with_values=1167 no_values=0 vacuous=0
+  report: reports/difftest/surface.surf_of_revolution_p2.json
+TIME surface.surf_of_revolution_p2 n=1167 cases=0.061316 cpp=0.182826 rust=0.270587 compare=0.011865 ratio=1.480 slowest_rust=gen0463:0.024029
+PASS surface.surf_of_revolution_p3 cases=26731 passed=26731 failed=0 deferred=0 max_rel_err=0e0 with_values=26731 no_values=0 vacuous=0
+  report: reports/difftest/surface.surf_of_revolution_p3.json
+TIME surface.surf_of_revolution_p3 n=26731 cases=2.483057 cpp=0.943456 rust=1.100879 compare=0.103712 ratio=1.167 slowest_rust=r2_drop_sphere_part_axis0_100000_None_5:0.006653
+PASS surface.surface_cache_p1 cases=872 passed=872 failed=0 deferred=0 max_rel_err=0e0 with_values=872 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_cache_p1.json
+TIME surface.surface_cache_p1 n=872 cases=0.020703 cpp=0.038621 rust=0.037945 compare=0.003301 ratio=0.983 slowest_rust=Surface_bplanes_0:0.000233
+PASS surface.surface_cache_p2 cases=913 passed=913 failed=0 deferred=0 max_rel_err=0e0 with_values=913 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_cache_p2.json
+TIME surface.surface_cache_p2 n=913 cases=0.020128 cpp=0.041590 rust=0.043737 compare=0.003666 ratio=1.052 slowest_rust=gen0256:0.002775
+PASS surface.surface_cache_p3 cases=600 passed=600 failed=0 deferred=0 max_rel_err=0e0 with_values=600 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_cache_p3.json
+TIME surface.surface_cache_p3 n=600 cases=0.037093 cpp=1.440391 rust=1.203642 compare=0.169641 ratio=0.836 slowest_rust=gen0129:0.295205
+PASS surface.surface_p1 cases=1000 passed=1000 failed=0 deferred=0 max_rel_err=0e0 with_values=1000 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p1.json
+TIME surface.surface_p1 n=1000 cases=0.034474 cpp=0.363572 rust=0.616571 compare=0.005985 ratio=1.696 slowest_rust=sil_adv_28_toruswvy_f0:0.066376
+PASS surface.surface_p10 cases=867 passed=867 failed=0 deferred=0 max_rel_err=0e0 with_values=867 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p10.json
+TIME surface.surface_p10 n=867 cases=0.088314 cpp=0.067450 rust=0.098318 compare=0.002445 ratio=1.458 slowest_rust=gen0286:0.001032
+PASS surface.surface_p11 cases=808 passed=808 failed=0 deferred=0 max_rel_err=0e0 with_values=808 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p11.json
+TIME surface.surface_p11 n=808 cases=0.008569 cpp=0.036782 rust=0.065922 compare=0.002885 ratio=1.792 slowest_rust=lift_crv1_iso_segment_swept:0.006115
+PASS surface.surface_p2 cases=16688 passed=16688 failed=0 deferred=0 max_rel_err=0e0 with_values=16688 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p2.json
+TIME surface.surface_p2 n=16688 cases=1.523867 cpp=1.087071 rust=1.891767 compare=0.055858 ratio=1.740 slowest_rust=ssi_adv_ssi_rev_rev_coin_f0_f0:0.341361
+PASS surface.surface_p3 cases=2507 passed=2507 failed=0 deferred=0 max_rel_err=0e0 with_values=2507 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p3.json
+TIME surface.surface_p3 n=2507 cases=0.135543 cpp=0.086415 rust=0.126762 compare=0.004968 ratio=1.467 slowest_rust=gen0582:0.002117
+PASS surface.surface_p4 cases=3015 passed=3015 failed=0 deferred=0 max_rel_err=0e0 with_values=3015 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p4.json
+TIME surface.surface_p4 n=3015 cases=0.102261 cpp=0.070237 rust=0.087821 compare=0.006209 ratio=1.250 slowest_rust=gen0106:0.006096
+PASS surface.surface_p5 cases=3058 passed=3058 failed=0 deferred=0 max_rel_err=0e0 with_values=3058 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p5.json
+TIME surface.surface_p5 n=3058 cases=0.120032 cpp=0.066901 rust=0.087433 compare=0.005255 ratio=1.307 slowest_rust=gen1100:0.001952
+PASS surface.surface_p6 cases=2104 passed=2104 failed=0 deferred=0 max_rel_err=0e0 with_values=2104 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p6.json
+TIME surface.surface_p6 n=2104 cases=0.062902 cpp=0.051325 rust=0.060611 compare=0.004781 ratio=1.181 slowest_rust=gen0746:0.000410
+PASS surface.surface_p7 cases=3728 passed=3728 failed=0 deferred=0 max_rel_err=0e0 with_values=3728 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p7.json
+TIME surface.surface_p7 n=3728 cases=1.792894 cpp=0.693168 rust=2.713453 compare=0.006882 ratio=3.915 slowest_rust=gen1764:1.127588
+PASS surface.surface_p8 cases=2108 passed=2108 failed=0 deferred=0 max_rel_err=0e0 with_values=2108 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p8.json
+TIME surface.surface_p8 n=2108 cases=0.548538 cpp=0.192791 rust=0.605974 compare=0.005484 ratio=3.143 slowest_rust=gen1021:0.008966
+PASS surface.surface_p9 cases=833 passed=833 failed=0 deferred=0 max_rel_err=0e0 with_values=833 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_p9.json
+TIME surface.surface_p9 n=833 cases=0.023242 cpp=0.023680 rust=0.039560 compare=0.002686 ratio=1.671 slowest_rust=csi_crossing_plane:0.000753
+PASS surface.surface_point_solve_p1 cases=1035 passed=1035 failed=0 deferred=0 max_rel_err=0e0 with_values=1035 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_point_solve_p1.json
+TIME surface.surface_point_solve_p1 n=1035 cases=0.042202 cpp=0.071319 rust=0.079493 compare=0.002387 ratio=1.115 slowest_rust=gen0150:0.010976
+PASS surface.surface_point_solve_p2 cases=1353 passed=1353 failed=0 deferred=0 max_rel_err=0e0 with_values=1353 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_point_solve_p2.json
+TIME surface.surface_point_solve_p2 n=1353 cases=0.062426 cpp=0.100501 rust=0.139743 compare=0.003257 ratio=1.390 slowest_rust=rev_gen0141:0.013782
+PASS surface.surface_point_solve_p3 cases=1365 passed=1365 failed=0 deferred=0 max_rel_err=0e0 with_values=1365 no_values=0 vacuous=0
+  report: reports/difftest/surface.surface_point_solve_p3.json
+TIME surface.surface_point_solve_p3 n=1365 cases=0.037742 cpp=0.152243 rust=0.225162 compare=0.003620 ratio=1.479 slowest_rust=matrix_1032:0.038196
+PASS surface.torus cases=596 passed=596 failed=0 deferred=0 max_rel_err=3.4462038079417334e-16 with_values=596 no_values=0 vacuous=0
+  report: reports/difftest/surface.torus.json
+TIME surface.torus n=596 cases=0.011843 cpp=0.014600 rust=0.015486 compare=0.002784 ratio=1.061 slowest_rust=gen0177:0.000212
+PASS surface.trim_srf_cache cases=772 passed=772 failed=0 deferred=0 max_rel_err=0e0 with_values=772 no_values=0 vacuous=0
+  report: reports/difftest/surface.trim_srf_cache.json
+TIME surface.trim_srf_cache n=772 cases=0.035177 cpp=0.117035 rust=0.233339 compare=0.005126 ratio=1.994 slowest_rust=gen0281:0.015557
+SKIP surface.twist_volume skipped(platform): C++ float-to-LONG conversion requires x86-64 (TwistVolume::EvaluateBoundingBoxSimple, #448)
+  report: reports/difftest/surface.twist_volume.json
+TIME surface.twist_volume n=0 cases=0.000000 cpp=0.000000 rust=0.000000 compare=0.000000 ratio=NaN
+PASS surface.unbend_volume cases=1874 passed=1874 failed=0 deferred=0 max_rel_err=0e0 with_values=1874 no_values=0 vacuous=0
+  report: reports/difftest/surface.unbend_volume.json
+TIME surface.unbend_volume n=1874 cases=0.025621 cpp=0.171192 rust=0.244973 compare=0.005427 ratio=1.431 slowest_rust=bbox_corner_on_axis_next_both:0.011426
+PASS surface.volume_p1 cases=2886 passed=2886 failed=0 deferred=0 max_rel_err=0e0 with_values=2886 no_values=0 vacuous=0
+  report: reports/difftest/surface.volume_p1.json
+TIME surface.volume_p1 n=2886 cases=0.055560 cpp=0.039048 rust=0.034980 compare=0.008279 ratio=0.896 slowest_rust=info_t:0.000064
+PASS surface.volume_p2 cases=11220 passed=11220 failed=0 deferred=0 max_rel_err=0e0 with_values=11220 no_values=0 vacuous=0
+  report: reports/difftest/surface.volume_p2.json
+TIME surface.volume_p2 n=11220 cases=0.506034 cpp=0.399181 rust=0.550493 compare=0.026113 ratio=1.379 slowest_rust=gen0183:0.040077
+PASS sweep.api_brep cases=597 passed=597 failed=0 deferred=0 max_rel_err=0e0 with_values=597 no_values=0 vacuous=0
+  report: reports/difftest/sweep.api_brep.json
+TIME sweep.api_brep n=597 cases=0.557205 cpp=1.706757 rust=1.211027 compare=0.002520 ratio=0.710 slowest_rust=gen0305:0.122644
+PASS sweep.api_surfaces cases=885 passed=885 failed=0 deferred=0 max_rel_err=0e0 with_values=885 no_values=0 vacuous=0
+  report: reports/difftest/sweep.api_surfaces.json
+TIME sweep.api_surfaces n=885 cases=0.009792 cpp=36.881472 rust=1.968103 compare=0.035448 ratio=0.053 slowest_rust=adv_sweep_scale_10000000.0:0.248994
+PASS sweep.rotational_sweep_geometry cases=823 passed=823 failed=0 deferred=0 max_rel_err=0e0 with_values=823 no_values=0 vacuous=0
+  report: reports/difftest/sweep.rotational_sweep_geometry.json
+TIME sweep.rotational_sweep_geometry n=823 cases=0.031305 cpp=0.023066 rust=0.024645 compare=0.005592 ratio=1.068 slowest_rust=nurb_partly_on_axis:0.000403
+PARTIAL sweep.topology_sweep cases=703 passed=692 failed=0 deferred=0 max_rel_err=3.62089958464889e-14 with_values=692 no_values=0 vacuous=0 rejected=2 known_mismatch=1 parked=8
+  known-mismatch nm_test_rotation_neg_y_36 [fixture:fixtures/sweep.topology_sweep/nonmanifold_body.json#7 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) on a non-manifold body (tests/prog_test/src/smSweepTest.cpp my_create_test_brep / my_sweep_demo case 8): step 6 wire-edge and shell-vertex copy into a separate B-rep, nested DoSweep of them, ManifoldBoolean union)]: values.points.len: cpp=0 rust=585
+  parked nm_box_linear_z_stitch (ND-491) [fixture:fixtures/sweep.topology_sweep/nonmanifold_body.json#12 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) on a non-manifold body (tests/prog_test/src/smSweepTest.cpp my_create_test_brep / my_sweep_demo case 8): step 6 wire-edge and shell-vertex copy into a separate B-rep, nested DoSweep of them, ManifoldBoolean union)]
+  parked nm_box_only_linear_z_stitch (ND-491) [fixture:fixtures/sweep.topology_sweep/nonmanifold_body.json#32 (upstream source/SMLib/src/SmTopologySweep.cpp:1363 (DoSweep, bSweepWholeBrep with m_bDoStitching) on the box alone: the stitch of body 0's box part)]
+  parked whole_stitch_linear_x_flat_box (ND-491) [fixture:fixtures/sweep.topology_sweep/whole_brep.json#15 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) with m_bDoStitching: SmStitch(SmSweepStitchCallback, tol, TRUE, TRUE).DoStitching on the swept B-rep)]
+  parked whole_stitch_linear_neg_y_flat_box (ND-491) [fixture:fixtures/sweep.topology_sweep/whole_brep.json#16 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) with m_bDoStitching: SmStitch(SmSweepStitchCallback, tol, TRUE, TRUE).DoStitching on the swept B-rep)]
+  parked whole_stitch_linear_tiny_box (ND-491) [fixture:fixtures/sweep.topology_sweep/whole_brep.json#17 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) with m_bDoStitching: SmStitch(SmSweepStitchCallback, tol, TRUE, TRUE).DoStitching on the swept B-rep)]
+  parked whole_stitch_rotation_y_90 (ND-491) [fixture:fixtures/sweep.topology_sweep/whole_brep.json#19 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) with m_bDoStitching: SmStitch(SmSweepStitchCallback, tol, TRUE, TRUE).DoStitching on the swept B-rep)]
+  parked whole_stitch_rotation_x_30 (ND-491) [fixture:fixtures/sweep.topology_sweep/whole_brep.json#20 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) with m_bDoStitching: SmStitch(SmSweepStitchCallback, tol, TRUE, TRUE).DoStitching on the swept B-rep)]
+  parked whole_merge_rotation_y_90 (ND-491) [fixture:fixtures/sweep.topology_sweep/whole_brep.json#23 (upstream source/SMLib/src/SmTopologySweep.cpp:628 (DoSweep, bSweepWholeBrep) with m_bDoMerge: the swept faces merged with the HCR scene copy)]
+  report: reports/difftest/sweep.topology_sweep.json
+TIME sweep.topology_sweep n=703 cases=0.010368 cpp=0.466284 rust=0.449052 compare=0.010694 ratio=0.963 slowest_rust=whole_merge_linear_oblique:0.040615
+PASS sweep.trans_sweep_geometry cases=788 passed=788 failed=0 deferred=0 max_rel_err=0e0 with_values=788 no_values=0 vacuous=0
+  report: reports/difftest/sweep.trans_sweep_geometry.json
+TIME sweep.trans_sweep_geometry n=788 cases=0.010165 cpp=0.016027 rust=0.025263 compare=0.002983 ratio=1.576 slowest_rust=gen0412:0.001108
+PASS topology.brep_cache cases=663 passed=663 failed=0 deferred=0 max_rel_err=0e0 with_values=663 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_cache.json
+TIME topology.brep_cache n=663 cases=0.011431 cpp=0.042500 rust=0.128362 compare=0.013967 ratio=3.020 slowest_rust=ring_1e-12_128:0.001011
+PASS topology.brep_data cases=2379 passed=2379 failed=0 deferred=0 max_rel_err=0e0 with_values=2379 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_data.json
+TIME topology.brep_data n=2379 cases=0.109472 cpp=0.626006 rust=0.285607 compare=0.050625 ratio=0.456 slowest_rust=file_Defeature_Platte:0.006589
+PASS topology.brep_p1 cases=2636 passed=2635 failed=0 deferred=0 max_rel_err=0e0 with_values=2590 no_values=45 vacuous=0 rejected=1
+  report: reports/difftest/topology.brep_p1.json
+TIME topology.brep_p1 n=2636 cases=0.054187 cpp=28.649678 rust=4.416969 compare=0.025584 ratio=0.154 slowest_rust=toruswvy_heal:0.548620
+PASS topology.brep_p10 cases=1416 passed=1408 failed=0 deferred=0 max_rel_err=0e0 with_values=1408 no_values=0 vacuous=0 rejected=7 parked=1
+  parked read_Solids_fillet_ts (UB-255) [fixture:fixtures/topology.brep_p10/upstream_files.json#459 (upstream source/SMLib/src/SmBrep.cpp SmBrep::ReadFromFile -> MakeTopologyFromData(data, attrs, FALSE, TRUE, TRUE))]
+  report: reports/difftest/topology.brep_p10.json
+TIME topology.brep_p10 n=1416 cases=0.034797 cpp=2.863703 rust=14.764275 compare=0.179088 ratio=5.156 slowest_rust=gen0026:1.000259
+PASS topology.brep_p2 cases=1720 passed=1720 failed=0 deferred=0 max_rel_err=0e0 with_values=1720 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_p2.json
+TIME topology.brep_p2 n=1720 cases=0.051112 cpp=18.585048 rust=25.248056 compare=0.015651 ratio=1.359 slowest_rust=refine_cci_f4_plane_a_nouv:0.327126
+PASS topology.brep_p3 cases=906 passed=906 failed=0 deferred=0 max_rel_err=0e0 with_values=906 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_p3.json
+TIME topology.brep_p3 n=906 cases=0.012488 cpp=12.861856 rust=13.621910 compare=0.014299 ratio=1.059 slowest_rust=nurbs_off_toruswvy_0.1:0.206218
+PASS topology.brep_p4 cases=327 passed=312 failed=0 deferred=0 max_rel_err=0e0 with_values=312 no_values=0 vacuous=0 rejected=15
+  report: reports/difftest/topology.brep_p4.json
+TIME topology.brep_p4 n=327 cases=1.315789 cpp=1.839289 rust=2.581651 compare=0.015257 ratio=1.404 slowest_rust=gen0059:0.118757
+PASS topology.brep_p5 cases=797 passed=797 failed=0 deferred=0 max_rel_err=0e0 with_values=797 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_p5.json
+TIME topology.brep_p5 n=797 cases=0.013567 cpp=0.027703 rust=0.030534 compare=0.003077 ratio=1.102 slowest_rust=nonuniform_deferred_kind2:0.000593
+PASS topology.brep_p6 cases=595 passed=595 failed=0 deferred=0 max_rel_err=0e0 with_values=595 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_p6.json
+TIME topology.brep_p6 n=595 cases=0.070231 cpp=9.276442 rust=4.222648 compare=0.017634 ratio=0.455 slowest_rust=closure_toruswvy.smb_1_4:0.060249
+PASS topology.brep_p7 cases=450 passed=417 failed=0 deferred=0 max_rel_err=0e0 with_values=417 no_values=0 vacuous=0 rejected=29 parked=4
+  parked read_ellips_ts2.smb_index1 (WR-470) [fixture:built-in: topology.brep_p7 cases#405 (upstream tests/prog_test (pt_TestFiles B-reps))]
+  parked read_plane_square.smb_index1 (WR-470) [fixture:built-in: topology.brep_p7 cases#413 (upstream tests/prog_test (pt_TestFiles B-reps))]
+  parked read_surf_extrude.smb_index1 (WR-470) [fixture:built-in: topology.brep_p7 cases#421 (upstream tests/prog_test (pt_TestFiles B-reps))]
+  parked read_surf_rev.smb_index1 (WR-470) [fixture:built-in: topology.brep_p7 cases#425 (upstream tests/prog_test (pt_TestFiles B-reps))]
+  report: reports/difftest/topology.brep_p7.json
+TIME topology.brep_p7 n=450 cases=1.424342 cpp=32.462538 rust=7.365161 compare=0.003155 ratio=0.227 slowest_rust=read_toruswvy.smb_index1:0.554646
+PASS topology.brep_p8 cases=350 passed=350 failed=0 deferred=0 max_rel_err=0e0 with_values=350 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_p8.json
+TIME topology.brep_p8 n=350 cases=0.005665 cpp=0.025308 rust=0.076860 compare=0.004862 ratio=3.037 slowest_rust=faces_from_surface_crease_uv_7:0.002810
+PASS topology.brep_p9 cases=684 passed=684 failed=0 deferred=0 max_rel_err=0e0 with_values=684 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_p9.json
+TIME topology.brep_p9 n=684 cases=0.015688 cpp=0.392361 rust=0.477108 compare=0.004398 ratio=1.216 slowest_rust=real_mouse_split_e0_t0:0.016202
+PASS topology.brep_validation cases=112 passed=112 failed=0 deferred=0 max_rel_err=0e0 with_values=112 no_values=0 vacuous=0
+  report: reports/difftest/topology.brep_validation.json
+TIME topology.brep_validation n=112 cases=0.008131 cpp=0.057015 rust=0.057485 compare=0.002583 ratio=1.008 slowest_rust=grid_128_pointers:0.007647
+PASS topology.database_io cases=2066 passed=2066 failed=0 deferred=0 max_rel_err=0e0 with_values=2066 no_values=0 vacuous=0
+  report: reports/difftest/topology.database_io.json
+TIME topology.database_io n=2066 cases=0.014596 cpp=0.047905 rust=0.040191 compare=0.020522 ratio=0.839 slowest_rust=extrusion_pbp:0.011572
+PASS topology.edge cases=1915 passed=1915 failed=0 deferred=0 max_rel_err=0e0 with_values=1915 no_values=0 vacuous=0
+  report: reports/difftest/topology.edge.json
+TIME topology.edge n=1915 cases=0.034415 cpp=10.414738 rust=0.242173 compare=0.011648 ratio=0.023 slowest_rust=Endcap_e0_uv_of_surface:0.001066
+PASS topology.edgeuse_p1 cases=5554 passed=5554 failed=0 deferred=0 max_rel_err=0e0 with_values=5526 no_values=28 vacuous=0
+  report: reports/difftest/topology.edgeuse_p1.json
+TIME topology.edgeuse_p1 n=5554 cases=0.184021 cpp=44.449299 rust=4.138871 compare=0.025676 ratio=0.093 slowest_rust=review_gapval_ellips_ts2.smb_1_4_0:0.006911
+PASS topology.edgeuse_p2 cases=4583 passed=4583 failed=0 deferred=0 max_rel_err=0e0 with_values=4498 no_values=85 vacuous=0
+  report: reports/difftest/topology.edgeuse_p2.json
+TIME topology.edgeuse_p2 n=4583 cases=0.257670 cpp=21.511176 rust=4.665944 compare=0.026619 ratio=0.217 slowest_rust=ellips_ts2_x_cs27_0.001_1:0.007312
+PASS topology.edgeuse_p3 cases=4805 passed=4805 failed=0 deferred=0 max_rel_err=0e0 with_values=4781 no_values=24 vacuous=0
+  report: reports/difftest/topology.edgeuse_p3.json
+TIME topology.edgeuse_p3 n=4805 cases=0.322513 cpp=30.926343 rust=19.225171 compare=0.051177 ratio=0.622 slowest_rust=upstream_files_b27_eu2_create_dev:0.045493
+PASS topology.face_p1 cases=2315 passed=2278 failed=0 deferred=0 max_rel_err=0e0 with_values=2278 no_values=0 vacuous=0 rejected=37
+  report: reports/difftest/topology.face_p1.json
+TIME topology.face_p1 n=2315 cases=0.015002 cpp=25.200519 rust=25.709624 compare=0.019712 ratio=1.020 slowest_rust=toruswvy.smb_0_f2_op9:0.484686
+PASS topology.face_p2 cases=2692 passed=2692 failed=0 deferred=0 max_rel_err=0e0 with_values=2692 no_values=0 vacuous=0
+  report: reports/difftest/topology.face_p2.json
+TIME topology.face_p2 n=2692 cases=5.235083 cpp=16.828391 rust=0.578980 compare=0.014110 ratio=0.034 slowest_rust=extra00057:0.033171
+PASS topology.face_p3 cases=1913 passed=1913 failed=0 deferred=0 max_rel_err=0e0 with_values=1910 no_values=3 vacuous=0
+  report: reports/difftest/topology.face_p3.json
+TIME topology.face_p3 n=1913 cases=0.035544 cpp=6.059638 rust=4.294956 compare=0.012991 ratio=0.709 slowest_rust=touching_torus_plane_circle_10_tol1e-6:0.123301
+PASS topology.face_p4 cases=5506 passed=5506 failed=0 deferred=0 max_rel_err=0e0 with_values=5506 no_values=0 vacuous=0
+  report: reports/difftest/topology.face_p4.json
+TIME topology.face_p4 n=5506 cases=0.015658 cpp=47.743564 rust=16.712886 compare=0.045596 ratio=0.350 slowest_rust=gen0008:0.244128
+PASS topology.loopuse cases=8854 passed=8854 failed=0 deferred=0 max_rel_err=0e0 with_values=8590 no_values=264 vacuous=0
+  report: reports/difftest/topology.loopuse.json
+TIME topology.loopuse n=8854 cases=7.156668 cpp=78.566455 rust=9.976611 compare=0.055745 ratio=0.127 slowest_rust=tol_ellips_ts2_rb_3_1e-09_01:0.006547
+PASS topology.proto_topology_p1 cases=1922 passed=1922 failed=0 deferred=0 max_rel_err=0e0 with_values=1922 no_values=0 vacuous=0
+  report: reports/difftest/topology.proto_topology_p1.json
+TIME topology.proto_topology_p1 n=1922 cases=0.155475 cpp=0.180253 rust=0.293995 compare=0.009954 ratio=1.631 slowest_rust=public_scale_torus_nonuniform:0.006579
+PASS topology.proto_topology_p2 cases=1767 passed=1767 failed=0 deferred=0 max_rel_err=0e0 with_values=1767 no_values=0 vacuous=0
+  report: reports/difftest/topology.proto_topology_p2.json
+TIME topology.proto_topology_p2 n=1767 cases=0.112059 cpp=0.185932 rust=0.338677 compare=0.012569 ratio=1.822 slowest_rust=real_face_update_first_only_zero_operand1:0.000960
+PASS topology.proto_topology_p3 cases=3013 passed=3013 failed=0 deferred=0 max_rel_err=0e0 with_values=3013 no_values=0 vacuous=0
+  report: reports/difftest/topology.proto_topology_p3.json
+TIME topology.proto_topology_p3 n=3013 cases=0.355302 cpp=0.432877 rust=0.597629 compare=0.017006 ratio=1.381 slowest_rust=gen2687:0.000975
+PASS topology.shell cases=911 passed=911 failed=0 deferred=0 max_rel_err=0e0 with_values=902 no_values=9 vacuous=0
+  report: reports/difftest/topology.shell.json
+TIME topology.shell n=911 cases=0.029280 cpp=0.258532 rust=0.198994 compare=0.003412 ratio=0.770 slowest_rust=region_order_gather_Mouse.smb_1:0.012200
+PASS topology.topology cases=658 passed=658 failed=0 deferred=0 max_rel_err=0e0 with_values=658 no_values=0 vacuous=0
+  report: reports/difftest/topology.topology.json
+TIME topology.topology n=658 cases=0.013434 cpp=0.010164 rust=0.015186 compare=0.003008 ratio=1.494 slowest_rust=tracker_capture_lists:0.000198
+PASS topology.topology_traverser cases=909 passed=909 failed=0 deferred=0 max_rel_err=0e0 with_values=791 no_values=118 vacuous=0
+  report: reports/difftest/topology.topology_traverser.json
+TIME topology.topology_traverser n=909 cases=0.186021 cpp=1.844042 rust=1.084691 compare=0.002768 ratio=0.588 slowest_rust=gen0003:0.051892
+PASS topology.trimming_tools cases=3305 passed=3305 failed=0 deferred=0 max_rel_err=0e0 with_values=3296 no_values=9 vacuous=0
+  report: reports/difftest/topology.trimming_tools.json
+TIME topology.trimming_tools n=3305 cases=0.077526 cpp=22.176728 rust=3.404306 compare=0.023915 ratio=0.154 slowest_rust=gen1061:0.081473
+PASS topology.vertex cases=5598 passed=5598 failed=0 deferred=0 max_rel_err=0e0 with_values=5596 no_values=2 vacuous=0
+  report: reports/difftest/topology.vertex.json
+TIME topology.vertex n=5598 cases=0.187834 cpp=27.547328 rust=0.514754 compare=0.022592 ratio=0.019 slowest_rust=toruswvy_v2_topo:0.000489
+PASS topology.vertexuse cases=2686 passed=2686 failed=0 deferred=0 max_rel_err=0e0 with_values=2686 no_values=0 vacuous=0
+  report: reports/difftest/topology.vertexuse.json
+TIME topology.vertexuse n=2686 cases=0.076668 cpp=11.365551 rust=1.298734 compare=0.012019 ratio=0.114 slowest_rust=ellips_ts2_rebuild_vu2_gap1_11:0.006606
+difftest: 261 unit(s), 255 passed, 1 partial, 0 failed, 5 skipped(platform)
+difftest --jobs 4: wall 327.5 s, sum of unit times 1179.2 s, longest unit topology.loopuse 95.9 s
+EXIT=0
+end: 2026-10-28T02:01:43Z

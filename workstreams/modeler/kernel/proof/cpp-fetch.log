@@ -1,0 +1,343 @@
+=== scripts/fetch-cpp.sh (C++ reference for difftest) ===
+#!/usr/bin/env bash
+# Print the key that names a prebuilt C++ reference build (harness/cpp/build.sh output).
+#
+#   v1-<upstream commit, 12 hex>-<16 hex of a sha256 over the harness inputs>
+#
+# The inputs are exactly what build.sh compiles into bin/cpp/lib: the pinned upstream
+# commit (UPSTREAM_COMMIT in scripts/upstream-pin.env) plus
+# harness/cpp/{CMakeLists.txt,build.sh,stubs/**,patches/**}. The shims
+# (harness/cpp/shim/**) are compiled by crates/solidcore-ffi, not by build.sh, so they
+# are not part of the key. CI (actions/cache key), .github/workflows/cpp-reference.yml
+# (release tag cpp-ref-<key>) and scripts/fetch-cpp.sh all call this script, so they
+# always agree. Bump the "v1" prefix when the packaging itself changes.
+#
+# An UPSTREAM_COMMIT environment variable overrides the pinned commit.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# The pin lives in scripts/upstream-pin.env (also read by fetch-cpp.sh, package-cpp-ref.sh,
+# the site and CI); ATTRIBUTION.md / AGENTS.md / README.md quote it for humans.
+PINNED="$(sed -n 's/^UPSTREAM_COMMIT=//p' "$ROOT/scripts/upstream-pin.env")"
+[ -n "$PINNED" ] || { echo "cpp-ref-key.sh: no UPSTREAM_COMMIT in scripts/upstream-pin.env" >&2; exit 1; }
+COMMIT="${UPSTREAM_COMMIT:-$PINNED}"
+
+if command -v sha256sum >/dev/null 2>&1; then
+  sha() { sha256sum | cut -c1-64; }
+else
+  sha() { shasum -a 256 | cut -c1-64; }   # macOS
+fi
+
+cd "$ROOT"
+files="$(
+  { printf '%s\n' harness/cpp/CMakeLists.txt harness/cpp/build.sh
+    for d in harness/cpp/stubs harness/cpp/patches; do
+      if [ -d "$d" ]; then find "$d" -type f; fi
+    done
+  } | LC_ALL=C sort
+)"
+hash="$(
+  printf '%s\n' "$files" | while IFS= read -r f; do
+    printf '%s  %s\n' "$(sha < "$f")" "$f"
+  done | sha
+)"
+printf 'v1-%s-%s\n' "$(printf '%s' "$COMMIT" | cut -c1-12)" "$(printf '%s' "$hash" | cut -c1-16)"
+---
+fetch-cpp: no prebuilt reference for Linux aarch64 (only Linux x86_64)
+fetch-cpp: building from source with harness/cpp/build.sh instead
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/r1a/.hermes/cache/scratch/solidcore/bin/cpp/build-276487c3
+compile_commands.json -> /home/r1a/.hermes/cache/scratch/solidcore/bin/cpp/compile_commands.json
+ffi.env -> /home/r1a/.hermes/cache/scratch/solidcore/bin/cpp/ffi.env
+[  0%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvAdv.cpp.o
+[  1%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Bezier.cpp.o
+[  1%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_BasisAdv.cpp.o
+[  1%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_BasisBasic.cpp.o
+[  1%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvApprox.cpp.o
+[  2%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvBasic.cpp.o
+[  2%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvCommon.cpp.o
+[  2%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvFit.cpp.o
+[  3%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvGeom.cpp.o
+[  3%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvNurb.cpp.o
+[  3%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvOffset.cpp.o
+[  4%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvPoly.cpp.o
+[  4%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvShape.cpp.o
+[  5%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_CrvTool.cpp.o
+[  5%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_FrameAdv.cpp.o
+[  5%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_FrameBasic.cpp.o
+[  6%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_FuncsAdv.cpp.o
+[  6%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_FuncsBasic.cpp.o
+[  6%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Gauss.cpp.o
+[  7%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Geom.cpp.o
+[  7%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Globals.cpp.o
+[  7%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Iges.cpp.o
+[  8%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Math.cpp.o
+[  8%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Spiral.cpp.o
+[  9%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfAdv.cpp.o
+[  9%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfApprox.cpp.o
+[  9%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfBasic.cpp.o
+[ 10%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfCommon.cpp.o
+[ 10%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfFit.cpp.o
+[ 10%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfGeom.cpp.o
+[ 11%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfLstSqFit.cpp.o
+[ 11%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfNurb.cpp.o
+[ 11%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfOffset.cpp.o
+[ 12%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfPoly.cpp.o
+[ 12%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfShape.cpp.o
+[ 12%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfSymbol.cpp.o
+[ 13%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_SrfTool.cpp.o
+[ 13%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Tessellate.cpp.o
+[ 14%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_Util.cpp.o
+[ 14%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/NL_VolumeAdv.cpp.o
+[ 14%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAObject.cpp.o
+[ 15%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAdvSurfaceIntersector.cpp.o
+[ 15%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAssembly.cpp.o
+[ 15%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAssemblyInstance.cpp.o
+[ 16%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAssertArray.cpp.o
+[ 16%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAttribute.cpp.o
+[ 16%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmAxis2Placement.cpp.o
+[ 17%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBSplineCurve.cpp.o
+[ 17%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBSplineCurveNLib.cpp.o
+[ 18%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBSplineSurface.cpp.o
+[ 18%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBSplineSurfaceNLib.cpp.o
+[ 18%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBSplineVolume.cpp.o
+[ 19%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBSplineVolumeNLib.cpp.o
+[ 19%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBendVolume.cpp.o
+[ 19%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBlendSurface.cpp.o
+[ 20%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBrep.cpp.o
+[ 20%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBrepCache.cpp.o
+[ 20%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBrepCutting.cpp.o
+[ 21%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBrepData.cpp.o
+[ 21%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmBucketSort.cpp.o
+[ 22%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCEdge.cpp.o
+[ 22%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCFace.cpp.o
+[ 22%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCacheMgr.cpp.o
+[ 23%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCacheMgrBrep.cpp.o
+[ 23%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCacheMgrCrv.cpp.o
+[ 23%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCacheMgrSrf.cpp.o
+[ 24%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCacheMgrTSrf.cpp.o
+[ 24%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCircle.cpp.o
+[ 24%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCodeCount.cpp.o
+[ 25%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCompositeCurve.cpp.o
+[ 25%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCone.cpp.o
+[ 25%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmConic.cpp.o
+[ 26%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmContext.cpp.o
+[ 26%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCopyBrepMap.cpp.o
+[ 27%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCrvInVolume.cpp.o
+[ 27%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCrvOnSurf.cpp.o
+[ 27%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCubicBezierSurface.cpp.o
+[ 28%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCurve.cpp.o
+[ 28%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCurveBoundedSurface.cpp.o
+[ 28%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCurveCache.cpp.o
+[ 29%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCurveClass.cpp.o
+[ 29%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCurveFilletExecutive.cpp.o
+[ 29%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCutter.cpp.o
+[ 30%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmCylinder.cpp.o
+[ 30%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmDatabaseIO.cpp.o
+[ 31%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmDirectedSilhouette.cpp.o
+[ 31%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmDllMain.cpp.o
+[ 31%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmEdge.cpp.o
+[ 32%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmEdgeProps.cpp.o
+[ 32%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmEdgeuse.cpp.o
+[ 32%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmEllipse.cpp.o
+[ 33%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmExtent1d.cpp.o
+[ 33%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmExtent2d.cpp.o
+[ 33%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmExtent3d.cpp.o
+[ 34%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmExtentNd.cpp.o
+[ 34%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFace.cpp.o
+[ 35%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFaceGrid.cpp.o
+[ 35%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFaceProps.cpp.o
+[ 35%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFaceuse.cpp.o
+[ 36%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFeatureExecutive.cpp.o
+[ 36%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletCorner.cpp.o
+[ 36%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletCustomSolver.cpp.o
+[ 37%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletExecutive.cpp.o
+[ 37%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletGeom.cpp.o
+[ 37%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletIntersector.cpp.o
+[ 38%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletRemoval.cpp.o
+[ 38%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletSolver.cpp.o
+[ 38%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmFilletStandardSolver.cpp.o
+[ 39%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGap.cpp.o
+[ 39%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGauss.cpp.o
+[ 40%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGeomUtility.cpp.o
+[ 40%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGlobalSolver.cpp.o
+[ 40%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGraphicsExtern.cpp.o
+[ 41%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGraphicsNLib.cpp.o
+[ 41%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGraphicsOutput.cpp.o
+[ 41%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGraphicsVertexArray.cpp.o
+[ 42%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmGrid.cpp.o
+[ 42%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmHCR.cpp.o
+[ 42%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmHashTable.cpp.o
+[ 43%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmHealData.cpp.o
+[ 43%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmHermiteCurve.cpp.o
+[ 44%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmHistogram.cpp.o
+[ 44%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmHyperbola.cpp.o
+[ 44%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmIntegrator.cpp.o
+[ 45%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmIsoCurve.cpp.o
+[ 45%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLine.cpp.o
+[ 45%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLineSegClass.cpp.o
+[ 46%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLocalSolve1d.cpp.o
+[ 46%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLocalSolveNd.cpp.o
+[ 46%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLoop.cpp.o
+[ 47%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLoopProps.cpp.o
+[ 47%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmLoopuse.cpp.o
+[ 48%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMapPtrToPtr.cpp.o
+[ 48%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMapTypeToType.cpp.o
+[ 48%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMath.cpp.o
+[ 49%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMatrix.cpp.o
+[ 49%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMemBlockMgr.cpp.o
+[ 49%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMemory.cpp.o
+[ 50%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMerge.cpp.o
+[ 50%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmMessages.cpp.o
+[ 50%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmNurbsCrv.cpp.o
+[ 51%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmNurbsSrf.cpp.o
+[ 51%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmNurbsVol.cpp.o
+[ 51%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmObjProps.cpp.o
+[ 52%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmObject.cpp.o
+[ 52%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmOffsetCurve.cpp.o
+[ 53%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmOffsetExecutive.cpp.o
+[ 53%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmOffsetGeometryCreation.cpp.o
+[ 53%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmOffsetSurface.cpp.o
+[ 54%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmOwningTopology.cpp.o
+[ 54%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmParabola.cpp.o
+[ 54%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPeriodicExtent1d.cpp.o
+[ 55%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPlane.cpp.o
+[ 55%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPointClass.cpp.o
+[ 55%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPointSet.cpp.o
+[ 56%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolarBox.cpp.o
+[ 56%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPoly.cpp.o
+[ 57%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolyBrepData.cpp.o
+[ 57%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolyDecimate.cpp.o
+[ 57%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolyIntersector.cpp.o
+[ 58%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolyMerge.cpp.o
+[ 58%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolySolver.cpp.o
+[ 58%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPolynomial.cpp.o
+[ 59%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPrimitiveCreation.cpp.o
+[ 59%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmProjectedCurve.cpp.o
+[ 59%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmProtoTopology.cpp.o
+[ 60%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmPseudoBox.cpp.o
+[ 60%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmRayTracer.cpp.o
+[ 61%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmRegion.cpp.o
+[ 61%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmRelation.cpp.o
+[ 61%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmRotationalSweepGeometry.cpp.o
+[ 62%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSAGObject.cpp.o
+[ 62%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSArray.cpp.o
+[ 62%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSLC.cpp.o
+[ 63%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSTEPSurface.cpp.o
+[ 63%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmShape.cpp.o
+[ 63%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmShell.cpp.o
+[ 64%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSolutionArray.cpp.o
+[ 64%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSpaceBend.cpp.o
+[ 64%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSpaceUnbend.cpp.o
+[ 65%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSphere.cpp.o
+[ 65%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSrfInVolume.cpp.o
+[ 66%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmStitch.cpp.o
+[ 66%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfOfExtrusion.cpp.o
+[ 66%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfOfRevolution.cpp.o
+[ 67%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurface.cpp.o
+[ 67%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfaceCache.cpp.o
+[ 67%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfaceDropCurve.cpp.o
+[ 68%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfaceDropLib.cpp.o
+[ 68%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfaceIntersector.cpp.o
+[ 68%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfacePointSolve.cpp.o
+[ 69%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfaceSilhouette.cpp.o
+[ 69%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSurfaceTracer.cpp.o
+[ 70%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmSweepGeometryCreation.cpp.o
+[ 70%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTList.cpp.o
+[ 70%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTArray.cpp.o
+[ 71%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTangentField.cpp.o
+[ 71%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTess.cpp.o
+[ 71%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmThreadLocalStorage.cpp.o
+[ 72%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTol.cpp.o
+[ 72%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTools.cpp.o
+[ 72%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTopology.cpp.o
+[ 73%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTopologyIntersector.cpp.o
+[ 73%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTopologySolver.cpp.o
+[ 74%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTopologySweep.cpp.o
+[ 74%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTopologyTraverser.cpp.o
+[ 74%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTorus.cpp.o
+[ 75%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTrackTopologyChanges.cpp.o
+[ 75%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTransSweepGeometry.cpp.o
+[ 75%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTransform.cpp.o
+[ 76%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTree.cpp.o
+[ 76%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTrimSrfCache.cpp.o
+[ 76%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTrimmingTools.cpp.o
+[ 77%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTwistVolume.cpp.o
+[ 77%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmTypes.cpp.o
+[ 77%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmUnbendVolume.cpp.o
+[ 78%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVector2d.cpp.o
+[ 78%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVector3d.cpp.o
+[ 79%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVectorNd.cpp.o
+[ 79%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVertex.cpp.o
+[ 79%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVertexProps.cpp.o
+[ 80%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVertexuse.cpp.o
+[ 80%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/SmVolume.cpp.o
+[ 80%] Building CXX object CMakeFiles/SMLib.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SMLib/src/StdAfx.cpp.o
+[ 81%] Linking CXX static library libSMLib.a
+[ 81%] Built target SMLib
+[ 82%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiHeal.cpp.o
+[ 82%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiBrep.cpp.o
+[ 82%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiCurves.cpp.o
+[ 82%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiGeneral.cpp.o
+[ 83%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiFillets.cpp.o
+[ 83%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/StdAfx.cpp.o
+[ 83%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiImportExport.cpp.o
+[ 83%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/prog_test.cpp.o
+[ 83%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiIntersectors.cpp.o
+[ 84%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiPolygons.cpp.o
+[ 84%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiPrimitives.cpp.o
+[ 84%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiQueries.cpp.o
+[ 85%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/prog_test_app.cpp.o
+[ 86%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiSurfaces.cpp.o
+[ 86%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/SmApiTrimmedSurfaces.cpp.o
+[ 86%] Building CXX object CMakeFiles/SM_API.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/source/SM_API/src/StdAfx.cpp.o
+[ 86%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smAdvancedTest.cpp.o
+[ 86%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smCurveTest.cpp.o
+[ 87%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smFaceTest.cpp.o
+[ 87%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smFeatureTest.cpp.o
+[ 87%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smFilletTest.cpp.o
+[ 88%] Linking CXX static library libSM_API.a
+[ 88%] Built target SM_API
+[ 88%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/StdAfx.cpp.o
+[ 88%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmBrep.cpp.o
+[ 89%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smHealTest.cpp.o
+[ 89%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smMergeTest.cpp.o
+[ 89%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smOffsetTest.cpp.o
+[ 90%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smSurfaceTest.cpp.o
+[ 90%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smSweepTest.cpp.o
+[ 91%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smTessTest.cpp.o
+[ 91%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smTestBrep.cpp.o
+[ 91%] Building CXX object CMakeFiles/prog_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/prog_test/src/smTopoTest.cpp.o
+[ 92%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmBrepCopy.cpp.o
+[ 92%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmBrepDistance.cpp.o
+[ 93%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmCurves.cpp.o
+[ 93%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmErrorCodes.cpp.o
+[ 93%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmFillets.cpp.o
+[ 94%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmGeneral.cpp.o
+[ 94%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmHeal.cpp.o
+[ 94%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmImportExport.cpp.o
+[ 95%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmIntersectors.cpp.o
+[ 95%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmPolygons.cpp.o
+[ 96%] Linking CXX executable prog_test_app
+[ 96%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmPrimitives.cpp.o
+[ 97%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmSurfaces.cpp.o
+[ 97%] Building CXX object CMakeFiles/sm_api_tests.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/TestSmTrimmedSurfaces.cpp.o
+[ 97%] Built target prog_test_app
+[ 98%] Building CXX object CMakeFiles/sm_api_tests.dir/stubs/sm_api_test_examples_stub.cpp.o
+[ 98%] Built target sm_api_tests
+[ 98%] Building CXX object CMakeFiles/SM_API_test_app.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/SM_API_test.cpp.o
+[ 98%] Building CXX object CMakeFiles/sm_api_single.dir/home/r1a/.hermes/cache/scratch/solidcore/upstream/tests/SM_API_test/src/SM_API_test.cpp.o
+[ 98%] Building CXX object CMakeFiles/sm_api_single.dir/sm_api_single_main.cpp.o
+[ 99%] Linking CXX executable SM_API_test_app
+[100%] Linking CXX executable sm_api_single
+[100%] Built target SM_API_test_app
+[100%] Built target sm_api_single
+C++ build finished in 71 s; libs in /home/r1a/.hermes/cache/scratch/solidcore/bin/cpp/lib
+EXIT=0
