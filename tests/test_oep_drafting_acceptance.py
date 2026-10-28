@@ -83,7 +83,7 @@ def test_document_header_and_drawing_extension():
     # title block values
     tb = sheet["title_block"]
     assert tb["title"] == "Bracket"
-    assert tb["part_number"] == "KW-BKT-001"
+    assert tb["part_number"] == "ISO-BKT-001"
     assert tb["material"] == "6061-T6"
 
 
@@ -182,7 +182,7 @@ def test_svg_draws_title_block_and_variable_driven_dimensions():
     texts = [t.text for t in root.iter("{%s}text" % NS["svg"])]
     joined = "\n".join(x for x in texts if x)
     assert "TITLE: Bracket" in joined
-    assert "PART NO: KW-BKT-001" in joined
+    assert "PART NO: ISO-BKT-001" in joined
     assert "MATERIAL: 6061-T6" in joined
     # The three dimensions are labeled by the variable-driven values.
     for label in ("80", "40", "6"):

@@ -3,7 +3,7 @@
 #
 # Runs the measured P10 GA gate against the two approved machines (decision
 # #9): machine A = U1 (the local host), machine B = a U1/VM-class host reached
-# over SSH (default: the keelwb2 QEMU/KVM VM on U1; set MACHINE_B_HOST/PORT to
+# over SSH (default: the oep-vm-b QEMU/KVM VM on U1; set MACHINE_B_HOST/PORT to
 # point at any approved second host, e.g. op@192.168.0.43 for the garage PC).
 #
 # What it does, in the exact shape of the P8/P9 proof scripts:

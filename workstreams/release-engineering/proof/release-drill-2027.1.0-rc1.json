@@ -6,7 +6,7 @@
   "tag": "v2027.1.0-rc1",
   "cut_sha": "7eefaa51c74ca36107c474fa155c880d52a327ea",
   "host": "promaxgb10-83f1 (U1)",
-  "verified_on": "U1 (machine A) + keelwb2 QEMU/KVM VM (machine B, op@127.0.0.1:2229)",
+  "verified_on": "U1 (machine A) + oep-vm-b QEMU/KVM VM (machine B, op@127.0.0.1:2229)",
   "generated": "2026-10-19T10:33:40.200825+00:00",
   "schema_version": 1,
   "summary": {
@@ -87,7 +87,7 @@
       "id": "install",
       "gate": "P12-T06 two-machine install rehearsal",
       "status": "PASS",
-      "detail": "fresh clean-state one-command install on U1 + keelwb2: total=4 PASS=4 FAIL=0 SKIP=0 exit 0; both hosts re-verified pdm/viewer/p2p HTTP 200; proof workstreams/release-engineering/proof/release-rehearsal-0.1.0.json"
+      "detail": "fresh clean-state one-command install on U1 + oep-vm-b: total=4 PASS=4 FAIL=0 SKIP=0 exit 0; both hosts re-verified pdm/viewer/p2p HTTP 200; proof workstreams/release-engineering/proof/release-rehearsal-0.1.0.json"
     }
   ],
   "deliverables": [

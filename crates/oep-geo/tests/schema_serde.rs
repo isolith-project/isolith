@@ -56,13 +56,13 @@ pub fn build_example() -> Document {
 
     // Parts.
     let bracket = Part::new("oep-part-bracket", "bracket")
-        .with_part_number("KW-BKT-001")
+        .with_part_number("ISO-BKT-001")
         .with_body("oep-body-bracket")
         .with_feature("oep-feature-bracket-extrude")
         .with_feature("oep-feature-bracket-fillet")
         .with_feature("oep-feature-bracket-hole");
     let fastener = Part::new("oep-part-fastener", "fastener")
-        .with_part_number("KW-FST-002")
+        .with_part_number("ISO-FST-002")
         .with_body("oep-body-fastener")
         .with_feature("oep-feature-fastener-turn");
     doc.push_part(bracket);
@@ -214,7 +214,7 @@ fn drawing_model_round_trips_in_document() {
             .with_projection(ProjectionType::ThirdAngle)
             .with_title_block(
                 TitleBlock::new("Bracket")
-                    .with_part_number("KW-BKT-001")
+                    .with_part_number("ISO-BKT-001")
                     .with_material("6061-T6")
                     .with_scale("1:1")
                     .with_drawn_by("oep-drafting")

@@ -72,7 +72,7 @@ def main() -> int:
         with open(GOLDEN, encoding="utf-8") as fh:
             golden = fh.read()
         item = api("POST", "/api/v1/items", {
-            "name": "kw-bracket-assembly", "kind": "assembly",
+            "name": "iso-bracket-assembly", "kind": "assembly",
             "description": "reference vertical fixture",
             "owner": "p8", "context": "w2",
         })

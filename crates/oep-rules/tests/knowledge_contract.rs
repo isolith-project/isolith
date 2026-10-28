@@ -14,7 +14,7 @@
 //!
 //! Every expectation here is derived from the real bracket part data
 //! (80x40x6 mm, fillet radius 2, hole diameter 6, hole depth 6) plus the
-//! committed knowledge set in `tests/golden/kw-bracket.json`. No mocks.
+//! committed knowledge set in `tests/golden/iso-bracket.json`. No mocks.
 //!
 //! Run: cargo test -p oep-rules
 
@@ -51,7 +51,7 @@ fn load_bracket_context() -> PartContext {
 }
 
 fn load_knowledge() -> KnowledgeSet {
-    let text = fs::read_to_string(repo_path("crates/oep-rules/tests/golden/kw-bracket.json"))
+    let text = fs::read_to_string(repo_path("crates/oep-rules/tests/golden/iso-bracket.json"))
         .expect("committed knowledge set must exist");
     KnowledgeSet::from_json(&text).expect("knowledge set must parse and validate")
 }
@@ -211,7 +211,7 @@ fn part_context_reads_real_part() {
     let ctx = load_bracket_context();
     assert_eq!(ctx.id, "oep-part-bracket");
     assert_eq!(ctx.name, "bracket");
-    assert_eq!(ctx.part_number.as_deref(), Some("KW-BKT-001"));
+    assert_eq!(ctx.part_number.as_deref(), Some("ISO-BKT-001"));
     assert_eq!(ctx.bbox_min, [0.0, 0.0, 0.0]);
     assert_eq!(ctx.bbox_max, [80.0, 40.0, 6.0]);
     let hole = ctx

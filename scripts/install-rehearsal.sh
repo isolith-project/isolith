@@ -5,7 +5,7 @@
 # machine. For every release this runs the P10-M1-T01 one-command install
 # (`workstreams/delivery/deploy/deploy/install.sh`) from a clean state on the two approved hosts
 # (decision #9): machine A = U1 (the local host), machine B = a U1/VM-class
-# host reached over SSH (default: the keelwb2 QEMU/KVM VM on U1; set
+# host reached over SSH (default: the oep-vm-b QEMU/KVM VM on U1; set
 # MACHINE_B_HOST/PORT to point at any approved second host, e.g. the garage PC
 # over WoL). The NAS stays repo/storage only -- it is never a run target.
 #
@@ -184,7 +184,7 @@ elif ! grep -q "curl -fsS http://127.0.0.1:8787/api/v1/health" "$RUNBOOK" \
   || ! grep -q "http://127.0.0.1:8790/" "$RUNBOOK" \
   || ! grep -q "curl -fsS http://127.0.0.1:8080/healthz" "$RUNBOOK"; then
     row "DOCS" "runbook" "FAIL" "runbook missing one of the three health-check surfaces"
-elif ! grep -qiE "U1|keelwb|VM-class|machine B|second host" "$RUNBOOK"; then
+elif ! grep -qiE "U1|oep-vm|VM-class|machine B|second host" "$RUNBOOK"; then
     row "DOCS" "runbook" "FAIL" "runbook does not name the two approved host classes (decision #9)"
 else
     row "DOCS" "runbook" "PASS" "runbook present, names 3 health surfaces + 2 approved host classes"

@@ -7,7 +7,7 @@ VM; the NAS is repo/storage only).
 | file | what it is |
 |------|------------|
 | machine-a-online.typescript / .timing | `script -T` recording of the U1 online install (clean state -> one-command install.sh -> the 8 checklist rows) |
-| machine-b-online.typescript / .timing | same walkthrough on machine B (keelwb2 U1/VM over SSH) |
+| machine-b-online.typescript / .timing | same walkthrough on machine B (oep-vm-b U1/VM over SSH) |
 | machine-a-online.mp4 | rendered replay of the U1 recording (10s) |
 | machine-b-online.mp4 | rendered replay of the machine B recording, build span elided (13s) |
 | isolith-install-walkthrough.mp4 | combined A + B replay (the headline install video) |

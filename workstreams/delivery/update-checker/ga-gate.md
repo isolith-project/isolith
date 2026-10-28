@@ -1,7 +1,7 @@
 # P10-M5-T02 -- P10 GA gate: fresh-install walkthrough verified on two machines
 
 Status: implemented + verified live (2026-10-18) on U1 + a fresh U1/VM-class
-QEMU/KVM VM (machine A = U1, machine B = keelwb2 VM). Owner: P10 delivery
+QEMU/KVM VM (machine A = U1, machine B = oep-vm-b VM). Owner: P10 delivery
 lane. Version: 1.
 
 ## 1. What this gate is
@@ -55,7 +55,7 @@ storage host only and never runs Isolith services.
 - Machine A -- U1 (promaxgb10-83f1, 192.168.0.67, aarch64, Ubuntu 24.04).
   Clean state: every prior isolith container/volume/image/.env removed, then
   the docs' `./install.sh` from `workstreams/delivery/deploy/deploy`.
-- Machine B -- keelwb2, a fresh QEMU/KVM aarch64 VM on U1 booted from the
+- Machine B -- oep-vm-b, a fresh QEMU/KVM aarch64 VM on U1 booted from the
   Ubuntu 24.04 cloud image with Docker installed and nothing Isolith on it;
   the same `./install.sh` run by an operator-shaped step (SSH command, no U1
   Docker involved - the VM runs its own engine).
@@ -69,7 +69,7 @@ uses the VM-class host per the task wording.
 ```
 summary: total=N PASS=M FAIL=0 SKIP=0
 INSTALL-A  u1-online     PASS  three health checks green on U1 (clean state)
-INSTALL-B  vm-online     PASS  three health checks green on keelwb2 VM (clean)
+INSTALL-B  vm-online     PASS  three health checks green on oep-vm-b VM (clean)
 STACK      full-stack    PASS  PDM + viewer + P2P + worker binaries present
 AIRGAP     signed-bundle PASS  sig/checksum verified, docker load only, health
                                 green, target had 0 routes (network disabled)

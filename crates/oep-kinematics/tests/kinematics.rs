@@ -115,8 +115,8 @@ fn full_demo_run_passes_recording_gates() {
 #[test]
 fn trace_is_deterministic_and_valid_json() {
     let result = demo::run_demo(6);
-    let tmp_a = std::env::temp_dir().join(format!("kw-trace-a-{}.json", std::process::id()));
-    let tmp_b = std::env::temp_dir().join(format!("kw-trace-b-{}.json", std::process::id()));
+    let tmp_a = std::env::temp_dir().join(format!("iso-trace-a-{}.json", std::process::id()));
+    let tmp_b = std::env::temp_dir().join(format!("iso-trace-b-{}.json", std::process::id()));
     demo::write_trace(&result, &result.frames, tmp_a.to_str().unwrap()).unwrap();
     demo::write_trace(&result, &result.frames, tmp_b.to_str().unwrap()).unwrap();
     let buf_a = std::fs::read(&tmp_a).unwrap();
@@ -133,7 +133,7 @@ fn trace_is_deterministic_and_valid_json() {
 #[test]
 fn renders_ppm_frames_with_our_rasterizer() {
     let result = demo::run_demo(4);
-    let dir = std::env::temp_dir().join(format!("kw-frames-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("iso-frames-{}", std::process::id()));
     let dir = dir.to_str().unwrap();
     let rendered = demo::render_frames(&result.mechanism, &result.frames, dir).expect("renders");
     assert_eq!(rendered.len(), 4);

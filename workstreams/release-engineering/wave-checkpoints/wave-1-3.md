@@ -74,7 +74,7 @@ superseded/conflicting). Result: 95 ported/covered + 1 waived-resolved.
 | P10 (fresh install) | PASS (CI-safe 2 PASS/4 SKIP; live proof 6/6) |
 | P11 (auth-boundary) | PASS (auth_boundary 3/3, authz 19/19, rbac 3/3) |
 | P12 (install rehearsal) | PASS (acceptance 5/5) |
-| P10/P12 live two-machine install | PASS (U1 + keelwb2: 4/4, exit 0) |
+| P10/P12 live two-machine install | PASS (U1 + oep-vm-b: 4/4, exit 0) |
 
 Evidence: `integration/union-gate.{json,md}` at the wave/1-3 tip; fresh
 `workstreams/release-engineering/proof/release-rehearsal-0.1.0.{json,md}`.
@@ -92,7 +92,7 @@ Evidence: `integration/union-gate.{json,md}` at the wave/1-3 tip; fresh
   honestly, not failures.
 - Integration drill CI jobs (wave-3 PRs #163-#177) queue behind the saturated
   serial runner; exact job steps are green in a CI-sim. This checkpoint's own
-  gate evidence is local on U1 + keelwb2, recorded in `integration/union-gate.*`.
+  gate evidence is local on U1 + oep-vm-b, recorded in `integration/union-gate.*`.
 
 ## Decisions taken
 

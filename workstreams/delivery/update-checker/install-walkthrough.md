@@ -131,7 +131,7 @@ Details and the current proof: workstreams/delivery/airgap/air-gap-install.md + 
 
 The two recorded runs for this gate are machine A = U1
 (promaxgb10-83f1, 192.168.0.67, aarch64) and machine B = a fresh U1/VM-class
-QEMU/KVM VM (keelwb2, Ubuntu 24.04 cloud image) - per decision #9 approved
+QEMU/KVM VM (oep-vm-b, Ubuntu 24.04 cloud image) - per decision #9 approved
 run targets, NOT the NAS. The proof script scripts/delivery-ga-gate-proof.sh
 re-runs this whole checklist on both machines and writes
 workstreams/delivery/update-checker/proof/ga-gate-p10-m5t02.{json,md}; the install itself is recorded as a

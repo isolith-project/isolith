@@ -12,7 +12,7 @@
 # VM/garage PC are live-LAN actions), so the live legs are classified SKIP -
 # exactly how the P8/P9 gates treat their live-LAN legs. The measured PASS
 # rows live in the committed workstreams/delivery/update-checker/proof/ga-gate-p10-m5t02.{json,md}, produced
-# by scripts/delivery-ga-gate-proof.sh on U1 + the keelwb2 VM.
+# by scripts/delivery-ga-gate-proof.sh on U1 + the oep-vm-b VM.
 name: P10 gates (replication demo + P10 GA gate)
 on:
   push:

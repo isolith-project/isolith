@@ -2102,7 +2102,7 @@
     "crates/oep-rules/src/part.rs",
     "crates/oep-rules/src/value.rs",
     "crates/oep-rules/tests/golden/bracket-report.golden.json",
-    "crates/oep-rules/tests/golden/kw-bracket.json",
+    "crates/oep-rules/tests/golden/iso-bracket.json",
     "crates/oep-rules/tests/knowledge_contract.rs",
     "tests/test_p7m4t02_rules_acceptance.py"
    ],

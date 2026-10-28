@@ -29,7 +29,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REAL_PART = os.path.join(REPO, "crates", "oep-geo", "tests", "golden",
                          "example-bracket.oepgeo.json")
 KNOWLEDGE = os.path.join(REPO, "crates", "oep-rules", "tests", "golden",
-                         "kw-bracket.json")
+                         "iso-bracket.json")
 REPORT_GOLDEN = os.path.join(REPO, "crates", "oep-rules", "tests", "golden",
                              "bracket-report.golden.json")
 DOC = os.path.join(REPO, "workstreams/modeler/sketch-and-rules", "rules-checks-sandbox.md")

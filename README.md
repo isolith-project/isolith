@@ -16,8 +16,9 @@ and the honest media package (see
 `docs-site/assets/media-manifest.md` for the provenance of every capture).
 
 "Isolith" is the name of the program and the product. Its former working
-codename (Keelworks) was retired in October 2026 because it collided with a
-registered trademark; see `assets/brand/NAME.md`.
+codename was retired in October 2026 because it collided with a registered
+trademark; see `assets/brand/NAME.md` for the name record and retirement
+statement.
 
 ## What it is for
 

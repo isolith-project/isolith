@@ -142,6 +142,6 @@ REAL render, never an upscale:
 - Commit demo: `demos/editor-sketch-extrude/` (trace.txt, manifest.json,
   edpart.step) reproduces the analytics live (frames/ regenerated).
 - Two-machine rehearsal: `scripts/editor-headless-smoke.sh` drives machine A
-  (U1) and, when reachable, machine B (default keelwb2 on U1;
+  (U1) and, when reachable, machine B (default oep-vm-b on U1;
   MACHINE_B_HOST/PORT override) per the P10/P12 pattern; `--selfcheck` is the
   CI-safe mode.

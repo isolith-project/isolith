@@ -66,7 +66,7 @@ fn bracket_variant() -> String {
 fn seed_store(store: &mut VaultStore) -> String {
     let item = store
         .create_item(&CreateItemRequest {
-            name: "kw-bracket-assembly".to_string(),
+            name: "iso-bracket-assembly".to_string(),
             kind: "assembly".to_string(),
             description: Some("reference vertical fixture".to_string()),
             owner: Some("p8".to_string()),
@@ -108,7 +108,7 @@ fn explorer_lists_vault_items() {
     assert_eq!(resp.status, 200);
     let page = String::from_utf8_lossy(&resp.body).into_owned();
     assert!(
-        page.contains("kw-bracket-assembly"),
+        page.contains("iso-bracket-assembly"),
         "explorer lists the item"
     );
     assert!(page.contains("assembly"), "explorer shows item kind");

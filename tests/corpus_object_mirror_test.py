@@ -160,7 +160,7 @@ def test_live_regression_fetch_full_corpus():
     import oep_tooling.regression as R
     mpath = os.path.join(REPO, "corpus", "manifest.json")
     m = load(mpath)
-    with tempfile.TemporaryDirectory(prefix="kw-mirror-cache-") as td:
+    with tempfile.TemporaryDirectory(prefix="iso-mirror-cache-") as td:
         rows = R.sweep(entries=m["entries"], corpus_root=os.path.join(REPO, "corpus"),
                        cache_dir=td, fetch=True)
     by_id = {r.id: r for r in rows}

@@ -6,7 +6,7 @@
     {
       "id": "oep-part-bracket",
       "name": "bracket",
-      "part_number": "KW-BKT-001",
+      "part_number": "ISO-BKT-001",
       "body_ids": [
         "oep-body-oep-part-bracket"
       ],
@@ -184,7 +184,7 @@
           "projection": "third_angle",
           "title_block": {
             "title": "Bracket",
-            "part_number": "KW-BKT-001",
+            "part_number": "ISO-BKT-001",
             "material": "6061-T6",
             "scale": "1:1",
             "drawn_by": "oep-drafting",

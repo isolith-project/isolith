@@ -109,7 +109,7 @@ The acceptance runs the `demo_rules` example against the committed canonical
 bracket part (`crates/oep-geo/tests/golden/example-bracket.oepgeo.json`: 80 x
 40 x 6 mm envelope, fillet radius 2 mm, mount hole diameter 6 mm and depth
 6 mm) with the committed knowledge set
-(`crates/oep-rules/tests/golden/kw-bracket.json`). On that real part:
+(`crates/oep-rules/tests/golden/iso-bracket.json`). On that real part:
 
 - formulas read the part: `sheet_thickness = 6`, `sheet_area = 3200`,
   `edge_fillet = 2`, `hole_diameter = 6`, `hole_depth = 6`;
@@ -190,7 +190,7 @@ panics on bad input.
 - `crates/oep-rules/src/knowledge.rs` - knowledge set, evaluation, report
 - `crates/oep-rules/examples/demo_rules.rs` - the real-part rules demo
 - `crates/oep-rules/tests/knowledge_contract.rs` - Rust acceptance contract
-- `crates/oep-rules/tests/golden/kw-bracket.json` - the committed knowledge set
+- `crates/oep-rules/tests/golden/iso-bracket.json` - the committed knowledge set
 - `crates/oep-rules/tests/golden/bracket-report.golden.json` - byte-locked report
 - `tests/test_p7m4t02_rules_acceptance.py` - independent stdlib verification
 - `docs/layout.md` - registered as the P7 oep-rules workstream crate

@@ -32,7 +32,7 @@ with three health checks green:
 The worker binaries (oep-batch-convert, oep-render-worker) must be present in
 the installed image, and the stack binds to 127.0.0.1 (nothing exposed to the
 LAN, decision #10). "Two approved hosts" is decision #9: machine A = U1, machine
-B = a U1/VM-class host (the keelwb2 QEMU/KVM VM on U1, or the garage PC over
+B = a U1/VM-class host (the oep-vm-b QEMU/KVM VM on U1, or the garage PC over
 WoL). The NAS is repo/storage only and is never a run target.
 
 ## 2. Run the rehearsal
@@ -47,7 +47,7 @@ Defaults (safe to rely on):
 
 - version: read from `workstreams/delivery/deploy/deploy/.env.example` `OEP_VERSION` when `--version`
   is omitted;
-- machine B: `op@127.0.0.1:2229` (the keelwb2 VM on U1). Override with
+- machine B: `op@127.0.0.1:2229` (the oep-vm-b VM on U1). Override with
   `--machine-b-host` / `--machine-b-port` for any other approved second host.
 
 What the script does, top to bottom:

@@ -1,6 +1,6 @@
 # INTEGRATION-T03: Union verification — integrated main is a buildable, test-passing whole
 
-Verified on U1 promaxgb10-83f1 (aarch64) + the keelwb2 U1/VM-class host (decision #9).
+Verified on U1 promaxgb10-83f1 (aarch64) + the oep-vm-b U1/VM-class host (decision #9).
 NAS stays repo/storage only. Branch `wave/1-3`, base `d22800b`, this proof at head
 `790db6a` + the proof commit. Release tag: stack OEP_VERSION 0.1.0 (2027.1 train).
 
@@ -45,7 +45,7 @@ one-command install of the INTEGRATED 0.1.0 stack on both approved hosts:
     RELEASE/version   PASS   install.sh + compose + .env.example pin OEP_VERSION=0.1.0
     DOCS/runbook      PASS   runbook names 3 health surfaces + 2 approved host classes
     INSTALL-A (U1)    PASS   pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present
-    INSTALL-B (keelwb2) PASS  same on the second approved host
+    INSTALL-B (oep-vm-b) PASS  same on the second approved host
 
     total=4 PASS=4 FAIL=0 SKIP=0  exit_code 0
     proof: workstreams/release-engineering/proof/release-rehearsal-0.1.0.{json,md} (regenerated on the integrated head)
