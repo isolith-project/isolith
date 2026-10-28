@@ -1,5 +1,6 @@
 [package]
 name = "oep-state"
+license = "AGPL-3.0"
 description = "P9: P2P compute lane - distributed job state: node-loss survival, at-least-once delivery, idempotent effects."
 version.workspace = true
 edition.workspace = true

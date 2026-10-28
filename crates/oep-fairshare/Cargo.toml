@@ -1,5 +1,6 @@
 [package]
 name = "oep-fairshare"
+license = "AGPL-3.0"
 description = "P9: P2P compute lane - per-team/per-node weighted fair-share scheduling + quota enforcement (throttling of oversubscribed teams)."
 version.workspace = true
 edition.workspace = true

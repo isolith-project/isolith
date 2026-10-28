@@ -1,0 +1,42 @@
+Isolith (Open Engineering Platform)
+===================================
+Copyright (c) 2026 Isolith contributors
+
+Isolith is distributed under a per-crate hybrid licence. Two full licence
+texts are included at the repository root:
+
+  LICENSE-APACHE  Apache License, Version 2.0
+  LICENSE-AGPL    GNU Affero General Public License, Version 3
+
+Both texts are the unmodified canonical texts published by the Apache
+Software Foundation and the Free Software Foundation respectively.
+
+Which licence applies to which part of the code is a per-crate boundary, not
+a prose statement. Every crate under crates/ declares its licence in its
+Cargo.toml and is listed in the boundary map:
+
+  docs/licensing-boundary.md   (human-readable)
+  docs/licensing-boundary.json (machine-checkable)
+
+The same rule, in one line: Apache-2.0 for applications and libraries;
+AGPL-3.0 for the server, the PDM, and the P2P orchestration components.
+The boundary map gives the licence and the reason for every crate, and
+resolves the two boundary questions the line leaves open:
+
+  - A library consumed by an AGPL component stays Apache-2.0 (the licence
+    of a consumer does not change the licence of the consumed crate).
+  - A shared contract crate takes the licence of the component it contracts:
+    the P2P lane contract crates (oep-job, oep-state) are AGPL-3.0.
+
+The boundary is enforced in CI by scripts/licensing-check.py, which fails
+when a crate's declared licence disagrees with the map or when a dependency
+introduces a licence outside the allow-list.
+
+Third-party open-source components are listed in NOTICE. It is generated
+from the committed Cargo.lock by scripts/licensing-check.py --regen and
+verified in CI; do not edit it by hand.
+
+Contributions are accepted under the Developer Certificate of Origin (DCO)
+with no Contributor License Agreement; see CONTRIBUTING.md. Copyright
+stays with each contributor; code is submitted under the licence of the
+directory it lands in, as stated in this file.

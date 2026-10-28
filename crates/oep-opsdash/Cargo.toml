@@ -1,5 +1,6 @@
 [package]
 name = "oep-opsdash"
+license = "AGPL-3.0"
 description = "P9-M5-T01: ops dashboard for the P9 compute lane. Live queue depth, node health, job logs and a cost/energy view, all read from the real oep-lane Scheduler (never mocked); served as JSON + rendered HTML."
 version.workspace = true
 edition.workspace = true

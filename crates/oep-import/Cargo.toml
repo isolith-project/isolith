@@ -1,5 +1,6 @@
 [package]
 name = "oep-import"
+license = "Apache-2.0"
 description = "P6-M4-T02: Importer hub — P2/P3/P4 adapters feed the canonical oep-geo model (one internal format)."
 version.workspace = true
 edition.workspace = true

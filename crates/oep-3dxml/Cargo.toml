@@ -1,5 +1,6 @@
 [package]
 name = "oep-3dxml"
+license = "Apache-2.0"
 description = "P3: 3DXML reader/writer (ZIP/BOM container, rep models, surface decode, writer)."
 version.workspace = true
 edition.workspace = true

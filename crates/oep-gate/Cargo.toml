@@ -1,5 +1,6 @@
 [package]
 name = "oep-gate"
+license = "Apache-2.0"
 description = "P9-M5-T02: the P9 GA gate. Runs a 100-job render/convert wave across 3+ real nodes, zero manual intervention, every output hash-verified in the P8 vault. Combines the real oep-lane scheduler (ordering, leases, acks), the real worker functions (render oep-geo, convert cgr/step), and the real oep-pdm vault (content-addressed, hash-verified)."
 version.workspace = true
 edition.workspace = true

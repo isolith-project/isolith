@@ -1,5 +1,6 @@
 [package]
 name = "oep-step-pmi"
+license = "Apache-2.0"
 description = "P4-M2-T01: STEP AP242 semantic PMI import (GD&T, datums, tolerances) into the oep-pmi model, the P4 STEP-PMI wedge."
 version.workspace = true
 edition.workspace = true

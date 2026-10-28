@@ -1,5 +1,6 @@
 [package]
 name = "oep-engine-occ"
+license = "Apache-2.0"
 description = "P6-M3-T04 / ADR v1.2.0: Open CASCADE Technology (OCCT) 8.0.x geometry-kernel binding behind the oep-geo seam -- exact B-Rep booleans, fillet/chamfer, primitives, and extrude/revolve sweeps."
 version.workspace = true
 edition.workspace = true

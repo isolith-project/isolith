@@ -1,5 +1,6 @@
 [package]
 name = "oep-viewer"
+license = "Apache-2.0"
 description = "P6-M5-T02: preview viewer (desktop app shell) for oep-geo models - scene, orbit camera, screen-space selection, clip planes, reference software renderer."
 version.workspace = true
 edition.workspace = true

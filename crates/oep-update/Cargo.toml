@@ -1,5 +1,6 @@
 [package]
 name = "oep-update"
+license = "Apache-2.0"
 description = "P10: self-hosted delivery - advisory, non-blocking, signed update checker (decision #11). The program runs identically whether the update source is found, empty, or unreachable; no update gate ever prevents launch; payloads are consumed only from a signature-verified manifest; feature is disable-able and non-phoning by default."
 version.workspace = true
 edition.workspace = true

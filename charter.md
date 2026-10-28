@@ -24,8 +24,12 @@ close on native formats, gated.
 
 ## License posture
 
-- Apache-2.0 for applications and libraries.
-- AGPL-3.0 for the server/PDM and P2P orchestration components.
+- Apache-2.0 for applications and libraries; AGPL-3.0 for the server/PDM and
+  P2P orchestration components. Full texts at `LICENSE-APACHE` and
+  `LICENSE-AGPL`, index at `LICENSE`, third-party attribution in `NOTICE`.
+- The per-crate boundary is fixed in `docs/licensing-boundary.md` (JSON copy
+  at `docs/licensing-boundary.json`) and enforced in CI by
+  `scripts/licensing-check.py`. This prose is a summary; the map is the rule.
 - No GPL-3.0 in delivered software (defense procurement legal review
   routinely disallows it).
 
