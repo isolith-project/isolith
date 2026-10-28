@@ -21,8 +21,9 @@
 
 /// Version tag embedded in every generated help artifact and asserted by the
 /// drift-guard test. Bump when the help surface changes materially (1.3.0:
-/// MEDIA-RENDERER adds optional WIDTH:HEIGHT and present overlays to sk:render).
-pub const HELP_INDEX_VERSION: &str = "1.3.0";
+/// MEDIA-RENDERER adds optional WIDTH:HEIGHT and present overlays to sk:render;
+/// 1.4.0: `search` adds a type-ahead command-search affordance to the index).
+pub const HELP_INDEX_VERSION: &str = "1.4.0";
 
 /// Label of the surface this index documents (used in the JSON and markdown
 /// artifacts).
@@ -795,17 +796,39 @@ pub static COMMANDS: &[CommandSpec] = &[
         examples: &["journal"],
     },
     CommandSpec {
+        name: "search",
+        token: "search",
+        usage: "search:QUERY",
+        category: "help",
+        summary: "Search the command index for a behaviour (type-ahead command search)", 
+        long_help: concat!(
+            "Search the command index for a behaviour. Prints every command whose ", 
+            "name, dispatch token, usage line or summary contains the query ", 
+            "(case-insensitive); an empty query lists the whole index. This is ", 
+            "the keyboard command-search affordance of the workbench (the ", 
+            "SolidWorks S-key / Fusion search equivalent): a few characters ", 
+            "narrow the whole reachable command set to what matches, so every ", 
+            "command is findable without reading the full index."
+        ),
+        args: &[ArgSpec {
+            name: "QUERY",
+            required: false,
+            help: "Case-insensitive substring to match against name/token/usage/summary",
+        }],
+        examples: &["search:extrude", "search:undo", "search:s"],
+    },
+    CommandSpec {
         name: "help",
         token: "help",
         usage: "help [COMMAND]",
         category: "help",
         summary: "Print this command index, or the full help for one command",
         long_help: concat!(
-            "With no argument, prints the full command index grouped by ",
-            "category. With a command name (for example help:load:cgr) prints ",
-            "that command's full documentation: usage, arguments, description ",
-            "and examples. Prefix --json for the machine-readable index, ",
-            "--markdown for the generated markdown document, or ",
+            "With no argument, prints the full command index grouped by ", 
+            "category. With a command name (for example help:load:cgr) prints ", 
+            "that command's full documentation: usage, arguments, description ", 
+            "and examples. Prefix --json for the machine-readable index, ", 
+            "--markdown for the generated markdown document, or ", 
             "--write-help-index PATH to regenerate the committed help index."
         ),
         args: &[ArgSpec {
@@ -844,6 +867,29 @@ pub fn validate_token(token: &str) -> Result<&'static str, String> {
             "unknown command '{token}': run 'help' for the full command index"
         )),
     }
+}
+
+/// Type-ahead command search over the registry (the workbench's keyboard
+/// command-search affordance, the practitioner-observed S-key/Fusion-search
+/// equivalent).
+///
+/// Returns every command whose name, dispatch token, usage line or summary
+/// contains `query` (case-insensitive), in registry order. An empty or
+/// whitespace-only query returns the whole index, so an empty search is a
+/// complete, honest list rather than a dead end. Every command in the
+/// registry is therefore reachable by typing part of its name.
+pub fn search(query: &str) -> Vec<&'static CommandSpec> {
+    let q = query.trim().to_lowercase();
+    if q.is_empty() {
+        return COMMANDS.iter().collect();
+    }
+    let matches = |c: &CommandSpec| -> bool {
+        c.name.to_lowercase().contains(&q)
+            || c.token.to_lowercase().contains(&q)
+            || c.usage.to_lowercase().contains(&q)
+            || c.summary.to_lowercase().contains(&q)
+    };
+    COMMANDS.iter().filter(|c| matches(c)).collect()
 }
 
 /// The help-index categories in display order.

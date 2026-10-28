@@ -6,7 +6,7 @@ This file is GENERATED from the command metadata in `crates/oep-shell/src/comman
 cargo run --example workbench -- --write-help-index:docs/re-notes/oep-workbench-help-index.md
 ```
 
-help-index-version: 1.3.0
+help-index-version: 1.4.0
 
 surface: oep-shell workbench command surface
 
@@ -51,6 +51,7 @@ surface: oep-shell workbench command surface
 | undo | `undo` | editor | Undo the last edit (restores the prior canonical document state) |
 | redo | `redo` | editor | Redo the last undone edit |
 | journal | `journal` | inspection | Print the ordered operation journal |
+| search | `search:QUERY` | help | Search the command index for a behaviour (type-ahead command search) |
 | help | `help [COMMAND]` | help | Print this command index, or the full help for one command |
 
 ## Commands
@@ -689,6 +690,24 @@ Arguments:
 Examples:
 
 - `oep-workbench journal`
+
+### search
+
+Usage: `search:QUERY`
+
+Category: help
+
+Search the command index for a behaviour. Prints every command whose name, dispatch token, usage line or summary contains the query (case-insensitive); an empty query lists the whole index. This is the keyboard command-search affordance of the workbench (the SolidWorks S-key / Fusion search equivalent): a few characters narrow the whole reachable command set to what matches, so every command is findable without reading the full index.
+
+Arguments:
+
+- `QUERY` (optional): Case-insensitive substring to match against name/token/usage/summary
+
+Examples:
+
+- `oep-workbench search:extrude`
+- `oep-workbench search:undo`
+- `oep-workbench search:s`
 
 ### help
 
