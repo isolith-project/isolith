@@ -14,12 +14,10 @@
 # reviewer/release-train alternate fed through P12-T05.
 
 id: org.isolith.oep.{BIN}
-branch: '0.1'
+branch: '2027.1'
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
-base: org.freedesktop.Platform
-base-version: '24.08'
 
 command: oep-{BIN}
 
@@ -40,12 +38,15 @@ modules:
       - install -Dm0644 oep-{BIN}.desktop /app/share/applications/org.isolith.oep.{BIN}.desktop
       - install -Dm0644 oep-icon.svg /app/share/icons/hicolor/scalable/apps/org.isolith.oep.{BIN}.svg
     sources:
+      # Relative paths resolve against the manifest's own directory, so the
+      # payload must sit next to the manifest (the ../ form was a defect that
+      # kept this recipe unexercised; build-flatpak.sh stages them together).
       - type: file
-        path: ../oep-{BIN}
+        path: ./oep-{BIN}
         dest: .
       - type: file
-        path: ../oep-{BIN}.desktop
+        path: ./oep-{BIN}.desktop
         dest: .
       - type: file
-        path: ../oep-icon.svg
+        path: ./oep-icon.svg
         dest: .

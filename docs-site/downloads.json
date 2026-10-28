@@ -1,0 +1,36 @@
+{
+  "schema": "isolith.downloads-manifest.v1",
+  "release": "2027.1.0",
+  "train": "2027.1",
+  "generated_utc": "2026-10-27T23:00:00Z",
+  "gate": "canary/prerelease only until Don opens the public surface",
+  "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811",
+  "unsigned_note": "binaries are NOT code-signed in 2027.1.0; Windows SmartScreen will warn on install",
+  "macos_note": "no macOS artifact ships in 2027.1.0; source build documented only",
+  "downloads": [
+    {
+      "platform": "linux-aarch64",
+      "artifact": "oep-workbench-isolith-oep-aarch64.AppImage",
+      "kind": "desktop-editor",
+      "version": "2027.1.0",
+      "sha256": "8f816eceafd0a4c3b8f565de98065a6c3839b9f4cf46e428b36db8e46bf94086",
+      "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
+    },
+    {
+      "platform": "linux-arm64",
+      "artifact": "isolith-oep-2027.1.0-arm64.deb",
+      "kind": "desktop-bundle",
+      "version": "2027.1.0",
+      "sha256": "4f68bb611ac3cf12c5292bd7ebee2e159ccfb408dd9ef5ff3a700a62635c4948",
+      "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
+    },
+    {
+      "platform": "windows-x86_64",
+      "artifact": "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi",
+      "kind": "desktop-editor",
+      "version": "2027.1.0",
+      "sha256": "3bf2b1923604edb4a5c7977343be16657646c21087324575b36244877413c181",
+      "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
+    }
+  ]
+}

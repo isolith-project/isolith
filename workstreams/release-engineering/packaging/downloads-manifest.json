@@ -1,0 +1,44 @@
+{
+  "schema": "isolith.downloads-manifest.v1",
+  "release": "2027.1.0",
+  "train": "2027.1",
+  "generated_from": "CROSS-PLATFORM-INSTALLERS card (2027-10-27)",
+  "gate": "artifacts are canary/prerelease channel only until Don opens the public surface",
+  "signature": {
+    "id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811",
+    "key_file": "workstreams/security/keys/oep-update-signing.pub",
+    "scheme": "Ed25519, signed update manifest (oep-update-manifest/1), advisory non-blocking"
+  },
+  "unsigned_note": "Binary downloads are NOT code-signed in 2027.1.0. Windows SmartScreen will warn on install; the download page states this plainly.",
+  "platforms": {
+    "linux": [
+      {
+        "platform": "linux-aarch64",
+        "artifact": "oep-workbench-isolith-oep-aarch64.AppImage",
+        "kind": "desktop-editor",
+        "version": "2027.1.0",
+        "sha256": "8f816eceafd0a4c3b8f565de98065a6c3839b9f4cf46e428b36db8e46bf94086",
+        "run_proof": "editor workflow PASS on U1 (open model, change parameter, export STEP)"
+      },
+      {
+        "platform": "linux-arm64",
+        "artifact": "isolith-oep-2027.1.0-arm64.deb",
+        "kind": "desktop-bundle",
+        "version": "2027.1.0",
+        "sha256": null,
+        "installed": "dpkg -i PASS on clean Ubuntu 24.04; editor workflow PASS"
+      }
+    ],
+    "windows": [
+      {
+        "platform": "windows-x86_64",
+        "artifact": "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi",
+        "kind": "desktop-editor",
+        "version": "2027.1.0",
+        "sha256": "3bf2b1923604edb4a5c7977343be16657646c21087324575b36244877413c181",
+        "run_proof": "MSI smoke 14/14 PASS on garage PC (fetch from store, hash, install, editor workflow, uninstall)"
+      }
+    ],
+    "macos": []
+  }
+}

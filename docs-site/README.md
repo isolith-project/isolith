@@ -11,13 +11,16 @@ the PDM, viewer and P2P services - "docs from the sum, no separate infra".
     index.html            landing + what the stack is
     getting-started.html  the eight-step verified install checklist + first use
     admin-guide.html      online + air-gap install, TLS, backup, DR, update posture
-    install-on-nas.html   customer-NAS quickstart (pull the GHCR image, all health checks green)
     format-matrix.html    the honest format capability table (rendered)
     format-matrix.json    machine-checkable copy of the table + truth anchors
+    downloads.html        desktop downloads page (rows rendered from downloads.json)
+    downloads.json        machine-readable downloads manifest (schema isolith.
+                          downloads-manifest.v1: platform, artifact, version,
+                          sha256, signature_id) - the site never hard-codes
+                          asset names
     assets/style.css      self-contained styling (no external assets, air-gap safe)
     assets/images/        real captures used on the landing page (drawing sheet,
-                          mechanism animation + GIF + contact sheet, editor pair,
-                          NAS compose-equivalent)
+                          mechanism animation + GIF + contact sheet, editor pair)
     assets/media-manifest.md  provenance and source of truth for every capture
     proof/                committed QA output (format-matrix-check.json)
 

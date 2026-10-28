@@ -24,7 +24,10 @@ command -v flatpak-builder >/dev/null || { echo "flatpak-builder not installed" 
 SRC_BIN="$REPO/target/release/$BIN"
 test -x "$SRC_BIN" || (cd "$REPO" && cargo build --release --offline --bin "$BIN")
 
-# prep a staging dir with the artifacts the manifest references
+# prep a staging dir with the artifacts the manifest references (manifest and
+# payload in the SAME dir: flatpak-builder resolves relative path: against the
+# manifest's own directory, so the manifest uses ./ and the payloads sit next
+# to it - the ../ form was the bug that kept this recipe unexercised).
 STAGE="$PWD/.flatpak-stage"
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
@@ -42,8 +45,9 @@ Categories=Engineering;Graphics;Office;
 StartupNotify=true
 EOF
 
-# parameterized manifest
-sed "s/{BIN}/$BIN/g" "$HERE/flatpak/org.isolith.oep.yml" > "$STAGE/manifest.yml"
+# parameterized manifest (payload paths fixed to ./ so they resolve against
+# the stage dir the payloads were copied into)
+sed -e "s/{BIN}/$BIN/g" -e 's#path: \.\./#path: ./#g' "$HERE/flatpak/org.isolith.oep.yml" > "$STAGE/manifest.yml"
 
 (
   cd "$STAGE"

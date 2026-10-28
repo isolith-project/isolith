@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isolith OEP - Downloads</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  table { border-collapse: collapse; margin: 1em 0; }
+  th, td { border: 1px solid #444; padding: 6px 10px; text-align: left; vertical-align: top; }
+  code { word-break: break-all; }
+  .warn { border: 1px solid #b88; background: #2a2020; padding: 8px 10px; }
+</style>
+</head>
+<body>
+<header><h1>Isolith Open Engineering Platform</h1><p class="tag">Downloads - 2027.1</p></header>
+<nav><a href="index.html">Overview</a> | <a href="getting-started.html">Getting started</a> |
+<a href="admin-guide.html">Admin guide</a> | <a href="format-matrix.html">Format matrix</a> |
+Download</nav>
+<main>
+<h2>Download the 2027.1 desktop tools</h2>
+<p>Rows below are rendered from <code>downloads.json</code> - the site never
+hard-codes asset names; the manifest is the source of truth for every file a
+user can fetch.</p>
+<p class="warn"><strong>Unsigned downloads.</strong> The 2027.1.0 binaries are
+<strong>not code-signed</strong>. On Windows, SmartScreen will show a warning
+when you run the MSI. This is by design on the current channel; verify the
+SHA-256 before installing.</p>
+<table>
+<thead><tr><th>Platform</th><th>Kind</th><th>Artifact</th><th>Version</th><th>SHA-256</th></tr></thead>
+<tbody id="rows"><tr><td colspan="5">loading downloads.json...</td></tr></tbody>
+</table>
+<p>macOS: no prebuilt artifact ships in 2027.1.0; a source build is documented
+in the packaging docs. The PDM server, web UI and workers are the Docker
+distribution, not part of this download.</p>
+<script>
+fetch('downloads.json').then(function (r) { return r.json(); }).then(function (m) {
+  var rows = document.getElementById('rows');
+  rows.innerHTML = '';
+  m.downloads.forEach(function (d) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + d.platform + '</td><td>' + d.kind + '</td><td><code>' +
+      d.artifact + '</code></td><td>' + d.version + '</td><td><code>' +
+      d.sha256 + '</code></td>';
+    rows.appendChild(tr);
+  });
+}).catch(function () {
+  document.getElementById('rows').innerHTML =
+    '<tr><td colspan="5">could not load downloads.json</td></tr>';
+});
+</script>
+</main>
+<footer><p>Public surface gated: canary/prerelease only until the maintainer
+opens the public channel. Signature id for update manifests:
+<code>e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811</code></p></footer>
+</body>
+</html>

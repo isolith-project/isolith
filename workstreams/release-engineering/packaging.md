@@ -32,9 +32,10 @@ picks up a package by construction.
   binary set and adds nothing reproducible per binary. Matrix column
   "Docker" = present in `isolith/oep-stack`.
 - Linux desktop: AppImage is the primary desktop format (single-file,
-  no root, FUSE or extract-and-run), Flatpak is the alternate path (sandboxed,
-  portal-integrated). Both recipes are provided; AppImage is the one built and
-  runtime-verified in this card.
+  no root, FUSE or extract-and-run). The `.deb` package (build-deb.sh) is the
+  second Linux desktop path and the Flatpak bundle is the sandboxed alternate;
+  all three are built and each has been run on U1 or a clean container in the
+  CROSS-PLATFORM-INSTALLERS card.
 - Windows: WiX MSI via `wixl` (msitools) — cross-compiled `.exe` + `.wxs`
   source. Build-only on U1 (no Windows runtime here); install target in the
   field is the garage PC (192.168.0.43, decision #9).
@@ -93,6 +94,7 @@ cross-target `target/<triple>/release` for Windows).
 |--------|---------|-------|
 | `build-appimage.sh <bin>` | Build a Linux desktop AppImage (aarch64/x86_64 auto from host) from a `.desktop` + AppDir + the release binary | `bash workstreams/release-engineering/packaging/build-appimage.sh oep-web` |
 | `flatpak/org.isolith.oep.yml` | Flatpak manifest (Freedesktop 24.08 runtime), finish-args network=local + browser capture for the viewer | `bash workstreams/release-engineering/packaging/build-flatpak.sh oep-web` |
+| `build-deb.sh <bin>...` | Build a Debian `.deb` bundling the editor shell + CLI tools + update checker | `bash workstreams/release-engineering/packaging/build-deb.sh oep-workbench oep-batch-convert` |
 | `build-msi.sh <bin> <arch>` | Cross-compile `<bin>` to the given Windows triple, write WiX `.wxs`, build `.msi` with wixl (msitools, in a hermetic debian container) | `bash workstreams/release-engineering/packaging/build-msi.sh oep-pdm x86_64-pc-windows-gnu` |
 | `oep-studio.desktop.in` | Template launcher + icon seeded for the future studio shell | (placeholder) |
 | `Dockerfile` | Already shipped at `workstreams/delivery/deploy/deploy/Dockerfile` (stack image); referenced, not duplicated | `docker compose -f workstreams/delivery/deploy/deploy/docker-compose.yml build` |
@@ -111,6 +113,9 @@ Linux desktop package host verification (this card): aarch64 U1-class host
   AppImage run: health `{"status":"ok",...}` HTTP 200.
 - `oep-pdm-msi-build.log` / `oep-update-check-msi-build.log` — wixl MSI builds.
 - `SHA256SUMS` — the four package binaries attached to the task.
+- `desktop-2027.1.0/` — CROSS-PLATFORM-INSTALLERS card proof: Windows MSI
+  smoke (14/14 PASS on the garage PC), Linux AppImage/.deb run logs, the
+  update round trip, and `SHA256SUMS.desktop`.
 
 ## CI note
 

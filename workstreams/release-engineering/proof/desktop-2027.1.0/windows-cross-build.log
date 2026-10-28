@@ -1,0 +1,24 @@
+=== windows cross-compile (x86_64-pc-windows-gnu) ===
+--- building workbench example (editor shell) ---
+   Compiling oep-import v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-import)
+   Compiling oep-shell v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-shell)
+    Finished `release` profile [optimized] target(s) in 1m 55s
+-rwxrwxr-x 1 r1a r1a 27286041 Oct 27 22:26 target/x86_64-pc-windows-gnu/release/oep-workbench.exe
+OK oep-workbench.exe
+--- building oep-update-check ---
+    Finished `release` profile [optimized] target(s) in 0.05s
+-rwxrwxr-x 2 r1a r1a 2009035 Oct 27 22:22 target/x86_64-pc-windows-gnu/release/oep-update-check.exe
+OK oep-update-check.exe
+--- building oep-batch-convert ---
+   Compiling oep-worker v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-worker)
+    Finished `release` profile [optimized] target(s) in 2.41s
+-rwxrwxr-x 2 r1a r1a 24598530 Oct 27 22:26 target/x86_64-pc-windows-gnu/release/oep-batch-convert.exe
+OK oep-batch-convert.exe
+--- building oep-cgr2gltf ---
+    Finished `release` profile [optimized] target(s) in 0.04s
+-rwxrwxr-x 2 r1a r1a 1423847 Oct 27 22:22 target/x86_64-pc-windows-gnu/release/oep-cgr2gltf.exe
+OK oep-cgr2gltf.exe
+--- building oep-cgr2step ---
+    Finished `release` profile [optimized] target(s) in 0.04s
+-rwxrwxr-x 2 r1a r1a 1454820 Oct 27 22:22 target/x86_64-pc-windows-gnu/release/oep-cgr2step.exe
+OK oep-cgr2step.exe
