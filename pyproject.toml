@@ -12,5 +12,12 @@ description = "Isolith / Open Engineering Platform - Python tooling and corpus s
 requires-python = ">=3.11"
 dependencies = []
 
+# Dev/test tooling for contributors and CI, version-pinned in uv.lock.
+# The devcontainer's postCreate runs `uv sync` (dev group by default), which
+# creates the repo .venv on the pinned .python-version interpreter; the gate
+# (`cargo xtask ci`) runs pytest from there. (CONTRIBUTOR-BUILD-PATH t_845b253d)
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
 [tool.uv]
 package = false   # tooling workspace, not a publishable library

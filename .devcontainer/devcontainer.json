@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "Isolith contributor environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "mounts": [
+    {
+      "source": "isolith-cargo-registry",
+      "target": "/usr/local/cargo/registry",
+      "type": "volume"
+    },
+    {
+      "source": "isolith-cargo-git",
+      "target": "/usr/local/cargo/git",
+      "type": "volume"
+    },
+    {
+      "source": "isolith-oep-occt",
+      "target": "/root/.cache/oep-occt",
+      "type": "volume"
+    }
+  ],
+  "postCreateCommand": "uv sync && cargo xtask check-sysdeps",
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "ms-python.python"
+      ],
+      "settings": {
+        "rust-analyzer.server.extraEnv": {
+          "CARGO_HOME": "/usr/local/cargo"
+        }
+      }
+    }
+  }
+}

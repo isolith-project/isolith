@@ -242,16 +242,21 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
     ensure_ref(tag, ["tag", "-a", tag,
                      "-m", f"Isolith {info['full']} release candidate freeze",
                      cut["cut_from"]["sha"]], "tag")
-    remote_url = _canary_url(canary_owner_repo)
     existing = git_rev(repo, "remote").splitlines()
     if "canary" not in existing:
+        # No canary remote yet: derive the NAS Gitea URL from the machine's
+        # git credentials (never embeds a raw IP or credentials in the URL).
+        # Only here is a credentials lookup required.
+        remote_url = _canary_url(canary_owner_repo)
         git_rev(repo, "remote", "add", "canary", remote_url)
     else:
         cur = git_rev(repo, "remote", "get-url", "canary")
         # heal only URLs that are equipment-bad (credentials embedded in the
         # URL, or a percent-encoded host); never clobber a working remote
-        # (e.g. a local file:// canary used by hermetic tests)
+        # (e.g. a local file:// canary used by hermetic tests), which also
+        # keeps the mechanical cut runnable on machines with no credentials.
         if "@" in cur or "%" in cur:
+            remote_url = _canary_url(canary_owner_repo)
             git_rev(repo, "remote", "set-url", "canary", remote_url)
     rc, out, err = git(repo, "push", "canary", f"{rel_branch}:{canary_branch}", tag)
     if rc != 0:

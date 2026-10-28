@@ -1,0 +1,33 @@
+# Contributor devcontainer build (public-surface port of
+# .gitea/workflows/devcontainer-build.yaml, same convention as dco-check.yaml:
+# the live CI runs on Gitea Actions; if the public repository is hosted on
+# GitHub, this file becomes the active rot gate).
+#
+# Every push and pull to the public repository rebuilds the exact contributor
+# devcontainer image and runs the sysdeps probe inside it, so the documented
+# build path (docs/contributing/build.md) cannot silently drift out of date.
+# GitHub's ubuntu-latest runner has a docker daemon natively; no socket mount
+# is needed here.
+name: Contributor devcontainer build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  devcontainer-build:
+    name: devcontainer-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build the devcontainer image (pinned toolchain, derived from rust-toolchain.toml)
+        run: |
+          docker build --tag isolith-devcontainer:ci -f .devcontainer/Dockerfile .
+      - name: Gate inside the built image (sysdeps probe)
+        run: |
+          docker run --rm -v "$PWD":/workspaces/isolith -w /workspaces/isolith \
+            isolith-devcontainer:ci bash -c 'uv sync && cargo xtask check-sysdeps'
+      - name: Cleanup local image
+        run: docker rmi isolith-devcontainer:ci || true

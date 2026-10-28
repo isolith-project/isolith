@@ -1,0 +1,7 @@
+# Contributor one-command tooling (CONTRIBUTOR-BUILD-PATH, card t_845b253d).
+#
+# `cargo xtask ...` resolves to the standalone xtask crate (xtask/, NOT a
+# workspace member), so the workspace build and Cargo.lock never see dev
+# tooling. The full gate is one command: `cargo xtask ci`.
+[alias]
+xtask = "run --manifest-path ./xtask/Cargo.toml --"

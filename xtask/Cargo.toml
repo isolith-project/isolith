@@ -1,0 +1,31 @@
+# Isolith contributor build tooling (CONTRIBUTOR-BUILD-PATH, card t_845b253d).
+#
+# One command for the whole gate: `cargo xtask ci` (alias wired in the
+# repo-root .cargo/config.toml). This crate is deliberately a STANDALONE
+# crate, not a workspace member: dev tooling must never pollute the workspace
+# build or Cargo.lock, and `cargo build --workspace` must never compile it.
+#
+# Zero runtime dependencies on purpose: only the standard library, so the
+# toolchain install in the devcontainer (and a projectile on any Linux/macOS
+# host) is all that is needed to run the gate.
+
+# Explicit empty [workspace]: the xtask crate lives INSIDE the repo root
+# directory, so without this table cargo auto-discovery treats it as an
+# implied member of the root workspace and refuses to run it standalone
+# ("current package believes it's in a workspace when it's not"). This table
+# makes xtask its own single-crate workspace; `cargo run --manifest-path
+# ./xtask/Cargo.toml` then works from anywhere. Do not add xtask to the root
+# workspace.members: dev tooling must never be compiled by
+# `cargo build --workspace`.
+[workspace]
+
+[package]
+name = "xtask"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Isolith contributor build tooling: one-command gate (`cargo xtask ci`)"
+
+[[bin]]
+name = "xtask"
+path = "src/main.rs"

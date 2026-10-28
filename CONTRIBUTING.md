@@ -1,6 +1,6 @@
 ---
 title: Isolith Contributing Guide
-version: 1.2.0
+version: 1.3.0
 date: 2026-10-27
 status: Ratified
 owner: Isolith program (Open Engineering Platform), P0-M1 (program governance and foundations)
@@ -111,7 +111,14 @@ verify against real material, then hand off for review. Concretely:
 - Write the acceptance test before the implementation it verifies. Watch it
   fail, then make it pass. A task is not done because a log line says so; it
   is done because a test passed on real material.
-- Run the repo checks locally before pushing:
+- Run the repo checks locally before pushing. The whole gate is one command:
+
+      cargo xtask ci    # fmt, clippy, unit + integration tests, pytest tests/
+
+  `cargo xtask` is the contributor build tooling described in
+  `docs/contributing/build.md`; `cargo xtask --help` lists the subcommands
+  (`ci`, `ci --kernel` for the OCCT tier, `occt`, `check-sysdeps`). The
+  expanded forms, if you prefer them directly:
 
       pytest tests/ -q          # Python acceptance tests (stdlib, no network)
       cargo test --workspace    # Rust crates under crates/
@@ -223,6 +230,12 @@ whose license does not allow contribution here.
 
 ## Change log
 
+- 1.3.0 (2026-10-27): added the contributor build path (CONTRIBUTOR-BUILD-PATH).
+  The whole gate is now one command (`cargo xtask ci`, defined in
+  `docs/contributing/build.md`), and the gate now also lints/formats the
+  dev-tooling crate itself so it cannot rot. First-PR guidance is in
+  `docs/contributing/first-pr.md`; python tooling gained a pytest dev
+  dependency group pin in `uv.lock`.
 - 1.2.0 (2026-10-27): pointed the license posture at the actual license files
   (`LICENSE`, `LICENSE-APACHE`, `LICENSE-AGPL`, `NOTICE`) and the per-crate
   boundary map (`docs/licensing-boundary.md`), and indexed them under "Where

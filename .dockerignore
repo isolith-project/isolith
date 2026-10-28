@@ -1,6 +1,12 @@
 # Isolith Docker build context ignore (P10-M1-T01).
 # Context for the OEP stack image is the repo root; keep it small and
 # hermetic so `docker build` only ships what cargo needs.
+#
+# Extended for the contributor devcontainer (CONTRIBUTOR-BUILD-PATH,
+# t_845b253d): the devcontainer's docker build context is ALSO the repo root,
+# and the same rule applies only more so (a fresh clone + devcontainer build =
+# no target dir, no venv, no secrets). Every addition below only shrinks
+# contexts for both consumers.
 
 .git
 .gitlab
@@ -17,3 +23,13 @@ target
 __pycache__
 *.log
 releases
+
+# Contributor devcontainer / generic build-artifact exclusions (both consumers)
+.venv/
+build/
+dist/
+pending-corpus/
+*.srl
+server.key
+P10-M1/certs/
+P10-M1/deploy/.env

@@ -7,6 +7,8 @@ __pycache__/
 
 # Rust build artifacts (cargo workspace)
 /target/
+# Standalone dev-tooling crate build output (xtask is not a workspace member)
+/xtask/target/
 
 # C/C++ build artifacts (CMake)
 build/

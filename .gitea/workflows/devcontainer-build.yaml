@@ -1,0 +1,47 @@
+# Contributor devcontainer build (CONTRIBUTOR-BUILD-PATH, card t_845b253d).
+#
+# The rot gate behind "so it cannot rot": EVERY push and pull rebuilds the
+# exact devcontainer image a contributor uses (.devcontainer/Dockerfile) and
+# runs the sysdeps probe inside it, so a drift in the pinned Rust toolchain,
+# CMake/GCC versions, or the Python/uv tooling breaks CI before it breaks the
+# next contributor.
+#
+# How docker works here: the job runs inside an ubuntu container, and mounts
+# the host docker socket (the runner is a trusted U1 runner; the act-runner
+# config allow-lists bind mounts, decision #9 trust boundary). The image is
+# built with the host daemon and the gate runs in it. `--depth 1` fetch plus
+# `docker build` and a 2-second probe keeps the job a few minutes, even though
+# the full workspace compile happens on contributor machines, not in CI.
+name: Contributor devcontainer build (rot gate)
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  devcontainer-build:
+    name: devcontainer-build
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:24.04
+      options: >-
+        --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock
+    steps:
+      - name: Checkout triggering ref
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates docker.io
+          git init -q
+          git remote add origin "http://${{ secrets.GITEA_TOKEN }}@192.168.0.101:3200/isolith/isolith.git"
+          git fetch -q --depth 1 origin "${{ github.ref }}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
+      - name: Build the devcontainer image (pinned toolchain, derived from rust-toolchain.toml)
+        run: |
+          docker build --tag isolith-devcontainer:ci -f .devcontainer/Dockerfile .
+      - name: Gate inside the built image (sysdeps probe)
+        run: |
+          docker run --rm -v "$PWD":/workspaces/isolith -w /workspaces/isolith \
+            isolith-devcontainer:ci bash -c 'uv sync && cargo xtask check-sysdeps'
+      - name: Cleanup local image
+        run: docker rmi isolith-devcontainer:ci || true
