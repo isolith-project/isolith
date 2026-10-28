@@ -18,12 +18,21 @@ use oep_pdm::graph::RelationshipGraph;
 use oep_pdm::service::Store;
 
 use crate::web::preview::render_document_png;
+use crate::web::update::{check_now, dismiss_banner, UpdateBanner};
 
 /// The viewer-embed preview renderer (P6 oep-viewer seam).
 pub mod preview;
 
+/// The update banner surface (decision #20): a dismissible, advisory note
+/// driven by the same `oep-update` status the workbench and CLI expose.
+pub mod update;
+
 /// Re-export the drawn-pixel counter for callers (tests, docs).
 pub use preview::drawn_pixel_count;
+
+/// The shared router state: the vault store plus the update banner. Every UI
+/// handler reads the banner's CACHED status; page loads never re-probe.
+pub type AppState = (Store, std::sync::Arc<UpdateBanner>);
 
 const VIEW_WIDTH: u32 = 320;
 const VIEW_HEIGHT: u32 = 240;
@@ -33,7 +42,18 @@ const VIEW_HEIGHT: u32 = 240;
 /// the shipped binary boots the authorized variant by default.
 pub fn build_router(store: Store) -> Router<()> {
     let api = oep_pdm::service::build_router(store.clone());
-    merged_router(api, store)
+    merged_router(
+        api,
+        store,
+        std::sync::Arc::new(UpdateBanner::new(oep_update::UpdateStatus::Off)),
+    )
+}
+
+/// Like [`build_router`] with an explicit update banner (tests/embedders that
+/// already ran the check).
+pub fn build_router_with_update(store: Store, banner: std::sync::Arc<UpdateBanner>) -> Router<()> {
+    let api = oep_pdm::service::build_router(store.clone());
+    merged_router(api, store, banner)
 }
 
 /// Build the merged router served behind the P11-T03 auth gate.
@@ -45,18 +65,38 @@ pub fn build_router(store: Store) -> Router<()> {
 /// router with the UI router keeps the gate scoped to the REST surface only.
 pub fn build_authorized_router(store: Store, state: std::sync::Arc<AuthState>) -> Router<()> {
     let api = oep_pdm::service::build_authorized_router(store.clone(), state);
-    merged_router(api, store)
+    merged_router(
+        api,
+        store,
+        std::sync::Arc::new(UpdateBanner::new(oep_update::UpdateStatus::Off)),
+    )
+}
+
+/// Like [`build_authorized_router`] with an explicit update banner.
+pub fn build_authorized_router_with_update(
+    store: Store,
+    state: std::sync::Arc<AuthState>,
+    banner: std::sync::Arc<UpdateBanner>,
+) -> Router<()> {
+    let api = oep_pdm::service::build_authorized_router(store.clone(), state);
+    merged_router(api, store, banner)
 }
 
 /// Combine a given API router (open or gated) with the UI route table.
-fn merged_router(api: Router<()>, store: Store) -> Router<()> {
+fn merged_router(
+    api: Router<()>,
+    store: Store,
+    banner: std::sync::Arc<UpdateBanner>,
+) -> Router<()> {
     let ui = Router::new()
         .route("/", get(explorer))
         .route("/ui/items/{item_id}", get(item_page))
         .route("/ui/items/{item_id}/bom", get(bom_page))
         .route("/ui/items/{item_id}/preview/{rev}", get(preview_png))
         .route("/ui/compare", get(compare_page))
-        .with_state(store);
+        .route("/ui/update/check", get(check_now))
+        .route("/ui/update/dismiss", get(dismiss_banner))
+        .with_state((store, banner));
     api.merge(ui)
 }
 
@@ -67,10 +107,14 @@ fn static_css() -> &'static str {
      h1{font-size:1.4rem}table{border-collapse:collapse}\
      td,th{border:1px solid #ccc;padding:.4rem .7rem;text-align:left}\
      .bom ul{list-style:none;padding-left:1.4rem}.bom .qty{color:#666}\
-     .pick{color:#0b5bd3}img.preview{border:1px solid #222;background:#1c1e22}"
+     .pick{color:#0b5bd3}img.preview{border:1px solid #222;background:#1c1e22}\
+     .update-banner{display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap;\
+       background:#fff8e1;border:1px solid #e0b64b;border-radius:6px;\
+       padding:.7rem 1rem;margin-bottom:1.5rem}\
+     .update-banner .update-link{margin-left:.25rem}"
 }
 
-fn esc(s: &str) -> String {
+pub(crate) fn esc(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     for c in s.chars() {
         match c {
@@ -108,7 +152,7 @@ fn store_locked() -> Response {
 }
 
 /// `GET /` -- item explorer: the vault catalogue.
-pub async fn explorer(State(store): State<Store>) -> Response {
+pub async fn explorer(State((store, banner)): State<AppState>) -> Response {
     let list = match store.lock() {
         Ok(g) => g.list_items("", 500, 0),
         Err(_) => return store_locked(),
@@ -125,11 +169,13 @@ pub async fn explorer(State(store): State<Store>) -> Response {
             count = item.revision_count,
         ));
     }
+    let banner_html = banner.render_html();
     let body = format!(
-        "<h1>OEP PDM item explorer</h1>\
+        "{banner_html}<h1>OEP PDM item explorer</h1>\
          <p>{total} item(s) in the vault.</p>\
          <table><thead><tr><th>Name</th><th>Kind</th><th>Latest</th><th>Revisions</th></tr></thead>\
          <tbody>{rows}</tbody></table>",
+        banner_html = banner_html,
         total = list.total,
         rows = rows,
     );
@@ -137,7 +183,10 @@ pub async fn explorer(State(store): State<Store>) -> Response {
 }
 
 /// `GET /ui/items/{item_id}` -- item detail with BOM tree + embedded viewer.
-pub async fn item_page(State(store): State<Store>, Path(item_id): Path<String>) -> Response {
+pub async fn item_page(
+    State((store, banner)): State<AppState>,
+    Path(item_id): Path<String>,
+) -> Response {
     let item = match store.lock() {
         Ok(g) => match g.get_item(&item_id) {
             Ok(i) => i,
@@ -219,8 +268,9 @@ pub async fn item_page(State(store): State<Store>, Path(item_id): Path<String>) 
         id = esc(&item_id),
     );
 
+    let banner_html = banner.render_html();
     let body = format!(
-        "<p><a class=\"pick\" href=\"/\">&larr; explorer</a></p>\
+        "{banner_html}<p><a class=\"pick\" href=\"/\">&larr; explorer</a></p>\
          <h1>{name}</h1>\
          <table><tbody>\
          <tr><th>Id</th><td>{id}</td></tr>\
@@ -243,6 +293,7 @@ pub async fn item_page(State(store): State<Store>, Path(item_id): Path<String>) 
         rev_table = rev_table,
         preview_imgs = preview_imgs,
         bom_link = bom_link,
+        banner_html = banner_html,
     );
     page(&format!("Item {}", item.name), &body)
 }
@@ -256,7 +307,7 @@ pub struct BomQuery {
 
 /// `GET /ui/items/{item_id}/bom` -- render the BOM tree for the item.
 pub async fn bom_page(
-    State(store): State<Store>,
+    State((store, banner)): State<AppState>,
     Path(item_id): Path<String>,
     Query(q): Query<BomQuery>,
 ) -> Response {
@@ -319,12 +370,14 @@ pub async fn bom_page(
         tree.push_str("<li>no top-level items in this graph</li>");
     }
 
+    let banner_html = banner.render_html();
     let body = format!(
-        "<p><a class=\"pick\" href=\"/ui/items/{id}\">&larr; item</a></p>\
+        "{banner_html}<p><a class=\"pick\" href=\"/ui/items/{id}\">&larr; item</a></p>\
          <h1>BOM tree: {id}</h1>\
          <p class=\"bom\"><ul>{tree}</ul></p>",
         id = esc(&item_id),
         tree = tree,
+        banner_html = banner_html,
     );
     page(&format!("BOM tree {item_id}"), &body)
 }
@@ -404,7 +457,7 @@ fn render_bom_node(
 /// The route is `/preview/{rev}` and callers append the `.png` extension for
 /// clarity in `<img>` tags; the handler strips a trailing `.png` if present.
 pub async fn preview_png(
-    State(store): State<Store>,
+    State((store, _banner)): State<AppState>,
     Path((item_id, rev)): Path<(String, String)>,
 ) -> Response {
     let rev = rev.strip_suffix(".png").unwrap_or(&rev);
@@ -472,7 +525,7 @@ pub struct CompareParams {
 
 /// `GET /ui/compare?item={id}&a={revA}&b={revB}`: compare two revisions.
 pub async fn compare_page(
-    State(store): State<Store>,
+    State((store, banner)): State<AppState>,
     Query(params): Query<CompareParams>,
 ) -> Response {
     let get_rev_meta = |rev: &str| -> Result<(String, oep_pdm::api::Revision), String> {
@@ -541,8 +594,9 @@ pub async fn compare_page(
         )
     };
 
+    let banner_html = banner.render_html();
     let body = format!(
-        "<p><a class=\"pick\" href=\"/ui/items/{item}\">&larr; item</a></p>\
+        "{banner_html}<p><a class=\"pick\" href=\"/ui/items/{item}\">&larr; item</a></p>\
          <h1>Compare {item}: {a} vs {b}</h1>\
          {diff_flag}\
          <div>{pv_a}{pv_b}</div>",
@@ -552,6 +606,7 @@ pub async fn compare_page(
         diff_flag = diff_flag,
         pv_a = preview(&a_num, "Revision 1", &a_rev),
         pv_b = preview(&b_num, "Revision 2", &b_rev),
+        banner_html = banner_html,
     );
     page(&format!("Compare {}", params.item), &body)
 }

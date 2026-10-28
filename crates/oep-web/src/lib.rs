@@ -34,7 +34,11 @@ use std::time::Duration;
 pub use oep_pdm::authz::AuthState;
 pub use oep_pdm::rbac::Authorizer;
 pub use oep_pdm::service::Store;
-pub use web::{build_authorized_router, build_router, drawn_pixel_count};
+pub use web::update::UpdateBanner;
+pub use web::{
+    build_authorized_router, build_authorized_router_with_update, build_router,
+    build_router_with_update, drawn_pixel_count,
+};
 
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P8-WEB";
@@ -65,7 +69,18 @@ impl PdmWeb {
     /// binary boots via [`Self::start_with_authorizer`] by default so the
     /// merged REST surface is secure-by-default.
     pub fn start_with_store(addr: &str, store: oep_pdm::store::VaultStore) -> io::Result<PdmWeb> {
-        Self::start_inner(addr, store, None)
+        Self::start_inner(addr, store, None, None)
+    }
+
+    /// [`Self::start_with_store`] with an explicit update banner (decision
+    /// #20): the shipped server computes the status once at startup and hands
+    /// it in, so page loads never re-probe the update source.
+    pub fn start_with_store_and_update(
+        addr: &str,
+        store: oep_pdm::store::VaultStore,
+        banner: std::sync::Arc<UpdateBanner>,
+    ) -> io::Result<PdmWeb> {
+        Self::start_inner(addr, store, None, Some(banner))
     }
 
     /// Start serving behind the P11-T03 auth boundary (SEC-AUTHZ-RESIDUAL).
@@ -80,7 +95,17 @@ impl PdmWeb {
         store: oep_pdm::store::VaultStore,
         authorizer: Authorizer,
     ) -> io::Result<PdmWeb> {
-        Self::start_inner(addr, store, Some(authorizer))
+        Self::start_inner(addr, store, Some(authorizer), None)
+    }
+
+    /// [`Self::start_with_authorizer`] with an explicit update banner.
+    pub fn start_with_authorizer_and_update(
+        addr: &str,
+        store: oep_pdm::store::VaultStore,
+        authorizer: Authorizer,
+        banner: std::sync::Arc<UpdateBanner>,
+    ) -> io::Result<PdmWeb> {
+        Self::start_inner(addr, store, Some(authorizer), Some(banner))
     }
 
     /// Shared start: bind, wrap the store, and (when `authorizer` is given)
@@ -89,6 +114,7 @@ impl PdmWeb {
         addr: &str,
         store: oep_pdm::store::VaultStore,
         authorizer: Option<Authorizer>,
+        banner: Option<std::sync::Arc<UpdateBanner>>,
     ) -> io::Result<PdmWeb> {
         let listener = std::net::TcpListener::bind(addr)?;
         listener.set_nonblocking(true)?;
@@ -100,12 +126,15 @@ impl PdmWeb {
                 store: Arc::clone(&store),
             })
         });
+        let banner = banner.unwrap_or_else(|| {
+            std::sync::Arc::new(UpdateBanner::new(oep_update::UpdateStatus::Off))
+        });
         let shutdown = Arc::new(AtomicBool::new(false));
         let handle = {
             let store = Arc::clone(&store);
             let shutdown = Arc::clone(&shutdown);
             let auth_state = auth_state.clone();
-            std::thread::spawn(move || run_runtime(listener, store, shutdown, auth_state))
+            std::thread::spawn(move || run_runtime(listener, store, shutdown, auth_state, banner))
         };
         Ok(PdmWeb {
             addr,
@@ -149,6 +178,7 @@ fn run_runtime(
     store: Store,
     shutdown: Arc<AtomicBool>,
     auth_state: Option<Arc<AuthState>>,
+    banner: std::sync::Arc<UpdateBanner>,
 ) {
     let rt = match tokio::runtime::Builder::new_multi_thread()
         .enable_all()
@@ -162,8 +192,8 @@ fn run_runtime(
     };
     rt.block_on(async move {
         let app = match &auth_state {
-            Some(state) => build_authorized_router(store, Arc::clone(state)),
-            None => build_router(store),
+            Some(state) => build_authorized_router_with_update(store, Arc::clone(state), banner),
+            None => build_router_with_update(store, banner),
         };
         let listener = match tokio::net::TcpListener::from_std(listener) {
             Ok(l) => l,

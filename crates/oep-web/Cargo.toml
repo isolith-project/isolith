@@ -20,6 +20,9 @@ oep-pdm = { path = "../oep-pdm" }
 oep-viewer = { path = "../oep-viewer" }
 # oep-geo model types (Document parse for the viewer embed / BOM ingest).
 oep-geo = { path = "../oep-geo" }
+# The advisory update-banner surface (decision #20): the server computes the
+# update status once at startup; page loads never probe the source.
+oep-update = { path = "../oep-update" }
 
 [dev-dependencies]
 # The acceptance test uploads fixture content (base64 wire encoding per the
