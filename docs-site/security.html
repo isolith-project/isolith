@@ -3,41 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Isolith: Security and release verification - Documentation</title>
-<meta name="description" content="Isolith security policy and how to verify that a downloaded release was signed by the Isolith release lane.">
+<title>Security - Isolith</title>
+<meta name="description" content="Isolith security: responsible disclosure to security@isolith.dev, how to verify a signed release, supported versions, response expectations, and pointers to the published security artifacts. No bug bounty.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <div class="brand"><a href="index.html">Isolith: Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
     <nav class="site">
       <a href="index.html">Home</a>
       <a href="getting-started.html">Getting started</a>
       <a href="admin-guide.html">Admin guide</a>
+      <a href="install-on-nas.html">Install on a NAS</a>
       <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
       <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
   <p class="kicker">Security</p>
-  <h1>Security and release verification</h1>
-
+  <h1>Security</h1>
   <p class="lead">
     This page tells you two things: how to report a security issue, and how to
     prove that a release you downloaded was really made by the Isolith release
     lane. The full policy lives in <code>SECURITY.md</code> in the repository.
   </p>
 
-  <h2>Reporting a security issue</h2>
+  <h2>Report privately first</h2>
   <p>
-    Do not open a public issue or pull request for an exploitable weakness.
-    Report it privately to the maintainers at the address in
-    <code>SECURITY.md</code>, and expect a reply within the response window the
-    policy commits to. A report reaches the maintainer explicitly, so the safe
-    harbor in the policy applies from the moment it is sent privately.
+    A vulnerability in Isolith is not a public issue. Do not open a public
+    issue, pull request, or discussion that describes an exploitable weakness
+    or includes a working exploit. Report it privately to
+    <a href="mailto:security@isolith.dev">security@isolith.dev</a>. A report
+    should name the release or commit you tested, the component and version,
+    the steps to reproduce, and the impact you observed (a severity guess is a
+    claim; label it as one). A report reaches the maintainer explicitly, so
+    the safe harbor in the policy applies from the moment it is sent
+    privately.
+  </p>
+
+  <h2>What you can expect</h2>
+  <ul>
+    <li>Acknowledgement within 3 business days.</li>
+    <li>An initial assessment (valid, invalid, needs more information) within
+        7 business days of acknowledgement.</li>
+    <li>A disposition: fixed, being fixed with an estimate, or declined with
+        the reason. A fix ships when the acceptance test passes on real
+        material; no fix date is promised.</li>
+  </ul>
+  <p>
+    There is no bug bounty and no reward or recognition program; reporting
+    never implies one. Responsible reporters are attributed in the release
+    records when they want credit.
   </p>
 
   <h2>Release signing key</h2>
@@ -58,10 +82,10 @@
   </p>
   <p>
     Where the private key lives, who may use it, and the rotation and
-    compromise procedure are documented in
-    <code>docs/release-signing.md</code> in the repository. In short: the
-    private key lives on the release lane build host, never in a repository,
-    never in CI, and only the release lane may sign with it.
+    compromise procedure are documented in <code>docs/release-signing.md</code>
+    in the repository. The private key lives on the release lane build host,
+    never in a repository, never in CI, and only the release lane may sign
+    with it.
   </p>
 
   <h2>How to verify a download</h2>
@@ -73,10 +97,10 @@ gpg --verify-options show-fingerprint --verify &lt;file&gt;.sig &lt;file&gt;
   </pre>
   <p>
     For the air-gap bundle, the included <code>airgap-verify.sh</code> script
-    imports the key and performs the detached verification for you. The
-    measured capability matrix and the install paths are on the other pages;
-    verification is the step that makes a download trustworthy before any of
-    them run.
+    imports the key and performs the detached verification for you. Every
+    release also ships a <code>SHA256SUMS</code> file; the
+    <a href="download.html">download page</a> covers checksum verification as
+    well.
   </p>
 
   <h2>Security posture, in plain words</h2>
@@ -84,15 +108,24 @@ gpg --verify-options show-fingerprint --verify &lt;file&gt;.sig &lt;file&gt;
     Telemetry is off by default. No component phones home. Releases carry an
     SBOM derived from the committed dependency lock, a CVE scan, and an
     export-control classification file, checked in CI before anything ships.
-    The attestations behind each claim, including what is <em>not</em>
-    claimed, are the records cited in <code>SECURITY.md</code>.
+    The attestations behind each claim, including what is not claimed, are the
+    records cited in <code>SECURITY.md</code>. The self-conducted pentest day
+    is a self-assessment of a specific build, not a third-party audit and not
+    a standing certification.
   </p>
+  <p>
+    The one-paragraph export-control statement is on the
+    <a href="download.html">download page</a>.
+  </p>
+
+  <p><a href="index.html">Back to home</a></p>
 </div>
 
 <footer class="site">
   <div class="wrap">
-    Isolith: Open Engineering Platform documentation - version 0.1.0. Served from the same
-    delivery stack as the product (no separate docs infrastructure).
+    Isolith documentation - version 0.1.0. Scope of the claims is stated in
+    SECURITY.md, in the repository under <code>SITE-REPO-URL</code> (the
+    placeholder constant in <code>docs-site/site.json</code>).
   </div>
 </footer>
 </body>

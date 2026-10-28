@@ -3,21 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Isolith: Open Engineering Platform - Documentation</title>
+<title>Isolith - documentation</title>
 <meta name="description" content="Isolith is an open-source engineering design program: create and edit 3D parts, put them into assemblies, and turn them into drawings, without the subscriptions or forced cloud accounts. It runs fully inside your own network. Getting started, admin guide, and the honest format capability matrix.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <div class="brand"><a href="index.html">Isolith: Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
     <nav class="site">
       <a href="index.html">Home</a>
       <a href="getting-started.html">Getting started</a>
       <a href="admin-guide.html">Admin guide</a>
       <a href="install-on-nas.html">Install on a NAS</a>
       <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
       <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
     </nav>
   </div>
 </header>
@@ -150,6 +155,36 @@
       <p class="muted">What each reader opens, and at what fidelity. Every claim ties to a published measurement; nothing is overstated.</p>
       <a href="format-matrix.html">Read the matrix</a>
     </div>
+    <div class="card">
+      <h3>Download</h3>
+      <p class="muted">Installers from GitHub Releases, checksum-matched, plus the honest export-control statement.</p>
+      <a href="download.html">Get the release</a>
+    </div>
+    <div class="card">
+      <h3>Releases and changelog</h3>
+      <p class="muted">The current train, the generated changelog, and the support window.</p>
+      <a href="releases.html">See the releases</a>
+    </div>
+    <div class="card">
+      <h3>License</h3>
+      <p class="muted">Apache-2.0 and AGPL-3.0, and the precise boundary between them.</p>
+      <a href="license.html">Read the license</a>
+    </div>
+    <div class="card">
+      <h3>Security</h3>
+      <p class="muted">Responsible disclosure, supported versions, and what the posture does and does not claim.</p>
+      <a href="security.html">Read the policy</a>
+    </div>
+    <div class="card">
+      <h3>Contact</h3>
+      <p class="muted">Email the maintainers; no forms and no tracking.</p>
+      <a href="contact.html">Contact us</a>
+    </div>
+    <div class="card">
+      <h3>What it does not do</h3>
+      <p class="muted">The honest boundary, generated from the format matrix gaps. Read it before you promise a workflow.</p>
+      <a href="what-it-does-not-do.html">See the boundary</a>
+    </div>
   </div>
 
   <h2>What the delivery stack is</h2>
@@ -171,7 +206,7 @@
   <p class="muted">
     Default host binds are <code>127.0.0.1</code>. Nothing is exposed to the LAN
     until an operator publishes a port, and no component phones home.
-    Hostnames such as <code>docs.openengineeringplatform.example</code> are wired
+    Hostnames such as <code>docs.isolith.example</code> are wired
     to whichever of these the operator decides to expose, on their own network.
   </p>
 
@@ -184,15 +219,12 @@
     is public, and lawful observation of proprietary formats where it is not.
     The format matrix is written to match the measured capability of those
     readers, including what they cannot do yet.
-    The product name is <strong>Isolith</strong>; "OEP" (Open Engineering
-    Platform) remains the working name of the delivery stack and this
-    documentation site.
   </p>
 </div>
 
 <footer class="site">
   <div class="wrap">
-    Isolith: Open Engineering Platform documentation - version 0.1.0. Served from the same
+    Isolith documentation - version 0.1.0. Served from the same
     delivery stack as the product (no separate docs infrastructure).
   </div>
 </footer>

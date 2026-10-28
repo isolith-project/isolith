@@ -3,19 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Getting started - Open Engineering Platform</title>
+<title>Getting started - Isolith</title>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <div class="brand"><a href="index.html">Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
     <nav class="site">
       <a href="index.html">Home</a>
       <a href="getting-started.html">Getting started</a>
       <a href="admin-guide.html">Admin guide</a>
       <a href="install-on-nas.html">Install on a NAS</a>
       <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
     </nav>
   </div>
 </header>
@@ -24,9 +30,9 @@
   <p class="kicker">Guide 1 of 3</p>
   <h1>Getting started</h1>
   <p class="lead">
-    This guide walks a new team from a clean machine to a verified OEP install
-    with every health check green. It is the same checklist the release build
-    runs end to end.
+    This guide walks a new team from a clean machine to a verified Isolith
+    install with every health check green. It is the same checklist the
+    release build runs end to end.
   </p>
 
   <h2>What you get</h2>
@@ -57,10 +63,20 @@
   </ul>
 
   <h2>Install (one command)</h2>
-  <p>Clone the repo and run the one-command install from the deploy directory:</p>
-  <pre><code>git clone http://gitea/isolith/isolith.git isolith
+  <p>
+    Clone the Isolith repository and run the one-command install from the
+    deploy directory.
+  </p>
+  <pre><code>git clone SITE-REPO-URL isolith
 cd isolith/workstreams/delivery/deploy/deploy
 ./install.sh</code></pre>
+  <p>
+    <code>SITE-REPO-URL</code> is the single repository placeholder
+    constant (defined in <code>docs-site/site.json</code>). The project does
+    not hard-code a repository origin in the shipped tree; the public GitHub
+    address is substituted where the SITE_ORIGIN build is generated, and it
+    lands for real when the GitHub migration completes.
+  </p>
   <p>
     From a clean state it preflights Docker/Compose/disk, writes <code>.env</code>
     from <code>.env.example</code> (host binds default to 127.0.0.1), builds or
@@ -122,7 +138,7 @@ cd isolith/workstreams/delivery/deploy/deploy
 
 <footer class="site">
   <div class="wrap">
-    Open Engineering Platform documentation - version 0.1.0.
+    Isolith documentation - version 0.1.0.
   </div>
 </footer>
 </body>

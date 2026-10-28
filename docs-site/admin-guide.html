@@ -3,19 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin and install guide - Open Engineering Platform</title>
+<title>Admin and install guide - Isolith</title>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <div class="brand"><a href="index.html">Open Engineering Platform (OEP)</a><small>documentation</small></div>
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
     <nav class="site">
       <a href="index.html">Home</a>
       <a href="getting-started.html">Getting started</a>
       <a href="admin-guide.html">Admin guide</a>
       <a href="install-on-nas.html">Install on a NAS</a>
       <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
     </nav>
   </div>
 </header>
@@ -24,10 +30,10 @@
   <p class="kicker">Guide 2 of 3</p>
   <h1>Admin and install guide</h1>
   <p class="lead">
-    How to install, secure, back up, and recover the OEP delivery stack. There
-    are two install paths: the online one-command path and the signed air-gap
-    path for machines with no network at all. Both finish on the same health
-    checks.
+    How to install, secure, back up, and recover the Isolith delivery stack.
+    There are two install paths: the online one-command path and the signed
+    air-gap path for machines with no network at all. Both finish on the same
+    health checks.
   </p>
 
   <h2>1. Prerequisites (every install)</h2>
@@ -41,7 +47,7 @@
   </ul>
 
   <h2>2. Online install (one command)</h2>
-  <pre><code>git clone http://gitea/isolith/isolith.git isolith
+  <pre><code>git clone SITE-REPO-URL isolith
 cd isolith/workstreams/delivery/deploy/deploy
 ./install.sh</code></pre>
   <p>
@@ -175,8 +181,8 @@ scripts/backup/vault-restore-check.sh          # restore round-trip proof</code>
 
 <footer class="site">
   <div class="wrap">
-    Open Engineering Platform documentation - version 0.1.0. Sourced from the
-    delivery stack documentation and operational runbooks.
+    Isolith documentation - version 0.1.0. Sourced from the delivery stack
+    documentation and operational runbooks.
   </div>
 </footer>
 </body>

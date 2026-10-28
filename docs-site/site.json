@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task": "SITE-DOMAIN-ORIGIN",
+  "site_name": "Isolith",
+  "expansion": "Open Engineering Platform",
+  "site_origin": "",
+  "version": "0.1.0",
+  "release_train": "2027.1",
+  "current_release": "2027.1.0-rc2",
+  "repo_url": "",
+  "repo_url_display": "the public repository (address published when the GitHub migration lands)",
+  "contact_email": "hello@isolith.dev",
+  "security_email": "security@isolith.dev",
+  "conduct_email": "conduct@isolith.dev",
+  "checksums": {
+    "release_manifest": "1f2d4adcf5b535095f04c189fac30f59814add0b2c52ac6fe8c27a103612ac08",
+    "sha256sums": "35a33bc3a6bef18ad29fc2df676f70fd707be071b293467a071683ded855cd9a",
+    "changelog": "5895edab20317857a816c8788274355d285ea43adc6db225de6695a7ecf60dfb"
+  },
+  "pages": [
+    "index.html",
+    "getting-started.html",
+    "admin-guide.html",
+    "format-matrix.html",
+    "what-it-does-not-do.html",
+    "download.html",
+    "releases.html",
+    "license.html",
+    "security.html",
+    "contact.html"
+  ]
+}

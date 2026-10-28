@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>License - Isolith</title>
+<meta name="description" content="The Isolith license boundary: Apache-2.0 for applications and libraries, AGPL-3.0 for the server, the PDM, and the P2P orchestration components. Per-crate and enforced in CI.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Legal clarity</p>
+  <h1>License</h1>
+  <p class="lead">
+    Isolith is a per-crate hybrid-licenced open-source program. The boundary is
+    a per-crate decision, not a prose statement, and it is enforced in CI. The
+    legal texts are the unmodified canonical versions at the repository root;
+    this page states where each one applies.
+  </p>
+
+  <h2>The boundary, in one line</h2>
+  <div class="note">
+    <strong>Apache-2.0</strong> for applications and libraries.
+    <strong>AGPL-3.0</strong> for the server, the PDM, and the P2P orchestration
+    components.
+  </div>
+
+  <table>
+    <thead><tr><th>Part of the stack</th><th>License</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Format readers (<code>oep-cgr</code>, <code>oep-3dxml</code>, <code>oep-step</code>, ...)</td><td>Apache-2.0</td><td>libraries</td></tr>
+      <tr><td>Geometry core and model (<code>oep-geo</code>, <code>oep-engine-occ</code>)</td><td>Apache-2.0</td><td>library</td></tr>
+      <tr><td>Applications (shell, drafting, viewer, ...)</td><td>Apache-2.0</td><td>applications</td></tr>
+      <tr><td>Self-hosted PDM server (<code>oep-pdm</code>) and its web UI (<code>oep-web</code>)</td><td>AGPL-3.0</td><td>server/PDM</td></tr>
+      <tr><td>P2P lane scheduler, workers, sandbox, state (<code>oep-lane</code>, <code>oep-worker</code>, <code>oep-sandbox</code>, ...)</td><td>AGPL-3.0</td><td>P2P orchestration</td></tr>
+      <tr><td>Docs server on the delivery stack (<code>oep-docs</code>)</td><td>AGPL-3.0</td><td>server, same compose as the PDM</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Three rules that close the open questions</h2>
+  <ul>
+    <li><strong>Per-crate.</strong> Every crate under <code>crates/</code> is
+        declared as a whole under exactly one license in its
+        <code>Cargo.toml</code>, and CI enforces that declaration against a
+        committed boundary map. Cross-crate links do not change a crate's
+        license.</li>
+    <li><strong>Consumption does not relicense.</strong> A library consumed by
+        an AGPL component stays Apache-2.0; the consumer's license does not
+        change the consumed crate's grant to third parties. When the combined
+        server work runs as one program, the AGPL applies to that combined
+        work the same way it always does to a Modified Work.</li>
+    <li><strong>Shared contracts follow the server.</strong> A crate whose
+        only job is the contract of the AGPL runtime (the P2P job spec and
+        state, <code>oep-job</code> and <code>oep-state</code>) is AGPL-3.0.</li>
+  </ul>
+
+  <h2>The files at the repository root</h2>
+  <ul>
+    <li><code>LICENSE</code> - the index stating which license applies where.</li>
+    <li><code>LICENSE-APACHE</code> - Apache License, Version 2.0 (unmodified).</li>
+    <li><code>LICENSE-AGPL</code> - GNU Affero General Public License, Version 3 (unmodified).</li>
+    <li><code>NOTICE</code> - third-party attribution, generated from
+        <code>Cargo.lock</code> and verified in CI.</li>
+    <li><code>docs/licensing-boundary.md</code> and
+        <code>docs/licensing-boundary.json</code> - the human-readable and
+        machine-checkable boundary map.</li>
+  </ul>
+  <p>
+    <strong>No GPL-3.0 in delivered software.</strong> The license list
+    deliberately excludes GPL-3.0, because defense-procurement legal review
+    routinely disallows it; the boundary map and the CI license allow-list
+    enforce that there is none among the delivered dependencies.
+  </p>
+
+  <h2>Contributions</h2>
+  <p>
+    Contributions are accepted under the Developer Certificate of Origin with
+    no Contributor License Agreement and no copyright assignment: code is
+    submitted under the license of the directory it lands in, per the DCO in
+    CONTRIBUTING.md. Copyright stays with each contributor.
+  </p>
+
+  <p><a href="index.html">Back to home</a></p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Isolith documentation - version 0.1.0. License texts are the unmodified
+    canonical versions in the repository; this page states the boundary, and
+    the per-crate map (<code>docs/licensing-boundary.md</code>) is the
+    enforcement point. The repository address is the placeholder constant
+    <code>SITE-REPO-URL</code> (see <code>docs-site/site.json</code>).
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+=== Isolith site verification: pages over HTTPS (outside LAN path via 46.62.170.182:8443) ===
+Date: 2026-10-28T07:44:36Z
+
+--- Page status codes (curl -k --resolve isolith.dev:8443:46.62.170.182) ---
+HTTP 200  https://isolith.dev:8443/
+HTTP 200  https://isolith.dev:8443/getting-started.html
+HTTP 200  https://isolith.dev:8443/admin-guide.html
+HTTP 200  https://isolith.dev:8443/format-matrix.html
+HTTP 200  https://isolith.dev:8443/download.html
+HTTP 200  https://isolith.dev:8443/releases.html
+HTTP 200  https://isolith.dev:8443/license.html
+HTTP 200  https://isolith.dev:8443/security.html
+HTTP 200  https://isolith.dev:8443/contact.html
+HTTP 200  https://isolith.dev:8443/what-it-does-not-do.html
+HTTP 200  https://isolith.dev:8443/sitemap.xml
+HTTP 200  https://isolith.dev:8443/robots.txt
+
+--- TLS + HSTS headers on https://isolith.dev:8443/download.html ---
+HTTP/2 200 
+accept-ranges: bytes
+alt-svc: h3=":8443"; ma=2592000
+content-type: text/html; charset=utf-8
+etag: "tnlx0h44u"
+last-modified: Wed, 28 Oct 2026 07:33:53 GMT
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=31536000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY
+content-length: 5358
+date: Wed, 28 Oct 2026 07:44:44 GMT
+
+--- Certificate subject/issuer (internal CA until DNS lands) ---
+subject=
+issuer=CN = Caddy Local Authority - ECC Intermediate
+notBefore=Oct 28 07:44:08 2026 GMT
+notAfter=Oct 28 19:44:08 2026 GMT

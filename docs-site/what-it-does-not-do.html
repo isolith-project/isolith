@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What it does not do - Isolith</title>
+<meta name="description" content="The honest out-of-scope list for Isolith: what the format readers and the editor do not do, taken from the measured format capability matrix and the product non-goals. Nothing here is an apology, it is the boundary.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Honest boundary</p>
+  <h1>What Isolith does not do</h1>
+  <p class="lead">
+    This page is generated from the measured format capability matrix
+    (<code>format-matrix.json</code>) and the product non-goals. It exists so
+    that a team evaluating Isolith can see the boundary as clearly as the
+    capability: what the readers open is a measured claim with a published
+    gate report behind it, and what they do not open is a documented gap in the
+    same table. A reader-only release never claims to be the editor, and the
+    editor does not claim the breadth of a full commercial suite yet.
+  </p>
+
+  <h2>Formats the readers do not open, and why (from the matrix)</h2>
+  <p>
+    Each reader row in the format capability matrix records a known limit in
+    its own words. The list below is that column, copied programmatically from
+    the matrix. Where a row says "not claimed", that is the honest state of a
+    young reader, not a hidden omission.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Format / module</th>
+        <th>Direction</th>
+        <th>What is not done (recorded gap)</th>
+      </tr>
+    </thead>
+    <tbody>
+            <tr>
+        <td><strong>CGR</strong> <code>.cgr</code><br><code>oep-cgr</code></td>
+        <td>read</td>
+        <td>old-era embedded payloads with un-locked triangle-stream offset return reasoned MeshNotFound skip - documented wall, never invented geometry</td>
+      </tr>
+      <tr>
+        <td><strong>CGR to glTF/GLB</strong> <code>.gltf, .glb</code><br><code>oep-cgr + oep-worker</code></td>
+        <td>write</td>
+        <td>output fidelity is that of the input mesh - not a surface or B-Rep</td>
+      </tr>
+      <tr>
+        <td><strong>STL</strong> <code>.stl</code><br><code>corpus/golden</code></td>
+        <td>read</td>
+        <td>facet/vertex counts within epsilon; no general-purpose STL reconstruction claim</td>
+      </tr>
+      <tr>
+        <td><strong>3DRep</strong> <code>.3DRep</code><br><code>oep-3dxml</code></td>
+        <td>read</td>
+        <td>header/record decode only; full geometry reconstruction from .3DRep not claimed</td>
+      </tr>
+      <tr>
+        <td><strong>3DXML</strong> <code>.3dxml, .3DXML</code><br><code>oep-3dxml</code></td>
+        <td>read</td>
+        <td>prototype-declaration XvlShell and truncated blobs classify SKIP (no-mesh-found / truncated); never a fabricated open</td>
+      </tr>
+      <tr>
+        <td><strong>3DXML (write)</strong> <code>.3dxml, .3DXML</code><br><code>oep-3dxml</code></td>
+        <td>write</td>
+        <td>foreign-writer archive with identical member bytes but different low-level ZIP framing classifies SKIP 'writer byte-layout differs' - valid, not a pass/fail</td>
+      </tr>
+      <tr>
+        <td><strong>JT</strong> <code>.jt</code><br><code>P4</code></td>
+        <td>read</td>
+        <td>visualization only; JT B-Rep/PMI not claimed</td>
+      </tr>
+      <tr>
+        <td><strong>QIF</strong> <code>.qif</code><br><code>oep-qif</code></td>
+        <td>read/write</td>
+        <td>basic cut scope only</td>
+      </tr>
+      <tr>
+        <td><strong>STEP AP203/AP214/AP242</strong> <code>.step, .stp</code><br><code>oep-step</code></td>
+        <td>read</td>
+        <td>PMI semantics separate lane; exactness is B-Rep topology within the accuracy harness</td>
+      </tr>
+      <tr>
+        <td><strong>STEP AP242 (write)</strong> <code>.step, .stp</code><br><code>oep-step</code></td>
+        <td>write</td>
+        <td>PMI export tracked honestly; not all PMI semantics claimed on write</td>
+      </tr>
+      <tr>
+        <td><strong>STEP AP242 PMI</strong> <code>.step, .stp</code><br><code>oep-pmi</code></td>
+        <td>read</td>
+        <td>FAIL cells: circular runout dropped (nist_ctc_05) and tolerance-modifier semantics empty on every file under step-io 0.2.5 - findings, not hidden</td>
+      </tr>
+      <tr>
+        <td><strong>STEP MBD validation</strong> <code>.step, .stp</code><br><code>oep-pmi + oep_tooling.mbd_validate</code></td>
+        <td>read</td>
+        <td>validator surfaces real STEP-seam gaps (floating datums, unknown unit symbols) as findings - the demo working</td>
+      </tr>
+      <tr>
+        <td><strong>STEP accuracy</strong> <code>.step, .stp</code><br><code>oep-step probe</code></td>
+        <td>read</td>
+        <td>a measured row out of epsilon is a hard gate FAIL - geometry drift never relabeled</td>
+      </tr>
+      <tr>
+        <td><strong>OEP canonical</strong> <code>.oepgeo.json, .oepmesh</code><br><code>oep-geo / oep-cgr</code></td>
+        <td>read/write</td>
+        <td>internal format; not a promised third-party exchange format</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>What the editor is not yet</h2>
+  <p>
+    The editor is the product spine and is young. These product-level gaps are
+    stated on the home page and repeated here so the boundary lives in one
+    honest list:
+  </p>
+  <ul>
+    <li>Full CATIA or SolidWorks breadth of workbenches is not claimed.</li>
+    <li>Sheet metal, weldments, mold tooling, CAM toolpaths, and FEA are not
+        shipped (some are planned for later trains; see the roadmap and the
+        workstream notes).</li>
+    <li>Class-A surface styling is a long-term program, not a shipped feature.</li>
+    <li>Native CATPart files are readable; native editing of CATPart is not.</li>
+    <li>The editor is not the 2027.1 GA deliverable; the interop/PDM
+        foundation release is.</li>
+  </ul>
+
+  <h2>The rule behind the boundary</h2>
+  <p>
+    One rule keeps every caveat honest: a capability is only ever claimed at
+    the exact fidelity a measured run verified. If the matrix does not say
+    Isolith can do it, Isolith does not claim it. Gaps are findings, not
+    defects to hide; a documented wall beats invented geometry.
+  </p>
+
+  <p><a href="format-matrix.html">Back to the format capability matrix</a></p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Isolith documentation - version 0.1.0. This page is generated from
+    <code>format-matrix.json</code> by scripts/site-build.py; edit the matrix,
+    not the page.
+  </div>
+</footer>
+</body>
+</html>

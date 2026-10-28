@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Releases and changelog - Isolith</title>
+<meta name="description" content="Isolith releases and changelog. Calendar-train versioning, the current release train, and where to read the generated changelog for each release.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Release trains</p>
+  <h1>Releases and changelog</h1>
+  <p class="lead">
+    Isolith runs on calendar-train versioning: the user-facing version is
+    <code>YYYY.N</code>, and patches append a third segment
+    (<code>2027.1.1</code>). A patch contains fixes only, never new features.
+    The full policy is the
+    <a href="workstreams/governance/decisions/release-train-versioning.md">release-train decision</a>;
+    this page is the plain-language index.
+  </p>
+
+  <h2>Current train</h2>
+  <table>
+    <thead><tr><th>Version</th><th>What it is</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>2027.1.0-rc2</code></td>
+        <td>Interop/PDM foundation release candidate: format readers, geometry
+            core, self-hosted PDM, delivery stack. Read, inspect, manage.</td>
+        <td>Release candidate (pre-GA)</td>
+      </tr>
+      <tr>
+        <td><code>2027.1</code></td>
+        <td>The GA target of the first train</td>
+        <td><a href="workstreams/security/export-control/2027.1.0-rc2.classification.toml">export-control classification</a> filed</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Where the changelog lives</h2>
+  <p>
+    The changelog is generated, never hand-written: it is built from the
+    conventional-commit history by <code>git-cliff</code> and committed with
+    each release. For 2027.1.0-rc2 it is
+    <code>CHANGELOG-2027.1.0-rc2.md</code> in the repository, with its own
+    <code>sha256</code> sidecar. Release notes for installers are published as
+    GitHub Releases, on the same page as the downloads. The repository address
+    is the placeholder constant <code>SITE-REPO-URL</code> in
+    <code>docs-site/site.json</code>, substituted at site generation.
+  </p>
+
+  <h2>Support window</h2>
+  <p>
+    Security fixes ship in a patch release of the newest published train. The
+    immediately preceding train receives backports on a case-by-case basis,
+    only when the fix is verified to apply. Older trains are not supported.
+    That is the honest support surface of a single-maintainer project; the
+    full statement is in <a href="security.html">SECURITY.md</a>.
+  </p>
+
+  <p><a href="download.html">Get the current release</a></p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Isolith documentation - version 0.1.0. Releases follow the calendar-train
+    and semantic-versioning decisions.
+  </div>
+</footer>
+</body>
+</html>

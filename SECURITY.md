@@ -1,6 +1,6 @@
 ---
 title: "Isolith Security Policy"
-version: 1.1.0
+version: 1.2.0
 date: 2026-10-27
 status: Ratified
 owner: Isolith program governance, P11 security lane (P11-T08 disclosure lane)
@@ -9,6 +9,10 @@ supersedes: nothing (first security policy; material changes bump the version, p
 ---
 
 # Isolith Security Policy
+
+Version 1.2.0 (2026-10-27): the public disclosure alias replaced the
+placeholder token with the real domain address `security@isolith.dev`
+(SITE-DOMAIN-ORIGIN). Standing content unchanged since 1.1.0.
 
 This document is the disclosure policy for Isolith ("Isolith", the Open
 Engineering Platform / OEP monorepo) and the P11-T08 responsible-disclosure
@@ -26,14 +30,13 @@ pull request, or discussion that describes an exploitable weakness or includes
 a working exploit.
 
 Report it privately to the maintainers at
-`security@SITE-DOMAIN-PLACEHOLDER`.
+`security@isolith.dev`.
 
-Placeholder notice: as with the Code of Conduct, the address above is a
-placeholder token that the SITE-DOMAIN-ORIGIN card replaces with the real
-Isolith domain before this document is shown on the public repository. It is
-stated explicitly so that no one invents an address. Until that address is
-live, reach the maintainer directly on the private instance (the safe harbor
-below still applies once the report is made in private).
+The public disclosure address is `security@isolith.dev` (forwarding alias only,
+landing in the maintainer's existing mailbox; no data is processed on any
+Isolith-operated mail server). Until the domain's email forwarding is live,
+reach the maintainer directly on the private instance (the safe harbor below
+still applies once the report is made in private).
 
 What to include in a report:
 
@@ -147,6 +150,8 @@ vulnerability always goes to the private path first.
 
 ## Version history
 
+- 1.2.0 (2026-10-27): public disclosure alias is now the real domain address
+  `security@isolith.dev` (SITE-DOMAIN-ORIGIN). Standing content unchanged.
 - 1.1.0 (2026-10-27): add release verification section that publishes the
   release signing key fingerprint and the verify path (PUBLIC-REPO-HARDENING).
 - 1.0.0 (2026-10-27): first security policy. Implements the P11-T08

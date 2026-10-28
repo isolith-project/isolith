@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download - Isolith</title>
+<meta name="description" content="Download Isolith. Installers for Windows, macOS and Linux ship from GitHub Releases together with SHA-256 checksums. This site hosts documentation only; it never hosts binaries or source downloads.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Isolith</a><small>documentation</small></div>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="admin-guide.html">Admin guide</a>
+      <a href="format-matrix.html">Format matrix</a>
+      <a href="download.html">Download</a>
+      <a href="releases.html">Releases</a>
+      <a href="license.html">License</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="what-it-does-not-do.html">What it does not do</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="kicker">Get Isolith</p>
+  <h1>Download</h1>
+  <p class="lead">
+    Installers for Windows, macOS and Linux ship from GitHub Releases, with a
+    SHA-256 checksum sidecar next to every file. This documentation site hosts
+    no binaries and no source downloads: the artifacts live on GitHub, and you
+    verify them by checksum before you run anything.
+  </p>
+
+  <h2>Current release: 2027.1.0-rc2</h2>
+  <p>
+    2027.1.0-rc2 is the interop and PDM foundation release: the format
+    readers, the geometry core, the self-hosted PDM, and the delivery stack.
+    It is a release candidate, not the product GA, and it does not claim to be
+    the editor. The changelog and release notes are on the
+    <a href="releases.html">releases page</a>.
+  </p>
+  <p>
+    Installers are published at the project's GitHub Releases page. The
+    repository address is the single placeholder constant
+    <code>SITE-REPO-URL</code> in <code>docs-site/site.json</code>: it is
+    substituted at site generation, and the real GitHub address lands there
+    when the GitHub migration completes.
+  </p>
+
+  <h2>Checksums, and why you check them</h2>
+  <p>
+    Every release publishes a <code>SHA256SUMS</code> file alongside the
+    artifacts, listing the SHA-256 of each file. Verify before install:
+  </p>
+  <pre><code>sha256sum -c SHA256SUMS</code></pre>
+  <p>
+    All output must say <code>OK</code>. A mismatch means the file is not the
+    file the release signed: stop and re-download from GitHub directly. The
+    release manifest itself is also signed (detached OpenPGP signature) so a
+    tampered index is detectable on its own.
+  </p>
+  <p>
+    The checksums for the current release, 2027.1.0-rc2, as committed by the
+    release gate (in <code>dist/2027.1.0-rc2</code>):
+  </p>
+  <pre><code>1f2d4adcf5b535095f04c189fac30f59814add0b2c52ac6fe8c27a103612ac08  RELEASE-MANIFEST.json
+35a33bc3a6bef18ad29fc2df676f70fd707be071b293467a071683ded855cd9a  SHA256SUMS
+5895edab20317857a816c8788274355d285ea43adc6db225de6695a7ecf60dfb  CHANGELOG-2027.1.0-rc2.md</code></pre>
+  <p>
+    The full per-artifact list is inside <code>SHA256SUMS</code> itself; the
+    hash of that file is listed above so the list can be checked for
+    tampering before it is even read.
+  </p>
+
+  <h2>Windows: your SmartScreen will warn, and that is expected</h2>
+  <div class="note warn">
+    <strong>Windows installers are unsigned today.</strong> The Windows
+    build is not yet Authenticode-signed (code signing lands in a later
+    release), so Windows SmartScreen will show a warning when you run the
+    installer. That warning is expected. Do not bypass it by disabling
+    SmartScreen globally; instead verify the checksum above, then allow this
+    one file. If the checksum matches, the file is the release file.
+  </div>
+
+  <h2>Export control, in one short paragraph</h2>
+  <p>
+    Isolith is published open-source software and self-classifies as EAR99
+    general-engineering software, not ITAR technical data and not on the
+    Commerce Control List. This is a self-classification, documented under
+    <code>workstreams/security/export-control/</code>, not a formal government
+    advisory opinion or any CCATS determination. Customer data that runs
+    through an Isolith deployment is classified by the customer's own
+    accredited deployment, not by this project. Isolith makes no claim of ITAR
+    certification, and none is implied by this page or any other page on this
+    site.
+  </p>
+
+  <h2>Source</h2>
+  <p>
+    The source is open. Check it out, build it, read it:
+  </p>
+  <pre><code>git clone SITE-REPO-URL isolith</code></pre>
+  <p>
+    The license boundary (Apache-2.0 for applications and libraries, AGPL-3.0
+    for the server/PDM and P2P orchestration) is stated precisely on the
+    <a href="license.html">license page</a>.
+  </p>
+
+  <p><a href="getting-started.html">Installed? Go to the getting-started guide</a></p>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    Isolith documentation - version 0.1.0. This site never hosts binaries;
+    downloads point at GitHub Releases and are verified by checksum.
+  </div>
+</footer>
+</body>
+</html>

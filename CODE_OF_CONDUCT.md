@@ -61,16 +61,11 @@ appointed representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-`conduct@SITE-DOMAIN-PLACEHOLDER`.
+`conduct@isolith.dev`.
 
-Placeholder notice: the address above is deliberately a placeholder token,
-not a working inbox. It states the enforcement contact explicitly so that
-nobody invents an address or leaves the Covenant with a fake one. The
-SITE-DOMAIN-ORIGIN card (the team that owns the public surface and the new
-Isolith domain) replaces `SITE-DOMAIN-PLACEHOLDER` with the real domain
-before this document is shown on the public repository. Until then, reports
-on the private development instance go directly to the maintainer through the
-normal reporting channels listed in SUPPORT.md.
+The enforcement address is `conduct@isolith.dev` (forwarding alias only).
+Reports on the private development instance also go directly to the
+maintainer through the reporting channels listed in SUPPORT.md.
 
 All complaints will be reviewed and investigated promptly and fairly.
 
@@ -144,6 +139,7 @@ at [https://www.contributor-covenant.org/translations][translations].
 [translations]: https://www.contributor-covenant.org/translations
 
 ---
-Program document version: 1.0.0 (2026-10-27). Versioned like the charter so a
+Program document version: 1.1.0 (2026-10-27). Versioned like the charter so a
 material change to the enforcement contact or the placeholder note bumps the
-version line here.
+version line here. 1.1.0: enforcement contact replaced the placeholder token
+with the real domain alias `conduct@isolith.dev` (SITE-DOMAIN-ORIGIN).
