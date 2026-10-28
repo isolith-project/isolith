@@ -27,7 +27,6 @@ finish-args:
   - --device=dri
   - --share=network          # local: reserved for viewer/PDM web ports
   - --filesystem=home        # persist-dir default lives under $HOME
-  - --filesystem=xdg-run
   - --talk-name=org.freedesktop.FileManager1
 
 modules:
