@@ -1,0 +1,32 @@
+
+===== CLI: oep update status (default deployment -> Off) =====
+update check: OFF (no source configured; non-phoning default)
+  [ok] exit=0
+
+===== CLI: oep update check --json (Off) =====
+"Off"
+  [ok] exit=0
+
+===== CLI: oep update status --config update-available (UpdateAvailable) =====
+update check: update available -> 2027.1.0-rc2 (advisory; install is a separate operator action)
+  [ok] exit=0
+
+===== CLI: oep update status --config update-uptodate (UpToDate) =====
+update check: up to date
+  [ok] exit=0
+
+===== CLI: oep update status --config update-untrusted (Untrusted) =====
+update check: source NOT TRUSTED - no payloads consumed (update bundle signature/verify failed: Ed25519 signature verification failed)
+  [ok] exit=0
+
+===== CLI: oep update status --config update-unreachable (Unreachable) =====
+update check: unavailable (cannot read /home/r1a/isolith-main/.worktrees/update-surface-1028a/does-not-exist/update.bundle.json: No such file or directory (os error 2))
+  [ok] exit=0
+
+===== CLI: oep update check --json --config update-untrusted (Untrusted, JSON) =====
+{
+  "Untrusted": {
+    "detail": "update bundle signature/verify failed: Ed25519 signature verification failed"
+  }
+}
+  [ok] exit=0

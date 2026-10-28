@@ -1,0 +1,7 @@
+===== WORKBENCH (off) =====
+oep-workbench: update check: OFF (no source configured; non-phoning default)
+===== WORKBENCH (update available) =====
+oep-workbench: update check: update available -> 2027.1.0-rc2 (advisory; install is a separate operator action)
+oep-workbench: update available: 2027.1.0-rc2 (released 2026-10-19)
+===== WORKBENCH (untrusted) =====
+oep-workbench: update check: source NOT TRUSTED - no payloads consumed (update bundle signature/verify failed: Ed25519 signature verification failed)

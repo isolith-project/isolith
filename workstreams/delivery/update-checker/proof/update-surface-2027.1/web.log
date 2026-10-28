@@ -1,0 +1,12 @@
+
+===== WEB: GET / -> banner rendered (version, date, actions) =====
+class="update-banner" role="status"><strong>Isolith update available: 2027.1.0-rc2</strong>
+
+===== WEB: dismiss version=2027.1.0-rc2 (per-version; redirect back) =====
+dismiss http=303 redirect=http://127.0.0.1:46611/
+
+===== WEB: GET / after dismiss -> same-version banner gone =====
+banner-divs-after-dismiss=0
+
+===== WEB: check now (explicit action; re-runs the advisory preflight, redirects) =====
+checknow http=303 redirect=http://127.0.0.1:46611/
