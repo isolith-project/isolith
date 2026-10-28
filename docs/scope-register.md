@@ -1,7 +1,7 @@
 ---
 title: "Isolith Scope Register: CATIA/SolidWorks Editor Parity Baseline"
 short_title: scope-register
-version: 1.0.0
+version: 1.1.0
 decision: editor_spine_parity_baseline
 date: 2026-10-22
 status: Ratified (decision #13 scope expansion, 2026-10-18; decision #19 editor spine, 2026-10-22)
@@ -90,6 +90,33 @@ version bump + migration); `class-3-kernel-gated` blocked on the kernel seam
 P6-M3-T04 (`oep-engine-occ` behind the `oep-geo` Evaluator seam);
 `class-4-different-foundation` needs a high-accuracy surface kernel (Class-A).
 
+## Practitioner input contract (LTT practitioner test)
+
+Feature lists do not prove the editor bar (decision #19: same-or-greater
+editor functionality than CATIA/SolidWorks). What proves it is the input and
+behaviour contract an experienced user carries in their hands - and the LTT
+practitioner test of SolidCraft and Purrametric is a free specification of
+exactly those expectations (Don directive 2026-10-27). This section tracks one
+row per behaviour with an explicit test hook. The status tokens and the
+honesty rule are identical to the capability register above: a behaviour row
+may only claim `building` or `shippable` while a green accepted test on main
+exercises that behaviour, and every row names the seam (`test_hook`) that will
+prove it. Machine-checkable copy lives in the
+`practitioner_input_contract` block of `docs/scope-register.json`, drift-guarded
+by the same tests.
+
+| behaviour | CATIA | SolidWorks | cost class | owning workstream | status | evidence |
+|---|---|---|---|---|---|---|
+| input-command-search - Command search on a single key (SolidWorks S key, Fusion search) plus a keyboard reachability path to any command | base | base | class-1-additive | shell: oep-shell command surface (P7-M5 command registry, search + generated help index) | building | green test: crates/oep-shell/tests/practitioner_input_contract.rs |
+| input-right-click-wheel - Right-click radial menu or equivalent recent/dimension wheel | base | base | class-1-additive | editor bar context surface (no committed context-menu layer yet) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-spacebar-accept - Spacebar accepts/confirms the active tool | base | base | class-1-additive | editor bar active-tool model (no active-tool state in EditorSession yet) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-snap-inference - Two-axis snap inference during a drag: coincident plus midpoint and perpendicular/extension snaps | base | base | class-1-additive | sketch: drag-snap resolver over oep-geo points/segments (not yet opened) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-escape-semantics - Escape semantics: one press clears the active tool, measured and consistent | base | base | class-1-additive | editor bar active-tool model (no active-tool state in EditorSession yet) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-cut-region - Cut-region selection from a sketch (choose which enclosed region an extrude consumes, without editing the sketch) | base | base | class-2-model-extend | editor feature vertical: region pick above the sketch profile (not yet opened) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-datum-plane-legibility - Datum plane legibility: labelled without hover, not stacked into a white wash | base | base | class-1-additive | viewer: datum-plane render + label pass (no datum-plane entity in the tree yet) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-toolbar-customisation - Toolbar and tab customisation (add a tab or move a command to a missing workspace) | base | base | class-1-additive | shell: workbench layout registry (no toolbar/tab model - commands are a flat registry today) | planned | Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings) |
+| input-undo-redo-parity - Single-press undo/redo parity and a visible undo step boundary per committed dimension | base | base | class-1-additive | shell: oep-shell EditorSession history (undo/redo/journal over canonical document snapshots) | building | green test: crates/oep-shell/tests/practitioner_input_contract.rs |
+
 ## Commitment order (decision #19, near term)
 
 1. **First:** drafting / 2D drawings, mass properties (plus interference/clash
@@ -110,13 +137,25 @@ P6-M3-T04 (`oep-engine-occ` behind the `oep-geo` Evaluator seam);
 ## Sync rule
 
 `docs/scope-register.json` and this file must agree. The drift-guard test
-fails if a capability's status in the JSON is not reflected in this table, or
-if a row claims `building`/`shippable` without a cited green accepted test in
-the tree. Add or move a capability by editing BOTH the JSON source of truth
-and this table, then run `tests/test_scope_register.py` and the full gate.
+fails if a capability's (or practitioner behaviour's) status in the JSON is
+not reflected in its table, or if a row claims
+`building`/`shippable` without a cited green accepted test in the tree. Add or
+move a capability or behaviour by editing BOTH the JSON source of truth and
+this table, then run `tests/test_scope_register.py` and the full gate.
 
 ## Change log
 
+- 1.1.0 (2026-10-27): practitioner input contract section added (card
+  t_5b00868e, Don directive 2026-10-27; LTT practitioner test of SolidCraft /
+  Purrametric). Nine input/behaviour rows, each with a test hook, under the
+  same status ceiling as the capabilities. `input-command-search` and
+  `input-undo-redo-parity` are `building` with real green tests on main
+  (crates/oep-shell/tests/practitioner_input_contract.rs). Escape semantics,
+  drag-snap inference, cut-region selection, datum-plane legibility, toolbar
+  customisation, right-click wheel and spacebar accept stayed `planned` with
+  the reason in each row - none of them is reachable without new editor code,
+  so none claims a test it does not have. Scope-register schema bumped to 2
+  with a tolerant migration (schema-1 registers still validate).
 - 1.0.0 (2026-10-22): parity baseline register committed (card
   FEATURE-BASELINE t_a686d2b9). All 14 Bucket C capabilities tracked with
   CATIA/SolidWorks status, cost class, owning workstream, status token, and

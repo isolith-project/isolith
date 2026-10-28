@@ -4,7 +4,7 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 description = "OEP delivery-stack static docs server (P13-T03). Zero external deps, std-only."
-license = "Apache-2.0"
+license = "AGPL-3.0"
 
 [lib]
 name = "oep_docs"

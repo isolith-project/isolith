@@ -1,8 +1,8 @@
 ---
 title: Isolith P7-M5-T02 Accessibility Checklist (viewer and workbench surfaces)
-version: 1.3.0
+version: 1.4.0
 date: 2026-10-22
-status: Ratified for the P7-M5-T02 headless surfaces (v1.3.0 covers the MEDIA-RENDERER present mode: explicit-width real renders and the grid/axes/label overlays keep only the documented contrast floor and stay deterministic; v1.2.0 widened the workbench surface with the interactive editor commands and the typed-error guarantee)
+status: Ratified for the P7-M5-T02 headless surfaces (v1.4.0 widens the workbench command surface with the type-ahead command search, search:QUERY - the S-key/Fusion-search equivalent; v1.3.0 covers the MEDIA-RENDERER present mode: explicit-width real renders and the grid/axes/label overlays keep only the documented contrast floor and stay deterministic; v1.2.0 widened the workbench surface with the interactive editor commands and the typed-error guarantee)
 owner: Isolith program governance, P7 modeler lane (P7-M5-T02)
 applies_to: the oep-viewer surface (P6-M5-T02 preview viewer) and the oep-shell workbench command surface (P7-M2-T01), and the gated items that land when the P7-M5 immediate-mode interactive panel is delivered
 supersedes: nothing
@@ -75,6 +75,10 @@ at that gate with the interactive items asserted for real.
 
 ## Change log
 
+- 1.4.0 (2026-10-27): widened the workbench command surface for the
+  practitioner input contract (card t_5b00868e): the type-ahead command
+  search (`search:QUERY`, `commands::search`) added to the generated help
+  index, the CLI example (`workbench`) and this checklist's canonical surface.
 - 1.0.0 (2026-10-16): Initial ratification for P7-M5-T02. Passes the
   headless-surface accessibility items on the viewer (oep-viewer) and
   workbench (oep-shell) surfaces with automated tests and a tuned theme that

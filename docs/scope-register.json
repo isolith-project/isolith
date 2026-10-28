@@ -1,24 +1,44 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "task": "FEATURE-BASELINE (t_a686d2b9)",
   "updated": "2026-10-22",
-  "description": "Isolith CATIA/SolidWorks editor parity baseline. Decision #19 sets the product bar: same-or-greater editor functionality than CATIA/SolidWorks for the working engineer. This register stops being an exclusion list and becomes the PARITY BASELINE inventory an engineer reads to judge whether Isolith covers their main job. Machine-checkable copy of docs/scope-register.md. Every row carries a current-status token (not-scoped / planned / building / shippable) and evidence; a row may NOT claim a status higher than a green accepted test proves (honest-claims discipline, enforced by python/oep_tooling/scope_register_check.py and tests/test_scope_register.py).",
+  "description": "Isolith CATIA/SolidWorks editor parity baseline. Decision #19 sets the product bar: same-or-greater editor functionality than CATIA/SolidWorks for the working engineer. This register stops being an exclusion list and becomes the PARITY BASELINE inventory an engineer reads to judge whether Isolith covers their main job. Machine-checkable copy of docs/scope-register.md. Every row carries a current-status token (not-scoped / planned / building / shippable) and evidence; a row may NOT claim a status higher than a green accepted test proves (honest-claims discipline, enforced by python/oep_tooling/scope_register_check.py and tests/test_scope_register.py). Also carries the practitioner_input_contract section (schema 2): the INPUT AND BEHAVIOUR contract an experienced user carries in their hands, free-specified by the LTT practitioner test of SolidCraft and Purrametric (Don directive 2026-10-27) - one row per behaviour with an explicit test hook, under the same honest-claims status ceiling.",
   "policy": {
     "product_bar": "same-or-greater editor functionality than CATIA/SolidWorks for the working engineer (decision #19, 2026-10-22)",
-    "status_rank": ["not-scoped", "planned", "building", "shippable"],
+    "status_rank": [
+      "not-scoped",
+      "planned",
+      "building",
+      "shippable"
+    ],
     "cost_classes": [
       "class-1-additive",
       "class-2-model-extend",
       "class-3-kernel-gated",
       "class-4-different-foundation"
     ],
-    "vendor_tiers": ["base", "module", "limited", "no"],
+    "vendor_tiers": [
+      "base",
+      "module",
+      "limited",
+      "no"
+    ],
     "honesty_rule": "no row may claim a status higher than a green accepted test proves",
     "evidence_ladder": {
-      "shippable": ["test"],
-      "building": ["test"],
-      "planned": ["decision", "test"],
-      "not-scoped": ["none", "decision"]
+      "shippable": [
+        "test"
+      ],
+      "building": [
+        "test"
+      ],
+      "planned": [
+        "decision",
+        "test"
+      ],
+      "not-scoped": [
+        "none",
+        "decision"
+      ]
     },
     "required_capabilities": [
       "2d-drafting",
@@ -35,6 +55,17 @@
       "cam",
       "fea",
       "class-a-surfacing"
+    ],
+    "practitioner_required_ids": [
+      "input-command-search",
+      "input-right-click-wheel",
+      "input-spacebar-accept",
+      "input-snap-inference",
+      "input-escape-semantics",
+      "input-cut-region",
+      "input-datum-plane-legibility",
+      "input-toolbar-customisation",
+      "input-undo-redo-parity"
     ]
   },
   "commitment_order": {
@@ -45,11 +76,22 @@
       "exploded-views"
     ],
     "spine": "editor assembly mate editing (interactive surface over the live oep-assem solver) commits first, in parallel with the pull-forwards; it is the editor spine itself, not a Bucket C capability row",
-    "after_kernel_seam": ["sheet-metal", "weldments", "mold-tooling", "routing"],
+    "after_kernel_seam": [
+      "sheet-metal",
+      "weldments",
+      "mold-tooling",
+      "routing"
+    ],
     "after_kernel_seam_note": "opens only after P6-M3-T04 (oep-engine-occ) lands on main behind the oep-geo Evaluator seam",
-    "secondary": ["electrical-harness", "cam", "fea"],
+    "secondary": [
+      "electrical-harness",
+      "cam",
+      "fea"
+    ],
     "secondary_note": "2027.2+ workstreams; CAM and FEA each get their own P15+ decomposition when opened",
-    "class_a_program": ["class-a-surfacing"],
+    "class_a_program": [
+      "class-a-surfacing"
+    ],
     "class_a_program_note": "its own long-horizon kernel-moat program (decision #19, full-send); strategy ADR is the next gate",
     "composites_note": "in scope per decision #13; evaluation gate at 2027.2 before any build commitment (weakest commitment in the baseline)"
   },
@@ -250,5 +292,145 @@
         "note": "own long-horizon kernel-moat program (longest pole, biggest team accepted); needs a high-accuracy surface kernel, not vanilla OCC; CATIA ICEM/Generative Shape Design vs SolidWorks limited"
       }
     }
-  ]
+  ],
+  "practitioner_input_contract": {
+    "description": "Editor input and behaviour contract from the LTT practitioner test of SolidCraft and Purrametric - the expectations an experienced user carries in their hands (Don directive 2026-10-27). One row per behaviour; each carries the existing register fields plus an explicit test hook, and obeys the same status ceiling: building/shippable require a green accepted test that exercises the behaviour.",
+    "rows": [
+      {
+        "id": "input-command-search",
+        "capability": "Command search on a single key (SolidWorks S key, Fusion search) plus a keyboard reachability path to any command",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "shell: oep-shell command surface (P7-M5 command registry, search + generated help index)",
+        "status": "building",
+        "evidence": {
+          "kind": "test",
+          "ref": "crates/oep-shell/tests/practitioner_input_contract.rs",
+          "note": "type-ahead search (commands::search) narrows the whole reachable command set to what matches; every command resolves through its dispatch token (validate_token) and is advertised in the generated text/markdown/JSON indexes - keyboard reachability is exercised by the command_search tests in practitioner_input_contract.rs on main"
+        },
+        "test_hook": "commands::search(QUERY) + validate_token(Token) + generated indexes; crates/oep-shell/tests/practitioner_input_contract.rs"
+      },
+      {
+        "id": "input-right-click-wheel",
+        "capability": "Right-click radial menu or equivalent recent/dimension wheel",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "editor bar context surface (no committed context-menu layer yet)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "context menu is a UI-surface row; no context-menu surface exists in the tree yet, so no test is claimable"
+        },
+        "test_hook": "context-wheel over pick/selection (needs a context-menu layer on the editor bar)"
+      },
+      {
+        "id": "input-spacebar-accept",
+        "capability": "Spacebar accepts/confirms the active tool",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "editor bar active-tool model (no active-tool state in EditorSession yet)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "requires an active-tool state plus a confirm affordance; neither exists in EditorSession today"
+        },
+        "test_hook": "EditorSession::confirm_active_tool (requires an active-tool model)"
+      },
+      {
+        "id": "input-snap-inference",
+        "capability": "Two-axis snap inference during a drag: coincident plus midpoint and perpendicular/extension snaps",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "sketch: drag-snap resolver over oep-geo points/segments (not yet opened)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "midpoint / perpendicular / extension inference is a geometry resolver not present in the tree yet"
+        },
+        "test_hook": "drag-snap resolver over oep-geo segment predicates (midpoint / perpendicular / extension)"
+      },
+      {
+        "id": "input-escape-semantics",
+        "capability": "Escape semantics: one press clears the active tool, measured and consistent",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "editor bar active-tool model (no active-tool state in EditorSession yet)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "LEFT PLANNED deliberately: one-press clear is not reachable today without new editor code - EditorSession has no active-tool state to clear and no escape/cancel command exists. Evidence is the recorded directive, not a faked test."
+        },
+        "test_hook": "EditorSession::dismiss_active_tool + single-press consistency probe (requires an active-tool model and an escape binding)"
+      },
+      {
+        "id": "input-cut-region",
+        "capability": "Cut-region selection from a sketch (choose which enclosed region an extrude consumes, without editing the sketch)",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-2-model-extend",
+        "workstream": "editor feature vertical: region pick above the sketch profile (not yet opened)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "choosing one enclosed region over another during a feature create needs loop/region detection above the profile - not in the tree yet"
+        },
+        "test_hook": "loop/region picker over the oep-geo profile (segment-graph region detection)"
+      },
+      {
+        "id": "input-datum-plane-legibility",
+        "capability": "Datum plane legibility: labelled without hover, not stacked into a white wash",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "viewer: datum-plane render + label pass (no datum-plane entity in the tree yet)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "needs a datum-plane entity and a persistent label pass in oep-viewer; neither exists yet"
+        },
+        "test_hook": "oep-viewer datum label render (needs a datum-plane entity + label pass)"
+      },
+      {
+        "id": "input-toolbar-customisation",
+        "capability": "Toolbar and tab customisation (add a tab or move a command to a missing workspace)",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "shell: workbench layout registry (no toolbar/tab model - commands are a flat registry today)",
+        "status": "planned",
+        "evidence": {
+          "kind": "decision",
+          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+          "note": "customising the command surface (add a tab / move a command) needs a layout model over the flat command registry; none exists yet"
+        },
+        "test_hook": "workbench layout registry add/move (needs a layout model over the command registry)"
+      },
+      {
+        "id": "input-undo-redo-parity",
+        "capability": "Single-press undo/redo parity and a visible undo step boundary per committed dimension",
+        "catia": "base",
+        "solidworks": "base",
+        "cost_class": "class-1-additive",
+        "workstream": "shell: oep-shell EditorSession history (undo/redo/journal over canonical document snapshots)",
+        "status": "building",
+        "evidence": {
+          "kind": "test",
+          "ref": "crates/oep-shell/tests/practitioner_input_contract.rs",
+          "note": "committing a dimension in the variable set is one real document snapshot; one undo press reverts exactly that commit, one redo press replays it, and the journal records each commit as its own line - exercised by undo_redo_single_press_parity_and_dimension_step_boundaries in practitioner_input_contract.rs on main"
+        },
+        "test_hook": "EditorSession::undo/redo/journal over committed variable-dimension steps; crates/oep-shell/tests/practitioner_input_contract.rs"
+      }
+    ]
+  }
 }

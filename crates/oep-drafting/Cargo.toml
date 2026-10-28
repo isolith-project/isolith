@@ -1,5 +1,6 @@
 [package]
 name = "oep-drafting"
+license = "Apache-2.0"
 description = "P7: 2D drafting workbench (EDITOR-2D-DRAFTING): standard/projected views computed from the oep-geo feature graph; dimensions driven by the oep-sketch variable set (FreeCAD-v1 behavior); title block + sheet management; SVG/PDF vector export and an honest STEP/2D story. Consumes the oep-geo Class 2 model extension (drawings collection) and oep-sketch."
 version.workspace = true
 edition.workspace = true

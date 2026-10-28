@@ -947,6 +947,22 @@ fn main() {
                     println!("{line}");
                 }
             }
+            ("search", rest) => {
+                let query = rest.unwrap_or_default();
+                let hits = commands::search(query);
+                if hits.is_empty() {
+                    println!("search: no command matches '{query}'; run 'help' for the full index");
+                } else {
+                    for c in &hits {
+                        println!("  {:<32} {}", c.usage, c.summary);
+                    }
+                    println!(
+                        "search: {} of {} commands match",
+                        hits.len(),
+                        commands::commands().len()
+                    );
+                }
+            }
             (other, _) => {
                 // Unreachable for unknown tokens (validated above); kept so a
                 // known token can never silently fall through as success.

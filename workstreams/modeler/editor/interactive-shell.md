@@ -7,6 +7,14 @@ main job with the program.
 viewport + oep-sketch solver/variable set + oep-geo tessellation seam).
 **Status:** landed on wave/editor, gates green.
 
+> **Acceptance contract for editor work:** what "same-or-greater editor
+> functionality than CATIA/SolidWorks" means in hand-held behaviour is the
+> `practitioner_input_contract` section of `docs/scope-register.[json|md]`
+> (LTT practitioner test of SolidCraft and Purrametric, Don directive
+> 2026-10-27). Feature lists do not prove the bar; each behaviour row has a
+> test hook and a status ceiling, and editor work is only `building` when a
+> green test exercises the behaviour on main.
+
 ## What the acceptance asked
 
 On a clean U1 (plus a second machine via the P10/P12 rehearsal pattern) a
@@ -84,10 +92,11 @@ the oep-viewer camera/render/pick (P6-M5), and the oep-shell command surface
   `sk:line`, `sk:constrain`, `sk:solve`, `sk:render`, `sk:props`, `vars:list`,
   `vars:set`, `feat:extrude`, `feat:revolve`, `feat:recompute`, `view:frame`,
   `view:orbit`, `view:zoom`, `view:pan`, `view:pick`, `export:step`, `props`,
-  `undo`, `redo`). Every command is registered in the single-source command
-  metadata (`crates/oep-shell/src/commands.rs`, version 1.3.0), the committed
-  help index is regenerated from it, and both drift-guard tests (Rust +
-  Python) cover every command. Accessibility checklist widened to WB-A11Y-10.
+  `undo`, `redo`, `search`). Every command is registered in the single-source
+  command metadata (`crates/oep-shell/src/commands.rs`, help-index version
+  1.4.0), the committed help index is regenerated from it, and both
+  drift-guard tests (Rust + Python) cover every command. Accessibility
+  checklist widened to WB-A11Y-10.
 
 ## Present render (MEDIA-RENDERER follow-on)
 

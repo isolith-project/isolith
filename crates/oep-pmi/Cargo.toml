@@ -1,5 +1,6 @@
 [package]
 name = "oep-pmi"
+license = "Apache-2.0"
 description = "P6: PMI model schema (GD&T types, datums, notes) — our-own-format serde model, the import destination for STEP AP242 PMI (P4)."
 version.workspace = true
 edition.workspace = true

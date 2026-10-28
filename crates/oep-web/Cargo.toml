@@ -1,5 +1,6 @@
 [package]
 name = "oep-web"
+license = "AGPL-3.0"
 description = "P8-M4-T01: self-hosted PDM web UI (item explorer, BOM tree, viewer embed, compare view) on the ratified axum web stack. Merges the oep-pdm REST API v1 router with UI routes over the same vault store; the viewer embed renders real oep-geo models through the P6 oep-viewer seam (reference CPU rasterizer)."
 version.workspace = true
 edition.workspace = true

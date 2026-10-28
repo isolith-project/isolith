@@ -1,5 +1,6 @@
 [package]
 name = "oep-rules"
+license = "Apache-2.0"
 description = "P7-M4-T02: Rules/checks sandbox - knowledge-light formulas + checks engine over oep-geo parts (documented not-parity with V5 Knowledgeware)."
 version.workspace = true
 edition.workspace = true

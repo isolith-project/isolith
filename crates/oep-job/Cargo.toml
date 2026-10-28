@@ -1,5 +1,6 @@
 [package]
 name = "oep-job"
+license = "AGPL-3.0"
 description = "P9: P2P compute lane - job/task spec schema + validation (input vault refs, executor, resource caps, output refs)."
 version.workspace = true
 edition.workspace = true

@@ -1,5 +1,6 @@
 [package]
 name = "oep-sketch"
+license = "Apache-2.0"
 description = "P7: 2D sketcher + parametric variable sets in the chosen shell - declarative sketch model, variable sets (FreeCAD-v1-like semantics), adopted OSS constraint solver behind a vendor-neutral seam, stored as oep-geo features (P7-M4-T01)."
 version.workspace = true
 edition.workspace = true

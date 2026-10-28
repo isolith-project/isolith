@@ -85,11 +85,12 @@ CANONICAL_COMMANDS = [
     ("undo", "undo", "editor"),
     ("redo", "redo", "editor"),
     ("journal", "journal", "inspection"),
+    ("search", "search:QUERY", "help"),
     ("help", "help [COMMAND]", "help"),
 ]
 CANONICAL_NAMES = [c[0] for c in CANONICAL_COMMANDS]
 CANONICAL_USAGES = [c[1] for c in CANONICAL_COMMANDS]
-EXPECT_VERSION = "1.3.0"
+EXPECT_VERSION = "1.4.0"
 
 EM_DASH = "\u2014"
 CURLY = "\u201c\u201d\u2018\u2019"

@@ -87,12 +87,19 @@ uv run pytest tests/
 
 ## License and contributing
 
-Apache-2.0 for applications and libraries; AGPL-3.0 for the server, PDM, and
-P2P components. No GPL-3.0 ships in the delivered software. Exports are
-classified per release.
+Isolith is distributed under a per-crate hybrid licence: Apache-2.0 for
+applications and libraries, AGPL-3.0 for the server, the PDM, and the P2P
+orchestration components. The full texts live at the repository root
+(`LICENSE-APACHE`, `LICENSE-AGPL`) with a short index (`LICENSE`); the
+per-crate boundary is mapped in `docs/licensing-boundary.md` and enforced in
+CI by `scripts/licensing-check.py`. No GPL-3.0 ships in the delivered
+software, consistent with the clean-room gate. Third-party attribution is in
+`NOTICE`, generated from the committed `Cargo.lock`. Exports are classified
+per release.
 
 - Charter: `charter.md`
 - Contributions: `CONTRIBUTING.md`
+- Licence files: `LICENSE`, `LICENSE-APACHE`, `LICENSE-AGPL`, `NOTICE`
 - Identity kit: `assets/brand/`
 
 ## Documentation

@@ -1,0 +1,28 @@
+# License-boundary gate (public-surface port of
+# .gitea/workflows/licensing-boundary.yaml).
+#
+# The live CI runs on Gitea Actions (.gitea/workflows/licensing-boundary.yaml).
+# If the public repository is hosted on GitHub, this file becomes the active
+# enforcement: every push and pull request must keep the per-crate licence
+# boundary (docs/licensing-boundary.json), the Cargo.toml SPDX declarations,
+# the dependency allow-list (docs/dependency-licenses.json), NOTICE, and the
+# root licence files in sync, gated by branch protection on the
+# `licensing-boundary` check.
+#
+# The scan logic is shared with the local runs via scripts/licensing-check.py
+# (stdlib, offline: crate boundary, boundary-doc sync, dependency allow-list,
+# NOTICE sync, root files). Exit 0 iff no FAIL row.
+name: License boundary
+on:
+  push:
+  pull_request:
+jobs:
+  licensing-boundary:
+    name: licensing-boundary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Enforce the per-crate licence boundary and dependency allow-list
+        run: python3 scripts/licensing-check.py --repo "$PWD" --out -
+        shell: bash

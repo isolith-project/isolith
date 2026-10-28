@@ -1,5 +1,6 @@
 [package]
 name = "oep-pdm"
+license = "AGPL-3.0"
 description = "P8: self-hosted PDM / ENOVIA-lite. P8-M1-T01 service skeleton on the ratified web stack (Rust axum, ADR workstreams/pdm/service/web-stack-adr.md): contract types, vault store, axum service (binary oep-pdm), retained P7-M2-T02 StubServer identity + PdmClient speaking the same OpenAPI v1 contract."
 version.workspace = true
 edition.workspace = true
