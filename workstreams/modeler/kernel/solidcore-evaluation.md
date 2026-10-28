@@ -1,7 +1,7 @@
 ---
 title: Isolith SolidCore Evaluation (second oep-geo Evaluator implementation)
 decision: evaluate_solidcore_as_second_kernel_behind_the_oep_geo_seam
-version: 1.0.0
+version: 1.1.0
 date: 2026-10-27
 status: Proposed
 owner: Isolith program governance, P6-M3 (B-Rep ops); Don directive 2026-10-27
@@ -125,6 +125,37 @@ can copy the approach" in our own geometry code. Apache-2.0 does not forbid
 copying, so the honest approach is: any code we deliberately take from
 solidcore comes with Apache-2.0 attribution (NOTICE), and we prefer calling
 the crate to copying from it. There is no license barrier either way.
+
+### SolidCraft lineage note (first production consumer)
+
+SolidCore is developed in the same organisation as SolidCraft
+(https://github.com/tangency-labs/solidcraft). SolidCraft's released builds
+still run its "truck" kernel (Apache-2.0) behind its own kernel crate; the
+SMLib / SolidCore migration sits on the `kernel-smlib` branch and is "not in
+releases yet" (verified 2026-10-27 from SolidCraft `ROADMAP.md`, item
+[#4012](https://github.com/tangency-labs/solidcraft/issues/4012)). Two
+consequences for this evaluation, stated plainly:
+
+1. **SolidCore has no production consumer today. Adopting it would make
+   Isolith its first production consumer** -- a support burden as well as a
+   licensing win. Anything that breaks in 0.0.x falls on us until the
+   ecosystem catches up. This is a cost, not a blocker (see Section 5 and
+   the obstacles list).
+2. The coverage claims in this memo are the project's own 0.0.x status
+   (differential tests vs the C++ reference), not claims validated in a
+   shipping product. The differential evidence here is on the SMLib port
+   itself, which is exactly the right evidence for an evaluation, but it is
+   not the same as production mileage.
+
+For completeness: SolidCraft is dual-licensed MIT OR Apache-2.0
+(`LICENSE-MIT` and `LICENSE-APACHE` both present at the repo root), and its
+reference oracle is 83 of 83 cases (62 analytic, 21 FreeCAD) per its
+`docs/oracle.md`, superseding the 75 of 76 figure still quoted in its
+`docs/capabilities.md`. Neither SolidCraft nor its oracle is imported by or
+linked into Isolith; this line exists only so a reader comparing the two
+projects in the same ecosystem does not misquote SolidCraft's current
+coverage. SolidCore's own differential-vs-C++ evidence is recorded
+separately in Section 2 and governs this evaluation.
 
 ## 2. Build and test for real on this host
 
@@ -323,6 +354,11 @@ Honest obstacles to record regardless of the choice made:
 - API 0.0.x volatility: every upstream bump must be reviewed before the
   pinned rev moves; two in-flight cards (adapter, routing) must agree on the
   pin. Plan a re-evaluation at each version bump.
+- First production consumer: SolidCore has no shipping consumer today
+  (SolidCraft's releases still run its truck kernel; the SMLib migration is
+  not in releases). Adopting it makes Isolith that first consumer, so 0.0.x
+  breakage is our support burden until the ecosystem matures (Section 1,
+  SolidCraft lineage note).
 - The seam's committed goldens and canonical trace bytes
   (`.oepkrt`/`kernel-seam-golden.json`) are OCC-specific for edge/vertex
   counts; a second engine needs its own golden set or convention-normalised
@@ -365,6 +401,17 @@ All raw logs committed under `workstreams/modeler/kernel/proof/`:
 
 ## Change log
 
+- 1.1.0 (2026-10-27): Add the SolidCraft lineage note (Section 1) and the
+  first-production-consumer obstacle (Section 5). Verified 2026-10-27
+  against the live SolidCraft repo: releases still run the truck kernel,
+  the SMLib/SolidCore migration is on `kernel-smlib` and not in releases
+  (ROADMAP.md item #4012), so adopting SolidCore makes Isolith its first
+  production consumer. Also records SolidCraft's current oracle status (83
+  of 83 cases, 62 analytic + 21 FreeCAD, superseding the 75 of 76 figure
+  still in its capabilities.md) and its dual MIT OR Apache-2.0 licensing,
+  so the two sibling projects are not misquoted by readers. No evidence or
+  verdict changed from 1.0.0; build/test/difftest/probe evidence and the
+  three ranked options are unchanged.
 - 1.0.0 (2026-10-27): Initial evaluation memo. License/provenance audit
   (Apache-2.0 chain, clean-room compatible, no-vendor-binaries compliant),
   real build/test evidence on U1 (cargo build/test, wasm32, C++ reference
