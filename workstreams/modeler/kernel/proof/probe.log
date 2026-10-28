@@ -1,0 +1,31 @@
+    Finished `release` profile [optimized] target(s) in 0.01s
+     Running `target/release/oep-solidcore-probe`
+=== SOLIDCORE capability probe (solidcore 0.0.1 @ 3c931f4) ===
+tolerance bar: relative volume < 0.000001 vs analytic / OCC kernel-seam golden
+volume integration accuracy: 0.00000001 (upstream clamp [1e-8, 1e-1])
+--- OCCT kernel-seam golden (oep-geo tests/golden) for reference ----
+  occ          box: volume=0.9999999999999998
+  occ        union: volume=1.4999999999999993
+  occ   difference: volume=0.4999999999999999
+  occ intersection: volume=0.4999999999999999
+  occ      extrude: volume=0.9999999999999998
+  occ      revolve: volume=2.638937829015426
+  occ       fillet: volume=0.9914159265358977
+  occ      chamfer: volume=0.98
+----------------------------------------------------------------
+OK   box-reference              volume=1.000000000000 faces=6 edges=12 verts=8 loops=6
+OK   union                      volume=1.500000000000 expected=1.5   faces=6 edges=12 verts=8 loops=6
+OK   difference                 volume=0.500000000000 expected=0.5   faces=6 edges=12 verts=8 loops=6
+OK   intersection               volume=0.500000000000 expected=0.5   faces=6 edges=12 verts=8 loops=6
+OK   extrude                    volume=1.000000000000 faces=6 edges=12 verts=8 loops=6
+OK   revolve                    volume=2.638937829025 expected=2.638937829015 faces=4 edges=6 verts=4 loops=6
+OK   fillet                     volume=0.991415926539 expected=0.991415926536 faces=7 edges=15 verts=10 loops=7
+OK   chamfer(all-edges)         volume=0.896970562749 faces=18 edges=48 verts=32 loops=18  [whole-solid op]
+            note: no per-edge chamfer API in 0.0.x; not comparable to OCCT single-edge chamfer golden (0.98)
+OK   bracket-plate-minus-hole   volume=19030.353996716018 expected=19030.353996706152 faces=7 edges=15 verts=10 loops=9
+OK   bracket-plate-fillet-r2    volume=18571.250405863615 faces=29 edges=55 verts=28 loops=31
+            note: fillet r=2 ran on the holed plate; no closed-form gate
+OK    err-zero-radius-sphere     Err as expected: primitive::api_primitives::create_sphere: invalid input: zero radius
+OK    err-zero-dim-box           Err as expected: primitive::api_primitives::create_box: invalid input: non-positive size
+----------------------------------------------------------------
+RESULT: ALL PROBE GATES PASSED

@@ -1,0 +1,29 @@
+# SolidCore capability probe (SOLIDCORE-SEAM-EVAL).
+#
+# Standalone crate, NOT a member of the Isolith workspace: it exists only as an
+# evaluation fixture for the SOLIDCORE-SEAM-EVAL card (2026-10-27) and proves
+# whether the solidcore kernel can perform the operations oep-geo's kernel seam
+# requires (bracket/box-reference geometry, the same tolerance bar the OCCT
+# path already passes). It pins the exact solidcore revision that was cloned,
+# built and difftested for this evaluation.
+#
+# Run: cargo run --release (own target dir, does not touch the Isolith build).
+
+[package]
+name = "oep-solidcore-probe"
+version = "0.0.0"
+edition = "2021"
+publish = false
+rust-version = "1.85"
+
+# Own-workspace root so cargo does not treat this as part of any parent
+# workspace (workstreams/ is not a Cargo member of the Isolith workspace).
+[workspace]
+
+[dependencies]
+# Pinned to the exact commit evaluated (HEAD 2026-10-27, also what the cargo
+# build / cargo test / difftest evidence in ../proof/ was produced from).
+solidcore = { git = "https://github.com/tangency-labs/solidcore", rev = "3c931f4c6f85a026b186954d5742152b7de8b42a" }
+
+[profile.release]
+opt-level = 2

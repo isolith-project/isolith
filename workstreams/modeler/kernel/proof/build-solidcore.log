@@ -1,0 +1,14 @@
+=== cargo build -p solidcore ===
+rustc: rustc 1.98.0 (88d9e12ae 2026-08-18)
+cargo: cargo 1.98.0 (797e8a9bc 2026-08-05)
+toolchain-in-dir: 1.98.0-aarch64-unknown-linux-gnu (overridden by '/home/r1a/.hermes/cache/scratch/solidcore/rust-toolchain.toml')
+    Updating crates.io index
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling thiserror v2.0.21
+   Compiling syn v3.0.9
+   Compiling thiserror-impl v2.0.21
+   Compiling solidcore v0.0.1 (/home/r1a/.hermes/cache/scratch/solidcore/crates/solidcore)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 36.02s
+EXIT=0

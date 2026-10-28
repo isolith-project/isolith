@@ -1,0 +1,2 @@
+# Probe build artifacts (standalone crate; never commit compiled output).
+/target
