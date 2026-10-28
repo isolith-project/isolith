@@ -39,7 +39,7 @@
       "name": "RearFrame",
       "kind": "part",
       "context_id": "ctx-frame",
-      "part_number": "KW-REAR-001",
+      "part_number": "ISO-REAR-001",
       "created_at": "2026-10-17T00:00:00Z",
       "origin": {
         "source": "v5-folder-tree",
@@ -54,7 +54,7 @@
       "name": "SkidPlate",
       "kind": "part",
       "context_id": "ctx-frame",
-      "part_number": "KW-SKD-002",
+      "part_number": "ISO-SKD-002",
       "created_at": "2026-10-17T00:00:00Z",
       "origin": {
         "source": "v5-folder-tree",
@@ -69,7 +69,7 @@
       "name": "BajaChassis",
       "kind": "assembly",
       "context_id": "ctx-chassis",
-      "part_number": "KW-CHS-003",
+      "part_number": "ISO-CHS-003",
       "created_at": "2026-10-17T00:00:00Z",
       "origin": {
         "source": "v5-folder-tree",

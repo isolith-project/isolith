@@ -49,7 +49,7 @@ def test_runbook_checklist_committed() -> None:
     ):
         assert needle in text, f"runbook missing: {needle}"
     # Decision #9: the run must name two approved host classes, never the NAS.
-    assert re.search(r"U1|keelwb|VM-class", text, re.I), "runbook must name the U1 / VM-class hosts"
+    assert re.search(r"U1|oep-vm|VM-class", text, re.I), "runbook must name the U1 / VM-class hosts"
     assert "machine b" in text.lower(), "runbook must name machine B"
     # Clean-room invariant: the NAS is repo/storage only.
     assert "NAS" in text and "repo/storage only" in text

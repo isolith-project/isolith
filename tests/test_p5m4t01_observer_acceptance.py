@@ -86,7 +86,7 @@ class TestReproducible(unittest.TestCase):
         if root is None:
             self.skipTest("no local corpus cache resolvable")
         d0 = load_evidence()
-        tmp = os.path.join("/tmp", "kw-p5m4-rerun.json")
+        tmp = os.path.join("/tmp", "iso-p5m4-rerun.json")
         r = subprocess.run([sys.executable, OBS, root, "--out", tmp],
                            capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, "observer rerun failed: %s" % r.stderr)

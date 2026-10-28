@@ -183,7 +183,7 @@ file's output.
 - 5d99f15 **real freeze manifest at integrated main head (supersedes dry-run placeholder at e67b8fc)**
 - 7eefaa5 **freeze manifest records the release tip tree (tag==frozen sha)**
 - b6c286f **changelog proof regenerated over real integrated history**
-- 37811b1 **two-machine install rehearsal proof 4/4 PASS (U1 + keelwb2, clean-state one-command install)**
+- 37811b1 **two-machine install rehearsal proof 4/4 PASS (U1 + oep-vm-b, clean-state one-command install)**
 - 7b4f51f **reproducible build proof regenerated - 18 artifacts byte-identical**
 - 18d24b0 **commit signed-release proof (11 gpg-signed artifacts + Ed25519 update bundle) + aggregate release-drill proof**
 

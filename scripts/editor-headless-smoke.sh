@@ -11,7 +11,7 @@
 # can rehearse the install:
 #
 #   machine A = this host (U1): clean build + drive (default).
-#   machine B = a second U1/VM-class host reached over SSH (default keelwb2
+#   machine B = a second U1/VM-class host reached over SSH (default oep-vm-b
 #               on U1; set MACHINE_B_HOST/PORT, mirrors install-rehearsal).
 #
 # Usage:

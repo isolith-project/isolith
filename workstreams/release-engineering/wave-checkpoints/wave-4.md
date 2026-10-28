@@ -69,7 +69,7 @@ legacy).
 
 ## Deferrals and waivers (with reasons)
 
-- Machine B leg of the editor headless smoke rehearsal (keelwb2 VM) was
+- Machine B leg of the editor headless smoke rehearsal (oep-vm-b VM) was
   recorded SKIP by INTERACTIVE-SHELL: the VM was unreachable over SSH when the
   card ran. The rehearsal script (scripts/editor-headless-smoke.sh) implements
   and re-runs the leg when a second host is up. Machine A (U1) PASS is

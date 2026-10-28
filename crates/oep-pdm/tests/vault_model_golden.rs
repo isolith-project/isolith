@@ -55,7 +55,7 @@ pub fn build_example() -> VaultDoc {
     doc.push_item(
         Item::new("item-rear-frame", "RearFrame", "part")
             .with_context("ctx-frame")
-            .with_part_number("KW-REAR-001")
+            .with_part_number("ISO-REAR-001")
             .with_created_at(T0)
             .with_origin(Origin::v5_folder_tree(
                 "W:\\Data\\Baja\\Chassis\\Frame\\RearFrame.CATPart",
@@ -67,7 +67,7 @@ pub fn build_example() -> VaultDoc {
     doc.push_item(
         Item::new("item-skid-plate", "SkidPlate", "part")
             .with_context("ctx-frame")
-            .with_part_number("KW-SKD-002")
+            .with_part_number("ISO-SKD-002")
             .with_created_at(T0)
             .with_origin(Origin::v5_folder_tree(
                 "W:\\Data\\Baja\\Chassis\\Frame\\SkidPlate.CATPart",
@@ -79,7 +79,7 @@ pub fn build_example() -> VaultDoc {
     doc.push_item(
         Item::new("item-baja-chassis", "BajaChassis", "assembly")
             .with_context("ctx-chassis")
-            .with_part_number("KW-CHS-003")
+            .with_part_number("ISO-CHS-003")
             .with_created_at(T0)
             .with_origin(Origin::v5_folder_tree(
                 "W:\\Data\\Baja\\Chassis\\BajaChassis.CATProduct",

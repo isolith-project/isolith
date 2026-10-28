@@ -6,7 +6,7 @@
   "head": "790db6a",
   "head_after": "final-proof-commit",
   "release": "2027.1 (0.1.0 stack tag)",
-  "verified_on": "U1 promaxgb10-83f1 (192.168.0.67, aarch64) + keelwb2 QEMU/KVM VM (op@127.0.0.1:2229); NAS repo/storage only",
+  "verified_on": "U1 promaxgb10-83f1 (192.168.0.67, aarch64) + oep-vm-b QEMU/KVM VM (op@127.0.0.1:2229); NAS repo/storage only",
   "generated": "2026-10-19T05:10:00Z",
   "schema_version": 1,
   "summary": {
@@ -46,8 +46,8 @@
      "detail": "auth_boundary suite 3/3 (strict denies cross-role 403 / cross-tenant 404, strict-vs-permissive mutation proof); authz lib 19/19; RBAC core 3/3; acceptance tests/test_p11_auth_boundary.py PASS. SEE open finding P2T-04-AZ."},
     {"id": "ga-p12", "gate": "P12 GA gate (wave-3 install rehearsal)", "status": "PASS",
      "detail": "P12-T06 ported onto the union by THIS card (scripts/install-rehearsal.sh + ga-gate-p12.yaml + runbook + test). Acceptance 5/5 PASS; --selfcheck 2 PASS / 2 SKIP / 0 FAIL exit 0; LIVE two-machine rehearsal below is the real gate."},
-    {"id": "install-rehearsal-live", "gate": "P10-P12 two-machine install rehearsal (decision #9, U1 + keelwb2)", "status": "PASS",
-     "detail": "Fresh clean-state one-command install of the INTEGRATED stack on both approved hosts: total=4 PASS=4 FAIL=0 SKIP=0 exit_code 0. install-A (U1): pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present. install-B (keelwb2 VM): same. Proof workstreams/release-engineering/proof/release-rehearsal-0.1.0.{json,md} regenerated on the integrated head."}
+    {"id": "install-rehearsal-live", "gate": "P10-P12 two-machine install rehearsal (decision #9, U1 + oep-vm-b)", "status": "PASS",
+     "detail": "Fresh clean-state one-command install of the INTEGRATED stack on both approved hosts: total=4 PASS=4 FAIL=0 SKIP=0 exit_code 0. install-A (U1): pdm /api/v1/health 200 ok, viewer / 200, p2p /healthz 200 ok, oep-batch-convert + oep-render-worker present. install-B (oep-vm-b VM): same. Proof workstreams/release-engineering/proof/release-rehearsal-0.1.0.{json,md} regenerated on the integrated head."}
   ],
   "open_findings": [
     {"id": "P2T-04-AZ", "severity": "HIGH", "owner": "P11 lane (P11-T03 continuation)",

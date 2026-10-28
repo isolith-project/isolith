@@ -2,7 +2,7 @@
 //!
 //! Loads a committed oep-geo part (default: the canonical bracket golden at
 //! `crates/oep-geo/tests/golden/example-bracket.oepgeo.json`), evaluates the
-//! committed knowledge set (`crates/oep-rules/tests/golden/kw-bracket.json`)
+//! committed knowledge set (`crates/oep-rules/tests/golden/iso-bracket.json`)
 //! against it, and prints the deterministic JSON report on stdout.
 //!
 //! Everything printed is the report serialized by the crate itself; nothing
@@ -29,7 +29,7 @@ fn main() -> ExitCode {
     let ks_path = args
         .get(1)
         .map(PathBuf::from)
-        .unwrap_or_else(|| here.join("tests/golden/kw-bracket.json"));
+        .unwrap_or_else(|| here.join("tests/golden/iso-bracket.json"));
 
     match run(&part_path, &ks_path) {
         Ok(text) => {

@@ -6,21 +6,21 @@
     {
       "id": "oep-part-base",
       "name": "base",
-      "part_number": "KW-BASE-001",
+      "part_number": "ISO-BASE-001",
       "body_ids": ["oep-body-base"],
       "feature_ids": ["oep-feature-base-extrude"]
     },
     {
       "id": "oep-part-cap",
       "name": "cap",
-      "part_number": "KW-CAP-002",
+      "part_number": "ISO-CAP-002",
       "body_ids": ["oep-body-cap"],
       "feature_ids": ["oep-feature-cap-extrude"]
     },
     {
       "id": "oep-part-peg",
       "name": "peg",
-      "part_number": "KW-PEG-003",
+      "part_number": "ISO-PEG-003",
       "body_ids": ["oep-body-peg"],
       "feature_ids": ["oep-feature-peg-extrude"]
     }

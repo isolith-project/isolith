@@ -55,7 +55,7 @@ pub fn build_demo_document() -> Document {
     doc.push_body(base_body);
     doc.push_part(
         Part::new("oep-part-crank-base", "crank-base")
-            .with_part_number("KW-CB-000")
+            .with_part_number("ISO-CB-000")
             .with_body("oep-body-crank-base"),
     );
 
@@ -64,7 +64,7 @@ pub fn build_demo_document() -> Document {
     doc.push_body(crank_body);
     doc.push_part(
         Part::new("oep-part-crank", "crank")
-            .with_part_number("KW-CR-001")
+            .with_part_number("ISO-CR-001")
             .with_body("oep-body-crank"),
     );
 
@@ -73,7 +73,7 @@ pub fn build_demo_document() -> Document {
     doc.push_body(rod_body);
     doc.push_part(
         Part::new("oep-part-rod", "rod")
-            .with_part_number("KW-RD-001")
+            .with_part_number("ISO-RD-001")
             .with_body("oep-body-rod"),
     );
 
@@ -82,7 +82,7 @@ pub fn build_demo_document() -> Document {
     doc.push_body(piston_body);
     doc.push_part(
         Part::new("oep-part-piston", "piston")
-            .with_part_number("KW-PS-001")
+            .with_part_number("ISO-PS-001")
             .with_body("oep-body-piston"),
     );
 

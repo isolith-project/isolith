@@ -12,7 +12,7 @@
 # classifies the machine legs SKIP - exactly how the P8/P9/P10 gates treat
 # their live-LAN legs. The measured PASS rows live in the committed
 # workstreams/release-engineering/proof/release-rehearsal-<ver>.{json,md}, produced by
-# scripts/install-rehearsal.sh on U1 + the keelwb2 VM before each release.
+# scripts/install-rehearsal.sh on U1 + the oep-vm-b VM before each release.
 name: P12 gates (release install rehearsal)
 on:
   push:

@@ -6,7 +6,7 @@
     {
       "id": "oep-part-bracket",
       "name": "bracket",
-      "part_number": "KW-BKT-001",
+      "part_number": "ISO-BKT-001",
       "body_ids": [
         "oep-body-bracket"
       ],
@@ -19,7 +19,7 @@
     {
       "id": "oep-part-fastener",
       "name": "fastener",
-      "part_number": "KW-FST-002",
+      "part_number": "ISO-FST-002",
       "body_ids": [
         "oep-body-fastener"
       ],

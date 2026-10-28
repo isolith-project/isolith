@@ -90,7 +90,7 @@ fn drive(width: f64) -> Document {
         "height",
         "depth",
         "Bracket",
-        Some("KW-BKT-001"),
+        Some("ISO-BKT-001"),
         Some("6061-T6"),
         Some("A"),
         Some("oep-drafting"),
@@ -118,7 +118,7 @@ fn part_solid_mesh_and_projected_edges_are_correct() {
         "height",
         "depth",
         "Bracket",
-        Some("KW-BKT-001"),
+        Some("ISO-BKT-001"),
         Some("6061-T6"),
         Some("A"),
         Some("oep-drafting"),
@@ -175,7 +175,7 @@ fn rendered_drawing_byte_locks_committed_goldens() {
         "height",
         "depth",
         "Bracket",
-        Some("KW-BKT-001"),
+        Some("ISO-BKT-001"),
         Some("6061-T6"),
         Some("A"),
         Some("oep-drafting"),
@@ -361,7 +361,7 @@ fn title_block_is_drawn_and_the_document_is_canonical_v2() {
 
     // Title block values travel with the drawing record.
     assert_eq!(sheet.title_block.title, "Bracket");
-    assert_eq!(sheet.title_block.part_number.as_deref(), Some("KW-BKT-001"));
+    assert_eq!(sheet.title_block.part_number.as_deref(), Some("ISO-BKT-001"));
 
     // And the SVG primitives carry the title text and the dimension labels.
     let render = render_document_with_graph(&driven);
@@ -375,7 +375,7 @@ fn title_block_is_drawn_and_the_document_is_canonical_v2() {
     }
     assert!(labels.contains("TITLE: Bracket"), "title in drawing");
     assert!(
-        labels.contains("PART NO: KW-BKT-001"),
+        labels.contains("PART NO: ISO-BKT-001"),
         "part number in drawing"
     );
     assert!(labels.contains("80"), "width dimension label");

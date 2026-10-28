@@ -38,9 +38,12 @@ kinematics residual, mass properties):
 - Drawing sheet: `crates/oep-drafting/tests/golden/bracket-drawing.svg`
   (also `.pdf` and `.oepgeo.json`); byte-locked by
   `crates/oep-drafting/tests/drawing_acceptance.rs`. The `03-drawing-sheet.png`
-  in this pack was re-rendered from the post-fix golden (DRAFTING-TITLEBLOCK
-  b9c139d); the first capture embedded the pre-fix buggy labels (shifted out of
-  their cells), which is why it was regenerated.
+  on the front door was re-rendered from the post-fix golden (DRAFTING-TITLEBLOCK
+  b9c139d) and again for IDENTITY-CONFORMANCE (2026-10-27) from the golden that
+  carries the neutral `ISO-` part-number prefix, at the documented 1800x1272 via
+  headless Chrome (sha256 `dafe733f3149d659536027e519690f25a2b8f8da91bca4e828e4de0269c0eeb9`);
+  the first capture embedded the pre-fix buggy labels (shifted out of their
+  cells), which is why it was regenerated.
 - Editor viewport pair: produced by the skew-extrude editor demo
   (`demos/editor-sketch-extrude`), attached to kanban card t_0e2a6fa7 as
   `edpart-before.png` / `edpart-after.png` (byte-identical). The live
