@@ -25,6 +25,15 @@
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     },
     {
+      "platform": "linux-all",
+      "artifact": "isolith-oep-workbench-2027.1.flatpak",
+      "kind": "desktop-sandboxed",
+      "version": "2027.1",
+      "sha256": "ae45aef66d5ca138574f476757c4ca3a75df2286a906c0c14b9836082ae6eac8",
+      "note": "built and installed in card; sandboxed run untested (bubblewrap-in-container)",
+      "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
+    },
+    {
       "platform": "windows-x86_64",
       "artifact": "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi",
       "kind": "desktop-editor",
