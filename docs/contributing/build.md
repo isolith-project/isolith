@@ -101,12 +101,15 @@ long step):
 
 or pre-build OCCT once with `cargo xtask occt`. The build is cached under
 `~/.cache/oep-occt/` (mapped to a named volume `isolith-oep-occt` in the
-devcontainer so it survives container rebuilds). Getting this tier is a
-two-command story by design: `cargo xtask occt` builds the dependency, and
-then the kernel test legs run. We do not promise a single command builds
-OCCT from nothing inside the gate, because the honest number is a
-2-to-3-minute one-time fetch/build (137 s measured) and it is only ever needed by
-the kernel lane; the common contributor path stays fast.
+devcontainer so it survives container rebuilds).
+
+Honest scope note: `cargo xtask ci --kernel` is a real single command for the
+kernel tier, but it is a flag, not the default. The OCCT fetch/build is a
+2-to-3-minute one-time cost (137 s measured) that only the kernel lane ever
+pays, so the plain `cargo xtask ci` leaves it out and stays about 3 minutes.
+A single command that ALWAYS builds OCCT from nothing would make every
+contributor, including people who never touch geometry, wait for a dependency
+they do not need; that tradeoff is made explicit rather than hidden.
 
 ## Expected wall-clock (measured, clean machine, no cached toolchain)
 
