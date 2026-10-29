@@ -1,7 +1,7 @@
 ---
 title: Isolith Contributor Rules Decision
 decision: dco_sign_off_no_standing_cla_with_codeowners
-version: 1.0.0
+version: 1.1.0
 date: 2026-10-15
 status: Ratified
 owner: Isolith program governance, P0-M1 (program governance and foundations)
@@ -42,8 +42,17 @@ before a pull request merges.
    non-exclusive license; under AGPL-3.0 the same is true and networked
    modifications must be offered back. A CLA exists to give a project
    relicensing leverage or copyright assignment, and this program wants
-   neither. Adding a CLA on top of these licenses buys no protection that is
-   not already in the file header.
+   neither. That is no longer a default that predates commercialization: it is
+   a deliberate, permanent policy adopted with the commercial model. The
+   services and add-ons commercial model (decision D-ISOLITH-1, 2026-10-29,
+   recorded in workstreams/governance/decisions/commercial-model-and-cla.md)
+   sells support, integration, training, managed hosting, and a separately
+   owned proprietary add-on that talks to the AGPL server over its public API.
+   That model needs no relicensing leverage, and selling an AGPL exception
+   (the classic dual-license path, and the only posture that would actually
+   require owning every contribution) is off the table permanently. Adding a
+   CLA on top of these licenses buys no protection that is not already in the
+   file header.
 2. Friction is a real cost here. The target contributors are small engineering
    shops, defense subcontractors, researchers, and students. A mandatory
    legal signature is the single best-documented deterrent to small
@@ -75,7 +84,9 @@ before a pull request merges.
 4. Both a CLA and a DCO (the Eclipse-style belt and suspenders). Deferred and
    explicitly not adopted today. If a foundation move or a specific corporate
    contributor ever genuinely requires a signed agreement, that is a new
-   decision record, scoped to that case, never a standing program rule.
+   decision record, scoped to that case, never a standing program rule and
+   never the dual-license program (see the permanent policy in section 2, item
+   1, per D-ISOLITH-1).
 
 ## 4. What a contribution certifies
 
@@ -170,6 +181,14 @@ this record hands off rather than absorbs:
 
 ## Change log
 
+- 1.1.0 (2026-10-29): amendment per the commercial-model decision D-ISOLITH-1
+  plus its memo (workstreams/governance/decisions/commercial-model-and-cla.md).
+  The rejection of a CLA is now an explicit permanent policy tied to the
+  services and add-ons model, not a default that predates commercialization.
+  Dual licensing (selling an AGPL exception) is permanently off the table; the
+  case-scoped corporate agreement escape hatch is clarified to never be the
+  dual-license program. No change to the DCO mechanism, CODEOWNERS, or
+  enforcement.
 - 1.0.0 (2026-10-15): initial record. Decides DCO with per-commit
   Signed-off-by, no standing CLA, plus a per-workstream repo-root CODEOWNERS
   policy enforced by branch protection, per P0-M1-T04. Ratified.
