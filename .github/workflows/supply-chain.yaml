@@ -41,6 +41,13 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files | head -3
       - name: Verify dependency pinning (fails on unpinned/unverified change)
         run: bash scripts/supply-chain/verify-lockpin.sh
 
@@ -63,6 +70,13 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files | head -3
       - name: Clean-room reproducible build (twice, byte-identical required)
         run: bash scripts/supply-chain/reproducible-build.sh
       - name: Keep the byte-identity proof in CI

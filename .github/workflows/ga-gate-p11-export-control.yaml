@@ -40,6 +40,13 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files | head -3
       - name: Export-control selfcheck (all committed classification files)
         run: bash scripts/export-control/verify-classification.sh --selfcheck
 
@@ -61,6 +68,13 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files | head -3
       - name: Require export-control classification file for the release
         # The release candidate version follows P12-T05 (e.g. 2027.1.0-rc1);
         # if this ever differs the drill card bumps it here.
