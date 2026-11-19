@@ -1,0 +1,56 @@
+# GitHub port of .gitea/workflows/docs-site-gate.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P13-T03 / SITE-DOMAIN-ORIGIN: docs-site gate.
+#
+# Enforces the SITE_ORIGIN discipline and the docs-site QA on every push:
+#
+#   1. air-gap check   -- scripts/site-build.py fails if any committed page
+#                        hard-codes an absolute origin or carries a canonical
+#                        tag (the committed tree is the air-gap build served
+#                        by oep-docs inside the delivery image).
+#   2. what-not sync   -- docs-site/what-it-does-not-do.html must equal a
+#                        fresh scripts/site-build.py --regen-what-not output
+#                        (the page is generated from format-matrix.json gaps,
+#                        never hand-written).
+#   3. acceptance      -- the P13 docs-site acceptance + the SITE-DOMAIN-ORIGIN
+#                        acceptance (pages exist, public build injects
+#                        canonicals + sitemap.xml + robots.txt, identity holds:
+#                        one primary name Isolith, no retired codename, no
+#                        analytics, no third-party fonts or CDN deps).
+#
+# Checkout uses the TRIGGERING ref so the gate tests the branch or pull under
+# validation (matching the main ci.yaml/kernel-seam convention).
+name: Docs-site gate (P13 / SITE_ORIGIN)
+
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  docs-site:
+    name: docs-site gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Air-gap / SITE_ORIGIN check (committed tree stays origin-free)
+        run: python3 scripts/site-build.py
+      - name: What-it-does-not-do generated page stays in sync with the matrix
+        run: python3 scripts/site-build.py --regen-what-not && git diff --exit-code -- docs-site/what-it-does-not-do.html
+      - name: P13 + SITE-DOMAIN-ORIGIN acceptance
+        run: python3 -m pytest -q tests/test_p13t03_docs_site.py tests/test_site_domain_origin.py

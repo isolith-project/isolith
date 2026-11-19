@@ -1,0 +1,69 @@
+# GitHub port of .gitea/workflows/ga-gate-p9.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P9-M5-T02: the P9 GA gate -- 100-job render/convert wave across 3+ nodes,
+# outputs verified in the P8 vault. Separate workflow file (NOT ci.yaml): the
+# P2/P3/P4/P8 gate convention is one new workflow per GA gate. Checkout uses
+# the TRIGGERING ref (same pattern as the P8 gate), so a PR branch's own gate
+# runs against the branch under validation.
+#
+# CI has no fleet and no real CGR corpus, so this job runs the gate's
+# CI-safe degraded path (`--local-only`): the REAL oep-pdm vault + the REAL
+# oep-ga-gate driver + the REAL worker functions + REAL PDM re-hash on the
+# committed STEP/oep-geo corpus. The 3-node fleet proof is a live-LAN action
+# documented in scripts/compute-ga-gate-proof.sh and workstreams/compute/ops/ga-gate.md.
+name: P9 GA gate (100-job render/convert wave, outputs verified in PDM)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  ga-gate-p9:
+    name: ga-gate-p9
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Build gate + vault binaries
+        run: cargo build -p oep-gate -p oep-pdm --bins 2>&1 | tail -5
+      - name: P9 GA gate acceptance (TDD)
+        run: |
+          if [ ! -f tests/ga_gate_p9_test.py ]; then
+            echo "P9 gate acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/ga_gate_p9_test.py
+      - name: P9 GA gate run (real vault, local-only degraded wave)
+        run: |
+          if [ ! -f python/oep_tooling/ga_gate_p9.py ]; then
+            echo "P9 gate module not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p9g-out /tmp/p9g-persist
+          PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.ga_gate_p9 \
+            --repo "$PWD" \
+            --fleet workstreams/compute/ops/fleet.local.json \
+            --jobs-count 100 \
+            --driver "$PWD/target/debug/oep-ga-gate" \
+            --agent "$PWD/target/debug/oep-ga-node" \
+            --pdm "$PWD/target/debug/oep-pdm" \
+            --persist /tmp/p9g-persist \
+            --report /tmp/p9g-out/ga-gate-p9 \
+            --local-only \
+            --timeout 1500
+          code=$?
+          test "$code" -eq 0

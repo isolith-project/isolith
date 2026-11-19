@@ -1,0 +1,57 @@
+# GitHub port of .gitea/workflows/nightly-stress.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# Isolith P0-M4-T03: nightly stress run.
+# Runs the long fuzz/regression suite on a schedule (02:00 UTC) and on demand,
+# publishes the status page + JSON report as artifacts, and turns the nightly
+# run red (non-zero exit) when any lane fails or times out.
+#
+# The runner itself is platform-neutral Python (ci/stress/); this workflow only
+# drives it. Local run with the exact same semantics:
+#   python3 ci/stress/stress_runner.py --jobs ci/stress/jobs.json
+name: nightly-stress
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  stress:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Install python3 (runner is stdlib Python)
+        run: apt-get update -qq && apt-get install -y -qq python3
+
+      - name: Run nightly stress suite
+        run: |
+          python3 ci/stress/stress_runner.py --jobs ci/stress/jobs.json \
+            --out-dir docs/status
+          rc=$?
+          echo "stress_runner exit=$rc"
+          exit $rc
+
+      - name: Upload status page
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightly-stress-status
+          path: docs/status/status.html
+
+      - name: Upload JSON report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightly-stress-report
+          path: docs/status/report.json

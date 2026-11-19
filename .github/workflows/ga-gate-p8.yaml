@@ -1,0 +1,66 @@
+# GitHub port of .gitea/workflows/ga-gate-p8.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P8-M6-T03: the P8 GA gate -- multi-user edit/publish/release + concurrent
+# lock test. Separate workflow file (NOT ci.yaml): the P2/P3/P4 gate
+# convention is one new workflow per GA gate so gates never collide with the
+# main lint/unit/integration pipeline or with each other. Checkout uses the
+# TRIGGERING ref (same pattern as the P4 gate + precommit-gate workflow), so
+# the gate tests the branch under validation, not the default branch.
+name: P8 GA gate (multi-user PDM cycle + concurrent lock)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  ga-gate-p8:
+    name: ga-gate-p8
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Build oep-pdm
+        run: cargo build -p oep-pdm 2>&1 | tail -5
+      - name: P8 GA gate acceptance (TDD)
+        run: |
+          if [ ! -f tests/ga_gate_p8_test.py ]; then
+            echo "P8 gate acceptance test not present on this ref (pre-gate main); skipping"
+            exit 0
+          fi
+          python3 tests/ga_gate_p8_test.py
+      - name: P8 GA gate run (boots the real service, N concurrent clients)
+        run: |
+          if [ ! -f python/oep_tooling/ga_gate_p8.py ]; then
+            echo "P8 gate module not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p8g-persist /tmp/p8g-out
+          ./target/debug/oep-pdm --addr 127.0.0.1:18799 --persist-dir /tmp/p8g-persist \
+            >/tmp/p8g.log 2>&1 &
+          echo $! > /tmp/p8g.pid
+          for i in $(seq 1 100); do
+            if python3 -c "import urllib.request,sys; urllib.request.urlopen('http://127.0.0.1:18799/api/v1/health', timeout=1); sys.exit(0)" 2>/dev/null; then break; fi
+            sleep 0.1
+          done
+          PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.ga_gate_p8 \
+            --base http://127.0.0.1:18799/api/v1 \
+            --binary "$PWD/target/debug/oep-pdm" \
+            --out /tmp/p8g-out \
+            --n 3
+          code=$?
+          kill "$(cat /tmp/p8g.pid)" 2>/dev/null || true
+          test "$code" -eq 0

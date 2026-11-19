@@ -1,0 +1,97 @@
+# GitHub port of .gitea/workflows/ga-gate-p12e2e.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P12 gate workflow: E2E vertical suite (ga-gate convention: one workflow per
+# GA-lane feature + the lane GA gate). Job:
+#   p12t09-e2e  P12-T09 full vertical scenario, release-blocking.
+#   For every push / PR (and therefore every release build on release/* and
+#   v-tag refs) this job:
+#     1. builds the REAL binaries from the triggering ref
+#        (cargo build -p oep-web -p oep-render-worker -p oep-worker --bins);
+#     2. runs the acceptance test tests/test_p12t09_e2e_vertical.py;
+#     3. runs the headless reference-vertical E2E
+#        (scripts/e2e-vertical.sh, local real binaries): import CGR/STEP ->
+#        model -> release via PDM -> render/convert via P2P -> share, and
+#        asserts every stage's output. A FAIL here reds the build, which
+#        BLOCKS the release on this ref;
+#     4. runs the deliberate-failure repro (--break-stage release) and asserts
+#        it exits NON-zero - proving a broken stage really blocks;
+#     5. uploads both E2E reports as build artifacts.
+#   The packaged-stack (docker) and real-CGR legs are recorded per release on
+#   U1 under workstreams/release-engineering/proof/ (decision #9: docker is a live-LAN action; CI classifies
+#   those legs SKIP under the closed taxonomy like every other gate).
+name: P12 E2E gate (reference vertical, release-blocking)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  p12t09-e2e:
+    name: p12t09-e2e
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Build real stack binaries from this ref
+        run: |
+          cargo build -p oep-web -p oep-render-worker -p oep-worker --bins
+          ls -la target/debug/oep-web target/debug/oep-render-worker target/debug/oep-batch-convert
+      - name: P12-T09 acceptance (TDD, committed artifacts + selfcheck)
+        run: |
+          if [ ! -f tests/test_p12t09_e2e_vertical.py ]; then
+            echo "P12-T09 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p12t09_e2e_vertical.py
+      - name: "P12-T09 E2E vertical (headless, real binaries) - release blocking"
+        run: |
+          if [ ! -f scripts/e2e-vertical.sh ]; then
+            echo "P12-T09 e2e driver not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p12t09-e2e
+          ./scripts/e2e-vertical.sh --version 0.1.0 --bin-dir "$PWD/target/debug" \
+            --out /tmp/p12t09-e2e/e2e-vertical
+      - name: "P12-T09 deliberate-broken-stage repro (must block: exit != 0)"
+        run: |
+          if [ ! -f scripts/e2e-vertical.sh ]; then
+            echo "P12-T09 e2e driver not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p12t09-e2e
+          set +e
+          ./scripts/e2e-vertical.sh --version 0.1.0 --bin-dir "$PWD/target/debug" \
+            --break-stage release --out /tmp/p12t09-e2e/e2e-vertical-break
+          code=$?
+          set -e
+          echo "broken-stage repro exit code: $code (expected non-zero = blocks)"
+          test "$code" -ne 0
+          python3 - <<'PY'
+          import json
+          with open("/tmp/p12t09-e2e/e2e-vertical-break-0.1.0.json") as fh:
+              d = json.load(fh)
+          assert d["exit_code"] != 0, "broken-stage repro must exit non-zero"
+          fails = [r for r in d["rows"] if r["status"] == "FAIL"]
+          assert any("deliberate" in r.get("detail","")+r.get("class","") for r in fails), fails
+          print("repro assert OK: broken release stage FAILs the gate")
+          PY
+      - name: Upload E2E reports
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: p12t09-e2e-${{ github.sha }}
+          path: /tmp/p12t09-e2e
+          if-no-files-found: error

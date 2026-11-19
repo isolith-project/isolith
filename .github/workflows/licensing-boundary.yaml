@@ -1,9 +1,8 @@
 # License-boundary gate (public-surface port of
 # .gitea/workflows/licensing-boundary.yaml).
 #
-# The live CI runs on Gitea Actions (.gitea/workflows/licensing-boundary.yaml).
-# If the public repository is hosted on GitHub, this file becomes the active
-# enforcement: every push and pull request must keep the per-crate licence
+# GitHub is the live CI since 2026-11-19 (Gitea is the internal mirror), so
+# this file is the active enforcement: every push and pull request must keep the per-crate licence
 # boundary (docs/licensing-boundary.json), the Cargo.toml SPDX declarations,
 # the dependency allow-list (docs/dependency-licenses.json), NOTICE, and the
 # root licence files in sync, gated by branch protection on the
@@ -15,6 +14,7 @@
 name: License boundary
 on:
   push:
+    branches: [main]
   pull_request:
 # PUBLIC-REPO-HARDENING: least privilege and SHA-pinned checkout (R1/R2).
 permissions:

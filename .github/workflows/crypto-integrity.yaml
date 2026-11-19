@@ -1,0 +1,50 @@
+# GitHub port of .gitea/workflows/crypto-integrity.yaml. Owns a branch-protection required check; runs on every push and pull request.
+# P11-T04: crypto / integrity gates (blob content-hash + release signing).
+#
+# Holds every branch/PR to the crypto bar:
+#   1) test_p11t04_crypto.py machine-checks the committed mechanism (blob
+#      integrity tests present, sign/verify scripts, committed pubkeys,
+#      recorded signed-release proof, doc sections) and, with gpg available,
+#      runs a full self-contained gpg detached-signature round trip with a
+#      scratch key (sign -> verify PASS -> tamper -> verify FAIL).
+#   2) The Rust acceptance tests for the two crypto surfaces are run on the
+#      exact ref: the tampered-blob test (oep-pdm) and the update-checker
+#      signed-bundle acceptance (oep-update). The shared precommit gate also
+#      runs them via `cargo test`, so this is the explicit, named crypto gate.
+name: Crypto integrity (blob hash + release signing)
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  crypto-integrity:
+    name: crypto-integrity
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Install test deps (python, pytest, gnupg for the round trip)
+        run: |
+          apt-get update -qq && apt-get install -y -qq python3 python3-pytest gnupg gnupg2
+      - name: Machine check + gpg signed-release round trip (scratch keys)
+        run: python3 tests/test_p11t04_crypto.py --full
+      - name: Tampered-blob acceptance (oep-pdm)
+        run: |
+          cargo test -p oep-pdm --lib blob_integrity
+          cargo test -p oep-pdm --test blob_integrity
+      - name: Signed update-manifest acceptance (oep-update)
+        run: cargo test -p oep-update
+      - name: Keep the recorded signed-release proof referenced by the test
+        run: |
+          ls -l workstreams/security/proof/ | tail -5
+          echo "crypto proof recorded on this ref"

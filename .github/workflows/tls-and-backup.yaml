@@ -1,0 +1,61 @@
+# GitHub port of .gitea/workflows/tls-and-backup.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P10-M1-T02: TLS + certs for the stack, vault DB/blob backup to a second
+# disk/archive, restore round-trip -- acceptance in CI.
+#
+# Separate workflow file (NOT ci.yaml): the P8/P9 gate convention is one new
+# workflow per delivery/Gate lane so lanes never collide with the main
+# lint/unit/integration pipeline or with each other. Checkout uses the
+# TRIGGERING ref (same pattern as the ga-gate + precommit workflows), so the
+# lane tests the branch under validation.
+#
+# What is actually proven here, on the CI container, is the transport / script
+# contract over REAL sockets + REAL openssl:
+#   * oep-pdm --tls-cert --tls-key terminates HTTPS; openssl s_client
+#     -verify_return_error trusts the chain; health rides over TLS; plain HTTP
+#     is not served on the TLS listener (native rustls via axum-server).
+#   * scripts/gen-stack-certs.sh emits a CA + leaf + key that chain-verifies.
+#   * the backup producer snapshots store.json + blobs + audit, writes a sha256
+#     manifest and self-verifies; the restore check boots a fresh oep-pdm on a
+#     restored copy and the real vault read hash round-trips against the
+#     manifest (the "restore round-trips" acceptance).
+#
+# The runner needs openssl for the TLS/cert legs; rust:1-slim-bookworm ships
+# it. The python acceptance degrades legs gracefully when the tool is absent
+# (CI-safe), so a container without openssl still exits 0.
+name: P10-M1-T02 (TLS + vault backup/restore round-trip)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  tls-and-backup:
+    name: tls-and-backup
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest openssl curl
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Build oep-pdm
+        run: cargo build -p oep-pdm 2>&1 | tail -5
+      - name: P10-M1-T02 acceptance (TLS + backup/restore)
+        run: |
+          if [ ! -f tests/test_p10_m1_t02_tls_and_backup.py ]; then
+            echo "P10-M1-T02 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p10_m1_t02_tls_and_backup.py

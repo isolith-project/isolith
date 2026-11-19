@@ -1,0 +1,110 @@
+# GitHub port of .gitea/workflows/release-changelog.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P12-T07: Release notes / changelog automation (conventional commits).
+#
+# Generates a categorized changelog from the repo's conventional commit
+# history on every RELEASE CUT and attaches it to the GitHub release.
+#
+# Trigger surface (the "release cut"):
+#   * push of a release tag  -- this is the train's cut moment. The release
+#     train tooling (P12-T05) creates tags of the form vYYYY.N.P[-PRE]
+#     (calendar trains, P0-M5-T03), e.g. v2027.1.0, v2027.1.0-rc1. Anything
+#     matching v20xx.* is treated as a release cut.
+#   * workflow_dispatch     -- manual / dry-run generation for a version and
+#     ref (used when the dry-run tag was created on a host that never pushed
+#     it, so CI can still emit the release-notes artifact for that cut).
+#
+# What it produces (the changelog / release-notes artifact):
+#   * a categorized CHANGELOG-v<version>.md rendered by git-cliff (cliff.toml)
+#     from the actual commits in the release (the frozen commit range the tag
+#     sees on the release branch),
+#   * the category count table + sha256 checksum printed in the job log,
+#   * the markdown attached to the GitHub release of the same tag as its
+#     release notes (body) and uploaded as a versioned .md release asset
+#     (scripts/release/attach-release-notes.py).
+#
+# git-cliff is a pinned, sha512-verified download (no registry, no npm); the
+# runner only needs the repository's normal network access to the GitHub API
+# and to GitHub releases, the same access the existing ci.yaml apt steps use.
+name: P12-T07 release changelog (on release cut)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  changelog:
+    name: changelog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # attaches the changelog to the GitHub release of the tag
+    container:
+      image: rust:1-slim-bookworm
+    env:
+      GIT_CLIFF_VERSION: "2.14.2"
+    steps:
+      - name: Install tooling
+        run: |
+          apt-get update -qq && apt-get install -y -qq git ca-certificates curl python3
+
+      - name: Checkout (full history and tags)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'push' && github.ref || 'main' }}
+      - name: Record checked-out ref
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then REF="$GITHUB_REF_NAME"; else REF=main; fi
+          echo "checked_out_ref=$REF" >> "$GITHUB_ENV"
+      - name: Install pinned git-cliff (sha512-verified)
+        run: |
+          if [ -n "${GIT_CLIFF_BIN:-}" ]; then
+            echo "using GIT_CLIFF_BIN=$GIT_CLIFF_BIN"
+            exit 0
+          fi
+          ARCH=$(uname -m)
+          case "$ARCH" in
+            x86_64)  TRI=git-cliff-${GIT_CLIFF_VERSION}-x86_64-unknown-linux-gnu
+                     SHA=26d1f7c8ea2400f2ccb0b2e7f321635f600b583bf4cd1f7afaa5e8c24068ad1088a2504e0a4d9f4333d4bb20a80329327d9462634343ee3af91e1a7fbdc6f18a ;;
+            aarch64) TRI=git-cliff-${GIT_CLIFF_VERSION}-aarch64-unknown-linux-gnu
+                     SHA=fd27768ea76fea8c3ba3f3247fef2f6604988b629f15e48bf40be5eaa08b8fef2e4087cc9c8af16bc522bc19cc369611fa7692101b513f63469ad58522708600 ;;
+            *) echo "unsupported arch $ARCH"; exit 1 ;;
+          esac
+          curl -fsSL -o /tmp/git-cliff.tar.gz \
+            "https://github.com/orhun/git-cliff/releases/download/v${GIT_CLIFF_VERSION}/${TRI}.tar.gz"
+          echo "$SHA  /tmp/git-cliff.tar.gz" | sha512sum -c -
+          tar xzf /tmp/git-cliff.tar.gz -C /tmp
+          install -m 0755 "/tmp/${TRI}/git-cliff" /usr/local/bin/git-cliff
+          git-cliff --version
+
+      - name: Generate categorized changelog from the release history
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          VERSION="${VERSION#v}"
+          mkdir -p changelog-artifacts
+          bash scripts/release/changelog.sh "$VERSION" "changelog-artifacts/CHANGELOG-v${VERSION}.md"
+          printf 'version=%s\n' "$VERSION" >> "$GITHUB_ENV"
+          printf 'changelog_file=changelog-artifacts/CHANGELOG-v%s.md\n' "$VERSION" >> "$GITHUB_ENV"
+
+      - name: Attach to the GitHub release (release notes + asset)
+        run: |
+          python3 scripts/release/attach-release-notes.py \
+            "$version" "$changelog_file" "$GITHUB_TOKEN" "$GITHUB_API_URL"
+
+      - name: Upload release-notes artifact
+        run: |
+          ls -la changelog-artifacts/
+          echo "artifact: changelog-artifacts/CHANGELOG-v${version}.md (+ .sha256)"
+
+      - name: Print the changelog
+        run: cat "$changelog_file"

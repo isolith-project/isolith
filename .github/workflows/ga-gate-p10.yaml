@@ -1,0 +1,117 @@
+# GitHub port of .gitea/workflows/ga-gate-p10.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P10 gate workflow (ga-gate convention: one workflow per GA-lane feature +
+# the lane GA gate). Jobs:
+#   p10m4-replication-demo  P10-M4-T01 multi-site replication demo (CI-safe)
+#   ga-gate-p10-m5t02       P10-M5-T02 P10 GA gate (CI-safe degraded mode:
+#                           DOCS + UPDATE legs PASS, live-machine legs SKIP
+#                           under the closed taxonomy; the recorded two-machine
+#                           proof is committed under workstreams/delivery/update-checker/proof/).
+# Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
+# branch under validation.
+#
+# CI has no second approved host and no docker daemon (decision #9: U1 +
+# VM/garage PC are live-LAN actions), so the live legs are classified SKIP -
+# exactly how the P8/P9 gates treat their live-LAN legs. The measured PASS
+# rows live in the committed workstreams/delivery/update-checker/proof/ga-gate-p10-m5t02.{json,md}, produced
+# by scripts/delivery-ga-gate-proof.sh on U1 + the oep-vm-b VM.
+name: P10 gates (replication demo + P10 GA gate)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  p10m4-replication-demo:
+    name: p10m4-replication-demo
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Build the vault binary
+        run: cargo build -p oep-pdm --bins 2>&1 | tail -5
+      - name: P10-M4 replication demo acceptance (TDD)
+        run: |
+          if [ ! -f tests/test_p10m4t01_replication_demo.py ]; then
+            echo "P10-M4 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p10m4t01_replication_demo.py
+      - name: P10-M4 replication demo run (real vault, local node pair)
+        run: |
+          if [ ! -f python/oep_tooling/replication_demo.py ]; then
+            echo "P10-M4 demo module not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p10m4-persist /tmp/p10m4-out
+          ./target/debug/oep-pdm --addr 127.0.0.1:18789 \
+            --persist-dir /tmp/p10m4-persist >/tmp/p10m4-pdm.log 2>&1 &
+          PDM_PID=$!
+          # loopback health wait
+          for i in $(seq 1 60); do
+            if grep -q "listening\|Axum\|serving\|ready" /tmp/p10m4-pdm.log 2>/dev/null; then break; fi
+            kill -0 $PDM_PID 2>/dev/null || break
+            sleep 0.5
+          done
+          PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.replication_demo \
+            --base-url http://127.0.0.1:18789/api/v1 \
+            --outdir /tmp/p10m4-out/p10m4t01-replication \
+            --binary "$PWD/target/debug/oep-pdm"
+          code=$?
+          kill $PDM_PID 2>/dev/null || true
+          test "$code" -eq 0
+
+  ga-gate-p10-m5t02:
+    name: ga-gate-p10-m5t02
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: P10-M5-T02 GA gate acceptance (TDD)
+        run: |
+          if [ ! -f tests/test_p10m5t02_ga_gate.py ]; then
+            echo "P10-M5-T02 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p10m5t02_ga_gate.py
+      - name: P10-M2-T02 air-gap contract still pinned (the gate's dependency)
+        run: |
+          if [ ! -f tests/test_p10m2t02_airgap.py ]; then
+            echo "P10-M2-T02 air-gap contract not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p10m2t02_airgap.py
+      - name: P10 GA gate harness (CI-safe degraded mode)
+        run: |
+          if [ ! -f python/oep_tooling/ga_gate_p10.py ]; then
+            echo "P10 GA gate module not present on this ref; skipping"
+            exit 0
+          fi
+          mkdir -p /tmp/p10g-out
+          PYTHONPATH=python:python/oep_tooling python3 -m oep_tooling.ga_gate_p10 \
+            --repo "$PWD" \
+            --report /tmp/p10g-out/ga-gate-p10-m5t02
+          code=$?
+          test "$code" -eq 0
