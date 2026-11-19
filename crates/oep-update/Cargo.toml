@@ -11,7 +11,7 @@ repository.workspace = true
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
-base64 = "0.22"
+base64 = "0.23"
 
 # Signature verification for signed update manifests (P11 signing tie-in).
 # Pure-Rust Ed25519; the exact resolution is pinned in the workspace lockfile.

@@ -27,7 +27,7 @@ oep-update = { path = "../oep-update" }
 [dev-dependencies]
 # The acceptance test uploads fixture content (base64 wire encoding per the
 # REST contract).
-base64 = "0.22"
+base64 = "0.23"
 
 [[bin]]
 name = "oep-web"
