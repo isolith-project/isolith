@@ -39,7 +39,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Install test deps (python, pytest, gnupg for the round trip)
         run: |
           apt-get update -qq && apt-get install -y -qq python3 python3-pytest gnupg gnupg2

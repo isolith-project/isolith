@@ -39,7 +39,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Build oep-pdm
         run: cargo build -p oep-pdm 2>&1 | tail -5
       - name: P8 GA gate acceptance (TDD)

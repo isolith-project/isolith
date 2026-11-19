@@ -47,7 +47,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Verify dependency pinning (fails on unpinned/unverified change)
         run: bash scripts/supply-chain/verify-lockpin.sh
 
@@ -76,7 +76,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Clean-room reproducible build (twice, byte-identical required)
         run: bash scripts/supply-chain/reproducible-build.sh
       - name: Keep the byte-identity proof in CI

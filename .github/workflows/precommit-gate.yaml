@@ -34,6 +34,6 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Run precommit quality gate
         run: bash scripts/gate/precommit-gate.sh

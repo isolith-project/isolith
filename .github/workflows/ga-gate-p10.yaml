@@ -48,7 +48,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Build the vault binary
         run: cargo build -p oep-pdm --bins 2>&1 | tail -5
       - name: P10-M4 replication demo acceptance (TDD)
@@ -102,7 +102,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: P10-M5-T02 GA gate acceptance (TDD)
         run: |
           if [ ! -f tests/test_p10m5t02_ga_gate.py ]; then

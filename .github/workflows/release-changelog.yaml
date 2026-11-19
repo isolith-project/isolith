@@ -64,7 +64,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Record checked-out ref
         run: |
           if [ "$GITHUB_EVENT_NAME" = "push" ]; then REF="$GITHUB_REF_NAME"; else REF=main; fi

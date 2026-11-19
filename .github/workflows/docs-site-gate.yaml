@@ -54,7 +54,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Air-gap / SITE_ORIGIN check (committed tree stays origin-free)
         run: python3 scripts/site-build.py
       - name: What-it-does-not-do generated page stays in sync with the matrix

@@ -46,7 +46,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Export-control selfcheck (all committed classification files)
         run: bash scripts/export-control/verify-classification.sh --selfcheck
 
@@ -74,7 +74,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Require export-control classification file for the release
         # The release candidate version follows P12-T05 (e.g. 2027.1.0-rc1);
         # if this ever differs the drill card bumps it here.

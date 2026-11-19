@@ -48,7 +48,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: P12-T06 install-rehearsal acceptance (TDD)
         run: |
           if [ ! -f tests/test_p12t06_install_rehearsal.py ]; then

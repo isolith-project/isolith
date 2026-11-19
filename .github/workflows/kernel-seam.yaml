@@ -55,7 +55,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Kernel seam guardrails (seam denial, no vendored OCCT, license gate, ADR v1.3.0)
         run: python3 -m pytest -q tests/test_kernel_seam_guardrails.py
 
@@ -79,7 +79,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Build pinned OCCT 8.0.1 (static, fetched as a dependency)
         run: |
           bash scripts/kernel/build-occt.sh

@@ -52,7 +52,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: Build oep-pdm (with the authz module + RBAC core)
         run: cargo build -p oep-pdm 2>&1 | tail -5
       - name: P11-T03 auth-boundary suite (strict + permissive mutation proof)
@@ -109,7 +109,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$PWD"
           git rev-parse --is-inside-work-tree
-          git ls-files | head -3
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
       - name: P11-T02 acceptance (TDD, hermetic fixtures + live green scan)
         run: |
           if [ ! -f tests/test_p11t02_sbom_cve.py ]; then
