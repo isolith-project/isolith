@@ -4,8 +4,9 @@
 #
 # Fails (exit 1) on any of:
 #   1. Cargo.lock is not committed / is git-ignored.
-#   2. Committing a fresh `cargo generate-lockfile` would change Cargo.lock
-#      (any dependency change that was not accompanied by a lockfile update).
+#   2. The committed Cargo.lock no longer satisfies the manifests
+#      (`cargo metadata --locked` fails), i.e. a dependency change landed
+#      without its lockfile update.
 #   3. Any dependency is unverifiable: a git source without an exact rev, a
 #      registry package without a checksum, or a path dependency outside the
 #      workspace.
@@ -38,32 +39,28 @@ else
   warn "no Cargo.lock (workspace may be dependency-free) - nothing to pin"
 fi
 
-# --- 2. Lockfile in sync with manifests -------------------------------------
+# --- 2. Lockfile satisfies the manifests (locked resolution) ----------------
+# `cargo metadata --locked` fails exactly when the committed Cargo.lock cannot
+# satisfy the manifests. The previous form exported the index to a temp tree,
+# ran `cargo generate-lockfile` there (which re-resolves from the registry
+# index, ignoring the committed lock) and diffed the two files. That fails on
+# every dependency that has published a newer compatible release since the
+# lock was written, so it measured elapsed time rather than pinning: on
+# 2026-11-19 it rejected main with axum 0.46.0 -> 0.47.0 and six other crates
+# resolving newer, while `cargo metadata --locked` passed on the same tree.
 if [ -f Cargo.toml ] && have cargo; then
-  tmp="$(mktemp -d)"
-  git checkout-index -a --prefix="$tmp/" >/dev/null 2>&1 || \
-    cp -r . "$tmp/" 2>/dev/null || true
-  (
-    cd "$tmp"
-    # honor the pinned toolchain so resolution matches the committed lock
-    cargo generate-lockfile --offline >/dev/null 2>&1 || \
-    cargo generate-lockfile >/dev/null 2>&1
-  )
-  # Compare ONLY the workspace root lockfile (drop the tmp path prefix noise).
-  if [ -f "$tmp/Cargo.lock" ]; then
-    if diff -q Cargo.lock "$tmp/Cargo.lock" >/dev/null 2>&1; then
-      note "Cargo.lock in sync with committed manifests"
-    else
-      bad "Cargo.lock is stale or modified vs manifests (unpinned change)"
-      warn "run: cargo update/check + commit the regenerated Cargo.lock; a"
-      warn "dependency change without a committed lockfile update is a CI failure."
-    fi
+  meta_err="$(mktemp)"
+  if cargo metadata --locked --format-version 1 >/dev/null 2>"$meta_err"; then
+    note "Cargo.lock satisfies every manifest (locked resolution)"
   else
-    warn "could not regenerate lockfile in sandbox; skipping sync check (CI has cargo offline mirror?)"
+    bad "Cargo.lock cannot satisfy the manifests (unpinned or missing lock entry)"
+    warn "run: cargo update -p <crate> (or cargo generate-lockfile), then commit"
+    warn "the updated Cargo.lock; a manifest change without a lock update fails CI."
+    sed -n '1,3p' "$meta_err" 2>/dev/null | sed 's/^/      /' || true
   fi
-  rm -rf "$tmp"
+  rm -f "$meta_err"
 else
-  warn "cargo unavailable or no workspace root; skipping lockfile sync check"
+  warn "cargo unavailable or no workspace root; skipping locked-resolution check"
 fi
 
 # --- 3. Every dependency verifiable (checksum-pinned / exact rev) -----------
