@@ -87,7 +87,11 @@ jobs:
             "https://github.com/orhun/git-cliff/releases/download/v${GIT_CLIFF_VERSION}/${TRI}.tar.gz"
           echo "$SHA  /tmp/git-cliff.tar.gz" | sha512sum -c -
           tar xzf /tmp/git-cliff.tar.gz -C /tmp
-          install -m 0755 "/tmp/${TRI}/git-cliff" /usr/local/bin/git-cliff
+          # The release tarball has changed its internal directory name between
+          # git-cliff releases; locate the binary instead of assuming the layout.
+          BIN="$(find /tmp -maxdepth 3 -type f -name git-cliff -perm -u+x | head -1)"
+          if [ -z "$BIN" ]; then echo "git-cliff binary not found after extraction"; ls -R /tmp | head -20; exit 1; fi
+          install -m 0755 "$BIN" /usr/local/bin/git-cliff
           git-cliff --version
 
       - name: Generate categorized changelog from the release history

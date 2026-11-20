@@ -230,10 +230,10 @@ def test_airgap_leg_and_report():
 
 
 def test_docs_are_honest():
-    doc = Path(ROOT) / "docs" / "workstreams/delivery/replication" / "multi-site-replication.md"
+    doc = Path(ROOT) / "docs" / "delivery/replication" / "multi-site-replication.md"
     if not doc.is_file():
         check("multi-site doc present", False,
-              "write workstreams/delivery/replication/multi-site-replication.md")
+              "write docs/delivery/replication/multi-site-replication.md")
         return
     text = doc.read_text(encoding="utf-8")
     check("doc present", doc.is_file())

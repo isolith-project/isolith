@@ -230,7 +230,28 @@
 #6 46.39 debconf: delaying package configuration, since apt-utils is not installed
 #6 46.42 Fetched 122 MB in 22s (5609 kB/s)
 #6 46.48 Selecting previously unselected package libpython3.12-minimal:arm64.
-#6 46.48 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4376 files and directories currently installed.)
+#6 46.48 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 4376 files and directories currently installed.)
 #6 46.49 Preparing to unpack .../libpython3.12-minimal_3.12.3-1ubuntu0.17_arm64.deb ...
 #6 46.50 Unpacking libpython3.12-minimal:arm64 (3.12.3-1ubuntu0.17) ...
 #6 46.64 Selecting previously unselected package libexpat1:arm64.
@@ -243,7 +264,28 @@
 #6 46.96 Setting up libexpat1:arm64 (2.6.1-2ubuntu0.6) ...
 #6 46.99 Setting up python3.12-minimal (3.12.3-1ubuntu0.17) ...
 #6 47.43 Selecting previously unselected package python3-minimal.
-#6 47.43 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4695 files and directories currently installed.)
+#6 47.43 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 4695 files and directories currently installed.)
 #6 47.43 Preparing to unpack .../0-python3-minimal_3.12.3-0ubuntu2.1_arm64.deb ...
 #6 47.44 Unpacking python3-minimal (3.12.3-0ubuntu2.1) ...
 #6 47.51 Selecting previously unselected package media-types.
@@ -279,7 +321,28 @@
 #6 48.44 Unpacking libpython3-stdlib:arm64 (3.12.3-0ubuntu2.1) ...
 #6 48.52 Setting up python3-minimal (3.12.3-0ubuntu2.1) ...
 #6 48.69 Selecting previously unselected package python3.
-#6 48.69 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5701 files and directories currently installed.)
+#6 48.69 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 5701 files and directories currently installed.)
 #6 48.70 Preparing to unpack .../000-python3_3.12.3-0ubuntu2.1_arm64.deb ...
 #6 48.71 Unpacking python3 (3.12.3-0ubuntu2.1) ...
 #6 48.77 Selecting previously unselected package perl-modules-5.38.
