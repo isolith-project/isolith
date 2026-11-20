@@ -10,6 +10,7 @@ repository.workspace = true
 [dependencies]
 eframe = { workspace = true }
 egui = { workspace = true }
+oep-ui-theme = { path = "../oep-ui-theme" }
 
 [[bin]]
 name = "isolith"

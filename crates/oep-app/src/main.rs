@@ -13,6 +13,7 @@
 
 mod app;
 mod config;
+mod theme;
 
 use eframe::egui;
 
@@ -20,8 +21,7 @@ fn main() -> eframe::Result<()> {
     let smoke = std::env::args().any(|arg| arg == "--smoke");
 
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default()
-            .with_inner_size(config::WINDOW_SIZE),
+        viewport: egui::ViewportBuilder::default().with_inner_size(config::WINDOW_SIZE),
         ..Default::default()
     };
 
@@ -29,6 +29,11 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         &app_name,
         options,
-        Box::new(move |_cc| Ok(Box::new(app::App::new(smoke)))),
+        Box::new(move |cc| {
+            // Install the semantic tokens as the egui style/visuals at
+            // startup (wave A, card UI-A3). Light is the default mode.
+            theme::install(&cc.egui_ctx, oep_ui_theme::Mode::default());
+            Ok(Box::new(app::App::new(smoke)))
+        }),
     )
 }
