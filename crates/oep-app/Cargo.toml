@@ -15,3 +15,6 @@ oep-ui-theme = { path = "../oep-ui-theme" }
 [[bin]]
 name = "isolith"
 path = "src/main.rs"
+
+[dev-dependencies]
+egui_kittest = { version = "0.37", features = ["eframe"] }

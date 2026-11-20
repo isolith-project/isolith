@@ -1,0 +1,16 @@
+======== GATE ON MERGED HEAD (9bfcb7f) ========
+--- cargo fmt --all -- --check ---
+fmt exit=0
+--- cargo clippy -p oep-app --all-targets -- -D warnings ---
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a2/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+clippy exit=0
+--- cargo test -p oep-app --test harness ---
+running 3 tests
+test key_press_reaches_real_app ... ok
+test real_app_registers_window_in_accesskit_tree ... ok
+test click_reaches_real_app ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+test exit=0
