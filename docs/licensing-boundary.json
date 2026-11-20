@@ -36,6 +36,7 @@
     {"crate": "oep-sketch", "license": "Apache-2.0", "workstream": "P7", "reason": "2D sketcher and parametric variables (application/library)"},
     {"crate": "oep-assem", "license": "Apache-2.0", "workstream": "P7", "reason": "assembly workbench and solver seam (application/library)"},
     {"crate": "oep-analysis", "license": "Apache-2.0", "workstream": "P7", "reason": "editor-spine analysis lane (application/library)"},
+    {"crate": "oep-app", "license": "Apache-2.0", "workstream": "P7", "reason": "modeler editor UI desktop application shell over eframe/egui (application/editor parity wave A)"},
     {"crate": "oep-drafting", "license": "Apache-2.0", "workstream": "P7", "reason": "2D drafting workbench (application/library)"},
     {"crate": "oep-gate", "license": "Apache-2.0", "workstream": "P9", "reason": "P9-M5-T02 GA gate: QA harness that exercises the lane; not part of the served orchestration runtime (application/tooling)"},
     {"crate": "oep-update", "license": "Apache-2.0", "workstream": "P10", "reason": "advisory non-blocking update checker (application)"},
@@ -52,6 +53,6 @@
     {"crate": "oep-farm", "license": "AGPL-3.0", "workstream": "P9", "reason": "P2P checkpoint/resume for long jobs (P2P orchestration runtime)"},
     {"crate": "oep-opsdash", "license": "AGPL-3.0", "workstream": "P9", "reason": "P2P ops dashboard, served over HTTP (P2P orchestration surface)"}
   ],
-  "count": 32,
-  "license_map_total": {"Apache-2.0": 20, "AGPL-3.0": 12}
+  "count": 33,
+  "license_map_total": {"Apache-2.0": 21, "AGPL-3.0": 12}
 }
