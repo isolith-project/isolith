@@ -1,0 +1,31 @@
+editor open: part=part-1 body=body-1 sketch=sketch-1
+sketch point p0 at (0, 0)
+sketch point p1 at (3, 1)
+sketch point p2 at (4, 4)
+sketch point p3 at (1, 5)
+sketch line l0 (p0) to (p1)
+sketch line l1 (p1) to (p2)
+sketch line l2 (p2) to (p3)
+sketch line l3 (p3) to (p0)
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+variable width = 80 (volume n/a)
+variable height = 40 (volume n/a)
+solved dof=0 residual=6.181e-13 dims=2 points=4 lines=4
+  height = 40.000000
+  width = 80.000000
+extruded oep-feature-extrude-2: volume 32000.000000 faces=12 edges=12 bbox [2.9960651997941413e-13, 3.2034320304901e-13, 0.0, 80.0000000000006, 40.000000000000924, 10.0]
+camera framed
+rendered /tmp/rc3-editor-proof/before.png sha256=8bd51e85c554a45a77298021861c1559ee9244c4f47eba55a866f8afdce5b1bc 640x480
+variable width = 120 (volume 32000.000000 -> 48000.000000 live recompute)
+rendered /tmp/rc3-editor-proof/after.png sha256=657b12548af5b171934b8b55bf30272ada0faaa75b2e4f0f0241754fa9ebc1c6 640x480
+exported STEP /tmp/rc3-editor-proof/edpart.step: faces=12 shells=1 closed=1
+loaded step: parts=1 bodies=1 features=1 assemblies=0
+undo: op=previous edit retained=18
+redo: op=next edit retained=0
+loaded step: parts=1 bodies=1 features=1
