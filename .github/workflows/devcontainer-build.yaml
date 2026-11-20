@@ -1,7 +1,6 @@
-# Contributor devcontainer build (public-surface port of
-# .gitea/workflows/devcontainer-build.yaml, same convention as dco-check.yaml:
-# the live CI runs on Gitea Actions; if the public repository is hosted on
-# GitHub, this file becomes the active rot gate).
+# Contributor devcontainer build (GitHub port of
+# .gitea/workflows/devcontainer-build.yaml, same convention as dco-check.yaml;
+# GitHub is the live CI since 2026-11-19, so this is the active rot gate).
 #
 # Every push and pull to the public repository rebuilds the exact contributor
 # devcontainer image and runs the sysdeps probe inside it, so the documented
@@ -12,6 +11,7 @@ name: Contributor devcontainer build
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -19,9 +19,11 @@ jobs:
   devcontainer-build:
     name: devcontainer-build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Build the devcontainer image (pinned toolchain, derived from rust-toolchain.toml)
         run: |
           docker build --tag isolith-devcontainer:ci -f .devcontainer/Dockerfile .

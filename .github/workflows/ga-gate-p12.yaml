@@ -1,0 +1,65 @@
+# GitHub port of .gitea/workflows/ga-gate-p12.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P12 gate workflow (ga-gate convention: one workflow per GA-lane feature +
+# the lane GA gate). Job:
+#   ga-gate-p12t06  P12-T06 release install rehearsal (CI-safe degraded mode:
+#                   RELEASE + DOCS legs PASS, live-machine legs SKIP under the
+#                   closed taxonomy; the recorded two-machine proof per release
+#                   is committed under workstreams/release-engineering/proof/).
+# Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
+# branch under validation.
+#
+# CI has no second approved host and no docker daemon (decision #9: U1 + a
+# VM/garage PC are live-LAN actions), so install-rehearsal.sh --selfcheck
+# classifies the machine legs SKIP - exactly how the P8/P9/P10 gates treat
+# their live-LAN legs. The measured PASS rows live in the committed
+# workstreams/release-engineering/proof/release-rehearsal-<ver>.{json,md}, produced by
+# scripts/install-rehearsal.sh on U1 + the oep-vm-b VM before each release.
+name: P12 gates (release install rehearsal)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  ga-gate-p12t06:
+    name: ga-gate-p12t06
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: P12-T06 install-rehearsal acceptance (TDD)
+        run: |
+          if [ ! -f tests/test_p12t06_install_rehearsal.py ]; then
+            echo "P12-T06 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p12t06_install_rehearsal.py
+      - name: P12-T06 release rehearsal driver selfcheck (CI-safe degraded mode)
+        run: |
+          if [ ! -f scripts/install-rehearsal.sh ]; then
+            echo "P12-T06 rehearsal driver not present on this ref; skipping"
+            exit 0
+          fi
+          ./scripts/install-rehearsal.sh --selfcheck --out /tmp/p12out/release-rehearsal

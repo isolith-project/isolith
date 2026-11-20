@@ -1,0 +1,56 @@
+# GitHub port of .gitea/workflows/ga-gate-p4.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P4-M5-T03: the P4 GA gate -- STEP fidelity matrix published; MBD validator
+# demo on real corpus material. New workflow file (NOT ci.yaml) so it cannot
+# collide with the P2-M6-T03 gate job that edits ci.yaml on its own open
+# branch (same convention as the P3-M5-T02 gate). Checkout uses the TRIGGERING
+# ref (same pattern as the precommit-gate workflow) so the gate tests the
+# branch/pull under validation, not the default branch.
+name: P4 GA gate (STEP fidelity + MBD)
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  ga-gate-p4:
+    name: ga-gate-p4
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: P4 GA gate acceptance (TDD)
+        run: |
+          if [ ! -f tests/ga_gate_p4_test.py ]; then
+            echo "P4 gate acceptance test not present on this ref (pre-gate main); skipping"
+            exit 0
+          fi
+          python3 tests/ga_gate_p4_test.py
+      - name: P4 GA gate run (tolerant on absent sibbing material, fail on mismatch)
+        run: |
+          if [ ! -f python/oep_tooling/ga_gate_p4.py ]; then
+            echo "P4 gate module not present on this ref; skipping"
+            exit 0
+          fi
+          PYTHONPATH=python python3 -m oep_tooling.ga_gate_p4 --out corpus || exit 1

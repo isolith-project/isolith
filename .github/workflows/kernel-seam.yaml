@@ -1,0 +1,89 @@
+# GitHub port of .gitea/workflows/kernel-seam.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P6-M3-T04 / ADR v1.3.0: kernel seam gates.
+#
+# Two jobs:
+#   1. guardrails -- the seam-denial scan (no OCCT identifiers in oep-geo
+#      public items), the no-vendored-OCCT scan, the license gate (the engine
+#      dependency graph is all-permissive; no GPL/AGPL), and the ADR v1.3.0
+#      contract (booleans + fillet/chamfer + primitives + sweeps + the v1.3.0
+#      bbox/translate/mirror replay additions + the replay goldens).
+#   2. acceptance -- the through-the-seam test gate on REAL material: builds
+#      the pinned OCCT 8.0.1 dependency (scripts/kernel/build-occt.sh) and runs
+#      crates/oep-geo/tests/kernel_seam.rs AND tests/kernel_replay.rs with the
+#      `kernel` feature (oep-geo types in, oep-geo types out) against the
+#      committed kernel goldens. Volumes to tolerance, face counts, typed
+#      errors, booleans + fillet + chamfer + primitives + extrude + revolve,
+#      and the feature-graph replay to real solids (byte-locked trace golden,
+#      driven-dimension re-solve, tolerant-failure prefix, undo/redo).
+#
+# The general CI jobs (lint/unit/integration) do NOT enable the kernel feature,
+# so the rest of the workspace stays C++-free and fast; the OCCT build happens
+# only here. Checkout uses the TRIGGERING ref so the gate tests the branch or
+# pull under validation (matching the main ci.yaml convention).
+name: Kernel seam (OCCT 8.0.x)
+
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  guardrails:
+    name: guardrails
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: Kernel seam guardrails (seam denial, no vendored OCCT, license gate, ADR v1.3.0)
+        run: python3 -m pytest -q tests/test_kernel_seam_guardrails.py
+
+  acceptance:
+    name: acceptance
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates curl cmake g++ make
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: Build pinned OCCT 8.0.1 (static, fetched as a dependency)
+        run: |
+          bash scripts/kernel/build-occt.sh
+      - name: Through-the-seam kernel acceptance (oep-geo <=> OCCT 8.0.1)
+        run: |
+          cargo test -p oep-geo --features kernel --test kernel_seam -- --test-threads=1
+          cargo test -p oep-geo --features kernel --test kernel_replay -- --test-threads=1

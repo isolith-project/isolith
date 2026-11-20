@@ -1,0 +1,55 @@
+# GitHub port of .gitea/workflows/changelog.yaml.
+# Trigger policy (2026-11-19): this workflow does not own a branch-protection
+# required check, and its jobs are cargo/build heavy, so it runs on release tag
+# pushes and manual dispatch rather than on every pull request. The required
+# checks run from the CI, crypto-integrity, precommit-gate, supply-chain and
+# P11 gate workflows on every push and pull request.
+# P12-T07: changelog automation acceptance lane.
+#
+# Runs the P12-T07 acceptance test on the triggering ref so the changelog
+# contract (cliff.toml, scripts, workflow trigger, doc, committed proof) is
+# enforced in CI exactly like the other per-delivery lanes (one workflow per
+# delivery/Gate lane so lanes never collide with the main pipeline).
+#
+# The test degrades gracefully: it validates structure always, and the
+# "regenerate over real history" leg runs only when a git-cliff binary is
+# present (GIT_CLIFF_BIN or on PATH); the rust:1-slim-bookworm image has
+# neither by default, so the PR lane validates the committed artifacts and the
+# release-cut job (release-changelog.yaml) is the real-history generator.
+name: P12-T07 changelog acceptance
+on:
+  push:
+    tags:
+      - "v20[0-9][0-9].*"
+      - "wave-*"
+  workflow_dispatch:
+
+jobs:
+  changelog-acceptance:
+    name: changelog-acceptance
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: P12-T07 changelog acceptance
+        run: |
+          if [ ! -f tests/test_release_changelog_acceptance.py ]; then
+            echo "P12-T07 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_release_changelog_acceptance.py

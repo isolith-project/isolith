@@ -1,0 +1,146 @@
+# GitHub port of .gitea/workflows/ga-gate-p11.yaml. Owns a branch-protection required check; runs on every push and pull request.
+# P11 gates (Wave-3 security lane). Two jobs on every push/PR (incl. release/*
+# and v-tag refs):
+#   ga-gate-p11t03  P11-T03 auth-boundary suite (RBAC bypass attempts and IDOR
+#                   on vault objects via the PDM REST API). Runs the strict +
+#                   permissive two-mode suite over real sockets and asserts
+#                   denial (403/404) passes on the P8-M3 RBAC implementation;
+#                   then the acceptance test checks the committed artifacts.
+#                   Includes the SEC-AUTHZ-RESIDUAL oep-web default-binary leg
+#                   and the P11-T01 threat-model acceptance.
+#   p11t02-sbom-cve P11-T02 dependency SBOM + CVE scanning in CI:
+#                   1. runs the hermetic TDD acceptance suite, then the real
+#                      green-scan check (real Cargo.lock vs real rustsec DB),
+#                   2. emits SPDX + CycloneDX BOMs (Rust crate tree from the
+#                      committed Cargo.lock + the container base images),
+#                   3. scans Cargo.lock against the advisory-db and GATES the
+#                      ref (job fails iff any unfixed critical/high finding is
+#                      outside the committed waiver file workstreams/security/waivers.toml),
+#                   4. uploads the BOMs + scan report as a per-build artifact,
+#                   5. runs the deliberate-failure repro (seeded critical vuln
+#                      MUST fail the gate).
+#   An OSV cross-check leg and the container-image leg (real trivy scan on the
+#   release host) are recorded under workstreams/security/proof/; CI classifies those SKIP under
+#   the closed taxonomy exactly like the P8/P9/P10/P12 gates classify their
+#   live-LAN legs.
+# Checkout uses the TRIGGERING ref, so a PR branch's own gate runs against the
+# branch under validation (same pattern as ga-gate-p8.yaml and the P12 gate).
+name: P11 gates (auth boundary + SBOM/CVE)
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ga-gate-p11t03:
+    name: ga-gate-p11t03
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: Build oep-pdm (with the authz module + RBAC core)
+        run: cargo build -p oep-pdm 2>&1 | tail -5
+      - name: P11-T03 auth-boundary suite (strict + permissive mutation proof)
+        run: |
+          if [ ! -f crates/oep-pdm/tests/auth_boundary.rs ]; then
+            echo "P11-T03 suite not present on this ref; skipping"
+            exit 0
+          fi
+          cargo test -p oep-pdm --test auth_boundary 2>&1 | tail -15
+      - name: SEC-AUTHZ-RESIDUAL oep-web default-binary leg
+        run: |
+          if [ ! -f crates/oep-web/tests/web_auth_boundary.rs ]; then
+            echo "oep-web auth leg not present on this ref; skipping"
+            exit 0
+          fi
+          cargo build -p oep-web 2>&1 | tail -3
+          cargo test -p oep-web --test web_auth_boundary 2>&1 | tail -15
+      - name: P11-T03 authz unit tests + RBAC core
+        run: |
+          cargo test -p oep-pdm --lib authz 2>&1 | tail -5
+          cargo test -p oep-pdm --test rbac_abac --test rbac_default_deny --test rbac_role_matrix 2>&1 | tail -5
+      - name: P11-T03 acceptance (committed artifacts + doc invariants)
+        run: |
+          if [ ! -f tests/test_p11_auth_boundary.py ]; then
+            echo "P11-T03 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p11_auth_boundary.py
+      - name: P11-T01 threat-model acceptance (no-orphan + posture in sync)
+        run: |
+          if [ ! -f tests/test_p11_threat_model.py ]; then
+            echo "P11-T01 threat-model test not present on this ref; skipping"
+            exit 0
+          fi
+          python3 tests/test_p11_threat_model.py
+
+  p11t02-sbom-cve:
+    name: p11t02-sbom-cve
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: rust:1-slim-bookworm
+    steps:
+      - name: Install git
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+      - name: Trust the workspace for git
+        # the job container runs as root while actions/checkout owns the
+        # tree as the runner uid, so git rejects it without safe.directory
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git rev-parse --is-inside-work-tree
+          git ls-files --error-unmatch Cargo.toml >/dev/null && echo "index readable"
+      - name: P11-T02 acceptance (TDD, hermetic fixtures + live green scan)
+        run: |
+          if [ ! -f tests/test_p11t02_sbom_cve.py ]; then
+            echo "P11-T02 acceptance test not present on this ref; skipping"
+            exit 0
+          fi
+          # the live green-scan check inside the suite needs the real
+          # advisory-db; bring it in first (shallow), like the gate driver does
+          if [ ! -d workstreams/security/.advisory-db/crates ]; then
+            git clone -q --depth 1 https://github.com/rustsec/advisory-db.git workstreams/security/.advisory-db
+          fi
+          python3 tests/test_p11t02_sbom_cve.py
+      - name: P11-T02 SBOM + CVE release gate (lockfile gate authoritative)
+        env:
+          OEP_REF: "${{ (startsWith(github.ref, 'refs/tags/') && github.ref_name) || (startsWith(github.ref, 'refs/heads/release/') && format('{0}-{1}', github.ref_name, github.sha)) || github.sha }}"
+        run: |
+          if [ ! -f scripts/sbom-cve-gate.sh ]; then
+            echo "P11-T02 gate driver not present on this ref; skipping"
+            exit 0
+          fi
+          ./scripts/sbom-cve-gate.sh --repo "$PWD" --ref "$OEP_REF" --out /tmp/p11out --osv
+      - name: P11-T02 deliberate-failure repro (seeded critical vuln fails the gate)
+        run: |
+          if [ ! -f scripts/sbom-cve-fail-repro.sh ]; then
+            echo "P11-T02 fail-repro script not present on this ref; skipping"
+            exit 0
+          fi
+          bash scripts/sbom-cve-fail-repro.sh
+      - name: Upload SBOM + scan report artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: p11-sbom-cve-${{ github.sha }}
+          path: /tmp/p11out
+          if-no-files-found: error
