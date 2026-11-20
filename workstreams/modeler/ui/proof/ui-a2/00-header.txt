@@ -1,0 +1,8 @@
+UI-A2 UI-HARNESS
+Behavior: one command produces a deterministic frame from the real application,
+and a test drives the real app through injected input and asserts on its state.
+Acceptance: cargo test -p oep-app --test harness passes (real App via
+egui_kittest 0.37, click + key reach the app, assertion reads the egui context
+and the AccessKit tree); bash scripts/ui/shot.sh writes proof/ui-a2/frame.png
++ frame.png.sha256 and exits 0 twice with identical sha256; a one-pixel app
+change makes shot.sh exit non-zero (transcript in proof), revert returns 0.

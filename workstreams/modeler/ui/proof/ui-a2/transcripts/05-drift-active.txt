@@ -1,0 +1,22 @@
+======== DRIFT PROOF: one-pixel change to crates/oep-app/src/app.rs ========
+
+--- git diff (the one-pixel rendering change) ---
+-        egui::CentralPanel::default().show(ui, |_ui| {
+-            // Wave A: the shell is intentionally empty. UI-A4 owns the panel
+-            // layout; UI-A5 owns the viewport content.
++        egui::CentralPanel::default().show(ui, |panel_ui| {
++            // UI-A2 DEV-ONLY DRIFT PROBE: paint a single bright pixel to prove
++            // the screenshot determinism guard trips. REVERTED before commit.
++            panel_ui.ctx().request_repaint();
++            panel_ui.painter().rect_filled(
++                egui::Rect::from_min_size(egui::pos2(100.5, 100.5), egui::vec2(1.0, 1.0)),
++                0.0,
++                egui::Color32::from_rgb(255, 0, 0),
++            );
+
+--- bash scripts/ui/shot.sh (expect NON-ZERO exit) ---
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 6c062cb8b36275e14b659c8e6d6f5c00bf1e8b33660694c8b6247d15b64914f9
+  golden  : e20b6d5d78466dcc7ce0f8531c2a9de243f7c0e6b28f3fd8aba6fc1442bb0da1
+  reference image: /home/r1a/isolith-main/.worktrees/ui-a2/workstreams/modeler/ui/proof/ui-a2/frame.png
+exit=1
