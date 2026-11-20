@@ -1,0 +1,54 @@
+--- isolith rc3 windows smoke final (elevated ssh) 2026-11-19T21:58:35.2661223-08:00 ---
+[PASS] host-windows - Microsoft Windows 11 Pro
+[PASS] msi-hash-vs-checksums - box=45ea439ee01a52a338c990c5fd2df68c6b16ac440d969be308f47f3a58bd5057 checksum=45ea439ee01a52a338c990c5fd2df68c6b16ac440d969be308f47f3a58bd5057
+[PASS] msi-install-exit0 - installer exit=0
+[PASS] msi-installed-binary - path=C:\Program Files (x86)\Isolith\bin\oep-workbench.exe
+[PASS] arp-registered - Count=1 Name=Isolith OEP oep-workbench Version=2027.1.0
+--- trace begin ---
+oep-workbench.exe : oep-workbench: update check: OFF (no source configured; non-phoning default)
+At C:\rc3smoke\rc3-windows-smoke-final.ps1:43 char:8
++ $out = & $exe `
++        ~~~~~~~~
+    + CategoryInfo          : NotSpecified: (oep-workbench: ...honing default):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+editor open: part=part-1 body=body-1 sketch=sketch-1
+sketch point p0 at (0, 0)
+sketch point p1 at (3, 1)
+sketch point p2 at (4, 4)
+sketch point p3 at (1, 5)
+sketch line l0 (p0) to (p1)
+sketch line l1 (p1) to (p2)
+sketch line l2 (p2) to (p3)
+sketch line l3 (p3) to (p0)
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+variable width = 80 (volume n/a)
+variable height = 40 (volume n/a)
+solved dof=0 residual=6.181e-13 dims=2 points=4 lines=4
+  height = 40.000000
+  width = 80.000000
+extruded oep-feature-extrude-2: volume 32000.000000 faces=12 edges=12 bbox [2.9960651997941413e-13, 3.2034320304901e-13, 0.0, 80.0000000000006, 40.000000000000924, 10.0]
+camera framed
+failed: sk:render expects PATH[:WIDTH:HEIGHT][:present]
+variable width = 120 (volume 32000.000000 -> 48000.000000 live recompute)
+failed: sk:render expects PATH[:WIDTH:HEIGHT][:present]
+exported STEP C:\Users\allen\AppData\Local\Temp\rc3-msi\workflow\edpart.step: faces=12 shells=1 closed=1
+loaded step: parts=1 bodies=1 features=1 assemblies=0
+
+--- trace end ---
+[PASS] workflow-exit0 - oep-workbench.exe : oep-workbench: update check: OFF (no source configured; non-
+[PASS] solve-dof0 - solver converged
+[PASS] solid-32000 - extrude volume at width 80
+[PASS] live-recompute-48000 - live recompute after width 120
+[PASS] step-exported - edpart.step exists
+[PASS] step-reimported - reimport succeeded
+[PASS] step-file-real - STEP file has real content
+[PASS] msi-uninstall-exit0 - uninstaller exit=0
+[PASS] arp-clean-after-uninstall - ARP entries after uninstall: 0
+RESULT: 14 checks passed, 0 checks failed
