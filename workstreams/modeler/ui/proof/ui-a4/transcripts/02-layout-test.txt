@@ -1,0 +1,14 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running tests/layout.rs (/home/r1a/isolith-main/.worktrees/ui-a2/target/debug/deps/layout-593ecf68dbe87373)
+
+running 7 tests
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test regions_are_in_the_documented_spatial_positions ... ok
+test persisted_layout_round_trips_and_app_restores_same_sizes ... ok
+test region_geometry_tiles_window_without_overlap_or_clipping ... ok
+test five_regions_reachable_by_accessible_name_at_both_resolutions ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
