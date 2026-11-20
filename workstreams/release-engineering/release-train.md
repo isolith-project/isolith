@@ -1,8 +1,9 @@
 ---
 title: Isolith Release Train, Versioning, and Patch Policy
 decision: release_train_calver_semver_canary_staged_patch_model
-version: 1.0.0
+version: 1.1.0
 date: 2026-10-18
+amended: 2026-11-20
 status: Ratified
 owner: Isolith program governance, P12-T05 (release engineering)
 applies_to: every released artifact of the Isolith / Open Engineering Platform (OEP) monorepo -- oep-pdm, oep-geo, oep-viewer, oep-cgr, oep-3dxml, oep-step, the P2P compute lane, and the install/package bundles (P12-T04) once they exist
@@ -148,15 +149,37 @@ remote (`isolith/isolith-canary`). `--dry-run` prints every git command
 without running the mutating ones. The manifest is written first and, on a
 successful cut, committed with the branch creation.
 
-## 5. Staged rollout: canary repo first, GA second
+## 5. Staged rollout: canary channel first, GA second
 
-Every candidate passes through **`isolith/isolith-canary`** before it is
-general availability. The canary repo receives, for each candidate:
+### Repository topology (1.1.0)
 
-- the `canary/<version>` branch (a copy of the freeze point), and
+One writable repository, one read-only mirror, and the canary as a channel
+rather than a repository:
+
+- **GitHub `isolith-project/isolith` is the single writable source of truth.**
+  Branch, tag, release and CI on that repository are authoritative. The org is
+  owned by Don's personal account, separate from the Red One Alpha account.
+- **NAS Gitea `isolith/isolith` is a read-only mirror.** It is fast-forwarded
+  from GitHub after each landing and is never a merge target. A commit that
+  exists only on Gitea is a finding, not a source.
+- **`isolith/isolith-canary` is retired as a publish target** and retained as
+  the archive of `v2027.1.0-rc1` and `v2027.1.0-rc2`. Its role is replaced by
+  GitHub pre-releases on the primary repository.
+
+This section supersedes the exactly-two-repositories-on-NAS-Gitea clause of
+decision #15. Records that reference the mirror URL (proof JSON, `docs/status`
+snapshots, air-gap probe scripts) keep the URL of the run that produced them;
+they are evidence of what happened, not configuration.
+
+Every candidate passes through a GitHub **pre-release** on the primary
+repository before it is general availability. Each candidate receives:
+
+- the release branch at the freeze point, and
 - the `v<version>` tag (e.g. `v2027.1.0-rc1`), and
-- a Gitea pre-release entry naming the candidate and linking `workstreams/release-engineering/...` notes,
-  with binary artifacts attached once P12-T04 packaging exists.
+- a GitHub pre-release entry naming the candidate and linking
+  `workstreams/release-engineering/...` notes, with the signed artifacts and
+  `SHA256SUMS` attached, and
+- the same tag forwarded to the Gitea mirror on its next fast-forward.
 
 Promotion to GA requires **all** of:
 
@@ -169,10 +192,11 @@ Promotion to GA requires **all** of:
    applies to this lane);
 4. release-manager sign-off (program governance; for the private phase, Don).
 
-On GA, the candidate's tag is mirrored to `main` as `v<YYYY.N.0>` (same
-commit sha -- promotion changes the tag name, never the tree) and a Gitea
-release is created there per repo policy; the canary candidate entry stays as
-the historical record of the staged path.
+On GA, the candidate's tag is re-tagged on `main` as `v<YYYY.N.0>` (same
+commit sha -- promotion changes the tag name, never the tree) and a GitHub
+release is created on the primary repository; the mirror picks the tag up on
+its next fast-forward. The pre-release entry stays as the historical record of
+the staged path.
 
 A candidate with a P0/P1 canary finding is **not promoted**; it is fixed on
 `main` and re-cut as `-rc2`. A candidate that fails soak is never renamed
@@ -251,3 +275,9 @@ proven on real material before the first real train. It is recorded in
   (quarterly), version scheme (`YYYY.N.P` + semver pre-release), freeze
   manifest contract, canary-first staged rollout, and the patch-vs-next-train
   trigger list.
+- 1.1.0 (2026-11-20) -- Repository topology amended per the Gate 0 answer of
+  2026-10-27 (GitHub becomes primary, Gitea demoted to internal mirror) and the
+  identity decision of 2026-11-19 (`isolith-project`). Supersedes the exactly-
+  two-repositories clause of decision #15: one writable repository on GitHub,
+  one read-only mirror on Gitea, and the canary is a GitHub pre-release
+  channel rather than a second repository.
