@@ -1,0 +1,16 @@
+[package]
+name = "oep-app"
+license = "Apache-2.0"
+description = "P7: Isolith modeler editor desktop application shell over eframe/egui 0.37 (editor parity program, wave A). Opens one window whose title bar names the product and version, exits cleanly on close, and runs a bounded headless --smoke mode."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+eframe = { workspace = true }
+egui = { workspace = true }
+
+[[bin]]
+name = "isolith"
+path = "src/main.rs"
