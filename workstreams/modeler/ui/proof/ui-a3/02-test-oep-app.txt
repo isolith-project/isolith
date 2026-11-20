@@ -1,0 +1,11 @@
+   Compiling oep-ui-theme v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-ui-theme)
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.77s
+     Running unittests src/main.rs (target/debug/deps/isolith-3817c45951605da4)
+
+running 2 tests
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
