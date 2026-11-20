@@ -63,12 +63,18 @@ def scan_commits(repo: str, base: str | None, head: str | None) -> list[str]:
 
     With base None the scan covers the commits reachable from head (used for
     a whole-tree audit). Records come from a single git log invocation.
+
+    Merge commits are excluded (--no-merges). A merge carries no authored
+    change of its own: GitHub's "Update branch" button, a maintainer merging
+    main into a contributor branch, and the repository's own merge commits all
+    produce them, and requiring a sign-off on those red-flags every
+    contributor who syncs their branch. The DCO certifies authored commits.
     """
     if base is not None:
         rev = "%s..%s" % (base, head)
     else:
         rev = str(head)
-    out = run_git(repo, ["log", "--format=" + LOG_FMT, rev])
+    out = run_git(repo, ["log", "--no-merges", "--format=" + LOG_FMT, rev])
     bad = []
     for record in out.split(RECORD_SEP):
         record = record.strip("\n")

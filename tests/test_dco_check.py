@@ -21,6 +21,7 @@ Exit 0 = pass; nonzero = fail.
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -124,6 +125,49 @@ def test_workflows_wire_the_module() -> None:
             check("pull_request.body" in text,
                   "%s must pass the PR body to the check" % port)
 
+def test_merge_commit_without_sign_off_is_not_flagged():
+    """A merge commit is not authored content and needs no DCO line.
+
+    GitHub's "Update branch" button, a maintainer syncing main into a
+    contributor branch, and this repository's own merges all produce merge
+    commits with no sign-off. Flagging them failed every contributor who
+    synced a branch, which is how this was found.
+    """
+    sys.path.insert(0, os.path.join(ROOT, "python"))
+    from oep_tooling import dco_check as D  # noqa: E402
+    tmp = tempfile.mkdtemp(prefix="dco-merge-")
+    try:
+        env = dict(os.environ, GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@e",
+                   GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@e")
+
+        def run(*a):
+            subprocess.run(["git", *a], cwd=tmp, env=env, check=True,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+        run("init", "-q", "-b", "main")
+        open(os.path.join(tmp, "a.txt"), "w").write("a\n")
+        run("add", "-A")
+        run("commit", "-q", "-m", "base")
+        base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp, env=env,
+                              capture_output=True, text=True).stdout.strip()
+        run("checkout", "-q", "-b", "side")
+        open(os.path.join(tmp, "b.txt"), "w").write("b\n")
+        run("add", "-A")
+        run("commit", "-q", "-m", "authored change\n\nSigned-off-by: t <t@e>")
+        run("checkout", "-q", "main")
+        open(os.path.join(tmp, "c.txt"), "w").write("c\n")
+        run("add", "-A")
+        run("commit", "-q", "-m",
+            "mainline change\n\nSigned-off-by: t <t@e>")
+        # an unsigned merge commit, exactly what "Update branch" produces
+        run("merge", "--no-ff", "-q", "-m", "Merge branch 'side' into main", "side")
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp, env=env,
+                              capture_output=True, text=True).stdout.strip()
+        bad = D.scan_commits(tmp, base, head)
+        check(bad == [], "unsigned merge commit is not flagged (got %r)" % (bad,))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
 
 def main() -> int:
     print("DCO sign-off check acceptance (community intake item 8)")
@@ -131,6 +175,7 @@ def main() -> int:
     print("=" * 60)
     test_unsigned_commit_fails_and_signed_row_passes()
     test_workflows_wire_the_module()
+    test_merge_commit_without_sign_off_is_not_flagged()
     print("=" * 60)
     if failures:
         print("DCO CHECK ACCEPTANCE FAILED (%d)" % len(failures))
