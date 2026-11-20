@@ -1,0 +1,13 @@
+STEP 0: git fetch + merge wave head (wave/ui-a)
+From https://github.com/isolith-project/isolith
+ + df52246...1d7da5c dependabot/github_actions/actions/checkout-7 -> github/dependabot/github_actions/actions/checkout-7  (forced update)
+merge:
+error: Your local changes to the following files would be overwritten by merge:
+	Cargo.lock
+	crates/oep-app/Cargo.toml
+Please commit your changes or stash them before you merge.
+Aborting
+Updating 7a3e47a..8bb3ad6
+head:
+7a3e47a Merge branch 'ui/a1-deps' into merge-ui-a1
+836c01f card(UI-A1): eframe/egui 0.37 dependency baseline, crates/oep-app with isolith --smoke

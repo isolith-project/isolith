@@ -37,13 +37,13 @@
     {
       "id": "dependency-allowlist",
       "status": "PASS",
-      "detail": "531 dependencies within the permissive allow-list",
+      "detail": "535 dependencies within the permissive allow-list",
       "source": "docs/dependency-licenses.json"
     },
     {
       "id": "notice-sync",
       "status": "PASS",
-      "detail": "531 dependency lines + 1 native entries",
+      "detail": "535 dependency lines + 1 native entries",
       "source": "NOTICE"
     }
   ]
