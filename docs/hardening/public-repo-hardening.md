@@ -1,6 +1,6 @@
 ---
 title: "Isolith Public Repository Hardening Baseline"
-version: 1.0.0
+version: 1.1.0
 date: 2026-10-27
 status: Ratified
 owner: Isolith program governance, P11 security lane
@@ -194,8 +194,44 @@ maintainer), so no file falls between rows.
    fingerprint block from `docs/release-signing.md` ships with the release
    notes of the first visible release.
 
+## Applied state
+
+Verified by `scripts/harden-public-repo.sh --check` against the live repository
+after the visibility flip. Every row below is an API readback, not an
+intention.
+
+- **Visibility:** public at `github.com/isolith-project/isolith`, org
+  `isolith-project` owned by Don's personal account `dmltallen`.
+- **Branch protection on main:** admins bound (`enforce_admins` true), no force
+  push, no deletions, conversation resolution required, strict status checks
+  over the eleven required contexts (lint, unit, integration, gateway,
+  quality-gate, dco-sign-off, lockpin, licensing-boundary, crypto-integrity,
+  p11t02-sbom-cve, export-control-selfcheck).
+- **Required reviews: 0, deliberately.** A solo-maintainer repository cannot
+  require an approval: GitHub does not let a maintainer approve their own pull
+  request, so `enforce_admins` plus one required review would deadlock every
+  merge, including the change that would relax it. The value is
+  `HARDEN_REQUIRED_APPROVALS` (default 1) and it goes to 1 in the same pass
+  that adds a second maintainer.
+- **Tag protection:** rulesets on `refs/tags/v*` and `refs/tags/wave-*`
+  blocking deletion and updates. The legacy `/tags/protection` endpoint GitHub
+  used in 1.0.0 is retired; a tag ruleset is the live mechanism and the script
+  now creates and reads that.
+- **Supply chain:** secret scanning enabled, secret scanning push protection
+  enabled, Dependabot alerts and automated security fixes enabled.
+- **Disclosure:** private vulnerability reporting enabled on the repository,
+  which is the channel SECURITY.md 1.3.0 names as primary.
+- **Actions:** default workflow token read-only.
+- **Outstanding manual step:** org-wide 2FA. GitHub does not expose the
+  requirement through the REST API, so the org owner toggles it at
+  `github.com/organizations/isolith-project/settings/security`. Until it is
+  on, the row stays open.
+
 ## Version history
 
+- 1.1.0 (2026-11-20): applied state recorded after the public flip. Adds the
+  solo-maintainer approvals decision, the ruleset-based tag protection, the
+  supply-chain and disclosure state, and the one manual step that remains.
 - 1.0.0 (2026-10-27): first hardening baseline, PUBLIC-REPO-HARDENING card.
   Locks account security, branch and tag protection, Actions hardening,
   supply-chain guards, release signing key publication and CODEOWNERS as the
