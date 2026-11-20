@@ -1,0 +1,8 @@
+======== DRIFT PROOF: one-pixel change reverted ========
+
+--- git diff (must be empty) ---
+--- bash scripts/ui/shot.sh (expect exit 0) ---
+shot.sh: ok
+  frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+  sha256   : e20b6d5d78466dcc7ce0f8531c2a9de243f7c0e6b28f3fd8aba6fc1442bb0da1
+exit=0

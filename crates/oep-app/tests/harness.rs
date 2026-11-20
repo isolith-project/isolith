@@ -95,13 +95,12 @@ fn click_reaches_real_app() {
         "click press did not reach the app input state"
     );
     assert!(
-        harness.ctx.input(|i| i.pointer.button_down(egui::PointerButton::Primary)),
+        harness
+            .ctx
+            .input(|i| i.pointer.button_down(egui::PointerButton::Primary)),
         "primary button down not visible to the app input state"
     );
-    assert_eq!(
-        harness.ctx.input(|i| i.pointer.latest_pos()),
-        Some(target)
-    );
+    assert_eq!(harness.ctx.input(|i| i.pointer.latest_pos()), Some(target));
 
     // Release: the app context must now register a completed primary click.
     harness.event(egui::Event::PointerButton {
