@@ -95,6 +95,8 @@ crates/oep-assem/.* @don
 /crates/oep-assem/ @don
 crates/oep-analysis/.* @don
 /crates/oep-analysis/ @don
+crates/oep-app/.* @don
+/crates/oep-app/ @don
 crates/oep-job/.* @don
 /crates/oep-job/ @don
 crates/oep-lane/.* @don

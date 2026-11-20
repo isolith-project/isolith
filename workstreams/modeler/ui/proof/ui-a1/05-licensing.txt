@@ -1,0 +1,10 @@
+### python3 scripts/licensing-check.py
+licensing check: total=6 pass=6 fail=0 skip=0 | exit=0
+report: /home/r1a/isolith-main/.worktrees/ui-a1/docs/proof/licensing-check.json
+  [PASS] root-files: 4 licence files at root, index in sync
+  [PASS] boundary-schema: schema_version 1
+  [PASS] crate-boundary: 33 crates match the boundary map
+  [PASS] boundary-doc-sync: 33 rows in sync
+  [PASS] dependency-allowlist: 531 dependencies within the permissive allow-list
+  [PASS] notice-sync: 531 dependency lines + 1 native entries
+licensing_exit=0
