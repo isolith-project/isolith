@@ -42,10 +42,17 @@ SCHEMA_VERSION = 1
 # --- policy -----------------------------------------------------------------
 # Pure-permissive SPDX identifiers a dependency may use (OR branches may also
 # be permissive; AND conjuncts must ALL be permissive).
+# Font licenses are permissive data licenses (no copyleft, no field
+# restriction): OFL-1.1 (SIL Open Font License) and Ubuntu-font-1.0 (Ubuntu
+# Font Licence) were added 2026-11-20 by the UI-A1 dependency card because the
+# egui UI stack (crates/oep-app, editor parity wave A) embeds its built-in
+# fonts through epaint_default_fonts, whose SPDX is
+# "(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0".
 ALLOWED = {
     "Apache-2.0", "MIT", "ISC", "BSL-1.0",
     "BSD-1-Clause", "BSD-2-Clause", "BSD-3-Clause",
     "CC0-1.0", "CC-BY-4.0", "MIT-0", "Unlicense", "Zlib", "Unicode-3.0",
+    "OFL-1.1", "Ubuntu-font-1.0",
 }
 # Identifiers explicitly barred from the delivered tree (defense clean-room
 # gate: "No GPL-3.0 in the delivered tree, consistent with the cleanroom
