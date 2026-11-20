@@ -61,11 +61,12 @@ appointed representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-`conduct@isolith.dev`.
+`conduct@isolith.dev`, or directly to `don@redonealpha.com` while the domain
+alias is not yet live.
 
-The enforcement address is `conduct@isolith.dev` (forwarding alias only).
-Reports on the private development instance also go directly to the
-maintainer through the reporting channels listed in SUPPORT.md.
+The enforcement address is `conduct@isolith.dev` (forwarding alias only, into
+the maintainer's existing mailbox). The reporting channels in SUPPORT.md reach
+the same person.
 
 All complaints will be reviewed and investigated promptly and fairly.
 

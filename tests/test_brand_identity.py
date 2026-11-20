@@ -47,9 +47,6 @@ ALLOWED_DIR_PREFIXES = (
     # The identity kit IS the retirement record: NAME.md documents the former
     # codename as retired, USAGE.md and the trademark evidence reference it.
     "assets/brand/",
-    # Archived release binaries (2027.1.0-rc2) built under the retired brand;
-    # not rebuildable inside this card.
-    "dist/",
     # Archived signed-release artifacts; their signatures cannot be reproduced.
     "workstreams/security/proof/signed-release-2027.1.0-rc1/",
 )
