@@ -27,7 +27,7 @@ tokio = { version = "1", features = ["rt-multi-thread", "net", "time"] }
 # HTTPS directly on the LAN/web surface. axum-server's rustls path is the
 # canonical way to serve an axum router over TLS in axum 0.8; it brings
 # tokio-rustls + rustls under the hood (same Rust-first stack as axum).
-axum-server = { version = "0.8", features = ["tls-rustls"] }
+axum-server = { version = "0.9", features = ["tls-rustls"] }
 
 # PDM relationship graph (P8-M2-T03): ingest real oep-geo assembly
 # documents into the uses/composed-of graph and query where-used / impact.
