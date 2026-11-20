@@ -2,8 +2,8 @@
   "schema": "isolith.downloads-manifest.v1",
   "release": "2027.1.0",
   "train": "2027.1",
-  "generated_utc": "2026-11-20T00:00:00Z",
-  "gate": "public surface open on GitHub Releases (2026-10-27 gate); canary rc3 + GA share this manifest",
+  "generated_utc": "2026-11-20T08:05:00Z",
+  "gate": "public surface open on GitHub Releases (2026-10-27 gate); GA v2027.1.0 promoted 2026-11-20T08:02Z after canary soak",
   "base_url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0",
   "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811",
   "unsigned_note": "binaries are NOT code-signed in 2027.1.0; Windows SmartScreen will warn on install",
@@ -37,9 +37,9 @@
       "platform": "update-feed",
       "artifact": "update.bundle.json",
       "kind": "update-feed",
-      "version": "2027.1.0-rc5",
+      "version": "2027.1.0",
       "sha256": "153e5f5378d06500724da5d2906ac94650d873be61f353ae73792368743c14e9",
-      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes. Candidates point at the canary release URL v2027.1.0-rc5; GA flips to v2027.1.0.",
+      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes. GA release v2027.1.0 carries the identical bundle.",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     }
   ]
