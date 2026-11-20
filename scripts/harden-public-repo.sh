@@ -28,6 +28,11 @@ REPO_PATH="$OWNER/$REPO"
 # Full ported CI set = the required status checks (baseline section 2).
 DEFAULT_CHECKS="lint,unit,integration,gateway,quality-gate,dco-sign-off,lockpin,licensing-boundary,crypto-integrity,p11t02-sbom-cve,export-control-selfcheck"
 REQUIRED_CHECKS="${HARDEN_REQUIRED_CHECKS:-$DEFAULT_CHECKS}"
+# Approvals required on a pull request. The baseline is 1; a solo-maintainer
+# repository must run 0, because GitHub does not let a maintainer approve
+# their own pull request and enforce_admins would then deadlock every merge.
+# Raise it to 1 in the same pass that adds a second maintainer.
+REQUIRED_APPROVALS="${HARDEN_REQUIRED_APPROVALS:-1}"
 
 MODE="${1:-apply}"
 case "$MODE" in
@@ -87,14 +92,15 @@ bp_get() { gh api "repos/$REPO_PATH/branches/main/protection" "$@" 2>/dev/null; 
 if [ -z "$(bp_get --jq '.required_pull_request_reviews.required_approving_review_count' 2>/dev/null)" ]; then
   if [ "$MODE" = "apply" ]; then
     python3 - "$(checks_json)" <<'PY' >/tmp/harden-bp.json
-import json, sys
+import json, os, sys
 ctx = json.loads(sys.argv[1])
+approvals = int(os.environ.get("HARDEN_REQUIRED_APPROVALS", "1"))
 json.dump({
   "required_status_checks": {"strict": True, "contexts": ctx},
   "enforce_admins": True,
   "required_pull_request_reviews": {
-    "required_approving_review_count": 1,
-    "require_code_owner_reviews": True,
+    "required_approving_review_count": approvals,
+    "require_code_owner_reviews": approvals > 0,
     "dismiss_stale_reviews": False,
   },
   "restrictions": None,
@@ -110,27 +116,39 @@ PY
     pnote "branch protection on main: not set yet (apply mode will set it)"
   fi
 fi
-if [ "$(bp_get --jq '.allow_force_pushes // "missing"')" = "false" ] \
-   && [ "$(bp_get --jq '.required_pull_request_reviews.required_approving_review_count // 0')" -ge 1 ] \
+if [ "$(bp_get --jq '.allow_force_pushes.enabled')" = "false" ] \
+   && [ "$(bp_get --jq '.allow_deletions.enabled')" = "false" ] \
+   && [ "$(bp_get --jq '.enforce_admins.enabled')" = "true" ] \
+   && [ "$(bp_get --jq '.required_pull_request_reviews.required_approving_review_count // -1')" = "$REQUIRED_APPROVALS" ] \
    && [ "$(bp_get --jq '.required_status_checks.strict // false')" = "true" ]; then
-  ppass "branch protection on main: no force push, no deletions, >=1 review, strict checks"
+  ppass "branch protection on main: admins bound, no force push, no deletions, $REQUIRED_APPROVALS required review(s), strict checks"
 else
   pfail "branch protection on main: missing or incomplete (see readback)"
   bp_get --jq '{enforce_admins, required_pull_request_reviews, allow_force_pushes, allow_deletions, required_linear_history, required_status_checks}' || true
 fi
 
 ## 3. Tag protection ---------------------------------------------------------
+# GitHub retired the legacy /tags/protection endpoint; a tag ruleset is the live
+# mechanism and is what this section now creates and verifies.
 for pat in "v*" "wave-*"; do
-  if ! gh api "repos/$REPO_PATH/tags/protection" --jq '.[].pattern' 2>/dev/null | grep -qxF "$pat"; then
+  want="refs/tags/$pat"
+  have=$(gh api "repos/$REPO_PATH/rulesets" --jq '.[]|select(.target=="tag")|.id' 2>/dev/null | while read -r rid; do
+    gh api "repos/$REPO_PATH/rulesets/$rid" --jq '.conditions.ref_name.include[]?' 2>/dev/null
+  done | grep -cxF "$want" || true)
+  if [ "$have" -eq 0 ]; then
     if [ "$MODE" = "apply" ]; then
-      gh api --method POST "repos/$REPO_PATH/tags/protection" --input - <<<"{\"pattern\":\"$pat\"}" >/dev/null
-      pnote "tag protection rule added: $pat"
+      gh api --method POST "repos/$REPO_PATH/rulesets" --input - >/dev/null <<JSON
+{"name":"protect $pat tags","target":"tag","enforcement":"active","conditions":{"ref_name":{"include":["$want"],"exclude":[]}},"rules":[{"type":"deletion"},{"type":"update"}]}
+JSON
+      pnote "tag ruleset added: $want"
     fi
   fi
 done
-present=$(gh api "repos/$REPO_PATH/tags/protection" --jq '.[].pattern' 2>/dev/null || true)
-if printf '%s\n' "$present" | grep -qxF "v*" && printf '%s\n' "$present" | grep -qxF "wave-*"; then
-  ppass "tag protection: v* and wave-* protected from delete and force-move"
+present=$(gh api "repos/$REPO_PATH/rulesets" --jq '.[]|select(.target=="tag")|.id' 2>/dev/null | while read -r rid; do
+  gh api "repos/$REPO_PATH/rulesets/$rid" --jq '.conditions.ref_name.include[]?' 2>/dev/null
+done | sort -u || true)
+if printf '%s\n' "$present" | grep -qxF "refs/tags/v*" && printf '%s\n' "$present" | grep -qxF "refs/tags/wave-*"; then
+  ppass "tag protection: v* and wave-* protected from delete and force-move (rulesets)"
 else
   pfail "tag protection incomplete (saw: $(printf '%s ' $present | tr '\n' ' '))"
 fi
@@ -143,7 +161,7 @@ if [ "$MODE" = "apply" ]; then
 JSON
   pnote "actions permissions: default GITHUB_TOKEN read-only"
 fi
-perm=$(gh api "repos/$REPO_PATH/actions/permissions" --jq '.default_workflow_permissions // "missing"' 2>/dev/null)
+perm=$(gh api "repos/$REPO_PATH/actions/permissions/workflow" --jq '.default_workflow_permissions // "missing"' 2>/dev/null)
 [ "$perm" = "read" ] && ppass "actions: default GITHUB_TOKEN read-only" \
                    || pfail "actions: default GITHUB_TOKEN is '$perm' (want read)"
 
