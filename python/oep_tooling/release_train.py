@@ -180,6 +180,26 @@ def verify_manifest(repo, manifest_path):
     return True, {}
 
 
+def remote_url(repo, name):
+    """Return a configured remote's URL, or None when it is not set."""
+    rc, out, _err = git(repo, "remote", "get-url", name)
+    return out.strip() if rc == 0 and out.strip() else None
+
+
+def resolve_canary_url(repo, owner_repo):
+    """Resolve where a candidate is published.
+
+    GitHub is the single writable source of truth (release train policy 1.1.0),
+    so a configured `github` remote wins. The NAS Gitea canary is the
+    historical target and remains the fallback on a machine with no GitHub
+    remote, which keeps the mechanical cut runnable offline.
+    """
+    gh = remote_url(repo, "github")
+    if gh:
+        return gh
+    return _canary_url(owner_repo)
+
+
 def _canary_url(owner_repo):
     """Build the NAS Gitea URL from ~/.git-credentials, so no raw IP ever
     appears on the command line and no credentials are embedded in the remote
@@ -218,7 +238,8 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
     steps.append(f"manifest -> workstreams/release-engineering/freeze-manifests/{info['full']}.json (write)")
     steps.append(f"branch  -> git branch {rel_branch} {cut['cut_from']['sha']}")
     steps.append(f"tag     -> git tag -a {tag} -m 'Isolith {info['full']} freeze' {cut['cut_from']['sha']}")
-    steps.append(f"push    -> git push canary {rel_branch}:{canary_branch} {tag}")
+    target = remote_url(repo, "github") or "the NAS Gitea canary"
+    steps.append(f"push    -> git push canary {rel_branch}:{canary_branch} {tag}  (to {target})")
     if dry_run:
         print("DRY RUN for", info["full"])
         for s in steps:
@@ -247,8 +268,7 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
         # No canary remote yet: derive the NAS Gitea URL from the machine's
         # git credentials (never embeds a raw IP or credentials in the URL).
         # Only here is a credentials lookup required.
-        remote_url = _canary_url(canary_owner_repo)
-        git_rev(repo, "remote", "add", "canary", remote_url)
+        git_rev(repo, "remote", "add", "canary", resolve_canary_url(repo, canary_owner_repo))
     else:
         cur = git_rev(repo, "remote", "get-url", "canary")
         # heal only URLs that are equipment-bad (credentials embedded in the
@@ -256,8 +276,8 @@ def release_cut(repo, version, trunk_ref, canary_owner_repo, since_ref=None,
         # (e.g. a local file:// canary used by hermetic tests), which also
         # keeps the mechanical cut runnable on machines with no credentials.
         if "@" in cur or "%" in cur:
-            remote_url = _canary_url(canary_owner_repo)
-            git_rev(repo, "remote", "set-url", "canary", remote_url)
+            git_rev(repo, "remote", "set-url", "canary",
+                    resolve_canary_url(repo, canary_owner_repo))
     rc, out, err = git(repo, "push", "canary", f"{rel_branch}:{canary_branch}", tag)
     if rc != 0:
         raise ReleaseTrainError(f"canary push failed: {err or out}")

@@ -185,6 +185,28 @@ def test_committed_manifests_conform():
               data.get("schema") == rt.SCHEMA, str(data.get("schema")))
 
 
+def test_canary_url_prefers_github():
+    """The candidate publishes to the writable source of truth (policy 1.1.0).
+
+    A configured `github` remote must win over the historical NAS Gitea canary
+    derivation. The Gitea fallback is only for a machine with no GitHub remote.
+    """
+    tmp = tempfile.mkdtemp()
+    try:
+        make_repo(tmp, ncommits=1)
+        run(["git", "remote", "add", "github",
+             "https://github.com/isolith-project/isolith.git"], cwd=tmp)
+        got = rt.resolve_canary_url(tmp, "isolith/isolith-canary")
+        check("canary url prefers the github remote",
+              got == "https://github.com/isolith-project/isolith.git", got)
+        run(["git", "remote", "remove", "github"], cwd=tmp)
+        check("canary url falls back when no github remote",
+              rt.resolve_canary_url(tmp, "isolith/isolith-canary").endswith(
+                  "/isolith/isolith-canary.git"))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def main():
     test_version_scheme()
     test_doc_present_and_covers_policy()
@@ -192,6 +214,7 @@ def main():
     test_verify_detects_tamper()
     test_release_cut_end_to_end_hermetic()
     test_committed_manifests_conform()
+    test_canary_url_prefers_github()
     print()
     if _failures:
         print(f"ACCEPTANCE FAILED: {len(_failures)} check(s) failed")
