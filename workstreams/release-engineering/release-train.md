@@ -1,7 +1,7 @@
 ---
 title: Isolith Release Train, Versioning, and Patch Policy
 decision: release_train_calver_semver_canary_staged_patch_model
-version: 1.1.0
+version: 1.2.0
 date: 2026-10-18
 amended: 2026-11-20
 status: Ratified
@@ -55,8 +55,8 @@ canary soak, a general-availability (GA) cut.
    From the freeze tag onward, `release/<YYYY.N>` accepts **no feature
    commits**. A freeze does not stop work on `main`: it stops merges onto the
    release branch.
-3. **Canary soak** -- the candidate sits in the canary repo for the soak
-   window (default 5 business days) while internal consumers and the
+3. **Canary soak** -- the candidate sits in the pre-release channel for the
+   soak window (3 hours, Don 2026-11-20) while internal consumers and the
    acceptance suite validate it (section 5).
 4. **GA promotion** -- at the end of a clean soak, the same frozen commit is
    published on `main` as the GA tag `v<YYYY.N.0>` with release notes
@@ -183,7 +183,7 @@ repository before it is general availability. Each candidate receives:
 
 Promotion to GA requires **all** of:
 
-1. canary soak of the full window (default 5 business days) with **zero
+1. canary soak of the full window (3 hours) with **zero
    P0/P1** findings attributed to the candidate;
 2. CI green on the frozen commit (lint + unit + integration + precommit
    gate, the same jobs that run on every push);
@@ -275,6 +275,13 @@ proven on real material before the first real train. It is recorded in
   (quarterly), version scheme (`YYYY.N.P` + semver pre-release), freeze
   manifest contract, canary-first staged rollout, and the patch-vs-next-train
   trigger list.
+- 1.2.0 (2026-11-20) -- Soak window reduced from 5 business days to 3 hours
+  (Don). The 5-day default was written before a pre-release channel existed and
+  assumed external canary consumers that this program does not have; a single
+  maintainer with a green gate and a two-machine rehearsal behind the cut is
+  the real signal, and a 5-day hold adds latency without adding evidence. The
+  zero-P0/P1 condition, the frozen-commit rule and the no-feature-commits rule
+  are unchanged.
 - 1.1.0 (2026-11-20) -- Repository topology amended per the Gate 0 answer of
   2026-10-27 (GitHub becomes primary, Gitea demoted to internal mirror) and the
   identity decision of 2026-11-19 (`isolith-project`). Supersedes the exactly-
