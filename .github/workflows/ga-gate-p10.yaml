@@ -65,7 +65,10 @@ jobs:
             exit 0
           fi
           mkdir -p /tmp/p10m4-persist /tmp/p10m4-out
-          ./target/debug/oep-pdm --addr 127.0.0.1:18789 \
+          # --no-auth on a loopback throwaway instance: the demo client is
+          # unauthenticated and the shipped default (authorize) correctly
+          # answers 403. Authorization behaviour is the P11 gate's subject.
+          ./target/debug/oep-pdm --addr 127.0.0.1:18789 --no-auth \
             --persist-dir /tmp/p10m4-persist >/tmp/p10m4-pdm.log 2>&1 &
           PDM_PID=$!
           # loopback health wait
