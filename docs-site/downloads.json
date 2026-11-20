@@ -37,9 +37,9 @@
       "platform": "update-feed",
       "artifact": "update.bundle.json",
       "kind": "update-feed",
-      "version": "2027.1.0-rc3",
+      "version": "2027.1.0-rc5",
       "sha256": "153e5f5378d06500724da5d2906ac94650d873be61f353ae73792368743c14e9",
-      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes. rc3 candidates point at the canary release URL v2027.1.0-rc3; GA flips to v2027.1.0.",
+      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes. Candidates point at the canary release URL v2027.1.0-rc5; GA flips to v2027.1.0.",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     }
   ]
