@@ -1,7 +1,7 @@
 ---
 title: "Isolith Security Policy"
-version: 1.2.0
-date: 2026-10-27
+version: 1.3.0
+date: 2026-11-20
 status: Ratified
 owner: Isolith program governance, P11 security lane (P11-T08 disclosure lane)
 applies_to: every repository under the Isolith org and every released artifact
@@ -10,9 +10,12 @@ supersedes: nothing (first security policy; material changes bump the version, p
 
 # Isolith Security Policy
 
-Version 1.2.0 (2026-10-27): the public disclosure alias replaced the
-placeholder token with the real domain address `security@isolith.dev`
-(SITE-DOMAIN-ORIGIN). Standing content unchanged since 1.1.0.
+Version 1.3.0 (2026-11-20): the disclosure path now names GitHub private
+vulnerability reporting as the primary channel, so a report has a working
+route before the `isolith.dev` mail alias exists. The alias remains the
+long-term address and `don@redonealpha.com` is the interim mailbox.
+Version 1.2.0 (2026-10-27) had replaced the placeholder token with the
+domain address (SITE-DOMAIN-ORIGIN).
 
 This document is the disclosure policy for Isolith ("Isolith", the Open
 Engineering Platform / OEP monorepo) and the P11-T08 responsible-disclosure
@@ -29,14 +32,16 @@ A vulnerability in Isolith is not a public issue. Do not open a public issue,
 pull request, or discussion that describes an exploitable weakness or includes
 a working exploit.
 
-Report it privately to the maintainers at
-`security@isolith.dev`.
+Report it privately through the repository's **private vulnerability
+reporting**: on `github.com/isolith-project/isolith`, Security tab, then
+`Report a vulnerability`. That channel is private to the maintainer and is the
+one that works today.
 
-The public disclosure address is `security@isolith.dev` (forwarding alias only,
-landing in the maintainer's existing mailbox; no data is processed on any
-Isolith-operated mail server). Until the domain's email forwarding is live,
-reach the maintainer directly on the private instance (the safe harbor below
-still applies once the report is made in private).
+The address of record is `security@isolith.dev`, a forwarding alias landing in
+the maintainer's existing mailbox; no data is processed on any Isolith-operated
+mail server. Until that alias is live, `don@redonealpha.com` reaches the same
+mailbox directly. The safe harbor below applies to any report made through
+whichever of these channels was used.
 
 What to include in a report:
 
