@@ -2940,6 +2940,7 @@ dependencies = [
  "eframe",
  "egui",
  "egui_kittest",
+ "oep-ui-theme",
 ]
 
 [[package]]
@@ -3176,6 +3177,13 @@ dependencies = [
  "oep-pmi",
  "serde_json",
  "step-io",
+]
+
+[[package]]
+name = "oep-ui-theme"
+version = "0.1.0"
+dependencies = [
+ "egui",
 ]
 
 [[package]]
