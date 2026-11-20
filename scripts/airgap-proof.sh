@@ -59,6 +59,10 @@ def req(method, path, body=None, ct="application/json"):
             return resp.status, raw
 
 
+# Internal mirror host: the proof probes the NAS service to show the appliance
+# reaches the local mirror and not the public internet. This is not the
+# canonical clone URL; the writable source of truth is
+# https://github.com/isolith-project/isolith (release train policy 1.1.0).
 GITEA_BASE = "http://192.168.0.101:3200"
 
 

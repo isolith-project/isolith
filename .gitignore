@@ -5,6 +5,11 @@
 __pycache__/
 *.pyc
 
+# Release bundles and installers are build outputs: they belong in a
+# release, never in the tree. The rc2 tree was committed before this rule
+# existed; those blobs stay in history, which is why they are listed here.
+dist/
+
 # Rust build artifacts (cargo workspace)
 /target/
 # Standalone dev-tooling crate build output (xtask is not a workspace member)

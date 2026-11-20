@@ -62,7 +62,7 @@
 //! # Ok::<(), std::io::Error>(())
 //! ```
 //!
-//! [oep-job]: https://192.168.0.101:3200/isolith/isolith
+//! [oep-job]: https://github.com/isolith-project/isolith
 #![deny(missing_docs)]
 
 pub mod cgroup;
