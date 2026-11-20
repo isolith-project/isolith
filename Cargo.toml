@@ -29,6 +29,7 @@ members = [
     "crates/oep-sketch",
     "crates/oep-assem",
     "crates/oep-analysis",
+    "crates/oep-app",
     "crates/oep-job",
     "crates/oep-lane",
     "crates/oep-farm",
@@ -48,3 +49,10 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Isolith contributors"]
 repository = "https://github.com/isolith-project/isolith"
+
+# UI dependency baseline (editor parity program, wave A, card UI-A1).
+# eframe/egui pinned at 0.37.x, resolved once and recorded in Cargo.lock.
+# Default renderer (glow) only; the wgpu backend is wave D's subject.
+[workspace.dependencies]
+eframe = { version = "0.37.0" }
+egui = { version = "0.37.0" }
