@@ -197,8 +197,11 @@ def _json(body):
 
 
 def _find_bin(root, name):
-    for cand in ("target/release", "target/debug"):
-        p = root / cand / name
+    # root arrives as a str from the CLI (--bin-dir) and as a Path from the
+    # script wrapper; coerce once so the join works on both paths.
+    root = Path(root)
+    for base in (root, root / "target/release", root / "target/debug"):
+        p = base / name
         if p.is_file() and os.access(p, os.X_OK):
             return p
     return None
@@ -297,8 +300,13 @@ def boot_local(args, report):
     web_bin = web_bin.resolve()
     port = args.port or free_port()
     persist = tempfile.mkdtemp(prefix="isolith-e2e-vault-")
+    # The shipped default authorizes (SEC-AUTHZ-DEFAULT) and correctly answers
+    # 403 to this unauthenticated harness. This vertical measures the data
+    # path, so the throwaway loopback instance opts out explicitly; the authz
+    # behaviour itself is the P11 gate's subject.
     proc = subprocess.Popen(
-        [str(web_bin), "--addr", f"127.0.0.1:{port}", "--persist-dir", persist],
+        [str(web_bin), "--addr", f"127.0.0.1:{port}", "--persist-dir", persist,
+         "--no-auth"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
     )
     base = f"http://127.0.0.1:{port}"

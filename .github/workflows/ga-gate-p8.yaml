@@ -56,7 +56,11 @@ jobs:
             exit 0
           fi
           mkdir -p /tmp/p8g-persist /tmp/p8g-out
-          ./target/debug/oep-pdm --addr 127.0.0.1:18799 --persist-dir /tmp/p8g-persist \
+          # --no-auth on a loopback throwaway instance: the gate's client is
+          # unauthenticated and the shipped default (authorize) now correctly
+          # refuses it with 403. Authorization behaviour is the P11 gate's
+          # subject; this gate measures the multi-user data cycle and locks.
+          ./target/debug/oep-pdm --addr 127.0.0.1:18799 --persist-dir /tmp/p8g-persist --no-auth \
             >/tmp/p8g.log 2>&1 &
           echo $! > /tmp/p8g.pid
           for i in $(seq 1 100); do

@@ -306,15 +306,25 @@ def multiuser_leg(base_url: str, n_clients: int = 4) -> list:
 
 def _racer(base_url, item_id, holder, result_q):
     """One racer: try to acquire a lock on the shared item."""
+    def _send(rec):
+        result_q.put((holder, rec))
+        # Flush before this process exits: without these two calls the record
+        # can be lost with no error when the child is short-lived.
+        try:
+            result_q.close()
+            result_q.join_thread()
+        except Exception:  # noqa: BLE001
+            pass
+
     try:
         ok, body = _acquire(base_url, item_id, holder)
-        result_q.put((holder, {
+        _send({
             "acquired": bool(ok),
             "detail": body,
             "token": body.get("token") if isinstance(body, dict) else None,
-        }))
+        })
     except Exception as e:  # noqa: BLE001
-        result_q.put((holder, {"acquired": False, "detail": repr(e), "token": None}))
+        _send({"acquired": False, "detail": repr(e), "token": None})
 
 
 def locks_leg(base_url: str, n_racers: int = 4) -> list:
@@ -333,6 +343,11 @@ def locks_leg(base_url: str, n_racers: int = 4) -> list:
                    state="working", created_by="gate")
 
     ctx = multiprocessing.get_context("spawn")
+    # Queue.put hands the record to a feeder thread and returns, so a
+    # short-lived child can exit before the bytes are written and the result is
+    # lost with no error. That read as "no racer won" on a 4-vCPU runner while
+    # passing on a fast host, where the flush always won the race. Each racer
+    # therefore closes and joins its feeder before exiting (see _racer).
     result_q = ctx.Queue()
     procs = []
     for i in range(max(2, int(n_racers))):
@@ -342,20 +357,35 @@ def locks_leg(base_url: str, n_racers: int = 4) -> list:
         p.start()
     for p in procs:
         p.join(timeout=60)
+    # multiprocessing.Queue.empty() is documented as unreliable, and the
+    # feeder thread can still be flushing right after join(): draining with it
+    # drops results and reads as "no racer won" when in fact every racer
+    # answered. Collect exactly one record per racer, with a deadline.
     result = {}
-    while not result_q.empty():
+    deadline = time.time() + 30
+    while len(result) < len(procs):
+        remaining = deadline - time.time()
+        if remaining <= 0:
+            break
         try:
-            h, rec = result_q.get_nowait()
-            result[h] = rec
+            h, rec = result_q.get(timeout=min(5.0, remaining))
         except Exception:
             break
+        result[h] = rec
+    hung = [p for p in procs if p.is_alive()]
+    for p in hung:
+        p.terminate()
+        p.join(timeout=5)
     winners = [h for h, r in result.items() if r.get("acquired")]
     if len(winners) == 1:
         rows.append(LegRow("concurrent-lock-single-winner", "locks", "PASS",
                            "exactly one of %d racers held the lock: %s" % (len(result), winners[0])))
     else:
-        rows.append(LegRow("concurrent-lock-single-winner", "locks", "FAIL",
-                           "winners=%r of %d racers" % (winners, len(result))))
+        rows.append(LegRow(
+            "concurrent-lock-single-winner", "locks", "FAIL",
+            "winners=%r of %d racers (collected %d/%d, hung %d, detail=%r)" % (
+                winners, len(result), len(result), len(procs), len(hung),
+                {h: r.get("detail") for h, r in sorted(result.items())})))
 
     # Publish gate: the winning racer holds the lock; a foreign/forged token
     # must be refused and the winning racer's real token must be allowed to
@@ -374,9 +404,13 @@ def locks_leg(base_url: str, n_racers: int = 4) -> list:
         rows.append(LegRow("publish-gate", "locks", "PASS",
                            "non-holder refused (%d), %s allowed (%d)" % (status, winner, status_ok)))
     else:
-        rows.append(LegRow("publish-gate", "locks", "FAIL",
-                           "non-holder refused=%r, %s allowed=%r (token=%r...)" % (
-                               refused, winner, allowed, str(winner_token)[:12])))
+        rows.append(LegRow(
+            "publish-gate", "locks", "FAIL",
+            "non-holder refused=%r (status=%s), %s allowed=%r (status=%s, "
+            "held_lock=%r, token=%r...)" % (
+                refused, status, winner, allowed, status_ok,
+                bool(result.get(winner, {}).get("token")),
+                str(winner_token)[:12])))
     _release(base_url, item_id, winner_token)
     return rows
 

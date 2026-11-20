@@ -147,11 +147,11 @@ def test_locks_leg_respected():
             check("locks_leg: exactly one racer wins concurrent lock",
                   any(r.id == "concurrent-lock-single-winner" and r.status == "PASS"
                       for r in rows),
-                  repr([(r.id, r.status) for r in rows])[:200])
+                  repr([(r.id, r.status, r.detail) for r in rows])[:900])
             check("locks_leg: non-holder publish refused",
                   any(r.id == "publish-gate" and r.status == "PASS"
                       for r in rows),
-                  repr([(r.id, r.status) for r in rows])[:200])
+                  repr([(r.id, r.status, r.detail) for r in rows])[:900])
         finally:
             proc.terminate()
             try:
