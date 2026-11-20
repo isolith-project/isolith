@@ -1,0 +1,47 @@
+{
+  "schema": "oep-update-manifest/1",
+  "product": "oep",
+  "version": "2027.1.0-rc5",
+  "released": "2026-11-20",
+  "notes": null,
+  "payloads": [
+    {
+      "name": "RELEASE-MANIFEST.json",
+      "sha256": "f6ee9c637a53b7ef89a2cae1a9e80fe05a84523052d2d84c5b6e0d1100a25035",
+      "size": 1639,
+      "url": null
+    },
+    {
+      "name": "2027.1.0-rc5.classification.toml",
+      "sha256": "6c463be034b04bcd33f5e514ed252bd2828051ed973bdc8f7e648bb944ed2867",
+      "size": 1795,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/2027.1.0-rc5.classification.toml"
+    },
+    {
+      "name": "2027.1.0-rc5.json",
+      "sha256": "219f77088b7070a78e7f590b14f700ea3c71748d5cf00597dbee3cc0325a882a",
+      "size": 522,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/2027.1.0-rc5.json"
+    },
+    {
+      "name": "isolith-oep-2027.1.0-arm64.deb",
+      "sha256": "2745e08fd6294ff25727f3b560f3722a4254d4a2c1d5d537f054741f31118ae8",
+      "size": 2597370,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/isolith-oep-2027.1.0-arm64.deb"
+    },
+    {
+      "name": "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi",
+      "sha256": "45ea439ee01a52a338c990c5fd2df68c6b16ac440d969be308f47f3a58bd5057",
+      "size": 8718848,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi"
+    },
+    {
+      "name": "oep-workbench-isolith-oep-aarch64.AppImage",
+      "sha256": "66a0e75b079ba02af665ef2c4e9977eccb8a4a634416cb2a3dedc2d94eb60b3b",
+      "size": 2298240,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/oep-workbench-isolith-oep-aarch64.AppImage"
+    }
+  ],
+  "payload_bytes_b64": "ewogICJhcnRpZmFjdHMiOiBbCiAgICB7CiAgICAgICJuYW1lIjogIjIwMjcuMS4wLXJjNS5jbGFzc2lmaWNhdGlvbi50b21sIiwKICAgICAgInNoYTI1NiI6ICI2YzQ2M2JlMDM0YjA0YmNkMzNmNWU1MTRlZDI1MmJkMjgyODA1MWVkOTczYmRjOGY3ZTY0OGJiOTQ0ZWQyODY3IiwKICAgICAgInNpemUiOiAxNzk1LAogICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9pc29saXRoLXByb2plY3QvaXNvbGl0aC9yZWxlYXNlcy9kb3dubG9hZC92MjAyNy4xLjAtcmM1LzIwMjcuMS4wLXJjNS5jbGFzc2lmaWNhdGlvbi50b21sIgogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAiMjAyNy4xLjAtcmM1Lmpzb24iLAogICAgICAic2hhMjU2IjogIjIxOWY3NzA4OGI3MDcwYTc4ZTdmNTkwYjE0ZjcwMGVhM2M3MTc0OGQ1Y2YwMDU5N2RiZWUzY2MwMzI1YTg4MmEiLAogICAgICAic2l6ZSI6IDUyMiwKICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vaXNvbGl0aC1wcm9qZWN0L2lzb2xpdGgvcmVsZWFzZXMvZG93bmxvYWQvdjIwMjcuMS4wLXJjNS8yMDI3LjEuMC1yYzUuanNvbiIKICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogImlzb2xpdGgtb2VwLTIwMjcuMS4wLWFybTY0LmRlYiIsCiAgICAgICJzaGEyNTYiOiAiMjc0NWUwOGZkNjI5NGZmMjU3MjdmM2I1NjBmMzcyMmE0MjU0ZDRhMmMxZDVkNTM3ZjA1NDc0MWYzMTExOGFlOCIsCiAgICAgICJzaXplIjogMjU5NzM3MCwKICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vaXNvbGl0aC1wcm9qZWN0L2lzb2xpdGgvcmVsZWFzZXMvZG93bmxvYWQvdjIwMjcuMS4wLXJjNS9pc29saXRoLW9lcC0yMDI3LjEuMC1hcm02NC5kZWIiCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJpc29saXRoLW9lcC13b3JrYmVuY2gteDg2XzY0LXBjLXdpbmRvd3MtZ251LTIwMjcuMS4wLm1zaSIsCiAgICAgICJzaGEyNTYiOiAiNDVlYTQzOWVlMDFhNTJhMzM4Yzk5MGM1ZmQyZGY2OGM2YjE2YWM0NDBkOTY5YmUzMDhmNDdmM2E1OGJkNTA1NyIsCiAgICAgICJzaXplIjogODcxODg0OCwKICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vaXNvbGl0aC1wcm9qZWN0L2lzb2xpdGgvcmVsZWFzZXMvZG93bmxvYWQvdjIwMjcuMS4wLXJjNS9pc29saXRoLW9lcC13b3JrYmVuY2gteDg2XzY0LXBjLXdpbmRvd3MtZ251LTIwMjcuMS4wLm1zaSIKICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIm9lcC13b3JrYmVuY2gtaXNvbGl0aC1vZXAtYWFyY2g2NC5BcHBJbWFnZSIsCiAgICAgICJzaGEyNTYiOiAiNjZhMGU3NWIwNzliYTAyYWY2NjVlZjJjNGU5OTc3ZWNjYjhhNGE2MzQ0MTZjYjJhM2RlZGMyZDk0ZWI2MGIzYiIsCiAgICAgICJzaXplIjogMjI5ODI0MCwKICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vaXNvbGl0aC1wcm9qZWN0L2lzb2xpdGgvcmVsZWFzZXMvZG93bmxvYWQvdjIwMjcuMS4wLXJjNS9vZXAtd29ya2JlbmNoLWlzb2xpdGgtb2VwLWFhcmNoNjQuQXBwSW1hZ2UiCiAgICB9CiAgXSwKICAibWFuaWZlc3QiOiAiaXNvbGl0aC1yZWxlYXNlLXYxIiwKICAicHJvZHVjdCI6ICJvZXAiLAogICJyZWxlYXNlIjogIjIwMjcuMS4wLXJjNSIsCiAgInJlbGVhc2VkIjogIjIwMjYtMTEtMjBUMDY6MjU6NThaIgp9Cg==",
+  "signature_b64": "EjEnfyFfkrkQfpll5g78Vo61yCcdUY620bkYgII3jKzc2piaHcnhsc8ChndRqghfbQrJAOpKbVxhTxY6g6FqDA=="
+}

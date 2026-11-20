@@ -1,0 +1,38 @@
+{
+  "artifacts": [
+    {
+      "name": "2027.1.0-rc5.classification.toml",
+      "sha256": "6c463be034b04bcd33f5e514ed252bd2828051ed973bdc8f7e648bb944ed2867",
+      "size": 1795,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/2027.1.0-rc5.classification.toml"
+    },
+    {
+      "name": "2027.1.0-rc5.json",
+      "sha256": "219f77088b7070a78e7f590b14f700ea3c71748d5cf00597dbee3cc0325a882a",
+      "size": 522,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/2027.1.0-rc5.json"
+    },
+    {
+      "name": "isolith-oep-2027.1.0-arm64.deb",
+      "sha256": "2745e08fd6294ff25727f3b560f3722a4254d4a2c1d5d537f054741f31118ae8",
+      "size": 2597370,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/isolith-oep-2027.1.0-arm64.deb"
+    },
+    {
+      "name": "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi",
+      "sha256": "45ea439ee01a52a338c990c5fd2df68c6b16ac440d969be308f47f3a58bd5057",
+      "size": 8718848,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi"
+    },
+    {
+      "name": "oep-workbench-isolith-oep-aarch64.AppImage",
+      "sha256": "66a0e75b079ba02af665ef2c4e9977eccb8a4a634416cb2a3dedc2d94eb60b3b",
+      "size": 2298240,
+      "url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0-rc5/oep-workbench-isolith-oep-aarch64.AppImage"
+    }
+  ],
+  "manifest": "isolith-release-v1",
+  "product": "oep",
+  "release": "2027.1.0-rc5",
+  "released": "2026-11-20T06:25:58Z"
+}
