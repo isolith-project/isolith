@@ -1,0 +1,27 @@
+# Isolith per-release export-control classification file (P11-T05).
+release = "2027.1.0"
+train = "2027.1"
+classification_date = "2026-11-20"
+
+[classification]
+status = "UNCLASSIFIED"
+summary = "General-engineering open-source software release: not a defense article, not ITAR technical data, not EAR-controlled. Export-controlled-compliant tooling per the documented internal EAR99 self-classification (Gate answer 2026-10-27); no formal BIS CCATS or DDTC determination obtained."
+
+[classification.itar]
+subject = false                 # false = NOT a USML defense article / NOT ITAR technical data (22 CFR 120.33(a), 120.34)
+
+[classification.ear]
+subject = false                 # false = NOT subject to the EAR (published OSS, 15 CFR 734.3(b)(3) + 734.7)
+eccn = "EAR99"                  # documented internal self-classification (Don 2026-10-27); not a formal CCATS
+enc_note = "published-software carve-out (15 CFR 734.7(b)); no closed binary (5D992.c mass-market ENC analysis N/A)"
+firearm_cam_backstop = "no CAM/G-code/AMF content in this release (15 CFR 734.7(c) N/A)"
+
+[restricted_content]
+contains_itar_technical_data = false
+contains_eccn_controlled_content = false
+contains_customer_data = false          # data-locality assertion
+data_locality = "Release bundles tool source + built binaries only; no customer CAD/geometry/PMI/payload content. The Isolith release body and website state that classification of any customer data belongs to the customer's own accredited deployment — Isolith is never described as ITAR certified or ITAR approved."
+
+[governance]
+basis = "P0-M2-T04 export-control memo v1.0 (2026-10-15); Gate-0 answer 2026-10-27 (documented internal EAR99 self-classification, no formal CCATS/DDTC hold before publishing)"
+prepared_by = "Isolith P11 security lane"

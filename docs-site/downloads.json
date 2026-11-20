@@ -2,18 +2,19 @@
   "schema": "isolith.downloads-manifest.v1",
   "release": "2027.1.0",
   "train": "2027.1",
-  "generated_utc": "2026-10-27T23:00:00Z",
-  "gate": "canary/prerelease only until Don opens the public surface",
+  "generated_utc": "2026-11-20T08:05:00Z",
+  "gate": "public surface open on GitHub Releases (2026-10-27 gate); GA v2027.1.0 promoted 2026-11-20T08:02Z after canary soak",
+  "base_url": "https://github.com/isolith-project/isolith/releases/download/v2027.1.0",
   "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811",
   "unsigned_note": "binaries are NOT code-signed in 2027.1.0; Windows SmartScreen will warn on install",
-  "macos_note": "no macOS artifact ships in 2027.1.0; source build documented only",
+  "macos_note": "no macOS artifact ships in 2027.1.0; source build documented only (macos-cli.md)",
   "downloads": [
     {
       "platform": "linux-aarch64",
       "artifact": "oep-workbench-isolith-oep-aarch64.AppImage",
       "kind": "desktop-editor",
       "version": "2027.1.0",
-      "sha256": "8f816eceafd0a4c3b8f565de98065a6c3839b9f4cf46e428b36db8e46bf94086",
+      "sha256": "66a0e75b079ba02af665ef2c4e9977eccb8a4a634416cb2a3dedc2d94eb60b3b",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     },
     {
@@ -21,16 +22,7 @@
       "artifact": "isolith-oep-2027.1.0-arm64.deb",
       "kind": "desktop-bundle",
       "version": "2027.1.0",
-      "sha256": "4f68bb611ac3cf12c5292bd7ebee2e159ccfb408dd9ef5ff3a700a62635c4948",
-      "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
-    },
-    {
-      "platform": "linux-all",
-      "artifact": "isolith-oep-workbench-2027.1.flatpak",
-      "kind": "desktop-sandboxed",
-      "version": "2027.1",
-      "sha256": "ae45aef66d5ca138574f476757c4ca3a75df2286a906c0c14b9836082ae6eac8",
-      "note": "built and installed in card; sandboxed run untested (bubblewrap-in-container)",
+      "sha256": "2745e08fd6294ff25727f3b560f3722a4254d4a2c1d5d537f054741f31118ae8",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     },
     {
@@ -38,16 +30,16 @@
       "artifact": "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi",
       "kind": "desktop-editor",
       "version": "2027.1.0",
-      "sha256": "3bf2b1923604edb4a5c7977343be16657646c21087324575b36244877413c181",
+      "sha256": "45ea439ee01a52a338c990c5fd2df68c6b16ac440d969be308f47f3a58bd5057",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     },
     {
       "platform": "update-feed",
       "artifact": "update.bundle.json",
       "kind": "update-feed",
-      "version": "2027.1.0-rc2",
-      "sha256": "4df5f764ec346b4c21a5e52303f9883bfa3a74b654f6ab22e9cec5415aa6ddbf",
-      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes; air-gap bundles carry this identical file.",
+      "version": "2027.1.0",
+      "sha256": "153e5f5378d06500724da5d2906ac94650d873be61f353ae73792368743c14e9",
+      "note": "UPDATE-CHANNEL (decision #20): the signed update manifest a release cut publishes to its artifact store is the SAME file listed here, so the site and the in-program check read the same signed bytes. GA release v2027.1.0 carries the identical bundle.",
       "signature_id": "e84406ed95b05cbe7003296a7296cd782bb4c45087323fc165f7230017a6a811"
     }
   ]

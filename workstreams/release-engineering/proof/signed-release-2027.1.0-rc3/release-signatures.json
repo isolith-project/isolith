@@ -1,0 +1,26 @@
+{
+  "artifacts": 5,
+  "checksums": {
+    "2027.1.0-rc3.classification.toml": "ae7e4febea5c7798bbe35b5d9b2cf2451c8518a669d15f342d20eed6198c41d1",
+    "2027.1.0-rc3.json": "f0bc01a352e63f6fa81cbd4b782ba5ffc103ac428b8d0cbbd842db1af9a3f716",
+    "isolith-oep-2027.1.0-arm64.deb": "2745e08fd6294ff25727f3b560f3722a4254d4a2c1d5d537f054741f31118ae8",
+    "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi": "45ea439ee01a52a338c990c5fd2df68c6b16ac440d969be308f47f3a58bd5057",
+    "oep-workbench-isolith-oep-aarch64.AppImage": "66a0e75b079ba02af665ef2c4e9977eccb8a4a634416cb2a3dedc2d94eb60b3b"
+  },
+  "detached_signatures": [
+    "2027.1.0-rc3.classification.toml.sig",
+    "2027.1.0-rc3.json.sig",
+    "SHA256SUMS.sig",
+    "isolith-oep-2027.1.0-arm64.deb.sig",
+    "isolith-oep-workbench-x86_64-pc-windows-gnu-2027.1.0.msi.sig",
+    "oep-workbench-isolith-oep-aarch64.AppImage.sig"
+  ],
+  "public_keys": {
+    "ed25519_update": "workstreams/security/keys/oep-update-signing.pub",
+    "gpg_artifact": "scripts/airgap/keys/oep-airgap-signing.pub.asc"
+  },
+  "schema": "isolith.release-signatures.v1",
+  "signed": "2026-11-20T05:12:59Z",
+  "update_bundle": "signed",
+  "version": "2027.1.0-rc3"
+}

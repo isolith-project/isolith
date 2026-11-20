@@ -1,0 +1,16 @@
+{
+  "created_utc": "2026-11-20T03:14:20.959245+00:00",
+  "cut_from": {
+    "ref": "main",
+    "sha": "f90d547fcf38990fc573057c8ab3c84f8801dd97"
+  },
+  "cut_tree": "272f58787612905612d1ba6a72242110f6d9529d",
+  "frozen_commits_first_parent": 129,
+  "frozen_commits_full": 246,
+  "frozen_newest": "f90d547fcf38990fc573057c8ab3c84f8801dd97",
+  "frozen_oldest": "0af3f9b86e39f7f48388ccb61a43323f59df2d74",
+  "host": "promaxgb10-83f1",
+  "schema": "isolith.release-freeze.v1",
+  "train": "2027.1",
+  "version": "2027.1.0-rc3"
+}
