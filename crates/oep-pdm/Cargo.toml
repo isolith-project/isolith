@@ -36,7 +36,7 @@ oep-geo = { path = "../oep-geo" }
 # P8-M3-T01 identity: argon2id password hashing for local accounts, with
 # rand_core/getrandom for salt. OIDC stays a no-dependency feature-gate (off
 # by default). Ported from task/p8m3t01-identity-1017a.
-argon2 = "0.5"
+argon2 = "0.6"
 rand_core = { version = "0.6", features = ["getrandom"] }
 
 [[bin]]
