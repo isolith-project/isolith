@@ -108,6 +108,13 @@ jobs:
           printf 'changelog_file=changelog-artifacts/CHANGELOG-v%s.md\n' "$VERSION" >> "$GITHUB_ENV"
 
       - name: Attach to the GitHub release (release notes + asset)
+        # GitHub exports GITHUB_API_URL but NOT a GITHUB_TOKEN env var: the token
+        # lives in the github.token context. Without these the script bailed
+        # with "no GITHUB_TOKEN" and no release was ever created for a tag.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_API_URL: ${{ github.api_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python3 scripts/release/attach-release-notes.py \
             "$version" "$changelog_file" "$GITHUB_TOKEN" "$GITHUB_API_URL"
