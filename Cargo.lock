@@ -2915,6 +2915,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui",
+ "oep-ui-theme",
 ]
 
 [[package]]
@@ -3151,6 +3152,13 @@ dependencies = [
  "oep-pmi",
  "serde_json",
  "step-io",
+]
+
+[[package]]
+name = "oep-ui-theme"
+version = "0.1.0"
+dependencies = [
+ "egui",
 ]
 
 [[package]]

@@ -1,0 +1,36 @@
+=== guard run with deliberate violation (app.rs:0x1F6FEB) ===
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.77s
+     Running unittests src/main.rs (target/debug/deps/isolith-3817c45951605da4)
+
+running 2 tests
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... FAILED
+
+failures:
+
+---- theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src stdout ----
+
+thread 'theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src' (3140810) panicked at crates/oep-app/src/theme.rs:144:9:
+raw colour literals outside crates/oep-app/src/theme.rs:
+  /home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-app/src/app.rs:15: hex literal 0x1F6FEB
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p oep-app --bin isolith`
+=== after revert ===
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.73s
+     Running unittests src/main.rs (target/debug/deps/isolith-3817c45951605da4)
+
+running 2 tests
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
