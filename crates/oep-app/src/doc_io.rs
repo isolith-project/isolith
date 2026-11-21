@@ -31,10 +31,32 @@
 //! names that directory; the recent file sits next to `layout.conf`), so a
 //! restart reads the same list back. The panel owns *what* goes in; this
 //! module owns *how* it is stored.
+//!
+//! ## Routed mutations and the command journal (wave B, card UI-B2)
+//!
+//! Every edit the editor makes to the loaded document is a ROUTED mutation:
+//! [`EditHistory::apply`] hashes the document before, applies the caller's
+//! change, hashes after, and records a named entry in the command journal
+//! ([`history::Journal`]), coalescing a continuous pointer drag into one
+//! entry. Undo/redo restore the actual canonical document from a bounded
+//! snapshot buffer, and the hashes are exact by construction: after undo the
+//! document hashes to the entry's `before`, after redo to its `after`.
 
 use std::path::{Path, PathBuf};
 
 use oep_import::{Document, ImportOutcome, SourceKind};
+
+// The journal is compiled into this crate through this one `#[path]` include
+// (the same cross-copy-safe pattern the panels use): `history.rs` sits next
+// to `doc_io.rs` under `src/`, and this is the only module that pulls it in,
+// so no `duplicate_mod` arises in the test targets that `#[path]`-include
+// this file. `dead_code` is allowed here for the same reason UI-B1's router
+// helpers are: in the bin build (and in test targets that include this module
+// through `app.rs` but do not drive the journal) the seam is built for the
+// next wave's wiring, and this crate lints `-D warnings`.
+#[allow(dead_code)]
+#[path = "history.rs"]
+pub mod history;
 
 /// File extension for our own document format.
 pub const OEPDOC_EXTENSION: &str = ".oepdoc";
@@ -112,6 +134,232 @@ pub fn document_hash(document: &Document) -> u64 {
         h = h.wrapping_mul(PRIME);
     }
     h
+}
+
+/// The routed, undoable edit history (wave B, card UI-B2 UI-HISTORY).
+///
+/// The card's detail splits undo machinery along the ownership line: the
+/// command journal ([`history::Journal`]) owns ordering and coalescing and
+/// records the command token plus the hashes before/after; it does NOT own
+/// document state. This type is the other half - the bounded canonical-JSON
+/// snapshot buffer that owns the actual states behind the journal's hashes,
+/// so undo/redo really restore the document (D-UI-4: "command journal with
+/// named entries over the existing snapshot history").
+///
+/// The two stay aligned by construction: `snapshots[i]` is the canonical
+/// `.oepdoc` JSON of the state the document was in BEFORE
+/// `journal.entries()[i]` ran, so undoing that entry restores `snapshots[i]`
+/// and the restored document hashes to the entry's `before`. Redo restores
+/// the state that was current when the edit was undone, hashing to the
+/// entry's `after`. Both are asserted here (`debug_assert`) so the acceptance
+/// "undo restores prior mesh hash / redo returns to the same hash" is proven,
+/// not assumed. Memory is bounded: at most `capacity` edits each way (D-UI-4
+/// 32-step semantics), oldest dropped.
+//
+// `dead_code` allowed on the whole seam for the same reason as the journal:
+// in the bin build (and in sibling test targets that include `doc_io` through
+// `app.rs`) nothing wires it yet - the routed journal lands its wired call
+// sites in the following cards (UI-B3/B4) and is exercised here by
+// `--test history`. This crate lints `-D warnings`, and UI-B1's router set
+// the same plain `#[allow(dead_code)]` precedent for seam code.
+#[allow(dead_code)]
+#[derive(Clone, Debug)]
+pub struct EditHistory {
+    /// Ordering + coalescing + the before/after hashes (no document state).
+    journal: history::Journal,
+    /// Canonical `.oepdoc` JSON of the state before each committed entry
+    /// (`i` aligns with `journal.entries()[i]`), oldest first.
+    snapshots: Vec<String>,
+    /// Canonical `.oepdoc` JSON of states that were undone, newest first
+    /// (the redo side).
+    future: Vec<String>,
+    /// Maximum edits/states kept in each direction (0 = unbounded).
+    capacity: usize,
+}
+
+#[allow(dead_code)]
+impl EditHistory {
+    /// An edit history with the engine's default undo capacity
+    /// ([`history::DEFAULT_CAPACITY`]).
+    pub fn new() -> Self {
+        Self::with_capacity(history::DEFAULT_CAPACITY)
+    }
+
+    /// An edit history that keeps at most `capacity` edits each way
+    /// (`0` = unbounded), dropping the oldest when exceeded.
+    pub fn with_capacity(capacity: usize) -> Self {
+        Self {
+            journal: history::Journal::with_capacity(0), // bounded here with the state
+            snapshots: Vec::new(),
+            future: Vec::new(),
+            capacity,
+        }
+    }
+
+    /// The underlying command journal (ordering + coalescing, hashes only).
+    /// The undo/redo affordances and the acceptance tests read it here - the
+    /// journal itself has no document dependency.
+    pub fn journal(&self) -> &history::Journal {
+        &self.journal
+    }
+
+    /// Mutable access for gesture lifecycle commands (`end_drag`): the
+    /// viewport seam tells the journal when a pointer-up closes a drag.
+    pub fn journal_mut(&mut self) -> &mut history::Journal {
+        &mut self.journal
+    }
+
+    /// Number of committed (undoable) edits; a coalesced drag counts once.
+    pub fn len(&self) -> usize {
+        self.journal.len()
+    }
+
+    /// Whether the history holds no committed edits.
+    pub fn is_empty(&self) -> bool {
+        self.journal.is_empty()
+    }
+
+    /// The maximum number of edits kept each way (0 = unbounded).
+    pub fn capacity(&self) -> usize {
+        self.capacity
+    }
+
+    /// Whether an undo step is available.
+    pub fn can_undo(&self) -> bool {
+        self.journal.can_undo()
+    }
+
+    /// Whether a redo step is available.
+    pub fn can_redo(&self) -> bool {
+        self.journal.can_redo()
+    }
+
+    /// Apply one routed mutation to `document` through the command journal.
+    ///
+    /// Hashes the document before, runs `mutate`, hashes after, and records a
+    /// named entry (`token`) - coalescing when `drag` matches the gesture in
+    /// progress, so a whole pointer drag is ONE undo entry. Returns the
+    /// document hash after the command. `mutate` is the sole writer of the
+    /// document; every other edit path in this crate routes through this seam
+    /// (the UI-B1 mutation guard keeps it that way).
+    pub fn apply<M>(
+        &mut self,
+        document: &mut Document,
+        token: &'static str,
+        drag: Option<history::DragId>,
+        mutate: M,
+    ) -> u64
+    where
+        M: FnOnce(&mut Document),
+    {
+        // A command that only extends an open drag coalesces: keep the FIRST
+        // before-state (already captured when the drag opened), hash only.
+        let coalesces = self.journal.would_coalesce(token, drag);
+        let before = document_hash(document);
+        let before_json = if coalesces {
+            None
+        } else {
+            Some(canonical_json(document))
+        };
+        mutate(document);
+        let after = document_hash(document);
+        self.journal.push(token, drag, before, after);
+        if let Some(json) = before_json {
+            self.snapshots.push(json);
+        }
+        self.trim();
+        after
+    }
+
+    /// Undo the last edit: restore `document` to the entry's `before` hash
+    /// (the "prior mesh hash"). Returns the target hash; exactness is
+    /// asserted - the restored document hashes to it.
+    pub fn undo(&mut self, document: &mut Document) -> Option<u64> {
+        let target = self.journal.undo()?;
+        let json = self
+            .snapshots
+            .pop()
+            .expect("the journal and its snapshot stack stay aligned");
+        self.future.push(canonical_json(document));
+        let restored = parse_canonical(&json);
+        debug_assert_eq!(
+            document_hash(&restored),
+            target,
+            "undo must be exact: hash before == hash after undo"
+        );
+        *document = restored;
+        self.trim();
+        Some(target)
+    }
+
+    /// Redo the last undone edit: restore `document` to the entry's `after`
+    /// hash - the same hash the drag ended at before the undo. Returns the
+    /// target hash; exactness is asserted the same way.
+    pub fn redo(&mut self, document: &mut Document) -> Option<u64> {
+        let target = self.journal.redo()?;
+        let json = self
+            .future
+            .pop()
+            .expect("the redo side and the journal stay aligned");
+        self.snapshots.push(canonical_json(document));
+        let restored = parse_canonical(&json);
+        debug_assert_eq!(
+            document_hash(&restored),
+            target,
+            "redo must be exact: hash after == hash after redo"
+        );
+        *document = restored;
+        self.trim();
+        Some(target)
+    }
+
+    /// Forget every edit and any open gesture (both branches).
+    pub fn clear(&mut self) {
+        self.journal.clear();
+        self.snapshots.clear();
+        self.future.clear();
+    }
+
+    /// Enforce the memory bound (D-UI-4: 32-step semantics, bounded memory)
+    /// on the journal AND its snapshot store in lock-step, so the hashes and
+    /// the states they point at never diverge.
+    fn trim(&mut self) {
+        while self.capacity > 0 && self.journal.len() > self.capacity {
+            self.journal.drop_oldest();
+            // Alignment: each committed entry has exactly one before-state.
+            if !self.snapshots.is_empty() {
+                self.snapshots.remove(0);
+            }
+        }
+        while self.capacity > 0 && self.future.len() > self.capacity {
+            self.future.remove(0);
+        }
+    }
+}
+
+impl Default for EditHistory {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+/// The deterministic canonical `.oepdoc` string of `document` - the same text
+/// [`document_hash`] hashes. Infallible for a canonical in-memory document
+/// (plain serde derive, `expect` documents the invariant rather than silently
+/// storing a substitution).
+#[allow(dead_code)]
+fn canonical_json(document: &Document) -> String {
+    document
+        .to_json_pretty()
+        .expect("canonical oep-geo Document always serializes")
+}
+
+/// Parse a canonical `.oepdoc` string that an earlier [`canonical_json`]
+/// produced. Infallible: we only ever re-parse our own canonical output, and
+/// the engine's parser cannot fail on its own serializer's output.
+#[allow(dead_code)]
+fn parse_canonical(json: &str) -> Document {
+    Document::from_json_pretty(json).expect("a canonical Document we serialized always reparses")
 }
 
 /// Path of the persisted recent-file list in `config_dir`.
