@@ -1,0 +1,7 @@
+=== 03-defect1-after.txt: tests/test_contributor_rules_decision.py (post-fix) ===
+$ python3 tests/test_contributor_rules_decision.py
+P0-M1-T04 contributor rules decision acceptance
+document: /home/r1a/isolith-main/.worktrees/ui-a10/workstreams/governance/contributor-rules/contributor-rules-decision.md
+==================================================================
+CONTRIBUTOR RULES DECISION ACCEPTANCE PASSED: DCO not CLA, per-workstream CODEOWNERS, enforcement + handoff recorded on real material (workspace + CODEOWNERS file).
+EXIT=0
