@@ -25,13 +25,13 @@
     {
       "id": "crate-boundary",
       "status": "PASS",
-      "detail": "33 crates match the boundary map",
+      "detail": "34 crates match the boundary map",
       "source": "Cargo.toml/*"
     },
     {
       "id": "boundary-doc-sync",
       "status": "PASS",
-      "detail": "33 rows in sync",
+      "detail": "34 rows in sync",
       "source": "docs/licensing-boundary.md"
     },
     {
