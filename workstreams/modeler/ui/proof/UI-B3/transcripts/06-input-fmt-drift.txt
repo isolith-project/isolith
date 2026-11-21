@@ -1,0 +1,15 @@
+# PRE-EXISTING rustfmt drift in UI-B1's input.rs (NOT owned by this card)
+# rustfmt 1.9.0 strips a trailing blank line at the end of crates/oep-app/src/input.rs
+# (UI-B1, committed on the wave head at 780dc56). It is outside UI-B3's file list, so this
+# card does not edit it; the wave integrator should re-format UI-B1's file at merge time.
+
+committed trailing bytes of input.rs at wave head:
+00000000: 782c 2026 7265 706f 7274 293b 0a7d 0a0a  x, &report);.}..
+
+rustfmt --check diff produced for that file today:
+Diff in /home/r1a/isolith-main/.worktrees/ui-b3/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+
+This is the only rustfmt delta under crates/oep-app; the four UI-B3 files are clean (04-fmt-clippy.txt).

@@ -1,0 +1,11 @@
+# UI-B3 formatting + clippy on the four files owned by this card
+# rustfmt parses the whole #[path]-include chain, so 'cargo fmt --all -- --check' also reflects UI-B1's input.rs (see 06-input-fmt-drift.txt); the deltas below are ONLY that pre-existing file. Clippy (-D warnings) over all oep-app targets is fully green.
+
+## rustfmt --check reaches the pre-existing input.rs drift only
+diff-file-count: 1
+diff-in: Diff in /home/r1a/isolith-main/.worktrees/ui-b3/crates/oep-app/tests/../src/input.rs:504:
+
+## clippy -D warnings over all oep-app targets
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b3/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.97s
+clippy exit: 0

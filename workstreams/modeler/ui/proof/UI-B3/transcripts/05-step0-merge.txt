@@ -1,0 +1,40 @@
+# STEP 0: git fetch + merge github/wave/ui-b
+# remote: github (the only fetchable remote on this host; 'origin' does not exist)
+github	https://github.com/isolith-project/isolith.git (fetch)
+github	https://github.com/isolith-project/isolith.git (push)
+
+fetch:
+
+merged head: 780dc564b344c4f8f03532fa7290f065526cc99c  (merge-UI-B1: UI-INPUT-ROUTER - one event map to command tokens)
+
+what the step-0 merge brought (the wave head 780dc56's diff vs main 736a0a7):
+ crates/oep-app/src/app.rs                          |  16 +
+ crates/oep-app/src/input.rs                        | 507 +++++++++++++++++++++
+ crates/oep-app/tests/input_router.rs               | 490 ++++++++++++++++++++
+ workstreams/modeler/ui/README.md                   |   6 +
+ workstreams/modeler/ui/proof/UI-B1/PROOF.md        |  99 ++++
+ .../ui/proof/UI-B1/transcripts/00-header.txt       |   5 +
+ .../ui/proof/UI-B1/transcripts/01-input-router.txt |  28 ++
+ .../ui/proof/UI-B1/transcripts/02-oep-app-full.txt | 160 +++++++
+ .../ui/proof/UI-B1/transcripts/03-fmt-clippy.txt   |  55 +++
+ .../ui/proof/UI-B1/transcripts/04-smoke.txt        |   7 +
+ .../ui/proof/UI-B1/transcripts/05-guard-fires.txt  |  24 +
+ .../ui/proof/UI-B1/transcripts/06-guard-clean.txt  |  10 +
+ .../ui/proof/UI-B1/transcripts/07-step0-merge.txt  |   7 +
+ 13 files changed, 1414 insertions(+)
+
+UI-B1 files landed on the wave branch before this card:
+ crates/oep-app/src/app.rs                          |  16 +
+ crates/oep-app/src/input.rs                        | 507 +++++++++++++++++++++
+ crates/oep-app/tests/input_router.rs               | 490 ++++++++++++++++++++
+ workstreams/modeler/ui/README.md                   |   6 +
+ workstreams/modeler/ui/proof/UI-B1/PROOF.md        |  99 ++++
+ .../ui/proof/UI-B1/transcripts/00-header.txt       |   5 +
+ .../ui/proof/UI-B1/transcripts/01-input-router.txt |  28 ++
+ .../ui/proof/UI-B1/transcripts/02-oep-app-full.txt | 160 +++++++
+ .../ui/proof/UI-B1/transcripts/03-fmt-clippy.txt   |  55 +++
+ .../ui/proof/UI-B1/transcripts/04-smoke.txt        |   7 +
+ .../ui/proof/UI-B1/transcripts/05-guard-fires.txt  |  24 +
+ .../ui/proof/UI-B1/transcripts/06-guard-clean.txt  |  10 +
+ .../ui/proof/UI-B1/transcripts/07-step0-merge.txt  |   7 +
+ 13 files changed, 1414 insertions(+)
