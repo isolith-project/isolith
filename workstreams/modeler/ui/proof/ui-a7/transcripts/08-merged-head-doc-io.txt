@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+     Running tests/doc_io.rs (/home/r1a/isolith-main/target/debug/deps/doc_io-9213799f1525d614)
+
+running 9 tests
+test committed_demo_step_is_present ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app_opens_committed_demo_step_with_dirty_star ... ok
+test dirty_star_lifecycle_appears_on_change_and_clears_on_save ... ok
+test cancel_and_error_paths_return_document_unchanged ... ok
+test recent_files_persist_across_restart ... ok
+test save_then_reopen_produces_identical_document_hash ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.23s
+
