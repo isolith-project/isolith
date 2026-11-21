@@ -58,6 +58,9 @@ Files outside the list, touched with reason:
 | gate | `cargo fmt --check`, `cargo clippy --workspace --all-targets -D warnings` | 0 | `transcripts/06-gate.txt` |
 | shot drift | `bash scripts/ui/shot.sh` against A4 golden | 1 (expected: viewport now renders) | `transcripts/03-shot-drift.txt` |
 | shot green | `bash scripts/ui/shot.sh` after recording new golden | 0, sha256 `35182d8d…9f5f` | `transcripts/04-shot-green-run1.txt`, `05-shot-green-run2.txt` |
+| merged head | merge `github/wave/ui-a` (UI-A6 landed during this card) into this branch | 0 (union deps, both README rows; golden re-derived on merged head) | landing section |
+| shot merged | `bash scripts/ui/shot.sh` on the merged head | 0, sha256 `97f0a035…7672` (byte-identical x2) | `transcripts/07-shot-merged-run1.txt`, `08-shot-merged-run2.txt` |
+| gate | `cargo fmt --check`, `cargo clippy --workspace --all-targets -D warnings` | 0 | `transcripts/06-gate.txt` |
 
 ### 1. `cargo test -p oep-viewer` (exit 0)
 
@@ -91,20 +94,27 @@ a test double.
 (80x40x10 solid + grid + axes, status bar reporting `Select · 10 ms`). The
 stub that UI-A4 left in the viewport is gone; the refactor is exactly what A5
 set out to prove, so the shell golden moved (validated: drift guard fired once
-loudly, old golden preserved), and three independent shot.sh runs are
-byte-identical:
+loudly, old golden preserved).
+
+During this card's run the wave head advanced (UI-A6 landed on `wave/ui-a`),
+so the FINAL golden is the one recorded on the merged head, where the shell
+shows BOTH the A6 palette and the A5 viewport. Two independent merged-head
+shot.sh runs are byte-identical:
 
 ```
 $ sha256sum workstreams/modeler/ui/proof/ui-a2/frame.png
-35182d8d4a013fe256b06cb2e0df61c811f598349a13138f8eba70e3896b9f5f
+97f0a035a70219c035e0c27702aabf441e7f9eddb6c094e26f602675b3557672
 ```
 
-Same hash recorded in `proof/ui-a5/frame.png.sha256`.
+Same hash recorded in `proof/ui-a5/frame.png.sha256`. (The pre-merge
+viewport-only frame recorded `35182d8d…9f5f`; the A6 golden preserved beside
+it is `66d7010e…a694`.)
 
 ## Image provenance
 
-- `frame.png` - 1280x800 xvfb capture after UI-A5; sha256
-  `35182d8d…9f5f`; byte-identical across three shot.sh runs.
+- `frame.png` - 1280x800 xvfb capture on the merged head (A5 viewport + A6
+  palette); sha256 `97f0a035…7672`; byte-identical across two merged-head
+  shot.sh runs.
 - `ui-a2-golden-before-viewport.png` - the UI-A4 shell golden (hash
   `49749550…9a9d`), preserved so the drift is auditable.
 
