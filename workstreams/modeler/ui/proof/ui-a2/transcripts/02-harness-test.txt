@@ -1,0 +1,12 @@
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a2/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.44s
+     Running tests/harness.rs (target/debug/deps/harness-7414feb5e76b062b)
+
+running 3 tests
+test real_app_registers_window_in_accesskit_tree ... ok
+test key_press_reaches_real_app ... ok
+test click_reaches_real_app ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+harness-test exit=0

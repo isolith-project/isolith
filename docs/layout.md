@@ -36,6 +36,10 @@ Workstream -> crate/module map (anchor format: `P<lane> <crate>`):
   variable-driven dimensions, title block + sheets, SVG/PDF vector export, honest STEP/2D story
   (EDITOR-2D-DRAFTING, Class 2 oep-geo extension)
 - P7 oep-analysis   -- editor-spine analysis lane (decision #19 pull-forward): mass properties, interference/clash detection, exploded views, Class 1 additive over the canonical oep-geo model
+- P7 oep-app        -- modeler editor UI: eframe/egui 0.37 desktop application shell over the engine.
+  `isolith` binary opens one window (1280x800) whose title bar names product and version and exits
+  cleanly on close; `--smoke` runs a bounded number of frames headless and exits 0 (editor parity
+  program, wave A). Later wave-A cards (panels, theme, viewport, palette, open/save) build on this crate.
 - P10 oep-archive   -- export-all interop escape hatch: neutral STEP/3DXML/glTF/STL + JSON archive (P10-M3-T02)
 - P8 oep-pdm        -- self-hosted PDM / ENOVIA-lite; REST API v1 service skeleton
   (P8-M1-T01, Rust axum per workstreams/pdm/service/web-stack-adr.md, AGPL-3.0; retained

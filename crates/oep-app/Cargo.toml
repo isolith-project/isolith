@@ -1,0 +1,31 @@
+[package]
+name = "oep-app"
+license = "Apache-2.0"
+description = "P7: Isolith modeler editor desktop application shell over eframe/egui 0.37 (editor parity program, wave A). Opens one window whose title bar names the product and version, exits cleanly on close, and runs a bounded headless --smoke mode."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+eframe = { workspace = true }
+egui = { workspace = true }
+oep-ui-theme = { path = "../oep-ui-theme" }
+oep-viewer = { path = "../oep-viewer" }
+# UI-A7 UI-OPEN-SAVE (card-mandated import path): the DETAIL requires "import
+# goes through the existing oep-import or oep-step path, never a new parser".
+# doc_io.rs opens the committed demo STEP through oep_import's hub. Already in
+# the build graph transitively via oep-shell; added as a direct dep so the app
+# can name the typed hub surface.
+oep-import = { path = "../oep-import" }
+# UI-A6 UI-COMMAND-PALETTE (card-mandated: the palette's search and its
+# validate-then-dispatch come from oep_shell::commands, the same registry and
+# router step the workbench CLI uses; the app never forks the command list).
+oep-shell = { path = "../oep-shell" }
+
+[[bin]]
+name = "isolith"
+path = "src/main.rs"
+
+[dev-dependencies]
+egui_kittest = { version = "0.37", features = ["eframe"] }
