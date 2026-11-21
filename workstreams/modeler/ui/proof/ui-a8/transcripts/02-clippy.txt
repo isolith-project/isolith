@@ -12,8 +12,8 @@
     Checking oep-step v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-step)
     Checking oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-viewer)
     Checking oep-kinematics v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-kinematics)
-    Checking oep-sketch v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-sketch)
     Checking oep-assem v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-assem)
+    Checking oep-sketch v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-sketch)
     Checking oep-import v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-import)
     Checking oep-render-worker v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-render-worker)
     Checking oep-analysis v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-analysis)
@@ -25,4 +25,5 @@
     Checking oep-archive v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-archive)
     Checking oep-gate v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-gate)
     Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-app)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.22s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.04s
+clippy exit: 0
