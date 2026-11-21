@@ -1,0 +1,7 @@
+# UI-B4 proof header — 2026-11-21
+
+host: aarch64 Linux, 20 cores
+rustc: rustc 1.98.1 (48a229cea 2026-09-01)
+cargo: cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch: ui/b4-sketch-draw
+HEAD: 270e8332af872c478ee6038ff27d591b458d06e3 merge-UI-B3: UI-SKETCH-ENTER (wave/ui-b head this card forks from)
