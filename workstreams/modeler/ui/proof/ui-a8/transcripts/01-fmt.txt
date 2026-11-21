@@ -1,0 +1,2 @@
+=== [1/6] cargo fmt --all -- --check ===
+FMT EXIT: 0

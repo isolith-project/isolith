@@ -1,0 +1,16 @@
+=== [5/6] precommit-gate.sh ===
+== quality gate: main ==
+  [run]  pytest
+  [FAIL] pytest
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_brand_identity.py::test_retired_codename_absent_outside_allowed_paths
+FAILED tests/test_contributor_rules_decision.py::test_contributor_rules_decision_acceptance
+2 failed, 554 passed, 29 skipped, 1 warning in 109.29s (0:01:49)
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate FAIL ==
+PRECOMMIT EXIT: 1

@@ -1,0 +1,14 @@
+=== clean-export proof (merged head 3588429, no on-disk .worktrees) ===
+git archive 3588429 -> /tmp/ui-a8-cleanmerged ; then:
+.venv/bin/python -m pytest tests/test_brand_identity.py tests/test_contributor_rules_decision.py -q
+result: 1 failed, 3 passed  (brand-identity PASSES; contributor-rules FAILS)
+
+=> test_contributor_rules_decision_acceptance is the ONLY real merged-head failure:
+   CODEOWNERS missing row for workspace member crates/oep-ui-theme (want 'crates/oep-ui-theme/.*')
+   root cause: UI-A3 added crates/oep-ui-theme to the workspace (Cargo.toml members + crates/)
+   but never added the CODEOWNERS row. Pre-existing on the wave head; CI would fail too.
+
+=> test_retired_codename_absent_outside_allowed_paths is ENVIRONMENTAL ONLY on this host:
+   passes on the clean export; fails in the main worktree because sibling, untracked
+   .worktrees/ (t_ac965332, t_99963f11, ...) contain retired-codename content and are
+   not in SKIP_DIRS. Not part of the committed tree.

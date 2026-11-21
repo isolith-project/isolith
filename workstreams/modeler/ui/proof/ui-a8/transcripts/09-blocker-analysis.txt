@@ -1,0 +1,35 @@
+=== 09-blocker-analysis.txt ===
+FULL GATE on merged head 3588429: 5/6 legs green, 1 leg (precommit-gate.sh) FAILS.
+
+Green: fmt(0) clippy(-D warnings, 0) cargo test --workspace(0) licensing-check(6/6, 34 crates) shot.sh(0, e60b86dc byte-identical to UI-A9 golden)
+
+Failing leg: bash scripts/gate/precommit-gate.sh
+  [FAIL] pytest: 2 failed, 554 passed, 29 skipped
+
+FAILURE 1 (REAL, wave-introduced, CI-reproducible):
+  tests/test_contributor_rules_decision.py::test_contributor_rules_decision_acceptance
+  'CODEOWNERS missing row for workspace member crates/oep-ui-theme (want "crates/oep-ui-theme/.*")'
+  Root cause: UI-A3 added crates/oep-ui-theme to the workspace (root Cargo.toml members +
+  crates/oep-ui-theme/) but never added the CODEOWNERS row that the P0-M1-T04
+  contributor-rules acceptance requires (CODEOWNERS has rows for oep-app and oep-shell
+  but not oep-ui-theme). Reproduces on a clean git archive export of the merged head,
+  so CI would fail it too. This is a wave-A defect caught at the gate.
+  Fix would be 2 lines beside the oep-app rows (~line 98 of CODEOWNERS):
+      crates/oep-ui-theme/.* @don
+      /crates/oep-ui-theme/ @don
+  CODEOWNERS is NOT in this card's FILES YOU OWN list, so UI-A8 must not edit it.
+
+FAILURE 2 (ENVIRONMENTAL only, not wave-introduced, not on clean CI tree):
+  tests/test_brand_identity.py::test_retired_codename_absent_outside_allowed_paths
+  Fails only when run inside the main worktree because sibling, untracked
+  .worktrees/ directories (t_ac965332, t_99963f11, ...) are materialized on disk and
+  contain retired-codename content; '.worktrees' is not in that test's SKIP_DIRS.
+  On a clean git archive export of the same head the test PASSES (verified).
+  .worktrees is untracked (git ls-files .worktrees/ is empty) - not part of the
+  committed merged head, and CI runs on a fresh checkout, so CI is unaffected.
+
+Verdict: acceptance #3 (full gate green on the merged head) cannot be met without
+editing CODEOWNERS, which is outside this card's file ownership. Per card rules the
+exact failing command is reported above and the card is blocked rather than a partial
+wave being merged to main. The checkpoint merge 3588429 exists only on local main;
+remote github/main is untouched.

@@ -1,0 +1,22 @@
+ANCESTOR ok      : ui/a1-deps is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a2-harness is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a3-theme is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a4-layout is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a5-viewport is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a6-palette is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a7-open-save is an ancestor of github/wave/ui-a
+ANCESTOR ok      : ui/a9-contrast is an ancestor of github/wave/ui-a
+
+=== wave head ===
+dd4725f merge-UI-A8: UI-WAVE-A-INTEGRATE (licensing boundary fix for wave close)
+
+=== proof dir presence on wave head ===
+PROOF ok         : proof/ui-a1/PROOF.md present
+PROOF ok         : proof/ui-a2/PROOF.md present
+PROOF ok         : proof/ui-a3/PROOF.md present
+PROOF ok         : proof/ui-a4/PROOF.md present
+PROOF ok         : proof/ui-a5/PROOF.md present
+PROOF ok         : proof/ui-a6/PROOF.md present
+PROOF ok         : proof/ui-a7/PROOF.md present
+PROOF MISSING    : proof/ui-a8/PROOF.md ABSENT on github/wave/ui-a
+PROOF ok         : proof/ui-a9/PROOF.md present
