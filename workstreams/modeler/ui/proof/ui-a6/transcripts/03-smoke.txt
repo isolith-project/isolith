@@ -1,0 +1,5 @@
+$ xvfb-run -a cargo run -p oep-app -- --smoke
+      Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
+       Running `target/debug/isolith --smoke`
+  frames=8 smoke ok
+exit: 0
