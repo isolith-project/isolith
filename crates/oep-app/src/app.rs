@@ -85,6 +85,7 @@ impl App {
             ui,
             "command_palette_host",
             "command palette host",
+            panels::RegionKind::PaletteHost,
             region.palette_host,
             |ui, app| {
                 ui.label(
@@ -101,6 +102,7 @@ impl App {
             ui,
             "model_tree",
             "model tree",
+            panels::RegionKind::ModelTree,
             region.model_tree,
             panels::tree::show,
         );
@@ -110,6 +112,7 @@ impl App {
             ui,
             "viewport",
             "viewport",
+            panels::RegionKind::Viewport,
             region.viewport,
             panels::viewport::show,
         );
@@ -119,6 +122,7 @@ impl App {
             ui,
             "properties",
             "properties",
+            panels::RegionKind::Properties,
             region.properties,
             panels::properties::show,
         );
@@ -128,6 +132,7 @@ impl App {
             ui,
             "status_bar",
             "status bar",
+            panels::RegionKind::StatusBar,
             region.status_bar,
             |ui, app| panels::status::show(ui, &app.status),
         );
@@ -141,14 +146,36 @@ impl App {
     /// nodes automatically, an explicit bounds set from the region rect so a
     /// test can assert the geometry (no overlap, no clipping) at any window
     /// size.
+    ///
+    /// UI-A9 UI-SHELL-CONTRAST: the region is painted as a panel - a raised
+    /// fill (SURFACE_RAISED) distinct from the flat window surface, plus a 1px
+    /// BORDER hairline - all from [`panels::region_frame`], resolved for the
+    /// active theme mode so dark is treated as deliberately as light. The fill
+    /// is painted behind the content and the hairline on top of it, so the
+    /// viewport's rasterizer frame stays inside its border. Pure painting:
+    /// the child Ui's `max_rect` is unchanged, so the AccessKit geometry the
+    /// layout test asserts is untouched.
     fn region<R>(
         &mut self,
         ui: &mut egui::Ui,
         id_salt: &'static str,
         accessible_name: &str,
+        kind: panels::RegionKind,
         rect: egui::Rect,
         add_contents: impl FnOnce(&mut egui::Ui, &mut App) -> R,
     ) {
+        let mode = if ui.style().visuals.dark_mode {
+            oep_ui_theme::Mode::Dark
+        } else {
+            oep_ui_theme::Mode::Light
+        };
+        let frame = panels::region_frame(kind, mode);
+        // Raised fill behind the region content (drop the painter so the
+        // scope can borrow `ui` mutably).
+        {
+            let painter = ui.painter();
+            painter.rect_filled(rect, frame.corner_radius, frame.fill);
+        }
         let inner = ui.scope_builder(
             egui::UiBuilder::new()
                 .id_salt(id_salt)
@@ -157,6 +184,17 @@ impl App {
                 .accessibility_role(Role::GenericContainer),
             |ui| add_contents(ui, self),
         );
+        // Hairline on top, so every region's edge (viewport raster included)
+        // reads as a deliberate panel seam even where content touches it.
+        {
+            let painter = ui.painter();
+            painter.rect_stroke(
+                rect,
+                frame.corner_radius,
+                frame.stroke,
+                egui::StrokeKind::Middle,
+            );
+        }
         // Explicit node bounds: `fill_accesskit_node_common` only runs for
         // focusable widgets, so without this the region node has no geometry
         // for tests (or screen readers) to inspect.

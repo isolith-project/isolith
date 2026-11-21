@@ -1,0 +1,84 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+     Running unittests src/main.rs (target/debug/deps/isolith-ee28e432ce29b2c6)
+
+running 6 tests
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/doc_io.rs (target/debug/deps/doc_io-9213799f1525d614)
+
+running 10 tests
+test committed_demo_step_is_present ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test app_opens_committed_demo_step_with_dirty_star ... ok
+test cancel_and_error_paths_return_document_unchanged ... ok
+test dirty_star_lifecycle_appears_on_change_and_clears_on_save ... ok
+test recent_files_persist_across_restart ... ok
+test save_then_reopen_produces_identical_document_hash ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.24s
+
+     Running tests/harness.rs (target/debug/deps/harness-78da3aa24b5a343f)
+
+running 7 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test real_app_registers_window_in_accesskit_tree ... ok
+test key_press_reaches_real_app ... ok
+test click_reaches_real_app ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+
+     Running tests/layout.rs (target/debug/deps/layout-edb97a6c91410100)
+
+running 8 tests
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test regions_are_in_the_documented_spatial_positions ... ok
+test persisted_layout_round_trips_and_app_restores_same_sizes ... ok
+test region_geometry_tiles_window_without_overlap_or_clipping ... ok
+test five_regions_reachable_by_accessible_name_at_both_resolutions ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.56s
+
+     Running tests/palette.rs (target/debug/deps/palette-612b7de2e5ea989d)
+
+running 9 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test rows_show_label_and_shortcut_or_path_with_nothing_hidden ... ok
+test ctrl_k_opens_the_palette_and_escape_closes_it ... ok
+test typing_filters_through_the_shared_registry_not_a_fork ... ok
+test unknown_input_shows_an_honest_no_match_line_and_does_not_route ... ok
+test enter_routes_through_the_shared_router_spy_counts_invocations ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running tests/viewport.rs (target/debug/deps/viewport-5b1e587998203802)
+
+running 7 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test zoom_changes_camera_distance_numerically_and_changes_frame_hash ... ok
+test middle_drag_pans_target_exactly_and_changes_frame_hash ... ok
+test left_drag_orbits_camera_numerically_and_changes_frame_hash ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
