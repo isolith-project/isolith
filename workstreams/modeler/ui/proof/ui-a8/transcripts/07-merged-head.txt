@@ -1,14 +1,15 @@
 === merged head record ===
-MERGED HEAD = the checkpoint commit on main created by UI-A8:
+Final wave head (github/wave/ui-a, carries the UI-A8 record): d4379c4f86083c4ac60ac013fc1b16f99348d1d1
 
+Checkpoint on main (created by UI-A8):
 git merge --no-ff github/wave/ui-a -m "checkpoint(wave-ui-a): walking skeleton -- cards UI-A1..UI-A9"
   one no-ff merge, no fast-forward.
-  parents: 8760cfe (main before the wave) + d4379c4 (final wave head)
-  checkpoint commit d94ad70 (this is the merged head; also the object of the
-  annotated tag wave-ui-a, acceptance #4).
+  parents: 8760cfe (main before the wave) + d4379c4f86083c4ac60ac013fc1b16f99348d1d1 (final wave head)
+  the checkpoint commit is the object of annotated tag wave-ui-a
+  (git rev-parse wave-ui-a^{} == the checkpoint; acceptance #4).
 
-The full gate in transcripts 01-06 was run on THIS merged head d94ad70 after
-the checkpoint merge: all six legs green (fmt, clippy -D warnings, cargo test
+The full gate in transcripts 01-06 was run on this merged head after the
+checkpoint merge: all six legs green (fmt, clippy -D warnings, cargo test
 --workspace, licensing-check 6/6 with 34 crates, precommit-gate pytest 558
 passed + cargo test, shot.sh byte-identical to the UI-A9 golden
 e60b86dc...9a9b). docs/scope-register.json diff across the checkpoint is empty
