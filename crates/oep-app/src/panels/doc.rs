@@ -190,10 +190,21 @@ impl DocState {
     }
 
     /// One compact, machine-readable report line every frame: visible file
-    /// name (with star), dirty flag, hashes, error, and recent list.
+    /// name (with star), dirty flag, hashes, body/feature counts taken from
+    /// the live document itself, error, and recent list.
+    ///
+    /// The `bodies=`/`features=` lines exist so the model-tree panel (UI-A11)
+    /// can report what the document actually contains without re-opening the
+    /// file or reading this private struct: it reads the plain `String` oracle
+    /// under `DOC_REPORT_KEY` the same way the `--test doc_io` target does.
     fn report(&self) -> String {
+        let (bodies, features) = self
+            .document
+            .as_ref()
+            .map(|d| (d.bodies.len(), d.features.len()))
+            .unwrap_or((0, 0));
         let mut out = format!(
-            "file={}\ndirty={}\nhash={}\nsaved={}\n",
+            "file={}\ndirty={}\nhash={}\nsaved={}\nbodies={bodies}\nfeatures={features}\n",
             self.display_name(),
             self.dirty(),
             self.current_hash,
