@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running tests/heading_ink.rs (target/debug/deps/heading_ink-cdb0851b3df565bd)
+
+running 9 tests
+test heading_carries_text_primary_in_dark ... ok
+test heading_carries_text_primary_in_light ... ok
+test on_accent_carries_the_accent_ink_and_differs_from_heading ... ok
+test dynamic_heading_sites_use_the_sanctioned_helpers ... ok
+test heading_is_not_the_strong_text_ink ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test shell_heading_strings_are_produced_through_heading_helper ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

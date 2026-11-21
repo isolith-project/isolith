@@ -26,7 +26,9 @@ Run: pytest tests/test_brand_identity.py   (or python3 tests/test_brand_identity
 from __future__ import annotations
 
 import os
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -80,6 +82,12 @@ ALLOWED_FILES = (
 SKIP_DIRS = {
     ".git", "target", "__pycache__", ".venv", "node_modules",
     ".pytest_cache", ".mypy_cache", ".ruff_cache", ".herschel",
+    # Sibling, untracked git worktree checkouts materialize under this name
+    # when the scan runs from the primary checkout of a worktree-hosting repo
+    # (the wave-A gate runs from such a tree). They are environment, not repo
+    # content: never tracked, never shipped, and they carry retired-brand-era
+    # files. Skipping keeps the guard green in a worktree and in CI alike.
+    ".worktrees",
 }
 
 CONTENT_HEAD = 256 * 1024  # content scan budget per file (per path header)
@@ -153,6 +161,51 @@ def test_retired_codename_absent_outside_allowed_paths() -> None:
         "retired codename strings found outside the allowed paths:\n  "
         + "\n  ".join(hits)
     )
+
+
+def test_scan_still_reports_a_planted_violation() -> None:
+    """The .worktrees skip is a directory-list correction, not a blind spot: a
+    real violation planted at a tracked-looking path inside the repo is still
+    reported, so the guard never weakens.
+    """
+    probe = Path(tempfile.mkdtemp(prefix="brand-scan-probe-", dir=REPO))
+    try:
+        planted = probe / "keelworks-config.json"
+        planted.write_text('{"name": "keelworks"}', encoding="utf-8")
+        hits = _scan()
+        assert hits, "scan must report a planted violation under %s" % probe.name
+        assert any("keelworks-config.json" in h for h in hits), (
+            "scan must name the planted file; got: %s" % hits
+        )
+    finally:
+        shutil.rmtree(probe, ignore_errors=True)
+
+
+def test_worktrees_copy_is_ignored() -> None:
+    """A copy of the retired token inside .worktrees/<x>/ is environment (the
+    sibling-checkout hosting dir), not repo content, and the scan must skip it.
+    This is the defect-2 correction: the gate runs green from a worktree-hosted
+    checkout and from a clean CI tree alike.
+    """
+    probe = REPO / ".worktrees" / ("brand-scan-probe-" + str(os.getpid()))
+    probe.mkdir(parents=True, exist_ok=True)
+    try:
+        planted = probe / "keelworks-config.json"
+        planted.write_text('{"name": "keelworks"}', encoding="utf-8")
+        hits = _scan()
+        worktrees_hits = [h for h in hits if ".worktrees" in h]
+        assert not worktrees_hits, (
+            ".worktrees copies must be ignored; got: %s" % worktrees_hits
+        )
+    finally:
+        shutil.rmtree(probe, ignore_errors=True)
+        # Remove the hosting dir only if we just created it and it is now empty
+        # (os.rmdir refuses on a non-empty dir, so a real sibling-hosting
+        # .worktrees/ is left untouched).
+        try:
+            (REPO / ".worktrees").rmdir()
+        except OSError:
+            pass
 
 
 def test_allowed_paths_exist() -> None:

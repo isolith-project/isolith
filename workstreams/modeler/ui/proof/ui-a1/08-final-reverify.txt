@@ -1,0 +1,14 @@
+### reverify on committed head 37367d8
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.11s
+build_exit=0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running `target/debug/isolith --smoke`
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok
+smoke_exit=0
+  [PASS] dependency-allowlist: 531 dependencies within the permissive allow-list
+  [PASS] notice-sync: 531 dependency lines + 1 native entries
+git diff --stat NOTICE --cached is n/a post-commit; committed NOTICE diff vs base:
+ NOTICE | 355 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 355 insertions(+)

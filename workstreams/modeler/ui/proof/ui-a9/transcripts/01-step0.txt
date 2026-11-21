@@ -1,0 +1,11 @@
+UI-A9 STEP 0: merge the wave head into the card branch.
+Remote for wave/ui-a on this host is `github` (no `origin` remote exists in the
+isolith repo; fetch + merge below use the same remote every wave-A card used,
+and the merge is what puts UI-A5/A6/A7 in the tree).
+
+  $ git rev-parse HEAD
+  d4da7e6 Merge remote-tracking branch 'github/wave/ui-a' into ui/a9-contrast
+
+The merge brought UI-A7 (29614e5, latest wave head) into the working tree; the
+log above it shows UI-A5 (a3abdb6) and UI-A6 (24a2cfd) already present via
+their wave merges. Plain `git merge github/wave/ui-a` now reports up to date.

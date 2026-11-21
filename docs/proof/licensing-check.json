@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-27",
+  "generated": "2026-11-21",
   "task": "t_fb3a286b license-files-and-boundary",
   "exit": 0,
   "summary": {
@@ -25,25 +25,25 @@
     {
       "id": "crate-boundary",
       "status": "PASS",
-      "detail": "32 crates match the boundary map",
+      "detail": "34 crates match the boundary map",
       "source": "Cargo.toml/*"
     },
     {
       "id": "boundary-doc-sync",
       "status": "PASS",
-      "detail": "32 rows in sync",
+      "detail": "34 rows in sync",
       "source": "docs/licensing-boundary.md"
     },
     {
       "id": "dependency-allowlist",
       "status": "PASS",
-      "detail": "176 dependencies within the permissive allow-list",
+      "detail": "535 dependencies within the permissive allow-list",
       "source": "docs/dependency-licenses.json"
     },
     {
       "id": "notice-sync",
       "status": "PASS",
-      "detail": "176 dependency lines + 1 native entries",
+      "detail": "535 dependency lines + 1 native entries",
       "source": "NOTICE"
     }
   ]

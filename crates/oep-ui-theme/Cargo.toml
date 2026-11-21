@@ -1,0 +1,11 @@
+[package]
+name = "oep-ui-theme"
+license = "Apache-2.0"
+description = "Semantic design tokens for the Isolith editor UI (editor parity program, wave A, card UI-A3). Each token carries a light and a dark value; light is the default mode. Contrast is tested against WCAG thresholds (4.5:1 text, 3:1 non-text) over both modes."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+egui = { workspace = true }

@@ -1,0 +1,16 @@
+=== palette capture: focus fix note ===
+Attempt to capture the palette under bare xvfb-run returned a shell-identical
+frame: xvfb-run -a -s "-screen 0 1280x800x24" ... xtest_inject PAL
+=> frame hash == shell golden e60b86dc (palette NOT open). Root cause: bare
+Xvfb has no window manager, so the egui/winit window never receives X input
+focus and winit does not deliver the Ctrl+K key event to the app.
+
+Fix: xtest_inject (this proof dir) now sets X input focus with a guarded,
+non-fatal XSetInputFocus(app, RevertToPointerRoot, CurrentTime) after the
+window is mapped and stable, then injects Ctrl+K. With focus set, the palette
+opens deterministically. Verified: two independent app launches under the same
+xvfb-run yield byte-identical palette frames (sha256 oracle), hash
+ed2634e1a6957a58f27d9ce6faf83a94dd1855b33f2c58ccd44ae1fb48eb9445.
+Diff from the previous injector: the focus-guard block only; no palette
+behaviour changed in the app. shell and viewport hashes are unchanged from the
+UI-A9/attempt-1 captures (e60b86dc, f7cc1e58).

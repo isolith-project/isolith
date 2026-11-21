@@ -1,0 +1,8 @@
+=== 01-defect1-before.txt: tests/test_contributor_rules_decision.py on merged wave head (pre-fix) ===
+$ python3 tests/test_contributor_rules_decision.py
+P0-M1-T04 contributor rules decision acceptance
+document: /home/r1a/isolith-main/.worktrees/ui-a10/workstreams/governance/contributor-rules/contributor-rules-decision.md
+==================================================================
+CONTRIBUTOR RULES DECISION ACCEPTANCE FAILED (1)
+  - CODEOWNERS missing row for workspace member crates/oep-ui-theme (want 'crates/oep-ui-theme/.*')
+EXIT=1

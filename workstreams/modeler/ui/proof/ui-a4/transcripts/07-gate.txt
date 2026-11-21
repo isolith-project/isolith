@@ -1,0 +1,18 @@
+======== WAVE GATE on merged head ========
+--- cargo fmt --all -- --check ---
+fmt OK (exit 0)
+--- cargo clippy -p oep-app --all-targets -- -D warnings ---
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.14s
+--- cargo test -p oep-app ---
+     Running unittests src/main.rs (/home/r1a/isolith-main/.worktrees/ui-a2/target/debug/deps/isolith-ea87e6c948a14101)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/harness.rs (/home/r1a/isolith-main/.worktrees/ui-a2/target/debug/deps/harness-5c203b942de66db4)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/layout.rs (/home/r1a/isolith-main/.worktrees/ui-a2/target/debug/deps/layout-593ecf68dbe87373)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+--- cargo test -p oep-ui-theme ---
+     Running unittests src/lib.rs (/home/r1a/isolith-main/.worktrees/ui-a2/target/debug/deps/oep_ui_theme-369e165cee4d2827)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/contrast.rs (/home/r1a/isolith-main/.worktrees/ui-a2/target/debug/deps/contrast-aa14fd0abc233369)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

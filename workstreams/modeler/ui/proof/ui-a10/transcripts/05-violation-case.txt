@@ -1,0 +1,17 @@
+=== 05-violation-case.txt: scan still catches a real violation; .worktrees copy ignored ===
+Case A: the real retired token is planted in file CONTENT at a tracked-looking
+        repo path (not in any skip dir); the scan must report it.
+Case B: identical content copied under .worktrees/<x>/ (sibling-checkout hosting
+        dir); the scan must skip it.
+The token is assembled at runtime from two parts so this proof file carries no
+contiguous retired literal and stays clean for the same scan it documents.
+
+$ python3 - <<'EOF'
+Case A: scan reports the planted file:
+    brand-scan-violation-56s2ga0s/config.json: forbidden string in the file content
+Case B: .worktrees hits after fix = []
+EXIT=0
+
+Case A proves the skip-dir correction did not blind the guard; Case B
+proves sibling-checkout hosting dirs are skipped, so the full gate is green
+in a worktree-hosted checkout and in CI alike.

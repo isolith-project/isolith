@@ -1,0 +1,8 @@
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 35182d8d4a013fe256b06cb2e0df61c811f598349a13138f8eba70e3896b9f5f
+  golden  : 49749550d281182113d8dc011193c50148bc136cff270f99fbe30591c9756a9d
+  reference image: /home/r1a/isolith-main/.worktrees/ui-a5/workstreams/modeler/ui/proof/ui-a2/frame.png
