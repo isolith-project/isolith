@@ -1,0 +1,34 @@
+=== ancestor audit (acceptance #1): every wave-A card branch -> github/wave/ui-a ===
+wave head: 33aaa689a15c9cc535e79fb02f539252282bb348
+
+ANCESTOR ok : ui/a1-deps
+ANCESTOR ok : ui/a2-harness
+ANCESTOR ok : ui/a3-theme
+ANCESTOR ok : ui/a4-layout
+ANCESTOR ok : ui/a5-viewport
+ANCESTOR ok : ui/a6-palette
+ANCESTOR ok : ui/a7-open-save
+ANCESTOR ok : ui/a9-contrast
+ANCESTOR ok : ui/a10-gate-fix
+
+merge commits on wave (each card's landing):
+ANCESTOR ok : merge-ui-a1
+ANCESTOR ok : merge-t_2aaa48e9
+ANCESTOR ok : merge-ui-a3
+ANCESTOR ok : merge-t_9796171c
+ANCESTOR ok : merge-t_72744f2e
+ANCESTOR ok : merge-t_af953360
+ANCESTOR ok : merge-t_c5fc0a25
+ANCESTOR ok : merge-UI-A9
+ANCESTOR ok : merge-UI-A10
+
+every wave-A card proof dir present on wave head:
+ui-a1
+ui-a10
+ui-a2
+ui-a3
+ui-a4
+ui-a5
+ui-a6
+ui-a7
+ui-a9
