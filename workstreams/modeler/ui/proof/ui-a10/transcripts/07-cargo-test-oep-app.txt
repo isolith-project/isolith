@@ -1,0 +1,18 @@
+=== 07-cargo-test-oep-app.txt: cargo test -p oep-app (unchanged, must stay green) ===
+$ cargo test -p oep-app
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running tests/viewport.rs (target/debug/deps/viewport-5b1e587998203802)
+
+running 7 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test zoom_changes_camera_distance_numerically_and_changes_frame_hash ... ok
+test middle_drag_pans_target_exactly_and_changes_frame_hash ... ok
+test left_drag_orbits_camera_numerically_and_changes_frame_hash ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+
+EXIT=0

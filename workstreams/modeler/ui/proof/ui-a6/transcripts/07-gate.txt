@@ -1,0 +1,17 @@
+$ cargo fmt -p oep-app -- --check
+fmt exit: 0
+
+$ cargo clippy -p oep-app --all-targets -- -D warnings
+      Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.16s
+clippy exit: 0
+
+$ cargo test -p oep-app
+       Running unittests src/main.rs (target/debug/deps/isolith-c701e959ef0bd058)
+  test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+       Running tests/harness.rs (target/debug/deps/harness-be39af3c6e85117e)
+  test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+       Running tests/layout.rs (target/debug/deps/layout-f02c477f1662f08f)
+  test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+       Running tests/palette.rs (target/debug/deps/palette-63a1ef10a6b02ec7)
+  test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+test exit: 0

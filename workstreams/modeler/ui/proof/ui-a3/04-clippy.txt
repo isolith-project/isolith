@@ -1,0 +1,2 @@
+    Checking oep-ui-theme v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-ui-theme)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.21s

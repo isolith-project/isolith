@@ -1,0 +1,25 @@
+UI-A6 acceptance re-run on the WAVE MERGED HEAD (merge-t_af953360 = 2269adf):
+
+$ cargo test -p oep-app --test palette
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+$ xvfb-run -a cargo run -p oep-app -- --smoke
+frames=8 smoke ok
+$ bash scripts/ui/shot.sh
+  sha256   : 66d7010e81ac29675fc8db0c12ed287f68961954255e1f301fe78d8d64c7a694
+
+$ cargo test -p oep-app --test palette
+     Running tests/palette.rs (target/debug/deps/palette-63a1ef10a6b02ec7)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+palette-test exit: 0
+
+$ xvfb-run -a cargo run -p oep-app -- --smoke
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.14s
+     Running `target/debug/isolith --smoke`
+frames=8 smoke ok
+smoke exit: 0
+
+$ bash scripts/ui/shot.sh
+shot.sh: ok
+  frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+  sha256   : 66d7010e81ac29675fc8db0c12ed287f68961954255e1f301fe78d8d64c7a694
+shot exit: 0

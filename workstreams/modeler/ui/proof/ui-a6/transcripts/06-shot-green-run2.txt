@@ -1,0 +1,6 @@
+$ bash scripts/ui/shot.sh   (determinism: identical hash on an independent rerun)
+
+shot.sh: ok
+  frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+  sha256   : 66d7010e81ac29675fc8db0c12ed287f68961954255e1f301fe78d8d64c7a694
+exit: 0

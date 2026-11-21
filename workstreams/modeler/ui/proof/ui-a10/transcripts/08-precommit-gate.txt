@@ -1,0 +1,12 @@
+=== 08-precommit-gate.txt: full precommit gate, post-fix (the leg UI-A8 saw red) ===
+$ VIRTUAL_ENV=.../main/.venv bash scripts/gate/precommit-gate.sh
+(VIRTUAL_ENV provides python with pytest; default python3 on this host has none.)
+== quality gate: ui-a10 ==
+  [run]  pytest
+  [ok]   pytest (557 passed, 29 skipped, 1 warning in 82.35s (0:01:22))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==
+GATE_EXIT=0

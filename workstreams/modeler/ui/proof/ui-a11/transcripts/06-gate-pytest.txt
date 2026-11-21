@@ -1,0 +1,6 @@
+$ python3 tests/test_brand_identity.py
+[PASS] test_worktrees_copy_is_ignored
+5/5 brand-identity checks passed
+
+$ python3 tests/test_contributor_rules_decision.py
+CONTRIBUTOR RULES DECISION ACCEPTANCE PASSED: DCO not CLA, per-workstream CODEOWNERS, enforcement + handoff recorded on real material (workspace + CODEOWNERS file).

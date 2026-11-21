@@ -42,7 +42,7 @@ components stay Apache-2.0.
 
 ## The per-crate map
 
-32 workspace crates. Licence column is the SPDX identifier every crate must
+34 workspace crates. Licence column is the SPDX identifier every crate must
 declare in its `Cargo.toml`.
 
 | Crate | Licence | Workstream | Why |
@@ -64,6 +64,8 @@ declare in its `Cargo.toml`.
 | oep-sketch | Apache-2.0 | P7 | 2D sketcher and parametric variables (application/library) |
 | oep-assem | Apache-2.0 | P7 | assembly workbench and solver seam (application/library) |
 | oep-analysis | Apache-2.0 | P7 | editor-spine analysis lane (application/library) |
+| oep-app | Apache-2.0 | P7 | modeler editor UI: eframe/egui desktop application shell (application) |
+| oep-ui-theme | Apache-2.0 | P7 | semantic design tokens (light + dark) for the modeler editor UI (library) |
 | oep-drafting | Apache-2.0 | P7 | 2D drafting workbench (application/library) |
 | oep-gate | Apache-2.0 | P9 | P9-M5-T02 GA gate: QA harness that exercises the lane, not part of the served orchestration runtime (application/tooling) |
 | oep-update | Apache-2.0 | P10 | advisory non-blocking update checker (application) |
@@ -80,12 +82,14 @@ declare in its `Cargo.toml`.
 | oep-farm | AGPL-3.0 | P9 | P2P checkpoint/resume for long jobs (P2P orchestration runtime) |
 | oep-opsdash | AGPL-3.0 | P9 | P2P ops dashboard, served over HTTP (P2P orchestration surface) |
 
-Totals: 20 crates Apache-2.0, 12 crates AGPL-3.0.
+Totals: 22 crates Apache-2.0, 12 crates AGPL-3.0.
 
 ## What this means for third-party components
 
 The pure-permissive allow-list (Apache-2.0, MIT, ISC, BSL-1.0, BSD-1/2/3,
-CC0-1.0, CC-BY-4.0, MIT-0, Unlicense, Zlib, Unicode-3.0) is enforced for
+CC0-1.0, CC-BY-4.0, MIT-0, Unlicense, Zlib, Unicode-3.0, plus the permissive
+font-data licenses OFL-1.1 and Ubuntu-font-1.0 carried by the egui default
+fonts) is enforced for
 every package in the committed `Cargo.lock`; OR branches that offer a
 permissive alternative are acceptable (for example the MIT/ISC branches of
 `aws-lc-rs` and the MIT branch of `r-efi`). Identifiers explicitly barred
