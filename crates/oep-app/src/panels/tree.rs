@@ -27,6 +27,7 @@
 use eframe::egui;
 
 use crate::app::App;
+use crate::theme;
 
 use super::doc::DOC_REPORT_KEY;
 
@@ -98,7 +99,7 @@ fn tree_state(ctx: &egui::Context) -> TreeState {
 
 /// Draw the model tree panel content inside its already-positioned region.
 pub fn show(ui: &mut egui::Ui, _app: &mut App) {
-    ui.label(egui::RichText::new("Model Tree").strong().size(13.0));
+    ui.label(theme::heading(theme::mode_of(ui), "Model Tree").size(13.0));
     ui.separator();
     ui.add_space(6.0);
 
@@ -111,7 +112,7 @@ pub fn show(ui: &mut egui::Ui, _app: &mut App) {
             bodies,
             features,
         } => {
-            ui.label(egui::RichText::new(&file_name).strong());
+            ui.label(theme::heading(theme::mode_of(ui), &file_name));
             let body_word = if bodies == 1 { "body" } else { "bodies" };
             let feature_word = if features == 1 { "feature" } else { "features" };
             ui.label(format!("{bodies} {body_word}, {features} {feature_word}"));

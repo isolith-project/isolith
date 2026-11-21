@@ -27,6 +27,7 @@ use eframe::egui;
 use egui::accesskit::Role;
 
 use crate::config;
+use crate::theme;
 
 use std::io::Write;
 
@@ -88,11 +89,7 @@ impl App {
             panels::RegionKind::PaletteHost,
             region.palette_host,
             |ui, app| {
-                ui.label(
-                    egui::RichText::new("Command Palette Host")
-                        .strong()
-                        .size(13.0),
-                );
+                ui.label(theme::heading(theme::mode_of(ui), "Command Palette Host").size(13.0));
                 panels::palette::show(ui.ctx(), app);
             },
         );

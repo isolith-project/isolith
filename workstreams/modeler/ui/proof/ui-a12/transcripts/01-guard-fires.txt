@@ -1,0 +1,23 @@
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a12/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.52s
+     Running unittests src/main.rs (target/debug/deps/isolith-ee28e432ce29b2c6)
+
+running 1 test
+test theme::guard::no_strong_text_outside_theme_rs ... FAILED
+
+failures:
+
+---- theme::guard::no_strong_text_outside_theme_rs stdout ----
+
+thread 'theme::guard::no_strong_text_outside_theme_rs' (3116528) panicked at crates/oep-app/src/theme.rs:221:9:
+`RichText::strong()` outside crates/oep-app/src/theme.rs would repaint headings:
+  /home/r1a/isolith-main/.worktrees/ui-a12/crates/oep-app/src/zz_a12_probe.rs:8: `RichText::strong(` paints through widgets.active
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    theme::guard::no_strong_text_outside_theme_rs
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p oep-app --bin isolith`

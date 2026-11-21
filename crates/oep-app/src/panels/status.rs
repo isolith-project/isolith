@@ -10,6 +10,8 @@
 
 use eframe::egui;
 
+use crate::theme;
+
 /// The three status bar fields, stubbed to safe defaults.
 #[derive(Debug, Clone)]
 pub struct Status {
@@ -34,7 +36,7 @@ impl Default for Status {
 /// Draw the status bar content inside its already-positioned region.
 pub fn show(ui: &mut egui::Ui, status: &Status) {
     ui.horizontal(|ui| {
-        ui.label(egui::RichText::new("Status Bar").strong().size(13.0));
+        ui.label(theme::heading(theme::mode_of(ui), "Status Bar").size(13.0));
         ui.separator();
         ui.label(egui::RichText::new(&status.document_name));
         ui.separator();

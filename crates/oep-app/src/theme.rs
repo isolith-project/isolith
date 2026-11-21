@@ -7,6 +7,15 @@
 //! read a literal colour. The `guard` test module enforces that rule by
 //! scanning this crate's `src/` for raw hex colour literals and direct
 //! `Color32::from_*` constructions outside of this file.
+//!
+//! UI-A12 UI-HEADING-INK: emphasised/heading text goes through [`heading`]
+//! (and [`on_accent`] for the one place that paints on the accent fill). This
+//! file is also the only place a `RichText::strong()` may appear: egui
+//! resolves `strong()` to `Visuals::strong_text_color()`, i.e.
+//! `widgets.active.fg_stroke` - the best-on-accent ink that is right on an
+//! accent-filled button but wrong (white-on-white) for headings on neutral
+//! surfaces. Both helpers pin an explicit token colour instead, which egui
+//! resolves ahead of the `strong()` ink.
 
 use eframe::egui;
 use egui::style::{Selection, WidgetVisuals, Widgets};
@@ -107,6 +116,42 @@ fn relative_luminance(c: Color32) -> f64 {
     0.2126 * channel(c.r()) + 0.7152 * channel(c.g()) + 0.0722 * channel(c.b())
 }
 
+/// The [`Mode`] currently installed on `ui`'s context, read from the style
+/// egui carries (`dark_mode`) - the same derivation `app.rs`' region painter
+/// uses - so the heading builders below resolve tokens for the theme that is
+/// actually painted without threading a mode through every panel.
+pub fn mode_of(ui: &egui::Ui) -> Mode {
+    if ui.style().visuals.dark_mode {
+        Mode::Dark
+    } else {
+        Mode::Light
+    }
+}
+
+/// Strong heading/emphasised text for `mode`, with its ink pinched to the
+/// `TEXT_PRIMARY` token so it is dark on light surfaces and light on dark
+/// surfaces - never egui's implicit strong ink (`strong_text_color()`
+/// resolves to `widgets.active.fg_stroke`, the best-on-accent ink that is
+/// correct only on an accent-filled button and is what made headings vanish
+/// on light panels). The explicit colour is resolved ahead of `strong()`, so
+/// the emphasis flag never controls the ink.
+pub fn heading(mode: Mode, text: impl Into<String>) -> egui::RichText {
+    egui::RichText::new(text.into())
+        .strong()
+        .color(Palette::resolve(mode).text_primary)
+}
+
+/// Strong text that is genuinely painted on the accent fill: the selected
+/// command-palette row. It needs the best-on-accent ink (not `TEXT_PRIMARY`),
+/// or it would disappear into the blue. Named and documented separately so a
+/// reader never reaches for it for a heading on a neutral surface.
+pub fn on_accent(mode: Mode, text: impl Into<String>) -> egui::RichText {
+    let p = Palette::resolve(mode);
+    egui::RichText::new(text.into())
+        .strong()
+        .color(best_on(p.accent, &[p.surface_raised, p.text_primary]))
+}
+
 /// Install the tokens as the egui style for `mode` on `ctx`.
 ///
 /// `main.rs` calls this at startup with [`Mode::default()`] (light), which is
@@ -144,6 +189,38 @@ mod guard {
         assert!(
             violations.is_empty(),
             "raw colour literals outside crates/oep-app/src/theme.rs:\n{}",
+            violations
+                .iter()
+                .map(|(p, n, hit)| format!("  {}:{}: {hit}", p.display(), n))
+                .collect::<Vec<_>>()
+                .join("\n")
+        );
+    }
+
+    #[test]
+    fn no_strong_text_outside_theme_rs() {
+        // UI-A12 UI-HEADING-INK: `RichText::strong()` resolves through
+        // `Visuals::strong_text_color()` to the active-widget ink, so a bare
+        // `.strong()` anywhere outside theme.rs re-introduces headings that
+        // disappear on light panels. The only sanctioned builders are
+        // [`super::heading`] / [`super::on_accent`] in this file.
+        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("src");
+        let mut violations: Vec<(std::path::PathBuf, usize, String)> = Vec::new();
+        collect_rust_files(&root, &mut |path, line_no, line| {
+            if path.ends_with("theme.rs") {
+                return; // this file is the sanctioned heading/seam
+            }
+            if line.contains(".strong(") {
+                violations.push((
+                    path.to_path_buf(),
+                    line_no,
+                    "`RichText::strong(` paints through widgets.active".to_owned(),
+                ));
+            }
+        });
+        assert!(
+            violations.is_empty(),
+            "`RichText::strong()` outside crates/oep-app/src/theme.rs would repaint headings:\n{}",
             violations
                 .iter()
                 .map(|(p, n, hit)| format!("  {}:{}: {hit}", p.display(), n))

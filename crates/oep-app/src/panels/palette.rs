@@ -32,6 +32,7 @@
 use eframe::egui;
 
 use crate::app::App;
+use crate::theme;
 
 #[path = "../commands.rs"]
 mod commands;
@@ -190,7 +191,7 @@ fn open_overlay(ctx: &egui::Context, mut state: PaletteState) -> PaletteState {
             egui::Frame::popup(ui.style()).show(ui, |ui| {
                 ui.set_width(OVERLAY_WIDTH);
                 ui.with_layout(egui::Layout::top_down(egui::Align::Min), |ui| {
-                    ui.label(egui::RichText::new("Command Palette").strong());
+                    ui.label(theme::heading(theme::mode_of(ui), "Command Palette"));
                     ui.add_space(4.0);
                     let edit = egui::TextEdit::singleline(&mut state.query)
                         .id(egui::Id::unique(QUERY_ID))
@@ -226,7 +227,12 @@ fn open_overlay(ctx: &egui::Context, mut state: PaletteState) -> PaletteState {
                                     let label =
                                         format!("{} | {}", spec.name, commands::row_note(spec));
                                     let text = if is_selected {
-                                        egui::RichText::new(&label).strong().monospace()
+                                        // Selected row paints on the accent
+                                        // fill, so it needs the best-on-accent
+                                        // ink (`theme::on_accent`), not the
+                                        // neutral TEXT_PRIMARY used by
+                                        // [`crate::theme::heading`].
+                                        theme::on_accent(theme::mode_of(ui), &label).monospace()
                                     } else {
                                         egui::RichText::new(&label).monospace()
                                     };
