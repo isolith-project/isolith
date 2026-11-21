@@ -1,0 +1,28 @@
+STEP 0: the wave merge (card rule: git fetch origin + git merge origin/wave/ui-b first).
+The card branch was cut from main 736a0a7; the wave lives on remote 'github' (NAS Gitea does not host wave/ui-b; upstream cards pushed to github).
+
+$ git fetch github
+
+$ git merge github/wave/ui-b (recorded at start of this card)
+38dcdb6 merge-UI-B4: UI-SKETCH-DRAW - point, line, polyline, rectangle, circle
+HEAD is the merged wave head: promaxgb10-83f1 wave head == github/wave/ui-b:
+38dcdb6ae8d8f3eeca8f369506744aae7eeeaeb6
+38dcdb6ae8d8f3eeca8f369506744aae7eeeaeb6
+
+The merge brought every earlier wave-B card into this tree (no conflicts):
+38dcdb6 merge-UI-B4: UI-SKETCH-DRAW - point, line, polyline, rectangle, circle
+270e833 merge-UI-B3: UI-SKETCH-ENTER - pick a datum plane and enter sketch
+41dbcb7 merge-UI-B2: UI-HISTORY - journal undo/redo with drag coalescing
+780dc56 merge-UI-B1: UI-INPUT-ROUTER - one event map to command tokens
+736a0a7 Merge pull request #28 from isolith-project/checkpoint/wave-ui-a
+8760cfe Merge pull request #26 from isolith-project/task/rc4-manifest-restore
+df6e5c4 Merge pull request #22 from isolith-project/github/release-notes-env
+0ccef03 card(RELEASE-2027.1-GA): GA 2027.1.0 evidence on identical frozen commit a9d1c0c (#25)
+5cf777d card(RELEASE-2027.1-GA): release train evidence for rc5 (gate, signed assets, MSI smoke, rehearsal, release body) (#23)
+a9d1c0c Merge pull request #21 from isolith-project/github/rc5
+
+Files brought in by the wave merge:
+ 53 files changed, 7635 insertions(+), 17 deletions(-)
+(diffstat of the whole wave vs the base cut point 736a0a7; per-file detail in 02/04 transcript headers if needed)
+
+This card's own files are the only ones added/changed on top of the wave head:

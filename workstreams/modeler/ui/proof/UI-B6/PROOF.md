@@ -9,15 +9,22 @@ instead of silently solving.
 
 | Command | Result |
 |---|---|
-| `cargo test -p oep-app --test constraints` | 99 passed (4 acceptance tests + 95 module/guard) |
-| `cargo test -p oep-app` | 13 targets, all green |
+| `cargo test -p oep-app --test constraints` | 109 passed (card acceptance + module/guard, merged head incl. UI-B5) |
+| `cargo test -p oep-app` | 14 targets / 998 tests, all green (merged head incl. UI-B5) |
 | `xvfb-run -a cargo run -p oep-app -- --smoke` | `frames=8 smoke ok`, exit 0 |
 | `cargo clippy -p oep-app --all-targets -- -D warnings` | exit 0, no warnings |
 | fmt | my 3 files clean; workspace check flags only the pre-existing UI-B1 `input.rs:504` blank |
 
+All acceptance commands were run on the merged head (wave/ui-b incl. UI-B5 snap)
+AND on the card branch before landing; both green. The constraint toolbar and
+the B5 snap engine coexist in `panels/sketch.rs` (merge kept both modules and
+both interaction paths; draw clicks/hovers skip the constraint-toolbar rect).
+
 Real transcripts: `transcripts/0X-*.txt`. Deterministic screenshot:
 `constraints.png` (sha256 `e17098049f5c80dba6c27fa5742b695140cd2ab572b4ad6269b877e4e71e115d`),
-captured twice under xvfb (XTEST injector, same as UI-B3/B4 proof), byte-identical.
+captured twice under xvfb via the XTEST injector (same technique as UI-B3/B4)
+on the merged head, byte-identical; shows sketch mode + the constraint toolbar
+(`H V Co Len Rm`) + the honest `dof 3` readout.
 
 ## What the kittest acceptance proves
 Drives the real `app::App` (the same binary as production) through
