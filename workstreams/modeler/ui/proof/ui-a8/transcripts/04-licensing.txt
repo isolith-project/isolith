@@ -6,4 +6,4 @@ report: /home/r1a/isolith-main/.worktrees/main/docs/proof/licensing-check.json
   [PASS] boundary-doc-sync: 34 rows in sync
   [PASS] dependency-allowlist: 535 dependencies within the permissive allow-list
   [PASS] notice-sync: 535 dependency lines + 1 native entries
-licensing exit: 0
+exit 0

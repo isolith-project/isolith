@@ -1,9 +1,9 @@
 == quality gate: main ==
   [run]  pytest
-  [ok]   pytest (558 passed, 29 skipped, 1 warning in 95.83s (0:01:35))
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 84.16s (0:01:24))
   [run]  cargo test
   [ok]   cargo test
   [skip] no UI files staged
   [skip] render mode not configured
 == gate PASS ==
-precommit exit: 0
+exit 0

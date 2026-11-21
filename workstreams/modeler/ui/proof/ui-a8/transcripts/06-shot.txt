@@ -5,4 +5,4 @@ libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
 shot.sh: ok
   frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
   sha256   : e60b86dcf4e29e599497f783ed4f8a38e4af9d7e72d478a9e63f201d5e94a9b4
-shot exit: 0
+exit 0
