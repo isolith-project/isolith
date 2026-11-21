@@ -42,7 +42,7 @@ components stay Apache-2.0.
 
 ## The per-crate map
 
-33 workspace crates. Licence column is the SPDX identifier every crate must
+34 workspace crates. Licence column is the SPDX identifier every crate must
 declare in its `Cargo.toml`.
 
 | Crate | Licence | Workstream | Why |
@@ -65,6 +65,7 @@ declare in its `Cargo.toml`.
 | oep-assem | Apache-2.0 | P7 | assembly workbench and solver seam (application/library) |
 | oep-analysis | Apache-2.0 | P7 | editor-spine analysis lane (application/library) |
 | oep-app | Apache-2.0 | P7 | modeler editor UI: eframe/egui desktop application shell (application) |
+| oep-ui-theme | Apache-2.0 | P7 | semantic design tokens (light + dark) for the modeler editor UI (library) |
 | oep-drafting | Apache-2.0 | P7 | 2D drafting workbench (application/library) |
 | oep-gate | Apache-2.0 | P9 | P9-M5-T02 GA gate: QA harness that exercises the lane, not part of the served orchestration runtime (application/tooling) |
 | oep-update | Apache-2.0 | P10 | advisory non-blocking update checker (application) |
@@ -81,7 +82,7 @@ declare in its `Cargo.toml`.
 | oep-farm | AGPL-3.0 | P9 | P2P checkpoint/resume for long jobs (P2P orchestration runtime) |
 | oep-opsdash | AGPL-3.0 | P9 | P2P ops dashboard, served over HTTP (P2P orchestration surface) |
 
-Totals: 21 crates Apache-2.0, 12 crates AGPL-3.0.
+Totals: 22 crates Apache-2.0, 12 crates AGPL-3.0.
 
 ## What this means for third-party components
 
