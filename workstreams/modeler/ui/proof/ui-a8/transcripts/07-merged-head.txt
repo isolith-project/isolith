@@ -1,10 +1,10 @@
 === merged head record ===
-Final wave head (github/wave/ui-a, carries the UI-A8 record): d4379c4f86083c4ac60ac013fc1b16f99348d1d1
+Final wave head (github/wave/ui-a, carries the UI-A8 record): 2b59b6fa548506973ffb31e4951f3ad86985c269
 
 Checkpoint on main (created by UI-A8):
 git merge --no-ff github/wave/ui-a -m "checkpoint(wave-ui-a): walking skeleton -- cards UI-A1..UI-A9"
   one no-ff merge, no fast-forward.
-  parents: 8760cfe (main before the wave) + d4379c4f86083c4ac60ac013fc1b16f99348d1d1 (final wave head)
+  parents: 8760cfe (main before the wave) + 2b59b6fa548506973ffb31e4951f3ad86985c269 (final wave head)
   the checkpoint commit is the object of annotated tag wave-ui-a
   (git rev-parse wave-ui-a^{} == the checkpoint; acceptance #4).
 
