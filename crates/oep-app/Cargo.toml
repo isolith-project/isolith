@@ -11,6 +11,10 @@ repository.workspace = true
 eframe = { workspace = true }
 egui = { workspace = true }
 oep-ui-theme = { path = "../oep-ui-theme" }
+# UI-A6 UI-COMMAND-PALETTE (card-mandated: the palette's search and its
+# validate-then-dispatch come from oep_shell::commands, the same registry and
+# router step the workbench CLI uses; the app never forks the command list).
+oep-shell = { path = "../oep-shell" }
 
 [[bin]]
 name = "isolith"

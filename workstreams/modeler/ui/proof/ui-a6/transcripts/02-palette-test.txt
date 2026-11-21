@@ -1,0 +1,16 @@
+$ cargo test -p oep-app --test palette
+      Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+       Running tests/palette.rs (target/debug/deps/palette-63a1ef10a6b02ec7)
+  
+  running 8 tests
+  test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+  test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+  test config::tests::shell_layout_round_trips_same_sizes ... ok
+  test enter_routes_through_the_shared_router_spy_counts_invocations ... ok
+  test ctrl_k_opens_the_palette_and_escape_closes_it ... ok
+  test typing_filters_through_the_shared_registry_not_a_fork ... ok
+  test rows_show_label_and_shortcut_or_path_with_nothing_hidden ... ok
+  test unknown_input_shows_an_honest_no_match_line_and_does_not_route ... ok
+  
+  test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+  

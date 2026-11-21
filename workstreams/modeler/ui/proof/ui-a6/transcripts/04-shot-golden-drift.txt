@@ -1,0 +1,7 @@
+$ bash scripts/ui/shot.sh   (golden forced back to the UI-A4 shell frame to re-prove the drift guard)
+
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 66d7010e81ac29675fc8db0c12ed287f68961954255e1f301fe78d8d64c7a694
+  golden  : 49749550d281182113d8dc011193c50148bc136cff270f99fbe30591c9756a9d
+  reference image: /home/r1a/isolith-main/.worktrees/ui-a6/workstreams/modeler/ui/proof/ui-a2/frame.png
+exit: 1
