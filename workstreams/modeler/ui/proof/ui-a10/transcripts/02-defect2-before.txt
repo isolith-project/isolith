@@ -1,0 +1,12 @@
+=== 02-defect2-before.txt: brand scan, PRE-FIX test, worktree-hosted checkout ===
+Root cause (UI-A8): SKIP_DIRS lacks .worktrees, so a scan from a checkout
+whose root hosts sibling .worktrees/ descends into them and flags retired
+token content. Probe planted at .worktrees/brand-scan-probe/config.json.
+
+$ python3 tests/test_brand_identity.py
+[PASS] test_allowed_paths_are_used
+[PASS] test_allowed_paths_exist
+[FAIL] test_retired_codename_absent_outside_allowed_paths: retired codename strings found outside the allowed paths:
+  .worktrees/brand-scan-probe/config.json: forbidden string in the file content
+2/3 brand-identity checks passed
+EXIT=1

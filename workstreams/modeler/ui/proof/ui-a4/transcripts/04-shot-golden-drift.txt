@@ -1,0 +1,23 @@
+======== DRIFT PROOF: UI-A4 shell changed the frame vs the A2 golden ========
+
+The A2 harness ships a committed golden reference (proof/ui-a2/frame.png.sha256
+= e20b6d5d78466dcc7ce0f8531c2a9de243f7c0e6b28f3fd8aba6fc1442bb0da1), captured
+on the empty shell. UI-A4 renders the five-region shell, so the frame
+legitimately changes and the drift guard fails loudly, exactly as designed (it
+never silently rewrites). The new shell frame hash is then recorded as the
+golden so the harness stays green and deterministic.
+
+--- bash scripts/ui/shot.sh on the UI-A4 tree while the golden was still the ---
+--- pre-layout frame (real command output)                               ---
+$ bash scripts/ui/shot.sh
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 49749550d281182113d8dc011193c50148bc136cff270f99fbe30591c9756a9d
+  golden  : e20b6d5d78466dcc7ce0f8531c2a9de243f7c0e6b28f3fd8aba6fc1442bb0da1
+  reference image: /home/r1a/isolith-main/.worktrees/ui-a4/workstreams/modeler/ui/proof/ui-a2/frame.png
+$ echo $?
+1
+
+--- golden refreshed to the new shell frame (recorded in frame.png.sha256), ---
+--- then shot.sh re-run green twice (transcripts 05 and 06)               ---

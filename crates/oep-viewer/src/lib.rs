@@ -19,8 +19,13 @@
 //! is std-only and deterministic, so the acceptance contract runs on the
 //! GPU-less CI container and still proves camera, picking, clipping and
 //! rendering on the committed golden model.
+//!
+//! Since UI-A5 the crate also hosts the viewport seam: [`backend::ViewportBackend`]
+//! is what the UI panel drives, and [`backend::CpuBackend`] is its
+//! deterministic CPU implementation over the same render path.
 #![deny(missing_docs)]
 
+pub mod backend;
 pub mod camera;
 pub mod clip;
 pub mod overlay;
@@ -33,8 +38,10 @@ pub mod theme;
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P6-VIEWER";
 
+pub use backend::{CpuBackend, ViewportBackend};
 pub use camera::Camera;
 pub use clip::{ClipPlane, Side};
+pub use oep_geo::math::Vec3;
 pub use overlay::{
     axis_arms, draw_label_chip, draw_text, fill_rect, grid_segments, nice_spacing, text_width,
 };

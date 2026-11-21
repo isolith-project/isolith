@@ -1,0 +1,5 @@
+=== 06-pytest.txt: pytest on the two gate legs that were red (what precommit-gate.sh runs) ===
+$ python3 -m pytest tests/test_contributor_rules_decision.py tests/test_brand_identity.py -q
+......                                                                   [100%]
+6 passed in 1.32s
+EXIT=0

@@ -1,0 +1,28 @@
+   Compiling oep-ui-theme v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a3/crates/oep-ui-theme)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.72s
+     Running unittests src/lib.rs (target/debug/deps/oep_ui_theme-369e165cee4d2827)
+
+running 4 tests
+test tokens::tests::every_token_differs_between_modes ... ok
+test tokens::tests::default_mode_is_light ... ok
+test tokens::tests::palette_resolves_all_tokens ... ok
+test tokens::tests::token_resolves_per_mode ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/contrast.rs (target/debug/deps/contrast-aa14fd0abc233369)
+
+running 4 tests
+test non_text_contrast_light ... ok
+test text_contrast_dark ... ok
+test non_text_contrast_dark ... ok
+test text_contrast_light ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests oep_ui_theme
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
