@@ -1,0 +1,8 @@
+# UI-B3 proof header — 2026-11-21
+
+host: aarch64 Linux, 20 cores
+rustc: rustc 1.98.1 (48a229cea 2026-09-01)
+cargo: cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch: ui/b3-sketch-enter
+HEAD: 780dc564b344c4f8f03532fa7290f065526cc99c merge-UI-B1: UI-INPUT-ROUTER - one event map to command tokens
+
