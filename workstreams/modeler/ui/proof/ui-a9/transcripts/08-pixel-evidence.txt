@@ -1,0 +1,15 @@
+Pixel evidence that the five regions now read as raised panels with hairlines (light default).
+SURFACE_RAISED = (255,255,255); SURFACE (window) = (246,247,249); BORDER = (130,139,150).
+
+model tree fill                    -> (255, 255, 255)
+properties fill                    -> (255, 255, 255)
+palette host fill                  -> (255, 255, 255)
+status bar fill                    -> (255, 255, 255)
+tree|viewport hairline             -> (130, 139, 150)
+viewport|properties hairline       -> (130, 139, 150)
+palette|viewport hairline          -> (130, 139, 150)
+viewport|status hairline           -> (130, 139, 150)
+shell right frame (x=1264)         -> (130, 139, 150)
+shell bottom frame (y=784)         -> (130, 139, 150)
+window margin (right)              -> (246, 247, 249)
+window margin (bottom)             -> (246, 247, 249)
