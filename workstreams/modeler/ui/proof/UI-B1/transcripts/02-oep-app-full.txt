@@ -1,0 +1,160 @@
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.02s
+     Running unittests src/main.rs (/home/r1a/isolith-main/target/debug/deps/isolith-ee28e432ce29b2c6)
+
+running 7 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/doc_io.rs (/home/r1a/isolith-main/target/debug/deps/doc_io-9213799f1525d614)
+
+running 13 tests
+test committed_demo_step_is_present ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test app_opens_committed_demo_step_with_dirty_star ... ok
+test save_then_reopen_produces_identical_document_hash ... ok
+test cancel_and_error_paths_return_document_unchanged ... ok
+test recent_files_persist_across_restart ... ok
+test dirty_star_lifecycle_appears_on_change_and_clears_on_save ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.25s
+
+     Running tests/harness.rs (/home/r1a/isolith-main/target/debug/deps/harness-78da3aa24b5a343f)
+
+running 10 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test real_app_registers_window_in_accesskit_tree ... ok
+test key_press_reaches_real_app ... ok
+test click_reaches_real_app ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+     Running tests/heading_ink.rs (/home/r1a/isolith-main/target/debug/deps/heading_ink-cdb0851b3df565bd)
+
+running 9 tests
+test heading_is_not_the_strong_text_ink ... ok
+test heading_carries_text_primary_in_light ... ok
+test on_accent_carries_the_accent_ink_and_differs_from_heading ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test dynamic_heading_sites_use_the_sanctioned_helpers ... ok
+test heading_carries_text_primary_in_dark ... ok
+test shell_heading_strings_are_produced_through_heading_helper ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/input_router.rs (/home/r1a/isolith-main/target/debug/deps/input_router-6169d0926ebc290d)
+
+running 20 tests
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test command_family_modifiers_resolve_to_the_same_binding ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test every_key_binding_resolves_back_to_itself ... ok
+test every_binding_token_validates_through_the_shared_registry ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test every_pointer_binding_resolves_back_to_itself ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test modifier_exactness_routes_shifted_and_plain_combos_apart ... ok
+test panel_seam_toggles_are_not_claimed_by_the_table ... ok
+test the_table_declares_at_least_twenty_bindings ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test the_scanner_flags_planted_direct_document_mutation_and_passes_reads ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test no_module_mutates_the_document_outside_doc_io_rs ... ok
+test held_pointer_button_resolves_to_its_binding_in_the_real_app ... ok
+test plain_key_routes_nothing_in_the_real_app ... ok
+test ctrl_shift_z_routes_to_redo_in_the_real_app ... ok
+test ctrl_z_routes_through_the_single_table_in_the_real_app ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/layout.rs (/home/r1a/isolith-main/target/debug/deps/layout-edb97a6c91410100)
+
+running 11 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test persisted_layout_round_trips_and_app_restores_same_sizes ... ok
+test regions_are_in_the_documented_spatial_positions ... ok
+test five_regions_reachable_by_accessible_name_at_both_resolutions ... ok
+test region_geometry_tiles_window_without_overlap_or_clipping ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+
+     Running tests/palette.rs (/home/r1a/isolith-main/target/debug/deps/palette-612b7de2e5ea989d)
+
+running 12 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test rows_show_label_and_shortcut_or_path_with_nothing_hidden ... ok
+test ctrl_k_opens_the_palette_and_escape_closes_it ... ok
+test typing_filters_through_the_shared_registry_not_a_fork ... ok
+test unknown_input_shows_an_honest_no_match_line_and_does_not_route ... ok
+test enter_routes_through_the_shared_router_spy_counts_invocations ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+
+     Running tests/tree_empty_state.rs (/home/r1a/isolith-main/target/debug/deps/tree_empty_state-243179f8f3d14277)
+
+running 11 tests
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test committed_demo_step_imports_to_one_body_and_one_feature ... ok
+test tree_says_no_model_open_with_empty_session_oracle ... ok
+test tree_names_open_document_with_truthful_counts_and_wave_c_note ... ok
+test tree_updates_to_named_document_on_open_without_restart ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/viewport.rs (/home/r1a/isolith-main/target/debug/deps/viewport-5b1e587998203802)
+
+running 10 tests
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test zoom_changes_camera_distance_numerically_and_changes_frame_hash ... ok
+test middle_drag_pans_target_exactly_and_changes_frame_hash ... ok
+test left_drag_orbits_camera_numerically_and_changes_frame_hash ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
+EXIT_02=0
