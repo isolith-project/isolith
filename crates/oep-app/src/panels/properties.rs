@@ -8,10 +8,11 @@
 use eframe::egui;
 
 use crate::app::App;
+use crate::theme;
 
 /// Draw the properties panel content inside its already-positioned region.
 pub fn show(ui: &mut egui::Ui, _app: &mut App) {
-    ui.label(egui::RichText::new("Properties").strong().size(13.0));
+    ui.label(theme::heading(theme::mode_of(ui), "Properties").size(13.0));
     ui.separator();
     ui.add_space(6.0);
     ui.label(egui::RichText::new("Nothing selected").weak().italics());
