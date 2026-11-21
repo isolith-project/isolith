@@ -66,17 +66,19 @@ git merge --no-ff github/wave/ui-a \
   -m "checkpoint(wave-ui-a): walking skeleton -- cards UI-A1..UI-A9"
 ```
 
-Checkpoint commit `0ddf3834c1081a86b54fe1fdeb9eadc4780a5ea1`, parents
-`8760cfe` (main before the wave) and `33aaa68` (wave head). No fast-forward;
-one checkpoint commit. Remote `github/main` updated to this commit and
-annotated tag `wave-ui-a` pushed (see below). `docs/scope-register.json`
-diff across the checkpoint is empty.
+Parents of the checkpoint merge: `8760cfe` (main before the wave) and the
+final wave head (`git rev-parse wave-ui-a^2`). No fast-forward; one checkpoint
+commit. The checkpoint commit is the object of annotated tag `wave-ui-a`
+(`git rev-parse wave-ui-a^{}`), and `github/main` is pushed to it (acceptance
+#4). `docs/scope-register.json` diff across the checkpoint is empty
+(transcript `08-scope-register.txt`).
 
 ## Full gate on the merged head (acceptance #3) — PASS
 
 Transcripts in `transcripts/`: `01-fmt.txt`, `02-clippy.txt`,
 `03-test.txt`, `04-licensing.txt`, `05-precommit-gate.txt`,
-`06-shot.txt`. Merged head `0ddf383` (parents `8760cfe` + `33aaa68`).
+`06-shot.txt`, run on the checkpoint (merged head) after the merge —
+`git rev-parse HEAD` there equals `git rev-parse wave-ui-a^{}`.
 
 | # | Command | Exit | Notes |
 |---|---|---|---|
