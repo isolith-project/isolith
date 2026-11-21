@@ -12,6 +12,12 @@ eframe = { workspace = true }
 egui = { workspace = true }
 oep-ui-theme = { path = "../oep-ui-theme" }
 oep-viewer = { path = "../oep-viewer" }
+# UI-A7 UI-OPEN-SAVE (card-mandated import path): the DETAIL requires "import
+# goes through the existing oep-import or oep-step path, never a new parser".
+# doc_io.rs opens the committed demo STEP through oep_import's hub. Already in
+# the build graph transitively via oep-shell; added as a direct dep so the app
+# can name the typed hub surface.
+oep-import = { path = "../oep-import" }
 # UI-A6 UI-COMMAND-PALETTE (card-mandated: the palette's search and its
 # validate-then-dispatch come from oep_shell::commands, the same registry and
 # router step the workbench CLI uses; the app never forks the command list).
