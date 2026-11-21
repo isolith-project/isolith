@@ -1,0 +1,6 @@
+# Merged-head gate (merge-UI-A9 = 28b890b) - re-run of full acceptance on wave head
+cargo test -p oep-app: bin 6, doc_io 10, harness 7, layout 8, palette 9, viewport 7 (all ok)
+cargo test -p oep-ui-theme: 4 + 4 (all ok)
+cargo clippy -p oep-app -p oep-ui-theme --all-targets -- -D warnings: exit 0
+xvfb-run smoke: frames=8 smoke ok
+bash scripts/ui/shot.sh: sha256 e60b86dcf4e29e599497f783ed4f8a38e4af9d7e72d478a9e63f201d5e94a9b4 (byte-identical to the golden recorded on the card branch)
