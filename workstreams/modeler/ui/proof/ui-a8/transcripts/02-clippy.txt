@@ -7,6 +7,7 @@
     Checking oep-opsdash v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-opsdash)
     Checking oep-step-pmi v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-step-pmi)
     Checking oep-state v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-state)
+    Checking oep-fairshare v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-fairshare)
     Checking oep-pdm v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-pdm)
     Checking oep-step v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-step)
     Checking oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-viewer)
@@ -18,12 +19,11 @@
     Checking oep-analysis v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-analysis)
     Checking oep-drafting v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-drafting)
     Checking oep-rules v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-rules)
-    Checking oep-fairshare v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-fairshare)
     Checking oep-shell v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-shell)
     Checking oep-worker v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-worker)
     Checking oep-web v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-web)
     Checking oep-archive v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-archive)
     Checking oep-gate v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-gate)
     Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-app)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.67s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.71s
 exit 0
