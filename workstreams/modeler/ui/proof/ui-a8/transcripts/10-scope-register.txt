@@ -1,0 +1,3 @@
+=== acceptance #6: scope register untouched by the wave ===
+exit: 0
+(empty = no wave-A commit touched docs/scope-register.json)
