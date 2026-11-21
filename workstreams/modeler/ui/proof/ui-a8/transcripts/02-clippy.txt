@@ -6,8 +6,8 @@
     Checking oep-ui-theme v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-ui-theme)
     Checking oep-opsdash v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-opsdash)
     Checking oep-step-pmi v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-step-pmi)
-    Checking oep-state v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-state)
     Checking oep-fairshare v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-fairshare)
+    Checking oep-state v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-state)
     Checking oep-pdm v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-pdm)
     Checking oep-step v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-step)
     Checking oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-viewer)
@@ -25,5 +25,5 @@
     Checking oep-archive v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-archive)
     Checking oep-gate v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-gate)
     Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/main/crates/oep-app)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.71s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.63s
 exit 0
