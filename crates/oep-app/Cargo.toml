@@ -11,6 +11,7 @@ repository.workspace = true
 eframe = { workspace = true }
 egui = { workspace = true }
 oep-ui-theme = { path = "../oep-ui-theme" }
+oep-viewer = { path = "../oep-viewer" }
 
 [[bin]]
 name = "isolith"
