@@ -87,6 +87,14 @@ use oep_viewer::{CpuBackend, Scene, Vec3};
 #[allow(clippy::duplicate_mod)]
 pub mod tools;
 
+// The UI-B6 constraint layer (egui-free; `src/sketch/constraints.rs`). Same
+// `#[path]` inclusion as tools.rs: the solver-facing model + the honest
+// over-constrained/conflict verdicts live here, and the toolbar + context
+// menu in this file drive them through [`constraints::apply`].
+#[path = "../sketch/constraints.rs"]
+#[allow(clippy::duplicate_mod)]
+pub mod constraints;
+
 // The UI-B5 snap-inference engine (egui-free; `src/sketch/snap.rs`), included
 // verbatim the same way `tools` is; the interactive half of this card (pointer
 // wiring through [`effective_uv`], the glyph/label painting, the toggle) lives
@@ -122,6 +130,17 @@ pub const SKETCH_DOC_KEY: &str = "ui_b4_sketch_doc";
 /// Context-data key under which the UI-B2 [`history::Journal`] for sketch
 /// commits lives.
 pub const SKETCH_JOURNAL_KEY: &str = "ui_b4_sketch_journal";
+/// Context-data key under which the UI-B6 constraint panel
+/// ([`constraints::ConstraintPanel`]) lives. Read/written only by this
+/// module's toolbar/menu seams (never across `#[path]` copies - tests read
+/// the `String` oracle, the same pattern as the B2 journal).
+pub const SKETCH_CONSTRAINT_KEY: &str = "ui_b6_sketch_constraints";
+/// Context-data key under which the constraint context menu's open position
+/// (`Some((x, y))` when the menu is showing) lives. Kept here so `read_state`
+/// (which detects the right-click) and `write_state` (which draws the menu)
+/// share one seam without touching the `SketchState` struct shape the
+/// viewport panel reads.
+pub const SKETCH_MENU_KEY: &str = "ui_b6_sketch_menu";
 /// The plain key that toggles the UI-B5 inference on/off while sketching (the
 /// `sk:snap` command token driven as a sketch-mode key, like the tool keys).
 /// F8 is free in the UI-B1 table and in every shell region, and keeps the
@@ -132,6 +151,190 @@ pub const SNAP_TOGGLE_KEY: egui::Key = egui::Key::F8;
 /// parent module across `#[path]` compilations - the test targets read it by
 /// the same literal).
 pub const VIEWPORT_STATE_KEY: &str = "isolith.ui.viewport.backend";
+
+/// One clickable constraint action in the toolbar strip / context menu.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct ConstraintButton {
+    /// The apply operation the button triggers.
+    pub kind: constraints::ApplyKind,
+    /// Short button label (`H`, `V`, `Co`, `Len`, `Rm`).
+    pub label: &'static str,
+    /// The button's on-screen rect (computed by [`constraint_toolbar_layout`]
+    /// from the same math the renderer uses).
+    pub rect: egui::Rect,
+}
+
+/// The five constraint actions, in toolbar order.
+pub const CONSTRAINT_KINDS: [constraints::ApplyKind; 5] = [
+    constraints::ApplyKind::Horizontal,
+    constraints::ApplyKind::Vertical,
+    constraints::ApplyKind::Coincident,
+    constraints::ApplyKind::Length,
+    constraints::ApplyKind::Remove,
+];
+
+/// Stable short button label for an apply kind.
+pub fn constraint_label(kind: constraints::ApplyKind) -> &'static str {
+    match kind {
+        constraints::ApplyKind::Horizontal => "H",
+        constraints::ApplyKind::Vertical => "V",
+        constraints::ApplyKind::Coincident => "Co",
+        constraints::ApplyKind::Length => "Len",
+        constraints::ApplyKind::Remove => "Rm",
+    }
+}
+
+fn constraint_button_size() -> egui::Vec2 {
+    egui::vec2(44.0, 24.0)
+}
+
+/// Deterministic toolbar layout: a horizontal strip of five buttons anchored
+/// to the viewport's top-right corner (clear of the B4 draw legend at the
+/// top-left). Public so the acceptance harness clicks the exact rect the
+/// renderer uses.
+pub fn constraint_toolbar_layout(viewport: egui::Rect) -> Vec<ConstraintButton> {
+    let size = constraint_button_size();
+    let gap = 6.0;
+    let total = size.x * CONSTRAINT_KINDS.len() as f32 + gap * (CONSTRAINT_KINDS.len() - 1) as f32;
+    let start = egui::pos2(viewport.max.x - 8.0 - total, viewport.min.y + 8.0);
+    CONSTRAINT_KINDS
+        .iter()
+        .enumerate()
+        .map(|(i, &kind)| {
+            let rect = egui::Rect::from_min_size(
+                egui::pos2(start.x + i as f32 * (size.x + gap), start.y),
+                size,
+            );
+            ConstraintButton {
+                kind,
+                label: constraint_label(kind),
+                rect,
+            }
+        })
+        .collect()
+}
+
+/// Whether a viewport-space point lies on the constraint toolbar (so draw
+/// vertex placement skips it - the toolbar button will consume the click).
+pub fn is_on_constraint_toolbar(viewport: egui::Rect, pos: egui::Pos2) -> bool {
+    constraint_toolbar_layout(viewport)
+        .iter()
+        .any(|b| b.rect.contains(pos))
+}
+
+fn constraint_menu_item_size() -> egui::Vec2 {
+    egui::vec2(140.0, 26.0)
+}
+
+/// Deterministic context-menu layout: the same five constraint actions as the
+/// toolbar, in a vertical column starting at `anchor` (the right-click point).
+/// Shared by the renderer and the acceptance harness so both click the same
+/// rects.
+pub fn constraint_menu_layout(anchor: egui::Pos2) -> Vec<ConstraintButton> {
+    let size = constraint_menu_item_size();
+    let gap = 2.0;
+    // Items start below the "constrain" header line (header ~16px tall).
+    let start = egui::pos2(anchor.x + 4.0, anchor.y + 18.0);
+    CONSTRAINT_KINDS
+        .iter()
+        .enumerate()
+        .map(|(i, &kind)| {
+            let rect = egui::Rect::from_min_size(
+                egui::pos2(start.x, start.y + i as f32 * (size.y + gap)),
+                size,
+            );
+            ConstraintButton {
+                kind,
+                label: constraint_label(kind),
+                rect,
+            }
+        })
+        .collect()
+}
+
+/// The context menu's open/closed state as the oracle reports it
+/// (`context_menu=1` when the right-click menu is up).
+pub fn context_menu_open(ctx: &egui::Context) -> bool {
+    ctx.data(|d| d.get_temp(egui::Id::unique(SKETCH_MENU_KEY)))
+        .unwrap_or(None::<egui::Pos2>)
+        .is_some()
+}
+
+/// Read the current constraint panel from the egui context data store.
+pub fn constraint_panel(ctx: &egui::Context) -> constraints::ConstraintPanel {
+    ctx.data(|d| d.get_temp(egui::Id::unique(SKETCH_CONSTRAINT_KEY)))
+        .unwrap_or_default()
+}
+
+/// Write the constraint panel back into the egui context data store.
+pub fn store_constraint_panel(ctx: &egui::Context, panel: &constraints::ConstraintPanel) {
+    ctx.data_mut(|d| d.insert_temp(egui::Id::unique(SKETCH_CONSTRAINT_KEY), panel.clone()));
+}
+
+/// The current committed sketch document (same seam `commit_shape` uses).
+pub fn sketch_doc(ctx: &egui::Context) -> tools::SketchDoc {
+    ctx.data(|d| d.get_temp(egui::Id::unique(SKETCH_DOC_KEY)))
+        .unwrap_or_default()
+}
+
+/// Apply one constraint action to the current sketch through the shared
+/// driver, persisting the updated panel and returning the one-line message
+/// for the oracle / legend. Never panics: a targetless apply is an honest
+/// "no <target>" message and the panel is left untouched.
+pub fn apply_constraint(ctx: &egui::Context, kind: constraints::ApplyKind) -> String {
+    let doc = sketch_doc(ctx);
+    let panel = constraint_panel(ctx);
+    let (next, message) = constraints::apply(&doc, &panel, kind);
+    store_constraint_panel(ctx, &next);
+    message.unwrap_or_default()
+}
+
+/// First-class dof / solve-state readout for the sketch status (the toolbar
+/// legend and the report oracle both use it): `dof 3`, `fully constrained
+/// (dof 0)`, `over-constrained (dof -1)`, `conflicting constraints: ...`, or
+/// `not solved`. This is a real UI value, never a debug print.
+pub fn constraint_status_text(panel: &constraints::ConstraintPanel) -> String {
+    panel.status_label()
+}
+
+/// The `String` oracle block for the applied constraints (appended to the
+/// report by [`write_state`]): counts, the honest dof/solve state, and one
+/// stable line per applied constraint.
+pub fn constraint_report_lines(panel: &constraints::ConstraintPanel) -> String {
+    let mut out = String::new();
+    out.push_str(&format!("constraints={}\n", panel.len()));
+    match &panel.verdict {
+        None => {
+            out.push_str("dof=-\n");
+            out.push_str("solve=unsolved\n");
+        }
+        Some(Ok(r)) => {
+            out.push_str(&format!("dof={}\n", r.dof));
+            out.push_str(if r.dof == 0 {
+                "solve=fully\n"
+            } else {
+                "solve=under\n"
+            });
+        }
+        Some(Err(constraints::ConstraintError::OverConstrained { dof, .. })) => {
+            out.push_str(&format!("dof={}\n", dof));
+            out.push_str("solve=over\n");
+        }
+        Some(Err(other)) => {
+            out.push_str("dof=-\n");
+            out.push_str(&format!("solve=error:{other}\n"));
+        }
+    }
+    for c in &panel.constraints {
+        out.push_str(&format!("constraint={}\n", c.describe()));
+    }
+    out.push_str(&format!("constraint_status={}\n", panel.status_label()));
+    out.push_str(&format!(
+        "constraint_last={}\n",
+        panel.last.as_deref().unwrap_or("")
+    ));
+    out
+}
 
 /// Stable ids of the three principal datum planes.
 pub const PLANE_XY: &str = "XY";
@@ -359,6 +562,7 @@ pub fn read_state(ctx: &egui::Context) -> SketchState {
             ..SketchState::default()
         });
     update_draw(ctx, &mut state);
+    update_constraints(ctx);
     state
 }
 
@@ -526,7 +730,10 @@ fn update_draw(ctx: &egui::Context, state: &mut SketchState) {
     }
 
     // 4. A fresh primary click inside the viewport places a vertex (the
-    //    gesture machine decides when that completes into a commit).
+    //    gesture machine decides when that completes into a commit). A click
+    //    on the constraint toolbar is NOT a draw vertex - the toolbar button
+    //    owns that pointer event (the toolbar is interactable and consumes
+    //    it); skipping here keeps tool placement from fighting the buttons.
     let (latest, interact, clicked) = ctx.input(|i| {
         (
             i.pointer.latest_pos(),
@@ -534,8 +741,11 @@ fn update_draw(ctx: &egui::Context, state: &mut SketchState) {
             i.pointer.primary_clicked(),
         )
     });
+    let click_is_toolbar = interact
+        .map(|p| is_on_constraint_toolbar(rect, p))
+        .unwrap_or(false);
     if state.draw.is_active() {
-        if clicked {
+        if clicked && !click_is_toolbar {
             if let Some(pos) = interact {
                 if rect.contains(pos) {
                     if let Some(uv) = plane_uv_at(ctx, state, rect, pos) {
@@ -555,9 +765,11 @@ fn update_draw(ctx: &egui::Context, state: &mut SketchState) {
             }
         }
         // 5. Rubber-band cursor: the hovered plane coordinate, snapped through
-        //    the inference engine while drawing (or none).
+        //    the inference engine while drawing (or none). The toolbar rect is
+        //    not drawn on - a hover over a constraint button leaves the rubber
+        //    band alone so the two surfaces never fight.
         let hover = latest.and_then(|pos| {
-            if rect.contains(pos) {
+            if rect.contains(pos) && !is_on_constraint_toolbar(rect, pos) {
                 plane_uv_at(ctx, state, rect, pos)
             } else {
                 None
@@ -606,6 +818,56 @@ fn effective_uv(
         Some(hit) => (hit.point, Some(hit)),
         None => (uv, None),
     }
+}
+
+/// The per-frame constraint interaction, run from [`read_state`] alongside
+/// [`update_draw`]:
+///
+/// - a secondary (right) click inside the viewport opens the constraint
+///   context menu at that point ([`SKETCH_MENU_KEY`]); clicking elsewhere or
+///   pressing Escape closes it;
+/// - Escape with the menu open closes only the menu (it is not re-dispatched
+///   to the draw tool, so a draw gesture under the menu survives).
+fn update_constraints(ctx: &egui::Context) {
+    let rect = viewport_rect(ctx);
+    let mut menu: Option<egui::Pos2> = ctx
+        .data(|d| d.get_temp(egui::Id::unique(SKETCH_MENU_KEY)))
+        .unwrap_or(None);
+
+    // Context menu on right-click inside the viewport.
+    let (secondary, secondary_pos) = ctx.input(|i| {
+        (
+            i.pointer.secondary_clicked(),
+            i.pointer.interact_pos().or(i.pointer.latest_pos()),
+        )
+    });
+    if secondary {
+        if let Some(pos) = secondary_pos {
+            if rect.contains(pos) {
+                menu = Some(pos);
+            } else if menu.is_some() {
+                menu = None; // closing the overlay by clicking off the viewport
+            }
+        }
+    }
+
+    // Opening a gesture (primary click) anywhere closes the open menu, so the
+    // menu never stays sticky across unrelated interactions.
+    if menu.is_some() && ctx.input(|i| i.pointer.primary_clicked()) {
+        if let Some(p) = ctx.input(|i| i.pointer.interact_pos()) {
+            if !rect.contains(p) {
+                menu = None;
+            }
+        }
+    }
+
+    // Escape closes the menu (and is consumed) while it is open.
+    if menu.is_some() && ctx.input(|i| i.key_pressed(egui::Key::Escape)) {
+        ctx.input_mut(|i| i.consume_key(egui::Modifiers::NONE, egui::Key::Escape));
+        menu = None;
+    }
+
+    ctx.data_mut(|d| d.insert_temp(egui::Id::unique(SKETCH_MENU_KEY), menu));
 }
 
 /// Commit one completed shape into the sketch document through the UI-B2
@@ -772,14 +1034,144 @@ pub fn write_state(ctx: &egui::Context, state: &SketchState) {
     let journal: history::Journal = ctx
         .data(|d| d.get_temp(egui::Id::unique(SKETCH_JOURNAL_KEY)))
         .unwrap_or_default();
+    let panel = constraint_panel(ctx);
+    let menu_line = if context_menu_open(ctx) {
+        "context_menu=1\n".to_string()
+    } else {
+        "context_menu=0\n".to_string()
+    };
     ctx.data_mut(|d| {
         d.insert_temp::<String>(
             egui::Id::unique(SKETCH_REPORT_KEY),
-            report(state, &doc, &journal),
+            report(state, &doc, &journal) + &constraint_report_lines(&panel) + &menu_line,
         );
     });
 
+    draw_constraint_ui(ctx, state);
     draw_preview(ctx, state);
+}
+
+/// Paint the interactive constraint surface over the viewport when in sketch
+/// mode: the top-right toolbar strip (five clickable buttons) and, when the
+/// context menu is open under [`SKETCH_MENU_KEY`], the small context menu at
+/// the right-click point. Both drive [`apply_constraint`] through the same
+/// `constraints::apply` seam, so the toolbar and the menu can never diverge.
+fn draw_constraint_ui(ctx: &egui::Context, state: &SketchState) {
+    if !state.in_sketch() {
+        return;
+    }
+    let rect = viewport_rect(ctx);
+    let p = palette(ctx);
+
+    // Toolbar strip: five interactable buttons at the deterministic layout
+    // rects (the same rects [`constraint_toolbar_layout`] exposes to the
+    // test harness). Buttons click through `apply_constraint`. Anchored at
+    // `Pos2::ZERO` exactly like B4's preview Area, so the button rects (which
+    // `constraint_toolbar_layout` computes in absolute viewport coords) land
+    // where the test clicks them.
+    egui::Area::new(egui::Id::unique("ui_b6_constraint_toolbar"))
+        .order(egui::Order::Foreground)
+        .fixed_pos(egui::Pos2::ZERO)
+        .interactable(true)
+        .show(ctx, |ui| {
+            for button in constraint_toolbar_layout(rect) {
+                let kind_label = button.label;
+                let mut btn = egui::Button::new(egui::RichText::new(kind_label).monospace());
+                btn = btn.min_size(constraint_button_size());
+                let clicked = ui.put(button.rect, btn).clicked();
+                if clicked {
+                    apply_constraint(ctx, button.kind);
+                }
+            }
+
+            // First-class dof status readout next to the strip: the honest
+            // solver state (dof / fully constrained / over-constrained /
+            // conflict). Never a debug print - a real status value.
+            let status = constraint_status_text(&constraint_panel(ctx));
+            let pos = egui::pos2(
+                rect.max.x - 8.0,
+                rect.min.y + 8.0 + constraint_button_size().y + 4.0,
+            );
+            ui.painter().text(
+                egui::pos2(pos.x, pos.y),
+                egui::Align2::RIGHT_TOP,
+                status,
+                egui::FontId::monospace(11.0),
+                constraint_status_color(&constraint_panel(ctx), &p),
+            );
+        });
+
+    // Context menu: a small popup of the same five actions at the open
+    // position, laid out by the same [`constraint_menu_layout`] the test
+    // harness clicks. Each click applies and closes the menu.
+    if let Some(anchor) = context_menu_anchor(ctx) {
+        egui::Area::new(egui::Id::unique("ui_b6_constraint_menu"))
+            .order(egui::Order::Foreground)
+            .fixed_pos(egui::Pos2::ZERO)
+            .interactable(true)
+            .show(ctx, |ui| {
+                let items = constraint_menu_layout(anchor);
+                let panel = egui::Rect::from_min_max(
+                    anchor,
+                    items.last().map(|b| b.rect.max).unwrap_or(anchor),
+                );
+                // Cosmetic backdrop + header (painted; the item rects are the
+                // real interactable surface) - drawn at the menu position,
+                // not at the screen origin.
+                let painter = ui.painter();
+                painter.rect_filled(panel, 4.0, p.surface_raised);
+                painter.rect_stroke(
+                    panel,
+                    4.0,
+                    egui::Stroke::new(1.0, p.border),
+                    egui::StrokeKind::Outside,
+                );
+                painter.text(
+                    egui::pos2(panel.min.x + 6.0, panel.min.y + 2.0),
+                    egui::Align2::LEFT_TOP,
+                    "constrain",
+                    egui::FontId::proportional(11.0),
+                    p.text_muted,
+                );
+                for button in items {
+                    let label = button.label;
+                    let mut btn = egui::Button::new(egui::RichText::new(label).monospace());
+                    btn = btn.min_size(constraint_menu_item_size());
+                    let clicked = ui.put(button.rect, btn).clicked();
+                    if clicked {
+                        let msg = apply_constraint(ctx, button.kind);
+                        set_context_menu_anchor(ctx, None);
+                        // Re-touch so the palette-context closure sees the
+                        // update; `msg` is reported in the oracle via the
+                        // stored panel.
+                        let _ = msg;
+                    }
+                }
+            });
+    }
+}
+
+/// The current context-menu anchor (`None` when the menu is closed).
+fn context_menu_anchor(ctx: &egui::Context) -> Option<egui::Pos2> {
+    ctx.data(|d| d.get_temp(egui::Id::unique(SKETCH_MENU_KEY)))
+        .unwrap_or(None)
+}
+
+/// Set the context-menu anchor (open at `Some(pos)`, closed at `None`).
+fn set_context_menu_anchor(ctx: &egui::Context, anchor: Option<egui::Pos2>) {
+    ctx.data_mut(|d| d.insert_temp(egui::Id::unique(SKETCH_MENU_KEY), anchor));
+}
+
+/// The status-ink for a dof readout: normal muted for a solved/under
+/// sketch, accent when exactly fully constrained, danger when
+/// over-constrained or conflicting.
+fn constraint_status_color(panel: &constraints::ConstraintPanel, p: &Palette) -> egui::Color32 {
+    match &panel.verdict {
+        Some(Err(constraints::ConstraintError::OverConstrained { .. }))
+        | Some(Err(constraints::ConstraintError::Conflict(_))) => p.danger,
+        Some(Ok(r)) if r.dof == 0 => p.accent,
+        _ => p.text_muted,
+    }
 }
 
 /// Project a world point onto the viewport panel in logical points (top-left
