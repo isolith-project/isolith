@@ -2940,6 +2940,7 @@ dependencies = [
  "eframe",
  "egui",
  "egui_kittest",
+ "oep-shell",
  "oep-ui-theme",
 ]
 
