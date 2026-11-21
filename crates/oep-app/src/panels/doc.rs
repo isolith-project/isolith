@@ -46,6 +46,7 @@ use eframe::egui;
 
 use crate::app::App;
 use crate::config;
+use crate::theme;
 
 #[path = "../doc_io.rs"]
 mod doc_io;
@@ -363,7 +364,10 @@ pub fn show(ctx: &egui::Context, app: &mut App) {
                 egui::Frame::popup(ui.style()).show(ui, |ui| {
                     ui.set_width(RECENT_OVERLAY_WIDTH);
                     ui.with_layout(egui::Layout::top_down(egui::Align::Min), |ui| {
-                        ui.label(egui::RichText::new("Recent Documents (Esc to close)").strong());
+                        ui.label(theme::heading(
+                            theme::mode_of(ui),
+                            "Recent Documents (Esc to close)",
+                        ));
                         ui.add_space(4.0);
                         egui::ScrollArea::vertical()
                             .max_height(RECENT_OVERLAY_HEIGHT)

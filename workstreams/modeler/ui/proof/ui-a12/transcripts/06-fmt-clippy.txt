@@ -1,0 +1,7 @@
+=== cargo fmt --check (oep-app, oep-ui-theme) ===
+fmt exit=0
+
+=== cargo clippy -p oep-app -p oep-ui-theme --all-targets -- -D warnings ===
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-a12/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
+clippy exit=0

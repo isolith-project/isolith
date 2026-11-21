@@ -33,6 +33,10 @@ mod app;
 #[allow(dead_code)]
 mod config;
 
+#[path = "../src/theme.rs"]
+#[allow(dead_code)]
+mod theme;
+
 use egui_kittest::Harness;
 
 /// Context-data key the palette writes its routing spy to (a plain `String`,

@@ -35,6 +35,10 @@ mod app;
 #[allow(dead_code)]
 mod config;
 
+#[path = "../src/theme.rs"]
+#[allow(dead_code)]
+mod theme;
+
 use egui_kittest::Harness;
 
 /// Context-data key the doc panel writes its report to (a plain `String`, so

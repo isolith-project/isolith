@@ -1,0 +1,12 @@
+UI-A12 UI-HEADING-INK: dark glyph pixels per heading band in the golden frames
+(threshold max(R,G,B) < 0x60; TEXT_PRIMARY dark ink is 0x1B-0x24, so headings count)
+
+region                                             before_fix after_fix
+Model Tree heading (0,32)-(240,60)                         0        90
+Properties heading (980,32)-(1280,60)                      0        68
+Command Palette Host strip (0,0)-(320,32)                  0       169
+Status Bar heading glyphs (4,761)-(64,774)                 0        73
+
+Before: every emphasised heading painted in the panel's own fill colour
+(SURFACE_RAISED white via widgets.active ink) -> 0 dark glyph pixels, invisible.
+After : headings carry TEXT_PRIMARY (dark in light mode) -> glyphs visible.
