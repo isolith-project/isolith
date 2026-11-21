@@ -1,0 +1,13 @@
+=== acceptance #6: scope register untouched by the wave ===
+Verified on the merged head 0ddf383 (checkpoint(wave-ui-a)):
+
+git diff --stat 0ccef03..HEAD -- docs/scope-register.json
+  (empty - no output above)
+
+git diff --stat HEAD~1..HEAD -- docs/scope-register.json
+  (empty - the checkpoint merge itself does not touch it)
+
+git log --oneline 0ccef03..HEAD -- docs/scope-register.json
+  (empty - no wave-A commit ever touched docs/scope-register.json)
+
+All three empty: acceptance #6 PASS.
