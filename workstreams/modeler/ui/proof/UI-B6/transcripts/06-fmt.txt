@@ -1,0 +1,10 @@
+$ rustfmt --check crates/oep-app/src/sketch/constraints.rs
+OK: constraints.rs clean
+$ rustfmt --check crates/oep-app/src/panels/sketch.rs
+OK: panels/sketch.rs clean
+$ rustfmt --check crates/oep-app/tests/constraints.rs (recurses #[path] chain)
+Diff in /home/r1a/isolith-main/.worktrees/ui-b6/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+Only diff found is the PRE-EXISTING UI-B1 src/input.rs:504 trailing blank
+(same condition documented by UI-B2/B3/B4; the test file itself is clean)
