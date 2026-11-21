@@ -1,0 +1,5 @@
+=== UI-B1 acceptance transcripts ===
+Sat Nov 21 06:30:03 PM UTC 2026
+host: promaxgb10-83f1 | uname: aarch64
+branch: ui/b1-input-router | head: 736a0a769c1afb3eed656165bfd48118732466e1
+worktree: /home/r1a/isolith-main/.worktrees/ui-b1

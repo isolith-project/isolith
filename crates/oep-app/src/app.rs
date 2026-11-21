@@ -23,6 +23,14 @@
 #[path = "panels/mod.rs"]
 mod panels;
 
+// The single input table (UI-B1 UI-INPUT-ROUTER): pointer buttons and keys
+// plus their modifiers resolve here to the command tokens `oep_shell::commands`
+// validates. The panels above remain the seam toggles - this module is the one
+// source of truth for command bindings, and its per-frame [`input::poll`] runs
+// after the panels so they win the keys they own.
+#[path = "input.rs"]
+pub mod input;
+
 use eframe::egui;
 use egui::accesskit::Role;
 
@@ -232,6 +240,14 @@ impl eframe::App for App {
         // The doc lifecycle seam (UI-A7) hangs off the ctx/app shape app.rs
         // already calls; it draws nothing until that card fills it.
         panels::doc::show(ui.ctx(), self);
+
+        // The one input table (UI-B1 UI-INPUT-ROUTER) runs LAST so every
+        // panel-owned key wins first this frame (palette Ctrl+K, doc panel
+        // Escape + Ctrl+O/S/R, viewport drags); only key presses no panel
+        // claimed reach the router, which resolves them to command tokens and
+        // routes them through the shared registry. It draws nothing, so the
+        // one-Pane AccessKit contract is untouched.
+        input::poll(ui.ctx());
     }
 
     /// Called once on shutdown (real native run): persist the shell sizes so a
