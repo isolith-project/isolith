@@ -1,0 +1,17 @@
+Deliberate golden refresh for UI-A9. The shell frame IS SUPPOSED to change:
+the five regions now render as raised panels with hairline borders.
+
+  $ rm workstreams/modeler/ui/proof/ui-a2/frame.png.sha256
+  $ bash scripts/ui/shot.sh
+  shot.sh: ok
+    frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+    sha256   : e60b86dcf4e29e599497f783ed4f8a38e4af9d7e72d478a9e63f201d5e94a9b4
+
+Old golden (pre-contrast, preserved as ui-a2-golden-before-contrast.png):
+  2695a608982b2eaa797a259f7c5796b2714f5021e903659eec61041255bcb0dc
+New golden (this card):
+  e60b86dcf4e29e599497f783ed4f8a38e4af9d7e72d478a9e63f201d5e94a9b4
+
+The drift guard fired only because the golden was deliberately removed first
+(per the card's acceptance steps), so the treatment change is recorded as the
+brand-new golden rather than flagged as an unintended drift.
