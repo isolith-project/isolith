@@ -1,0 +1,15 @@
+$ cargo test -p oep-app
+     Running unittests src/main.rs (target/debug/deps/isolith-ee28e432ce29b2c6)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/doc_io.rs (target/debug/deps/doc_io-9213799f1525d614)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.22s
+     Running tests/harness.rs (target/debug/deps/harness-78da3aa24b5a343f)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+     Running tests/layout.rs (target/debug/deps/layout-edb97a6c91410100)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+     Running tests/palette.rs (target/debug/deps/palette-612b7de2e5ea989d)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+     Running tests/tree_empty_state.rs (target/debug/deps/tree_empty_state-243179f8f3d14277)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+     Running tests/viewport.rs (target/debug/deps/viewport-5b1e587998203802)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s

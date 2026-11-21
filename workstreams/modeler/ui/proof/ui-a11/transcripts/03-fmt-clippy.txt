@@ -1,0 +1,6 @@
+$ cargo fmt -p oep-app --check
+fmt exit 0
+
+$ cargo clippy --workspace --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.20s
+clippy exit 0

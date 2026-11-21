@@ -1,0 +1,16 @@
+$ cargo test -p oep-app --test tree_empty_state
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running tests/tree_empty_state.rs (target/debug/deps/tree_empty_state-243179f8f3d14277)
+
+running 8 tests
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test committed_demo_step_imports_to_one_body_and_one_feature ... ok
+test tree_says_no_model_open_with_empty_session_oracle ... ok
+test tree_names_open_document_with_truthful_counts_and_wave_c_note ... ok
+test tree_updates_to_named_document_on_open_without_restart ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
