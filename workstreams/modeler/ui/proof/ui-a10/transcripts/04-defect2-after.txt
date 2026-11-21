@@ -1,0 +1,9 @@
+=== 04-defect2-after.txt: tests/test_brand_identity.py in this worktree (post-fix, final code) ===
+$ python3 tests/test_brand_identity.py
+[PASS] test_allowed_paths_are_used
+[PASS] test_allowed_paths_exist
+[PASS] test_retired_codename_absent_outside_allowed_paths
+[PASS] test_scan_still_reports_a_planted_violation
+[PASS] test_worktrees_copy_is_ignored
+5/5 brand-identity checks passed
+EXIT=0
