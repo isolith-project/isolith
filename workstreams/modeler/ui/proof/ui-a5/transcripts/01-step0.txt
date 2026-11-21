@@ -1,0 +1,6 @@
+$ git fetch github && git merge github/wave/ui-a
+STEP 0 run at start of this card: wave/ui-a was at dd5728f (UI-A4 head), merge
+brought UI-A1..UI-A4 into this tree (11 commits). The remote wave head advanced
+to 24a2cfd (UI-A6) during this card's run; this card's branch is then merged
+onto the wave head per the landing procedure (the merge command output for that
+final merge is in the landing section below).
