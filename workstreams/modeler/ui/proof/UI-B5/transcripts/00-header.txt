@@ -1,0 +1,7 @@
+### UI-B5 UI-SNAP-INFERENCE — card proof
+branch: ui/b5-snap-inference
+head: 38dcdb6ae8d8f3eeca8f369506744aae7eeeaeb6
+wave: 38dcdb6ae8d8f3eeca8f369506744aae7eeeaeb6
+rustc: rustc 1.98.1 (48a229cea 2026-09-01)
+cargo: cargo 1.98.1 (797e8a9bc 2026-08-05)
+

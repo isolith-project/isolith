@@ -49,6 +49,24 @@
 //!   committed sketch document (`tools::SketchDoc`) lives under
 //!   [`SKETCH_DOC_KEY`] and is only ever written inside that journaled seam.
 //!
+//! UI-B5 UI-SNAP-INFERENCE adds pointer snap inference while drawing. The
+//! pure engine lives in `src/sketch/snap.rs` ([`snap::infer`]); this file
+//! holds its interactive half:
+//!
+//! - while a draw tool is active, the hovered pointer coordinate and every
+//!   click are resolved through [`effective_uv`], which snaps the raw plane
+//!   `uv` to the winning inference candidate (priority, then distance, then
+//!   document order) when inference is enabled and a candidate is within
+//!   [`snap::SNAP_RADIUS`];
+//! - the firing inference is carried on [`SketchState::snap_hit`], published
+//!   in the oracle (`snap=`/`infer=`/`snapx=`/`snapy=`) and painted as a
+//!   per-kind glyph at the snapped point plus a label naming which inference
+//!   fired ([`draw_preview`]);
+//! - the toggle is a command token like any other - the `sk:snap` family line
+//!   ([`snap::SNAP_TOKEN`]) driven as a plain sketch-mode key
+//!   ([`SNAP_TOGGLE_KEY`]), so inference turns off entirely and the pointer
+//!   falls back to raw plane coordinates.
+//!
 //! Escape leaves sketch mode without touching a document: the viewport panel
 //! consumes Escape only while a plane is active (and this module already let
 //! it pass - i.e. no draw tool is active) and writes [`SketchState`] back
@@ -68,6 +86,14 @@ use oep_viewer::{CpuBackend, Scene, Vec3};
 #[path = "../sketch/tools.rs"]
 #[allow(clippy::duplicate_mod)]
 pub mod tools;
+
+// The UI-B5 snap-inference engine (egui-free; `src/sketch/snap.rs`), included
+// verbatim the same way `tools` is; the interactive half of this card (pointer
+// wiring through [`effective_uv`], the glyph/label painting, the toggle) lives
+// in this file.
+#[path = "../sketch/snap.rs"]
+#[allow(clippy::duplicate_mod)]
+pub mod snap;
 
 // The UI-B2 command journal, included verbatim so the draw tools commit
 // through the exact journal this wave built (doc_io.rs includes the same file
@@ -96,6 +122,11 @@ pub const SKETCH_DOC_KEY: &str = "ui_b4_sketch_doc";
 /// Context-data key under which the UI-B2 [`history::Journal`] for sketch
 /// commits lives.
 pub const SKETCH_JOURNAL_KEY: &str = "ui_b4_sketch_journal";
+/// The plain key that toggles the UI-B5 inference on/off while sketching (the
+/// `sk:snap` command token driven as a sketch-mode key, like the tool keys).
+/// F8 is free in the UI-B1 table and in every shell region, and keeps the
+/// letter keys for the action tools.
+pub const SNAP_TOGGLE_KEY: egui::Key = egui::Key::F8;
 /// The viewport's published scalar snapshot key (must match
 /// `viewport::VIEWPORT_STATE_KEY`; a local copy avoids depending on the
 /// parent module across `#[path]` compilations - the test targets read it by
@@ -296,6 +327,15 @@ pub struct SketchState {
     pub draw: tools::Gesture,
     /// One-line status of the last draw action (for the oracle / preview).
     pub last: Option<String>,
+    /// UI-B5: whether inference snaps the pointer while a draw tool is active
+    /// (default on; the toggle turns it off **entirely** - the pointer then
+    /// resolves to raw plane coordinates and no glyph/label is painted).
+    pub snap_enabled: bool,
+    /// UI-B5: the inference currently firing for the hovered pointer - the
+    /// source of the glyph + label and of the exact coordinate the next click
+    /// places ([`effective_uv`]). `None` while inference is off or nothing is
+    /// within range.
+    pub snap_hit: Option<snap::Snap>,
 }
 
 impl SketchState {
@@ -312,7 +352,12 @@ impl SketchState {
 pub fn read_state(ctx: &egui::Context) -> SketchState {
     let mut state = ctx
         .data(|d| d.get_temp::<SketchState>(egui::Id::unique(SKETCH_STATE_KEY)))
-        .unwrap_or_default();
+        // Inference is on by default (the card: the pointer snaps while
+        // drawing); the toggle turns it off.
+        .unwrap_or_else(|| SketchState {
+            snap_enabled: true,
+            ..SketchState::default()
+        });
     update_draw(ctx, &mut state);
     state
 }
@@ -423,7 +468,26 @@ fn tool_key(tool: tools::Tool) -> egui::Key {
 ///    committed through the journal ([`commit_shape`]);
 /// 5. the hovered cursor position is refreshed for the rubber band.
 fn update_draw(ctx: &egui::Context, state: &mut SketchState) {
+    // UI-B5: the inference toggle, a command token like any other - the
+    // `sk:snap` family line routed as a plain sketch-mode key, the way the
+    // tool keys are. Handled before the sketch guard so turning inference off
+    // is a global command, not something that only works mid-sketch.
+    if ctx.input_mut(|i| i.consume_key(egui::Modifiers::NONE, SNAP_TOGGLE_KEY)) {
+        state.snap_enabled = !state.snap_enabled;
+        state.snap_hit = None;
+        state.last = Some(format!(
+            "{} ({})",
+            if state.snap_enabled {
+                "snap on"
+            } else {
+                "snap off"
+            },
+            snap::SNAP_TOKEN
+        ));
+    }
+
     if !state.in_sketch() {
+        state.snap_hit = None;
         return;
     }
     let rect = viewport_rect(ctx);
@@ -475,6 +539,11 @@ fn update_draw(ctx: &egui::Context, state: &mut SketchState) {
             if let Some(pos) = interact {
                 if rect.contains(pos) {
                     if let Some(uv) = plane_uv_at(ctx, state, rect, pos) {
+                        // UI-B5: the click lands on the winning inference
+                        // candidate (or the raw coordinate when inference is
+                        // off / nothing is within range).
+                        let (uv, hit) = effective_uv(ctx, state, uv);
+                        state.snap_hit = hit;
                         match state.draw.step(uv) {
                             tools::StepOutcome::Continuing => {}
                             tools::StepOutcome::Completed(shape) => {
@@ -485,16 +554,57 @@ fn update_draw(ctx: &egui::Context, state: &mut SketchState) {
                 }
             }
         }
-        // 5. Rubber-band cursor: the hovered plane coordinate (or none).
-        state.draw.cursor = latest.and_then(|pos| {
+        // 5. Rubber-band cursor: the hovered plane coordinate, snapped through
+        //    the inference engine while drawing (or none).
+        let hover = latest.and_then(|pos| {
             if rect.contains(pos) {
                 plane_uv_at(ctx, state, rect, pos)
             } else {
                 None
             }
         });
+        match hover {
+            Some(uv) => {
+                let (uv, hit) = effective_uv(ctx, state, uv);
+                state.snap_hit = hit;
+                state.draw.cursor = Some(uv);
+            }
+            None => {
+                state.draw.cursor = None;
+                state.snap_hit = None;
+            }
+        }
     } else {
         state.draw.cursor = None;
+        state.snap_hit = None;
+    }
+}
+
+/// The drawing coordinate the pointer actually resolves to through the UI-B5
+/// inference seam: the raw plane `uv` while inference is off (or there is
+/// nothing to snap to), else the pointer snapped to its winning candidate.
+/// Returns the effective coordinate and the [`snap::Snap`] that fired - the
+/// source of the glyph + label - `None` when no inference is driving the
+/// pointer this frame.
+fn effective_uv(
+    ctx: &egui::Context,
+    state: &SketchState,
+    uv: (f64, f64),
+) -> ((f64, f64), Option<snap::Snap>) {
+    if !state.snap_enabled {
+        return (uv, None);
+    }
+    // Inference runs over the committed sketch document; an empty sketch has
+    // no candidates, so the pointer stays raw.
+    let doc: tools::SketchDoc = ctx
+        .data(|d| d.get_temp(egui::Id::unique(SKETCH_DOC_KEY)))
+        .unwrap_or_default();
+    if doc.points.is_empty() && doc.lines.is_empty() && doc.circles.is_empty() {
+        return (uv, None);
+    }
+    match snap::infer(&doc, uv, snap::SNAP_RADIUS) {
+        Some(hit) => (hit.point, Some(hit)),
+        None => (uv, None),
     }
 }
 
@@ -592,6 +702,25 @@ fn draw_report_lines(state: &SketchState) -> String {
             .unwrap_or_else(|| "-".to_string())
     ));
     out.push_str(&format!("last={}\n", state.last.as_deref().unwrap_or("-")));
+
+    // UI-B5 inference oracle: whether inference is on, which inference is
+    // currently firing (or `-`), and the exact snapped coordinate the next
+    // click places. The acceptance asserts these to prove the pointer snapped
+    // and to which candidate.
+    out.push_str(&format!(
+        "snap={}\n",
+        if state.snap_enabled { "on" } else { "off" }
+    ));
+    match &state.snap_hit {
+        Some(s) => {
+            out.push_str(&format!("infer={}\n", s.kind.id()));
+            out.push_str(&format!("snapx={:.3}\n", s.point.0));
+            out.push_str(&format!("snapy={:.3}\n", s.point.1));
+        }
+        None => {
+            out.push_str("infer=-\nsnapx=-\nsnapy=-\n");
+        }
+    }
     out
 }
 
@@ -846,6 +975,25 @@ fn draw_preview(ctx: &egui::Context, state: &SketchState) {
                 }
             }
 
+            // UI-B5: the inference currently firing - a per-kind glyph at the
+            // snapped point plus a label naming which inference fired, so the
+            // pointer's snap is visible, not just felt. Painted from
+            // `state.snap_hit` (tool state), never from the document.
+            if state.snap_enabled {
+                if let Some(hit) = &state.snap_hit {
+                    if let Some(pos) = anchor(hit.point) {
+                        snap_glyph(painter, pos, hit.kind, p);
+                        painter.text(
+                            egui::pos2(pos.x + 12.0, pos.y - 6.0),
+                            egui::Align2::LEFT_BOTTOM,
+                            hit.kind.label(),
+                            egui::FontId::proportional(12.0),
+                            p.accent,
+                        );
+                    }
+                }
+            }
+
             // Live dimension readout near the cursor (the "typed dimensions"
             // surface: numeric width/height/length/radius as the band grows).
             let label_pos = draw
@@ -911,6 +1059,88 @@ fn cross(painter: &egui::Painter, pos: egui::Pos2, r: f32, color: egui::Color32)
         [egui::pos2(pos.x, pos.y - r), egui::pos2(pos.x, pos.y + r)],
         stroke,
     );
+}
+
+/// UI-B5: the glyph painted at a fired inference's snapped point. Each
+/// inference kind gets a distinct marker (solid square / X / triangle / ring /
+/// diamond / guide), so the label's claim also has a shape. All ink comes from
+/// the semantic [`Palette`] - never a hand-chosen raw colour.
+fn snap_glyph(painter: &egui::Painter, pos: egui::Pos2, kind: snap::Inference, p: Palette) {
+    let stroke = egui::Stroke::new(1.6, p.accent);
+    let r = 4.5;
+    match kind {
+        snap::Inference::Endpoint => {
+            // Solid square: a precise pick point.
+            painter.rect_filled(
+                egui::Rect::from_center_size(pos, egui::vec2(2.0 * r, 2.0 * r)),
+                0.0,
+                p.accent,
+            );
+        }
+        snap::Inference::Intersection => {
+            // X: a crossing of two segments.
+            let d = r * 0.9;
+            painter.line_segment(
+                [
+                    egui::pos2(pos.x - d, pos.y - d),
+                    egui::pos2(pos.x + d, pos.y + d),
+                ],
+                stroke,
+            );
+            painter.line_segment(
+                [
+                    egui::pos2(pos.x - d, pos.y + d),
+                    egui::pos2(pos.x + d, pos.y - d),
+                ],
+                stroke,
+            );
+        }
+        snap::Inference::Midpoint => {
+            // Up triangle: the halfway mark.
+            painter.add(egui::Shape::convex_polygon(
+                vec![
+                    egui::pos2(pos.x, pos.y - r),
+                    egui::pos2(pos.x - r, pos.y + r),
+                    egui::pos2(pos.x + r, pos.y + r),
+                ],
+                p.accent,
+                stroke,
+            ));
+        }
+        snap::Inference::Centre => {
+            // Dot in a ring: a centre.
+            painter.circle_filled(pos, r * 0.7, p.accent);
+            painter.circle_stroke(pos, r, stroke);
+        }
+        snap::Inference::OnEdge => {
+            // Diamond: a point riding an edge.
+            painter.add(egui::Shape::convex_polygon(
+                vec![
+                    egui::pos2(pos.x, pos.y - r),
+                    egui::pos2(pos.x + r, pos.y),
+                    egui::pos2(pos.x, pos.y + r),
+                    egui::pos2(pos.x - r, pos.y),
+                ],
+                p.accent,
+                stroke,
+            ));
+        }
+        snap::Inference::Horizontal => {
+            // A short horizontal guide through the snapped point.
+            let w = r * 2.2;
+            painter.line_segment(
+                [egui::pos2(pos.x - w, pos.y), egui::pos2(pos.x + w, pos.y)],
+                stroke,
+            );
+        }
+        snap::Inference::Vertical => {
+            let w = r * 2.2;
+            painter.line_segment(
+                [egui::pos2(pos.x, pos.y - w), egui::pos2(pos.x, pos.y + w)],
+                stroke,
+            );
+        }
+    }
 }
 
 #[cfg(test)]
