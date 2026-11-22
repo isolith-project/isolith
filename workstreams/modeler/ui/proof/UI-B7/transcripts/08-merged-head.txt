@@ -1,0 +1,14 @@
+MERGED HEAD verification (branch merge-UI-B7 after --no-ff merge of ui/b7-dimensions)
+HEAD: 09a02535472ff162303665f6656350944811d31d
+parents: cf91df7 c37dc70
+
+COMMAND: cargo test -p oep-app --test dimensions
+test result: ok. 145 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.29s
+
+COMMAND: cargo test -p oep-app
+sum: passed=1287 failed=0 (across all 14 test targets, each printed above)
+COMMAND: cargo clippy -p oep-app --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.16s
+
+COMMAND: xvfb-run -a cargo run -p oep-app -- --smoke
+frames=8 smoke ok
