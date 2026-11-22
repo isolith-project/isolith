@@ -1,0 +1,20 @@
+# Merged-head verification (merge-UI-B8, parents b1ce450 + 8d69373)
+git log -1:
+452f302 merge-UI-B8: UI-FEATURE-FROM-SKETCH - extrude/revolve dialog with preview
+
+cargo test -p oep-app --test feature_from_sketch ...
+test result: ok. 148 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.70s
+
+cargo test -p oep-app -> target count:
+16
+
+smoke:
+frames=8 smoke ok
+
+clippy:
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.17s
+
+DCO:
+DCO commit check passed on 736a0a7..HEAD (Signed-off-by present on every commit)
+DCO PR-body check skipped (no --body-file; push-only scan)
+DCO check passed
