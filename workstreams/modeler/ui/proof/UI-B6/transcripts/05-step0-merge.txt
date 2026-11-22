@@ -1,0 +1,6 @@
+$ git fetch github && git merge github/wave/ui-b
+Fast-forward? No: merge of the wave head applied in step 0 (see git log).
+$ git log --oneline -3 at start
+  736a0a7 (before merge) Merge pull request #28 from isolith-project/checkpoint/wave-ui-a
+After merge HEAD = 38dcdb6ae8d8f3eeca8f369506744aae7eeeaeb6 (wave/ui-b), brought
+UI-B1 (input router), UI-B2 (journal), UI-B3 (sketch enter), UI-B4 (draw) code.

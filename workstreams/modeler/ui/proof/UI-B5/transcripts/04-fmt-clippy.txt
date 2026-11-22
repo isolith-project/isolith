@@ -1,0 +1,10 @@
+$ cargo clippy -p oep-app --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.18s
+CLIPPY_EXIT=0
+
+$ rustfmt --check on owned files
+snap.rs: clean
+panels/sketch.rs: clean
+
+test-file check recurses through #[path] into src/: the ONLY delta is the pre-existing wave-head trailing blank in src/input.rs (UI-B1, not owned):
+crates/oep-app/tests/../src/input.rs:504:

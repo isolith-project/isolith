@@ -22,6 +22,12 @@ oep-import = { path = "../oep-import" }
 # validate-then-dispatch come from oep_shell::commands, the same registry and
 # router step the workbench CLI uses; the app never forks the command list).
 oep-shell = { path = "../oep-shell" }
+# UI-B6 UI-CONSTRAINTS (card-mandated DETAIL: "Use the existing solver seam
+# (oep-assem / oep-sketch). Do not write a second solver." -- the sketch
+# constraint apply/remove layer translates the app's SketchDoc + applied
+# constraints into the oep-sketch model and calls its solver for an honest
+# dof / over-constrained report; oep-shell does not re-export these types).
+oep-sketch = { path = "../oep-sketch" }
 
 [[bin]]
 name = "isolith"

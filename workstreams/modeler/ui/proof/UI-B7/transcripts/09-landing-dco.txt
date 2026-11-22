@@ -1,0 +1,7 @@
+Landing + DCO posture (branch merge-UI-B7 landed on wave/ui-b).
+COMMAND: python3 python/oep_tooling/dco_check.py --repo . --base 736a0a7 --head <wave/ui-b>
+DCO commit check passed on 736a0a7..fcd6648b596a9e37b72befcc95eaed88cdcad7c9 (Signed-off-by present on every commit)
+DCO PR-body check skipped (no --body-file; push-only scan)
+DCO check passed
+
+The repo's own DCO checker runs git log --no-merges (merge commits are excluded - dco_check.py:67, hook commit-msg:13), so the merge-UI-B7 commit carries no authored sign-off and the gate is still green. Every card commit and proof commit in the range carries its Signed-off-by via the commit-msg hook.
