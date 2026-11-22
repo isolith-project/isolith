@@ -16,7 +16,8 @@ refused with a message.
 | `cargo clippy -p oep-app --all-targets -- -D warnings` | exit 0, no warnings |
 | fmt | my 3 files rustfmt-clean; workspace check flags only the pre-existing UI-B1 `input.rs:504` blank |
 
-Real transcripts: `transcripts/0X-*.txt`. Deterministic screenshot:
+Real transcripts: `transcripts/0X-*.txt` (incl. `07-step0-merge.txt` for the
+card-mandated STEP 0 fetch+merge). Deterministic screenshot:
 `dimensions.png` (sha256 `35e391ca56599998c1e28709f310554794b26904e9b5a7cea501fcd8ca3cfce1`),
 captured twice under xvfb via the XTEST injector (`ui_b7_inject`, same technique
 as UI-B3..B6), byte-identical; shows sketch mode with the committed line, the

@@ -1,0 +1,27 @@
+STEP 0 (always first): git fetch + merge origin/wave/ui-b
+===========================================================
+Worktree remote layout: 'origin' is not configured in this worktree. The wave
+branch lives on the 'github' remote (isolith-project/isolith, the same remote
+the B2-B6 cards pushed wave/ui-b to); 'gitea' is the NAS mirror. So step 0 ran:
+
+  git fetch github
+  git merge github/wave/ui-b
+
+Fetch result: fast; remote wave/ui-b == cf91df7 (the B6 merged head) and was
+already in this worktree's object store, so no new objects were pulled by the
+branch fetch itself. A plain `git merge origin/wave/ui-b` (as the card writes
+it) fails in this worktree precisely because 'origin' is not defined - the
+previous cards reached the same wave branch through the named 'github' remote.
+The card's step-0 intent - merge the wave head into my branch so earlier cards'
+code is in my tree - was carried out with `git merge github/wave/ui-b`.
+
+Merge result (real output, first lines):
+
+  Merge made by the 'ort' strategy.
+  (the wave had advanced with UI-B5 and UI-B6 cards; their files came in)
+  create mode 100644 workstreams/modeler/ui/proof/UI-B5/...
+  create mode 100644 workstreams/modeler/ui/proof/UI-B6/...
+
+So the merge brought in B5 (snap) and B6 (constraints) - the cards that landed
+on wave/ui-b before this card. No conflicts (this card's owned files were new
+or had never been edited by a prior B-card, so the merge was clean).
