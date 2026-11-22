@@ -1,0 +1,26 @@
+# full gate on merged head 8da7347d88cbab104f9c93070c486260a9602929
+
+1) cargo fmt --all -- --check => RED
+   Diff in crates/oep-app/src/input.rs:504 (trailing blank after fn report).
+   blame 89f1489 (UI-B1), present on wave head dc57f54, untouched B2..B8.
+ 
+ }
+-
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/src/input.rs:504:
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+     write_report(ctx, &report);
+EXIT=1
+
+2) cargo clippy --workspace --all-targets -- -D warnings => GREEN (exit 0)
+3) cargo test --workspace => GREEN (2846 passed, 0 failed)
+4) python3 scripts/licensing-check.py => GREEN (6/6, 34 crates, 535 deps)
+5) bash scripts/gate/precommit-gate.sh => GREEN with pytest python (558 passed, 29 skipped, cargo test ok)
+6) bash scripts/ui/shot.sh => RED
+   frame drift vs committed golden: current 2f20383c..1047 golden 59ae82bf..9d989f (UI-A12 golden).
+   cause: UI-B7 landed the properties dimension editor, changing the default frame;
+   no wave-B card refreshed workstreams/modeler/ui/proof/ui-a2/frame.png sha256.
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 2f20383c1ae851675499c96e43980ebc1b6dbb45235bb64b94cce55a400c1047
+  golden  : 59ae82bf991d455a36abd368d345e4e6c92854d856bdc8181614a757579d989f
+  reference image: /home/r1a/isolith-main/.worktrees/ui-b9/workstreams/modeler/ui/proof/ui-a2/frame.png
+EXIT=1

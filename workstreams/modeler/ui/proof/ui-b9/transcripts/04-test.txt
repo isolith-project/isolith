@@ -1,0 +1,4 @@
+# leg: cargo test --workspace
+8da7347d88cbab104f9c93070c486260a9602929
+aggregate passed=2846 failed=0
+EXIT=0

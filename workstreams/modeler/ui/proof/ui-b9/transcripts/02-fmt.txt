@@ -1,0 +1,87 @@
+# leg: cargo fmt --all -- --check (on merged head)
+8da7347d88cbab104f9c93070c486260a9602929
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+EXIT=1
