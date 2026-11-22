@@ -35,6 +35,14 @@ use crate::theme;
 #[path = "sketch.rs"]
 pub mod sketch;
 
+// UI-B8 UI-FEATURE-FROM-SKETCH: the finish-sketch (extrude/revolve) dialog, its
+// document-clone preview, the feature journal and the STEP export. This panel
+// owns the interactive half (keys, buttons, oracle, painting); `features.rs`
+// is its own `#[path]` include exactly like `sketch.rs` above, so the app
+// binary (and the test targets that pull `app.rs`) compile the same source.
+#[path = "features.rs"]
+pub mod features;
+
 /// Context-data key under which the backend lives (and the scalar snapshot is
 /// published) in the egui per-context store. Shared with
 /// `crates/oep-app/tests/viewport.rs`, which derives the same id value.
@@ -111,6 +119,12 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // borrow, so it never nests inside `data_mut` below).
     let mut sketch_state = sketch::read_state(ui.ctx());
 
+    // UI-B8 UI-FEATURE-FROM-SKETCH: plain F opens the finish-sketch dialog,
+    // Escape cancels it. Runs after the sketch read (so draw-tool keys win)
+    // and before this panel's own Exit-sketch Escape, so a cancel inside the
+    // dialog is consumed here and never exits the sketch.
+    features::poll(ui.ctx());
+
     // Escape leaves sketch mode without touching the document. This panel runs
     // first in the frame, so it consumes the key ONLY while a plane is active
     // and never steals the Escape the doc panel / palette need otherwise.
@@ -138,6 +152,14 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     } else {
         None
     };
+
+    // UI-B8 UI-FEATURE-FROM-SKETCH: the preview frame path. Computed once
+    // before the backend borrow (it reads the feature panel state from the
+    // same context store); when a document clone is being previewed (or a
+    // feature is applied) its rasterized solid frame and hash replace the
+    // ordinary backend frame - so the published viewport hash moves with the
+    // preview, and Cancel returns it to the pre-feature value.
+    let preview = features::preview_frame(ui.ctx(), px, py);
 
     // All panel mutation lives inside one context-data scope (no `&mut` escape,
     // this egui version); owned outputs are handed out afterwards.
@@ -220,10 +242,26 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
         let cam = backend.camera();
         let frame_hash = backend.frame_hash();
         let frame = backend.frame();
-        let image = egui::ColorImage::from_rgba_unmultiplied(
-            [frame.width as usize, frame.height as usize],
-            &frame.data,
-        );
+        // UI-B8 preview frame path: the preview document clone's rasterized
+        // solid replaces the ordinary backend frame (and its hash is what the
+        // snapshot publishes), so "the preview frame differs from the
+        // pre-feature frame" is a real, published value.
+        let (image, published_hash) = match &preview {
+            Some((pimg, phash)) => (
+                egui::ColorImage::from_rgba_unmultiplied(
+                    [pimg.width as usize, pimg.height as usize],
+                    &pimg.data,
+                ),
+                *phash,
+            ),
+            None => (
+                egui::ColorImage::from_rgba_unmultiplied(
+                    [frame.width as usize, frame.height as usize],
+                    &frame.data,
+                ),
+                frame_hash,
+            ),
+        };
         let ms_bucket = ((backend.frame_time_secs() * 1000.0) as u64 / 10) * 10;
 
         // Sketch grid layer: project the active plane onto this panel (the
@@ -246,7 +284,7 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             cam.target.y,
             cam.target.z,
             cam.fov_y,
-            frame_hash,
+            published_hash,
         );
         d.insert_temp::<ViewportSnapshot>(state_id, snapshot);
 
@@ -256,6 +294,11 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // Persist the sketch state (struct + String oracle) after the backend
     // borrow: a second, sequential context-data scope.
     sketch::write_state(ui.ctx(), &sketch_state);
+
+    // UI-B8 UI-FEATURE-FROM-SKETCH: paint the feature surface (Finish button,
+    // live dialog, Export button) over the viewport, from the same panel state
+    // the preview frame reads.
+    features::draw(ui.ctx(), rect);
 
     // Draw the frame into the panel via an egui texture.
     let texture_id = ui.scope_id().with("viewport_frame_texture");
