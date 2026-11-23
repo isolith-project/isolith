@@ -104,6 +104,25 @@ pub const TREE_SEED_KEY: &str = "ui_c1_tree_seed";
 pub const RENAME_TOKEN: &str = "tree:rename";
 /// Journal token this panel records for a delete edit.
 pub const DELETE_TOKEN: &str = "tree:delete";
+/// Journal token this panel records for a suppress/restore edit.
+pub const SUPPRESS_TOKEN: &str = "tree:suppress";
+/// Journal token this panel records for a roll/unroll edit.
+pub const ROLL_TOKEN: &str = "tree:roll";
+
+/// `Feature.parameters` key marking a feature suppressed (UI-C4). Document
+/// state: it serializes into the canonical `.oepdoc`, so a saved + reopened
+/// document replays the same suppression.
+pub const PARAM_SUPPRESSED: &str = "suppressed";
+/// `Feature.parameters` key marking the feature the tree is rolled back to
+/// (UI-C4). Everything created after it in the document's feature order is
+/// hidden (rolled back). Document state, same round-trip as suppression.
+pub const PARAM_ROLL: &str = "roll";
+
+/// Context-data key under which the panel publishes the live canonical
+/// `.oepdoc` JSON of its model document every frame. Cross-copy-safe plain
+/// `String`; the acceptance harness reads this to prove save/reopen (the text
+/// `doc_io::write_oepdoc` would write, read as the reopened document).
+pub const TREE_DOC_JSON_KEY: &str = "ui_c1_tree_doc_json";
 
 /// The width given to the inline rename text field.
 const RENAME_FIELD_WIDTH: f32 = 180.0;
@@ -237,6 +256,19 @@ fn feature_note(kind: &str) -> String {
     }
 }
 
+/// The full row label for a feature: name + kind note, plus the honest
+/// UI-C4 suppression mark when the feature carries `suppressed` document state
+/// (a readable suffix, so screen readers and the AccessKit assertions see the
+/// state in plain text).
+fn feature_row_label(name: &str, note: &str, suppressed: bool) -> String {
+    let base = format!("{name} ({note})");
+    if suppressed {
+        format!("{base} (suppressed)")
+    } else {
+        base
+    }
+}
+
 /// Derive the live tree rows from the document. Pure: every call re-reads the
 /// document collections, so an edit made through the journal is reflected on
 /// the very next frame without any stored row list ("rows come from the live
@@ -276,11 +308,18 @@ fn rows_of(document: &Option<oep_import::Document>) -> Vec<Row> {
         }
         for feature_id in &part.feature_ids {
             if let Some(feature) = doc.features.iter().find(|f| &f.id == feature_id) {
+                // UI-C4: a feature created after the roll point is hidden
+                // (rolled back). The tree re-derives rows every frame, so the
+                // held-back set is exactly the document's downstream features.
+                if is_rolled_hidden(doc, &feature.id) {
+                    continue;
+                }
                 let note = feature_note(&feature.kind);
+                let label = feature_row_label(&feature.name, &note, feature_suppressed(feature));
                 rows.push(Row {
                     id: feature.id.clone(),
                     kind: RowKind::Feature,
-                    label: format!("{} ({note})", feature.name),
+                    label,
                     depth: 1,
                 });
             }
@@ -301,11 +340,15 @@ fn rows_of(document: &Option<oep_import::Document>) -> Vec<Row> {
     }
     for feature in &doc.features {
         if !owned_feature(&feature.id, doc) {
+            // UI-C4: same downstream hiding for unowned features.
+            if is_rolled_hidden(doc, &feature.id) {
+                continue;
+            }
             let note = feature_note(&feature.kind);
             rows.push(Row {
                 id: feature.id.clone(),
                 kind: RowKind::Feature,
-                label: format!("{} ({note})", feature.name),
+                label: feature_row_label(&feature.name, &note, feature_suppressed(feature)),
                 depth: 0,
             });
         }
@@ -371,6 +414,128 @@ fn label_of<'a>(rows: &'a [Row], id: &str) -> Option<&'a Row> {
     rows.iter().find(|r| r.id == id)
 }
 
+// ---------------------------------------------------------------------------
+// UI-C4 UI-ROLLBACK: suppression marks and the roll bar (document state)
+// ---------------------------------------------------------------------------
+//
+// Both suppression and roll are DOCUMENT state, carried in the affected
+// feature's `parameters` map (`suppressed` / `roll` keys) - the same
+// deterministic canonical channels UI-C2's parameter editor and UI-C3's
+// variable table use. Because they live in the `.oepdoc` JSON, a saved and
+// reopened document replays exactly the same suppression marks and roll
+// position (`doc_io::write_oepdoc` -> `read_oepdoc` round-trips them), which
+// the acceptance harness proves by re-seeding the panel's own canonical JSON.
+//
+// - Suppress: `parameters["suppressed"] = true` marks the feature suppressed;
+//   the row renders a suppression mark and the document hash moves (the
+//   canonical JSON changed). The count feeds the status bar.
+// - Roll: `parameters["roll"] = true` on the feature the tree is rolled back
+//   to. Everything created after it (higher index in `document.features`,
+//   i.e. creation order) is DOWNSTREAM and is hidden: the roll bar shows the
+//   position and the hidden count, and the rows re-derive live every frame
+//   (the established "rows come from the live document, never a cached copy"
+//   contract), so no stale geometry can outlive the edit.
+
+/// True when `feature` carries the suppression mark.
+fn feature_suppressed(feature: &oep_import::Feature) -> bool {
+    feature
+        .parameters
+        .get(PARAM_SUPPRESSED)
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false)
+}
+
+/// True when `feature` is the current roll-back position (the roll point).
+fn feature_is_roll_point(feature: &oep_import::Feature) -> bool {
+    feature
+        .parameters
+        .get(PARAM_ROLL)
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false)
+}
+
+/// The roll point, as `(feature_id, creation_index)`: the one feature marked
+/// `roll` and its position in `document.features` (creation order).
+fn roll_point(document: &oep_import::Document) -> Option<(String, usize)> {
+    document
+        .features
+        .iter()
+        .enumerate()
+        .find(|(_, f)| feature_is_roll_point(f))
+        .map(|(i, f)| (f.id.clone(), i))
+}
+
+/// Whether `feature_id` is downstream of the roll point (created after it) and
+/// therefore hidden. `None` roll = nothing hidden.
+fn is_rolled_hidden(document: &oep_import::Document, feature_id: &str) -> bool {
+    let Some((_, roll_index)) = roll_point(document) else {
+        return false;
+    };
+    document
+        .features
+        .iter()
+        .position(|f| f.id == feature_id)
+        .map(|i| i > roll_index)
+        .unwrap_or(false)
+}
+
+/// Count of suppressed features in the document (the status-bar number).
+fn suppressed_count(document: &oep_import::Document) -> usize {
+    document
+        .features
+        .iter()
+        .filter(|f| feature_suppressed(f))
+        .count()
+}
+
+/// Count of features hidden because they were created after the roll point.
+fn rolled_count(document: &oep_import::Document) -> usize {
+    match roll_point(document) {
+        Some((_, ri)) => document.features.len().saturating_sub(ri + 1),
+        None => 0,
+    }
+}
+
+/// Mark `row.feature` suppressed or restore it, in the live document. Runs
+/// INSIDE [`doc_io::EditHistory::apply`] (the journal seam) like the other
+/// helpers, so one suppress/restore is one undoable command.
+fn apply_suppress(document: &mut oep_import::Document, row: &Row, suppress: bool) {
+    if row.kind != RowKind::Feature {
+        return;
+    }
+    if let Some(feature) = document.features.iter_mut().find(|f| f.id == row.id) {
+        if suppress {
+            feature
+                .parameters
+                .insert(PARAM_SUPPRESSED.to_string(), true.into());
+        } else {
+            feature.parameters.remove(PARAM_SUPPRESSED);
+        }
+    }
+}
+
+/// Roll the tree back to `feature_id`: clear every existing roll mark, then
+/// mark that feature as the roll point. Downstream features (created after it)
+/// become hidden on the next frame's row derivation.
+fn apply_roll_to(document: &mut oep_import::Document, feature_id: &str) {
+    for f in &mut document.features {
+        f.parameters.remove(PARAM_ROLL);
+    }
+    if let Some(feature) = document.features.iter_mut().find(|f| f.id == feature_id) {
+        feature
+            .parameters
+            .insert(PARAM_ROLL.to_string(), true.into());
+    }
+}
+
+/// Clear the roll point entirely: every downstream feature becomes visible
+/// again on the next frame.
+fn apply_unroll(document: &mut oep_import::Document) {
+    for f in &mut document.features {
+        f.parameters.remove(PARAM_ROLL);
+    }
+}
+
 /// Rename the entity named by `row` to `new_name`, in the live document.
 ///
 /// Runs INSIDE the [`doc_io::EditHistory::apply`] closure - the UI-B2 journal
@@ -432,6 +597,12 @@ enum TreeAction {
     CancelConfirm,
     DoDelete,
     Undo,
+    /// Toggle suppression on the selected feature row (true = suppress).
+    ToggleSuppress(bool),
+    /// Roll the tree back to the selected feature.
+    RollTo,
+    /// Clear the roll point (everything visible again).
+    Unroll,
 }
 
 /// Render one selectable row; returns `true` when it was clicked.
@@ -493,10 +664,33 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     if header_open && !rows.is_empty() {
         ui.add_space(4.0);
         let mut clicked: Option<String> = None;
+        // UI-C4: the row, if any, the tree is rolled back to (draws the roll
+        // bar right under it).
+        let roll_mark: Option<String> = model
+            .document
+            .as_ref()
+            .and_then(roll_point)
+            .map(|(id, _)| id);
         for row in &rows {
             let selected = model.selection.as_deref() == Some(row.id.as_str());
             if row_ui(ui, row, selected) {
                 clicked = Some(row.id.clone());
+            }
+            if roll_mark.as_deref() == Some(row.id.as_str()) {
+                // The roll bar: an honest accessible marker under the roll
+                // point, showing the tree is rolled back here; downstream
+                // features (created after it) are hidden until Unroll. Painted
+                // as real labels so screen readers and the AccessKit
+                // assertions see the state, not just pixels.
+                ui.separator();
+                ui.label(
+                    egui::RichText::new(format!(
+                        "roll bar · {} downstream hidden",
+                        model.document.as_ref().map(rolled_count).unwrap_or(0)
+                    ))
+                    .weak()
+                    .italics(),
+                );
             }
         }
         if let Some(id) = clicked {
@@ -511,19 +705,48 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             model.rename_draft.clear();
         }
 
-        // 5. Action toolbar: Rename / Delete + Undo (undo only when there is
-        //    an edit to step back).
+        // 5. Action toolbar: Rename / Delete, the UI-C4 Suppress / Roll
+        //    controls (feature rows only), then Undo (only when there is an
+        //    edit to step back).
         ui.add_space(6.0);
         ui.horizontal_wrapped(|ui| {
             let selected = model.selection.clone();
             let idle = model.renaming.is_none() && model.confirm_delete.is_none();
             if selected.is_some() && idle {
+                let sel = selected.clone().unwrap_or_default();
+                let sel_is_feature = label_of(&rows, &sel)
+                    .map(|r| r.kind == RowKind::Feature)
+                    .unwrap_or(false);
+                let sel_suppressed = model
+                    .document
+                    .as_ref()
+                    .and_then(|d| d.features.iter().find(|f| f.id == sel))
+                    .map(feature_suppressed)
+                    .unwrap_or(false);
                 if ui.button("Rename").clicked() {
                     action = TreeAction::BeginRename(selected.clone().unwrap_or_default());
                 }
                 if ui.button("Delete").clicked() {
                     action = TreeAction::SetConfirm(selected.unwrap_or_default());
                 }
+                if sel_is_feature {
+                    let label = if sel_suppressed {
+                        "Restore"
+                    } else {
+                        "Suppress"
+                    };
+                    if ui.button(label).clicked() {
+                        action = TreeAction::ToggleSuppress(!sel_suppressed);
+                    }
+                    if ui.button("Roll to here").clicked() {
+                        action = TreeAction::RollTo;
+                    }
+                }
+            }
+            // Only offer Unroll when a roll point actually exists.
+            let has_roll = model.document.as_ref().and_then(roll_point).is_some();
+            if has_roll && idle && ui.button("Unroll").clicked() {
+                action = TreeAction::Unroll;
             }
             if model.history.can_undo() && ui.button("Undo").clicked() {
                 action = TreeAction::Undo;
@@ -642,12 +865,50 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             model.selection = None;
             model.confirm_delete = None;
         }
+        TreeAction::ToggleSuppress(suppress) => {
+            let id = model.selection.clone();
+            // Resolve the live row BEFORE the mutable document borrow (rows
+            // derive from a shared read; the journal borrow comes after).
+            let target = rows_of(&model.document);
+            let row = id.as_deref().and_then(|id| label_of(&target, id)).cloned();
+            if let (Some(row), Some(document)) = (row, model.document.as_mut()) {
+                model.history.apply(document, SUPPRESS_TOKEN, None, |d| {
+                    apply_suppress(d, &row, suppress);
+                });
+                doc_changed = true;
+            }
+        }
+        TreeAction::RollTo => {
+            let id = model.selection.clone();
+            if let Some(id) = id {
+                if let Some(document) = model.document.as_mut() {
+                    model.history.apply(document, ROLL_TOKEN, None, |d| {
+                        apply_roll_to(d, &id);
+                    });
+                    doc_changed = true;
+                }
+            }
+        }
+        TreeAction::Unroll => {
+            if let Some(document) = model.document.as_mut() {
+                model.history.apply(document, ROLL_TOKEN, None, |d| {
+                    apply_unroll(d);
+                });
+                doc_changed = true;
+            }
+        }
     }
 
     // Re-derive rows after a document edit so this frame's rendered state and
-    // the published report agree.
+    // the published report agree. A selection that pointed at a now-hidden
+    // (rolled-back) row is honestly cleared rather than left dangling.
     if doc_changed {
         rows = rows_of(&model.document);
+        if let Some(sel) = model.selection.clone() {
+            if label_of(&rows, &sel).is_none() {
+                model.selection = None;
+            }
+        }
     }
 
     // 9. Publish the shared selection id (the one id viewport / properties /
@@ -656,6 +917,10 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     ui.ctx()
         .data_mut(|d| d.insert_temp::<String>(egui::Id::unique(TREE_SELECTION_KEY), sel_id));
     app.status.selection_count = if model.selection.is_some() { 1 } else { 0 };
+    // UI-C4: the status bar reports the honest suppression and roll-back
+    // counts (document-state-derived every frame, never cached).
+    app.suppressed = model.document.as_ref().map(suppressed_count).unwrap_or(0);
+    app.rolled = model.document.as_ref().map(rolled_count).unwrap_or(0);
 
     write_model(ui.ctx(), &model);
     publish_report(ui.ctx(), &model, &rows);
@@ -703,10 +968,29 @@ fn publish_report(ctx: &egui::Context, model: &TreeModel, rows: &[Row]) {
         .confirm_delete
         .clone()
         .unwrap_or_else(|| "-".to_string());
+    // UI-C4: honest suppression / roll fields (UI-C2/C3 oracle style).
+    let suppressed = doc.map(suppressed_count).unwrap_or(0);
+    let rolled = doc.map(rolled_count).unwrap_or(0);
+    let roll = doc
+        .and_then(roll_point)
+        .map(|(id, _)| id)
+        .unwrap_or_else(|| "-".to_string());
     let report = format!(
-        "open={}\nparts={parts}\nbodies={bodies}\nfeatures={features}\nsketch={sketch}\nvarset={varset}\nrows={}\nhash={hash}\nsel={sel}\nrenaming={renaming}\nconfirm={confirm}\n",
+        "open={}\nparts={parts}\nbodies={bodies}\nfeatures={features}\nsketch={sketch}\nvarset={varset}\nrows={}\nhash={hash}\nsel={sel}\nrenaming={renaming}\nconfirm={confirm}\nsuppressed={suppressed}\nrolled={rolled}\nroll={roll}\n",
         model.document.is_some() as u8,
         rows.len(),
     );
     ctx.data_mut(|d| d.insert_temp::<String>(egui::Id::unique(TREE_REPORT_KEY), report));
+
+    // UI-C4 round-trip: publish the exact canonical `.oepdoc` JSON of the live
+    // document (what `doc_io::write_oepdoc` would write). A test can re-seed
+    // this under [`TREE_SEED_KEY`] (what `read_oepdoc` would hand back after a
+    // reopen) and the suppression/roll state must replay identically.
+    if let Some(document) = &model.document {
+        if let Ok(json) = document.to_json_pretty() {
+            ctx.data_mut(|d| {
+                d.insert_temp::<String>(egui::Id::unique(TREE_DOC_JSON_KEY), json);
+            });
+        }
+    }
 }
