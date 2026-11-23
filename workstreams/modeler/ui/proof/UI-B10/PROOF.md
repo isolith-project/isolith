@@ -146,17 +146,41 @@ $ git merge --no-ff ui/b10-gate-fix
 $ git push github HEAD:wave/ui-b
 ```
 
-Post-landing verification: `github/wave/ui-b` remote ref equals local merged
-HEAD, and the card branch `ui/b10-gate-fix` is an ancestor of the wave head
-(`git merge-base --is-ancestor ui/b10-gate-fix github/wave/ui-b` exits 0).
+Push identity (environment finding, transcript `11-push-denied-redonealpha.txt`):
+the first `git push github` was denied 403 because the resolution of
+`credential.helper` produced the `redonealpha-don` account, which has
+**no write** to the `isolith-project/isolith` repo (read works; write 403).
+Prior wave cards push this repo as `dmltallen`. The card branch was re-pushed
+with the keyring token for `dmltallen` and the merge commit was pushed the same
+way. Both landing pushes succeeded: `[new branch] ui/b10-gate-fix`, and
+`dc57f54..c684ca2 HEAD -> wave/ui-b`.
+
+Merge commit: `c684ca2` — `merge-UI-B10: UI-GATE-FIX - formatting and
+intentional launch-frame update`, parents `dc57f546` (prior wave head) +
+`6f76192` (card tip). Merged with no conflict.
+
+Post-landing verification (`09-verify.txt`): `github/wave/ui-b` remote ref
+`c684ca2d9b04d5f5e21a15be20b905579e53979b` equals local merged HEAD; the card
+branch `ui/b10-gate-fix` is an ancestor of the wave head (`git merge-base
+--is-ancestor` exits 0); card tip `6f76192` is reachable from
+`github/wave/ui-b`.
+
+No daemon or display process left running (`10-processes.txt`): the only Xvfb
+(`:99`, 1280x1024, older PID) and the Chrome browser are pre-existing host
+processes; nothing owned by this card's captures.
 
 ## Commits
 
 - `card(UI-B10): strip the input.rs trailing blank and refresh the ui-a2 golden`
-- `card(UI-B10): record UI-B10 proof and README row`
+- `card(UI-B10): record proof and README row`
+- `card(UI-B10): fix diff-block trailing whitespace in PROOF.md`
+- `card(UI-B10): record final-tree acceptance for the proof transcripts`
+- `card(UI-B10): record landing verification transcripts`
 
-Both DCO-signed by the repository commit-msg hook (`Signed-off-by: Don Allen
-<don@redonealpha.com>`), never `--no-signoff` / `--no-verify`.
+All DCO-signed by the repository commit-msg hook (`Signed-off-by: Don Allen
+<don@redonealpha.com>`), never `--no-signoff` / `--no-verify`. The no-ff merge
+commit `c684ca2` is unsigned, matching the wave's established merge-posture
+(contract-exempt per UI-A8/UI-B8).
 
 ## Environment
 
