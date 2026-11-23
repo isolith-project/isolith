@@ -1,0 +1,3 @@
+# cargo test --workspace (aggregate)
+workspace exit=0
+214 targets, 3191 passed, 0 failed
