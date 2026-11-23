@@ -1,26 +1,25 @@
-=== Mon Nov 23 01:46:20 PM UTC 2026 ===
-    Blocking waiting for file lock on build directory
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 44.45s
+=== Mon Nov 23 01:55:11 PM UTC 2026 merged-head 366c0a3: cargo test -p oep-geo --features kernel --test kernel_seam ===
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
      Running tests/kernel_seam.rs (target/debug/deps/kernel_seam-db9056a63ec85b47)
 
 running 16 tests
 test degenerate_primitive_is_kernel_error_not_panic ... ok
 test empty_or_invalid_sweep_is_kernel_error_not_panic ... ok
-test primitive_box_matches_analytic_and_golden ... ok
 test boolean_of_fewer_than_two_operands_is_typed_error ... ok
 test empty_edge_selection_is_kernel_error_not_panic ... ok
-test primitive_sphere_matches_analytic_and_golden ... ok
 test primitive_cylinder_matches_analytic_and_golden ... ok
 test extrude_profile_matches_analytic_and_golden ... ok
+test primitive_sphere_matches_analytic_and_golden ... ok
+test primitive_box_matches_analytic_and_golden ... ok
 test revolve_meridian_matches_analytic_and_golden ... ok
 test cross_session_solid_is_typed_result_never_a_panic ... ok
 test difference_that_consumes_all_material_is_typed_error ... ok
-test boolean_difference_matches_analytic_and_golden ... ok
-test boolean_intersection_matches_analytic_and_golden ... ok
-test boolean_union_matches_analytic_and_golden ... ok
 test chamfer_box_edge_matches_analytic_and_golden ... ok
 test fillet_box_edge_matches_analytic_and_golden ... ok
+test boolean_intersection_matches_analytic_and_golden ... ok
+test boolean_difference_matches_analytic_and_golden ... ok
+test boolean_union_matches_analytic_and_golden ... ok
 
-test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
 
 EXIT=0

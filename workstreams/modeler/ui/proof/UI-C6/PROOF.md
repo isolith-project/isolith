@@ -114,6 +114,27 @@ branch forked from `736a0a7` (before the wave-B close), and merging
 through UI-C4 (226 files). The whole gate above was re-run against the merged
 head.
 
+## Landing (merged head, after UI-C5 landed mid-run)
+
+While this card ran, the wave head advanced past my STEP 0 to `2c1c900`
+(UI-C5 UI-MEASURE landed mid-run). The landing merge `merge-UI-C6`
+(`366c0a3`, parents `2c1c900` + card branch `f185c4f`) therefore met UI-C5's
+code; every path auto-merged EXCEPT `workstreams/modeler/ui/README.md`, where
+both UI-C5 and UI-C6 register a row right after the UI-C4 row. This is NOT a
+root manifest, so per the card rule the conflict is documented (kanban
+comment #222 on this task naming the file and the two intents) and resolved
+as a pure union keeping BOTH rows ordered by card id (UI-C5 then UI-C6) --
+dropping either side would false-erase a registered card row.
+
+The ENTIRE acceptance was re-run against the merged head `366c0a3`
+(transcripts 01-08 are the post-merge output): `kernel_features` 122/0 in
+both the default and `--features kernel` builds, `cargo test -p oep-app` 22
+targets / 0 failed (now including C5's `tests/measure.rs` alongside
+`tests/kernel_features.rs`; frozen contracts untouched), `cargo test
+--workspace` green (`WS_EXIT=0`), clippy `-D warnings`, fmt and `--smoke`
+(`frames=8 smoke ok`) all clean. Transcript `09-landing.txt` records the
+push / merge / remote read-back.
+
 ## Honest notes
 
 - **No real-binary screenshot in this card.** The panel is delivered

@@ -1,5 +1,5 @@
-=== Mon Nov 23 01:45:19 PM UTC 2026 ===
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.16s
+=== Mon Nov 23 01:53:42 PM UTC 2026 merged-head 366c0a3: xvfb-run -a cargo run -p oep-app -- --smoke ===
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.18s
      Running `target/debug/isolith --smoke`
 libEGL warning: DRI3 error: Could not get DRI3 device
 libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering

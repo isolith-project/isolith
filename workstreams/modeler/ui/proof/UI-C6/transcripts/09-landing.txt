@@ -1,0 +1,39 @@
+### UI-C6 landing transcript (merge-UI-C6)
+
+Card branch: ui/c6-kernel-features f185c4f (DCO sign-off auto-appended).
+Pushed to github/ui/c6-kernel-features as dmltallen (local credential helper).
+
+STEP 0: branch forked from 736a0a7; merged github/wave/ui-c twice --
+  start: 736a0a7 -> ddd6d17 (wave-B close + UI-C1..UI-C4; 226 files, fast-forward, not empty)
+  at landing: wave head had advanced to 2c1c900 (UI-C5 landed mid-run).
+
+Merge: 366c0a3 "merge-UI-C6" 
+  parents: 2c1c900 (wave/ui-c head, incl. UI-C5) + f185c4f (card branch)
+  CONFLICT in workstreams/modeler/ui/README.md (NOT a root manifest):
+    side A: UI-C5 row landed after the UI-C4 row mid-run
+    side B: UI-C6 row after the UI-C4 row (C5 absent when appended)
+    resolution: documented in kanban_comment #222 on this task; union keeping
+    BOTH rows ordered by card id (C5 then C6). All other paths auto-merged.
+
+Gate re-run on the MERGED head 366c0a3:
+  01 kernel_features default -> see transcript
+  02 kernel_features --features kernel -> see transcript
+  03 oep-app -> see transcript
+  05 clippy -> see transcript
+  06 fmt -> see transcript
+  07 smoke -> see transcript
+
+
+Gate re-run on the MERGED head 366c0a3 (real output, one line per target group):
+  cargo test -p oep-app --test kernel_features (default, kernel ABSENT) ..... 122 passed / 0 failed, EXIT=0 (01-)
+  cargo test -p oep-app --features kernel --test kernel_features (kernel PRESENT) .... 122 passed / 0 failed, EXIT=0 (02-)
+  cargo test -p oep-app ................................ 22 targets / 0 failed, EXIT=0 (03-) includes tests/kernel_features.rs + tests/measure.rs
+  cargo test --workspace ................................ 218 targets / 0 failed, WS_EXIT=0 (04-)
+  cargo clippy -p oep-app --all-targets -- -D warnings ... clean, EXIT=0 (05-)
+  cargo fmt --all -- --check ............................. clean, EXIT=0 (06-)
+  xvfb-run -a cargo run -p oep-app -- --smoke ............ frames=8 smoke ok, EXIT=0 (07-)
+  cargo test -p oep-geo --features kernel --test kernel_seam (seam golden reference) ... 16 passed / 0 failed, EXIT=0 (08-)
+
+Push: merge-UI-C6 366c0a3 -> github/wave/ui-c (registered below after push).
+Remote read-back: after push, github/wave/ui-c HEAD must == 366c0a3 (== local).
+Ancestry: ui/c6-kernel-features f185c4f is an ancestor of github/wave/ui-c.
