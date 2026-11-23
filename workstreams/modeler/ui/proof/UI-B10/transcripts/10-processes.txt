@@ -1,0 +1,10 @@
+== no daemon/display left running by this card ==
+The Xvfb on :99 (1280x1024x24, PID 2393) is pre-existing on the host: it runs
+an older PID and a different screen size than shot.sh's 1280x800x24, so it was
+not spawned by this card's captures (xvfb-run -a tears its display down after
+each launch). The Chrome session is an unrelated pre-existing browser. No
+isolith binary and no shot.sh-owned Xvfb/display process is running after the
+captures and acceptance.
+pgrep for 'isolith|Xvfb' returned only the pre-existing host entries above,
+nothing owned by this run (exit 0 = at least one host process matched, none of
+them spawned by this card).
