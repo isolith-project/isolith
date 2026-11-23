@@ -1,0 +1,4 @@
+=== cargo clippy -p oep-app --all-targets -- -D warnings ===
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-c1/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.78s
+CLIPPY_EXIT=0
