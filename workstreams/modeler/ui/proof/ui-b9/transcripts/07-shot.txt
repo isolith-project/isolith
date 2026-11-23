@@ -1,9 +1,0 @@
-# leg: bash scripts/ui/shot.sh (default-frame drift guard)
-8da7347d88cbab104f9c93070c486260a9602929
-libEGL warning: DRI3 error: Could not get DRI3 device
-libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
-shot.sh: FATAL: frame drift detected vs committed golden
-  current : 2f20383c1ae851675499c96e43980ebc1b6dbb45235bb64b94cce55a400c1047
-  golden  : 59ae82bf991d455a36abd368d345e4e6c92854d856bdc8181614a757579d989f
-  reference image: /home/r1a/isolith-main/.worktrees/ui-b9/workstreams/modeler/ui/proof/ui-a2/frame.png
-EXIT=0

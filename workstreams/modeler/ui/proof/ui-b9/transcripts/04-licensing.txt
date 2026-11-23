@@ -1,5 +1,5 @@
-# leg: python3 scripts/licensing-check.py
-8da7347d88cbab104f9c93070c486260a9602929
+# full gate leg 5: python3 scripts/licensing-check.py
+2a359146e6d9a7d32421face6426406f91b0d620
 licensing check: total=6 pass=6 fail=0 skip=0 | exit=0
 report: /home/r1a/isolith-main/.worktrees/ui-b9/docs/proof/licensing-check.json
   [PASS] root-files: 4 licence files at root, index in sync

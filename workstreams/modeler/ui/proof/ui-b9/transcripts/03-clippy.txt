@@ -1,4 +1,0 @@
-# leg: cargo clippy --workspace --all-targets -- -D warnings
-8da7347d88cbab104f9c93070c486260a9602929
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
-EXIT=0
