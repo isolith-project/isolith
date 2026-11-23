@@ -1,0 +1,61 @@
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+FMT-CHECK-EXIT=1

@@ -21,6 +21,13 @@
 //! oracle uses and stays on the current frame's truth — open a document and
 //! the tree names it with no restart.
 //!
+//! UI-B3 UI-SKETCH-ENTER: while sketch mode is active the tree also shows a
+//! sketch node (the active datum plane). The sketch viewport panel publishes a
+//! `String` oracle under [`super::viewport::sketch::SKETCH_REPORT_KEY`] exactly
+//! as the doc panel does, so this panel reads the mode and the active plane
+//! through the same cross-`#[path]`-copy-safe channel and the node appears on
+//! the same frame sketch mode turns on.
+//!
 //! No raw hex and no `Color32::from_*` here (UI-A3 guard): only the token
 //! styles egui already applies (weak / italic), never a literal colour.
 
@@ -97,6 +104,30 @@ fn tree_state(ctx: &egui::Context) -> TreeState {
     }
 }
 
+/// The active sketch plane's label while sketch mode is on, read from the
+/// sketch viewport panel's `String` oracle (UI-B3 UI-SKETCH-ENTER). `None`
+/// when not in sketch mode.
+fn active_sketch_plane(ctx: &egui::Context) -> Option<String> {
+    let report: Option<String> = ctx.data(|d| {
+        d.get_temp::<String>(egui::Id::unique(super::viewport::sketch::SKETCH_REPORT_KEY))
+    });
+    let report = report?;
+    let mut mode = None;
+    let mut label = None;
+    for line in report.lines() {
+        if let Some(v) = line.strip_prefix("mode=") {
+            mode = Some(v.to_string());
+        } else if let Some(v) = line.strip_prefix("label=") {
+            label = Some(v.to_string());
+        }
+    }
+    if mode.as_deref() == Some("sketch") {
+        label
+    } else {
+        None
+    }
+}
+
 /// Draw the model tree panel content inside its already-positioned region.
 pub fn show(ui: &mut egui::Ui, _app: &mut App) {
     ui.label(theme::heading(theme::mode_of(ui), "Model Tree").size(13.0));
@@ -124,5 +155,20 @@ pub fn show(ui: &mut egui::Ui, _app: &mut App) {
                     .italics(),
             );
         }
+    }
+
+    // Sketch node (UI-B3 UI-SKETCH-ENTER): while sketch mode is active the
+    // tree names the active datum plane. The same-frame oracle read keeps it
+    // honest — the node appears exactly when the viewport entered sketch mode
+    // and disappears when Escape exits it.
+    if let Some(plane_label) = active_sketch_plane(ui.ctx()) {
+        ui.add_space(10.0);
+        ui.label(theme::heading(theme::mode_of(ui), "Sketch"));
+        ui.label(plane_label);
+        ui.label(
+            egui::RichText::new("Sketch layer on · Esc exits sketch")
+                .weak()
+                .italics(),
+        );
     }
 }

@@ -1,0 +1,7 @@
+== post-landing verification ==
+local  merged HEAD : c684ca2d9b04d5f5e21a15be20b905579e53979b
+remote wave/ui-b   : c684ca2d9b04d5f5e21a15be20b905579e53979b
+github/wave/ui-b == local merged HEAD: MATCH
+git merge-base --is-ancestor ui/b10-gate-fix github/wave/ui-b: exit 0 (card branch IS an ancestor)
+card tip 6f76192 reachable from github/wave/ui-b: yes
+no daemon/display process left running: see 10-processes.txt

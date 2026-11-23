@@ -2942,6 +2942,7 @@ dependencies = [
  "egui_kittest",
  "oep-import",
  "oep-shell",
+ "oep-sketch",
  "oep-ui-theme",
  "oep-viewer",
 ]

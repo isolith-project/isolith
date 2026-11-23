@@ -1,0 +1,30 @@
+test sketch::tools::tests::adding_geometry_changes_the_document_hash ... ok
+test sketch::tools::tests::circle_tool_commits_centre_and_radius ... ok
+test sketch::tools::tests::completion_counts_are_the_cards ... ok
+test sketch::tools::tests::escape_cancels_one_step_then_the_second_leaves_the_tool ... ok
+test sketch::tools::tests::emitted_command_tokens_are_registry_validated ... ok
+test sketch::tools::tests::four_clicks_build_a_closed_rectangle_and_reset ... ok
+test sketch::tools::tests::every_tool_has_a_distinct_key_and_id ... ok
+test sketch::tools::tests::line_tool_commits_two_points_and_one_line ... ok
+test sketch::tools::tests::placing_a_vertex_rearms_the_one_cancel ... ok
+test sketch::tools::tests::point_tool_commits_one_point ... ok
+test sketch::tools::tests::polyline_defers_commit_until_finish ... ok
+test sketch::tools::tests::polyline_single_vertex_finishes_as_a_point ... ok
+test sketch::tools::tests::preview_is_tool_state_until_the_gesture_completes ... ok
+test sketch::tools::tests::sketch_doc_assigns_ids_and_hashes_deterministically ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test sketch::constraints::tests::removing_restores_the_prior_dof ... ok
+test sketch::constraints::tests::redundant_constraint_reports_over_constrained_named_state ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test app::panels::viewport::sketch::constraints::tests::driver_reports_over_constrained_and_remove_heals ... ok
+test sketch::constraints::tests::driver_reports_over_constrained_and_remove_heals ... ok
+test app::panels::properties::dimensions::tests::driven_volume_is_5_times_width_squared ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test cancel_leaves_the_document_byte_identical ... ok
+test preview_frame_differs_from_pre_feature_frame ... ok
+test apply_commits_the_feature_into_the_journal ... ok
+test ui_step_export_matches_the_cli_export_hash ... ok
+test revolve_kind_is_offered_and_previews_live ... ok
+
+test result: ok. 148 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.69s
+

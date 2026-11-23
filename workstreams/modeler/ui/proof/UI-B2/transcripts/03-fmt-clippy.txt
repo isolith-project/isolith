@@ -1,0 +1,59 @@
+=== cargo fmt --all -- --check ===
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b2/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+FMT_EXIT=1
+
+--- fmt diffs by file (rustfmt output above): the ONLY remaining diff is the
+    pre-existing trailing blank line in crates/oep-app/src/input.rs:504,
+    byte-identical to github/wave/ui-b (UI-B1's file; not owned by this card).
+    This card's three files are fmt-clean (verified above: no diff names them).
+
+=== cargo clippy -p oep-app --all-targets -- -D warnings ===
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
+CLIPPY_EXIT=0

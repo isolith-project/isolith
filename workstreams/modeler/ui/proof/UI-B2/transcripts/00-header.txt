@@ -1,0 +1,5 @@
+=== UI-B2 UI-HISTORY acceptance transcripts ===
+Sat Nov 21 11:13:20 AM PST 2026
+host: promaxgb10-83f1 | uname: aarch64
+branch: ui/b2-history | head: 780dc564b344c4f8f03532fa7290f065526cc99c
+worktree: /home/r1a/isolith-main/.worktrees/ui-b2

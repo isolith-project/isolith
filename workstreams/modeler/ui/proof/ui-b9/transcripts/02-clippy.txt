@@ -1,0 +1,4 @@
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.88s
+EXIT=0

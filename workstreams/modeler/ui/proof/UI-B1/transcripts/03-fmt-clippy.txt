@@ -1,0 +1,55 @@
+=== cargo fmt --all -- --check ===
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+Diff in /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/tests/../src/input.rs:504:
+ 
+     write_report(ctx, &report);
+ }
+-
+ 
+FMT_EXIT=1
+
+=== cargo clippy -p oep-app --all-targets -- -D warnings ===
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.16s
+CLIPPY_EXIT=0

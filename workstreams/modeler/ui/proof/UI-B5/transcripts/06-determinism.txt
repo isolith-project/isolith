@@ -1,0 +1,18 @@
+Screenshot determinism (the sha256 files in this proof are the oracle,
+exactly like UI-B3/UI-B4: each capture was performed TWICE from two
+independent xvfb launches driven through the XTEST injector and required
+to be byte-identical - capture_snap.sh exits non-zero on any hash drift):
+
+sha256 of snap_on.png : f2efc0dcda8e5d2f4b6657816d74665e641ec780baa45afad3265ed1a9abc06b
+sha256 of snap_off.png: 12d832e603a07a8a7e1f11c2ee287a7bbaa386419f01972496e3822b1c2916ae
+
+on-pass (inference on): the pointer hovered near the line's endpoint p1
+  fires the Endpoint inference; the glyph (solid accent square) paints at
+  the exact endpoint and the label names the fired inference.
+off-pass (inference off, F8 = the sk:snap command token): the same hover
+  paints no glyph and no label; the status text near the pointer reads
+  'snap off (sk:snap)' - the token name - proving the toggle engaged.
+
+Both PNGs correspond to the same committed sketch document (a line drawn
+from two clicks) and the same hovered pointer position; only the toggle
+state differs, so the glyph+label are the only visual delta.

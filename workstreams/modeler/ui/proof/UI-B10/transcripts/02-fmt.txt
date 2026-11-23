@@ -1,0 +1,2 @@
+=== cargo fmt --all -- --check (final card tree; fix commit bb2f71b) ===
+EXIT=0

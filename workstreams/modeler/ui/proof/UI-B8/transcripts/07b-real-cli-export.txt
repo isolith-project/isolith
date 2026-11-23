@@ -1,0 +1,10 @@
+# Real CLI export of the same committed model (plan coords 30,10..50,22, extrude 10)
+# oep-workbench export:step -> EditorSession::export_step (the same lane the UI Export button routes through)
+cmd: ./target/debug/examples/workbench editor:open sk:point:30:10 sk:point:50:10 sk:point:50:22 sk:point:30:22 sk:line:p0:p1 sk:line:p1:p2 sk:line:p2:p3 sk:line:p3:p0 sk:solve feat:extrude:10 export:step:/tmp/ui-b8-export-test/cli/ui-export.step
+solved dof=8 residual=0.000e0 dims=0 points=4 lines=4
+extruded oep-feature-extrude-2: volume 2400.000000 faces=12 edges=12 bbox [30.0, 10.0, 0.0, 50.0, 22.0, 10.0]
+exported STEP /tmp/ui-b8-export-test/cli/ui-export.step: faces=12 shells=1 closed=1
+sha256  ae63918a6fd7a0849c804c0b7e3671bfc6c20c69b8b433db909d94667033ffe7
+
+# UI Export button produced (from --test, same file basename so the embedded STEP name matches):
+sha256  ae63918a6fd7a0849c804c0b7e3671bfc6c20c69b8b433db909d94667033ffe7

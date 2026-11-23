@@ -1,0 +1,8 @@
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
+  [PASS] root-files: 4 licence files at root, index in sync
+  [PASS] boundary-schema: schema_version 1
+  [PASS] crate-boundary: 34 crates match the boundary map
+  [PASS] boundary-doc-sync: 34 rows in sync
+  [PASS] dependency-allowlist: 535 dependencies within the permissive allow-list
+  [PASS] notice-sync: 535 dependency lines + 1 native entries
+EXIT=0
