@@ -1,10 +1,18 @@
-# STEP 0: git fetch + merge github/wave/ui-c
----
- create mode 100755 workstreams/modeler/ui/proof/UI-C3/capture_ui_c3.sh
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/00-step0-merge.txt
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/01-fmt.txt
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/02-clippy.txt
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/03-variable_table.txt
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/04-oep-app.txt
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/05-workspace.txt
- create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/06-smoke.txt
+# STEP 0: fetch + merge the wave head.
+#
+# First merge at card start: `git merge github/wave/ui-c` over the fresh
+# branch brought the wave-B union + UI-C1 (`1e3b5dd` -> `d450ab4`). NOT empty.
+#
+# While this card ran, UI-C3 also landed on github/wave/ui-c. Re-fetching and
+# merging pulled that merge into the local tree too (`d450ab4` -> `4058a24`,
+# "merge-UI-C3"), so the acceptance gate (transcripts 01..08) was run against
+# the merged head. UI-C3 touched only `panels/variables.rs` + its own test, so
+# it collided with none of this card's owned files (properties.rs,
+# property_panel.rs).
+
+$ git fetch github
+$ git merge github/wave/ui-c
+Already up to date.         # after the mid-run merge, local was already at 4058a24
+
+Final local card commit `314aa60` sits directly on the wave head
+(its parent == github/wave/ui-c == 4058a24).
