@@ -1,0 +1,4 @@
+### git fetch github && git merge github/wave/ui-c ###
+branch began: 736a0a7 (main wave-A checkpoint)
+fast-forward 736a0a7..5318a73 (wave head: wave-B close + UI-C1..C6)
+merge command exit 0; nothing local to merge (fast-forward)
