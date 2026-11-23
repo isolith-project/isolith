@@ -65,8 +65,11 @@ git merge --no-ff github/wave/ui-b \
   -m "checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8"
 ```
 
-Parents of the checkpoint merge: `736a0a7` (main before the wave) and the
-final wave head. No fast-forward; one checkpoint commit. The checkpoint commit
+Parents of the checkpoint merge: `38fae0c` (main head when the wave closed —
+note main moved from the wave-B fork base `736a0a7` to `38fae0c` when PR #29
+landed the name-reservations closeout after the wave was cut; that change is on
+main and comes into the merged head through the merge, not through the wave)
+and the final wave head. No fast-forward; one checkpoint commit. The checkpoint commit
 is the object of annotated tag `wave-ui-b` (`git rev-parse wave-ui-b^{}`), and
 `github/main` is pushed to it. The UI-B9 record (this proof, the README row,
 `docs/status/waves/wave-ui-b.md`) landed on the wave branch first, so the

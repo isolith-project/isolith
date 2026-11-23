@@ -1,8 +1,7 @@
-# full gate leg 4: bash scripts/gate/precommit-gate.sh (pytest python via VIRTUAL_ENV)
-2a359146e6d9a7d32421face6426406f91b0d620
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
 == quality gate: ui-b9 ==
   [run]  pytest
-  [ok]   pytest (558 passed, 29 skipped, 1 warning in 91.67s (0:01:31))
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 102.24s (0:01:42))
   [run]  cargo test
   [ok]   cargo test
   [skip] no UI files staged

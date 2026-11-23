@@ -1,5 +1,4 @@
-# full gate leg 2: cargo clippy --workspace --all-targets -- -D warnings
-2a359146e6d9a7d32421face6426406f91b0d620
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
     Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.18s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.88s
 EXIT=0

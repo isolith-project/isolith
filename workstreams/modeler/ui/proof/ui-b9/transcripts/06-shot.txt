@@ -1,5 +1,4 @@
-# full gate leg 6: bash scripts/ui/shot.sh (default-frame drift guard)
-2a359146e6d9a7d32421face6426406f91b0d620
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
 libEGL warning: DRI3 error: Could not get DRI3 device
 libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
 libEGL warning: DRI3 error: Could not get DRI3 device
@@ -7,5 +6,4 @@ libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
 shot.sh: ok
   frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
   sha256   : 2f20383c1ae851675499c96e43980ebc1b6dbb45235bb64b94cce55a400c1047
-
 EXIT=0

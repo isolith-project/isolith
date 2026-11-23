@@ -1,7 +1,4 @@
-# full gate leg 5: python3 scripts/licensing-check.py
-2a359146e6d9a7d32421face6426406f91b0d620
-licensing check: total=6 pass=6 fail=0 skip=0 | exit=0
-report: /home/r1a/isolith-main/.worktrees/ui-b9/docs/proof/licensing-check.json
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
   [PASS] root-files: 4 licence files at root, index in sync
   [PASS] boundary-schema: schema_version 1
   [PASS] crate-boundary: 34 crates match the boundary map

@@ -1,3 +1,2 @@
-# full gate leg 1: cargo fmt --all -- --check (on merged head)
-2a359146e6d9a7d32421face6426406f91b0d620
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
 EXIT=0

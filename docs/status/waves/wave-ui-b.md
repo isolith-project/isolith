@@ -24,7 +24,7 @@ Every wave-B card branch is an ancestor of the wave head (audit in `proof/ui-b9/
 ## Head sha
 
 - Wave head: `98a8ccc` (`merge-UI-B10`, the gate fix; contains all wave-B cards UI-B1..UI-B8 plus UI-B10).
-- Checkpoint merge onto main: one no-ff commit, `checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8`, parents `736a0a7` (main before the wave) and the wave head. The UI-B9 record (this file, the README row, `proof/ui-b9/`) lands on the wave branch and is carried into main by that single checkpoint commit.
+- Checkpoint merge onto main: one no-ff commit, `checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8`, parents `38fae0c` (main at wave close; main had moved from the wave-B fork base `736a0a7` to `38fae0c` via PR #29, the name-reservations closeout) + the wave head. The UI-B9 record (this file, the README row, `proof/ui-b9/`) lands on the wave branch and is carried into main by that single checkpoint commit.
 - Annotated tag `wave-ui-b` pushed on github/main.
 
 ## Gate history (UI-B9, both attempts)
