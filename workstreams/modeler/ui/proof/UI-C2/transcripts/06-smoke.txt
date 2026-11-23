@@ -1,0 +1,4 @@
+$ xvfb-run -a cargo run -p oep-app -- --smoke
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok
+exit=0

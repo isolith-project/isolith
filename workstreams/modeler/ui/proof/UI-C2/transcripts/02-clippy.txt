@@ -1,0 +1,3 @@
+$ cargo clippy -p oep-app --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33s
+exit=0

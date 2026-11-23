@@ -1,0 +1,10 @@
+# STEP 0: git fetch + merge github/wave/ui-c
+---
+ create mode 100755 workstreams/modeler/ui/proof/UI-C3/capture_ui_c3.sh
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/00-step0-merge.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/01-fmt.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/02-clippy.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/03-variable_table.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/04-oep-app.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/05-workspace.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-C3/transcripts/06-smoke.txt
