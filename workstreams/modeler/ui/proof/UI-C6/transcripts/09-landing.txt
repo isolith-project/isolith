@@ -37,3 +37,8 @@ Gate re-run on the MERGED head 366c0a3 (real output, one line per target group):
 Push: merge-UI-C6 366c0a3 -> github/wave/ui-c (registered below after push).
 Remote read-back: after push, github/wave/ui-c HEAD must == 366c0a3 (== local).
 Ancestry: ui/c6-kernel-features f185c4f is an ancestor of github/wave/ui-c.
+
+Push done: 2c1c900..dcd23f1 -> github/wave/ui-c (commits 366c0a3 merge + dcd23f1 landing transcript).
+Remote read-back: github/wave/ui-c HEAD == dcd23f1 == local HEAD (== local). OK.
+Ancestry: ui/c6-kernel-features f185c4f IS an ancestor of github/wave/ui-c. OK.
+merge-UI-C6 branch IS an ancestor of github/wave/ui-c. OK.
