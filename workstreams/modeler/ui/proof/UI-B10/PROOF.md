@@ -40,7 +40,6 @@ Diff (exactly one deleted blank line, no behavioural change):
 
 ```
 @@ -504,4 +504,3 @@ pub fn poll(ctx: &egui::Context) {
- 
      write_report(ctx, &report);
  }
 -
