@@ -1,0 +1,25 @@
+=== UI-B9 landing verification (post-PR, post-tag, post-mirror) ===
+
+1) main head after checkpoint PR #30:
+   1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6  (Merge pull request #30 from isolith-project/checkpoint/wave-ui-b-5ba89cb)
+
+2) checkpoint commit reachable:
+   5ba89cbbc0fa2edbdb2a59f6dcfcd7ca98354ffb
+   checkpoint IS ancestor of main
+
+3) tag wave-ui-b := checkpoint:
+   tag obj: b19b19c2aeb1806ce3401f3ed3916246de0344a3  deref: 5ba89cbbc0fa2edbdb2a59f6dcfcd7ca98354ffb
+   tag -> checkpoint: MATCH
+
+4) gitea mirror:
+   1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+   github main: 1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+
+5) wave/ui-c advanced:
+   1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+
+6) four practitioner rows building (test evidence):
+   input-right-click-wheel = building evidence crates/oep-app/tests/constraints.rs
+   input-snap-inference = building evidence crates/oep-app/tests/snap_inference.rs
+   input-escape-semantics = building evidence crates/oep-app/tests/sketch_draw.rs
+   input-datum-plane-legibility = building evidence crates/oep-app/tests/sketch_enter.rs
