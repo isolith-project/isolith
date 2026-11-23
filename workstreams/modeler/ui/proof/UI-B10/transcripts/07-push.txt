@@ -1,0 +1,4 @@
+== git push github HEAD:ui/b10-gate-fix (as dmltallen; redonealpha-don has no write to isolith-project) ==
+remote: Invalid username or token. Password authentication is not supported for Git operations.
+fatal: Authentication failed for 'https://github.com/isolith-project/isolith.git/'
+EXIT=128
