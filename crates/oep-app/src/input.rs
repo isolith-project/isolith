@@ -504,4 +504,3 @@ pub fn poll(ctx: &egui::Context) {
 
     write_report(ctx, &report);
 }
-
