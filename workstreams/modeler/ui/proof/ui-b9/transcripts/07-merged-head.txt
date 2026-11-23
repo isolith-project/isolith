@@ -1,11 +1,24 @@
-# merged head / checkpoint record
-final wave head on github/wave/ui-b (carried into the checkpoint):
-  98a8ccc08270b36fa7e1c420d46c4acbaee40613
+=== merged head / checkpoint record ===
 
-checkpoint onto main (created by UI-B9):
-  git merge --no-ff github/wave/ui-b -m "checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8"
-  parents: 736a0a7 (main before the wave) + wave head
-  tag wave-ui-b => the checkpoint commit
+Final wave head on github/wave/ui-b carrying the UI-B9 record:
+  merge-UI-B9 (f40625b) landed the UI-B9 record onto the wave; the record
+  finalization commits (sha-stable gate transcripts, corrected proof) land on
+  top and are taken into the checkpoint.
 
-the full gate transcripts 01-06 were run on this merged head (wave head + UI-B10 fixes)
-all six legs green; aggregate cargo test 2846 passed / 0 failed
+Checkpoint on main (created by UI-B9):
+  git merge --no-ff github/wave/ui-b \
+    -m "checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8"
+  one no-ff merge, no fast-forward.
+  parents: 38fae0c (main at wave close; main moved from the wave-B fork base
+  736a0a7 to 38fae0c via PR #29, the name-reservations closeout, after the wave
+  was cut) + the final wave head.
+  the checkpoint commit is the stable object of tag wave-ui-b:
+    git rev-parse wave-ui-b^{} == the checkpoint (acceptance: tag pushed)
+
+The full gate in transcripts 01-06 was run on this merged head (the checkpoint
+commit, whose tree is the wave tree plus main's name-reservations docs — the
+only changes across the merge are those brand docs; the workspace code is the
+wave tree). All six legs green (fmt, clippy -D warnings, cargo test --workspace
+aggregate 2846 passed / 0 failed, licensing 6/6 with 34 crates, precommit-gate
+pytest 558 passed + cargo test, shot.sh byte-identical to the B10-refreshed
+golden 2f20383c...1047). No drift.
