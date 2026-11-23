@@ -1,0 +1,59 @@
+{
+  "purpose": "Isolith public-identity registry reservation evidence (crates.io and npm name holds). Complements the availability probes; the authoritative map is NAME.md (public identity and asset map).",
+  "handle": "isolith-project",
+  "canonical_repo": "https://github.com/isolith-project/isolith",
+  "reserved_on": "2026-11-22",
+  "recorded_at_utc": "2026-11-23T06:34:09Z",
+  "recorded_by": "kanban t_a15e108f (NAME-AND-ASSET-RESERVATIONS), closeout run",
+  "reservations": {
+    "crates_io": {
+      "package": "isolith",
+      "version": "0.0.0",
+      "public_url": "https://crates.io/crates/isolith/0.0.0",
+      "status": "published placeholder",
+      "contents": "an empty library target plus the name-reservation README; the package source and homepage point at the canonical GitHub repository",
+      "account": "crates.io account created for the reservation; the cargo token is scoped to publish-new on crate isolith only and expires 2026-11-29",
+      "verification": [
+        "cargo search isolith --limit 3 -> succeeded, returns the placeholder crate",
+        "cargo info isolith@0.0.0 -> succeeded, resolves the published 0.0.0"
+      ]
+    },
+    "npm": {
+      "package": "isolith",
+      "version": "0.0.0",
+      "public_url": "https://www.npmjs.com/package/isolith/v/0.0.0",
+      "status": "published placeholder",
+      "owner_account": "dmltallen",
+      "account_creation": "account created through the official npm website including email OTP verification",
+      "registry_readback": "latest version is 0.0.0",
+      "tarball": "https://registry.npmjs.org/isolith/-/isolith-0.0.0.tgz",
+      "tarball_sha1": "90da9d0f5a07c5a22d1b36f47fa741551b5d8609",
+      "sha1_matches": "exactly matches the locally validated package",
+      "version_list_note": "npm also lists a public 0.0.0-stage placeholder version on the package version list; it is registry-site placeholding, not ours",
+      "verification": [
+        "registry read-back shows latest 0.0.0",
+        "downloaded tarball SHA-1 matches the locally validated package"
+      ]
+    },
+    "pypi": {
+      "status": "not reserved",
+      "policy": "hold the PyPI name only if a Python package will ever ship; otherwise do not squat (decided on this card)",
+      "availability_probe": "pypi.org/pypi/isolith/json returned 404 (name free) on the 2026-10-28 availability pass and has been left untouched"
+    }
+  },
+  "cleanup": {
+    "npm_access_token": "the temporary granular access token was revoked through the account UI; Access Tokens read-back is zero rows",
+    "local_npmrc": "the temporary local .npmrc was removed"
+  },
+  "policy": [
+    "Placeholder reservation policy approved by Don 2026-11-19: do the cheap holds.",
+    "Handle fixed as isolith-project on 2026-11-19; no second handle was introduced.",
+    "Production crates keep the oep- prefix; the npm package is a pure name hold.",
+    "The GitHub org/account is created by Don separately (tracked on t_e5a4f89a); this evidence covers only the registry reservations."
+  ],
+  "summary": [
+    "crates.io and npm each hold the public isolith name via a 0.0.0 placeholder published 2026-11-22 and read back independently.",
+    "PyPI is intentionally not reserved; its hold stays conditional on a Python package actually shipping.",
+    "The temporary npm credentials were revoked and removed after the publish."
+  ]
+}
