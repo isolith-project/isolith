@@ -1,0 +1,5 @@
+# full gate leg 2: cargo clippy --workspace --all-targets -- -D warnings
+2a359146e6d9a7d32421face6426406f91b0d620
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b9/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.18s
+EXIT=0

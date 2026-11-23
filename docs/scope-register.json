@@ -1,436 +1,436 @@
 {
-  "schema_version": 2,
-  "task": "FEATURE-BASELINE (t_a686d2b9)",
-  "updated": "2026-10-22",
-  "description": "Isolith CATIA/SolidWorks editor parity baseline. Decision #19 sets the product bar: same-or-greater editor functionality than CATIA/SolidWorks for the working engineer. This register stops being an exclusion list and becomes the PARITY BASELINE inventory an engineer reads to judge whether Isolith covers their main job. Machine-checkable copy of docs/scope-register.md. Every row carries a current-status token (not-scoped / planned / building / shippable) and evidence; a row may NOT claim a status higher than a green accepted test proves (honest-claims discipline, enforced by python/oep_tooling/scope_register_check.py and tests/test_scope_register.py). Also carries the practitioner_input_contract section (schema 2): the INPUT AND BEHAVIOUR contract an experienced user carries in their hands, free-specified by the LTT practitioner test of SolidCraft and Purrametric (Don directive 2026-10-27) - one row per behaviour with an explicit test hook, under the same honest-claims status ceiling.",
-  "policy": {
-    "product_bar": "same-or-greater editor functionality than CATIA/SolidWorks for the working engineer (decision #19, 2026-10-22)",
-    "status_rank": [
-      "not-scoped",
-      "planned",
-      "building",
-      "shippable"
-    ],
-    "cost_classes": [
-      "class-1-additive",
-      "class-2-model-extend",
-      "class-3-kernel-gated",
-      "class-4-different-foundation"
-    ],
-    "vendor_tiers": [
-      "base",
-      "module",
-      "limited",
-      "no"
-    ],
-    "honesty_rule": "no row may claim a status higher than a green accepted test proves",
-    "evidence_ladder": {
-      "shippable": [
-        "test"
-      ],
-      "building": [
-        "test"
-      ],
-      "planned": [
-        "decision",
-        "test"
-      ],
-      "not-scoped": [
-        "none",
-        "decision"
-      ]
-    },
-    "required_capabilities": [
-      "2d-drafting",
-      "configurations-design-tables",
-      "mass-properties",
-      "interference-clash",
-      "exploded-views",
-      "sheet-metal",
-      "weldments",
-      "mold-tooling",
-      "routing",
-      "electrical-harness",
-      "composites",
-      "cam",
-      "fea",
-      "class-a-surfacing"
-    ],
-    "practitioner_required_ids": [
-      "input-command-search",
-      "input-right-click-wheel",
-      "input-spacebar-accept",
-      "input-snap-inference",
-      "input-escape-semantics",
-      "input-cut-region",
-      "input-datum-plane-legibility",
-      "input-toolbar-customisation",
-      "input-undo-redo-parity"
-    ]
-  },
-  "commitment_order": {
-    "near_term": [
-      "2d-drafting",
-      "mass-properties",
-      "interference-clash",
-      "exploded-views"
-    ],
-    "spine": "editor assembly mate editing (interactive surface over the live oep-assem solver) commits first, in parallel with the pull-forwards; it is the editor spine itself, not a Bucket C capability row",
-    "after_kernel_seam": [
-      "sheet-metal",
-      "weldments",
-      "mold-tooling",
-      "routing"
-    ],
-    "after_kernel_seam_note": "opens only after P6-M3-T04 (oep-engine-occ) lands on main behind the oep-geo Evaluator seam",
-    "secondary": [
-      "electrical-harness",
-      "cam",
-      "fea"
-    ],
-    "secondary_note": "2027.2+ workstreams; CAM and FEA each get their own P15+ decomposition when opened",
-    "class_a_program": [
-      "class-a-surfacing"
-    ],
-    "class_a_program_note": "its own long-horizon kernel-moat program (decision #19, full-send); strategy ADR is the next gate",
-    "composites_note": "in scope per decision #13; evaluation gate at 2027.2 before any build commitment (weakest commitment in the baseline)"
-  },
-  "rows": [
-    {
-      "id": "2d-drafting",
-      "capability": "2D drafting / drawings (sheets, views, dimensions, title block, export)",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-1-additive",
-      "workstream": "editor: drafting workbench (card EDITOR-2D-DRAFTING, running)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19 (master plan scope register + vault Topics/Isolith.md v1.23); card EDITOR-2D-DRAFTING",
-        "note": "near-term pull-forward #1: drafting is what engineers hand to fabrication"
-      }
-    },
-    {
-      "id": "configurations-design-tables",
-      "capability": "Configurations / design tables (variant states over the feature tree)",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-2-model-extend",
-      "workstream": "modeler: oep-geo model-extend (configurations as variant states / design tables; workstream not yet opened)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 (2027.2 pull-forward) and #19 (parity baseline); master plan 2027.2 scope section",
-        "note": "model-extend: version bump + migration on the versioned oep-geo schema (VariableSet/Feature kinds already exist)"
-      }
-    },
-    {
-      "id": "mass-properties",
-      "capability": "Mass properties (volume, mass, centroid, moments of inertia)",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-1-additive",
-      "workstream": "editor: mass properties (card EDITOR-MASS-PROP, running)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
-        "note": "near-term pull-forward #2; verify against a known analytical solid within tolerance"
-      }
-    },
-    {
-      "id": "interference-clash",
-      "capability": "Assembly interference / clash detection",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-1-additive",
-      "workstream": "editor: assembly interference/clash (card EDITOR-MASS-PROP, running)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
-        "note": "near-term pull-forward #2; CATIA ships this in the DMU Space Analysis lane (vendor tier transcribed from the recorded register)"
-      }
-    },
-    {
-      "id": "exploded-views",
-      "capability": "Exploded / assembly views",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-1-additive",
-      "workstream": "editor: exploded views (card EDITOR-MASS-PROP, running)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
-        "note": "near-term pull-forward #2, grouped with mass properties and clash"
-      }
-    },
-    {
-      "id": "sheet-metal",
-      "capability": "Sheet metal design",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-3-kernel-gated",
-      "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19; master plan cost class 3 (kernel-gated); P6-M3-T01 ADR (boolean-ops-occ-adr.md v1.1.0)",
-        "note": "rests on real B-Rep ops; blocked until oep-engine-occ lands behind the oep-geo Evaluator seam"
-      }
-    },
-    {
-      "id": "weldments",
-      "capability": "Weldments (welded structures / frames)",
-      "catia": "module",
-      "solidworks": "base",
-      "cost_class": "class-3-kernel-gated",
-      "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19; master plan cost class 2/3 (model + kernel); P6-M3-T01 ADR v1.1.0",
-        "note": "CATIA ships this via the Weld Design (WD1) workbench lineage (vendor tier from recorded register: add-ons); classified kernel-gated (class 3) because full weldment B-Rep rests on the seam"
-      }
-    },
-    {
-      "id": "mold-tooling",
-      "capability": "Mold tooling design",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-3-kernel-gated",
-      "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19; master plan cost class 3 (kernel-gated); P6-M3-T01 ADR v1.1.0",
-        "note": "CATIA Mold Tooling Design (MTD) + Machining context; classic kernel-gated vertical"
-      }
-    },
-    {
-      "id": "routing",
-      "capability": "Piping / tubing / routing",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-2-model-extend",
-      "workstream": "modeler: routing vertical (workstream opens after the kernel seam; class-2 model-extend)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19; master plan 2027.2 scope (kernel-gated verticals after P6-M3-T04)",
-        "note": "CATIA Piping/Tubing/HVAC routing workbenches; extends the versioned oep-geo schema (line/wireframe intent)"
-      }
-    },
-    {
-      "id": "electrical-harness",
-      "capability": "Electrical / harness (3D wire routing, flattening, harness design)",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-2-model-extend",
-      "workstream": "modeler: electrical/harness vertical (2027.2+ workstream, not yet opened)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 and #19; master plan 2027.2 scope",
-        "note": "CATIA Electrical 3D Design / Harness Installation / Wire Routing lineage; class-2 model-extend"
-      }
-    },
-    {
-      "id": "composites",
-      "capability": "Composites (laminate definition / ply handoff)",
-      "catia": "base",
-      "solidworks": "module",
-      "cost_class": "class-2-model-extend",
-      "workstream": "modeler: composites evaluation (2027.2 review gate; no committed workstream)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 (in scope, evaluated 2027.2+); master plan Bucket C",
-        "note": "weakest commitment in the baseline: in scope per decision #13 but gated behind a 2027.2 evaluation; SolidWorks ships composites as an add-on (vendor tier from recorded register)"
-      }
-    },
-    {
-      "id": "cam",
-      "capability": "CAM / machining / toolpaths",
-      "catia": "base",
-      "solidworks": "base",
-      "cost_class": "class-1-additive",
-      "workstream": "new vertical P15+ (CAM / machining decomposition; not yet opened)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 (2027.2+ workstream) and #19; master plan 2027.2 scope",
-        "note": "class-1 additive (large); robust boolean/tessellation from the kernel improves it"
-      }
-    },
-    {
-      "id": "fea",
-      "capability": "Simulation / FEA / structural analysis",
-      "catia": "module",
-      "solidworks": "base",
-      "cost_class": "class-1-additive",
-      "workstream": "new vertical P15+ (simulation / FEA decomposition; not yet opened)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #13 (2027.2+ workstream) and #19; master plan 2027.2 scope",
-        "note": "CATIA ships analysis as GPS / SIMULIA product family (vendor tier module, per recorded register annotation); SolidWorks cell recorded as yes/base with the Simulation add-on nuance noted"
-      }
-    },
-    {
-      "id": "class-a-surfacing",
-      "capability": "Class-A / ICEM-class surface design",
-      "catia": "base",
-      "solidworks": "limited",
-      "cost_class": "class-4-different-foundation",
-      "workstream": "SURFACING-CLASS-A program (card running; strategy ADR is the next gate)",
-      "status": "planned",
-      "evidence": {
-        "kind": "decision",
-        "ref": "decision #19 (moved INTO scope from day one, full-send); card SURFACING-CLASS-A; master plan Class-A SUPERSEDED note",
-        "note": "own long-horizon kernel-moat program (longest pole, biggest team accepted); needs a high-accuracy surface kernel, not vanilla OCC; CATIA ICEM/Generative Shape Design vs SolidWorks limited"
-      }
-    }
+ "schema_version": 2,
+ "task": "FEATURE-BASELINE (t_a686d2b9)",
+ "updated": "2026-10-22",
+ "description": "Isolith CATIA/SolidWorks editor parity baseline. Decision #19 sets the product bar: same-or-greater editor functionality than CATIA/SolidWorks for the working engineer. This register stops being an exclusion list and becomes the PARITY BASELINE inventory an engineer reads to judge whether Isolith covers their main job. Machine-checkable copy of docs/scope-register.md. Every row carries a current-status token (not-scoped / planned / building / shippable) and evidence; a row may NOT claim a status higher than a green accepted test proves (honest-claims discipline, enforced by python/oep_tooling/scope_register_check.py and tests/test_scope_register.py). Also carries the practitioner_input_contract section (schema 2): the INPUT AND BEHAVIOUR contract an experienced user carries in their hands, free-specified by the LTT practitioner test of SolidCraft and Purrametric (Don directive 2026-10-27) - one row per behaviour with an explicit test hook, under the same honest-claims status ceiling.",
+ "policy": {
+  "product_bar": "same-or-greater editor functionality than CATIA/SolidWorks for the working engineer (decision #19, 2026-10-22)",
+  "status_rank": [
+   "not-scoped",
+   "planned",
+   "building",
+   "shippable"
   ],
-  "practitioner_input_contract": {
-    "description": "Editor input and behaviour contract from the LTT practitioner test of SolidCraft and Purrametric - the expectations an experienced user carries in their hands (Don directive 2026-10-27). One row per behaviour; each carries the existing register fields plus an explicit test hook, and obeys the same status ceiling: building/shippable require a green accepted test that exercises the behaviour.",
-    "rows": [
-      {
-        "id": "input-command-search",
-        "capability": "Command search on a single key (SolidWorks S key, Fusion search) plus a keyboard reachability path to any command",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "shell: oep-shell command surface (P7-M5 command registry, search + generated help index)",
-        "status": "building",
-        "evidence": {
-          "kind": "test",
-          "ref": "crates/oep-shell/tests/practitioner_input_contract.rs",
-          "note": "type-ahead search (commands::search) narrows the whole reachable command set to what matches; every command resolves through its dispatch token (validate_token) and is advertised in the generated text/markdown/JSON indexes - keyboard reachability is exercised by the command_search tests in practitioner_input_contract.rs on main"
-        },
-        "test_hook": "commands::search(QUERY) + validate_token(Token) + generated indexes; crates/oep-shell/tests/practitioner_input_contract.rs"
-      },
-      {
-        "id": "input-right-click-wheel",
-        "capability": "Right-click radial menu or equivalent recent/dimension wheel",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "editor bar context surface (no committed context-menu layer yet)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "context menu is a UI-surface row; no context-menu surface exists in the tree yet, so no test is claimable"
-        },
-        "test_hook": "context-wheel over pick/selection (needs a context-menu layer on the editor bar)"
-      },
-      {
-        "id": "input-spacebar-accept",
-        "capability": "Spacebar accepts/confirms the active tool",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "editor bar active-tool model (no active-tool state in EditorSession yet)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "requires an active-tool state plus a confirm affordance; neither exists in EditorSession today"
-        },
-        "test_hook": "EditorSession::confirm_active_tool (requires an active-tool model)"
-      },
-      {
-        "id": "input-snap-inference",
-        "capability": "Two-axis snap inference during a drag: coincident plus midpoint and perpendicular/extension snaps",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "sketch: drag-snap resolver over oep-geo points/segments (not yet opened)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "midpoint / perpendicular / extension inference is a geometry resolver not present in the tree yet"
-        },
-        "test_hook": "drag-snap resolver over oep-geo segment predicates (midpoint / perpendicular / extension)"
-      },
-      {
-        "id": "input-escape-semantics",
-        "capability": "Escape semantics: one press clears the active tool, measured and consistent",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "editor bar active-tool model (no active-tool state in EditorSession yet)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "LEFT PLANNED deliberately: one-press clear is not reachable today without new editor code - EditorSession has no active-tool state to clear and no escape/cancel command exists. Evidence is the recorded directive, not a faked test."
-        },
-        "test_hook": "EditorSession::dismiss_active_tool + single-press consistency probe (requires an active-tool model and an escape binding)"
-      },
-      {
-        "id": "input-cut-region",
-        "capability": "Cut-region selection from a sketch (choose which enclosed region an extrude consumes, without editing the sketch)",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-2-model-extend",
-        "workstream": "editor feature vertical: region pick above the sketch profile (not yet opened)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "choosing one enclosed region over another during a feature create needs loop/region detection above the profile - not in the tree yet"
-        },
-        "test_hook": "loop/region picker over the oep-geo profile (segment-graph region detection)"
-      },
-      {
-        "id": "input-datum-plane-legibility",
-        "capability": "Datum plane legibility: labelled without hover, not stacked into a white wash",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "viewer: datum-plane render + label pass (no datum-plane entity in the tree yet)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "needs a datum-plane entity and a persistent label pass in oep-viewer; neither exists yet"
-        },
-        "test_hook": "oep-viewer datum label render (needs a datum-plane entity + label pass)"
-      },
-      {
-        "id": "input-toolbar-customisation",
-        "capability": "Toolbar and tab customisation (add a tab or move a command to a missing workspace)",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "shell: workbench layout registry (no toolbar/tab model - commands are a flat registry today)",
-        "status": "planned",
-        "evidence": {
-          "kind": "decision",
-          "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
-          "note": "customising the command surface (add a tab / move a command) needs a layout model over the flat command registry; none exists yet"
-        },
-        "test_hook": "workbench layout registry add/move (needs a layout model over the command registry)"
-      },
-      {
-        "id": "input-undo-redo-parity",
-        "capability": "Single-press undo/redo parity and a visible undo step boundary per committed dimension",
-        "catia": "base",
-        "solidworks": "base",
-        "cost_class": "class-1-additive",
-        "workstream": "shell: oep-shell EditorSession history (undo/redo/journal over canonical document snapshots)",
-        "status": "building",
-        "evidence": {
-          "kind": "test",
-          "ref": "crates/oep-shell/tests/practitioner_input_contract.rs",
-          "note": "committing a dimension in the variable set is one real document snapshot; one undo press reverts exactly that commit, one redo press replays it, and the journal records each commit as its own line - exercised by undo_redo_single_press_parity_and_dimension_step_boundaries in practitioner_input_contract.rs on main"
-        },
-        "test_hook": "EditorSession::undo/redo/journal over committed variable-dimension steps; crates/oep-shell/tests/practitioner_input_contract.rs"
-      }
-    ]
+  "cost_classes": [
+   "class-1-additive",
+   "class-2-model-extend",
+   "class-3-kernel-gated",
+   "class-4-different-foundation"
+  ],
+  "vendor_tiers": [
+   "base",
+   "module",
+   "limited",
+   "no"
+  ],
+  "honesty_rule": "no row may claim a status higher than a green accepted test proves",
+  "evidence_ladder": {
+   "shippable": [
+    "test"
+   ],
+   "building": [
+    "test"
+   ],
+   "planned": [
+    "decision",
+    "test"
+   ],
+   "not-scoped": [
+    "none",
+    "decision"
+   ]
+  },
+  "required_capabilities": [
+   "2d-drafting",
+   "configurations-design-tables",
+   "mass-properties",
+   "interference-clash",
+   "exploded-views",
+   "sheet-metal",
+   "weldments",
+   "mold-tooling",
+   "routing",
+   "electrical-harness",
+   "composites",
+   "cam",
+   "fea",
+   "class-a-surfacing"
+  ],
+  "practitioner_required_ids": [
+   "input-command-search",
+   "input-right-click-wheel",
+   "input-spacebar-accept",
+   "input-snap-inference",
+   "input-escape-semantics",
+   "input-cut-region",
+   "input-datum-plane-legibility",
+   "input-toolbar-customisation",
+   "input-undo-redo-parity"
+  ]
+ },
+ "commitment_order": {
+  "near_term": [
+   "2d-drafting",
+   "mass-properties",
+   "interference-clash",
+   "exploded-views"
+  ],
+  "spine": "editor assembly mate editing (interactive surface over the live oep-assem solver) commits first, in parallel with the pull-forwards; it is the editor spine itself, not a Bucket C capability row",
+  "after_kernel_seam": [
+   "sheet-metal",
+   "weldments",
+   "mold-tooling",
+   "routing"
+  ],
+  "after_kernel_seam_note": "opens only after P6-M3-T04 (oep-engine-occ) lands on main behind the oep-geo Evaluator seam",
+  "secondary": [
+   "electrical-harness",
+   "cam",
+   "fea"
+  ],
+  "secondary_note": "2027.2+ workstreams; CAM and FEA each get their own P15+ decomposition when opened",
+  "class_a_program": [
+   "class-a-surfacing"
+  ],
+  "class_a_program_note": "its own long-horizon kernel-moat program (decision #19, full-send); strategy ADR is the next gate",
+  "composites_note": "in scope per decision #13; evaluation gate at 2027.2 before any build commitment (weakest commitment in the baseline)"
+ },
+ "rows": [
+  {
+   "id": "2d-drafting",
+   "capability": "2D drafting / drawings (sheets, views, dimensions, title block, export)",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-1-additive",
+   "workstream": "editor: drafting workbench (card EDITOR-2D-DRAFTING, running)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19 (master plan scope register + vault Topics/Isolith.md v1.23); card EDITOR-2D-DRAFTING",
+    "note": "near-term pull-forward #1: drafting is what engineers hand to fabrication"
+   }
+  },
+  {
+   "id": "configurations-design-tables",
+   "capability": "Configurations / design tables (variant states over the feature tree)",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-2-model-extend",
+   "workstream": "modeler: oep-geo model-extend (configurations as variant states / design tables; workstream not yet opened)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 (2027.2 pull-forward) and #19 (parity baseline); master plan 2027.2 scope section",
+    "note": "model-extend: version bump + migration on the versioned oep-geo schema (VariableSet/Feature kinds already exist)"
+   }
+  },
+  {
+   "id": "mass-properties",
+   "capability": "Mass properties (volume, mass, centroid, moments of inertia)",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-1-additive",
+   "workstream": "editor: mass properties (card EDITOR-MASS-PROP, running)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
+    "note": "near-term pull-forward #2; verify against a known analytical solid within tolerance"
+   }
+  },
+  {
+   "id": "interference-clash",
+   "capability": "Assembly interference / clash detection",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-1-additive",
+   "workstream": "editor: assembly interference/clash (card EDITOR-MASS-PROP, running)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
+    "note": "near-term pull-forward #2; CATIA ships this in the DMU Space Analysis lane (vendor tier transcribed from the recorded register)"
+   }
+  },
+  {
+   "id": "exploded-views",
+   "capability": "Exploded / assembly views",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-1-additive",
+   "workstream": "editor: exploded views (card EDITOR-MASS-PROP, running)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19 (master plan scope register); card EDITOR-MASS-PROP",
+    "note": "near-term pull-forward #2, grouped with mass properties and clash"
+   }
+  },
+  {
+   "id": "sheet-metal",
+   "capability": "Sheet metal design",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-3-kernel-gated",
+   "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19; master plan cost class 3 (kernel-gated); P6-M3-T01 ADR (boolean-ops-occ-adr.md v1.1.0)",
+    "note": "rests on real B-Rep ops; blocked until oep-engine-occ lands behind the oep-geo Evaluator seam"
+   }
+  },
+  {
+   "id": "weldments",
+   "capability": "Weldments (welded structures / frames)",
+   "catia": "module",
+   "solidworks": "base",
+   "cost_class": "class-3-kernel-gated",
+   "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19; master plan cost class 2/3 (model + kernel); P6-M3-T01 ADR v1.1.0",
+    "note": "CATIA ships this via the Weld Design (WD1) workbench lineage (vendor tier from recorded register: add-ons); classified kernel-gated (class 3) because full weldment B-Rep rests on the seam"
+   }
+  },
+  {
+   "id": "mold-tooling",
+   "capability": "Mold tooling design",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-3-kernel-gated",
+   "workstream": "kernel seam P6-M3-T04 (oep-engine-occ) then editor vertical; workstream opens after the seam lands",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19; master plan cost class 3 (kernel-gated); P6-M3-T01 ADR v1.1.0",
+    "note": "CATIA Mold Tooling Design (MTD) + Machining context; classic kernel-gated vertical"
+   }
+  },
+  {
+   "id": "routing",
+   "capability": "Piping / tubing / routing",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-2-model-extend",
+   "workstream": "modeler: routing vertical (workstream opens after the kernel seam; class-2 model-extend)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19; master plan 2027.2 scope (kernel-gated verticals after P6-M3-T04)",
+    "note": "CATIA Piping/Tubing/HVAC routing workbenches; extends the versioned oep-geo schema (line/wireframe intent)"
+   }
+  },
+  {
+   "id": "electrical-harness",
+   "capability": "Electrical / harness (3D wire routing, flattening, harness design)",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-2-model-extend",
+   "workstream": "modeler: electrical/harness vertical (2027.2+ workstream, not yet opened)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 and #19; master plan 2027.2 scope",
+    "note": "CATIA Electrical 3D Design / Harness Installation / Wire Routing lineage; class-2 model-extend"
+   }
+  },
+  {
+   "id": "composites",
+   "capability": "Composites (laminate definition / ply handoff)",
+   "catia": "base",
+   "solidworks": "module",
+   "cost_class": "class-2-model-extend",
+   "workstream": "modeler: composites evaluation (2027.2 review gate; no committed workstream)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 (in scope, evaluated 2027.2+); master plan Bucket C",
+    "note": "weakest commitment in the baseline: in scope per decision #13 but gated behind a 2027.2 evaluation; SolidWorks ships composites as an add-on (vendor tier from recorded register)"
+   }
+  },
+  {
+   "id": "cam",
+   "capability": "CAM / machining / toolpaths",
+   "catia": "base",
+   "solidworks": "base",
+   "cost_class": "class-1-additive",
+   "workstream": "new vertical P15+ (CAM / machining decomposition; not yet opened)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 (2027.2+ workstream) and #19; master plan 2027.2 scope",
+    "note": "class-1 additive (large); robust boolean/tessellation from the kernel improves it"
+   }
+  },
+  {
+   "id": "fea",
+   "capability": "Simulation / FEA / structural analysis",
+   "catia": "module",
+   "solidworks": "base",
+   "cost_class": "class-1-additive",
+   "workstream": "new vertical P15+ (simulation / FEA decomposition; not yet opened)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #13 (2027.2+ workstream) and #19; master plan 2027.2 scope",
+    "note": "CATIA ships analysis as GPS / SIMULIA product family (vendor tier module, per recorded register annotation); SolidWorks cell recorded as yes/base with the Simulation add-on nuance noted"
+   }
+  },
+  {
+   "id": "class-a-surfacing",
+   "capability": "Class-A / ICEM-class surface design",
+   "catia": "base",
+   "solidworks": "limited",
+   "cost_class": "class-4-different-foundation",
+   "workstream": "SURFACING-CLASS-A program (card running; strategy ADR is the next gate)",
+   "status": "planned",
+   "evidence": {
+    "kind": "decision",
+    "ref": "decision #19 (moved INTO scope from day one, full-send); card SURFACING-CLASS-A; master plan Class-A SUPERSEDED note",
+    "note": "own long-horizon kernel-moat program (longest pole, biggest team accepted); needs a high-accuracy surface kernel, not vanilla OCC; CATIA ICEM/Generative Shape Design vs SolidWorks limited"
+   }
   }
+ ],
+ "practitioner_input_contract": {
+  "description": "Editor input and behaviour contract from the LTT practitioner test of SolidCraft and Purrametric - the expectations an experienced user carries in their hands (Don directive 2026-10-27). One row per behaviour; each carries the existing register fields plus an explicit test hook, and obeys the same status ceiling: building/shippable require a green accepted test that exercises the behaviour.",
+  "rows": [
+   {
+    "id": "input-command-search",
+    "capability": "Command search on a single key (SolidWorks S key, Fusion search) plus a keyboard reachability path to any command",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "shell: oep-shell command surface (P7-M5 command registry, search + generated help index)",
+    "status": "building",
+    "evidence": {
+     "kind": "test",
+     "ref": "crates/oep-shell/tests/practitioner_input_contract.rs",
+     "note": "type-ahead search (commands::search) narrows the whole reachable command set to what matches; every command resolves through its dispatch token (validate_token) and is advertised in the generated text/markdown/JSON indexes - keyboard reachability is exercised by the command_search tests in practitioner_input_contract.rs on main"
+    },
+    "test_hook": "commands::search(QUERY) + validate_token(Token) + generated indexes; crates/oep-shell/tests/practitioner_input_contract.rs"
+   },
+   {
+    "id": "input-right-click-wheel",
+    "capability": "Right-click radial menu or equivalent recent/dimension wheel",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "editor bar context surface: right-click context menu in the sketch viewport (UI-B6)",
+    "status": "building",
+    "evidence": {
+     "kind": "test",
+     "ref": "crates/oep-app/tests/constraints.rs",
+     "note": "a right-click context surface now exists over pick/selection in the sketch editor: right-click in the viewport opens a constraint menu (H V Co Len Rm) and every entry drives the same constraints::apply path as the toolbar, asserted by the context_menu_applies_the_same_constraints_as_the_toolbar test on wave head. The radial/recent-dimension wheel styling is a later cosmetic; the context-menu seam named in the test_hook is landed."
+    },
+    "test_hook": "context-wheel over pick/selection (needs a context-menu layer on the editor bar)"
+   },
+   {
+    "id": "input-spacebar-accept",
+    "capability": "Spacebar accepts/confirms the active tool",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "editor bar active-tool model (no active-tool state in EditorSession yet)",
+    "status": "planned",
+    "evidence": {
+     "kind": "decision",
+     "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+     "note": "requires an active-tool state plus a confirm affordance; neither exists in EditorSession today"
+    },
+    "test_hook": "EditorSession::confirm_active_tool (requires an active-tool model)"
+   },
+   {
+    "id": "input-snap-inference",
+    "capability": "Two-axis snap inference during a drag: coincident plus midpoint and perpendicular/extension snaps",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "sketch: drag-snap resolver over the committed SketchDoc (UI-B5)",
+    "status": "building",
+    "evidence": {
+     "kind": "test",
+     "ref": "crates/oep-app/tests/snap_inference.rs",
+     "note": "endpoint, midpoint, centre, on-edge, intersection and h/v inference resolve to exact snapped coordinates over the committed SketchDoc; selection is priority then distance then document order; the sk:snap toggle (F8) turns inference off entirely - exercised by 101 snap_inference tests plus two real-app kittest runs on wave head"
+    },
+    "test_hook": "drag-snap resolver over oep-geo segment predicates (midpoint / perpendicular / extension)"
+   },
+   {
+    "id": "input-escape-semantics",
+    "capability": "Escape semantics: one press clears the active tool, measured and consistent",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "editor bar active-tool model + sketch escape ladder (UI-B3/UI-B4 input router)",
+    "status": "building",
+    "evidence": {
+     "kind": "test",
+     "ref": "crates/oep-app/tests/sketch_draw.rs",
+     "note": "measured and consistent escape semantics: one Escape cancels exactly one drawing step and the tool stays, a second leaves the tool, a third leaves sketch mode, and the document stays byte-identical throughout - exercised by sketch_draw escape tests and sketch_enter escape-leaves-sketch tests on wave head"
+    },
+    "test_hook": "EditorSession::dismiss_active_tool + single-press consistency probe (requires an active-tool model and an escape binding)"
+   },
+   {
+    "id": "input-cut-region",
+    "capability": "Cut-region selection from a sketch (choose which enclosed region an extrude consumes, without editing the sketch)",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-2-model-extend",
+    "workstream": "editor feature vertical: region pick above the sketch profile (not yet opened)",
+    "status": "planned",
+    "evidence": {
+     "kind": "decision",
+     "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+     "note": "choosing one enclosed region over another during a feature create needs loop/region detection above the profile - not in the tree yet"
+    },
+    "test_hook": "loop/region picker over the oep-geo profile (segment-graph region detection)"
+   },
+   {
+    "id": "input-datum-plane-legibility",
+    "capability": "Datum plane legibility: labelled without hover, not stacked into a white wash",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "viewer: pickable datum planes, highlight, normal camera, grid, tree node naming the plane (UI-B3)",
+    "status": "building",
+    "evidence": {
+     "kind": "test",
+     "ref": "crates/oep-app/tests/sketch_enter.rs",
+     "note": "the three principal datum planes are pickable and identifiable (highlight, camera normal within 1e-6, sketch grid + centre marker over the frame, model tree shows a Sketch node naming the active plane and the status bar names it) - exercised by sketch_enter tests on wave head; persistent in-viewport text labels are still a later polish card"
+    },
+    "test_hook": "oep-viewer datum label render (needs a datum-plane entity + label pass)"
+   },
+   {
+    "id": "input-toolbar-customisation",
+    "capability": "Toolbar and tab customisation (add a tab or move a command to a missing workspace)",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "shell: workbench layout registry (no toolbar/tab model - commands are a flat registry today)",
+    "status": "planned",
+    "evidence": {
+     "kind": "decision",
+     "ref": "Don directive 2026-10-27; LTT practitioner test of SolidCraft and Purrametric (verified episode findings)",
+     "note": "customising the command surface (add a tab / move a command) needs a layout model over the flat command registry; none exists yet"
+    },
+    "test_hook": "workbench layout registry add/move (needs a layout model over the command registry)"
+   },
+   {
+    "id": "input-undo-redo-parity",
+    "capability": "Single-press undo/redo parity and a visible undo step boundary per committed dimension",
+    "catia": "base",
+    "solidworks": "base",
+    "cost_class": "class-1-additive",
+    "workstream": "shell: oep-shell EditorSession history (undo/redo/journal over canonical document snapshots)",
+    "status": "building",
+    "evidence": {
+     "kind": "test",
+     "ref": "crates/oep-shell/tests/practitioner_input_contract.rs",
+     "note": "committing a dimension in the variable set is one real document snapshot; one undo press reverts exactly that commit, one redo press replays it, and the journal records each commit as its own line - exercised by undo_redo_single_press_parity_and_dimension_step_boundaries in practitioner_input_contract.rs on main"
+    },
+    "test_hook": "EditorSession::undo/redo/journal over committed variable-dimension steps; crates/oep-shell/tests/practitioner_input_contract.rs"
+   }
+  ]
+ }
 }

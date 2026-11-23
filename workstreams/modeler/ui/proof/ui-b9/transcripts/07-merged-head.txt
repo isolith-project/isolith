@@ -1,0 +1,11 @@
+# merged head / checkpoint record
+final wave head on github/wave/ui-b (carried into the checkpoint):
+  98a8ccc08270b36fa7e1c420d46c4acbaee40613
+
+checkpoint onto main (created by UI-B9):
+  git merge --no-ff github/wave/ui-b -m "checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8"
+  parents: 736a0a7 (main before the wave) + wave head
+  tag wave-ui-b => the checkpoint commit
+
+the full gate transcripts 01-06 were run on this merged head (wave head + UI-B10 fixes)
+all six legs green; aggregate cargo test 2846 passed / 0 failed
