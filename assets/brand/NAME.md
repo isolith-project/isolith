@@ -1,8 +1,8 @@
 # Isolith: Name and Public Product Brand for Open Engineering Platform (OEP)
 
-Status: Selected and trademark-checked by P13-T08 (2026-10-18). Formal legal memo P0-M2-T03 owns the final clearance and any attorney review. On 2026-10-20 Don approved the full name change: the internal codename is retired and Isolith is the single program name (internal and public). On 2026-10-27 Don directed the public identity rollout under the Isolith name (card NAME-AND-ASSET-RESERVATIONS t_a15e108f); the public-handle decision and asset map are recorded below pending his pick.
-Date: 2026-10-18 (name record v1.0), rename record v1.1 2026-10-20, public asset map v1.2 2026-10-28
-Version: 1.3
+Status: Selected and trademark-checked by P13-T08 (2026-10-18). Formal legal memo P0-M2-T03 owns the final clearance and any attorney review. On 2026-10-20 Don approved the full name change: the internal codename is retired and Isolith is the single program name (internal and public). On 2026-10-27 Don directed the public identity rollout under the Isolith name (card NAME-AND-ASSET-RESERVATIONS t_a15e108f); the handle and the completed registry reservations are recorded below.
+Date: 2026-10-18 (name record v1.0), rename record v1.1 2026-10-20, public asset map v1.2 2026-10-28, identity map v1.3 2026-11-20, registrations recorded v1.4 2026-11-22
+Version: 1.4
 Owner: Don (final), P13-T08 worker (selection, design, and collision check)
 
 ## Decision
@@ -95,22 +95,24 @@ record 0001).
 - Registries searched: uspto, euipo, wipo, tmview.
 - Next owner: P0-M2-T03 trademark memo (formal).
 
-## Public identity and asset map (v1.3, 2026-11-20)
+## Public identity and asset map (v1.4, 2026-11-22)
 
 One table. This is the single source for the public identity assets below;
 no document or workflow invents a second name, handle, or path. Availability
-evidence (per-platform probes with timestamp) is in
-`evidence/name-handle-availability-2026-10-28.json`.
+evidence (per-platform probes with a timestamp) is in
+`evidence/name-handle-availability-2026-10-28.json`, and the completed
+registry reservations (public package URLs and read-backs) are in
+`evidence/registry-reservation-evidence-2026-11-22.json`.
 
 | Asset | Value | Status / owner |
 |---|---|---|
 | Product name | Isolith | Decided (v1.0). Wordmark "isolith". |
 | Domain | isolith.dev (recommended primary), isolith.org (defensive) | Recommended by the release/community plan; registration is a Don item (card SITE-DOMAIN-ORIGIN t_ad10a5f5). isolith.com/.net are held by others; RDAP records in the plan. |
 | GitHub org or account | `isolith-project` (org id 358919476, owned by Don's personal account `dmltallen`) | **Decided 2026-11-19 and created.** Canonical clone URL `https://github.com/isolith-project/isolith`. The R1A account `redonealpha-don` never hosts Isolith. |
-| crates.io prefix | `oep-` (all published crates keep the existing `oep-` prefix, e.g. `oep-stack`, `oep-archive`) | Decided by namespace ownership: crates.io `isolith` is claimed only as a placeholder 0.0.0 crate if Don approves the squatting policy; otherwise no crates.io reservation. |
+| crates.io prefix | `oep-` (all published crates keep the existing `oep-` prefix, e.g. `oep-stack`, `oep-archive`) | Reserved 2026-11-22: placeholder crate `isolith@0.0.0` holds the crates.io name (https://crates.io/crates/isolith/0.0.0); production crates still ship under `oep-`. |
 | Image path (public) | `ghcr.io/isolith-project/oep-stack` | Follows the org; Docker Hub namespace is free but GHCR is preferred. |
-| npm package | `isolith` package (404 = free), claimed with a placeholder README once the handle is picked (needs Don's npm account/token) | Pending pick + credential. |
-| PyPI | Held only if a Python package will ever ship; otherwise not squatted | Policy call (this card). |
+| npm package | placeholder package `isolith@0.0.0` published 2026-11-22 under account `dmltallen` | Reserved 2026-11-22: https://www.npmjs.com/package/isolith (latest 0.0.0). |
+| PyPI | Not reserved | Policy on this card: hold the PyPI name only if a Python package will ever ship; otherwise do not squat. |
 
 Crate/image naming map (how the same artifact is referenced today, so the sweep
 below has exact targets):
