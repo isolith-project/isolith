@@ -1,0 +1,36 @@
+# UI-B9 final acceptance - all items after landing
+
+A1) each wave-B branch is an ancestor of origin/wave/ui-b (a65f4b9):
+  OK ui/b1-input-router
+  OK ui/b2-history
+  OK ui/b3-sketch-enter
+  OK ui/b4-sketch-draw
+  OK ui/b5-snap-inference
+  OK ui/b6-constraints
+  OK ui/b7-dimensions
+  OK ui/b8-feature-from-sketch
+  OK ui/b10-gate-fix
+
+A2) checkpoint merge present with exact message:
+5ba89cbbc0fa2edbdb2a59f6dcfcd7ca98354ffb checkpoint(wave-ui-b): sketch tools -- cards UI-B1..UI-B8
+
+A3) full gate green on merged head - transcripts 01-06 (fmt/clippy/test/licensing/precommit/shot): all EXIT=0, cargo test aggregate 2846 passed / 0 failed
+6
+  gate legs recorded: 6
+
+A4) PR merged / main updated / tag / mirror / wave/ui-c advanced:
+  main   = 1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+  tag    = 5ba89cbbc0fa2edbdb2a59f6dcfcd7ca98354ffb (== checkpoint 5ba89cb)
+  gitea  = 1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+  ui-c   = 1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+  PR     = https://github.com/isolith-project/isolith/pull/30 (MERGED)
+
+A5) register: scope_register_check green + 4 rows building:
+  pass 23 fail 0
+
+A6) three screenshots (draw/snap/dimension, capture_ui.sh):
+  draw 91712ad1b9b53fb40b98d234e8b1034e1a1eb1f0d920a02885e141d2e5273a58
+  snap 5042f159ab9ee3d26e7c89dc9c43abd994df5c57abb02e665094a5ecab736346
+  dimension 5bc2c55c1a59c46de479fd61c597cf01061b6662118e1e871fbce01448de01e2
+
+tracked in repo proof and attached as completion artifacts
