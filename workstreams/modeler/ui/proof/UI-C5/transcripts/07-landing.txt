@@ -1,0 +1,43 @@
+# UI-C5 landing (push, merge, remote read-back) - real output
+
+$ git push github HEAD
+To https://github.com/isolith-project/isolith.git
+ * [new branch]      HEAD -> ui/c5-measure
+
+$ git switch -c merge-UI-C5 github/wave/ui-c
+Switched to a new branch 'merge-UI-C5'
+branch 'merge-UI-C5' set up to track 'github/wave/ui-c'.
+
+$ git merge --no-ff ui/c5-measure
+Auto-merging workstreams/modeler/ui/README.md
+CONFLICT (content): Merge conflict in workstreams/modeler/ui/README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+Resolution (union, not a guess): the wave head had gained UI-C4's README row while UI-C5
+was in flight; both add a table row between the same neighbours. Union keeps BOTH rows
+(UI-C1..UI-C5 all present after the fix) - the same "keep both sides" rule the landing
+section prescribes for additive table rows.
+
+$ git add workstreams/modeler/ui/README.md
+$ git commit --no-edit
+d0b4236 Merge branch 'ui/c5-measure' into merge-UI-C5
+  parents ddd6d17 (wave head) + d665928 (ui/c5-measure)
+
+$ git push github HEAD:wave/ui-c
+To https://github.com/isolith-project/isolith.git
+   ddd6d17..d0b4236  HEAD -> wave/ui-c
+
+$ git fetch github
+$ git rev-parse HEAD            -> d0b423695c0cdf163ddda3e6ebbdb39399bfe890
+$ git rev-parse github/wave/ui-c-> d0b423695c0cdf163ddda3e6ebbdb39399bfe890
+remote read-back == local
+
+$ git merge-base --is-ancestor ui/c5-measure github/wave/ui-c   -> 0 (ancestor)
+
+Acceptance re-run on the MERGED head (wave/ui-c d0b4236):
+  cargo test -p oep-app --test measure : exit 0
+  cargo test -p oep-app              : 2762 passed / 0 failed (incl. UI-C2/C4 targets now on the wave)
+  cargo fmt --all -- --check         : clean
+  cargo clippy -p oep-app --all-targets -- -D warnings : clean
+  xvfb-run -a cargo run -p oep-app -- --smoke : frames=8 smoke ok
+  cargo test --workspace            : 4004 passed / 0 failed
