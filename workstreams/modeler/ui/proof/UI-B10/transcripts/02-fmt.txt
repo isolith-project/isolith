@@ -1,1 +1,2 @@
-FMT EXIT: 0
+=== cargo fmt --all -- --check (final card tree 4afebb4) ===
+EXIT=0
