@@ -1,0 +1,2 @@
+== sha256 of preserved golden (ui-a2-golden-before-ui-b9.png) ==
+59ae82bf991d455a36abd368d345e4e6c92854d856bdc8181614a757579d989f  /home/r1a/isolith-main/.worktrees/ui-b10/workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-b9.png

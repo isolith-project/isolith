@@ -1,0 +1,10 @@
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.52s
+     Running tests/input_router.rs (/home/r1a/isolith-main/target/debug/deps/input_router-6169d0926ebc290d)
+
+running 1 test
+test no_module_mutates_the_document_outside_doc_io_rs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.01s
+
+GUARD_CLEAN_EXIT=0

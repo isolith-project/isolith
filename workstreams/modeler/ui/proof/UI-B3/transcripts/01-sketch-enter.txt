@@ -1,0 +1,26 @@
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b3/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.40s
+     Running tests/sketch_enter.rs (target/debug/deps/sketch_enter-313c19ad5893d0e7)
+
+running 18 tests
+test app::panels::viewport::sketch::tests::vertical_normal_never_degenerates ... ok
+test app::panels::viewport::sketch::tests::orientation_looks_along_the_normal ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::viewport::sketch::tests::every_plane_has_consistent_axes ... ok
+test app::panels::viewport::sketch::tests::nearest_and_most_frontal_plane_wins ... ok
+test sketch::tests::every_plane_has_consistent_axes ... ok
+test sketch::tests::orientation_looks_along_the_normal ... ok
+test sketch::tests::nearest_and_most_frontal_plane_wins ... ok
+test sketch::tests::vertical_normal_never_degenerates ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test clicking_viewport_empty_space_stays_in_normal_mode ... ok
+test clicking_a_datum_plane_enters_sketch_and_swings_the_camera_normal ... ok
+test escape_leaves_sketch_mode_without_touching_the_document ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+

@@ -1,0 +1,28 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.27s
+     Running tests/input_router.rs (/home/r1a/isolith-main/target/debug/deps/input_router-6169d0926ebc290d)
+
+running 20 tests
+test command_family_modifiers_resolve_to_the_same_binding ... ok
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+test every_key_binding_resolves_back_to_itself ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test every_binding_token_validates_through_the_shared_registry ... ok
+test modifier_exactness_routes_shifted_and_plain_combos_apart ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test panel_seam_toggles_are_not_claimed_by_the_table ... ok
+test every_pointer_binding_resolves_back_to_itself ... ok
+test the_table_declares_at_least_twenty_bindings ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test the_scanner_flags_planted_direct_document_mutation_and_passes_reads ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test no_module_mutates_the_document_outside_doc_io_rs ... ok
+test held_pointer_button_resolves_to_its_binding_in_the_real_app ... ok
+test plain_key_routes_nothing_in_the_real_app ... ok
+test ctrl_shift_z_routes_to_redo_in_the_real_app ... ok
+test ctrl_z_routes_through_the_single_table_in_the_real_app ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+EXIT_01=0

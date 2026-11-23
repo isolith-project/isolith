@@ -1,0 +1,24 @@
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.36s
+     Running tests/input_router.rs (/home/r1a/isolith-main/target/debug/deps/input_router-6169d0926ebc290d)
+
+running 1 test
+test no_module_mutates_the_document_outside_doc_io_rs ... FAILED
+
+failures:
+
+---- no_module_mutates_the_document_outside_doc_io_rs stdout ----
+
+thread 'no_module_mutates_the_document_outside_doc_io_rs' (145383) panicked at crates/oep-app/tests/input_router.rs:456:5:
+direct document mutation outside crates/oep-app/src/doc_io.rs:
+  /home/r1a/isolith-main/.worktrees/ui-b1/crates/oep-app/src/input.rs:508: .push_feature(
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    no_module_mutates_the_document_outside_doc_io_rs
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p oep-app --test input_router`
+GUARD_EXIT=101

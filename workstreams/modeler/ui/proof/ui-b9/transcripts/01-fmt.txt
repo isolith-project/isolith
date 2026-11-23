@@ -1,0 +1,2 @@
+# full gate on the checkpoint (merged head) - wave/ui-b tree, real oep-app/workspace code
+EXIT=0

@@ -1,0 +1,15 @@
+UI-B6 UI-CONSTRAINTS: apply and remove constraints
+Wave B of the editor parity program.
+
+Branch: ui/b6-constraints
+Base: wave/ui-b @ 38dcdb6
+Host: aarch64, 20 cores, rustc/cargo 1.98.1
+Date: 2026-11-21
+
+Files owned by this card:
+  crates/oep-app/src/sketch/constraints.rs   (new)
+  crates/oep-app/src/panels/sketch.rs        (toolbar and context menu)
+  crates/oep-app/tests/constraints.rs        (new)
+
+STEP 0: merged github/wave/ui-b (38dcdb6) into ui/b6-constraints -
+brought UI-B1..B4 code into the tree (merge commit below).

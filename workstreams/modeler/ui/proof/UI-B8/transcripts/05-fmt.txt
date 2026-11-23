@@ -1,0 +1,2 @@
+MY_FILES_FMT_CLEAN=yes (only pre-existing input.rs:504 blank flagged, owned by UI-B1, untouched per B2..B7)
+input.rs:504 blank = pre-existing UI-B1 file, not owned by UI-B8, left untouched (same state as B2..B7)

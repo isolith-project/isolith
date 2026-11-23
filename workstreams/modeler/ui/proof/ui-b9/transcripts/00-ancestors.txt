@@ -1,0 +1,25 @@
+# ancestor audit (acceptance #1): every wave-B card branch -> github/wave/ui-b
+wave head: 98a8ccc08270b36fa7e1c420d46c4acbaee40613
+
+ANCESTOR ok : ui/b1-input-router (card(UI-B1): UI-INPUT-ROUTER - one event map to command toke)
+ANCESTOR ok : ui/b10-gate-fix (card(UI-B10): record landing verification transcripts)
+ANCESTOR ok : ui/b2-history (card(UI-B2): UI-HISTORY - journal undo/redo with drag coales)
+ANCESTOR ok : ui/b3-sketch-enter (card(UI-B3): UI-SKETCH-ENTER - pick a datum plane and enter )
+ANCESTOR ok : ui/b4-sketch-draw (card(UI-B4): UI-SKETCH-DRAW - point, line, polyline, rectang)
+ANCESTOR ok : ui/b5-snap-inference (card(UI-B5): UI-SNAP-INFERENCE - endpoint, midpoint, centre,)
+ANCESTOR ok : ui/b6-constraints (Merge wave/ui-b into ui/b6-constraints: land UI-B5 snap alon)
+ANCESTOR ok : ui/b7-dimensions (card(UI-B7): correct step-0 transcript to the real fast-forw)
+ANCESTOR ok : ui/b8-feature-from-sketch (card(UI-B8): record proof of the extrude/revolve dialog)
+
+merge commits on wave (each card landing):
+ANCESTOR ok : 98a8ccc08270b36fa7e1c420d46c4acbaee40613 merge-UI-B10: UI-GATE-FIX landing evidence (transcripts 07-1
+ANCESTOR ok : c684ca2d9b04d5f5e21a15be20b905579e53979b merge-UI-B10: UI-GATE-FIX - formatting and intentional launc
+ANCESTOR ok : 452f3024521e70af9b29045eda0c3c79e0cead93 merge-UI-B8: UI-FEATURE-FROM-SKETCH - extrude/revolve dialog
+ANCESTOR ok : 09a02535472ff162303665f6656350944811d31d merge-UI-B7: UI-DIMENSIONS - place, drive and edit dimension
+ANCESTOR ok : cf91df787e30792765f532e470535720c8635f38 Merge branch 'ui/b6-constraints' into merge-UI-B6
+ANCESTOR ok : bb87cc6d75795df63ed2595b5c285602fd6bccec Merge wave/ui-b into ui/b6-constraints: land UI-B5 snap alon
+ANCESTOR ok : c888a358e0848838b08f5c28c895c09ec487ac01 merge-UI-B5: UI-SNAP-INFERENCE - endpoint, midpoint, centre,
+ANCESTOR ok : 38dcdb6ae8d8f3eeca8f369506744aae7eeeaeb6 merge-UI-B4: UI-SKETCH-DRAW - point, line, polyline, rectang
+ANCESTOR ok : 270e8332af872c478ee6038ff27d591b458d06e3 merge-UI-B3: UI-SKETCH-ENTER - pick a datum plane and enter 
+ANCESTOR ok : 41dbcb70fab5c793b3e0b6f34352bb3faed8362f merge-UI-B2: UI-HISTORY - journal undo/redo with drag coales
+ANCESTOR ok : 780dc564b344c4f8f03532fa7290f065526cc99c merge-UI-B1: UI-INPUT-ROUTER - one event map to command toke

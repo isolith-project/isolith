@@ -1,0 +1,9 @@
+# clippy -D warnings over oep-app (all targets)
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-b4/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.52s
+EXIT=0
+# rustfmt check over this card's three files (individually, since rustfmt recurses through the #[path] chain of the test file)
+== crates/oep-app/src/sketch/tools.rs
+OK
+== crates/oep-app/src/panels/sketch.rs
+OK

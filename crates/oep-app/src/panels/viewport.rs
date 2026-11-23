@@ -1,4 +1,5 @@
-//! Viewport panel (wave A, card UI-A5): the live frame behind the backend seam.
+//! Viewport panel (wave A, card UI-A5; wave B, card UI-B3 UI-SKETCH-ENTER): the
+//! live frame behind the backend seam.
 //!
 //! Replaces the UI-A4 stub: the panel now shows the committed demo scene as a
 //! deterministic CPU-rendered frame, navigable with the mouse (orbit = left
@@ -6,18 +7,41 @@
 //! [`oep_viewer::ViewportBackend`] trait so Wave D swaps in a GPU backend
 //! without touching this file's structure.
 //!
-//! Backend ownership: `App` is off-limits on this card, so the [`CpuBackend`]
+//! UI-B3 adds datum-plane picking to the same panel: a clean primary click
+//! (no drag, no modifiers) is resolved through the viewport's existing pick
+//! seam ([`oep_viewer::pick::unproject`]) into the nearest [`sketch::DatumPlane`]
+//! under the cursor. Picking a plane highlights it (accent outline + centre
+//! marker), swings the camera to look normal to it within 1e-6, and turns on
+//! the sketch grid layer (an egui overlay projected onto the active plane).
+//! Escape leaves sketch mode without touching a document: it is consumed here
+//! (the viewport panel runs before the doc panel in the frame) only while a
+//! plane is active, then the sketch state is written back idle.
+//!
+//! Backend ownership: `App` is off-limits on these cards, so the [`CpuBackend`]
 //! lives in the egui context's per-widget data, keyed by a stable id that the
-//! kittest harness (`--test viewport`) reads back with the same id. All work
-//! happens inside one [`egui::Context::data_mut`] scope because this egui
-//! version cannot return `&mut` out of that closure; the frame hands out owned
-//! values (texture image, snapshot, status text).
+//! kittest harnesses (`--test viewport`, `--test sketch_enter`) read back with
+//! the same id. All work happens inside one [`egui::Context::data_mut`] scope
+//! because this egui version cannot return `&mut` out of that closure; the
+//! frame hands out owned values (texture image, snapshot, status text, the
+//! pre-projected sketch grid layer).
 
 use eframe::egui;
 
 use oep_viewer::{Camera, ViewportBackend};
 
 use crate::app::App;
+use crate::theme;
+
+#[path = "sketch.rs"]
+pub mod sketch;
+
+// UI-B8 UI-FEATURE-FROM-SKETCH: the finish-sketch (extrude/revolve) dialog, its
+// document-clone preview, the feature journal and the STEP export. This panel
+// owns the interactive half (keys, buttons, oracle, painting); `features.rs`
+// is its own `#[path]` include exactly like `sketch.rs` above, so the app
+// binary (and the test targets that pull `app.rs`) compile the same source.
+#[path = "features.rs"]
+pub mod features;
 
 /// Context-data key under which the backend lives (and the scalar snapshot is
 /// published) in the egui per-context store. Shared with
@@ -51,7 +75,15 @@ pub fn snapshot(ctx: &egui::Context) -> Option<ViewportSnapshot> {
     ctx.data(|d| d.get_temp::<ViewportSnapshot>(egui::Id::unique(VIEWPORT_STATE_KEY)))
 }
 
-/// Draw the viewport panel: the live navigable frame.
+/// The demo scene this wave's viewport always renders (the backend is
+/// constructed with `CpuBackend::demo`), whose bounding box defines where the
+/// datum planes sit.
+fn demo_scene() -> oep_viewer::Scene {
+    oep_viewer::CpuBackend::demo_scene()
+}
+
+/// Draw the viewport panel: the live navigable frame plus (in sketch mode) the
+/// active datum plane's highlight and sketch grid layer.
 pub fn show(ui: &mut egui::Ui, app: &mut App) {
     let state_id = egui::Id::unique(VIEWPORT_STATE_KEY);
     let rect = ui.available_rect_before_wrap();
@@ -59,7 +91,7 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     let px = (rect.width() * scale).round().max(2.0) as u32;
     let py = (rect.height() * scale).round().max(2.0) as u32;
 
-    let (primary, middle, shift, delta, scroll, zoom, hovered, _response) = {
+    let (primary, middle, shift, delta, scroll, zoom, hovered, response) = {
         let (primary, middle, shift, delta, scroll, zoom) = ui.ctx().input(|i| {
             (
                 i.pointer.primary_down(),
@@ -83,6 +115,52 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
         )
     };
 
+    // Sketch mode: read the current state up front (a read-only context-data
+    // borrow, so it never nests inside `data_mut` below).
+    let mut sketch_state = sketch::read_state(ui.ctx());
+
+    // UI-B8 UI-FEATURE-FROM-SKETCH: plain F opens the finish-sketch dialog,
+    // Escape cancels it. Runs after the sketch read (so draw-tool keys win)
+    // and before this panel's own Exit-sketch Escape, so a cancel inside the
+    // dialog is consumed here and never exits the sketch.
+    features::poll(ui.ctx());
+
+    // Escape leaves sketch mode without touching the document. This panel runs
+    // first in the frame, so it consumes the key ONLY while a plane is active
+    // and never steals the Escape the doc panel / palette need otherwise.
+    if sketch_state.in_sketch() {
+        let escape = ui
+            .ctx()
+            .input_mut(|i| i.consume_key(egui::Modifiers::NONE, egui::Key::Escape));
+        if escape {
+            sketch_state.plane = None;
+        }
+    }
+
+    // A clean primary click (press + release, no drag, no modifiers) picks a
+    // datum plane. `response.interact_pointer_pos` is the clicked point; it
+    // falls back to the live pointer for robustness.
+    let click_px: Option<(f64, f64)> = if response.clicked() && !shift && !middle {
+        response
+            .interact_pointer_pos()
+            .or_else(|| ui.ctx().input(|i| i.pointer.latest_pos()))
+            .map(|pos| {
+                let cx = ((pos.x - rect.min.x) * scale).max(0.0) as f64;
+                let cy = ((pos.y - rect.min.y) * scale).max(0.0) as f64;
+                (cx, cy)
+            })
+    } else {
+        None
+    };
+
+    // UI-B8 UI-FEATURE-FROM-SKETCH: the preview frame path. Computed once
+    // before the backend borrow (it reads the feature panel state from the
+    // same context store); when a document clone is being previewed (or a
+    // feature is applied) its rasterized solid frame and hash replace the
+    // ordinary backend frame - so the published viewport hash moves with the
+    // preview, and Cancel returns it to the pre-feature value.
+    let preview = features::preview_frame(ui.ctx(), px, py);
+
     // All panel mutation lives inside one context-data scope (no `&mut` escape,
     // this egui version); owned outputs are handed out afterwards.
     //
@@ -90,7 +168,7 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // not egui's click-vs-drag flag: that flag lands one frame after the drag
     // decision, which would blur the exact numeric mapping a kittest drag needs
     // to assert. A press with no movement is a no-op (delta == 0).
-    let (image, ms_bucket, action) = ui.ctx().data_mut(|d| {
+    let (image, ms_bucket, action, overlay) = ui.ctx().data_mut(|d| {
         let backend: &mut oep_viewer::CpuBackend =
             d.get_temp_mut_or_insert_with(state_id, oep_viewer::CpuBackend::demo);
 
@@ -101,13 +179,41 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
         }
 
         let mut cam = backend.camera();
-        let mut action = "Select";
+        let mut action = "Select".to_owned();
+
+        // The datum planes only need building on the frames that use them (a
+        // click to pick, or any frame while the sketch layer is on).
+        let scene_planes = (click_px.is_some() || sketch_state.in_sketch()).then(|| {
+            let scene = demo_scene();
+            sketch::datum_planes(&scene)
+        });
+
+        // Plane pick on click, through the existing pick seam (unproject).
+        if let (Some((cx, cy)), Some(planes)) = (click_px, scene_planes.as_ref()) {
+            let ray = oep_viewer::pick::unproject(&cam, cx, cy, f64::from(px), f64::from(py));
+            let f = cam
+                .target
+                .sub(&cam.eye())
+                .normalize()
+                .expect("viewpoint camera is never degenerate");
+            if let Some(plane) = sketch::pick_plane(planes, &ray, &f) {
+                let (yaw, pitch) = sketch::normal_orientation(&plane.normal);
+                cam.yaw = yaw;
+                cam.pitch = pitch;
+                sketch_state.plane = Some(sketch::ActivePlane {
+                    id: plane.id.to_string(),
+                    label: plane.label.to_string(),
+                    normal: (plane.normal.x, plane.normal.y, plane.normal.z),
+                });
+                action = format!("Sketch {}", plane.label);
+            }
+        }
 
         // Pan: middle drag, or shift+drag (over the panel).
         if (middle || (shift && primary)) && hovered {
-            let wpp = pan_world_per_pixel(&cam, py as f64);
+            let wpp = pan_world_per_pixel(&cam, f64::from(py));
             cam.pan(delta.x as f64 * wpp, delta.y as f64 * wpp);
-            action = "Pan";
+            action = "Pan".to_owned();
         }
         // Orbit: plain left drag.
         else if primary && hovered && !shift {
@@ -115,7 +221,7 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
                 delta.x as f64 * ORBIT_RAD_PER_PX,
                 delta.y as f64 * ORBIT_RAD_PER_PX,
             );
-            action = "Orbit";
+            action = "Orbit".to_owned();
         }
         // Zoom: pinch/zoom event (zoom_delta > 1 zooms in => distance shrinks)
         // or wheel over the panel.
@@ -126,7 +232,7 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
                 1.0 / (1.0 + scroll as f64 * ZOOM_FACTOR_PER_SCROLL_POINT).clamp(0.2, 5.0)
             };
             cam.zoom(factor);
-            action = "Zoom";
+            action = "Zoom".to_owned();
         }
 
         if cam != backend.camera() {
@@ -136,11 +242,37 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
         let cam = backend.camera();
         let frame_hash = backend.frame_hash();
         let frame = backend.frame();
-        let image = egui::ColorImage::from_rgba_unmultiplied(
-            [frame.width as usize, frame.height as usize],
-            &frame.data,
-        );
+        // UI-B8 preview frame path: the preview document clone's rasterized
+        // solid replaces the ordinary backend frame (and its hash is what the
+        // snapshot publishes), so "the preview frame differs from the
+        // pre-feature frame" is a real, published value.
+        let (image, published_hash) = match &preview {
+            Some((pimg, phash)) => (
+                egui::ColorImage::from_rgba_unmultiplied(
+                    [pimg.width as usize, pimg.height as usize],
+                    &pimg.data,
+                ),
+                *phash,
+            ),
+            None => (
+                egui::ColorImage::from_rgba_unmultiplied(
+                    [frame.width as usize, frame.height as usize],
+                    &frame.data,
+                ),
+                frame_hash,
+            ),
+        };
         let ms_bucket = ((backend.frame_time_secs() * 1000.0) as u64 / 10) * 10;
+
+        // Sketch grid layer: project the active plane onto this panel (the
+        // pre-projected geometry the painter draws after the backend borrow).
+        let overlay = match (&sketch_state.plane, scene_planes.as_ref()) {
+            (Some(active), Some(planes)) => planes
+                .iter()
+                .find(|p| p.id == active.id)
+                .and_then(|p| sketch::grid_overlay(p, &cam, rect, scale)),
+            _ => None,
+        };
 
         // Publish the scalar snapshot for the harness after the backend borrow
         // has ended (this egui IdTypeMap cannot be borrowed mutably twice).
@@ -152,12 +284,21 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             cam.target.y,
             cam.target.z,
             cam.fov_y,
-            frame_hash,
+            published_hash,
         );
         d.insert_temp::<ViewportSnapshot>(state_id, snapshot);
 
-        (image, ms_bucket, action)
+        (image, ms_bucket, action, overlay)
     });
+
+    // Persist the sketch state (struct + String oracle) after the backend
+    // borrow: a second, sequential context-data scope.
+    sketch::write_state(ui.ctx(), &sketch_state);
+
+    // UI-B8 UI-FEATURE-FROM-SKETCH: paint the feature surface (Finish button,
+    // live dialog, Export button) over the viewport, from the same panel state
+    // the preview frame reads.
+    features::draw(ui.ctx(), rect);
 
     // Draw the frame into the panel via an egui texture.
     let texture_id = ui.scope_id().with("viewport_frame_texture");
@@ -171,6 +312,35 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     ui.painter()
         .image(texture.id(), rect, uv, egui::Color32::WHITE);
 
-    // Report the frame time in the status-bar mode field UI-A4 created.
-    app.status.mode = format!("{action} · {ms_bucket} ms");
+    // Sketch grid layer on top of the frame: the active plane's triangle-free
+    // outline (accent), the grid lines (border), and the centre pick marker.
+    if let Some(overlay) = &overlay {
+        let p = oep_ui_theme::Palette::resolve(theme::mode_of(ui));
+        let painter = ui.painter();
+        painter.add(egui::Shape::convex_polygon(
+            overlay.corners.clone(),
+            egui::Color32::TRANSPARENT,
+            egui::Stroke::new(2.0, p.accent),
+        ));
+        for (a, b) in &overlay.segments {
+            painter.line_segment([*a, *b], egui::Stroke::new(1.0, p.border));
+        }
+        let c = overlay.centre;
+        let r = 5.0;
+        painter.line_segment(
+            [egui::pos2(c.x - r, c.y), egui::pos2(c.x + r, c.y)],
+            egui::Stroke::new(2.0, p.accent),
+        );
+        painter.line_segment(
+            [egui::pos2(c.x, c.y - r), egui::pos2(c.x, c.y + r)],
+            egui::Stroke::new(2.0, p.accent),
+        );
+    }
+
+    // Report the frame time (and, in sketch mode, the active plane) in the
+    // status-bar mode field UI-A4 created.
+    app.status.mode = match &sketch_state.plane {
+        Some(active) => format!("{} · {ms_bucket} ms", active.label),
+        None => format!("{action} · {ms_bucket} ms"),
+    };
 }

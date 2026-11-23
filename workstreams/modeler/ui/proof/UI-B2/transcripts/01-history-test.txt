@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.20s
+     Running tests/history.rs (target/debug/deps/history-184544b69377e553)
+
+running 18 tests
+test a_different_token_breaks_coalescing ... ok
+test a_new_drag_id_starts_a_fresh_entry ... ok
+test after_the_gesture_ends_the_same_drag_id_starts_again ... ok
+test doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test discrete_commands_are_individual_entries ... ok
+test doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test bounded_capacity_drops_the_oldest_and_undo_stays_exact ... ok
+test doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test journal_records_token_and_hashes_only ... ok
+test registry_backed_journal_tokens_are_validated_command_tokens ... ok
+test new_edit_after_undo_truncates_the_redo_branch ... ok
+test undo_redo_walk_mixed_history_with_exact_hashes ... ok
+test fifty_drag_commands_collapse_to_one_entry_and_undo_redo_are_exact ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+EXIT_01=0
