@@ -14,6 +14,19 @@ Pure D4 branch (ui/d4-gpu-nav), GPU backend — the blocker this card fixes:
 On the temp merge with this card's fix, the six-cube test no longer hits the
 empty-face panic, and Back renders (22,520 GPU px at 400x300 per 01 transcript).
 
+## REAL captured output (unchanged test, merged tree - verbatim)
+
+```
+face: clicked "Cube Front" -> eye=(40.000000000000, 20.000000000000, -136.108800206649) target=(40.000000000000, 20.000000000000, 5.000000000000) up=(0.0, 1.0, 0.0) | yaw=3.141592653590 pitch=0.000000000000 | expected_eye=(40.000000000000, 20.000000000000, 146.108800206649)
+thread 'six_cube_faces_land_exact_standard_views' (768561) panicked at crates/oep-app/tests/nav.rs:152:5:
+face: yaw 3.141592653589793 != 0
+test six_cube_faces_land_exact_standard_views ... FAILED
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 121 filtered out; finished in 1.14s
+```
+
+(The intended Front camera eye is z = +146.108800206649; the click that meant
+"Cube Front" applied the BACK camera eye z = -136.108800206649 => yaw = pi.)
+
 ## Residual: a pre-existing UI-D4 nav.rs click-geometry defect
 
 Even with the renderer fixed, the unchanged six-cube test fails on a DIFFERENT,
