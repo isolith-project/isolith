@@ -1170,6 +1170,7 @@ dependencies = [
  "egui-winit",
  "egui_glow",
  "egui_system_font_provider",
+ "glow",
  "glutin",
  "glutin-winit",
  "image",
@@ -3208,6 +3209,7 @@ version = "0.1.0"
 dependencies = [
  "oep-geo",
  "serde_json",
+ "wgpu",
 ]
 
 [[package]]

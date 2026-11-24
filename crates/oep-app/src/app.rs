@@ -276,9 +276,13 @@ impl eframe::App for App {
     /// restart comes back to the same layout. Best-effort and only when the
     /// config directory exists, so tests (which run under kittest and never
     /// reach a real shutdown) cannot scatter files across the host.
-    /// This is the non-glow `eframe::App::on_exit` variant (oep-app builds
-    /// eframe with its default backends; `glow` is not a Cargo feature here).
-    fn on_exit(&mut self) {
+    ///
+    /// UI-D1: oep-app enables eframe's `glow` feature (the card's honest
+    /// "wgpu when available, glow otherwise" fallback), which changes
+    /// `eframe::App::on_exit` to also receive the glow context. This
+    /// signature-only adjustment preserves the prior behaviour; flagged as a
+    /// card-required touch to app.rs (owned-files rule naming).
+    fn on_exit(&mut self, _gl: Option<&eframe::glow::Context>) {
         if let Some(parent) = config::layout_path().parent() {
             if parent.exists() {
                 self.persist_layout();

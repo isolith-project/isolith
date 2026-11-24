@@ -28,6 +28,7 @@
 pub mod backend;
 pub mod camera;
 pub mod clip;
+pub mod gpu;
 pub mod overlay;
 pub mod pick;
 pub mod render;
@@ -38,9 +39,10 @@ pub mod theme;
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P6-VIEWER";
 
-pub use backend::{CpuBackend, ViewportBackend};
+pub use backend::{select_backend, CpuBackend, ViewportBackend};
 pub use camera::Camera;
 pub use clip::{ClipPlane, Side};
+pub use gpu::GpuBackend;
 pub use oep_geo::math::Vec3;
 pub use overlay::{
     axis_arms, draw_label_chip, draw_text, fill_rect, grid_segments, nice_spacing, text_width,

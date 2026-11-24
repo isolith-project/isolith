@@ -17,17 +17,21 @@
 //! (the viewport panel runs before the doc panel in the frame) only while a
 //! plane is active, then the sketch state is written back idle.
 //!
-//! Backend ownership: `App` is off-limits on these cards, so the [`CpuBackend`]
-//! lives in the egui context's per-widget data, keyed by a stable id that the
-//! kittest harnesses (`--test viewport`, `--test sketch_enter`) read back with
-//! the same id. All work happens inside one [`egui::Context::data_mut`] scope
-//! because this egui version cannot return `&mut` out of that closure; the
-//! frame hands out owned values (texture image, snapshot, status text, the
-//! pre-projected sketch grid layer).
+//! Backend ownership (UI-D1): `App` is off-limits on these cards, so the
+//! runtime backend lives in the egui context's per-widget data, keyed by a
+//! stable id that the kittest harnesses (`--test viewport`, `--test
+//! sketch_enter`) read back with the same id. Since wave D the panel
+//! constructs it via `oep_viewer::select_backend` - `GpuBackend` when a wgpu
+//! adapter exists, `CpuBackend` otherwise - and holds the seam behind an
+//! `Arc<Mutex<Box<dyn ViewportBackend>>>` (the egui store needs cloneable,
+//! sendable state). All work happens inside one [`egui::Context::data_mut`]
+//! scope because this egui version cannot return `&mut` out of that closure;
+//! the frame hands out owned values (texture image, snapshot, status text,
+//! the pre-projected sketch grid layer).
 
 use eframe::egui;
 
-use oep_viewer::{Camera, ViewportBackend};
+use oep_viewer::Camera;
 
 use crate::app::App;
 use crate::theme;
@@ -181,123 +185,141 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // decision, which would blur the exact numeric mapping a kittest drag needs
     // to assert. A press with no movement is a no-op (delta == 0).
     let (image, ms_bucket, action, overlay) = ui.ctx().data_mut(|d| {
-        let backend: &mut oep_viewer::CpuBackend =
-            d.get_temp_mut_or_insert_with(state_id, oep_viewer::CpuBackend::demo);
+        // UI-D1: the seam now selects the runtime backend - GPU (`GpuBackend`)
+        // when an adapter exists, deterministic CPU otherwise (see
+        // `oep_viewer::select_backend`). The egui context store requires
+        // cloned, `Send + Sync` values, so the `Box<dyn ViewportBackend>` is
+        // held in an `Arc<Mutex<...>>`. All backend work lives in one inner
+        // block so the `MutexGuard` (a Drop type) releases the store before
+        // the snapshot is published into the same store.
+        let (snapshot, image, ms_bucket, action, overlay) = {
+            let backend_arc = d.get_temp_mut_or_insert_with(state_id, || {
+                std::sync::Arc::new(std::sync::Mutex::new(oep_viewer::select_backend(
+                    demo_scene(),
+                )))
+            });
+            let mut guard = backend_arc
+                .lock()
+                .expect("viewport backend lock never held across a data_mut scope");
+            let backend: &mut dyn oep_viewer::ViewportBackend = &mut **guard;
 
-        // Size the render target to the panel's pixel rect.
-        let (cw, ch) = (backend.frame().width, backend.frame().height);
-        if (cw, ch) != (px, py) {
-            backend.resize(px, py);
-        }
-
-        let mut cam = backend.camera();
-        let mut action = "Select".to_owned();
-
-        // The datum planes only need building on the frames that use them (a
-        // click to pick, or any frame while the sketch layer is on).
-        let scene_planes = (click_px.is_some() || sketch_state.in_sketch()).then(|| {
-            let scene = demo_scene();
-            sketch::datum_planes(&scene)
-        });
-
-        // Plane pick on click, through the existing pick seam (unproject).
-        if let (Some((cx, cy)), Some(planes)) = (click_px, scene_planes.as_ref()) {
-            let ray = oep_viewer::pick::unproject(&cam, cx, cy, f64::from(px), f64::from(py));
-            let f = cam
-                .target
-                .sub(&cam.eye())
-                .normalize()
-                .expect("viewpoint camera is never degenerate");
-            if let Some(plane) = sketch::pick_plane(planes, &ray, &f) {
-                let (yaw, pitch) = sketch::normal_orientation(&plane.normal);
-                cam.yaw = yaw;
-                cam.pitch = pitch;
-                sketch_state.plane = Some(sketch::ActivePlane {
-                    id: plane.id.to_string(),
-                    label: plane.label.to_string(),
-                    normal: (plane.normal.x, plane.normal.y, plane.normal.z),
-                });
-                action = format!("Sketch {}", plane.label);
+            // Size the render target to the panel's pixel rect.
+            let (cw, ch) = (backend.frame().width, backend.frame().height);
+            if (cw, ch) != (px, py) {
+                backend.resize(px, py);
             }
-        }
 
-        // Pan: middle drag, or shift+drag (over the panel).
-        if (middle || (shift && primary)) && hovered {
-            let wpp = pan_world_per_pixel(&cam, f64::from(py));
-            cam.pan(delta.x as f64 * wpp, delta.y as f64 * wpp);
-            action = "Pan".to_owned();
-        }
-        // Orbit: plain left drag.
-        else if primary && hovered && !shift {
-            cam.orbit(
-                delta.x as f64 * ORBIT_RAD_PER_PX,
-                delta.y as f64 * ORBIT_RAD_PER_PX,
-            );
-            action = "Orbit".to_owned();
-        }
-        // Zoom: pinch/zoom event (zoom_delta > 1 zooms in => distance shrinks)
-        // or wheel over the panel.
-        if hovered && ((zoom - 1.0).abs() > 1e-6 || scroll != 0.0) {
-            let factor = if (zoom - 1.0).abs() > 1e-6 {
-                1.0 / zoom as f64
-            } else {
-                1.0 / (1.0 + scroll as f64 * ZOOM_FACTOR_PER_SCROLL_POINT).clamp(0.2, 5.0)
+            let mut cam = backend.camera();
+            let mut action = "Select".to_owned();
+
+            // The datum planes only need building on the frames that use them (a
+            // click to pick, or any frame while the sketch layer is on).
+            let scene_planes = (click_px.is_some() || sketch_state.in_sketch()).then(|| {
+                let scene = demo_scene();
+                sketch::datum_planes(&scene)
+            });
+
+            // Plane pick on click, through the existing pick seam (unproject).
+            if let (Some((cx, cy)), Some(planes)) = (click_px, scene_planes.as_ref()) {
+                let ray = oep_viewer::pick::unproject(&cam, cx, cy, f64::from(px), f64::from(py));
+                let f = cam
+                    .target
+                    .sub(&cam.eye())
+                    .normalize()
+                    .expect("viewpoint camera is never degenerate");
+                if let Some(plane) = sketch::pick_plane(planes, &ray, &f) {
+                    let (yaw, pitch) = sketch::normal_orientation(&plane.normal);
+                    cam.yaw = yaw;
+                    cam.pitch = pitch;
+                    sketch_state.plane = Some(sketch::ActivePlane {
+                        id: plane.id.to_string(),
+                        label: plane.label.to_string(),
+                        normal: (plane.normal.x, plane.normal.y, plane.normal.z),
+                    });
+                    action = format!("Sketch {}", plane.label);
+                }
+            }
+
+            // Pan: middle drag, or shift+drag (over the panel).
+            if (middle || (shift && primary)) && hovered {
+                let wpp = pan_world_per_pixel(&cam, f64::from(py));
+                cam.pan(delta.x as f64 * wpp, delta.y as f64 * wpp);
+                action = "Pan".to_owned();
+            }
+            // Orbit: plain left drag.
+            else if primary && hovered && !shift {
+                cam.orbit(
+                    delta.x as f64 * ORBIT_RAD_PER_PX,
+                    delta.y as f64 * ORBIT_RAD_PER_PX,
+                );
+                action = "Orbit".to_owned();
+            }
+            // Zoom: pinch/zoom event (zoom_delta > 1 zooms in => distance shrinks)
+            // or wheel over the panel.
+            if hovered && ((zoom - 1.0).abs() > 1e-6 || scroll != 0.0) {
+                let factor = if (zoom - 1.0).abs() > 1e-6 {
+                    1.0 / zoom as f64
+                } else {
+                    1.0 / (1.0 + scroll as f64 * ZOOM_FACTOR_PER_SCROLL_POINT).clamp(0.2, 5.0)
+                };
+                cam.zoom(factor);
+                action = "Zoom".to_owned();
+            }
+
+            if cam != backend.camera() {
+                backend.set_camera(cam);
+            }
+
+            let cam = backend.camera();
+            let frame_hash = backend.frame_hash();
+            let frame = backend.frame();
+            // UI-B8 preview frame path: the preview document clone's rasterized
+            // solid replaces the ordinary backend frame (and its hash is what the
+            // snapshot publishes), so "the preview frame differs from the
+            // pre-feature frame" is a real, published value.
+            let (image, published_hash) = match &preview {
+                Some((pimg, phash)) => (
+                    egui::ColorImage::from_rgba_unmultiplied(
+                        [pimg.width as usize, pimg.height as usize],
+                        &pimg.data,
+                    ),
+                    *phash,
+                ),
+                None => (
+                    egui::ColorImage::from_rgba_unmultiplied(
+                        [frame.width as usize, frame.height as usize],
+                        &frame.data,
+                    ),
+                    frame_hash,
+                ),
             };
-            cam.zoom(factor);
-            action = "Zoom".to_owned();
-        }
+            let ms_bucket = ((backend.frame_time_secs() * 1000.0) as u64 / 10) * 10;
 
-        if cam != backend.camera() {
-            backend.set_camera(cam);
-        }
+            // Sketch grid layer: project the active plane onto this panel (the
+            // pre-projected geometry the painter draws after the backend borrow).
+            let overlay = match (&sketch_state.plane, scene_planes.as_ref()) {
+                (Some(active), Some(planes)) => planes
+                    .iter()
+                    .find(|p| p.id == active.id)
+                    .and_then(|p| sketch::grid_overlay(p, &cam, rect, scale)),
+                _ => None,
+            };
 
-        let cam = backend.camera();
-        let frame_hash = backend.frame_hash();
-        let frame = backend.frame();
-        // UI-B8 preview frame path: the preview document clone's rasterized
-        // solid replaces the ordinary backend frame (and its hash is what the
-        // snapshot publishes), so "the preview frame differs from the
-        // pre-feature frame" is a real, published value.
-        let (image, published_hash) = match &preview {
-            Some((pimg, phash)) => (
-                egui::ColorImage::from_rgba_unmultiplied(
-                    [pimg.width as usize, pimg.height as usize],
-                    &pimg.data,
-                ),
-                *phash,
-            ),
-            None => (
-                egui::ColorImage::from_rgba_unmultiplied(
-                    [frame.width as usize, frame.height as usize],
-                    &frame.data,
-                ),
-                frame_hash,
-            ),
-        };
-        let ms_bucket = ((backend.frame_time_secs() * 1000.0) as u64 / 10) * 10;
+            let snapshot = (
+                cam.yaw,
+                cam.pitch,
+                cam.distance,
+                cam.target.x,
+                cam.target.y,
+                cam.target.z,
+                cam.fov_y,
+                published_hash,
+            );
+            (snapshot, image, ms_bucket, action, overlay)
+        }; // backend borrow (guard) released here
 
-        // Sketch grid layer: project the active plane onto this panel (the
-        // pre-projected geometry the painter draws after the backend borrow).
-        let overlay = match (&sketch_state.plane, scene_planes.as_ref()) {
-            (Some(active), Some(planes)) => planes
-                .iter()
-                .find(|p| p.id == active.id)
-                .and_then(|p| sketch::grid_overlay(p, &cam, rect, scale)),
-            _ => None,
-        };
-
-        // Publish the scalar snapshot for the harness after the backend borrow
-        // has ended (this egui IdTypeMap cannot be borrowed mutably twice).
-        let snapshot = (
-            cam.yaw,
-            cam.pitch,
-            cam.distance,
-            cam.target.x,
-            cam.target.y,
-            cam.target.z,
-            cam.fov_y,
-            published_hash,
-        );
+        // Publish the scalar snapshot for the harness (a second, sequential
+        // context-data scope, free of the backend borrow).
         d.insert_temp::<ViewportSnapshot>(state_id, snapshot);
 
         (image, ms_bucket, action, overlay)
