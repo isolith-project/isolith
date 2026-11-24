@@ -16,21 +16,21 @@
 //!
 //! # Projection model (why the CPU computes the NDC)
 //!
-//! The CPU backend's committed goldens are produced by `render::render_present`,
-//! whose clip-space convention projects a point with `w = row4(mvp)·(view·p)`
-//! — the renderer's documented `clip_w`. The mathematically-raw
-//! `row4(mvp)·p` does NOT reproduce it: measured on the committed demo view,
-//! the raw form projects the same 80x40x10 box onto screen ~1.6x larger
-//! (corner bbox 340..456px vs 325..511px), so a GPU that projects with the
-//! textbook formula shows a genuinely different view than the CPU goldens.
-//! To keep "same scene, same view" numerically identical across backends —
-//! the wave-D parity line — [`GpuBackend`] projects every vertex with the
-//! exact same CPU math and hands the GPU pre-divided NDC positions. The GPU
-//! owns the rasterization; the CPU owns the matrix pipeline. This is the same
+//! [`GpuBackend`] projects every vertex with the exact same CPU math and
+//! hands the GPU pre-divided NDC positions: `clip = vp · (p, 1)` and
+//! `w = row4(vp) · (p, 1)` in BODY (world) space, then NDC =
+//! `clip.xyz / w` — the `render::clip_w` formula. The GPU owns the
+//! rasterization; the CPU owns the matrix pipeline. This is the same
 //! immediate-mode model egui itself uses (screen-space quads through a
 //! passthrough vertex stage), and it is what makes the 5% coverage contract
-//! well-posed. Wave D2+ may move the transform into the vertex shader once
-//! the CPU path's projection is corrected and the goldens re-captured.
+//! well-posed.
+//!
+//! The pre-D7 code fed the VIEW-space point into the w computation
+//! (`w = row4(vp) · (view, 1)`), double-applying the view transform: it
+//! scaled every frame ~1.6x and degenerated to `w == 0` at the exact axis
+//! views (UI-D4's Back-view blocker). UI-D7 corrected line and GPU both to
+//! the world-space form above and re-captured the goldens, so the quirk
+//! paragraph is intentionally gone.
 //!
 //! So the visual-fidelity contract with the CPU path is geometric: the same
 //! polygons, in the same painter order, at the same pixels within
@@ -38,7 +38,7 @@
 //! rasterizers and edge rules, and the GPU skips the 5x7 axis LETTERS),
 //! which is why the seam's determinism oracle is re-proven on the GPU path
 //! (two identical renders hash identically) and the coverage comparison
-//! allows a documented 5% band rather than byte equality.
+//! allows a documented band rather than byte equality.
 //!
 //! The one intentional visual difference from `CpuBackend`: the GPU path does
 //! not rasterize the axis tip letters X/Y/Z — the arms are drawn, the letters
@@ -50,8 +50,8 @@
 //! grid, card UI-D3).
 
 pub mod device;
-pub mod shading;
 pub mod idbuffer;
+pub mod shading;
 pub mod target;
 
 use std::time::{Duration, Instant};
@@ -486,7 +486,6 @@ impl GpuBackend {
                                 &mut lines,
                                 &Vec3::new(pa[0] as f64, pa[1] as f64, pa[2] as f64),
                                 &Vec3::new(pb[0] as f64, pb[1] as f64, pb[2] as f64),
-                                &world_to_view,
                                 &vp,
                                 color,
                             );
@@ -502,7 +501,7 @@ impl GpuBackend {
                                 continue;
                             };
                             let before = lines.len();
-                            push_wire(&mut lines, pa, pb, &world_to_view, &vp, color);
+                            push_wire(&mut lines, pa, pb, &vp, color);
                             if lines.len() > before {
                                 edge_prims += 1;
                             }
@@ -525,19 +524,12 @@ impl GpuBackend {
         let extent = raw.into_iter().fold(1.0f64, f64::max);
         let spacing = overlay::nice_spacing(extent / 4.0);
         for seg in overlay::grid_segments(extent * 1.3, spacing) {
-            push_wire(
-                &mut lines,
-                &seg[0],
-                &seg[1],
-                &world_to_view,
-                &vp,
-                grid_color(),
-            );
+            push_wire(&mut lines, &seg[0], &seg[1], &vp, grid_color());
         }
 
         // Screen-constant triad arms (the CPU compositor's pixel-space arms,
         // converted to NDC for the passthrough stage).
-        append_screen_axis_arms(&mut lines, scene, &world_to_view, &vp, width, height);
+        append_screen_axis_arms(&mut lines, scene, &vp, width, height);
 
         (faces, lines, edge_prims)
     }
@@ -657,7 +649,10 @@ fn push_face(
     for (i, p) in poly.iter().enumerate() {
         let view = world_to_view.transform_point(p);
         let clip = vp.transform_point(p);
-        let w = clip_w(vp, &view);
+        // `w` must be the clip w of the SAME world point `p` (D7: feeding
+        // the view-space point here double-applied the view transform and
+        // zeroed w on exact axis views).
+        let w = clip_w(vp, p);
         if w.abs() < 1e-9 {
             ok = false;
             break;
@@ -702,18 +697,11 @@ fn push_face(
 /// Project a single edge segment into visible NDC, clip it to the NDC cube
 /// with the CPU wire path's Liang-Barsky step, and append the two surviving
 /// endpoints (each a 2D NDC position, as a pair for the line pipeline).
-fn push_wire(
-    out: &mut Vec<Vertex>,
-    a: &Vec3,
-    b: &Vec3,
-    world_to_view: &Mat4,
-    vp: &Mat4,
-    color: [u8; 4],
-) {
-    let Some(ndc_a) = to_ndc(a, world_to_view, vp) else {
+fn push_wire(out: &mut Vec<Vertex>, a: &Vec3, b: &Vec3, vp: &Mat4, color: [u8; 4]) {
+    let Some(ndc_a) = to_ndc(a, vp) else {
         return;
     };
-    let Some(ndc_b) = to_ndc(b, world_to_view, vp) else {
+    let Some(ndc_b) = to_ndc(b, vp) else {
         return;
     };
     let Some((t0, t1)) = clip_ndc_line(ndc_a, ndc_b) else {
@@ -725,10 +713,9 @@ fn push_wire(
 
 /// Project one world point to `(ndc_x, ndc_y, ndc_z)` with the CPU's exact
 /// projection formula; `None` when the clip w is degenerate.
-fn to_ndc(p: &Vec3, world_to_view: &Mat4, vp: &Mat4) -> Option<[f64; 3]> {
-    let view = world_to_view.transform_point(p);
+fn to_ndc(p: &Vec3, vp: &Mat4) -> Option<[f64; 3]> {
     let clip = vp.transform_point(p);
-    let w = clip_w(vp, &view);
+    let w = clip_w(vp, p);
     if w.abs() < 1e-9 {
         return None;
     }
@@ -791,19 +778,21 @@ fn fan_indices(n: usize) -> Vec<[usize; 3]> {
     (1..n - 1).map(|i| [0, i, i + 1]).collect()
 }
 
-/// The `w` clip coordinate produced by the CPU renderer (mirror of
-/// `render::clip_w` — the shipped goldens encode this exact formula).
-fn clip_w(vp: &Mat4, view: &Vec3) -> f64 {
+/// The `w` clip coordinate for a WORLD point under the combined
+/// view-projection matrix (mirror of `render::clip_w`; the D7 correction —
+/// feed the world point, never a pre-transformed view point, or the view
+/// transform applies twice and `w` degenerates to 0 on exact axis views).
+fn clip_w(vp: &Mat4, world: &Vec3) -> f64 {
     let a = vp.to_array16();
-    a[3] * view.x + a[7] * view.y + a[11] * view.z + a[15]
+    a[3] * world.x + a[7] * world.y + a[11] * world.z + a[15]
 }
 
-/// Project a view-space point to pixel coordinates (top-left origin); `None`
+/// Project a world-space point to pixel coordinates (top-left origin); `None`
 /// when behind the camera or outside the NDC z range (mirror of
-/// `render::to_px`).
-fn to_px(view: Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
-    let clip = vp.transform_point(&view);
-    let w = clip_w(vp, &view);
+/// `render::to_px`; D7 — takes the world point, see `clip_w`).
+fn to_px(world: Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
+    let clip = vp.transform_point(&world);
+    let w = clip_w(vp, &world);
     if w.abs() < 1e-9 {
         return None;
     }
@@ -824,7 +813,6 @@ fn to_px(view: Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
 fn append_screen_axis_arms(
     verts: &mut Vec<Vertex>,
     scene: &Scene,
-    world_to_view: &Mat4,
     vp: &Mat4,
     width: u32,
     height: u32,
@@ -833,7 +821,7 @@ fn append_screen_axis_arms(
         .bounds
         .map(|b| Vec3::new(0.0, 0.0, b.min.z.min(0.0)))
         .unwrap_or_else(Vec3::zero);
-    let Some(proj_origin) = to_px(world_to_view.transform_point(&origin), vp, width, height) else {
+    let Some(proj_origin) = to_px(origin, vp, width, height) else {
         return;
     };
     let (ax, ay) = (
@@ -869,7 +857,7 @@ fn append_screen_axis_arms(
     ];
     for (i, axis) in axes.iter().enumerate() {
         let p = origin.add(&Vec3::new(axis[0], axis[1], axis[2]).mul(arm_world));
-        let Some(pp) = to_px(world_to_view.transform_point(&p), vp, width, height) else {
+        let Some(pp) = to_px(p, vp, width, height) else {
             continue;
         };
         let (dx, dy) = (pp.0 - proj_origin.0, pp.1 - proj_origin.1);

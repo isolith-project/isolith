@@ -38,9 +38,17 @@ const COVERAGE_TOLERANCE: f64 = 0.05;
 
 /// Pre-card CPU golden: the demo scene rendered by `CpuBackend` at its
 /// default 640x480, captured on the wave-D fork point (2026-11-23) before any
-/// GPU path existed. `CpuBackend` is byte-untouched on this card, so this is
-/// the oracle that `ISOLITH_GPU=off` must reproduce exactly.
-const CPU_DEMO_GOLDEN_HASH: u64 = 11436915591341135581;
+/// GPU path existed. `CpuBackend` was byte-untouched then, so this was the
+/// oracle `ISOLITH_GPU=off` had to reproduce exactly.
+///
+/// UI-D7 corrected the shared clip-w projection (the UI-D1-documented "D2+
+/// correct+regolden" item): the old formula applied the combined
+/// view-projection's w-row to an already view-space point (double-applying V,
+/// ~1.6x scale, and w == 0 on exact axis views). The corrected projection
+/// legitimately moves the CPU demo frame, so this golden value is
+/// re-registered here: `11436915591341135581` (pre-D7) -> this value. All
+/// other assertions in this file are untouched.
+const CPU_DEMO_GOLDEN_HASH: u64 = 12597229237775278722;
 
 /// Serialises the tests that read or write the `ISOLITH_GPU` environment
 /// flag (Rust test threads run in parallel; the flag is process-global).
