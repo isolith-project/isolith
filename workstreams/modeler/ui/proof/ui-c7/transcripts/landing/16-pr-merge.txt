@@ -1,0 +1,14 @@
+$ gh pr merge 31 --repo isolith-project/isolith --merge
+
+$ gh pr view 31 --json state,mergeCommit,mergedAt
+{"merge":"62757872139aa778e5c66e6b1376df8d90c38d68","mergedAt":"2026-11-24T03:57:33Z","mergedBy":"dmltallen","state":"MERGED"}
+
+$ git fetch github && git log --oneline -3 github/main
+From https://github.com/isolith-project/isolith
+   1e3b5dd..6275787  main       -> github/main
+6275787 Merge pull request #31 from isolith-project/checkpoint/wave-ui-c-bc69f8b
+c5aea6d checkpoint(wave-ui-c): model tree, properties, variables -- cards UI-C1..UI-C7
+bc69f8b merge-UI-C7: UI-WAVE-C-INTEGRATE record (proof, README row, wave record, decision record)
+
+$ git ls-remote github refs/heads/main
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/main

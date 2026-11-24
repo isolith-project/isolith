@@ -1,0 +1,9 @@
+$ git push github HEAD:checkpoint/wave-ui-c-bc69f8b
+remote: 
+To https://github.com/isolith-project/isolith.git
+ * [new branch]      HEAD -> checkpoint/wave-ui-c-bc69f8b
+
+$ git ls-remote github refs/heads/checkpoint/wave-ui-c-bc69f8b
+c5aea6db62456f2004eaa224721ab7ae2ca66a56	refs/heads/checkpoint/wave-ui-c-bc69f8b
+$ git rev-parse HEAD
+c5aea6db62456f2004eaa224721ab7ae2ca66a56

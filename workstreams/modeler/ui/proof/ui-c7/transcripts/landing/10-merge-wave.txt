@@ -1,0 +1,54 @@
+$ git switch -c merge-UI-C7 github/wave/ui-c
+Switched to a new branch 'merge-UI-C7'
+branch 'merge-UI-C7' set up to track 'github/wave/ui-c'.
+
+$ git merge --no-ff ui/c7-integrate
+Merge made by the 'ort' strategy.
+ docs/status/waves/wave-ui-c.md                     |   63 +
+ workstreams/modeler/ui/README.md                   |    1 +
+ workstreams/modeler/ui/proof/ui-a2/frame.png       |  Bin 70552 -> 80390 bytes
+ .../modeler/ui/proof/ui-a2/frame.png.sha256        |    2 +-
+ .../ui/proof/ui-a2/ui-a2-golden-before-ui-c7.png   |  Bin 0 -> 70552 bytes
+ .../ui-a2/ui-a2-golden-before-ui-c7.png.sha256     |    1 +
+ workstreams/modeler/ui/proof/ui-c7/PROOF.md        |  110 +
+ workstreams/modeler/ui/proof/ui-c7/capture.sh      |  141 +
+ workstreams/modeler/ui/proof/ui-c7/measure.png     |  Bin 0 -> 93306 bytes
+ .../modeler/ui/proof/ui-c7/measure.png.sha256      |    1 +
+ workstreams/modeler/ui/proof/ui-c7/properties.png  |  Bin 0 -> 85912 bytes
+ .../modeler/ui/proof/ui-c7/properties.png.sha256   |    1 +
+ .../ui/proof/ui-c7/transcripts/00-step0.txt        |    4 +
+ .../modeler/ui/proof/ui-c7/transcripts/01-fmt.txt  |    2 +
+ .../ui/proof/ui-c7/transcripts/02-clippy.txt       |    3 +
+ .../proof/ui-c7/transcripts/03-workspace-test.txt  | 5454 ++++++++++++++++++++
+ .../ui/proof/ui-c7/transcripts/04-licensing.txt    |   10 +
+ .../ui/proof/ui-c7/transcripts/05-precommit.txt    |   10 +
+ .../modeler/ui/proof/ui-c7/transcripts/06-shot.txt |    9 +
+ .../proof/ui-c7/transcripts/07-scope-register.txt  |  179 +
+ .../ui/proof/ui-c7/transcripts/08-ancestors.txt    |    7 +
+ .../ui/proof/ui-c7/transcripts/09-step0-merge.txt  |    4 +
+ workstreams/modeler/ui/proof/ui-c7/tree.png        |  Bin 0 -> 80390 bytes
+ workstreams/modeler/ui/proof/ui-c7/tree.png.sha256 |    1 +
+ workstreams/modeler/ui/proof/ui-c7/ui_c7_inject.c  |  103 +
+ 25 files changed, 6105 insertions(+), 1 deletion(-)
+ create mode 100644 docs/status/waves/wave-ui-c.md
+ create mode 100644 workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-c7.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-c7.png.sha256
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/PROOF.md
+ create mode 100755 workstreams/modeler/ui/proof/ui-c7/capture.sh
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/measure.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/measure.png.sha256
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/properties.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/properties.png.sha256
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/00-step0.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/01-fmt.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/02-clippy.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/03-workspace-test.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/04-licensing.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/05-precommit.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/06-shot.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/07-scope-register.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/08-ancestors.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/09-step0-merge.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/tree.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/tree.png.sha256
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/ui_c7_inject.c

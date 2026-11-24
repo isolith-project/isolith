@@ -1,0 +1,22 @@
+$ git switch -c checkpoint/wave-ui-c-bc69f8b github/main
+Switched to a new branch 'checkpoint/wave-ui-c-bc69f8b'
+branch 'checkpoint/wave-ui-c-bc69f8b' set up to track 'github/main'.
+
+$ git merge --no-ff github/wave/ui-c
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/08-ancestors.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/transcripts/09-step0-merge.txt
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/tree.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/tree.png.sha256
+ create mode 100644 workstreams/modeler/ui/proof/ui-c7/ui_c7_inject.c
+
+$ git log --oneline -3
+42ea74b checkpoint(wave-ui-c): model tree, properties, variables -- cards UI-C1..UI-C7
+bc69f8b merge-UI-C7: UI-WAVE-C-INTEGRATE record (proof, README row, wave record, decision record)
+d09dc78 card(UI-C7): record the orchestrator decision - the UI-C3 kittest harness is the wave-C variables evidence
+
+$ git rev-parse HEAD HEAD^1 HEAD^2
+42ea74b0e4b4e4a401ab423bdc402f8454db02c8
+1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+bc69f8b95758787b98cfaf2d20bb1c2a25134419
+
+$ git diff --stat HEAD github/wave/ui-c  (expect empty: tree == wave head)

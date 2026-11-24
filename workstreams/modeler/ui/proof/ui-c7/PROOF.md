@@ -31,6 +31,48 @@ Transcripts in `transcripts/`, run on the merged head `5318a73`:
 | `bash scripts/gate/precommit-gate.sh` | PASS - pytest 558 passed, 29 skipped; cargo test green |
 | `bash scripts/ui/shot.sh` | PASS (0) - frame `a7594b124...` |
 
+## Checkpoint merged head (main + wave/ui-c)
+
+The checkpoint was built and the full six-leg gate was run again on that merged
+head, not only on the wave head:
+
+- Checkpoint commit `c5aea6d` = `git merge --no-ff github/wave/ui-c` onto
+  `github/main` (`1e3b5dd`); parents `1e3b5dd` (main) + `bc69f8b` (wave head).
+- `main` was an ancestor of the wave head, so the checkpoint code tree is
+  byte-identical to the wave head. Transcript:
+  `transcripts/checkpoint-merged-head/00-head.txt`.
+- Every leg re-run on that merged head, all PASS: fmt 0, clippy `-D warnings` 0,
+  `cargo test --workspace` 218 targets / 4126 passed / 0 failed, licensing 6/6,
+  precommit-gate pytest 558 passed + cargo test green, `shot.sh` ok at the same
+  wave-C golden `a7594b124...` (no drift).
+- Transcripts: `transcripts/checkpoint-merged-head/{00-head,01-fmt,02-clippy,03-test-workspace,04-licensing,05-precommit,06-shot,99-summary}.txt`.
+
+The gate ran on the checkpoint merge at `42ea74b`; those transcripts and this
+section were then folded into it by `git commit --amend`, giving `c5aea6d` (same
+parents, code tree untouched, documentation only - verified by
+`git diff --stat 42ea74b c5aea6d`, which lists only the transcript files and this
+record). `c5aea6d` is the commit that was pushed, PR-merged and tagged.
+
+## Landing
+
+- PR: https://github.com/isolith-project/isolith/pull/31 - merged as
+  `6275787` (`Merge pull request #31 from isolith-project/checkpoint/wave-ui-c-bc69f8b`),
+  merged by `dmltallen`.
+- `github/main` = `6275787`, fast-forwarded `1e3b5dd..6275787`.
+- Annotated tag `wave-ui-c` (`88bc91d`) -> checkpoint `c5aea6d`, pushed to github
+  and to the Gitea mirror.
+- Gitea mirror fast-forwarded: `192.168.0.101:3200/isolith/isolith.git` main
+  `1e3b5dd..6275787`, tag `wave-ui-c` present.
+- Next wave advanced: `github/wave/ui-d` created at `6275787`.
+- Every wave-C card branch is an ancestor of `github/main` (C1, C2, C3, C4, C5,
+  C6, C7 all YES).
+- Transcripts: `transcripts/landing/{10-merge-wave,11-push-wave,12-checkpoint-merge,13-checkpoint-amend,14-push-checkpoint,15-pr-create,16-pr-merge,17-tag,18-mirror-and-wave-d,19-readback}.txt`.
+- CI note: the first DCO run failed on the PR body only (the body sign-off line
+  was added after the run started, and `gh run rerun` replays the original event
+  payload). The PR was closed and reopened to raise a fresh event; the DCO check
+  then passed on the same head `c5aea6d` (run 45321588407), and the merge was
+  CLEAN. Commit sign-offs passed on every commit in the first run already.
+
 ## Delegated wave-C golden refresh (shot.sh leg)
 
 The `06-shot` leg failed on its first run with frame drift against the wave-B

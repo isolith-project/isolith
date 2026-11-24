@@ -1,0 +1,3 @@
+$ git push github HEAD:wave/ui-c
+To https://github.com/isolith-project/isolith.git
+   5318a73..bc69f8b  HEAD -> wave/ui-c

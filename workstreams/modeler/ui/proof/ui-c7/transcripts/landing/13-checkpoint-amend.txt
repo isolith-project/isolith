@@ -1,0 +1,48 @@
+$ git add proof transcripts + records
+ M docs/proof/licensing-check.json
+M  docs/status/waves/wave-ui-c.md
+M  workstreams/modeler/ui/proof/ui-c7/PROOF.md
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/00-head.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/01-fmt.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/02-clippy.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/03-test-workspace.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/04-licensing.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/05-precommit.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/06-shot.txt
+A  workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/99-summary.txt
+
+$ git commit --amend --no-edit
+[checkpoint/wave-ui-c-bc69f8b c5aea6d] checkpoint(wave-ui-c): model tree, properties, variables -- cards UI-C1..UI-C7
+ Date: Mon Nov 23 19:26:23 2026 -0800
+
+$ git log -1 --format=%H%n%B
+
+c5aea6db62456f2004eaa224721ab7ae2ca66a56
+1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6
+bc69f8b95758787b98cfaf2d20bb1c2a25134419
+
+$ git diff --stat github/wave/ui-c HEAD  (docs-only delta expected)
+ docs/status/waves/wave-ui-c.md                     |    3 +-
+ workstreams/modeler/ui/proof/ui-c7/PROOF.md        |   22 +
+ .../transcripts/checkpoint-merged-head/00-head.txt |    8 +
+ .../transcripts/checkpoint-merged-head/01-fmt.txt  |    4 +
+ .../checkpoint-merged-head/02-clippy.txt           |    6 +
+ .../checkpoint-merged-head/03-test-workspace.txt   | 5457 ++++++++++++++++++++
+ .../checkpoint-merged-head/04-licensing.txt        |   12 +
+ .../checkpoint-merged-head/05-precommit.txt        |   12 +
+ .../transcripts/checkpoint-merged-head/06-shot.txt |   11 +
+ .../checkpoint-merged-head/99-summary.txt          |    9 +
+ 10 files changed, 5543 insertions(+), 1 deletion(-)
+
+$ git diff --stat 42ea74b HEAD  (delta vs gated tree)
+ docs/status/waves/wave-ui-c.md                     |    3 +-
+ workstreams/modeler/ui/proof/ui-c7/PROOF.md        |   22 +
+ .../transcripts/checkpoint-merged-head/00-head.txt |    8 +
+ .../transcripts/checkpoint-merged-head/01-fmt.txt  |    4 +
+ .../checkpoint-merged-head/02-clippy.txt           |    6 +
+ .../checkpoint-merged-head/03-test-workspace.txt   | 5457 ++++++++++++++++++++
+ .../checkpoint-merged-head/04-licensing.txt        |   12 +
+ .../checkpoint-merged-head/05-precommit.txt        |   12 +
+ .../transcripts/checkpoint-merged-head/06-shot.txt |   11 +
+ .../checkpoint-merged-head/99-summary.txt          |    9 +
+ 10 files changed, 5543 insertions(+), 1 deletion(-)

@@ -1,0 +1,38 @@
+$ read-back: checkpoint, main, tag, mirror, wave/ui-d
+
+local checkout (checkpoint branch): c5aea6db62456f2004eaa224721ab7ae2ca66a56 checkpoint/wave-ui-c-bc69f8b
+github/main: 62757872139aa778e5c66e6b1376df8d90c38d68
+github/main PR merge subject: Merge pull request #31 from isolith-project/checkpoint/wave-ui-c-bc69f8b
+checkpoint commit: c5aea6db62456f2004eaa224721ab7ae2ca66a56 parents 1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6 bc69f8b95758787b98cfaf2d20bb1c2a25134419
+tag object wave-ui-c -> c5aea6db62456f2004eaa224721ab7ae2ca66a56
+
+$ git ls-remote github main + tags
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/main
+bc69f8b95758787b98cfaf2d20bb1c2a25134419	refs/heads/wave/ui-c
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/wave/ui-d
+88bc91d14169ece73f2ea69c298ccda4ca90e9c0	refs/tags/wave-ui-c
+c5aea6db62456f2004eaa224721ab7ae2ca66a56	refs/tags/wave-ui-c^{}
+
+$ git ls-remote gitea main + tags
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/main
+88bc91d14169ece73f2ea69c298ccda4ca90e9c0	refs/tags/wave-ui-c
+c5aea6db62456f2004eaa224721ab7ae2ca66a56	refs/tags/wave-ui-c^{}
+
+$ gate transcripts present in main tree
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/00-head.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/01-fmt.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/02-clippy.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/03-test-workspace.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/04-licensing.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/05-precommit.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/06-shot.txt
+workstreams/modeler/ui/proof/ui-c7/transcripts/checkpoint-merged-head/99-summary.txt
+
+$ wave-C card branches ancestors of the wave head / main
+ui/c1-feature-tree: ancestor of github/main YES
+ui/c2-property-panel: ancestor of github/main YES
+ui/c3-variable-table: ancestor of github/main YES
+ui/c4-rollback: ancestor of github/main YES
+ui/c5-measure: ancestor of github/main YES
+ui/c6-kernel-features: ancestor of github/main YES
+ui/c7-integrate: ancestor of github/main YES

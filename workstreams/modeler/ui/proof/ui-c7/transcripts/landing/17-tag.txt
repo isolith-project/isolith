@@ -1,0 +1,17 @@
+$ git tag -a wave-ui-c c5aea6d -m "wave-ui-c: model tree, properties, variables (UI-C1..UI-C7)"
+rc=0
+
+$ git cat-file -p wave-ui-c
+object c5aea6db62456f2004eaa224721ab7ae2ca66a56
+type commit
+tag wave-ui-c
+tagger Don Allen <don@redonealpha.com> 1795492662 -0800
+
+wave-ui-c: model tree, properties, variables (UI-C1..UI-C7)
+
+$ git push github refs/tags/wave-ui-c
+To https://github.com/isolith-project/isolith.git
+ * [new tag]         wave-ui-c -> wave-ui-c
+
+$ git ls-remote github refs/tags/wave-ui-c
+88bc91d14169ece73f2ea69c298ccda4ca90e9c0	refs/tags/wave-ui-c

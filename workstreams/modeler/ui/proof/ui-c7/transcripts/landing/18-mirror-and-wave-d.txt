@@ -1,0 +1,21 @@
+$ git push gitea github/main:refs/heads/main
+To http://192.168.0.101:3200/isolith/isolith.git
+   1e3b5dd..6275787  github/main -> main
+
+$ git push gitea refs/tags/wave-ui-c
+To http://192.168.0.101:3200/isolith/isolith.git
+ * [new tag]         wave-ui-c -> wave-ui-c
+
+$ git ls-remote gitea refs/heads/main refs/tags/wave-ui-c*
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/main
+88bc91d14169ece73f2ea69c298ccda4ca90e9c0	refs/tags/wave-ui-c
+c5aea6db62456f2004eaa224721ab7ae2ca66a56	refs/tags/wave-ui-c^{}
+
+$ git push github github/main:refs/heads/wave/ui-d
+remote: 
+To https://github.com/isolith-project/isolith.git
+ * [new branch]      github/main -> wave/ui-d
+
+$ git ls-remote github refs/heads/wave/ui-d refs/heads/main
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/main
+62757872139aa778e5c66e6b1376df8d90c38d68	refs/heads/wave/ui-d

@@ -20,7 +20,9 @@ Every wave-C card branch is an ancestor of the wave head (audit in `proof/ui-c7/
 
 ## Head sha
 
-- Wave head: `5318a73` (contains all wave-C cards UI-C1..C6 plus the UI-C7 record; wave/ui-c fast-forward was `736a0a7..5318a73`).
+- Wave head: `bc69f8b` (`merge-UI-C7`, the gate proof + decision record; contains all wave-C cards UI-C1..UI-C6 plus the UI-C7 record; the pre-record wave head was `5318a73`, fast-forwarded `736a0a7..5318a73`).
+- Checkpoint merge commit: `c5aea6d`, parents `1e3b5dd` (`main`) + `bc69f8b` (wave head). `main` was an ancestor of the wave head, so the checkpoint code tree is byte-identical to the wave head. The full six-leg gate was re-run on that checkpoint merged head and passed (transcripts `proof/ui-c7/transcripts/checkpoint-merged-head/`).
+- Landing: PR #31 merged as `6275787` (`github/main` fast-forwarded `1e3b5dd..6275787`), annotated tag `wave-ui-c` (`88bc91d`) -> checkpoint `c5aea6d`, Gitea mirror fast-forwarded to `6275787` with the tag, and `github/wave/ui-d` created at `6275787`. Transcripts `proof/ui-c7/transcripts/landing/`.
 - Wave closes by the UI-C7 record landing on the wave branch and one no-ff checkpoint commit carrying it into main (per the wave-B close procedure); annotated tag `wave-ui-c` pushed on github/main.
 - The UI-C7 record (this file, the README row, `proof/ui-c7/`) lands on the wave branch so the single checkpoint merge carries it into main.
 
