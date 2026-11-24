@@ -44,11 +44,14 @@
 //! not rasterize the axis tip letters X/Y/Z — the arms are drawn, the letters
 //! are a wave-D2 (UI-GPU-SHADING) concern.
 //!
-//! Submodules: [`device`] (adapter/device acquisition, shared with egui) and
-//! [`target`] (offscreen colour target + readback).
+//! Submodules: [`device`] (adapter/device acquisition, shared with egui),
+//! [`target`] (offscreen colour target + readback) and [`idbuffer`] (the id
+//! pass: "what is actually drawn" rasterized into a per-pixel primitive id
+//! grid, card UI-D3).
 
 pub mod device;
 pub mod shading;
+pub mod idbuffer;
 pub mod target;
 
 use std::time::{Duration, Instant};

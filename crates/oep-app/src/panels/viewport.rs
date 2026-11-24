@@ -65,6 +65,15 @@ pub mod measure;
 #[path = "shading.rs"]
 pub mod shading;
 
+// UI-D3 UI-PICK: the GPU id-buffer pick surface (hover pre-highlight, shift
+// click multi-select, alt-drag box select) over the same scene the viewport
+// draws. `pick_gpu.rs` is included verbatim like the panels above; it drives
+// its own [`crate::gpu idbuffer`] pass from the scalar snapshot and paints
+// nothing until the pointer interacts, so the committed goldens stay valid.
+// It is driven by the single `pick_gpu::update(...)` call in `show` below.
+#[path = "pick_gpu.rs"]
+pub mod pick_gpu;
+
 /// Context-data key under which the backend lives (and the scalar snapshot is
 /// published) in the egui per-context store. Shared with
 /// `crates/oep-app/tests/viewport.rs`, which derives the same id value.
@@ -113,12 +122,13 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     let px = (rect.width() * scale).round().max(2.0) as u32;
     let py = (rect.height() * scale).round().max(2.0) as u32;
 
-    let (primary, middle, shift, delta, scroll, zoom, hovered, response) = {
-        let (primary, middle, shift, delta, scroll, zoom) = ui.ctx().input(|i| {
+    let (primary, middle, shift, alt, delta, scroll, zoom, hovered, response) = {
+        let (primary, middle, shift, alt, delta, scroll, zoom) = ui.ctx().input(|i| {
             (
                 i.pointer.primary_down(),
                 i.pointer.button_down(egui::PointerButton::Middle),
                 i.modifiers.shift,
+                i.modifiers.alt,
                 i.pointer.delta(),
                 i.smooth_scroll_delta.y,
                 i.zoom_delta(),
@@ -129,6 +139,7 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             primary,
             middle,
             shift,
+            alt,
             delta,
             scroll,
             zoom,
@@ -256,8 +267,10 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
                 cam.pan(delta.x as f64 * wpp, delta.y as f64 * wpp);
                 action = "Pan".to_owned();
             }
-            // Orbit: plain left drag.
-            else if primary && hovered && !shift {
+            // Orbit: plain left drag. The `alt` modifier is deliberately
+            // excluded so Alt+left-drag belongs to the UI-D3 box-select
+            // gesture (pick_gpu) instead of fighting with navigation.
+            else if primary && hovered && !shift && !alt {
                 cam.orbit(
                     delta.x as f64 * ORBIT_RAD_PER_PX,
                     delta.y as f64 * ORBIT_RAD_PER_PX,
@@ -389,6 +402,13 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             egui::Stroke::new(2.0, p.accent),
         );
     }
+
+    // UI-D3 UI-PICK: drive the GPU id-buffer pick surface from the frame's
+    // fresh scalar snapshot (runs after the backend block so the camera is
+    // this frame's), painting the hover pre-highlight, the box rubber band
+    // and the multi-select outlines on top of the frame. Sketch mode owns its
+    // clicks, so `in_sketch` idles the surface.
+    pick_gpu::update(ui, rect, scale, sketch_state.in_sketch());
 
     // Report the frame time (and, in sketch mode, the active plane) in the
     // status-bar mode field UI-A4 created.
