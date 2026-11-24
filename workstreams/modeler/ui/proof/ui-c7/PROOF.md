@@ -58,22 +58,28 @@ launches byte-identical each (sha256 as the determinism oracle):
 | properties | `a1473024020db22c8e00ddaa2fa5825c5c218c0cf117f65f89a447f8df5ec97e` | demo ImportStep row selected: honest "No editable parameters for ImportStep", status "1 selected" |
 | measure | `c02c76b30af87455123653f61b392a54ab0804b7066f47ddba52b198046d6ce3` | plain `M` surface open, point p0 + p1 picked: annotation "distance point p0 -> point p1 = 40.000 mm" |
 
-### Screenshot "variables": blocked, honestly
+### Screenshot "variables": evidence is the UI-C3 kittest harness (decided)
 
-The C7 screenshot list includes "variables", but the variables table cannot be
-captured from the merged-head real binary: `crates/oep-app/src/panels/variables.rs`
-is delivered `#[path]`-includable and is NOT wired into any shell region (the
-shell still hosts exactly the five wave-A regions; no `variables::show` call site
-exists in `src/`). This is documented by BOTH upstream owners - UI-C3 ("C7 needs a
-wiring step before a 'variables' screenshot") and UI-C6 ("panel stays unhosted
-until future wiring") - and this card's body forbids editing any crate ("DO NOT
-edit any crate. This card merges and proves."), so the wiring step cannot be
-performed here. The variables panel's rendering is instead proven by the UI-C3
-kittest harness (`--test variable_table` 133 passed, incl. the real `show`
-driven through egui_kittest with a real `app::App`) on the same merged head. No
-fake frame was produced. Per the card's own rule ("A blocked card is a valid
-outcome; a faked green is not"), this acceptance bullet is surfaced to the
-orchestrator rather than silently skipped.
+The C7 screenshot list includes "variables", and no real-binary variables frame
+exists: `crates/oep-app/src/panels/variables.rs` is delivered
+`#[path]`-includable and is NOT wired into any shell region (the shell still
+hosts exactly the five wave-A regions; no `variables::show` call site exists in
+`src/`). This card was blocked on that one bullet rather than faking a frame.
+
+ORCHESTRATOR DECISION (2026-11-23): option (b) - the UI-C3 kittest harness is
+accepted as the "variables" rendering evidence for wave C. No wiring card is
+added in this wave and no crate exception is granted; the wiring step belongs to
+a later card that owns the shell. Concretely, the accepted evidence on the same
+merged head is `cargo test -p oep-app --test variable_table`: 133 passed / 0
+failed, driving the real `variables::show` through `egui_kittest` against a real
+`app::App`, including the seeded rows + usage counts, a live expression edit
+re-resolving `base 60 -> width 120 -> volume 72000`, and a circular reference
+refused whole with the named cycle and unchanged document hash.
+
+The other three shots (tree / properties / measure) remain real-binary frames
+captured from the merged head, exactly as required. No fake image was produced
+at any point, and the underlying limitation - the panel is unhosted - is
+recorded in the wave record and the README row as a known gap for a later wave.
 
 ## Register rows
 
