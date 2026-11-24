@@ -1,0 +1,23 @@
+# STEP 0 (UI-C1): refresh the branch from the wave head github/wave/ui-c
+# Branch: ui/c1-feature-tree (forked from main at 736a0a7, per card).
+#
+# Run at session start (git fetch origin -> git merge origin/wave/ui-c). The
+# wave-B close had fast-forwarded wave/ui-c to the merged head 1e3b5dd, so the
+# merge was NOT empty: it brought the full wave-B sketch-tool union (UI-B1..
+# UI-B8 + UI-B10 gate fixes + the UI-B9 close record) into this card's branch,
+# which is what puts the sketch/feature panels in the tree.
+#
+# Re-verified just before the proof commit; HEAD is exactly the wave head, so
+# the second merge is "Already up to date."
+
+$ git fetch github
+   (fetched github/wave/ui-c at 1e3b5dd)
+
+$ git merge github/wave/ui-c
+Already up to date.
+
+$ git rev-parse HEAD
+1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6    # == github/wave/ui-c head
+
+$ git log --oneline -1
+1e3b5dd Merge pull request #30 from isolith-project/checkpoint/wave-ui-b-5ba89cb

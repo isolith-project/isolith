@@ -1,0 +1,5 @@
+### STEP 0: git fetch + merge github/wave/ui-c (fetched before work began)
+47900bc card(UI-C2): record the landing transcript (push, merge, remote read-back)
+b1110c7 merge-UI-C2: UI-PROPERTY-PANEL (per-feature parameter editor)
+b205705 card(UI-C2): record the step0 merge detail (UI-C3 landed mid-run)
+47900bc card(UI-C2): record the landing transcript (push, merge, remote read-back)

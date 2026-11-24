@@ -1,0 +1,8 @@
+merged head: 42ea74b0e4b4e4a401ab423bdc402f8454db02c8
+branch:      checkpoint/wave-ui-c-bc69f8b
+parents:     1e3b5dd3c8f72a73609bc3f91b1851bf516e12b6 (main) + bc69f8b95758787b98cfaf2d20bb1c2a25134419 (wave/ui-c)
+tree check:  git diff --quiet HEAD github/wave/ui-c -> identical
+host:        aarch64, 20 cores, Linux 7.0.0-1019-nvidia
+cargo:       cargo 1.98.1 (797e8a9bc 2026-08-05)
+rustc:       rustc 1.98.1 (48a229cea 2026-09-01)
+date:        2026-11-23T19:26:37-08:00

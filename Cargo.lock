@@ -2940,6 +2940,7 @@ dependencies = [
  "eframe",
  "egui",
  "egui_kittest",
+ "oep-geo",
  "oep-import",
  "oep-shell",
  "oep-sketch",

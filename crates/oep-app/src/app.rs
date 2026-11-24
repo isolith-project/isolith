@@ -55,6 +55,12 @@ pub struct App {
     /// Status bar fields (document name, selection count, mode), stubbed to
     /// defaults now and wired to live state by later cards.
     status: panels::status::Status,
+    /// Number of suppressed features, published by the tree panel every frame
+    /// (UI-C4) and shown in the status bar.
+    suppressed: usize,
+    /// Number of rolled-back (hidden downstream) features, published by the
+    /// tree panel every frame (UI-C4) and shown in the status bar.
+    rolled: usize,
 }
 
 impl App {
@@ -67,6 +73,8 @@ impl App {
             frames: 0,
             layout,
             status: Default::default(),
+            suppressed: 0,
+            rolled: 0,
         }
     }
 
@@ -139,7 +147,21 @@ impl App {
             "status bar",
             panels::RegionKind::StatusBar,
             region.status_bar,
-            |ui, app| panels::status::show(ui, &app.status),
+            |ui, app| {
+                panels::status::show(ui, &app.status);
+                // UI-C4: the status bar also reports the honest suppressed and
+                // rolled-back counts the tree panel publishes each frame.
+                if app.suppressed > 0 || app.rolled > 0 {
+                    ui.separator();
+                    if app.suppressed > 0 {
+                        ui.label(format!("{} suppressed", app.suppressed));
+                    }
+                    if app.rolled > 0 {
+                        ui.separator();
+                        ui.label(format!("{} rolled back", app.rolled));
+                    }
+                }
+            },
         );
     }
 

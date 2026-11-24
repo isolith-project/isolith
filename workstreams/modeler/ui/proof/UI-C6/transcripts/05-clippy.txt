@@ -1,0 +1,4 @@
+=== Mon Nov 23 01:53:35 PM UTC 2026 merged-head 366c0a3: cargo clippy -p oep-app --all-targets -- -D warnings ===
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-c6/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.31s
+EXIT=0

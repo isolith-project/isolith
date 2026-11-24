@@ -1,0 +1,31 @@
+# UI-C2 landing transcript: branch push, wave merge, remote read-back.
+
+$ git -c credential.https://github.com.username=dmltallen push github HEAD
+remote: Create a pull request for 'ui/c2-property-panel' on GitHub ...
+ * [new branch]      HEAD -> ui/c2-property-panel
+
+$ git switch -c merge-UI-C2 github/wave/ui-c
+Switched to a new branch 'merge-UI-C2'
+
+$ git merge --no-ff ui/c2-property-panel -m "merge-UI-C2: UI-PROPERTY-PANEL (per-feature parameter editor)"
+# clean merge - no root-manifest conflict (none of this card's files are a
+# root manifest; the merged tree pulled the UI-C3 files without conflict)
+
+merged head: b1110c76aff1ae215efd39a397a58b9107685113
+parents:     4058a249888e698813a16df2c296a341d8974fd4 (wave/ui-c previous)
+              b20570558603b8d9734aaf475d6a607ef788c4d3 (card branch)
+
+Gate on the merged head:
+  cargo test -p oep-app --test property_panel   -> 210 passed / 0 failed
+  cargo test -p oep-app                          -> 19 targets ok / 0 failed
+  cargo fmt --all -- --check                     -> clean
+  cargo clippy -p oep-app --all-targets -- -D warnings -> clean
+  xvfb-run -a cargo run -p oep-app -- --smoke    -> frames=8 smoke ok
+
+$ git -c credential.https://github.com.username=dmltallen push github HEAD:wave/ui-c
+   4058a24..b1110c7  HEAD -> wave/ui-c
+
+Remote read-back (after `git fetch github`):
+  local  merge head: b1110c76aff1ae215efd39a397a58b9107685113
+  remote wave head : b1110c76aff1ae215efd39a397a58b9107685113   (equal)
+  card branch ancestor of wave head: YES

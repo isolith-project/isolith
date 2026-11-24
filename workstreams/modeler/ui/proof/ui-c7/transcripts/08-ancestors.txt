@@ -1,0 +1,7 @@
+### every wave-C branch ancestor of origin/wave/ui-c ###
+  ui/c1-feature-tree : ANCESTOR ok
+  ui/c2-property-panel : ANCESTOR ok
+  ui/c3-variable-table : ANCESTOR ok
+  ui/c4-rollback : ANCESTOR ok
+  ui/c5-measure : ANCESTOR ok
+  ui/c6-kernel-features : ANCESTOR ok

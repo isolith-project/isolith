@@ -1,0 +1,26 @@
+=== cargo test -p oep-app --test feature_tree ===
+test app::panels::viewport::sketch::tools::tests::every_tool_has_a_distinct_key_and_id ... ok
+test app::panels::viewport::sketch::tools::tests::preview_is_tool_state_until_the_gesture_completes ... ok
+test app::panels::viewport::sketch::tools::tests::sketch_doc_assigns_ids_and_hashes_deterministically ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test app::panels::properties::dimensions::tests::invalid_expression_refused_and_leaves_everything_untouched ... ok
+test app::panels::viewport::sketch::constraints::tests::redundant_constraint_reports_over_constrained_named_state ... ok
+test app::panels::viewport::sketch::constraints::tests::driver_reports_over_constrained_and_remove_heals ... ok
+test app::panels::viewport::sketch::tools::tests::polyline_defers_commit_until_finish ... ok
+test app::panels::properties::dimensions::tests::unknown_variable_error_names_the_variable ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test app::panels::viewport::sketch::constraints::tests::removing_restores_the_prior_dof ... ok
+test app::panels::properties::dimensions::tests::edit_width_times_factor_moves_the_volume ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test app::panels::properties::dimensions::tests::driven_volume_is_5_times_width_squared ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+test tree_derives_the_live_demo_document_rows ... ok
+test selecting_a_feature_publishes_the_shared_selection_and_highlights ... ok
+test cancelling_a_delete_leaves_the_document_untouched ... ok
+test delete_confirms_then_undo_restores_the_exact_document_hash ... ok
+test renaming_a_feature_persists_in_the_live_document ... ok
+test sketch_and_variable_set_rows_render_select_rename_and_delete ... ok
+test journal_records_edits_in_order_for_multistep_undo ... ok
+test result: ok. 100 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.65s

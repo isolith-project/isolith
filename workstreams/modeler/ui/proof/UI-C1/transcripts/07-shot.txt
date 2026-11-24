@@ -1,0 +1,7 @@
+=== bash scripts/ui/shot.sh (determinism + golden drift) ===
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 29db3704a1f049134446c762fc8eed4a03abfaaaf1551b6779cd3392fdd03879
+  golden  : 2f20383c1ae851675499c96e43980ebc1b6dbb45235bb64b94cce55a400c1047
+  reference image: /home/r1a/isolith-main/.worktrees/ui-c1/workstreams/modeler/ui/proof/ui-a2/frame.png
+---
+Interpretation: the two independent launches were byte-identical (one 'current' hash printed); drift vs the committed golden 2f20383c.. is INTENTIONAL (UI-C1 now renders the real document tree on the launch frame). The wave-C integrate card refreshes the golden; the measured current frame is 29db3704a1f049134446c762fc8eed4a03abfaaaf1551b6779cd3392fdd03879 (byte-identical x2, matching capture tree.png).

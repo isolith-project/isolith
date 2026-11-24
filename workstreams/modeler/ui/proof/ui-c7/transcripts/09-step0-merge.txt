@@ -1,0 +1,4 @@
+### actual STEP 0 output ###
+5318a73 card(UI-C6): record the remote read-back for the wave/ui-c push
+git merge-base --is-ancestor 736a0a7 github/wave/ui-c => 
+yes (wave/ui-c is ahead of the wave-A checkpoint)

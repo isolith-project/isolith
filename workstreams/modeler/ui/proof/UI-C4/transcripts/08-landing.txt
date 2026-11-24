@@ -1,0 +1,19 @@
+### UI-C4 landing transcript (merge-UI-C4)
+
+Card branch: ui/c4-rollback 4baf4d0 (DCO sign-off auto-appended)
+Pushed to github/ui/c4-rollback as dmltallen.
+
+Merge: 4d5c390 "Merge branch 'ui/c4-rollback' into merge-UI-C4"
+  parents: 47900bc (wave/ui-c head) + 4baf4d0 (card branch)
+  clean no-ff merge; no root-manifest conflict.
+
+Gate re-run on the MERGED head (4d5c390):
+  cargo test -p oep-app --test rollback  -> 119 passed / 0 failed
+  cargo test -p oep-app                  -> all 20 targets ok
+  cargo clippy -p oep-app --all-targets -- -D warnings -> clean
+  cargo fmt --all -- --check             -> clean
+  xvfb-run -a cargo run -p oep-app -- --smoke -> frames=8 smoke ok
+
+Push: 47900bc..4d5c390 -> wave/ui-c
+Remote read-back: github/wave/ui-c HEAD == 4d5c390 (== local)
+Ancestry: ui/c4-rollback is an ancestor of github/wave/ui-c.
