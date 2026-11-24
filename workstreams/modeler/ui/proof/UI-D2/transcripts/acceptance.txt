@@ -1,15 +1,37 @@
-=== xvfb-run -a cargo test -p oep-app --test gpu_shading (committed tree) ===
+=== STEP 0: git merge github/wave/ui-d into ui/d2-gpu-shading (retry 2) ===
 
-test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.30s
+The wave head had moved since the card branch was cut: UI-D3 UI-PICK landed on
+wave/ui-d (16b2d11). Merge brought UI-D3's id-buffer picking. ADDITIVE conflicts
+in viewport.rs (shading + pick_gpu modules), gpu/mod.rs (shading + idbuffer
+modules) and README.md (UI-D2 + UI-D3 rows) resolved keeping BOTH sides.
+Merge commit: 048e795. The merge brought changes (UI-D3), so the gate below was
+re-run on the merged tree.
 
+=== cargo test -p oep-app --test gpu_shading (merged tree, --nocapture) ===
+
+test result: ok. 124 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.84s
+
+Full verbatim output (the six proof legs with printed numbers):
+see transcripts/acceptance-merged.txt
+
+Snapshot hashes on the merged tree are byte-identical to the committed ones
+(git status clean under proof/UI-D2/), so UI-D3's additive merge did not change
+any of the five rendered states:
+  shaded          07eebca5f53cdd1d387ebb6450e91de1875ce528ae52fd20b000ad520ef8c84d  ui-d2-shaded.png
+  edges           8dee0722f3ffe6f006438e27819916e22d40897279708161348758970abf92fd  ui-d2-edges.png
+  flat            d4cb47d07e7a4f2cd1645ab975c44cedd859b8b154cb6e50eee81d5f96f99d25  ui-d2-flat.png
+  smooth          4836698181e4bbef3e754d73d9f95c486bb633b974de0acbe38bdd71eb7c60a3  ui-d2-smooth.png
+  transparent-50  afdb52960dc6ac160e9f7c82161fcf36f4c4c9a37693a4a2cd8bae62f37f3b24  ui-d2-transparent-50.png
 
 === xvfb-run -a cargo test -p oep-viewer --test gpu_backend (D1 oracle) ===
 
 test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.23s
+(recorded on the pre-merge committed tree; D1 seam/determinism oracle intact)
 
-
-=== xvfb-run -a cargo run -p oep-app -- --smoke ===
+=== xvfb-run -a cargo run -p oep-app -- --smoke (merged tree) ===
 libEGL warning: DRI3 error: Could not get DRI3 device
 libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+isolith smoke: renderer=wgpu viewport-backend=gpu (set ISOLITH_GPU=off to force cpu)
 frames=8 smoke ok
 smoke exit=0
+(verbatim: transcripts/smoke-merged.txt)

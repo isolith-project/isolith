@@ -136,6 +136,52 @@ all green — includes viewport 117/117, measure, dimensions, feature_from_sketc
 gpu_shading 121/121 — no prior card regressed.
 ```
 
+## Retry 2: STEP 0 reconciliation with UI-D3 (landed mid-flight) and re-gate
+
+Attempt 1 timed out after writing this proof but before landing. In the
+meantime UI-D3 UI-PICK landed on `github/wave/ui-d` (16b2d11), so the STEP 0
+merge on the retry brought real changes, not an empty merge:
+
+```text
+$ git merge github/wave/ui-d --no-edit
+Auto-merging crates/oep-app/src/panels/viewport.rs   CONFLICT (content)
+Auto-merging crates/oep-viewer/src/gpu/mod.rs        CONFLICT (content)
+Auto-merging workstreams/modeler/ui/README.md        CONFLICT (content)
+```
+
+All three files are in this card's owned list and all three are ADDITIVE
+per the card, so both sides were kept: `viewport.rs` declares both the
+`shading` module (this card) and the `pick_gpu` module (UI-D3); `gpu/mod.rs`
+exposes both `pub mod shading;` and `pub mod idbuffer;`; `README.md` keeps
+both the UI-D2 row and the UI-D3 row. Merge committed as `048e795`.
+
+The gate was re-run on the merged tree:
+
+```text
+$ cargo test -p oep-app --test gpu_shading -- --nocapture
+test result: ok. 124 passed; 0 failed   (121 D2 legs + UI-D3's pick_gpu panel legs
+                                          pulled into the same compiled binary)
+
+$ xvfb-run -a cargo run -p oep-app -- --smoke
+isolith smoke: renderer=wgpu viewport-backend=gpu
+frames=8 smoke ok, exit 0
+```
+
+Every proof-leg number is identical to the pre-merge run (full verbatim
+transcript: `transcripts/acceptance-merged.txt`, smoke `transcripts/smoke-merged.txt`):
+
+```text
+Edges mode:  drawn edge primitives = 24, fixture boundary edge count = 24
+Shaded mode: drawn edge primitives = 24, fixture boundary edge count = 24
+depth comparisons performed = 0; face-vs-face alternating runs = 0
+smooth-vs-flat: differing pixels = 56415, silhouette 27840 == 27840
+overlap-region mean readback alpha: opaque = 255.0, 50% transparent = 149.3
+```
+
+And the five snapshot PNGs are byte-identical on the merged tree (`git status`
+clean under `proof/UI-D2/`, hashes above still current) — UI-D3's additive
+id-buffer/pick work changed none of the five rendered states.
+
 Determinism: everything is a pure function of `(scene, camera, size, shading
 state)`, so the same state re-renders to byte-identical pixels (re-proven by
 the D1 `gpu_backend` determinism oracle on the committed tree).
@@ -144,3 +190,6 @@ the D1 `gpu_backend` determinism oracle on the committed tree).
 
 - `ui-d2-shaded.png`, `ui-d2-edges.png`, `ui-d2-flat.png`,
   `ui-d2-smooth.png`, `ui-d2-transparent-50.png` — the five snapshots.
+- `transcripts/acceptance.txt` — gate summary; `transcripts/acceptance-merged.txt`
+  — full verbatim six-leg output on the merged tree; `transcripts/smoke-merged.txt`
+  — verbatim smoke output.
