@@ -8,7 +8,11 @@ authors.workspace = true
 repository.workspace = true
 
 [dependencies]
-eframe = { workspace = true }
+# UI-D1 UI-GPU-BACKEND (card ADDITIVE): eframe's wgpu renderer feature is
+# enabled explicitly (it is also part of the default set) so the app renders
+# egui on wgpu whenever the card's `main.rs` renderer selection finds an
+# adapter; `glow` is enabled so the honest wgpu-absent fallback compiles.
+eframe = { workspace = true, features = ["wgpu", "glow"] }
 egui = { workspace = true }
 oep-ui-theme = { path = "../oep-ui-theme" }
 oep-viewer = { path = "../oep-viewer" }

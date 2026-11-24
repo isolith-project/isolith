@@ -1,0 +1,5 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.15s
+     Running `target/debug/isolith --smoke`
+isolith smoke: renderer=glow viewport-backend=cpu (set ISOLITH_GPU=off to force cpu)
+frames=8 smoke ok
+EXIT=0

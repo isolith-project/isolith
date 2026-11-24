@@ -1,0 +1,22 @@
+$ cargo test -p oep-viewer --test gpu_backend -- --nocapture
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running tests/gpu_backend.rs (target/debug/deps/gpu_backend-5b456643314cafe6)
+
+running 6 tests
+CPU demo fallback hash = 11436915591341135581 (pre-card golden 11436915591341135581)
+test gpu_off_falls_back_to_cpu_and_matches_precard_golden ... ok
+GPU demo(800x600): non-background pixels = 28136
+test demo_renders_non_empty_gpu_frame ... ok
+GPU bracket(800x600): non-background pixels = 26088
+test bracket_renders_non_empty_gpu_frame ... ok
+test gpu_renders_same_view_byte_identically ... ok
+GPU demo(800x600): covered=23658 hash=4903190574258948810
+CPU demo(800x600): covered=23524 hash=9822561619069829146
+GPU bracket(800x600): covered=25833 hash=15609424193225942655
+CPU bracket(800x600): covered=25755 hash=6754971388433688936
+test gpu_geometry_coverage_within_5pct_of_cpu ... ok
+test select_backend_returns_gpu_when_adapter_exists ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.02s
+
+EXIT=$?
