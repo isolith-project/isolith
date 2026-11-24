@@ -1,0 +1,17 @@
+=== Mon Nov 23 01:42:54 PM UTC 2026 ===
+=== STEP 0: git fetch github && git merge github/wave/ui-c ===
+ui/c6-kernel-features
+--- local head before merge (branch cut point): ---
+736a0a769c1afb3eed656165bfd48118732466e1
+--- wave head merged: ---
+ddd6d17 card(UI-C4): record the landing transcript (push, merge, remote read-back)
+4d5c390 Merge branch 'ui/c4-rollback' into merge-UI-C4
+4baf4d0 card(UI-C4): UI-ROLLBACK - suppress and roll the tree
+--- merge brought (not empty): ---
+ .../modeler/ui/proof/ui-b9/transcripts/06-shot.txt |    9 +
+ .../ui/proof/ui-b9/transcripts/07-merged-head.txt  |   24 +
+ .../proof/ui-b9/transcripts/08-scope-register.txt  |   43 +
+ workstreams/modeler/ui/proof/ui-b9/ui_b9_inject.c  |  137 +
+ 226 files changed, 47902 insertions(+), 498 deletions(-)
+--- merge type: ---
+ddd6d1727c17a76214f0e01fdf26006498323be8 4d5c390a90a826247a0a9c4ccbee7f2c1a294613

@@ -43,6 +43,14 @@ pub mod sketch;
 #[path = "features.rs"]
 pub mod features;
 
+// UI-C5 UI-MEASURE: the measure surface (plain `M`), its egui-free geometry
+// engine and the on-screen annotation. `measure.rs` is included verbatim like
+// `sketch.rs` / `features.rs`, so the app and the test targets that pull
+// `app.rs` compile the same source; by default the surface is closed and
+// draws nothing, so the committed launch-frame goldens are untouched.
+#[path = "measure.rs"]
+pub mod measure;
+
 /// Context-data key under which the backend lives (and the scalar snapshot is
 /// published) in the egui per-context store. Shared with
 /// `crates/oep-app/tests/viewport.rs`, which derives the same id value.
@@ -124,6 +132,10 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // and before this panel's own Exit-sketch Escape, so a cancel inside the
     // dialog is consumed here and never exits the sketch.
     features::poll(ui.ctx());
+
+    // UI-C5 UI-MEASURE: plain M toggles the measure surface. Runs alongside
+    // the feature poll so the two plain keys never fight.
+    measure::poll(ui.ctx());
 
     // Escape leaves sketch mode without touching the document. This panel runs
     // first in the frame, so it consumes the key ONLY while a plane is active
@@ -299,6 +311,10 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // live dialog, Export button) over the viewport, from the same panel state
     // the preview frame reads.
     features::draw(ui.ctx(), rect);
+
+    // UI-C5 UI-MEASURE: paint the measure surface + annotation over the
+    // viewport (draws nothing while the surface is closed).
+    measure::draw(ui.ctx(), rect);
 
     // Draw the frame into the panel via an egui texture.
     let texture_id = ui.scope_id().with("viewport_frame_texture");

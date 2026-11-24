@@ -1,0 +1,9 @@
+# UI-C2 captures - two launches each, byte-identical (determinism oracle)
+== empty ==
+a7594b124ac8ea49c95ef49d2c25106bf37cf309ca808d652e9943bb417586ef
+empty.png
+== importstep ==
+0f5688066374a933aadde412ed24ce4310fa094d480d216538a781721f1e90c3
+importstep.png
+-rw-rw-r-- 1 r1a r1a 80390 Nov 23 03:33 workstreams/modeler/ui/proof/UI-C2/empty.png
+-rw-rw-r-- 1 r1a r1a 82652 Nov 23 03:33 workstreams/modeler/ui/proof/UI-C2/importstep.png

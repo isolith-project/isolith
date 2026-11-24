@@ -1,0 +1,9 @@
+### bash scripts/ui/shot.sh ###
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+shot.sh: ok
+  frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+  sha256   : a7594b124ac8ea49c95ef49d2c25106bf37cf309ca808d652e9943bb417586ef
+EXIT=0

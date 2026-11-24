@@ -1,0 +1,10 @@
+### bash scripts/gate/precommit-gate.sh ###
+== quality gate: ui-c7 ==
+  [run]  pytest
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 97.37s (0:01:37))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==
+EXIT=0

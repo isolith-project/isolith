@@ -1,0 +1,2 @@
+# cargo test -p oep-app --test variable_table
+test result: ok. 133 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s

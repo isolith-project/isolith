@@ -1,0 +1,7 @@
+$ cargo test -p oep-app --test property_panel
+test invalid_direction_is_refused_naming_the_field ... ok
+test invalid_depth_is_refused_naming_field_and_reason ... ok
+test apply_commits_one_journal_entry_and_cancel_discards ... ok
+
+test result: ok. 210 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.81s
+

@@ -1,0 +1,9 @@
+merged head: 42ea74b0e4b4e4a401ab423bdc402f8454db02c8
+date: 2026-11-23T19:31:01-08:00
+
+01-fmt.txt EXIT=0
+02-clippy.txt EXIT=0
+03-test-workspace.txt EXIT=0
+04-licensing.txt EXIT=0
+05-precommit.txt EXIT=0
+06-shot.txt EXIT=0

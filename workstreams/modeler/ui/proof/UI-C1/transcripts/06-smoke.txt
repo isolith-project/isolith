@@ -1,0 +1,6 @@
+=== xvfb-run -a cargo run -p oep-app -- --smoke ===
+     Running `target/debug/isolith --smoke`
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok
+SMOKE_EXIT=0

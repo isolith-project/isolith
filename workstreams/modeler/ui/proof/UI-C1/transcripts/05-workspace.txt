@@ -1,0 +1,4 @@
+=== cargo test --workspace ===
+TOTAL PASSED: 3058
+FAILED lines:
+0

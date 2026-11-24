@@ -28,6 +28,18 @@ oep-shell = { path = "../oep-shell" }
 # constraints into the oep-sketch model and calls its solver for an honest
 # dof / over-constrained report; oep-shell does not re-export these types).
 oep-sketch = { path = "../oep-sketch" }
+# UI-C6 UI-KERNEL-FEATURES (card-mandated DETAIL: fillet, chamfer, shell and
+# boolean are dialogs OVER THE OCC SEAM -- the oep-geo kernel module that
+# fronts the oep-engine-occ OCCT binding). Availability is DETECTED at runtime
+# via oep-geo's typed seam (sys_new -> EngineUnavailable when the `kernel`
+# feature is off), so the dialogs run real geometry only while a kernel
+# session exists and otherwise say so honestly, never drawing fake geometry.
+# The `kernel` feature forwards to oep-geo/kernel for the acceptance build.
+oep-geo = { path = "../oep-geo" }
+
+[features]
+default = []
+kernel = ["oep-geo/kernel"]
 
 [[bin]]
 name = "isolith"
