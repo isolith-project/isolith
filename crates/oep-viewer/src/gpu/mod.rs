@@ -48,6 +48,7 @@
 //! [`target`] (offscreen colour target + readback).
 
 pub mod device;
+pub mod shading;
 pub mod target;
 
 use std::time::{Duration, Instant};
@@ -62,6 +63,7 @@ use crate::scene::{Primitive, Scene};
 use crate::{overlay, theme};
 
 use device::GpuContext;
+use shading::{ViewMode, BOX_EDGES};
 use target::{GpuTarget, TARGET_FORMAT};
 
 /// The background colour the target is cleared to (the theme's viewport
@@ -77,6 +79,31 @@ const CLEAR: [f32; 4] = [
 /// Overlay wire colour for solid boundary edges (same neutral the CPU
 /// renderer uses, `render::EDGE_RGB`).
 const EDGE_RGB: [u8; 4] = [170, 176, 184, 255];
+
+/// The shaded pass's blend state.
+///
+/// Colour is straight-alpha source-over (`src.a * src + (1 - src.a) * dst`),
+/// so at `alpha = 1.0` it is byte-equivalent to REPLACE (the D1 opaque
+/// pass) and below 1.0 an overlapping body shows through. The ALPHA channel
+/// is written as the source alpha (`1 * src.a + 0 * dst.a` — REPLACE), so
+/// the transparency control is measurable at readback: a 50% body reads back
+/// alpha ≈ 128 instead of 255 — the number the UI-D2 acceptance prints
+/// before/after. (wgpu's `ALPHA_BLENDING`/OVER alpha equation saturates the
+/// alpha channel to 1.0 once the dst below is opaque, which would make the
+/// readback proof unmeasurable; the source-alpha write keeps the control
+/// inspectable while the rgb stays a true source-over composite.)
+const STUDIO_BLEND: wgpu::BlendState = wgpu::BlendState {
+    color: wgpu::BlendComponent {
+        src_factor: wgpu::BlendFactor::SrcAlpha,
+        dst_factor: wgpu::BlendFactor::OneMinusSrcAlpha,
+        operation: wgpu::BlendOperation::Add,
+    },
+    alpha: wgpu::BlendComponent {
+        src_factor: wgpu::BlendFactor::One,
+        dst_factor: wgpu::BlendFactor::Zero,
+        operation: wgpu::BlendOperation::Add,
+    },
+};
 
 /// Default width/height at backend construction, matching `CpuBackend`.
 const DEFAULT_WIDTH: u32 = crate::render::DEFAULT_WIDTH;
@@ -120,19 +147,75 @@ impl Vertex {
     }
 }
 
-/// One filled face ready for GPU submission: its NDC polygon, the flattened
-/// shade colour, and the view-space depth used for the painter's sort.
+/// One shaded-face vertex: NDC position, view-space normal (unit, for the
+/// studio key/fill fragment lighting) and base RGBA (with the transparency
+/// alpha applied).
+///
+/// The fragment stage (`shading.wgsl`) computes `key + fill` diffuse lighting
+/// from the interpolated normal and multiplies the base colour, and carries
+/// the alpha straight through (opaque REPLACE-equivalent at alpha 1.0, real
+/// transparency below that).
+#[derive(Debug, Clone, Copy)]
+struct ShadedVertex {
+    /// NDC position (x/y in [-1,1]; z unused).
+    pos: [f32; 3],
+    /// View-space unit normal (flat: shared per face; smooth: per-vertex).
+    normal: [f32; 3],
+    /// Base RGBA in 0..1 (alpha = shading transparency).
+    color: [f32; 4],
+}
+
+impl ShadedVertex {
+    fn new(pos: [f64; 2], normal: [f64; 3], rgba: [u8; 4]) -> Self {
+        Self {
+            pos: [pos[0] as f32, pos[1] as f32, 0.0],
+            normal: [normal[0] as f32, normal[1] as f32, normal[2] as f32],
+            color: [
+                f32::from(rgba[0]) / 255.0,
+                f32::from(rgba[1]) / 255.0,
+                f32::from(rgba[2]) / 255.0,
+                f32::from(rgba[3]) / 255.0,
+            ],
+        }
+    }
+
+    /// Pack into `bytes` as `[pos f32x3][normal f32x3][color f32x4]` (40 B).
+    fn pack_into(&self, bytes: &mut Vec<u8>) {
+        for c in self.pos {
+            bytes.extend_from_slice(&c.to_le_bytes());
+        }
+        for c in self.normal {
+            bytes.extend_from_slice(&c.to_le_bytes());
+        }
+        for c in self.color {
+            bytes.extend_from_slice(&c.to_le_bytes());
+        }
+    }
+}
+
+/// One filled face ready for GPU submission: its NDC polygon, the per-vertex
+/// view-space normals (flat: same normal per triangle; smooth: per-vertex
+/// averaged), the flattened shade colour, and the view-space depth used for
+/// the painter's sort.
 struct GpuFace {
     depth: f64,
     color: [u8; 4],
     ndc: Vec<[f64; 2]>,
+    /// View-space (camera-space) unit normal per NDC vertex, in the same
+    /// order as `ndc`. Flat mode stores the face normal on every vertex;
+    /// smooth mode stores the per-vertex averaged normal.
+    normal: Vec<[f64; 3]>,
 }
 
-/// GPU-backend pipeline set: one triangle pipeline for filled faces, one line
-/// pipeline for the grid, mesh edges and triad arms. No bind groups or
-/// uniform buffers — every vertex arrives pre-projected (NDC).
+/// GPU-backend pipeline set. The shaded pipeline renders filled faces through
+/// the studio key+fill lighting shader (`shading.wgsl`); the line pipeline
+/// draws the grid, feature edges and triad arms (~passthrough colour).
+/// No bind groups or uniform buffers — vertices arrive pre-projected (NDC),
+/// normals in view space.
 struct GpuPipeline {
-    triangles: wgpu::RenderPipeline,
+    /// Studio-lit triangle pipeline (shading.wgsl, alpha blended).
+    shading: wgpu::RenderPipeline,
+    /// Line pipeline for grid/edges/triad (viewport.wgsl, replace blend).
     lines: wgpu::RenderPipeline,
     target: GpuTarget,
 }
@@ -151,6 +234,11 @@ pub struct GpuBackend {
     frame: RgbaImage,
     hash: u64,
     frame_time: Duration,
+    /// Number of feature-edge line primitives drawn in the last render
+    /// (the `edges` boundary list exactly). Reset on every render.
+    edge_primitives: usize,
+    /// The shading state applied to the last render (mode + alpha).
+    shading: shading::ShadingState,
 }
 
 impl GpuBackend {
@@ -185,6 +273,8 @@ impl GpuBackend {
             },
             hash: 0,
             frame_time: Duration::ZERO,
+            edge_primitives: 0,
+            shading: shading::state(),
         };
         backend.render_frame();
         Some(backend)
@@ -197,7 +287,10 @@ impl GpuBackend {
     /// byte-identical pixels (the seam's determinism oracle on the GPU path).
     fn render_frame(&mut self) {
         let start = Instant::now();
-        let (faces, lines) = self.assemble(&self.scene, &self.camera, self.width, self.height);
+        self.shading = shading::state();
+        let (faces, lines, edge_prims) =
+            self.assemble(&self.scene, &self.camera, self.width, self.height);
+        self.edge_primitives = edge_prims;
 
         let device = &self.ctx.device;
         let queue = &self.ctx.queue;
@@ -215,17 +308,20 @@ impl GpuBackend {
 
         // 1. Filled faces, painter-sorted back-to-front (deepest first) so
         //    later draws overwrite nearer ones exactly like the CPU raster.
-        let face_bytes = pack(&faces);
-        let face_buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("isolith-gpu-viewport-faces"),
-            contents: &face_bytes,
-            usage: wgpu::BufferUsages::VERTEX,
-        });
-        pass.set_pipeline(&self.pipeline.triangles);
-        pass.set_vertex_buffer(0, face_buf.slice(..));
-        pass.draw(0..face_bytes.len() as u32 / 28, 0..1);
+        //    (Skip in `Edges` mode, which draws the boundary edge list only.)
+        if !faces.is_empty() {
+            let face_bytes = pack_shaded(&faces);
+            let face_buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
+                label: Some("isolith-gpu-viewport-faces"),
+                contents: &face_bytes,
+                usage: wgpu::BufferUsages::VERTEX,
+            });
+            pass.set_pipeline(&self.pipeline.shading);
+            pass.set_vertex_buffer(0, face_buf.slice(..));
+            pass.draw(0..face_bytes.len() as u32 / 40, 0..1);
+        }
 
-        // 2. Lines (mesh boundary edges, grid, then the triad arms).
+        // 2. Lines (feature edges, grid, then the triad arms).
         if !lines.is_empty() {
             let line_bytes = pack(&lines);
             let line_buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
@@ -246,47 +342,99 @@ impl GpuBackend {
         self.hash = frame_hash(&self.frame);
     }
 
-    /// Project the scene into NDC vertex lists for one frame, mirroring
-    /// `render::render` + `render::render_present`.
+    /// Project the scene into NDC vertex lists for one frame, honouring the
+    /// current shading state (view mode + alpha).
     ///
-    /// Returns `(faces, lines)` where `lines` holds the mesh boundary edges,
-    /// the grid and the screen-constant triad arms in draw order. Every NDC
-    /// position uses the CPU renderer's exact projection formula (module
-    /// docs).
+    /// Returns `(faces, lines)` where `faces` are the (mode-dependent)
+    /// shaded-triangle vertices and `lines` hold the feature edges (in the
+    /// `Edges`/`Shaded` modes only), the grid and the screen-constant triad
+    /// arms in draw order. Every NDC position uses the CPU renderer's exact
+    /// projection formula (module docs).
     fn assemble(
         &self,
         scene: &Scene,
         camera: &Camera,
         width: u32,
         height: u32,
-    ) -> (Vec<Vertex>, Vec<Vertex>) {
+    ) -> (Vec<ShadedVertex>, Vec<Vertex>, usize) {
         let aspect = f64::from(width) / f64::from(height);
         let world_to_view = camera.view_matrix();
         let vp = camera.view_projection(aspect);
-        let light = Vec3::new(-0.4, 0.8, 0.45).normalize().expect("light dir");
+        let alpha = self.shading.alpha.clamp(0.0, 1.0);
+        let mode = self.shading.mode;
 
         let mut face_ndc: Vec<GpuFace> = Vec::new();
-        for prim in &scene.primitives {
-            let color = if prim.highlighted {
-                [
-                    theme::HIGHLIGHT_RGB[0],
-                    theme::HIGHLIGHT_RGB[1],
-                    theme::HIGHLIGHT_RGB[2],
-                    255,
-                ]
-            } else {
-                theme::part_color(&prim.part_id)
-            };
-            match &prim.mesh {
-                Some(mesh) => {
-                    for t in &mesh.triangles {
-                        let poly = tri_positions(&mesh.positions, t);
-                        push_polygon(&mut face_ndc, &poly, color, &world_to_view, &vp, &light);
+        if mode != ViewMode::Edges {
+            for prim in &scene.primitives {
+                let color = if prim.highlighted {
+                    [
+                        theme::HIGHLIGHT_RGB[0],
+                        theme::HIGHLIGHT_RGB[1],
+                        theme::HIGHLIGHT_RGB[2],
+                        (alpha * 255.0).round() as u8,
+                    ]
+                } else {
+                    let mut c = theme::part_color(&prim.part_id);
+                    c[3] = (alpha * 255.0).round() as u8;
+                    c
+                };
+                match &prim.mesh {
+                    Some(mesh) => {
+                        let positions: Vec<Vec3> = mesh
+                            .positions
+                            .iter()
+                            .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64))
+                            .collect();
+                        let smooth = if mode == ViewMode::Smooth || mode == ViewMode::Shaded {
+                            Some(shading::smooth_normals(&positions, &mesh.triangles))
+                        } else {
+                            None
+                        };
+                        for t in &mesh.triangles {
+                            let poly = tri_positions(&mesh.positions, t);
+                            let normals = match &smooth {
+                                Some(sm) => {
+                                    [sm[t[0] as usize], sm[t[1] as usize], sm[t[2] as usize]]
+                                }
+                                None => shading::flat_triangle_normals(&poly),
+                            };
+                            push_face(&mut face_ndc, &poly, &normals, color, &world_to_view, &vp);
+                        }
                     }
-                }
-                None => {
-                    for face in box_faces(prim) {
-                        push_polygon(&mut face_ndc, &face, color, &world_to_view, &vp, &light);
+                    None => {
+                        let quads = box_faces(prim);
+                        // Smooth corner normals: average the incident face
+                        // normals per corner (area-weighted by the quad fan).
+                        // `quads` vertices are `world_corners` in the fixed
+                        // index pattern below (mirrors `render::box_faces`).
+                        const BOX_FACE_CORNERS: [[usize; 4]; 6] = [
+                            [0, 1, 2, 3],
+                            [4, 5, 6, 7],
+                            [0, 1, 5, 4],
+                            [3, 2, 6, 7],
+                            [0, 3, 7, 4],
+                            [1, 2, 6, 5],
+                        ];
+                        let corners = prim.world_corners;
+                        let smooth_corner = if mode == ViewMode::Smooth || mode == ViewMode::Shaded
+                        {
+                            let tris: Vec<[u32; 3]> =
+                                crate::gpu::shading::box_fan_triangles().to_vec();
+                            crate::gpu::shading::smooth_normals(corners.as_ref(), &tris)
+                        } else {
+                            Vec::new()
+                        };
+                        for (face, idxs) in quads.iter().zip(BOX_FACE_CORNERS.iter()) {
+                            let face_normal = crate::gpu::shading::newell(face);
+                            let normals: Vec<Vec3> = if smooth_corner.is_empty() {
+                                vec![face_normal; face.len()]
+                            } else {
+                                idxs.iter()
+                                    .map(|&i| smooth_corner.get(i).copied().unwrap_or(face_normal))
+                                    .collect()
+                            };
+                            push_face(&mut face_ndc, face, &normals, color, &world_to_view, &vp);
+                        }
                     }
                 }
             }
@@ -298,44 +446,66 @@ impl GpuBackend {
                 .unwrap_or(std::cmp::Ordering::Equal)
         });
 
-        let mut faces = Vec::with_capacity(face_ndc.len() * 3);
+        let mut faces: Vec<ShadedVertex> = Vec::with_capacity(face_ndc.len() * 3);
         for face in &face_ndc {
-            for tri in fan_triangles(&face.ndc) {
-                for p in tri {
-                    faces.push(Vertex::new(p, face.color));
+            let idxs = fan_indices(face.ndc.len());
+            for (tri, idx) in fan_triangles(&face.ndc).iter().zip(idxs.iter()) {
+                for (k, p) in tri.iter().enumerate() {
+                    faces.push(ShadedVertex::new(*p, face.normal[idx[k]], face.color));
                 }
             }
         }
 
         let mut lines: Vec<Vertex> = Vec::new();
-
-        // Mesh boundary edges, projected and clipped to the NDC cube like the
-        // CPU wire path.
-        for prim in &scene.primitives {
-            let Some(mesh) = &prim.mesh else {
-                continue;
-            };
-            if mesh.edges.is_empty() {
-                continue;
-            }
-            let color = if prim.highlighted {
-                prim_color(prim)
-            } else {
-                EDGE_RGB
-            };
-            for [ia, ib] in &mesh.edges {
-                let (Some(pa), Some(pb)) = (mesh.positions.get(*ia), mesh.positions.get(*ib))
-                else {
-                    continue;
+        // The edge pass draws EXACTLY the boundary edge list: a mesh
+        // primitive draws its committed `mesh.edges`; a box proxy draws its
+        // 12 box edges (the proxy's boundary edge list). The count of line
+        // primitives the pass submits is recorded (`edge_primitives`) so the
+        // acceptance can compare drawn vs fixture boundary edge count.
+        let mut edge_prims = 0usize;
+        if mode == ViewMode::Shaded || mode == ViewMode::Edges {
+            for prim in &scene.primitives {
+                let color = if prim.highlighted {
+                    prim_color(prim)
+                } else {
+                    EDGE_RGB
                 };
-                push_wire(
-                    &mut lines,
-                    &Vec3::new(pa[0] as f64, pa[1] as f64, pa[2] as f64),
-                    &Vec3::new(pb[0] as f64, pb[1] as f64, pb[2] as f64),
-                    &world_to_view,
-                    &vp,
-                    color,
-                );
+                match &prim.mesh {
+                    Some(mesh) => {
+                        for [ia, ib] in &mesh.edges {
+                            let (Some(pa), Some(pb)) =
+                                (mesh.positions.get(*ia), mesh.positions.get(*ib))
+                            else {
+                                continue;
+                            };
+                            let before = lines.len();
+                            push_wire(
+                                &mut lines,
+                                &Vec3::new(pa[0] as f64, pa[1] as f64, pa[2] as f64),
+                                &Vec3::new(pb[0] as f64, pb[1] as f64, pb[2] as f64),
+                                &world_to_view,
+                                &vp,
+                                color,
+                            );
+                            if lines.len() > before {
+                                edge_prims += 1;
+                            }
+                        }
+                    }
+                    None => {
+                        let corners = prim.world_corners;
+                        for [ia, ib] in BOX_EDGES {
+                            let (Some(pa), Some(pb)) = (corners.get(ia), corners.get(ib)) else {
+                                continue;
+                            };
+                            let before = lines.len();
+                            push_wire(&mut lines, pa, pb, &world_to_view, &vp, color);
+                            if lines.len() > before {
+                                edge_prims += 1;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -366,7 +536,28 @@ impl GpuBackend {
         // converted to NDC for the passthrough stage).
         append_screen_axis_arms(&mut lines, scene, &world_to_view, &vp, width, height);
 
-        (faces, lines)
+        (faces, lines, edge_prims)
+    }
+
+    /// The number of feature-edge line primitives drawn by the LAST render
+    /// (the boundary edge list exactly — mesh edges for meshes, the 12 box
+    /// edges for box proxies). Only `Shaded` and `Edges` modes run the pass,
+    /// so other modes report 0. Zeroed at the start of every render.
+    pub fn last_edge_primitives(&self) -> usize {
+        self.edge_primitives
+    }
+
+    /// The shading state (view mode + alpha) of the last render.
+    pub fn shading_state(&self) -> shading::ShadingState {
+        self.shading
+    }
+
+    /// Re-render the current view, picking up any shading-state change that
+    /// [`shading::set_state`] made since the previous render. Used by the
+    /// runtime shading panel (and by the gpu_shading acceptance) to apply a
+    /// new view mode / alpha without moving the camera.
+    pub fn re_render_with_current_shading(&mut self) {
+        self.render_frame();
     }
 }
 
@@ -401,6 +592,15 @@ fn pack(verts: &[Vertex]) -> Vec<u8> {
     bytes
 }
 
+/// Pack a list of shaded-face vertices into interleaved LE bytes (40 B each).
+fn pack_shaded(verts: &[ShadedVertex]) -> Vec<u8> {
+    let mut bytes = Vec::with_capacity(verts.len() * 40);
+    for v in verts {
+        v.pack_into(&mut bytes);
+    }
+    bytes
+}
+
 /// The world-space polygon of a mesh triangle.
 fn tri_positions(positions: &[[f32; 3]], t: &[u32; 3]) -> Vec<Vec3> {
     let mut v = Vec::with_capacity(3);
@@ -426,28 +626,32 @@ fn box_faces(prim: &Primitive) -> [Vec<Vec3>; 6] {
     ]
 }
 
-/// Push one world polygon through NDC culling, Lambert shading and depth
-/// sorting into the face list (mirror of `render::push_polygon`, clip-plane
-/// free because this backend passes no clip planes). The stored points are the
-/// projected NDC (x/y) so the GPU rasterizes exactly the CPU's polygon.
-fn push_polygon(
+/// Push one world polygon through NDC culling into the face list, storing the
+/// per-vertex VIEW-SPACE normals and the base (unlit) colour for the studio
+/// fragment shader (mirror of `render::push_polygon`, clip-plane free, with
+/// the colour flattened instead of Lambert-shaded — the GPU owns the lighting
+/// now).
+///
+/// The stored points are the projected NDC (x/y) so the GPU rasterizes
+/// exactly the CPU's polygon. `normals` must be unit world-space normals (one
+/// per polygon vertex); they are rotated into view space here because the
+/// light rig is defined in view space.
+fn push_face(
     faces: &mut Vec<GpuFace>,
     poly: &[Vec3],
+    world_normals: &[Vec3],
     color: [u8; 4],
     world_to_view: &Mat4,
     vp: &Mat4,
-    light: &Vec3,
 ) {
     if poly.len() < 3 {
         return;
     }
-    let normal = newell_normal(poly);
-    let shade = normal.dot(light).max(0.0) * 0.55 + 0.45;
-    let fcolor = shade_color(color, shade);
     let mut ok = true;
     let mut depth_sum = 0.0f64;
     let mut ndc = Vec::with_capacity(poly.len());
-    for p in poly {
+    let mut normal = Vec::with_capacity(poly.len());
+    for (i, p) in poly.iter().enumerate() {
         let view = world_to_view.transform_point(p);
         let clip = vp.transform_point(p);
         let w = clip_w(vp, &view);
@@ -465,14 +669,30 @@ fn push_polygon(
         }
         depth_sum += view.z;
         ndc.push([nx, ny]);
+        // Rotate the world normal into view space (normalize guards
+        // degenerate input, matching the CPU's Newell fallback).
+        let wn = world_normals
+            .get(i)
+            .copied()
+            .unwrap_or(Vec3::new(0.0, 0.0, 1.0));
+        let vn = world_to_view
+            .transform_vector(&wn)
+            .normalize()
+            .unwrap_or(Vec3::new(0.0, 0.0, 1.0));
+        normal.push([vn.x, vn.y, vn.z]);
     }
     if !ok || ndc.len() < 3 {
         return;
     }
+    // The colour is stored UNLIT: the fragment shader applies the studio
+    // key + fill lighting, so the same base colour reaches opaque and
+    // transparent renders (the alpha was baked in the vertex colour by the
+    // caller).
     faces.push(GpuFace {
         depth: depth_sum / poly.len() as f64,
-        color: fcolor,
+        color,
         ndc,
+        normal,
     });
 }
 
@@ -547,32 +767,6 @@ fn lerp_ndc_xy(a: [f64; 3], b: [f64; 3], t: f64) -> [f64; 2] {
     [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
 }
 
-/// Newell's method: robust area-weighted face normal (mirror of
-/// `render::newell_normal`).
-fn newell_normal(poly: &[Vec3]) -> Vec3 {
-    let mut nx = 0.0;
-    let mut ny = 0.0;
-    let mut nz = 0.0;
-    for i in 0..poly.len() {
-        let cur = poly[i];
-        let nxt = poly[(i + 1) % poly.len()];
-        nx += (cur.y - nxt.y) * (cur.z + nxt.z);
-        ny += (cur.z - nxt.z) * (cur.x + nxt.x);
-        nz += (cur.x - nxt.x) * (cur.y + nxt.y);
-    }
-    Vec3::new(nx, ny, nz)
-        .normalize()
-        .unwrap_or(Vec3::new(0.0, 0.0, 1.0))
-}
-
-/// Shade an opaque colour by a factor, clamped exactly like the CPU raster
-/// (mirror of `render::shade_color`).
-fn shade_color(c: [u8; 4], k: f64) -> [u8; 4] {
-    let f = k.clamp(0.35, 1.0);
-    let m = |x: u8| ((f64::from(x)) * f).round().clamp(0.0, 255.0) as u8;
-    [m(c[0]), m(c[1]), m(c[2]), c[3]]
-}
-
 /// Fan a convex NDC polygon into a triangle list (mirror of
 /// `render::fan_triangles`).
 fn fan_triangles(pts: &[[f64; 2]]) -> Vec<[[f64; 2]; 3]> {
@@ -582,6 +776,16 @@ fn fan_triangles(pts: &[[f64; 2]]) -> Vec<[[f64; 2]; 3]> {
     (1..pts.len() - 1)
         .map(|i| [pts[0], pts[i], pts[i + 1]])
         .collect()
+}
+
+/// The indices of each fan triangle's vertices (parallel to
+/// [`fan_triangles`]) — one `[0, i, i+1]` per fan triangle, so a face's
+/// per-vertex normals follow the geometry exactly.
+fn fan_indices(n: usize) -> Vec<[usize; 3]> {
+    if n < 3 {
+        return Vec::new();
+    }
+    (1..n - 1).map(|i| [0, i, i + 1]).collect()
 }
 
 /// The `w` clip coordinate produced by the CPU renderer (mirror of
@@ -688,10 +892,18 @@ fn screen_ndc(x: f64, y: f64, width: u32, height: u32) -> [f64; 2] {
 }
 
 /// Build the pipelines and target for a device context.
+///
+/// Two pipelines share one layout (no bind groups): the **shading** triangle
+/// pass (studio key/fill lighting, alpha-blended so transparency composites)
+/// and the **lines** pass (grid, feature edges, triad — opaque replace).
 fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipeline> {
     let device = &ctx.device;
-    let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
-        label: Some("isolith-gpu-viewport-shader"),
+    let shading_shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
+        label: Some("isolith-gpu-viewport-shading-shader"),
+        source: wgpu::ShaderSource::Wgsl(shading::shading_wgsl().into()),
+    });
+    let line_shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
+        label: Some("isolith-gpu-viewport-line-shader"),
         source: wgpu::ShaderSource::Wgsl(include_str!("shaders/viewport.wgsl").into()),
     });
 
@@ -702,23 +914,29 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
     });
     let target = GpuTarget::new(device, width, height);
 
-    let make = |topology: wgpu::PrimitiveTopology| -> wgpu::RenderPipeline {
+    let make = |topology: wgpu::PrimitiveTopology,
+                shader: &wgpu::ShaderModule,
+                vertex_entry: &str,
+                fragment_entry: &str,
+                layout: wgpu::VertexBufferLayout<'_>,
+                blend: Option<wgpu::BlendState>,
+                label: &str| {
         device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
-            label: Some("isolith-gpu-viewport-pipeline"),
+            label: Some(label),
             layout: Some(&pipeline_layout),
             vertex: wgpu::VertexState {
-                module: &shader,
-                entry_point: Some("vs_main"),
+                module: shader,
+                entry_point: Some(vertex_entry),
                 compilation_options: Default::default(),
-                buffers: &[Some(VERTEX_LAYOUT)],
+                buffers: &[Some(layout)],
             },
             fragment: Some(wgpu::FragmentState {
-                module: &shader,
-                entry_point: Some("fs_color"),
+                module: shader,
+                entry_point: Some(fragment_entry),
                 compilation_options: Default::default(),
                 targets: &[Some(wgpu::ColorTargetState {
                     format: TARGET_FORMAT,
-                    blend: Some(wgpu::BlendState::REPLACE),
+                    blend,
                     write_mask: wgpu::ColorWrites::ALL,
                 })],
             }),
@@ -738,14 +956,34 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
         })
     };
 
+    let shading = make(
+        wgpu::PrimitiveTopology::TriangleList,
+        &shading_shader,
+        "vs_main",
+        "fs_main",
+        SHADED_VERTEX_LAYOUT,
+        Some(STUDIO_BLEND),
+        "isolith-gpu-viewport-shading-pipeline",
+    );
+    let lines = make(
+        wgpu::PrimitiveTopology::LineList,
+        &line_shader,
+        "vs_main",
+        "fs_color",
+        VERTEX_LAYOUT,
+        Some(wgpu::BlendState::REPLACE),
+        "isolith-gpu-viewport-lines-pipeline",
+    );
+
     Some(GpuPipeline {
-        triangles: make(wgpu::PrimitiveTopology::TriangleList),
-        lines: make(wgpu::PrimitiveTopology::LineList),
+        shading,
+        lines,
         target,
     })
 }
 
-/// The interleaved vertex buffer layout: `[pos f32x3 @0][color f32x4 @1]`.
+/// The interleaved vertex buffer layout for line vertices:
+/// `[pos f32x3 @0][color f32x4 @1]` (28 B).
 const ATTRS: [wgpu::VertexAttribute; 2] = [
     wgpu::VertexAttribute {
         format: wgpu::VertexFormat::Float32x3,
@@ -759,11 +997,38 @@ const ATTRS: [wgpu::VertexAttribute; 2] = [
     },
 ];
 
-/// The single vertex buffer layout used by every pipeline.
+/// The line vertex buffer layout (28 B).
 const VERTEX_LAYOUT: wgpu::VertexBufferLayout<'_> = wgpu::VertexBufferLayout {
     array_stride: 28,
     step_mode: wgpu::VertexStepMode::Vertex,
     attributes: &ATTRS,
+};
+
+/// The interleaved shaded-face vertex layout:
+/// `[pos f32x3 @0][normal f32x3 @1][color f32x4 @2]` (40 B).
+const SHADED_ATTRS: [wgpu::VertexAttribute; 3] = [
+    wgpu::VertexAttribute {
+        format: wgpu::VertexFormat::Float32x3,
+        offset: 0,
+        shader_location: 0,
+    },
+    wgpu::VertexAttribute {
+        format: wgpu::VertexFormat::Float32x3,
+        offset: 12,
+        shader_location: 1,
+    },
+    wgpu::VertexAttribute {
+        format: wgpu::VertexFormat::Float32x4,
+        offset: 24,
+        shader_location: 2,
+    },
+];
+
+/// The shaded-face vertex buffer layout (40 B).
+const SHADED_VERTEX_LAYOUT: wgpu::VertexBufferLayout<'_> = wgpu::VertexBufferLayout {
+    array_stride: 40,
+    step_mode: wgpu::VertexStepMode::Vertex,
+    attributes: &SHADED_ATTRS,
 };
 
 impl crate::backend::ViewportBackend for GpuBackend {
