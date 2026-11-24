@@ -1,0 +1,7 @@
+# UI-D7 acceptance transcripts (real command output, wave head 513ce8f + card commits b7bf432 04a6fcf)
+
+## STEP 0: git fetch + merge (brought nothing)
+
+```
+Already up to date.
+```
