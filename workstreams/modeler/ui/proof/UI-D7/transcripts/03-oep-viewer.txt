@@ -1,0 +1,120 @@
+   Compiling oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.15s
+     Running unittests src/lib.rs (target/debug/deps/oep_viewer-5b8fa3f6b6132d42)
+
+running 37 tests
+test clip::tests::classifies_box_sides ... ok
+test camera::tests::framed_camera_looks_at_centroid ... ok
+test clip::tests::clips_polygon_on_kept_side ... ok
+test gpu::idbuffer::tests::align_256_rounds_up ... ok
+test gpu::device::tests::gpu_flag_off_disables_selection_and_restores ... ok
+test gpu::shading::tests::smooth_vs_flat_normals_differ_on_a_box ... ok
+test clip::tests::point_normal_plane_signed_distance ... ok
+test gpu::target::tests::padding_rounds_up_to_256 ... ok
+test overlay::tests::axis_arms_are_unit_aligned ... ok
+test gpu::shading::tests::shading_wgsl_embeds_the_exact_light_rig ... ok
+test overlay::tests::grid_segments_cover_and_are_deterministic ... ok
+test pick::tests::ray_hits_aabb ... ok
+test overlay::tests::draw_text_clips_out_of_bounds ... ok
+test overlay::tests::draw_text_paints_expected_pixels ... ok
+test overlay::tests::draw_text_uppercases ... ok
+test scene::tests::aabb_union_covers_both ... ok
+test scene::tests::build_scene_from_part_without_assembly ... ok
+test render::tests::render_empty_scene_yields_background ... ok
+test scene::tests::corners_are_eight_distinct_points ... ok
+test theme::tests::contrast_of_a_color_with_itself_is_1 ... ok
+test overlay::tests::nice_spacing_follows_125_ladder ... ok
+test pick::tests::ray_misses_aabb_offset ... ok
+test theme::tests::white_on_black_exceeds_17 ... ok
+test pick::tests::pick_prefers_nearest ... ok
+test render::tests::png_magic_and_chunks ... ok
+test render::tests::encode_png_is_deterministic ... ok
+test overlay::tests::glyph_table_has_no_blank_leading_or_trailing ... ok
+test overlay::tests::glyph_table_has_all_label_chars ... ok
+test backend::tests::frame_time_is_non_negative ... ok
+test backend::tests::resize_changes_size_and_hash ... ok
+test backend::tests::camera_round_trips ... ok
+test backend::tests::pan_changes_target_numerically_and_frame_hash ... ok
+test backend::tests::orbit_changes_camera_numerically_and_frame_hash ... ok
+test backend::tests::zoom_changes_distance_numerically_and_frame_hash ... ok
+test backend::tests::seam_does_not_alter_output ... ok
+test backend::tests::demo_render_hashes_deterministically ... ok
+test gpu::idbuffer::tests::empty_scene_reads_back_all_background ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/accessibility_theme.rs (target/debug/deps/accessibility_theme-405ae3defdee966e)
+
+running 5 tests
+test every_part_color_across_hue_meets_the_floor ... ok
+test worst_part_contrast_meets_wcag_floor ... ok
+test structural_identity_is_not_color_only ... ok
+test renderer_uses_theme_constants ... ok
+test render_is_deterministic_single_frame ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/gpu_backend.rs (target/debug/deps/gpu_backend-5b456643314cafe6)
+
+running 6 tests
+test gpu_off_falls_back_to_cpu_and_matches_precard_golden ... ok
+test bracket_renders_non_empty_gpu_frame ... ok
+test demo_renders_non_empty_gpu_frame ... ok
+test gpu_geometry_coverage_within_5pct_of_cpu ... ok
+test gpu_renders_same_view_byte_identically ... ok
+test select_backend_returns_gpu_when_adapter_exists ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.02s
+
+     Running tests/mesh_scene.rs (target/debug/deps/mesh_scene-02115746378af3a0)
+
+running 5 tests
+test pick_selects_the_mesh_primitive ... ok
+test highlighted_mesh_uses_theme_highlight_color ... ok
+test edge_overlay_changes_the_frame ... ok
+test wire_overlay_primitive_renders_lines ... ok
+test mesh_primitive_renders_non_background_and_deterministically ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/render_axis_views.rs (target/debug/deps/render_axis_views-b170d5aa1c0ac6fa)
+
+running 4 tests
+test back_view_near_corner_w_before_and_after ... ok
+test all_culled_scene_renders_empty_frame_without_panic_on_both_backends ... ok
+test all_standard_views_render_on_both_backends ... ok
+test proof_images_for_all_standard_views ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.83s
+
+     Running tests/render_present.rs (target/debug/deps/render_present-0fae660da3e9f18c)
+
+running 6 tests
+test axis_triad_direction_is_meaningful ... ok
+test overlay_label_chip_is_legible_pixels ... ok
+test default_present_options_equal_base_render ... ok
+test present_paints_grid_axes_and_labels ... ok
+test present_is_deterministic_and_png_reproducible ... ok
+test hd_present_render_has_real_dimensions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/viewer_contract.rs (target/debug/deps/viewer_contract-bb9b925513f94f45)
+
+running 7 tests
+test png_encoder_roundtrips_with_valid_magic ... ok
+test clip_plane_cuts_golden_bracket_assembly ... ok
+test framed_camera_projects_bracket_centroid_near_view_centre ... ok
+test pick_returns_full_identity_from_golden ... ok
+test scene_builds_full_assembly_from_golden ... ok
+test picking_ray_direction_is_normalized_and_origins_at_eye ... ok
+test render_produces_distinct_full_and_clipped_images ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests oep_viewer
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

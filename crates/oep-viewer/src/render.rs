@@ -166,7 +166,7 @@ pub fn render(
     // Overlay wires on top: solid boundary edges and sketch lines. Drawn
     // last so silhouette and guidance lines read above the fill.
     for (seg, color) in wires {
-        draw_wire(&mut img, seg, &world_to_view, &vp, color);
+        draw_wire(&mut img, seg, &vp, color);
     }
     img
 }
@@ -216,7 +216,6 @@ pub fn render_present(
 ) -> PresentFrame {
     let mut img = render(scene, cam, clips, width, height);
     let aspect = width as f64 / height as f64;
-    let world_to_view = cam.view_matrix();
     let vp = cam.view_projection(aspect);
     let opacity = 255u8;
     let grid_color = theme::GRID_RGB;
@@ -243,7 +242,6 @@ pub fn render_present(
             draw_wire(
                 &mut img,
                 *seg,
-                &world_to_view,
                 &vp,
                 [grid_color[0], grid_color[1], grid_color[2], opacity],
             );
@@ -255,7 +253,7 @@ pub fn render_present(
             .map(|b| Vec3::new(0.0, 0.0, b.min.z.min(0.0)))
             .unwrap_or_else(Vec3::zero);
         // Anchor at the projected origin, clamped into the frame.
-        let proj_origin = to_px(world_to_view.transform_point(&origin), &vp, width, height);
+        let proj_origin = to_px(origin, &vp, width, height);
         let (ax, ay) = proj_origin.unwrap_or((0.0, 0.0));
         let ax = ax.clamp(8.0, width.saturating_sub(8) as f64);
         let ay = ay.clamp(8.0, height.saturating_sub(8) as f64);
@@ -270,7 +268,7 @@ pub fn render_present(
         let labels = ["X", "Y", "Z"];
         for (i, axis) in axes.iter().enumerate() {
             let p = origin.add(&Vec3::new(axis[0], axis[1], axis[2]).mul(arm_world));
-            let Some(pp) = to_px(world_to_view.transform_point(&p), &vp, width, height) else {
+            let Some(pp) = to_px(p, &vp, width, height) else {
                 continue;
             };
             let anchor = proj_origin.unwrap_or((0.0, 0.0));
@@ -317,10 +315,16 @@ pub fn render_present(
     }
 }
 
-/// Project a view-space point to pixel coordinates (top-left origin).
-fn to_px(view: oep_geo::math::Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
-    let clip = vp.transform_point(&view);
-    let w = clip_w(vp, &view);
+/// Project a world-space point to pixel coordinates (top-left origin).
+///
+/// The point is expected in WORLD space: `clip_w` applies the combined
+/// view-projection `vp` to the point it is given, so giving it a view-space
+/// point (as the pre-D7 code did) applies the view transform a second time
+/// and degenerates to `w == 0` on exact axis views (UI-D4's Back-view
+/// blocker). Every caller here passes a world point.
+fn to_px(world: oep_geo::math::Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
+    let clip = vp.transform_point(&world);
+    let w = clip_w(vp, &world);
     if w.abs() < 1e-9 {
         return None;
     }
@@ -390,7 +394,10 @@ fn push_polygon(
     for p in &clipped {
         let view = world_to_view.transform_point(p);
         let clip = vp.transform_point(p);
-        let w = clip_w(vp, &view);
+        // `w` must be the clip w of the SAME world point `p` the clip xyz
+        // came from (D7: the combined matrix applied to body space). Feeding
+        // the view-space point here double-applied the view transform.
+        let w = clip_w(vp, p);
         if w.abs() < 1e-9 {
             ok = false;
             break;
@@ -420,14 +427,14 @@ fn push_polygon(
 /// Overlay wire color for solid boundary edges (neutral light gray).
 const EDGE_RGB: [u8; 4] = [170, 176, 184, 255];
 
-/// Rasterize one wire segment: project both endpoints to NDC, clip the
-/// segment to the visible NDC cube, then draw it as a 1px line.
-fn draw_wire(img: &mut RgbaImage, seg: [Vec3; 2], world_to_view: &Mat4, vp: &Mat4, color: [u8; 4]) {
+/// Rasterize one wire segment: project both endpoints to NDC (world points,
+/// direct through `vp`), clip the segment to the visible NDC cube, then draw
+/// it as a 1px line.
+fn draw_wire(img: &mut RgbaImage, seg: [Vec3; 2], vp: &Mat4, color: [u8; 4]) {
     let mut ndc = [[0.0f64; 3]; 2];
     for (k, p) in seg.iter().enumerate() {
-        let view = world_to_view.transform_point(p);
         let clip = vp.transform_point(p);
-        let w = clip_w(vp, &view);
+        let w = clip_w(vp, p);
         if w.abs() < 1e-9 {
             return;
         }
@@ -541,11 +548,27 @@ fn newell_normal(poly: &[Vec3]) -> Vec3 {
     n.normalize().unwrap_or(Vec3::new(0.0, 0.0, 1.0))
 }
 
-/// The `w` clip coordinate produced by the projection matrix.
-fn clip_w(vp: &Mat4, view: &Vec3) -> f64 {
-    // Row 3 (clip.w) = row3 · (view, 1). Column-major: element (3,c) at c*4+3.
+/// The `w` clip coordinate for a WORLD point under the combined
+/// view-projection matrix (the clip-space homogeneous component, which the
+/// perspective divide uses).
+///
+/// The pre-D7 bug fed the VIEW-space point into this (the caller that
+/// pre-transformed `p` through `world_to_view` passed that result), so the
+/// combined matrix's 4th row was applied to an already view-space point —
+/// the view transform was applied a second time purely inside `w`. For a
+/// right-handed perspective camera the projection's 4th row is
+/// `[0, 0, -1, 0]`, so `w = -view.z`, and the double application scaled the
+/// whole frame ~1.6x (UI-D1's doc note) and forced `w == 0` at the exact
+/// axis views whose near (z=0) face lay perpendicular to the view axis
+/// (UI-D4's Back-view blocker: every corner at z=0 in world, hence a whole
+/// face at exactly `w = 0`, dropped by `push_polygon`'s `|w| < 1e-9` guard).
+///
+/// Pass the point in the same space `vp` expects — body space (world) — and
+/// `row4(vp) · (p, 1)` is the true clip-space `w`.
+fn clip_w(vp: &Mat4, world: &Vec3) -> f64 {
+    // Row 3 (clip.w) = row3 · (world, 1). Column-major: element (3,c) at c*4+3.
     let a = vp.to_array16();
-    a[3] * view.x + a[7] * view.y + a[11] * view.z + a[15]
+    a[3] * world.x + a[7] * world.y + a[11] * world.z + a[15]
 }
 
 /// Shade an opaque color by factor `k` in [0,1].
