@@ -24,11 +24,16 @@
 //! visible-triangle counts) under [`NAV_STATE_KEY`] for the acceptance
 //! harness.
 //!
-//! The card is drawn as ONE `egui::Area` at screen origin whose interactive
-//! widgets are each `put` at an explicit screen rect (the UI-B8 feature-panel
-//! idiom). That keeps the Area's click surface exactly the card - never a
-//! layout-flow surface that expands and swallows clicks meant for the
-//! neighbouring properties panel.
+//! The card is drawn as ONE `egui::Area` fixed at the viewport's bottom-right
+//! corner (the wave's other top-right surfaces - the D2 shading card - and
+//! the sketch plane, which the default camera projects to the upper-right,
+//! own the rest of that quadrant) whose widgets are added through the card's
+//! flow layout (the shading.rs idiom). egui auto-sizes the Area to exactly
+//! that content, so the Area's click surface is the card alone - never a
+//! screen-anchored `fixed_pos(ZERO)` + absolute `ui.put` surface that grows
+//! to a huge rect and swallows clicks meant for the neighbouring surfaces
+//! (measured: the original layout caught the UI-B8 "Export STEP" click and
+//! the D2 shading panel's clicks until the layout was corrected).
 //!
 //! ## Bounds this panel respects
 //!
@@ -139,55 +144,94 @@ fn section_numbers(bounds: &Aabb, fraction: f64) -> (f64, usize, usize) {
     (offset, measured, analytic)
 }
 
-/// One face button of the gizmo, placed at an explicit screen rect; `hit`
-/// records the clicked face. The label is one line at a fixed size and
-/// truncates rather than wraps, so the button never grows taller than its
-/// cell and neighbouring faces' click rects never overlap (the UI-D7-measured
-/// gizmo defect: wrapped "Cube Front" labels grew buttons to ~64px in 24px
-/// cells, so a kittest click resolved to the wrong face).
-fn face_button(ui: &mut egui::Ui, rect: egui::Rect, face: CubeFace, hit: &mut Option<CubeFace>) {
+/// One face button of the gizmo, added to the flow `ui`; `hit` reports the
+/// clicked face. The label is one line at a fixed size (an explicit 10px
+/// RichText with an Extend wrap mode so it can never wrap to multiple lines),
+/// so the button never grows taller than its cell and neighbouring faces'
+/// click rects never overlap (the UI-D7-measured gizmo defect: wrapped
+/// "Cube Front" labels grew buttons to ~64px in 24px cells, so a kittest
+/// click resolved to the wrong face).
+fn face_button(ui: &mut egui::Ui, face: CubeFace) -> Option<CubeFace> {
     let btn = egui::Button::new(egui::RichText::new(format!("Cube {}", face.label())).size(10.0))
-        .min_size(rect.size())
-        .wrap_mode(egui::TextWrapMode::Truncate);
-    let resp = ui.put(rect, btn).on_hover_text(format!(
+        .min_size(egui::vec2(FACE_W, FACE_H))
+        .wrap_mode(egui::TextWrapMode::Extend);
+    let resp = ui.add(btn).on_hover_text(format!(
         "Orient to the {} standard view",
         face.view().label()
     ));
-    if resp.clicked() {
-        *hit = Some(face);
-    }
+    resp.clicked().then_some(face)
 }
 
 /// The miniature orientation cube: six labelled face buttons in the classic
 /// front/top/side arrangement, each a normal egui button so every face is in
-/// the AccessKit tree by name and reachable by keyboard. Widgets are `put` at
-/// explicit screen rects, so the surrounding `egui::Area` never grows a click
-/// surface beyond the nav card. Face cells are wide enough that the full
-/// "Cube <face>" label fits on one line and the buttons keep their 20 px
-/// height, so no two faces overlap (the click rect of every face is its 72x20
-/// cell on the 76x24 grid, as the acceptance probe prints).
-fn cube_gizmo(ui: &mut egui::Ui, px: f32, py: f32) -> Option<CubeFace> {
-    const FW: f32 = 72.0;
-    const FH: f32 = 20.0;
-    const GAP: f32 = 4.0;
-    let col = |i: usize| px + i as f32 * (FW + GAP);
-    let row = |i: usize| py + i as f32 * (FH + GAP);
-    let cell = |c: usize, r: usize| {
-        egui::Rect::from_min_size(egui::pos2(col(c), row(r)), egui::vec2(FW, FH))
-    };
-
+/// the AccessKit tree by name and reachable by keyboard. Laid out with the
+/// card's flow layout (the shading.rs idiom) so the surrounding
+/// `egui::Area` auto-sizes to exactly this content and never grows a click
+/// surface beyond the card.
+fn cube_gizmo(ui: &mut egui::Ui) -> Option<CubeFace> {
+    use CubeFace::*;
     let mut hit = None;
-    face_button(ui, cell(1, 0), CubeFace::Top, &mut hit);
-    face_button(ui, cell(0, 1), CubeFace::Left, &mut hit);
-    face_button(ui, cell(1, 1), CubeFace::Front, &mut hit);
-    face_button(ui, cell(2, 1), CubeFace::Right, &mut hit);
-    face_button(ui, cell(1, 2), CubeFace::Back, &mut hit);
-    face_button(ui, cell(1, 3), CubeFace::Bottom, &mut hit);
+    // Centred Top
+    ui.horizontal(|ui| {
+        ui.add_space(FACE_W + FACE_GAP);
+        if let Some(f) = face_button(ui, Top) {
+            hit = Some(f);
+        }
+    });
+    // Left | Front | Right
+    ui.horizontal(|ui| {
+        if let Some(f) = face_button(ui, Left) {
+            hit = Some(f);
+        }
+        if let Some(f) = face_button(ui, Front) {
+            hit = Some(f);
+        }
+        if let Some(f) = face_button(ui, Right) {
+            hit = Some(f);
+        }
+    });
+    // Centred Back
+    ui.horizontal(|ui| {
+        ui.add_space(FACE_W + FACE_GAP);
+        if let Some(f) = face_button(ui, Back) {
+            hit = Some(f);
+        }
+    });
+    // Centred Bottom
+    ui.horizontal(|ui| {
+        ui.add_space(FACE_W + FACE_GAP);
+        if let Some(f) = face_button(ui, Bottom) {
+            hit = Some(f);
+        }
+    });
     hit
 }
 
+/// The six face buttons' cell size: wide enough that the full "Cube <face>"
+/// label fits on one line, 20 px tall on a 24 px row pitch, so no two faces
+/// overlap (the acceptance probe prints every face's 72x20 click rect).
+const FACE_W: f32 = 72.0;
+const FACE_H: f32 = 20.0;
+const FACE_GAP: f32 = 4.0;
+
+/// The nav card's total width, sized to the widest content row (three 72 px
+/// face buttons plus two 4 px gaps) plus the frame's inner margin.
+const GW: f32 = 240.0;
+
+/// The nav card is anchored in the viewport's bottom-right corner (free of
+/// every other wave surface): the shading card (D2) owns the top-right, the
+/// default-camera sketch plane projects to the upper-right (measured:
+/// rectangle corners at x 788..912, y 258..333; entry point at 662,407), the
+/// finish/export surface is top-left, the measure surface (C5) is bottom-left,
+/// and the feature dialog is centre. Placing the card anywhere over the sketch
+/// projection swallowed the sketch tool's clicks (`feature_from_sketch`), and
+/// over the shading card swallowed D2's clicks (`gpu_shading`) - both measured
+/// on this branch. The card's approximate height keeps it above the viewport
+/// bottom when anchored in the corner.
+const CARD_H: f32 = 220.0;
+
 /// Paint the nav surface (gizmo, quick-view buttons, section slider) over the
-/// viewport's top-right corner and apply anything the user just clicked.
+/// viewport's bottom-right corner and apply anything the user just clicked.
 /// Called exactly once per frame from `viewport::show`, AFTER the backend
 /// block, so the camera it reads/writes is this frame's backend.
 pub fn update(ui: &egui::Ui, rect: egui::Rect, _scale: f32, _app: &mut App) {
@@ -199,18 +243,15 @@ pub fn update(ui: &egui::Ui, rect: egui::Rect, _scale: f32, _app: &mut App) {
         .data(|d| d.get_temp(nav_id()))
         .unwrap_or((1.0, 0.0, 0, 0));
 
-    // The nav card's explicit geometry, anchored to the viewport's top-right.
-    // One `egui::Area` at screen origin whose interactive widgets are each
-    // `put` at an exact rect (the UI-B8 feature-panel idiom), so the Area's
-    // click surface stays the card and never expands into the neighbouring
-    // properties panel. Wide enough for three 72 px gizmo-face columns.
-    let gw = 240.0_f32;
-    let gh = 236.0_f32;
-    let card = egui::Rect::from_min_size(
-        egui::pos2(rect.right() - gw - 10.0, rect.top() + 8.0),
-        egui::vec2(gw, gh),
-    );
-    let (px, py) = (card.min.x + 6.0, card.min.y + 6.0);
+    // The nav card, anchored at the viewport's top-right. The `egui::Area`
+    // is fixed at the card corner and its widgets are added with the card's
+    // flow layout (the shading.rs idiom), so egui auto-sizes the Area to
+    // exactly its content and the click surface is the card alone - never a
+    // screen-anchored `fixed_pos(ZERO)` + absolute `ui.put` surface that
+    // grows to a huge rect and swallows other panels' clicks (measured: the
+    // original layout caught the UI-B8 "Export STEP" click at the viewport's
+    // top-left, failing `feature_from_sketch::ui_step_export_...`).
+    let card_pos = egui::pos2(rect.right() - GW - 10.0, rect.max.y - CARD_H - 10.0);
     let mut pending: Option<StandardView> = None;
     let mut section = prev.0;
 
@@ -219,81 +260,69 @@ pub fn update(ui: &egui::Ui, rect: egui::Rect, _scale: f32, _app: &mut App) {
 
     egui::Area::new(egui::Id::unique("ui_d4_nav_area"))
         .order(egui::Order::Foreground)
-        .fixed_pos(egui::Pos2::ZERO)
+        .fixed_pos(card_pos)
+        .movable(false)
         .show(ui.ctx(), |ui| {
-            // Card background + hairline + heading (painted first in a scoped
-            // painter, before the interactive `put`s below borrow `ui`).
-            {
-                let painter = ui.painter();
-                painter.rect_filled(card, 4.0, p.surface_raised);
-                painter.rect_stroke(
-                    card,
-                    4.0,
-                    egui::Stroke::new(1.0, p.border),
-                    egui::StrokeKind::Outside,
+            let frame = egui::Frame::new()
+                .fill(p.surface_raised)
+                .corner_radius(egui::CornerRadius::same(4))
+                .stroke(egui::Stroke::new(1.0, p.border))
+                .inner_margin(egui::Margin::symmetric(8, 8));
+            frame.show(ui, |ui| {
+                ui.set_width(GW - 16.0);
+                ui.label(
+                    egui::RichText::new("Orientation")
+                        .size(11.0)
+                        .color(p.text_primary),
                 );
-                painter.text(
-                    egui::pos2(px, py),
-                    egui::Align2::LEFT_TOP,
-                    "Orientation",
-                    egui::FontId::proportional(11.0),
-                    p.text_primary,
+                ui.add_space(4.0);
+
+                // The orientation cube gizmo (six labelled face buttons).
+                if let Some(face) = cube_gizmo(ui) {
+                    pending = Some(face.view());
+                }
+                ui.add_space(6.0);
+
+                // Quick standard-view buttons: two 2-button rows.
+                let quick_btn = |ui: &mut egui::Ui, text: &str| {
+                    ui.add(
+                        egui::Button::new(egui::RichText::new(text).size(11.0))
+                            .min_size(egui::vec2(52.0, 20.0)),
+                    )
+                };
+                ui.horizontal(|ui| {
+                    if quick_btn(ui, "Front").clicked() {
+                        pending = Some(StandardView::Front);
+                    }
+                    if quick_btn(ui, "Top").clicked() {
+                        pending = Some(StandardView::Top);
+                    }
+                });
+                ui.horizontal(|ui| {
+                    if quick_btn(ui, "Right").clicked() {
+                        pending = Some(StandardView::Right);
+                    }
+                    if quick_btn(ui, "Iso").clicked() {
+                        pending = Some(StandardView::Iso);
+                    }
+                });
+                ui.add_space(6.0);
+
+                // Section plane slider (Z axis, 0 = closed to the bottom
+                // sheet, 1 = whole box). The AccessKit SetValue action drives
+                // the same slider, so the harness can place it exactly and
+                // the surface is reachable without a mouse.
+                ui.add(
+                    egui::Slider::new(&mut section, 0.0..=1.0)
+                        .text("Section")
+                        .show_value(false),
                 );
-            }
-
-            // The orientation cube gizmo (six labelled face buttons).
-            if let Some(face) = cube_gizmo(ui, px, py + 18.0) {
-                pending = Some(face.view());
-            }
-
-            // Quick standard-view buttons: a 2x2 cluster under the cube.
-            let qy = py + 18.0 + 4.0 * 24.0 + 6.0;
-            let quick = |c: usize, r: usize| {
-                egui::Rect::from_min_size(
-                    egui::pos2(px + c as f32 * 54.0, qy + r as f32 * 21.0),
-                    egui::vec2(52.0, 20.0),
-                )
-            };
-            let quick_btn = |ui: &mut egui::Ui, r: egui::Rect, text: &str| {
-                ui.put(r, egui::Button::new(text).min_size(r.size()))
-            };
-            if quick_btn(ui, quick(0, 0), "Front").clicked() {
-                pending = Some(StandardView::Front);
-            }
-            if quick_btn(ui, quick(1, 0), "Top").clicked() {
-                pending = Some(StandardView::Top);
-            }
-            if quick_btn(ui, quick(0, 1), "Right").clicked() {
-                pending = Some(StandardView::Right);
-            }
-            if quick_btn(ui, quick(1, 1), "Iso").clicked() {
-                pending = Some(StandardView::Iso);
-            }
-
-            // Section plane slider (Z axis, 0 = closed to the bottom sheet,
-            // 1 = whole box). The AccessKit SetValue action drives the same
-            // slider, so the harness can place it exactly and the surface is
-            // reachable without a mouse.
-            let slider_rect = egui::Rect::from_min_size(
-                egui::pos2(px, qy + 2.0 * 21.0 + 8.0),
-                egui::vec2(gw - 12.0, 20.0),
-            );
-            ui.put(
-                slider_rect,
-                egui::Slider::new(&mut section, 0.0..=1.0)
-                    .text("Section")
-                    .show_value(false),
-            );
-            {
-                let painter = ui.painter();
-                painter.text(
-                    egui::pos2(px, slider_rect.max.y + 4.0),
-                    egui::Align2::LEFT_TOP,
-                    format!("Triangles: {}", prev.2),
-                    egui::FontId::proportional(10.0),
-                    p.text_muted,
+                ui.label(
+                    egui::RichText::new(format!("Triangles: {}", prev.2))
+                        .size(10.0)
+                        .color(p.text_muted),
                 );
-            }
+            });
         });
 
     // Apply a pending orientation (writes the camera AFTER the interactive
