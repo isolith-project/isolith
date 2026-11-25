@@ -74,6 +74,14 @@ pub mod shading;
 #[path = "pick_gpu.rs"]
 pub mod pick_gpu;
 
+// UI-D4 UI-NAV: the orientation cube gizmo, quick standard-view buttons and
+// the section-plane slider. `nav.rs` is included verbatim like the panels
+// above and driven by the single `nav::update(...)` call in `show` below -
+// after pick_gpu, so its buttons and slider sit on the top-right corner of
+// the frame and win pointer interaction there.
+#[path = "nav.rs"]
+pub mod nav;
+
 /// Context-data key under which the backend lives (and the scalar snapshot is
 /// published) in the egui per-context store. Shared with
 /// `crates/oep-app/tests/viewport.rs`, which derives the same id value.
@@ -409,6 +417,13 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // and the multi-select outlines on top of the frame. Sketch mode owns its
     // clicks, so `in_sketch` idles the surface.
     pick_gpu::update(ui, rect, scale, sketch_state.in_sketch());
+
+    // UI-D4 UI-NAV: drive the navigation surface (orientation cube, quick
+    // standard-view buttons, section slider) from this frame's camera. Runs
+    // after pick_gpu so its buttons and slider sit on the frame's top-right
+    // corner and win pointer interaction there; any orientation it applies
+    // reaches the backend now and renders at the next frame.
+    nav::update(ui, rect, scale, app);
 
     // Report the frame time (and, in sketch mode, the active plane) in the
     // status-bar mode field UI-A4 created.
