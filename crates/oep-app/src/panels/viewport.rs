@@ -55,6 +55,16 @@ pub mod features;
 #[path = "measure.rs"]
 pub mod measure;
 
+// UI-D2 UI-GPU-SHADING: the runtime view-mode selector + transparency slider
+// + oracle card over the viewport. `shading.rs` is included verbatim like
+// `sketch.rs` / `features.rs` / `measure.rs`, so the app and the test targets
+// that pull `app.rs` compile the same source; its `draw` is called once,
+// alongside `features::draw` / `measure::draw`, and it defaults to the same
+// `Shaded`/opaque state the GPU backend starts with, so the committed
+// launch-frame goldens are untouched.
+#[path = "shading.rs"]
+pub mod shading;
+
 // UI-D3 UI-PICK: the GPU id-buffer pick surface (hover pre-highlight, shift
 // click multi-select, alt-drag box select) over the same scene the viewport
 // draws. `pick_gpu.rs` is included verbatim like the panels above; it drives
@@ -358,6 +368,11 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // UI-C5 UI-MEASURE: paint the measure surface + annotation over the
     // viewport (draws nothing while the surface is closed).
     measure::draw(ui.ctx(), rect);
+
+    // UI-D2 UI-GPU-SHADING: paint the view-mode selector + transparency
+    // slider + oracle card over the viewport (one call, alongside
+    // features/measure; applies any selection to the shared backend).
+    shading::draw(ui.ctx(), rect);
 
     // Draw the frame into the panel via an egui texture.
     let texture_id = ui.scope_id().with("viewport_frame_texture");

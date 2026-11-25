@@ -1,0 +1,62 @@
+# `cargo test -p oep-app --test nav` — six-cube acceptance on a temp merge
+
+The wave head does NOT contain tests/nav.rs (it is UI-D4's test, lands with the
+UI-D4 card which is this card's child). To prove the renderer fix's share, I did
+a TEMPORARY branch (verify-nav-d7, since deleted): wave head + this card's
+two commits + the ui/d4-gpu-nav delta (additive files only: nav.rs, views.rs,
+viewport.rs include, lib.rs mod, tests/nav.rs). Ran the UNCHANGED test.
+
+## Renderer share: the panic is GONE
+
+Pure D4 branch (ui/d4-gpu-nav), GPU backend — the blocker this card fixes:
+    buffer slice can not be empty   ->  SIGSEGV-free, now just assertion output
+
+On the temp merge with this card's fix, the six-cube test no longer hits the
+empty-face panic, and Back renders (22,520 GPU px at 400x300 per 01 transcript).
+
+## REAL captured output (unchanged test, merged tree - verbatim)
+
+```
+face: clicked "Cube Front" -> eye=(40.000000000000, 20.000000000000, -136.108800206649) target=(40.000000000000, 20.000000000000, 5.000000000000) up=(0.0, 1.0, 0.0) | yaw=3.141592653590 pitch=0.000000000000 | expected_eye=(40.000000000000, 20.000000000000, 146.108800206649)
+thread 'six_cube_faces_land_exact_standard_views' (768561) panicked at crates/oep-app/tests/nav.rs:152:5:
+face: yaw 3.141592653589793 != 0
+test six_cube_faces_land_exact_standard_views ... FAILED
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 121 filtered out; finished in 1.14s
+```
+
+(The intended Front camera eye is z = +146.108800206649; the click that meant
+"Cube Front" applied the BACK camera eye z = -136.108800206649 => yaw = pi.)
+
+## Residual: a pre-existing UI-D4 nav.rs click-geometry defect
+
+Even with the renderer fixed, the unchanged six-cube test fails on a DIFFERENT,
+pre-existing UI-D4 defect that the old panic masked: the cube-gizmo buttons in
+crates/oep-app/src/panels/nav.rs are sized FW=40/FH=20 at 24px pitch, but
+Button min_size auto-grows to ~64px tall (the "Cube ..." label wraps at 40px
+width), so adjacent face buttons overlap and a click resolves to the wrong face.
+
+Measured via AccessKit on the temp merge (CPU backend, real app):
+
+  clicked       label node rect           camera yaw after         hits
+  Cube Front    [852,88]-[892,152]        pi (Back)                overlapping Back
+  Cube Back     [852,112]-[892,176]       0, pitch -1.54 (Bottom)  overlapping Bottom
+  Cube Left     [808,88]-[848,137]        -pi/2 (Left, correct)    isolated
+  Cube Right    [896,88]-[936,152]        pi/2 (Right, correct)    isolated
+  Cube Top      [852,64]-[892,113]        0, pitch 0 (Front)       overlapping Front
+  Cube Bottom   [852,136]-[892,200]       0, pitch 1.54 (Top)      overlapping Top
+
+The SAME scramble reproduces on the pristine ui/d4-gpu-nav branch with
+ISOLITH_GPU=off (CPU backend) and no renderer fix — so it is NOT caused by this
+card; it is inside crates/oep-app/src/panels/nav.rs (UI-D4's owned file), which
+this card's rules forbid touching ("touch no file outside your owned list").
+
+Quick buttons (Front/Top/Right/Iso, same apply_view) pass, proving camera math
+and the renderer are correct; only the gizmo hit-testing is scrambled.
+
+## Conclusion for the nav leg
+
+The renderer half is fixed and proven here (no panic; every standard view
+renders on both backends). The test cannot be fully green until UI-D4 fixes its
+own nav.rs gizmo layout (a UI-D4-owned file, fixed when UI-D4 lands after this
+card). Blocking reason recorded: the six-cube acceptance needs a file outside
+this card's owned list.
