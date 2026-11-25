@@ -46,7 +46,7 @@ pub use backend::{select_backend, CpuBackend, ViewportBackend};
 pub use camera::Camera;
 pub use clip::{ClipPlane, Side};
 pub use gpu::GpuBackend;
-pub use oep_geo::math::Vec3;
+pub use oep_geo::math::{Vec3, Vec4};
 pub use overlay::{
     axis_arms, draw_label_chip, draw_text, fill_rect, grid_segments, nice_spacing, text_width,
 };

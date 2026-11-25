@@ -14,16 +14,25 @@
 //! `cargo tree -p oep-app -i wgpu`). With no adapter, or `ISOLITH_GPU=off`,
 //! the caller falls back to the deterministic CPU backend.
 //!
-//! # Projection model (why the CPU computes the NDC)
+//! # Projection model (the vertex stage owns the transform — UI-D8)
 //!
-//! [`GpuBackend`] projects every vertex with the exact same CPU math and
-//! hands the GPU pre-divided NDC positions: `clip = vp · (p, 1)` and
-//! `w = row4(vp) · (p, 1)` in BODY (world) space, then NDC =
-//! `clip.xyz / w` — the `render::clip_w` formula. The GPU owns the
-//! rasterization; the CPU owns the matrix pipeline. This is the same
-//! immediate-mode model egui itself uses (screen-space quads through a
-//! passthrough vertex stage), and it is what makes the 5% coverage contract
-//! well-posed.
+//! The GPU backend now hands the shaded pass WORLD positions (plus view-space
+//! normals and the flattened base colour) and the vertex stage owns the
+//! transform: an MVP uniform (`mat4x4<f32>`, column-major, packed from
+//! `Mat4::to_array16()` with `f32::to_ne_bytes`, no bytemuck) is applied as
+//! `clip = mvp · (world, 1)`, then the vertex stage does the perspective
+//! divide and outputs `w = 1` so the rasterizer's own divide is a no-op and
+//! attribute interpolation stays linear in screen space — byte-identical to
+//! the D1/D7 pre-projected behaviour. The CPU still runs the SAME projection
+//! (`render::project_ndc`, the crate's single NDC path) purely to cull faces
+//! and order the painter; the pixels come from the GPU's vertex stage.
+//!
+//! The LINE pass (grid, feature edges, the screen-constant triad arms) remains
+//! a passthrough for pre-projected NDC: the triad arms are pixel-space by
+//! construction (they come from `to_px`/`screen_ndc`, exactly the
+//! immediate-mode egui model), so there is no world-space form to transform.
+//! The store of the projection formula is `render::project_ndc` — one helper
+//! in `render.rs`, no duplicated `clip_w` anywhere in this module (UI-D8).
 //!
 //! The pre-D7 code fed the VIEW-space point into the w computation
 //! (`w = row4(vp) · (view, 1)`), double-applying the view transform: it
@@ -112,12 +121,19 @@ const STUDIO_BLEND: wgpu::BlendState = wgpu::BlendState {
 const DEFAULT_WIDTH: u32 = crate::render::DEFAULT_WIDTH;
 const DEFAULT_HEIGHT: u32 = crate::render::DEFAULT_HEIGHT;
 
-/// One interleaved GPU vertex: NDC position + flat colour.
+/// One interleaved GPU vertex: screen-space NDC position + flat colour.
 ///
 /// `pos` carries already-projected NDC (x/y in [-1,1], top-left origin, z
 /// unused). `color` is the literal final byte colour (already shaded for
 /// faces) scaled to 0..1; the `Rgba8Unorm` target round-trips it back to the
 /// same byte.
+///
+/// This is the LINE (overlay) vertex: grid, feature edges and the
+/// screen-constant triad arms are projected on the CPU through the single
+/// `render::project_ndc` helper and arrive pre-divided, exactly the
+/// immediate-mode egui model the D1 module doc describes (the triad arms are
+/// pixel-space by construction and have no world-space home, so the line pass
+/// stays a passthrough; the shaded FACE pass owns the MVP+divide).
 #[derive(Debug, Clone, Copy)]
 struct Vertex {
     /// NDC position (x/y in [-1,1]; z unused).
@@ -150,17 +166,22 @@ impl Vertex {
     }
 }
 
-/// One shaded-face vertex: NDC position, view-space normal (unit, for the
+/// One shaded-face vertex: WORLD position, view-space normal (unit, for the
 /// studio key/fill fragment lighting) and base RGBA (with the transparency
 /// alpha applied).
 ///
-/// The fragment stage (`shading.wgsl`) computes `key + fill` diffuse lighting
-/// from the interpolated normal and multiplies the base colour, and carries
-/// the alpha straight through (opaque REPLACE-equivalent at alpha 1.0, real
+/// The vertex stage (`shading.wgsl`) applies the MVP from the uniform buffer
+/// to the WORLD position and does the perspective divide (outputting w=1, so
+/// the rasterizer's own divide is a no-op and attribute interpolation stays
+/// linear in screen space exactly as the D1/D7 pre-projected path). The
+/// fragment stage computes `key + fill` diffuse lighting from the
+/// interpolated normal and multiplies the base colour, carrying the alpha
+/// straight through (opaque REPLACE-equivalent at alpha 1.0, real
 /// transparency below that).
 #[derive(Debug, Clone, Copy)]
 struct ShadedVertex {
-    /// NDC position (x/y in [-1,1]; z unused).
+    /// WORLD position (x/y/z in scene units; the transform lives in the
+    /// vertex stage now).
     pos: [f32; 3],
     /// View-space unit normal (flat: shared per face; smooth: per-vertex).
     normal: [f32; 3],
@@ -169,9 +190,9 @@ struct ShadedVertex {
 }
 
 impl ShadedVertex {
-    fn new(pos: [f64; 2], normal: [f64; 3], rgba: [u8; 4]) -> Self {
+    fn new(pos: [f64; 3], normal: [f64; 3], rgba: [u8; 4]) -> Self {
         Self {
-            pos: [pos[0] as f32, pos[1] as f32, 0.0],
+            pos: [pos[0] as f32, pos[1] as f32, pos[2] as f32],
             normal: [normal[0] as f32, normal[1] as f32, normal[2] as f32],
             color: [
                 f32::from(rgba[0]) / 255.0,
@@ -196,26 +217,35 @@ impl ShadedVertex {
     }
 }
 
-/// One filled face ready for GPU submission: its NDC polygon, the per-vertex
-/// view-space normals (flat: same normal per triangle; smooth: per-vertex
-/// averaged), the flattened shade colour, and the view-space depth used for
-/// the painter's sort.
+/// One filled face ready for GPU submission: its world-space polygon, the
+/// per-vertex view-space normals (flat: same normal per triangle; smooth:
+/// per-vertex averaged), the flattened shade colour, and the view-space depth
+/// used for the painter's sort.
 struct GpuFace {
     depth: f64,
     color: [u8; 4],
-    ndc: Vec<[f64; 2]>,
-    /// View-space (camera-space) unit normal per NDC vertex, in the same
-    /// order as `ndc`. Flat mode stores the face normal on every vertex;
+    /// WORLD-space vertices, transformed to clip by the vertex stage's MVP
+    /// (the GPU owns the transform now). In the same order as `normal`.
+    world: Vec<[f64; 3]>,
+    /// View-space (camera-space) unit normal per world vertex, in the same
+    /// order as `world`. Flat mode stores the face normal on every vertex;
     /// smooth mode stores the per-vertex averaged normal.
     normal: Vec<[f64; 3]>,
 }
 
 /// GPU-backend pipeline set. The shaded pipeline renders filled faces through
-/// the studio key+fill lighting shader (`shading.wgsl`); the line pipeline
-/// draws the grid, feature edges and triad arms (~passthrough colour).
-/// No bind groups or uniform buffers — vertices arrive pre-projected (NDC),
-/// normals in view space.
+/// the studio key+fill lighting shader (`shading.wgsl`) whose vertex stage
+/// applies the MVP from the bind group (`binding 0` uniform, column-major f32,
+/// packed from `Mat4::to_array16()`) and does the perspective divide; the
+/// line pipeline draws the grid, feature edges and triad arms (~passthrough
+/// colour, pre-projected NDC — the screen-constant arms are pixel-space by
+/// construction so the overlay pass stays a passthrough).
 struct GpuPipeline {
+    /// MVP (view-projection) uniform buffer: 64 bytes = `mat4x4<f32>`
+    /// column-major, rewritten every render via `queue.write_buffer`.
+    uniform: wgpu::Buffer,
+    /// Bind group for the MVP (group 0, binding 0), shared by both pipelines.
+    bind_group: wgpu::BindGroup,
     /// Studio-lit triangle pipeline (shading.wgsl, alpha blended).
     shading: wgpu::RenderPipeline,
     /// Line pipeline for grid/edges/triad (viewport.wgsl, replace blend).
@@ -240,6 +270,11 @@ pub struct GpuBackend {
     /// Number of feature-edge line primitives drawn in the last render
     /// (the `edges` boundary list exactly). Reset on every render.
     edge_primitives: usize,
+    /// The wall time of the last render's GPU vertex preparation: packing
+    /// the face/line vertex bytes and creating the device buffers that carry
+    /// them (UI-D8 records this before/after so the transform move's upload
+    /// cost is measured, not guessed).
+    vertex_prep: Duration,
     /// The shading state applied to the last render (mode + alpha).
     shading: shading::ShadingState,
 }
@@ -277,6 +312,7 @@ impl GpuBackend {
             hash: 0,
             frame_time: Duration::ZERO,
             edge_primitives: 0,
+            vertex_prep: Duration::ZERO,
             shading: shading::state(),
         };
         backend.render_frame();
@@ -300,6 +336,19 @@ impl GpuBackend {
 
         let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor::default());
 
+        // Vertex preparation: pack the face/line bytes and create the device
+        // buffers (the per-frame cost the transform move is meant to shift /
+        // measure; UI-D8 records it before and after). The MVP uniform is
+        // rewritten here too — the vertex stage owns the transform.
+        let prep_start = Instant::now();
+
+        // The MVP the vertex stage applies to the WORLD positions: the same
+        // view-projection the CPU culling uses (`render::project_ndc`), packed
+        // column-major f32 — one transform, one place, shared with the CPU.
+        let aspect = f64::from(self.width) / f64::from(self.height);
+        let vp = self.camera.view_projection(aspect);
+        queue.write_buffer(&self.pipeline.uniform, 0, &pack_matrix4(&vp));
+
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("isolith-gpu-viewport-pass"),
             color_attachments: &[Some(self.pipeline.target.color_attachment(CLEAR))],
@@ -308,6 +357,7 @@ impl GpuBackend {
             occlusion_query_set: None,
             multiview_mask: None,
         });
+        pass.set_bind_group(0, &self.pipeline.bind_group, &[]);
 
         // 1. Filled faces, painter-sorted back-to-front (deepest first) so
         //    later draws overwrite nearer ones exactly like the CPU raster.
@@ -337,6 +387,7 @@ impl GpuBackend {
             pass.draw(0..line_bytes.len() as u32 / 28, 0..1);
         }
         drop(pass);
+        self.vertex_prep = prep_start.elapsed();
 
         queue.submit([encoder.finish()]);
 
@@ -451,8 +502,8 @@ impl GpuBackend {
 
         let mut faces: Vec<ShadedVertex> = Vec::with_capacity(face_ndc.len() * 3);
         for face in &face_ndc {
-            let idxs = fan_indices(face.ndc.len());
-            for (tri, idx) in fan_triangles(&face.ndc).iter().zip(idxs.iter()) {
+            let idxs = fan_indices(face.world.len());
+            for (tri, idx) in fan_triangles(&face.world).iter().zip(idxs.iter()) {
                 for (k, p) in tri.iter().enumerate() {
                     faces.push(ShadedVertex::new(*p, face.normal[idx[k]], face.color));
                 }
@@ -542,6 +593,13 @@ impl GpuBackend {
         self.edge_primitives
     }
 
+    /// The GPU path's vertex-preparation wall time for the LAST render:
+    /// packing the face/line vertex bytes and creating the device buffers
+    /// that carry them to the GPU (UI-D8 records this before/after).
+    pub fn vertex_prep_time(&self) -> Duration {
+        self.vertex_prep
+    }
+
     /// The shading state (view mode + alpha) of the last render.
     pub fn shading_state(&self) -> shading::ShadingState {
         self.shading
@@ -585,6 +643,18 @@ fn pack(verts: &[Vertex]) -> Vec<u8> {
         v.pack_into(&mut bytes);
     }
     bytes
+}
+
+/// Pack a `Mat4` into the 64-byte column-major `mat4x4<f32>` uniform layout
+/// the vertex stage consumes: each of the 16 f64 entries of
+/// `Mat4::to_array16()` narrowed to f32 in native order (no bytemuck — the
+/// UI-D8 no-new-dependency rule). `Mat4` stores column-major
+/// `entry (r, c) at c*4 + r`, exactly WGSL's `mat4x4<f32>` memory layout.
+fn pack_matrix4(m: &Mat4) -> Vec<u8> {
+    m.to_array16()
+        .iter()
+        .flat_map(|v| (*v as f32).to_ne_bytes())
+        .collect()
 }
 
 /// Pack a list of shaded-face vertices into interleaved LE bytes (40 B each).
@@ -644,29 +714,21 @@ fn push_face(
     }
     let mut ok = true;
     let mut depth_sum = 0.0f64;
-    let mut ndc = Vec::with_capacity(poly.len());
+    let mut world = Vec::with_capacity(poly.len());
     let mut normal = Vec::with_capacity(poly.len());
     for (i, p) in poly.iter().enumerate() {
         let view = world_to_view.transform_point(p);
-        let clip = vp.transform_point(p);
-        // `w` must be the clip w of the SAME world point `p` (D7: feeding
-        // the view-space point here double-applied the view transform and
-        // zeroed w on exact axis views).
-        let w = clip_w(vp, p);
-        if w.abs() < 1e-9 {
-            ok = false;
-            break;
-        }
-        let nx = clip.x / w;
-        let ny = clip.y / w;
-        let nz = clip.z / w;
-        // Near/far frustum cull (NDC z in [-1,1]), exactly like the CPU.
-        if nz < -1.0 || nz > 1.0 {
+        // The single projection path: raw clip via transform_point4, divide,
+        // near/far and degenerate-w reject (`render::project_ndc`; D7's
+        // correction — the combined matrix applied to the body-space point it
+        // owns, `w = -view.z`). Used for culling exactly like the CPU path.
+        let rst = crate::render::project_ndc(p, vp);
+        if rst.is_none() {
             ok = false;
             break;
         }
         depth_sum += view.z;
-        ndc.push([nx, ny]);
+        world.push([p.x, p.y, p.z]);
         // Rotate the world normal into view space (normalize guards
         // degenerate input, matching the CPU's Newell fallback).
         let wn = world_normals
@@ -679,7 +741,7 @@ fn push_face(
             .unwrap_or(Vec3::new(0.0, 0.0, 1.0));
         normal.push([vn.x, vn.y, vn.z]);
     }
-    if !ok || ndc.len() < 3 {
+    if !ok || world.len() < 3 {
         return;
     }
     // The colour is stored UNLIT: the fragment shader applies the studio
@@ -689,7 +751,7 @@ fn push_face(
     faces.push(GpuFace {
         depth: depth_sum / poly.len() as f64,
         color,
-        ndc,
+        world,
         normal,
     });
 }
@@ -711,15 +773,18 @@ fn push_wire(out: &mut Vec<Vertex>, a: &Vec3, b: &Vec3, vp: &Mat4, color: [u8; 4
     out.push(Vertex::new(lerp_ndc_xy(ndc_a, ndc_b, t1), color));
 }
 
-/// Project one world point to `(ndc_x, ndc_y, ndc_z)` with the CPU's exact
-/// projection formula; `None` when the clip w is degenerate.
+/// Project one world point to `(ndc_x, ndc_y, ndc_z)` with the single
+/// `transform_point4` formula (the crate's one clip-space path); `None` only
+/// on a degenerate clip w (`w.abs() < 1e-9`, the D7 wire semantics). NDC-z is
+/// NOT range-rejected here: wire endpoints are projected raw and the segment
+/// is clipped to the visible cube by [`clip_ndc_line`], so wires crossing the
+/// near/far plane keep their visible portion exactly as the D7 goldens.
 fn to_ndc(p: &Vec3, vp: &Mat4) -> Option<[f64; 3]> {
-    let clip = vp.transform_point(p);
-    let w = clip_w(vp, p);
-    if w.abs() < 1e-9 {
+    let h = vp.transform_point4(p);
+    if h.w.abs() < 1e-9 {
         return None;
     }
-    Some([clip.x / w, clip.y / w, clip.z / w])
+    Some([h.x / h.w, h.y / h.w, h.z / h.w])
 }
 
 /// Liang-Barsky clip of a 3D NDC segment to the visible cube `[-1,1]^3`
@@ -757,9 +822,9 @@ fn lerp_ndc_xy(a: [f64; 3], b: [f64; 3], t: f64) -> [f64; 2] {
     [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
 }
 
-/// Fan a convex NDC polygon into a triangle list (mirror of
-/// `render::fan_triangles`).
-fn fan_triangles(pts: &[[f64; 2]]) -> Vec<[[f64; 2]; 3]> {
+/// Fan a convex polygon (any component count — NDC `[f64;2]` for the
+/// id-buffer pass, world `[f64;3]` for the shaded pass) into a triangle list.
+fn fan_triangles<const N: usize>(pts: &[[f64; N]]) -> Vec<[[f64; N]; 3]> {
     if pts.len() < 3 {
         return Vec::new();
     }
@@ -778,30 +843,11 @@ fn fan_indices(n: usize) -> Vec<[usize; 3]> {
     (1..n - 1).map(|i| [0, i, i + 1]).collect()
 }
 
-/// The `w` clip coordinate for a WORLD point under the combined
-/// view-projection matrix (mirror of `render::clip_w`; the D7 correction —
-/// feed the world point, never a pre-transformed view point, or the view
-/// transform applies twice and `w` degenerates to 0 on exact axis views).
-fn clip_w(vp: &Mat4, world: &Vec3) -> f64 {
-    let a = vp.to_array16();
-    a[3] * world.x + a[7] * world.y + a[11] * world.z + a[15]
-}
-
 /// Project a world-space point to pixel coordinates (top-left origin); `None`
-/// when behind the camera or outside the NDC z range (mirror of
-/// `render::to_px`; D7 — takes the world point, see `clip_w`).
+/// when behind the camera or outside the NDC z range. Delegates to the single
+/// `render::project_ndc` path (D7 — world point; one formula in the crate).
 fn to_px(world: Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
-    let clip = vp.transform_point(&world);
-    let w = clip_w(vp, &world);
-    if w.abs() < 1e-9 {
-        return None;
-    }
-    let nx = clip.x / w;
-    let ny = clip.y / w;
-    let nz = clip.z / w;
-    if nz < -1.0 || nz > 1.0 {
-        return None;
-    }
+    let [nx, ny, _] = crate::render::project_ndc(&world, vp)?;
     Some((
         (nx * 0.5 + 0.5) * f64::from(width),
         (0.5 - ny * 0.5) * f64::from(height),
@@ -884,9 +930,12 @@ fn screen_ndc(x: f64, y: f64, width: u32, height: u32) -> [f64; 2] {
 
 /// Build the pipelines and target for a device context.
 ///
-/// Two pipelines share one layout (no bind groups): the **shading** triangle
-/// pass (studio key/fill lighting, alpha-blended so transparency composites)
-/// and the **lines** pass (grid, feature edges, triad — opaque replace).
+/// One bind group layout carries the MVP (view-projection) uniform for the
+/// vertex stage (group 0, binding 0) and both pipelines share the resulting
+/// pipeline layout — the shaded pass consumes it in `shading.wgsl`'s vertex
+/// stage (multiply + divide), the line pass ignores it (screen-space
+/// passthrough). The uniform buffer is created once and rewritten every
+/// render via `queue.write_buffer`.
 fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipeline> {
     let device = &ctx.device;
     let shading_shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
@@ -898,9 +947,45 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
         source: wgpu::ShaderSource::Wgsl(include_str!("shaders/viewport.wgsl").into()),
     });
 
+    // MVP uniform: 4x4 column-major f32 = 64 bytes, visible to the vertex
+    // stage only (the transform lives there). Packed from
+    // `Mat4::to_array16()` as f32 via `f32::to_ne_bytes` — no bytemuck (the
+    // card's explicit no-new-dependency rule).
+    let uniform = device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some("isolith-gpu-viewport-mvp-uniform"),
+        size: 64,
+        usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+        mapped_at_creation: false,
+    });
+    let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+        label: Some("isolith-gpu-viewport-mvp-bgl"),
+        entries: &[wgpu::BindGroupLayoutEntry {
+            binding: 0,
+            visibility: wgpu::ShaderStages::VERTEX,
+            ty: wgpu::BindingType::Buffer {
+                ty: wgpu::BufferBindingType::Uniform,
+                has_dynamic_offset: false,
+                min_binding_size: wgpu::BufferSize::new(64),
+            },
+            count: None,
+        }],
+    });
+    let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("isolith-gpu-viewport-mvp-bg"),
+        layout: &bind_group_layout,
+        entries: &[wgpu::BindGroupEntry {
+            binding: 0,
+            resource: wgpu::BindingResource::Buffer(wgpu::BufferBinding {
+                buffer: &uniform,
+                offset: 0,
+                size: wgpu::BufferSize::new(64),
+            }),
+        }],
+    });
+
     let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
         label: Some("isolith-gpu-viewport-layout"),
-        bind_group_layouts: &[],
+        bind_group_layouts: &[Some(&bind_group_layout)],
         immediate_size: 0,
     });
     let target = GpuTarget::new(device, width, height);
@@ -967,6 +1052,8 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
     );
 
     Some(GpuPipeline {
+        uniform,
+        bind_group,
         shading,
         lines,
         target,

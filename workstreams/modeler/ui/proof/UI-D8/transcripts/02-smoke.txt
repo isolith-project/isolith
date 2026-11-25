@@ -1,0 +1,6 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
+     Running `target/debug/isolith --smoke`
+isolith smoke: renderer=wgpu viewport-backend=gpu (set ISOLITH_GPU=off to force cpu)
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok

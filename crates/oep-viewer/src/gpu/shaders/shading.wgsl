@@ -1,15 +1,36 @@
-// WGSL shading pass for the GPU viewport (wave D, card UI-D2).
+// WGSL shading pass for the GPU viewport (wave D, cards UI-D2 + UI-D8).
 //
-// Unlike the opaque `viewport.wgsl` passthrough, this shader owns per-fragment
-// studio lighting: the host hands it NDC position (pre-projected by the CPU,
-// per the D1 projection model), a VIEW-SPACE normal and a BASE colour + alpha,
-// and the fragment stage computes `key + fill` diffuse lighting so flat vs
-// smooth normals and the transparency alpha reach the pixels.
+// The host hands it a WORLD-space position (the vertex buffer carries world
+// coordinates now, NOT pre-projected NDC — UI-D8 moved the transform into the
+// vertex stage), a VIEW-SPACE normal and a BASE colour + alpha, and the vertex
+// stage applies the MVP identity from the uniform buffer:
+//
+//     clip = u_mvp · vec4(world, 1)      # world -> homogeneous clip
+//     out.clip.xyz = clip.xyz / clip.w   # perspective divide, owned by the
+//                                        #   vertex stage
+//     out.clip.w   = 1.0                 # w=1 keeps the rasterizer's own
+//                                        #   divide a no-op, so attribute
+//                                        #   interpolation stays linear in
+//                                        #   screen space, exactly the D1/D7
+//                                        #   pre-projected behaviour
+//
+// The fragment stage computes `key + fill` diffuse lighting from the
+// interpolated view-space normal so flat vs smooth normals and the
+// transparency alpha reach the pixels byte-identically to the pre-D8 path.
 //
 // The light rig values are injected at build time from `crate::gpu::shading`
 // (`shading_wgsl()`), so the WGSL and the Rust constants are one source of
 // truth. The placeholders are the only thing substituted; nothing else in this
 // file may change.
+
+struct Uniforms {
+    // Column-major mat4 (view-projection), packed on the host from
+    // `Mat4::to_array16()` as 16 f32; a uniform mat4x4 in WGSL is stored
+    // column-by-column, matching that layout.
+    mvp: mat4x4<f32>,
+};
+
+@group(0) @binding(0) var<uniform> u: Uniforms;
 
 struct VsIn {
     @location(0) pos: vec3<f32>,
@@ -26,9 +47,11 @@ struct VsOut {
 @vertex
 fn vs_main(in: VsIn) -> VsOut {
     var out: VsOut;
-    // `pos` carries already-divided NDC (x/y in [-1,1], z unused); w=1 so the
-    // rasterizer's own divide is a no-op.
-    out.clip = vec4<f32>(in.pos.x, in.pos.y, 0.0, 1.0);
+    // World -> homogeneous clip, then the vertex stage does the perspective
+    // divide; w=1 is output so the rasterizer's own divide is a no-op and the
+    // pre-D8 screen-space-linear interpolation semantics are preserved exactly.
+    let clip = u.mvp * vec4<f32>(in.pos, 1.0);
+    out.clip = vec4<f32>(clip.xyz / clip.w, 1.0);
     out.normal = in.normal;
     out.color = in.color;
     return out;
