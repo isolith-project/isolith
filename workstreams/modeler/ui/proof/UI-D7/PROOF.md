@@ -4,11 +4,15 @@ Wave D, in-wave fix card (the wave-B UI-B10 pattern). Branch `ui/d7-render-fix`,
 commits `b7bf432` (correction + golden re-register) and `04a6fcf` (proof-image
 emission), both DCO-signed. Full real transcripts under `transcripts/`.
 
-## STEP 0 — brought nothing
+## STEP 0 — brought nothing (twice)
 
 `git fetch github && git merge github/wave/ui-d` → `Already up to date.`
 (the wave head `513ce8f` — UI-D1+D2+D3 — was already the branch base).
 See `transcripts/00-step0-merge.txt`.
+
+Re-run on 2026-11-25 for this dispatch: `git fetch github && git merge
+github/wave/ui-d` → `Already up to date.` again — the wave head has not
+advanced past this branch's base, so the merge brings nothing.
 
 ## What was wrong (the UI-D1-deferred "D2+ correct + regolden" item)
 
@@ -91,15 +95,48 @@ mechanism; this test pins it.
 | `cargo test -p oep-viewer` (full suite) | all ok | `transcripts/03-oep-viewer.txt` |
 | `cargo test --workspace` | exit 0, 4448 passed / 0 failed | `transcripts/04-workspace.txt` |
 | `xvfb-run -a cargo run -p oep-app -- --smoke` | `frames=8 smoke ok`, exit 0 | `transcripts/05-smoke.txt` |
-| `cargo test -p oep-app --test nav` | **NOT green on this tree — see diagnostics below** | merge-tree run captured in `transcripts/06-nav-diagnosis.txt` |
+| `cargo test -p oep-app --test nav` | **DEFERRED to UI-D4 by the 2026-11-25 orchestrator decision — see below** | diagnosis captured in `transcripts/06-nav-diagnosis.txt` |
 
-### `--test nav` status (important)
+Re-run 2026-11-25 on the committed tree (same 4 commits as the rows above;
+nothing in the tree changed):
 
-The wave head does NOT yet contain `crates/oep-app/tests/nav.rs` — that test is
-UI-D4's and lands with the UI-D4 card (my child, currently `todo`, waiting on
-this card). To prove my fix's share of that acceptance, I built a temporary
-merge of the wave head + my `ui/d7-render-fix` + the `ui/d4-gpu-nav` delta
-(additive files only) and ran the **unchanged** six-cube test.
+| Leg | Result | Transcript |
+|---|---|---|
+| `cargo test -p oep-viewer --test render_axis_views` (`-- --nocapture`) | 4/4; coverage table, near-corner w, per-image sha256 all printed | `transcripts/07-rerun-render-axis-views.txt` |
+| `cargo test -p oep-viewer --test gpu_backend` | 6/6 (re-registered golden's `ISOLITH_GPU=off` round-trip ok) | `transcripts/08-rerun-gpu-backend.txt` |
+| `cargo test --workspace` | exit 0, 222 targets, 4448 passed / 0 failed | `transcripts/09-rerun-workspace.txt` |
+| `xvfb-run -a cargo run -p oep-app -- --smoke` | `frames=8 smoke ok`, exit 0 (`renderer=wgpu viewport-backend=gpu`) | `transcripts/10-rerun-smoke.txt` |
+
+### Intermittent exit-time SIGSEGV in `oep-app --test layout` (pre-existing, unrelated)
+
+One `cargo test --workspace` attempt in this dispatch aborted with
+`signal: 11 SIGSEGV` from `target/debug/deps/layout-*` AFTER every layout test
+reported ok (including `persisted_layout_round_trips_and_app_restores_same_sizes`).
+It reproduces ~1 in 3 runs even fully isolated (`transcripts/09a-layout-isolated.txt`,
+`transcripts/09b-layout-isolated-reruns.txt`) — an exit-time teardown crash in
+the egui_kittest/eframe harness of `crates/oep-app/tests/layout.rs` (built from
+the real `app::App`), not a test failure: all assertions pass, the process dies
+on teardown. It is NOT caused by this card: my diff is oep-viewer projection
+math only, `layout.rs` is UI-A4's owned test, and the identical committed tree
+passed `cargo test --workspace` 4448/0 both before (04) and on the rerun (09).
+Same flake class as the previously-recorded `pick_gpu` timing flake. No test is
+weakened, skipped, or deleted; the suite is green on the reruns above.
+
+### `--test nav` leg — DEFERRED TO UI-D4 (orchestrator decision 2026-11-25)
+
+The acceptance leg `cargo test -p oep-app --test nav -> green` was REMOVED
+from this card by the orchestrator decision of 2026-11-25 (option (a),
+approved): the test is UI-D4's and does not exist on this wave head, and the
+remaining failure is UI-D4's pre-existing gizmo overlap in `nav.rs`. `nav.rs`
+is UI-D4's owned file, outside this card's owned list. This card does NOT
+claim to have passed the nav test; the leg is deferred to UI-D4, with reason
+recorded in the decision: "nav.rs is D4's owned file and the D4 gizmo overlap
+is a separate pre-existing defect."
+
+What this card still owes that leg is ONLY its renderer contribution, proven by
+temporarily merging the wave head + my `ui/d7-render-fix` + the
+`ui/d4-gpu-nav` delta (additive files only) and running the **unchanged**
+six-cube test:
 
 Result: the renderer-caused panic is **gone** (the GPU no longer panics on an
 empty face buffer, and Back renders 22k pixels), but the test now fails on a
@@ -132,6 +169,13 @@ defect is tracked for the UI-D4 card, which lands after this one.
 | File | old | new | why |
 |---|---|---|---|
 | `crates/oep-viewer/tests/gpu_backend.rs` `CPU_DEMO_GOLDEN_HASH` | `11436915591341135581` | `12597229237775278722` | The corrected projection moves the CPU demo frame (the UI-D1-deferred "correct + regolden" item, explicitly re-registered with a comment in the file; no test logic weakened) |
+| `workstreams/modeler/ui/proof/UI-D2/ui-d2-shaded.png` | `07eebca5f53cdd1d387ebb6450e91de1875ce528ae52fd20b000ad520ef8c84d` | `68b991a446677afdc0dcd03344328d86bc313ed7864c2fd61fdda464451efe4d` | `gpu_shading`'s colour-pass snapshot re-captured under the corrected projection (frame re-framed by the clip-w fix); the test deterministically rewrites these files and still asserts only pairwise-distinct hashes |
+| `workstreams/modeler/ui/proof/UI-D2/ui-d2-flat.png` | `d4cb47d07e7a4f2cd1645ab975c44cedd859b8b154cb6e50eee81d5f96f99d25` | `cc69bd61be43c6020d7a4f87157111a877ee69ce145a1899f758f83b0b5e5daa` | same re-capture |
+| `workstreams/modeler/ui/proof/UI-D2/ui-d2-smooth.png` | `4836698181e4bbef3e754d73d9f95c486bb633b974de0acbe38bdd71eb7c60a3` | `bdc83f188647f7245670094e7e4d250192b2d3e30c41bf794f769b62473e972e` | same re-capture |
+| `workstreams/modeler/ui/proof/UI-D2/ui-d2-edges.png` | `8dee0722f3ffe6f006438e27819916e22d40897279708161348758970abf92fd` | `1a34e7bf5dbfbbd5806a4c21ee1eaf2aad17dddc46cfacf1db7d5198b66b79de` | same re-capture |
+| `workstreams/modeler/ui/proof/UI-D2/ui-d2-transparent-50.png` | `afdb52960dc6ac160e9f7c82161fcf36f4c4c9a37693a4a2cd8bae62f37f3b24` | `532c564261d71d94262b50859709415bc590b19b71fc00233c0fe7dd5d97fe05` | same re-capture |
+
+Every golden that did NOT move is the important verification: `pick` / `idbuffer` / `measure` / `gpu_shading.rs` expectations all passed unchanged, confirming the correction moved only the colour pass (which was the broken projection) and not the analytic-truth surfaces.
 
 The launch-frame golden (`shot.sh` / `ui-a2/frame.png*`) is intentionally NOT
 touched: its refresh belongs to the wave-D integrate card UI-D6.
