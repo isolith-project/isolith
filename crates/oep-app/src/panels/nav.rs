@@ -140,9 +140,15 @@ fn section_numbers(bounds: &Aabb, fraction: f64) -> (f64, usize, usize) {
 }
 
 /// One face button of the gizmo, placed at an explicit screen rect; `hit`
-/// records the clicked face.
+/// records the clicked face. The label is one line at a fixed size and
+/// truncates rather than wraps, so the button never grows taller than its
+/// cell and neighbouring faces' click rects never overlap (the UI-D7-measured
+/// gizmo defect: wrapped "Cube Front" labels grew buttons to ~64px in 24px
+/// cells, so a kittest click resolved to the wrong face).
 fn face_button(ui: &mut egui::Ui, rect: egui::Rect, face: CubeFace, hit: &mut Option<CubeFace>) {
-    let btn = egui::Button::new(format!("Cube {}", face.label())).min_size(rect.size());
+    let btn = egui::Button::new(egui::RichText::new(format!("Cube {}", face.label())).size(10.0))
+        .min_size(rect.size())
+        .wrap_mode(egui::TextWrapMode::Truncate);
     let resp = ui.put(rect, btn).on_hover_text(format!(
         "Orient to the {} standard view",
         face.view().label()
@@ -156,9 +162,12 @@ fn face_button(ui: &mut egui::Ui, rect: egui::Rect, face: CubeFace, hit: &mut Op
 /// front/top/side arrangement, each a normal egui button so every face is in
 /// the AccessKit tree by name and reachable by keyboard. Widgets are `put` at
 /// explicit screen rects, so the surrounding `egui::Area` never grows a click
-/// surface beyond the nav card.
+/// surface beyond the nav card. Face cells are wide enough that the full
+/// "Cube <face>" label fits on one line and the buttons keep their 20 px
+/// height, so no two faces overlap (the click rect of every face is its 72x20
+/// cell on the 76x24 grid, as the acceptance probe prints).
 fn cube_gizmo(ui: &mut egui::Ui, px: f32, py: f32) -> Option<CubeFace> {
-    const FW: f32 = 40.0;
+    const FW: f32 = 72.0;
     const FH: f32 = 20.0;
     const GAP: f32 = 4.0;
     let col = |i: usize| px + i as f32 * (FW + GAP);
@@ -194,8 +203,8 @@ pub fn update(ui: &egui::Ui, rect: egui::Rect, _scale: f32, _app: &mut App) {
     // One `egui::Area` at screen origin whose interactive widgets are each
     // `put` at an exact rect (the UI-B8 feature-panel idiom), so the Area's
     // click surface stays the card and never expands into the neighbouring
-    // properties panel.
-    let gw = 152.0_f32;
+    // properties panel. Wide enough for three 72 px gizmo-face columns.
+    let gw = 240.0_f32;
     let gh = 236.0_f32;
     let card = egui::Rect::from_min_size(
         egui::pos2(rect.right() - gw - 10.0, rect.top() + 8.0),
