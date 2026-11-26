@@ -1,0 +1,35 @@
+GATE 1 OF 2: cargo test -p oep-app --test pick_gpu
+sample 0 (cube idx 0): px=(243, 244) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 1 (cube idx 1): px=(376, 303) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+sample 2 (cube idx 2): px=(552, 376) idbuf=Some("cube-c") pick=Some("cube-c") match=true
+sample 3 (cube idx 0): px=(247, 249) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 4 (cube idx 1): px=(377, 299) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+sample 5 (cube idx 2): px=(562, 376) idbuf=Some("cube-c") pick=Some("cube-c") match=true
+sample 6 (cube idx 0): px=(254, 262) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 7 (cube idx 1): px=(386, 282) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+sample 8 (cube idx 2): px=(563, 351) idbuf=Some("cube-c") pick=Some("cube-c") match=true
+sample 9 (cube idx 0): px=(257, 231) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 10 (cube idx 1): px=(388, 322) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+sample 11 (cube idx 2): px=(567, 400) idbuf=Some("cube-c") pick=Some("cube-c") match=true
+sample 12 (cube idx 0): px=(258, 266) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 13 (cube idx 1): px=(390, 320) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+sample 14 (cube idx 2): px=(578, 400) idbuf=Some("cube-c") pick=Some("cube-c") match=true
+sample 15 (cube idx 0): px=(263, 230) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 16 (cube idx 1): px=(399, 272) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+sample 17 (cube idx 2): px=(584, 341) idbuf=Some("cube-c") pick=Some("cube-c") match=true
+sample 18 (cube idx 0): px=(265, 222) idbuf=Some("cube-a") pick=Some("cube-a") match=true
+sample 19 (cube idx 1): px=(401, 283) idbuf=Some("cube-b") pick=Some("cube-b") match=true
+box select expected ids (analytic grid inside px rect [159.0,258.8]..[405.8,411.9]): ["cube-a", "cube-b"]
+box select returned ids: ["cube-a", "cube-b"]
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.41s
+pick_gpu exit: 0
+
+GATE 2 OF 2: xvfb-run -a cargo run -p oep-app -- --smoke
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.14s
+     Running `target/debug/isolith --smoke`
+isolith smoke: renderer=wgpu viewport-backend=gpu (set ISOLITH_GPU=off to force cpu)
+frames=8 smoke ok
+smoke exit: 0
+
+gate date:
+Tue Nov 24 07:49:12 AM UTC 2026

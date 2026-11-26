@@ -1,0 +1,9 @@
+=== gate summary on checkpoint merged head 881405a (parents bed3d50 main + 91a07a5 wave) ===
+01-fmt             exit: 0   (cargo fmt --all -- --check)
+02-clippy          exit: 0   (cargo clippy --workspace --all-targets -- -D warnings; Finished dev profile in 51.74s)
+03-test-workspace  exit: 0   (cargo test --workspace; 225 suites, 4608 passed / 0 failed)
+04-licensing       exit: 0   (python3 scripts/licensing-check.py; 6/6, 34 crates, 535 deps)
+05-precommit       PASS      (bash scripts/gate/precommit-gate.sh; attempt 4 - pytest 558 passed / 29 skipped / 0 failed, cargo test ok; flakes 1-3 preserved: 05-precommit-flake{1,2,3}.txt)
+06-shot            exit: 0   (bash scripts/ui/shot.sh; frame 56afced6... byte-identical x2, no drift vs UI-D12-refreshed golden)
+07-scope-register  exit: 0   (python3 python/oep_tooling/scope_register_check.py; 23 pass / 0 fail; register files byte-identical)
+Screenshots: shaded 7fdf02ec...d41 | view-cube 29e8fab7...1eb3 | picking 5678b384...c84e (byte-identical x2 each)

@@ -1,0 +1,1 @@
+perf.sh exit=0

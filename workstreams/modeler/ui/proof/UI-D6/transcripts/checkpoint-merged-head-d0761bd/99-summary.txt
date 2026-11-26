@@ -1,0 +1,16 @@
+# Six-leg gate on the checkpoint merged head d0761bd (checkpoint/wave-ui-d-b6176aa)
+
+Checkpoint merge commit d0761bd, parents bed3d50 (github/main) + b6176aa (wave/ui-d head).
+Tree delta vs the wave head = only the two post-wave-C docs PRs (README.md, assets/brand/*,
+assets/readme/*, docs-site/index.html) -- no crate, no test, no script, no committed artifact.
+
+- fmt:    cargo fmt --all -- --check                                  EXIT 0
+- clippy: cargo clippy --workspace --all-targets -- -D warnings       EXIT 0
+- test:   cargo test --workspace                                      EXIT 0, 225 suites, aggregate 4608 passed / 0 failed
+          (first parallel run hit the documented egui_kittest exit-time SIGSEGV in
+           feature_from_sketch then layout; isolated binaries 181/0 and 122/0 pass,
+           clean full re-run 4608/0 -- recorded as flake, not a gate failure;
+           03b- and 03c- files are the isolated proof, 03-test-workspace-clean.txt the re-run)
+- licensing: python3 scripts/licensing-check.py                        EXIT 0 (6/6)
+- precommit: bash scripts/gate/precommit-gate.sh (venv pytest 9.2.0)  EXIT 0, gate PASS (pytest 558 passed, 29 skipped)
+- shot:    bash scripts/ui/shot.sh                                    EXIT 0, frame 56afced6473393b20a00388e1a1057032b2eeb0d6721fe01caebc43b23fd0f45, byte-identical, NO drift

@@ -1,0 +1,7 @@
+# gate-clippy: cargo clippy --workspace --all-targets -- -D warnings
+# head: f628f99a3094f26f3edea3e1e4f5d78e6c8be333
+# run: 2026-11-26T13:43:11Z
+
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
+
+## exit: 0

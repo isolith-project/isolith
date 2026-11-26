@@ -1,0 +1,13 @@
+# gate-shot: bash scripts/ui/shot.sh
+# head: f628f99a3094f26f3edea3e1e4f5d78e6c8be333
+# run: 2026-11-26T13:39:12Z
+
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+shot.sh: ok
+  frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+  sha256   : 56afced6473393b20a00388e1a1057032b2eeb0d6721fe01caebc43b23fd0f45
+
+## exit: 0

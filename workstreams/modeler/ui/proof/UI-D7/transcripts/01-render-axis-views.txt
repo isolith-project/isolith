@@ -1,0 +1,43 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running tests/render_axis_views.rs (target/debug/deps/render_axis_views-b170d5aa1c0ac6fa)
+
+running 4 tests
+clip-w formula change: row4(vp)·(view,1)  ->  row4(vp)·(world,1) = -view.z
+corner              old_w             d7_w
+              0.000000000    136.108800207
+              0.000000000    136.108800207
+              0.000000000    136.108800207
+              0.000000000    136.108800207
+Back view CPU covered-pixels after fix: 22810
+test back_view_near_corner_w_before_and_after ... ok
+all-culled scene: CPU faces=231 baseline=231; GPU faces=246 baseline=246; no panic
+view        gpu_px     cpu_px   drift%
+test all_culled_scene_renders_empty_frame_without_panic_on_both_backends ... ok
+Front        22487      22827   0.0149
+Back         22520      22810   0.0127
+Left          5576       5745   0.0294
+Right         5635       5471   0.0291
+Top           7853       7817   0.0046
+Bottom        7834       7813   0.0027
+Iso          22161      21628   0.0241
+test all_standard_views_render_on_both_backends ... ok
+Front CPU: sha256 721209ec77edb9215960b075f14e5e316af8baa5de8c5ac0da1ddcba6b35c35a  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Front-cpu-400x300.png)
+Front GPU: sha256 90750d3fb61497589f06089de39b6610095b8c96e1c717ed009562b0f27e9898  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Front-gpu-400x300.png)
+Back CPU: sha256 16557c16c8aa75ce0cbe4c9f6617f61ff4aa8509a3efbfd7b0975d517c78690d  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Back-cpu-400x300.png)
+Back GPU: sha256 11e7b4f92ba4bfc17bbb3d389e421a35e0341470a4434355789afbc0d641b977  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Back-gpu-400x300.png)
+Left CPU: sha256 80468a5baf39f18c3a98602ba25b4c7527981d4379023271be319167b6f3bc00  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Left-cpu-400x300.png)
+Left GPU: sha256 262389ff0ce9650d4a801ac7eeb3c765b6bb9980c3e2fe9d69a2315bdcec8568  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Left-gpu-400x300.png)
+Right CPU: sha256 5b1a1247721e1db2850d036c64b01dc17b18a48fab1024bff373d39115784794  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Right-cpu-400x300.png)
+Right GPU: sha256 e1eb01e8d4791d3cf8fa4e5487075756e5c52969f29a3936dfd5d812efc38d0d  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Right-gpu-400x300.png)
+Top CPU: sha256 0a951c0e679627060c4816f9f6186050bcc2c7db152ac4853626c1c9d9f28618  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Top-cpu-400x300.png)
+Top GPU: sha256 8ad31153c612d3a5257b594482d4ed22cceaa86629fef87665d4a5788f317f30  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Top-gpu-400x300.png)
+Bottom CPU: sha256 f4c78e4b052bbf7046ca40b670256cf23b0ecc74c8ac5ad2a27b395a1680277e  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Bottom-cpu-400x300.png)
+Bottom GPU: sha256 0e9f1b972f79576b08d46ce68aa7dee62eaeae62f035014d6f36e113e4b5cc78  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Bottom-gpu-400x300.png)
+Iso CPU: sha256 adadf5c4df5bd1699c997d023048c37ef0ee4d81d73c8b72f42f1b3b84bb63e0  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Iso-cpu-400x300.png)
+Iso GPU: sha256 3164ea28d7571e83a2bc79deee5f8b593756ab2d939046a87bcb8a5f034bb054  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Iso-gpu-400x300.png)
+all-culled CPU: sha256 0f2e19116639692e6d20e9877c89d5033ddfb7e2fd6127173b9efaf333ec043f  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-all-culled-cpu-400x300.png)
+all-culled GPU: sha256 5ca67f6b3d8621323818f590ba38b2e2f07454fb159080166d452da1b91a4fbe  (/home/r1a/isolith-main/.worktrees/ui-d7/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-all-culled-gpu-400x300.png)
+test proof_images_for_all_standard_views ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.83s
+

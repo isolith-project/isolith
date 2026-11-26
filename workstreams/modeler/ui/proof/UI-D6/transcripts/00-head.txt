@@ -1,0 +1,5 @@
+=== 00-head ===
+date: 2026-11-26T08:46:38Z
+1097f768061c8289c28fdff805434ecec3a314c2
+1097f76 proof(UI-D5): re-gate on merged wave head (fast-forward to ba7e3bc w/ UI-D10) - budget MET, p95 6.408 ms
+?? workstreams/modeler/ui/proof/UI-D6/
