@@ -253,6 +253,93 @@ struct GpuPipeline {
     target: GpuTarget,
 }
 
+/// UI-D9 per-stage frame cost instrumentation (env-gated, inert when off).
+///
+/// Active ONLY when `ISOLITH_PERF_STAGES=1` (read once at construction).
+/// When unset, `GpuBackend::perf` is `None` and the render path performs zero
+/// timing calls; no `Instant::now()` in the seam, so the unset binary is
+/// behaviour- and hash-identical to the pre-card tree (the fast smoke proves
+/// the GPU frame hash unchanged with and without the variable). When set,
+/// `render_frame` records a partition of the driving wall clock into named
+/// stages and prints one machine-parseable line per frame to stderr, with each
+/// stage's duration against the frame total so the sum can be checked against
+/// the measured p95. Consumed by `scripts/ui/perf-profile.sh`.
+struct PerfStages {
+    frame: usize,
+    samples: Vec<(&'static str, Duration)>,
+}
+
+impl PerfStages {
+    /// Returns `Some` only when `ISOLITH_PERF_STAGES=1`; the unset path (and
+    /// any other value) returns `None`, keeping the seam inert.
+    fn enabled() -> Option<Self> {
+        match std::env::var_os("ISOLITH_PERF_STAGES") {
+            Some(v) if v == "1" => Some(Self {
+                frame: 0,
+                samples: Vec::new(),
+            }),
+            _ => None,
+        }
+    }
+
+    /// Start a new frame: the stage table is per-frame and resets here.
+    fn begin_frame(&mut self) {
+        self.frame += 1;
+        self.samples.clear();
+    }
+
+    /// Record one (named, wall-time) segment for the current frame.
+    fn push(&mut self, name: &'static str, d: Duration) {
+        self.samples.push((name, d));
+    }
+
+    /// Merge same-name segments into a deterministic stage table and print it
+    /// with the frame total (stderr, `ISOLITH_PERF_STAGES` prefix) so a
+    /// profile script can set the per-stage sum against `frame_time`.
+    fn print_frame(&self, total: Duration) {
+        let mut acc: Vec<(&'static str, Duration)> = Vec::new();
+        for (name, d) in &self.samples {
+            if let Some(entry) = acc.iter_mut().find(|(n, _)| *n == *name) {
+                entry.1 += *d;
+            } else {
+                acc.push((*name, *d));
+            }
+        }
+        let parts: Vec<String> = acc
+            .iter()
+            .map(|(n, d)| format!("{n}={:.3}ms", d.as_secs_f64() * 1e3))
+            .collect();
+        eprintln!(
+            "ISOLITH_PERF_STAGES frame={} total={:.3}ms {}",
+            self.frame,
+            total.as_secs_f64() * 1e3,
+            parts.join(" ")
+        );
+    }
+}
+
+/// Run `f` once, and when the stage instrumentation is live (`perf` is
+/// `Some`) record the wall time as a named per-stage frame segment and return
+/// it (so callers can sum segments and attribute a residual). When `perf` is
+/// `None` this is a plain call with no timing work and returns `None`; the
+/// seam is inert unless `ISOLITH_PERF_STAGES=1`.
+fn timed_push(
+    perf: &mut Option<PerfStages>,
+    name: &'static str,
+    mut f: impl FnMut(),
+) -> Option<Duration> {
+    if let Some(p) = perf.as_mut() {
+        let t0 = Instant::now();
+        f();
+        let d = t0.elapsed();
+        p.push(name, d);
+        Some(d)
+    } else {
+        f();
+        None
+    }
+}
+
 /// The GPU viewport backend: same scene, GPU path, shared device with egui.
 ///
 /// Owns the device context, the pipelines and the offscreen target, and
@@ -277,6 +364,10 @@ pub struct GpuBackend {
     vertex_prep: Duration,
     /// The shading state applied to the last render (mode + alpha).
     shading: shading::ShadingState,
+    /// UI-D9 env-gated per-stage frame cost instrumentation; `None` unless
+    /// `ISOLITH_PERF_STAGES=1` (then the render path records and prints a
+    /// per-frame stage partition, inert and zero-timing when unset).
+    perf: Option<PerfStages>,
 }
 
 impl GpuBackend {
@@ -314,6 +405,7 @@ impl GpuBackend {
             edge_primitives: 0,
             vertex_prep: Duration::ZERO,
             shading: shading::state(),
+            perf: PerfStages::enabled(),
         };
         backend.render_frame();
         Some(backend)
@@ -326,9 +418,27 @@ impl GpuBackend {
     /// byte-identical pixels (the seam's determinism oracle on the GPU path).
     fn render_frame(&mut self) {
         let start = Instant::now();
+        if let Some(p) = &mut self.perf {
+            p.begin_frame();
+        }
         self.shading = shading::state();
-        let (faces, lines, edge_prims) =
-            self.assemble(&self.scene, &self.camera, self.width, self.height);
+        // The assemble call is made through a receiver-less associated fn
+        // (UI-D9's stage timers need `&mut perf`; a `&mut self` receiver would
+        // fight the `&self.scene` argument borrow, so the inputs and the perf
+        // handle are passed as disjoint parameters). `assemble` itself reports
+        // its own total + sub-split (incl. an exact residual), so the per-stage
+        // partition is self-consistent here.
+        let scene = &self.scene;
+        let camera = self.camera; // Copy
+        let shading_state = self.shading; // Copy
+        let (faces, lines, edge_prims) = Self::assemble(
+            &mut self.perf,
+            scene,
+            &camera,
+            self.width,
+            self.height,
+            shading_state,
+        );
         self.edge_primitives = edge_prims;
 
         let device = &self.ctx.device;
@@ -388,12 +498,33 @@ impl GpuBackend {
         }
         drop(pass);
         self.vertex_prep = prep_start.elapsed();
+        if let Some(p) = &mut self.perf {
+            // Shaded/lines vertex pack + device-buffer create + draw-record
+            // (`prep_start.elapsed()` is exactly the UI-D8 vertex_prep bucket).
+            p.push("vertex-prep", prep_start.elapsed());
+        }
 
+        let sub0 = Instant::now();
         queue.submit([encoder.finish()]);
+        if let Some(p) = &mut self.perf {
+            p.push("submit", sub0.elapsed());
+        }
 
+        let rb0 = Instant::now();
         self.frame = self.pipeline.target.read_back(device, queue);
+        if let Some(p) = &mut self.perf {
+            // read_back asserts the copy + map + device.poll; the poll is the
+            // synchronous wait that makes the GPU raster time part of this
+            // frame's wall clock (the seam is synchronous by design).
+            p.push("readback+w", rb0.elapsed());
+        }
         self.frame_time = start.elapsed();
+        let h0 = Instant::now();
         self.hash = frame_hash(&self.frame);
+        if let Some(p) = &mut self.perf {
+            p.push("hash", h0.elapsed());
+            p.print_frame(self.frame_time);
+        }
     }
 
     /// Project the scene into NDC vertex lists for one frame, honouring the
@@ -404,18 +535,33 @@ impl GpuBackend {
     /// `Edges`/`Shaded` modes only), the grid and the screen-constant triad
     /// arms in draw order. Every NDC position uses the CPU renderer's exact
     /// projection formula (module docs).
+    ///
+    /// Receiver-less so `render_frame` can pass the disjoint `perf` handle
+    /// (UI-D9 stage instrumentation) alongside the scene/camera inputs.
     fn assemble(
-        &self,
+        perf: &mut Option<PerfStages>,
         scene: &Scene,
         camera: &Camera,
         width: u32,
         height: u32,
+        shading: shading::ShadingState,
     ) -> (Vec<ShadedVertex>, Vec<Vertex>, usize) {
         let aspect = f64::from(width) / f64::from(height);
         let world_to_view = camera.view_matrix();
         let vp = camera.view_projection(aspect);
-        let alpha = self.shading.alpha.clamp(0.0, 1.0);
-        let mode = self.shading.mode;
+        let alpha = shading.alpha.clamp(0.0, 1.0);
+        let mode = shading.mode;
+
+        // UI-D9 exact partition of `assemble`: the total wall time, the timed
+        // segments below, and a reported `assemble.other` residual so no
+        // unmetered time hides between the measured closures (the stage table
+        // is a true partition of the function).
+        let a_total = perf.is_some().then(Instant::now);
+        let mut d_pos = Duration::ZERO;
+        let mut d_norm = Duration::ZERO;
+        let mut d_proj = Duration::ZERO;
+        let mut d_sort = Duration::ZERO;
+        let mut d_expand = Duration::ZERO;
 
         let mut face_ndc: Vec<GpuFace> = Vec::new();
         if mode != ViewMode::Edges {
@@ -434,26 +580,42 @@ impl GpuBackend {
                 };
                 match &prim.mesh {
                     Some(mesh) => {
-                        let positions: Vec<Vec3> = mesh
-                            .positions
-                            .iter()
-                            .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64))
-                            .collect();
-                        let smooth = if mode == ViewMode::Smooth || mode == ViewMode::Shaded {
-                            Some(shading::smooth_normals(&positions, &mesh.triangles))
-                        } else {
-                            None
-                        };
-                        for t in &mesh.triangles {
-                            let poly = tri_positions(&mesh.positions, t);
-                            let normals = match &smooth {
-                                Some(sm) => {
-                                    [sm[t[0] as usize], sm[t[1] as usize], sm[t[2] as usize]]
-                                }
-                                None => shading::flat_triangle_normals(&poly),
-                            };
-                            push_face(&mut face_ndc, &poly, &normals, color, &world_to_view, &vp);
+                        let mut positions: Vec<Vec3> = Vec::new();
+                        d_pos += timed_push(perf, "assemble.positions", || {
+                            positions = mesh
+                                .positions
+                                .iter()
+                                .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64))
+                                .collect();
+                        })
+                        .unwrap_or_default();
+                        let mut smooth: Option<Vec<Vec3>> = None;
+                        if mode == ViewMode::Smooth || mode == ViewMode::Shaded {
+                            d_norm += timed_push(perf, "assemble.normals", || {
+                                smooth = Some(shading::smooth_normals(&positions, &mesh.triangles));
+                            })
+                            .unwrap_or_default();
                         }
+                        d_proj += timed_push(perf, "assemble.project+cull", || {
+                            for t in &mesh.triangles {
+                                let poly = tri_positions(&mesh.positions, t);
+                                let normals = match &smooth {
+                                    Some(sm) => {
+                                        [sm[t[0] as usize], sm[t[1] as usize], sm[t[2] as usize]]
+                                    }
+                                    None => shading::flat_triangle_normals(&poly),
+                                };
+                                push_face(
+                                    &mut face_ndc,
+                                    &poly,
+                                    &normals,
+                                    color,
+                                    &world_to_view,
+                                    &vp,
+                                );
+                            }
+                        })
+                        .unwrap_or_default();
                     }
                     None => {
                         let quads = box_faces(prim);
@@ -470,45 +632,65 @@ impl GpuBackend {
                             [1, 2, 6, 5],
                         ];
                         let corners = prim.world_corners;
-                        let smooth_corner = if mode == ViewMode::Smooth || mode == ViewMode::Shaded
-                        {
-                            let tris: Vec<[u32; 3]> =
-                                crate::gpu::shading::box_fan_triangles().to_vec();
-                            crate::gpu::shading::smooth_normals(corners.as_ref(), &tris)
-                        } else {
-                            Vec::new()
-                        };
-                        for (face, idxs) in quads.iter().zip(BOX_FACE_CORNERS.iter()) {
-                            let face_normal = crate::gpu::shading::newell(face);
-                            let normals: Vec<Vec3> = if smooth_corner.is_empty() {
-                                vec![face_normal; face.len()]
-                            } else {
-                                idxs.iter()
-                                    .map(|&i| smooth_corner.get(i).copied().unwrap_or(face_normal))
-                                    .collect()
-                            };
-                            push_face(&mut face_ndc, face, &normals, color, &world_to_view, &vp);
+                        let mut smooth_corner: Vec<Vec3> = Vec::new();
+                        if mode == ViewMode::Smooth || mode == ViewMode::Shaded {
+                            d_norm += timed_push(perf, "assemble.normals", || {
+                                let tris: Vec<[u32; 3]> =
+                                    crate::gpu::shading::box_fan_triangles().to_vec();
+                                smooth_corner =
+                                    crate::gpu::shading::smooth_normals(corners.as_ref(), &tris);
+                            })
+                            .unwrap_or_default();
                         }
+                        d_proj += timed_push(perf, "assemble.project+cull", || {
+                            for (face, idxs) in quads.iter().zip(BOX_FACE_CORNERS.iter()) {
+                                let face_normal = crate::gpu::shading::newell(face);
+                                let normals: Vec<Vec3> = if smooth_corner.is_empty() {
+                                    vec![face_normal; face.len()]
+                                } else {
+                                    idxs.iter()
+                                        .map(|&i| {
+                                            smooth_corner.get(i).copied().unwrap_or(face_normal)
+                                        })
+                                        .collect()
+                                };
+                                push_face(
+                                    &mut face_ndc,
+                                    face,
+                                    &normals,
+                                    color,
+                                    &world_to_view,
+                                    &vp,
+                                );
+                            }
+                        })
+                        .unwrap_or_default();
                     }
                 }
             }
         }
         // Painter: farthest (largest view z) first, exactly like the CPU path.
-        face_ndc.sort_by(|a, b| {
-            b.depth
-                .partial_cmp(&a.depth)
-                .unwrap_or(std::cmp::Ordering::Equal)
-        });
+        d_sort += timed_push(perf, "assemble.sort", || {
+            face_ndc.sort_by(|a, b| {
+                b.depth
+                    .partial_cmp(&a.depth)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            });
+        })
+        .unwrap_or_default();
 
         let mut faces: Vec<ShadedVertex> = Vec::with_capacity(face_ndc.len() * 3);
-        for face in &face_ndc {
-            let idxs = fan_indices(face.world.len());
-            for (tri, idx) in fan_triangles(&face.world).iter().zip(idxs.iter()) {
-                for (k, p) in tri.iter().enumerate() {
-                    faces.push(ShadedVertex::new(*p, face.normal[idx[k]], face.color));
+        d_expand += timed_push(perf, "assemble.expand", || {
+            for face in &face_ndc {
+                let idxs = fan_indices(face.world.len());
+                for (tri, idx) in fan_triangles(&face.world).iter().zip(idxs.iter()) {
+                    for (k, p) in tri.iter().enumerate() {
+                        faces.push(ShadedVertex::new(*p, face.normal[idx[k]], face.color));
+                    }
                 }
             }
-        }
+        })
+        .unwrap_or_default();
 
         let mut lines: Vec<Vertex> = Vec::new();
         // The edge pass draws EXACTLY the boundary edge list: a mesh
@@ -578,9 +760,34 @@ impl GpuBackend {
             push_wire(&mut lines, &seg[0], &seg[1], &vp, grid_color());
         }
 
+        // Drop of the per-face intermediate list is real per-frame transient
+        // garbage (1M `GpuFace`s, each with two heap-backed `Vec`s): moving
+        // the deallocation here (which is what returning would trigger)
+        // closes the assemble clock AFTER the cleanup, so the stage honestly
+        // owns build + teardown (it shows up in `assemble.other`).
+        drop(face_ndc);
+
         // Screen-constant triad arms (the CPU compositor's pixel-space arms,
         // converted to NDC for the passthrough stage).
         append_screen_axis_arms(&mut lines, scene, &vp, width, height);
+
+        // Close the exact partition: the whole-assemble wall (incl. the
+        // dropped intermediate) and the residual the five measured segments do
+        // not own (so `assemble` == positions + normals + project+cull + sort
+        // + expand + other, with no unmetered time left inside the function).
+        if let Some(a0) = a_total {
+            let total = a0.elapsed();
+            let sub = d_pos + d_norm + d_proj + d_sort + d_expand;
+            let other = if total > sub {
+                total - sub
+            } else {
+                Duration::ZERO
+            };
+            if let Some(p) = perf.as_mut() {
+                p.push("assemble", total);
+                p.push("assemble.other", other);
+            }
+        }
 
         (faces, lines, edge_prims)
     }
