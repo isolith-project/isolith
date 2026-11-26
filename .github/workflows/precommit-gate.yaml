@@ -22,8 +22,26 @@ jobs:
     container:
       image: rust:1-slim-bookworm
     steps:
-      - name: Install git
-        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest
+      - name: Install git and a software Vulkan adapter
+        # Same requirement as the integration job: the precommit gate runs
+        # cargo test -q, which builds the viewer GPU suites and needs a Vulkan
+        # ICD in the container or gpu_shading and gpu_backend fail with a
+        # poisoned gpu_lock (`gpu lock: PoisonError`) instead of running.
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates python3 python3-pytest libvulkan1 mesa-vulkan-drivers vulkan-tools
+      - name: Assert a software Vulkan adapter is present
+        # Fail loudly here instead of letting the GPU suites fail with a
+        # poisoned lock, so a silent ICD absence shows up in the log directly.
+        run: |
+          ls -1 /usr/share/vulkan/icd.d/
+          vulkaninfo --summary > /tmp/vulkaninfo-summary.txt 2>&1
+          sed -n '1,40p' /tmp/vulkaninfo-summary.txt
+          echo "adapter line(s) in the full summary:"
+          grep -Ei 'deviceName|driverName|llvmpipe|lavapipe' /tmp/vulkaninfo-summary.txt | head -5 || true
+          if ! grep -Eiq 'llvmpipe|lavapipe' /tmp/vulkaninfo-summary.txt; then
+            echo "ERROR: no llvmpipe or lavapipe software Vulkan adapter found; the GPU suites cannot run"
+            exit 1
+          fi
+          echo "OK: software Vulkan adapter present in this container"
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:

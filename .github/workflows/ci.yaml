@@ -79,8 +79,29 @@ jobs:
     container:
       image: rust:1-slim-bookworm
     steps:
-      - name: Install git
-        run: apt-get update -qq && apt-get install -y -qq git ca-certificates
+      - name: Install git and a software Vulkan adapter
+        # The viewer test suites (gpu_shading, gpu_backend) build a real wgpu
+        # backend, so the container needs a Vulkan ICD or the first GPU test
+        # panics on "no adapter" while holding the process-global gpu_lock and
+        # poisons the rest of the suite as `gpu lock: PoisonError`.
+        # mesa-vulkan-drivers ships lavapipe, a conformant software Vulkan
+        # implementation, which the Vulkan loader picks up like a physical
+        # driver (bookworm installs its ICD as lvp_icd.x86_64.json).
+        run: apt-get update -qq && apt-get install -y -qq git ca-certificates libvulkan1 mesa-vulkan-drivers vulkan-tools
+      - name: Assert a software Vulkan adapter is present
+        # Fail loudly here instead of letting the GPU suites fail with a
+        # poisoned lock, so a silent ICD absence shows up in the log directly.
+        run: |
+          ls -1 /usr/share/vulkan/icd.d/
+          vulkaninfo --summary > /tmp/vulkaninfo-summary.txt 2>&1
+          sed -n '1,40p' /tmp/vulkaninfo-summary.txt
+          echo "adapter line(s) in the full summary:"
+          grep -Ei 'deviceName|driverName|llvmpipe|lavapipe' /tmp/vulkaninfo-summary.txt | head -5 || true
+          if ! grep -Eiq 'llvmpipe|lavapipe' /tmp/vulkaninfo-summary.txt; then
+            echo "ERROR: no llvmpipe or lavapipe software Vulkan adapter found; the GPU suites cannot run"
+            exit 1
+          fi
+          echo "OK: software Vulkan adapter present in this container"
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
