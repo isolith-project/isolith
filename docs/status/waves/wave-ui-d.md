@@ -1,45 +1,133 @@
 # Wave ui-d status record
 
-Wave D of the editor parity program (`~/.hermes/plans/2026-11-09_210930-isolith-rust-ui-parity.md`, section 5): GPU viewport and visual quality. Branch `wave/ui-d`.
+Wave D of the editor parity program (`~/.hermes/plans/2026-11-09_210930-isolith-rust-ui-parity.md`, section 5): GPU viewport, shading, picking, navigation, and the render-seam performance fix. Branch `wave/ui-d` cut from main at `6275787`.
 
-STATUS: OPEN — the UI-D6 integrate card (t_62060655) BLOCKED at the wave-close gate (2026-11-26). The merged wave head `1097f76` does NOT pass the full six-leg gate: fmt, clippy `-D warnings`, the precommit pytest (2 failures), and `shot.sh` are red, and every red leg's root cause is in files outside the integrate card's owned list (UI-D3/UI-D5 crate files, D1/D2/D3/D8/D10 em-dash text guards, and the MEDIA-RENDERER demo present PNGs). Full evidence: `workstreams/modeler/ui/proof/UI-D6/PROOF.md` and its `transcripts/`.
+Written by card UI-D6 (wave integration) at wave close.
 
 ## Cards
 
 | Card | Title | Status |
 |---|---|---|
 | UI-D1 | UI-GPU-BACKEND: wgpu viewport behind the seam, shared device with egui | done |
-| UI-D2 | UI-GPU-SHADING: lighting, edges, view modes | done |
-| UI-D3 | UI-PICK: id buffer picking, hover, box select | done |
+| UI-D2 | UI-GPU-SHADING: studio lighting, edges, flat/smooth, transparency | done |
+| UI-D3 | UI-PICK: id buffer picking, hover pre-highlight, box select | done |
 | UI-D7 | UI-RENDER-FIX: correct the clip_w projection and guard empty face buffers | done |
 | UI-D4 | UI-NAV: view cube, standard views, section planes | done |
 | UI-D8 | UI-VEC4-PIPELINE: one homogeneous clip-space path, transform in the vertex stage | done |
 | UI-D9 | UI-PERF-PROFILE: per-stage frame cost split and the render-seam performance ADR | done |
 | UI-D10 | UI-RESIDENT-SCENE: keep geometry on the GPU, cull per primitive, re-upload only dirty meshes | done |
-| UI-D5 | UI-PERF: interactive frame budget on U1, recorded numbers | done (budget MET on merged head: p95 6.408 ms; historical miss preserved) |
-| UI-D6 | UI-WAVE-D-INTEGRATE: merge, gate, checkpoint, screenshots, tag | blocked (needs_input) 2026-11-26 |
+| UI-D5 | UI-PERF: interactive frame budget on U1, recorded numbers | done |
+| UI-D12 | UI-GATE-FIX: make the wave-D head pass its own gate | done |
+| UI-D6 | UI-WAVE-D-INTEGRATE: merge, gate, checkpoint, screenshots, tag | done |
 
-Every wave-D card branch is an ancestor of the wave head (`proof/UI-D6/transcripts/08-ancestors.txt`).
+Every wave-D card branch (the 9 feature cards plus the UI-D12 gate-fix branch)
+is an ancestor of the wave head (audit in
+`proof/UI-D6/transcripts/08-ancestors.txt`, 10/10), and every card's proof dir
+is present on the wave head.
 
 ## Head sha
 
-- Wave head: `1097f76` (carries UI-D1, D2, D3, D7, D4, D8, D9, D10 and D5's landing; the wave was fast-forwarded to include UI-D5's merged-head re-gate proof at `1097f76` per the orchestrator's UI-D5 handoff).
-- Not closed: no checkpoint merge into `main` exists. `github/main` (`bed3d50`) is not an ancestor of the wave head (main carries post-wave-C docs PRs #32/#33), so the checkpoint would be a real merge, not a fast-forward.
+- Wave head: `91a07a5` (`merge-UI-D12`, containing all wave-D cards UI-D1..UI-D10
+  plus UI-D5's merged-head re-prove and the UI-D12 gate fix).
+- Checkpoint merge commit: `881405a`, parents `bed3d50` (`github/main`) +
+  `91a07a5` (wave head). `main` is NOT an ancestor of the wave head (main
+  carries two post-wave-C docs PRs: readme-refresh and brand-avatar); the
+  checkpoint tree differs from the wave head only by those two docs commits
+  (`README.md`, `assets/brand/*`, `assets/readme/*`, `docs-site/index.html`),
+  none of which the six-leg gate touches. The full six-leg gate was run on the
+  checkpoint merged head and passed (transcripts
+  `proof/UI-D6/transcripts/checkpoint-merged-head/`).
+- STEP 0 of the close card fast-forwarded nothing (the card worktree merged the
+  new head `39425ee`); attempt 1's block on the pre-fix head `1097f76` was
+  resolved by UI-D12 (see `proof/UI-D6/PROOF.md` for the full history).
+- Landing: PR #<PR> merged as `<MAIN>` (`github/main`), annotated tag `wave-ui-d`
+  (`<TAG>`) -> checkpoint `881405a`, Gitea mirror fast-forwarded to `<MAIN>`
+  with the tag, and `github/wave/ui-e` created at `<MAIN>`. Transcripts
+  `proof/UI-D6/transcripts/landing/`.
+- The UI-D6 record (this file, the README row, `proof/UI-D6/`) is folded into
+  the single checkpoint commit and re-committed onto the wave branch, per the
+  wave-close convention.
 
-## Deferred
+## Full gate on the checkpoint merged head
 
-UI-D11 (UI-DEPTH-SORT, reverse-Z depth buffer) is deliberately NOT part of wave D per the orchestrator addendum 2026-11-25: the premise that the painter sort could not reach the budget is false (UI-D10 measured p95 6.366 ms at the full 1,002,528-triangle / 1600x1000 scene against the 16.6 ms bar), and UI-D11 is a correctness upgrade that changes the GPU output contract (per-pixel depth ordering, GPU regolden, id-parity and transparency re-verification), not a budget fix. Its branch is NOT merged; it is parked in `scheduled` for Don's decision.
+Transcripts in `workstreams/modeler/ui/proof/UI-D6/transcripts/checkpoint-merged-head/`:
 
-## Render-seam performance numbers (from the cards' own proofs)
+| Leg | Result |
+|---|---|
+| `cargo fmt --all -- --check` | PASS (0) |
+| `cargo clippy --workspace --all-targets -- -D warnings` | PASS (0) |
+| `cargo test --workspace` | PASS (0) - 225 suites, aggregate 4608 passed / 0 failed |
+| `python3 scripts/licensing-check.py` | PASS (0) - 6/6, 34 crates, 535 deps |
+| `bash scripts/gate/precommit-gate.sh` | PASS - pytest 558 passed, 29 skipped; cargo test green (three earlier runs flaked on the documented egui_kittest exit-time SIGSEGV class and one on a pytest interpreter miss - all preserved as `05-precommit-flake{1,2,3}.txt`, clean run in `05-precommit.txt`) |
+| `bash scripts/ui/shot.sh` | PASS (0) - frame `56afced6...`, byte-identical x2, NO drift (golden already refreshed by UI-D12) |
 
-The interactive seam at 1,002,528 triangles / 1600x1000 on the real NVIDIA GB10:
+`scope_register_check`: 23/23, `docs/scope-register.json` and `.md`
+byte-identical (`07-scope-register.txt`) - no wave-D test proves a register row.
 
-- Before (UI-D5 measurement, pre-D10 seam): p95 434.94 ms (the committed historical miss in UI-D5's proof is p95 438.617 ms, ~26x over the bar, recorded 2026-11-25 and preserved as history; bar never lowered).
-- After UI-D10 (resident scene, Option A of `workstreams/modeler/ui/decisions/render-seam-performance.md` v1.0.1): p95 6.366 ms (UI-D10 proof) and p95 6.408 ms (UI-D5 re-gate on the merged head, p50 6.313, p99 6.471, max 6.823, min fps 146.6, mean fps 158.7). Threshold 16.6 ms: MET.
-- Steady-state upload per frame: 120,303,360 B before -> 64 B after (MVP uniform only).
-- Device buffer allocations per frame: 0. Draw calls per frame: 2.
-- Per-primitive frustum cull: 78.4 pct of a 1,331-primitive framed assembly dropped.
-- Pixel oracle: 21/21 proof frames sha256-identical across the change; CPU golden 12597229237775278722 and GPU echo 9287941873092625150 unchanged.
-- Prior-art brief: `workstreams/modeler/ui/proof/UI-D9/prior-art.md` (36 cited sources).
+## The numbers the wave carries (from the cards' own proofs)
 
-The render-seam fix, in one line: geometry uploaded once into device-resident buffers and referenced per frame, per-primitive world-AABB culling, dirty-only re-uploads, painter order preserved. (The lesson worth keeping for wave E.)
+Interactive seam - 1,002,528 triangles at 1600x1000 on the real NVIDIA GB10
+(Vulkan, driver 580.178.04; adversarial scene = P6-M5-T03 heightfield grid):
+
+- p95 434.94 ms BEFORE (UI-D5 measurement on the pre-D10 seam) -> 6.366 ms AFTER
+  UI-D10 (UI-D10 proof; UI-D5's merged-head re-measure 6.408 ms agrees), against
+  the unchanged 16.6 ms bar (bar never lowered; the historical ~26x miss is
+  recorded in UI-D5's proof and README row as history, fixed by UI-D10).
+- Steady-state upload per frame: 120,303,360 B before -> 64 B after (MVP
+  uniform only).
+- Device buffer allocations per frame: 0 (created once). Draw calls per frame: 2.
+- Per-primitive world-AABB frustum cull: 78.4% of a 1,331-primitive framed
+  assembly dropped (3,444 of 15,972 triangles submitted).
+- Pixel oracle: 21/21 proof frames sha256-identical across the change; CPU
+  golden 12597229237775278722 and GPU echo 9287941873092625150 unchanged,
+  picking parity 123/0, transparent-50 snapshot byte-identical.
+- Decision record:
+  `workstreams/modeler/ui/decisions/render-seam-performance.md` v1.0.1, with the
+  prior-art brief committed at
+  `workstreams/modeler/ui/proof/UI-D9/prior-art.md` (36 cited sources).
+
+What the render-seam fix was, in one line (the lesson for wave E): geometry is
+uploaded ONCE into device-resident buffers and referenced per frame,
+per-primitive world-AABB culling, dirty-only re-uploads, painter order
+preserved - the painter-sorted streams stay in resident GPU buffers created
+once, so the steady-state frame is a 64-byte uniform write plus two draws.
+
+## Register rows
+
+No wave-D test maps to a `docs/scope-register.json` row, so the register is
+byte-identical and `scope_register_check` stays green (23/23).
+
+## Screenshots (acceptance)
+
+Three real-binary screenshots of the merged-head binary, captured under
+`xvfb-run` via the XTEST injector (`proof/UI-D6/ui_d6_inject.c` + `capture.sh`),
+two independent launches byte-identical each (sha256 in proof):
+
+| Shot | sha256 | Shows |
+|---|---|---|
+| shaded | `7fdf02ec...d41` | default studio launch: GPU-shaded demo solid + UI-D2 Shading card (Shaded selected) |
+| view-cube | `29e8fab7...1eb3` | UI-D4 Orientation card (cube faces + Front/Top/Right/Iso + Section + `Triangles: 12`) after the Iso click landed the standard Iso view |
+| picking | `5678b384...c84e` | UI-D3 GPU box-select mid Alt+left-drag: rubber band framing exactly the drag rect over the shaded solid |
+
+## What is not done / deferred
+
+- **UI-D11 (UI-DEPTH-SORT, reverse-Z depth buffer) is deliberately NOT part of
+  wave D and is deferred (parked in `scheduled` for Don's decision).** It is a
+  correctness upgrade that changes the GPU output contract (per-pixel depth
+  ordering, GPU regolden, id-parity and transparency re-verification), NOT a
+  budget fix. The premise that auto-cut it - that the painter sort could not
+  reach the budget - is false: UI-D10 measured p95 6.366 ms at the full
+  1,002,528-triangle / 1600x1000 scene against the 16.6 ms bar, so the budget is
+  met with the painter sort retained. Its branch `ui/d11-depth-sort` was never
+  merged into `wave/ui-d` (no remote branch exists) and the ancestry check does
+  not fail on it.
+- The wave-C variables/ kernel-features hosting gap (panels delivered
+  `#[path]`-includable and unhosted) is unchanged by wave D; the UI-C3 kittest
+  harness remains the accepted variables evidence per the wave-C orchestrator
+  decision.
+- The `wave/ui-d` branch is left in place after the checkpoint so the wave
+  history and record are preserved.
+- No UI test was weakened, skipped or deleted to reach green; the only gate-run
+  disturbances were the documented egui_kittest teardown flake (re-run clean,
+  flake transcripts preserved) and the throwaway venv used to give the precommit
+  gate a pytest-capable interpreter.

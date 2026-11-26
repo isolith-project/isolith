@@ -1,0 +1,16 @@
+== quality gate: ui-d6 ==
+  [run]  pytest
+  [FAIL] pytest
+/home/r1a/.hermes/installs/5ebcb71aa13cac4c/environments/e070cf0ec47f49bb96b43959347e2981/venv/bin/python3: No module named pytest
+  [run]  cargo test
+  [FAIL] cargo test
+running 125 tests
+....................................................................................... 87/125
+...............................error: test failed, to rerun pass `-p oep-app --test feature_tree`
+
+Caused by:
+  process didn't exit successfully: `/home/r1a/isolith-main/.worktrees/ui-d6/target/debug/deps/feature_tree-1c72521b8301480c --quiet` (signal: 11, SIGSEGV: invalid memory reference)
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate FAIL ==
+exit: 1
