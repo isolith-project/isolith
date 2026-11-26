@@ -1,0 +1,15 @@
+== quality gate: ui-d6 ==
+  [run]  pytest
+  [FAIL] pytest
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_interactive_shell_acceptance.py::test_present_hd_committed_artifacts_regenerate_byte_identical
+FAILED tests/test_preview_viewer_acceptance.py::test_preview_viewer_acceptance
+2 failed, 556 passed, 29 skipped, 1 warning in 109.34s (0:01:49)
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate FAIL ==
+precommit exit: 1

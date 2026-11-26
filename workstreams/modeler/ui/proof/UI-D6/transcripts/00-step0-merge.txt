@@ -1,0 +1,11 @@
+## UI-D6 STEP 0 transcript
+command: git fetch github && git merge github/wave/ui-d
+worktree: /home/r1a/isolith-main/.worktrees/ui-d6
+date: Thu Nov 26 12:00:37 PM UTC 2026
+
+-- merge output (tail) --
+## ui/d6-integrate...github/wave/ui-d [ahead 2]
+?? workstreams/modeler/ui/proof/UI-D6/transcripts/00-step0-merge.txt
+39425ee Merge remote-tracking branch 'github/wave/ui-d' into ui/d6-integrate
+91a07a5 merge-UI-D12: wave-D gate fix lands on wave/ui-d
+e6bcf13 card(UI-D12): make the wave-D head pass its own gate

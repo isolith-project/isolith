@@ -1,0 +1,3 @@
+CPU 800x600 per-frame ns: median=21367902 p95=21713438 n=300
+GPU 800x600 render_frame ns: median=10911711 p95=12227325 n=120
+GPU vertex-prep(upload) ns: median=240704 p95=342847 n=120

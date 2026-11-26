@@ -1,0 +1,14 @@
+== quality gate: ui-d6 ==
+  [run]  pytest
+  [ok]   pytest (559 passed, 28 skipped, 1 warning in 119.69s (0:01:59))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==
+
+## exit: 0
+
+## note: first two precommit runs hit the documented egui_kittest exit-time teardown
+## SIGSEGV in the gate script internal `cargo test` leg (rollback, layout binaries;
+## zero test failures). Clean re-run above: pytest 559/28 PASS, cargo test ok, gate PASS.

@@ -1,0 +1,13 @@
+# UI-D7 2026-11-25 rerun: oep-app layout binary, isolated (flake investigation)
+--- isolated run 1 (cargo test -p oep-app --test layout) ---
+test persisted_layout_round_trips_and_app_restores_same_sizes ... ok
+test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.21s
+exit=0
+--- isolated run 2 (cargo test -p oep-app --test layout) ---
+test persisted_layout_round_trips_and_app_restores_same_sizes ... ok
+test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.40s
+exit=0
+--- isolated run 3 (cargo test -p oep-app --test layout) ---
+test persisted_layout_round_trips_and_app_restores_same_sizes ... ok
+  process didn't exit successfully: `/home/r1a/isolith-main/.worktrees/ui-d7/target/debug/deps/layout-d87407b388cdfa67` (signal: 11, SIGSEGV: invalid memory reference)
+exit=0

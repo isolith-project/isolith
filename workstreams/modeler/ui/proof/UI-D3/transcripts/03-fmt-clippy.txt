@@ -1,0 +1,238 @@
+$ cargo fmt --all -- --check
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+fmt exit: 1
+
+$ cargo clippy -p oep-viewer -p oep-app --all-targets -- -D warnings
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d3/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.33s
+clippy exit: 0

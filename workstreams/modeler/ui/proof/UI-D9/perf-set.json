@@ -1,0 +1,30 @@
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "device_type": "IntegratedGpu",
+    "driver": "NVIDIA",
+    "driver_info": "580.178.04",
+    "name": "NVIDIA GB10"
+  },
+  "benchmark": "ui-d5-interactive-frame-budget",
+  "budget_met": false,
+  "card": "UI-D5",
+  "cpu_demo_frame_hash": 12597229237775278722,
+  "cpu_demo_golden_hash": 12597229237775278722,
+  "cpu_determinism_unchanged": true,
+  "fps_mean": 2.5059515767836937,
+  "fps_min": 2.301207767956021,
+  "height": 1000,
+  "host": "u1",
+  "max_frame_ms": 434.554417,
+  "mean_frame_ms": 399.05000929166675,
+  "measured_frames": 120,
+  "min_frame_ms": 383.853615,
+  "p50_frame_ms": 398.741868,
+  "p95_frame_ms": 408.968951,
+  "p99_frame_ms": 425.46484499999997,
+  "scene_triangles": 1002528,
+  "threshold_p95_ms": 16.6,
+  "warmup_frames": 20,
+  "width": 1600
+}
