@@ -3,15 +3,15 @@
 //! [`acquire`] returns the device/queue the GPU backend renders on. The
 //! acquisition order is:
 //!
-//! 1. **egui's device** — when the app runs `eframe` with the wgpu renderer,
+//! 1. **egui's device**: when the app runs `eframe` with the wgpu renderer,
 //!    `main.rs` calls [`register_egui_device`] with the device eframe already
 //!    created, so the viewport literally shares the same `wgpu::Device` the
 //!    UI renders on (the wave-D "shared device with egui" line). No second
 //!    device is created and the lockfile keeps a single `wgpu` version.
-//! 2. **autonomous acquisition** — when no egui device was registered (the
+//! 2. **autonomous acquisition**: when no egui device was registered (the
 //!    `oep-viewer` crate test, or an app that fell back to the glow
 //!    renderer), this module creates its own `Instance`/`Adapter`/`Device`.
-//! 3. **honest `None`** — if [`GPU_FLAG`] is `off` or no adapter is
+//! 3. **honest `None`**: if [`GPU_FLAG`] is `off` or no adapter is
 //!    reachable, callers fall back to the CPU backend.
 //!
 //! Everything the backend needs from the device is offscreen and

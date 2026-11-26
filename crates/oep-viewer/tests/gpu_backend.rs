@@ -9,7 +9,7 @@
 //! 2. renders the committed demo and bracket fixtures at 800x600 to a
 //!    non-empty frame (non-background pixel counts printed and floored);
 //! 3. renders the same `(scene, camera, size)` twice to BYTE-IDENTICAL
-//!    frames — the seam's determinism oracle re-proven on the GPU path;
+//!    frames: the seam's determinism oracle re-proven on the GPU path;
 //! 4. covers within [`COVERAGE_TOLERANCE`] (5%) of the CPU backend's
 //!    covered-pixel count for the same view. The exact GPU and CPU counts
 //!    are printed; the pixels are NOT byte-equal and this test never claims
@@ -61,7 +61,7 @@ fn env_lock() -> &'static Mutex<()> {
 ///
 /// The lavapipe software ICD segfaults when multiple tests create/destroy
 /// devices concurrently in one process (measured, reproducible SIGSEGV), so
-/// the device-touching tests hold this lock for their whole body — creation
+/// the device-touching tests hold this lock for their whole body: creation
 /// AND teardown happen while the lock is held.
 fn gpu_lock() -> &'static Mutex<()> {
     static LOCK: OnceLock<Mutex<()>> = OnceLock::new();

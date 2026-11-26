@@ -1,0 +1,28 @@
+    Checking oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-viewer)
+error: this assertion has a constant value
+   --> crates/oep-viewer/tests/perf_budget.rs:233:5
+    |
+233 | /     assert!(
+234 | |         MEASURED_FRAMES >= 120,
+235 | |         "the card requires at least 120 measured frames"
+236 | |     );
+    | |_____^
+    |
+    = help: consider moving this into a const block: `const { assert!(..) }`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#assertions_on_constants
+    = note: `-D clippy::assertions-on-constants` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::assertions_on_constants)]`
+
+error: could not compile `oep-viewer` (test "perf_budget") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: using `chunks_exact` with a constant chunk size
+   --> crates/oep-viewer/tests/render_axis_views.rs:297:22
+    |
+297 |     for chunk in msg.chunks_exact(64) {
+    |                      ^^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<64>().0`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#chunks_exact_to_as_chunks
+    = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::chunks_exact_to_as_chunks)]`
+
+error: could not compile `oep-viewer` (test "render_axis_views") due to 1 previous error
