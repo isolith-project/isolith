@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/render_axis_views.rs (target/debug/deps/render_axis_views-b170d5aa1c0ac6fa)
+
+running 4 tests
+test all_culled_scene_renders_empty_frame_without_panic_on_both_backends ... ok
+test all_standard_views_render_on_both_backends ... ok
+test back_view_near_corner_w_before_and_after ... ok
+test proof_images_for_all_standard_views ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.94s
+

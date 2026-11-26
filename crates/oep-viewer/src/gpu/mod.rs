@@ -60,13 +60,13 @@
 
 pub mod device;
 pub mod idbuffer;
+pub mod resident;
 pub mod shading;
 pub mod target;
 
 use std::time::{Duration, Instant};
 
 use oep_geo::math::{Mat4, Vec3};
-use wgpu::util::DeviceExt;
 
 use crate::backend::frame_hash;
 use crate::camera::Camera;
@@ -75,6 +75,7 @@ use crate::scene::{Primitive, Scene};
 use crate::{overlay, theme};
 
 use device::GpuContext;
+use resident::{FaceArena, ResidentScene};
 use shading::{ViewMode, BOX_EDGES};
 use target::{GpuTarget, TARGET_FORMAT};
 
@@ -217,22 +218,6 @@ impl ShadedVertex {
     }
 }
 
-/// One filled face ready for GPU submission: its world-space polygon, the
-/// per-vertex view-space normals (flat: same normal per triangle; smooth:
-/// per-vertex averaged), the flattened shade colour, and the view-space depth
-/// used for the painter's sort.
-struct GpuFace {
-    depth: f64,
-    color: [u8; 4],
-    /// WORLD-space vertices, transformed to clip by the vertex stage's MVP
-    /// (the GPU owns the transform now). In the same order as `normal`.
-    world: Vec<[f64; 3]>,
-    /// View-space (camera-space) unit normal per world vertex, in the same
-    /// order as `world`. Flat mode stores the face normal on every vertex;
-    /// smooth mode stores the per-vertex averaged normal.
-    normal: Vec<[f64; 3]>,
-}
-
 /// GPU-backend pipeline set. The shaded pipeline renders filled faces through
 /// the studio key+fill lighting shader (`shading.wgsl`) whose vertex stage
 /// applies the MVP from the bind group (`binding 0` uniform, column-major f32,
@@ -259,11 +244,14 @@ struct GpuPipeline {
 /// When unset, `GpuBackend::perf` is `None` and the render path performs zero
 /// timing calls; no `Instant::now()` in the seam, so the unset binary is
 /// behaviour- and hash-identical to the pre-card tree (the fast smoke proves
-/// the GPU frame hash unchanged with and without the variable). When set,
-/// `render_frame` records a partition of the driving wall clock into named
-/// stages and prints one machine-parseable line per frame to stderr, with each
-/// stage's duration against the frame total so the sum can be checked against
-/// the measured p95. Consumed by `scripts/ui/perf-profile.sh`.
+/// the GPU frame hash unchanged with and without the variable — UI-D10 re-proves
+/// this on its committed tree). When set, `render_frame` records a partition of
+/// the driving wall clock into named stages and prints one machine-parseable
+/// line per frame to stderr, with each stage's duration against the frame total
+/// so the sum can be checked against the measured p95. Consumed by
+/// `scripts/ui/perf-profile.sh`. UI-D10 keeps the exact stage names D9
+/// committed; a resident fast path reports `assemble=0` and `vertex-prep=0`
+/// explicitly so the seam partition stays a true partition of the frame.
 struct PerfStages {
     frame: usize,
     samples: Vec<(&'static str, Duration)>,
@@ -364,10 +352,47 @@ pub struct GpuBackend {
     vertex_prep: Duration,
     /// The shading state applied to the last render (mode + alpha).
     shading: shading::ShadingState,
+    /// The resident GPU buffers + per-frame dirty tracking (UI-D10).
+    cache: ResidentScene,
     /// UI-D9 env-gated per-stage frame cost instrumentation; `None` unless
     /// `ISOLITH_PERF_STAGES=1` (then the render path records and prints a
     /// per-frame stage partition, inert and zero-timing when unset).
     perf: Option<PerfStages>,
+    /// Scene generation counter: bumped on every `set_scene`. The scene is
+    /// owned by this backend and immutable between `set_scene` calls, so the
+    /// epoch is the exact dirty oracle for every primitive's mesh bytes,
+    /// transform, highlighted flag and colour (see `resident::frame_key`).
+    session_epoch: u64,
+    // ---- reused CPU scratch (Stage 2: nothing allocated per frame) ----
+    /// Painter face arena (metadata + flat world/normal scratch).
+    arena: FaceArena,
+    /// Reused packed face-vertex byte stream.
+    face_bytes: Vec<u8>,
+    /// Reused line vertex list (feature edges, grid, triad).
+    lines: Vec<Vertex>,
+    /// Reused packed line-vertex byte stream.
+    line_bytes: Vec<u8>,
+    /// Reused per-primitive visibility mask from the world-AABB frustum cull.
+    visible: Vec<bool>,
+    /// Reused f64 mesh position scratch (avoids a fresh `Vec<Vec3>` per mesh
+    /// per frame).
+    scratch_positions: Vec<Vec3>,
+    // ---- seam instrumentation counters exposed to the acceptance harness ----
+    /// Upload bytes written in the last render (MVP + geometry + lines) —
+    /// the pre-D10 per-frame total was 120,303,360 B; steady state is 64.
+    last_upload_bytes: u64,
+    /// Device-buffer allocations made in the last render.
+    last_buffer_allocs: u64,
+    /// Draw calls recorded in the last render.
+    last_draw_calls: u64,
+    /// Wall time of the last render's assemble (0 on a resident fast path).
+    last_assemble: Duration,
+    /// Faces submitted by the last full-path assemble (0 on a fast path).
+    last_faces_submitted: usize,
+    /// Total triangles of the scene the last assemble saw.
+    last_scene_triangles: usize,
+    /// Primitives the world-AABB cull removed in the last assemble.
+    last_culled_prims: usize,
 }
 
 impl GpuBackend {
@@ -388,6 +413,7 @@ impl GpuBackend {
         let width = DEFAULT_WIDTH;
         let height = DEFAULT_HEIGHT;
         let pipeline = init_pipeline(&ctx, width, height)?;
+        let cache = ResidentScene::new(ctx.device.clone());
         let mut backend = Self {
             scene,
             camera,
@@ -405,7 +431,22 @@ impl GpuBackend {
             edge_primitives: 0,
             vertex_prep: Duration::ZERO,
             shading: shading::state(),
+            cache,
             perf: PerfStages::enabled(),
+            session_epoch: 0,
+            arena: FaceArena::default(),
+            face_bytes: Vec::new(),
+            lines: Vec::new(),
+            line_bytes: Vec::new(),
+            visible: Vec::new(),
+            scratch_positions: Vec::new(),
+            last_upload_bytes: 0,
+            last_buffer_allocs: 0,
+            last_draw_calls: 0,
+            last_assemble: Duration::ZERO,
+            last_faces_submitted: 0,
+            last_scene_triangles: 0,
+            last_culled_prims: 0,
         };
         backend.render_frame();
         Some(backend)
@@ -422,43 +463,76 @@ impl GpuBackend {
             p.begin_frame();
         }
         self.shading = shading::state();
-        // The assemble call is made through a receiver-less associated fn
-        // (UI-D9's stage timers need `&mut perf`; a `&mut self` receiver would
-        // fight the `&self.scene` argument borrow, so the inputs and the perf
-        // handle are passed as disjoint parameters). `assemble` itself reports
-        // its own total + sub-split (incl. an exact residual), so the per-stage
-        // partition is self-consistent here.
-        let scene = &self.scene;
-        let camera = self.camera; // Copy
-        let shading_state = self.shading; // Copy
-        let (faces, lines, edge_prims) = Self::assemble(
-            &mut self.perf,
-            scene,
-            &camera,
-            self.width,
-            self.height,
-            shading_state,
-        );
-        self.edge_primitives = edge_prims;
-
-        let device = &self.ctx.device;
-        let queue = &self.ctx.queue;
-
-        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor::default());
-
-        // Vertex preparation: pack the face/line bytes and create the device
-        // buffers (the per-frame cost the transform move is meant to shift /
-        // measure; UI-D8 records it before and after). The MVP uniform is
-        // rewritten here too — the vertex stage owns the transform.
-        let prep_start = Instant::now();
 
         // The MVP the vertex stage applies to the WORLD positions: the same
         // view-projection the CPU culling uses (`render::project_ndc`), packed
         // column-major f32 — one transform, one place, shared with the CPU.
         let aspect = f64::from(self.width) / f64::from(self.height);
         let vp = self.camera.view_projection(aspect);
-        queue.write_buffer(&self.pipeline.uniform, 0, &pack_matrix4(&vp));
 
+        // The per-frame dirty key: (scene generation, camera, size, shading).
+        // An unchanged key means the resident streams are byte-identical to
+        // what this frame would assemble, so the frame reuses them and moves
+        // only the 64-byte MVP uniform: no assemble, no packing, no upload,
+        // no buffer allocation, and the SAME single digit draw calls.
+        let key = resident::frame_key(
+            self.session_epoch,
+            &self.camera,
+            self.width,
+            self.height,
+            self.shading.mode as u8,
+            self.shading.alpha.to_bits(),
+        );
+
+        self.cache.start_frame();
+        self.last_buffer_allocs = 0;
+        let fast = self.cache.is_resident() && self.cache.resident_key() == Some(key);
+
+        if !fast {
+            // Full path: derive the painter-sorted face/line vertex streams
+            // for this (scene, camera, shading) into the reused arena, pack
+            // them into the reused byte buffers, and re-upload only what
+            // actually changed, through the resident buffers (created once).
+            // `assemble` reports its own total + sub-split (incl. an exact
+            // residual), so the stage partition is self-consistent here.
+            let (faces, tris, culled, edge_prims, assemble_t) = self.assemble();
+            self.edge_primitives = edge_prims;
+            self.last_assemble = assemble_t;
+            self.last_faces_submitted = faces;
+            self.last_scene_triangles = tris;
+            self.last_culled_prims = culled;
+
+            // Vertex preparation: re-upload only the dirty streams through the
+            // resident buffers (write_buffer; no device-buffer allocation) —
+            // the UI-D8 vertex-prep bucket, env-gated to the D9 stage table.
+            let prep = timed_push(&mut self.perf, "vertex-prep", || {
+                self.cache.upload_faces(&self.ctx.queue, &self.face_bytes);
+                self.cache.upload_lines(&self.ctx.queue, &self.line_bytes);
+            })
+            .unwrap_or_default();
+            self.vertex_prep = prep;
+            self.cache.mark_resident(key);
+        } else {
+            // Steady-state / repeat view: nothing in the resident streams
+            // changed, so only the MVP uniform is (re)written this frame and
+            // the resident ranges are drawn as-is. `edge_primitives` keeps
+            // its value from the last full path (same inputs => same count).
+            // The D9 stage table records these two seam stages as 0 so the
+            // partition stays a true partition of the frame wall clock.
+            self.vertex_prep = Duration::ZERO;
+            self.last_assemble = Duration::ZERO;
+            if let Some(p) = &mut self.perf {
+                p.push("assemble", Duration::ZERO);
+                p.push("vertex-prep", Duration::ZERO);
+            }
+        }
+
+        let device = &self.ctx.device;
+        let queue = &self.ctx.queue;
+        queue.write_buffer(&self.pipeline.uniform, 0, &pack_matrix4(&vp));
+        self.cache.record_mvp();
+
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor::default());
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("isolith-gpu-viewport-pass"),
             color_attachments: &[Some(self.pipeline.target.color_attachment(CLEAR))],
@@ -472,42 +546,28 @@ impl GpuBackend {
         // 1. Filled faces, painter-sorted back-to-front (deepest first) so
         //    later draws overwrite nearer ones exactly like the CPU raster.
         //    (Skip in `Edges` mode, which draws the boundary edge list only.)
-        if !faces.is_empty() {
-            let face_bytes = pack_shaded(&faces);
-            let face_buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("isolith-gpu-viewport-faces"),
-                contents: &face_bytes,
-                usage: wgpu::BufferUsages::VERTEX,
-            });
+        let face_len = self.cache.face_len_bytes();
+        if face_len > 0 {
             pass.set_pipeline(&self.pipeline.shading);
-            pass.set_vertex_buffer(0, face_buf.slice(..));
-            pass.draw(0..face_bytes.len() as u32 / 40, 0..1);
+            pass.set_vertex_buffer(0, self.cache.face_buffer().slice(..));
+            self.cache.record_draw();
+            pass.draw(0..(face_len as u32) / resident::SHADED_STRIDE as u32, 0..1);
         }
 
         // 2. Lines (feature edges, grid, then the triad arms).
-        if !lines.is_empty() {
-            let line_bytes = pack(&lines);
-            let line_buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("isolith-gpu-viewport-lines"),
-                contents: &line_bytes,
-                usage: wgpu::BufferUsages::VERTEX,
-            });
+        let line_len = self.cache.line_len_bytes();
+        if line_len > 0 {
             pass.set_pipeline(&self.pipeline.lines);
-            pass.set_vertex_buffer(0, line_buf.slice(..));
-            pass.draw(0..line_bytes.len() as u32 / 28, 0..1);
+            pass.set_vertex_buffer(0, self.cache.line_buffer().slice(..));
+            self.cache.record_draw();
+            pass.draw(0..(line_len as u32) / resident::LINE_STRIDE as u32, 0..1);
         }
         drop(pass);
-        self.vertex_prep = prep_start.elapsed();
-        if let Some(p) = &mut self.perf {
-            // Shaded/lines vertex pack + device-buffer create + draw-record
-            // (`prep_start.elapsed()` is exactly the UI-D8 vertex_prep bucket).
-            p.push("vertex-prep", prep_start.elapsed());
-        }
 
-        let sub0 = Instant::now();
+        let s0 = Instant::now();
         queue.submit([encoder.finish()]);
         if let Some(p) = &mut self.perf {
-            p.push("submit", sub0.elapsed());
+            p.push("submit", s0.elapsed());
         }
 
         let rb0 = Instant::now();
@@ -525,37 +585,42 @@ impl GpuBackend {
             p.push("hash", h0.elapsed());
             p.print_frame(self.frame_time);
         }
+        self.last_upload_bytes = self.cache.upload_bytes();
+        self.last_buffer_allocs = self.cache.buffer_allocs();
+        self.last_draw_calls = self.cache.draw_calls();
     }
 
-    /// Project the scene into NDC vertex lists for one frame, honouring the
-    /// current shading state (view mode + alpha).
+    /// Project the scene into the reused painter-sorted vertex scratch for one
+    /// frame, honouring the current shading state (view mode + alpha).
     ///
-    /// Returns `(faces, lines)` where `faces` are the (mode-dependent)
-    /// shaded-triangle vertices and `lines` hold the feature edges (in the
-    /// `Edges`/`Shaded` modes only), the grid and the screen-constant triad
-    /// arms in draw order. Every NDC position uses the CPU renderer's exact
-    /// projection formula (module docs).
+    /// Per-primitive world-AABB frustum culling runs first; only survivors are
+    /// projected / sorted / packed, into the reused arena and byte buffers
+    /// (Stage 2: the CPU touches survivors only, and nothing is heap-allocated
+    /// per face). The packed stream is byte-identical to the pre-D10
+    /// `pack_shaded` stream: the same projection (`render::project_ndc`), the
+    /// same global painter order, the same vertices and colours.
     ///
-    /// Receiver-less so `render_frame` can pass the disjoint `perf` handle
-    /// (UI-D9 stage instrumentation) alongside the scene/camera inputs.
-    fn assemble(
-        perf: &mut Option<PerfStages>,
-        scene: &Scene,
-        camera: &Camera,
-        width: u32,
-        height: u32,
-        shading: shading::ShadingState,
-    ) -> (Vec<ShadedVertex>, Vec<Vertex>, usize) {
+    /// Returns `(faces_submitted, scene_triangle_total, primitives_culled,
+    /// edge_primitives_drawn, wall_time)`. On a resident fast-path frame this
+    /// method is not called and the previous totals stand.
+    fn assemble(&mut self) -> (usize, usize, usize, usize, Duration) {
+        let t0 = Instant::now();
+        let scene = &self.scene;
+        let camera = self.camera; // `Camera` is Copy; the scene stays borrowed
+        let width = self.width;
+        let height = self.height;
         let aspect = f64::from(width) / f64::from(height);
         let world_to_view = camera.view_matrix();
         let vp = camera.view_projection(aspect);
-        let alpha = shading.alpha.clamp(0.0, 1.0);
-        let mode = shading.mode;
+        let alpha = self.shading.alpha.clamp(0.0, 1.0);
+        let mode = self.shading.mode;
 
         // UI-D9 exact partition of `assemble`: the total wall time, the timed
-        // segments below, and a reported `assemble.other` residual so no
-        // unmetered time hides between the measured closures (the stage table
-        // is a true partition of the function).
+        // segments below, and a reported `assemble.other` residual so the
+        // stage table is a true partition. The primitive AABB cull and the
+        // line/grid/triad assembly land in `other` (as D9's line assembly
+        // did); everything else is a named sub-stage with D9's exact names.
+        let perf = &mut self.perf;
         let a_total = perf.is_some().then(Instant::now);
         let mut d_pos = Duration::ZERO;
         let mut d_norm = Duration::ZERO;
@@ -563,9 +628,33 @@ impl GpuBackend {
         let mut d_sort = Duration::ZERO;
         let mut d_expand = Duration::ZERO;
 
-        let mut face_ndc: Vec<GpuFace> = Vec::new();
+        // Reuse every scratch allocation from the previous full path.
+        self.arena.clear();
+        self.face_bytes.clear();
+        self.lines.clear();
+        self.line_bytes.clear();
+        self.visible.clear();
+        self.visible.resize(scene.primitives.len(), true);
+
+        // Per-primitive world-AABB frustum cull: the CPU only touches
+        // survivors (the OCCT primitive-level BVH-cull essence, ADOPTED in the
+        // UI-D9 ADR §4 Option A).
+        let mut culled = 0usize;
+        let mut tris_total = 0usize;
+        for (i, prim) in scene.primitives.iter().enumerate() {
+            tris_total += scene_triangle_count(prim);
+            let vis = resident::aabb_visible(&prim.world_aabb(), &vp);
+            self.visible[i] = vis;
+            if !vis {
+                culled += 1;
+            }
+        }
+
         if mode != ViewMode::Edges {
-            for prim in &scene.primitives {
+            for (i, prim) in scene.primitives.iter().enumerate() {
+                if !self.visible[i] {
+                    continue;
+                }
                 let color = if prim.highlighted {
                     [
                         theme::HIGHLIGHT_RGB[0],
@@ -580,33 +669,52 @@ impl GpuBackend {
                 };
                 match &prim.mesh {
                     Some(mesh) => {
-                        let mut positions: Vec<Vec3> = Vec::new();
-                        d_pos += timed_push(perf, "assemble.positions", || {
-                            positions = mesh
-                                .positions
-                                .iter()
-                                .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64))
-                                .collect();
-                        })
-                        .unwrap_or_default();
+                        // Reused f64 position scratch (no fresh Vec per mesh);
+                        // `assemble.positions` and `assemble.normals` carry
+                        // D9's names so the profile partition is preserved.
                         let mut smooth: Option<Vec<Vec3>> = None;
                         if mode == ViewMode::Smooth || mode == ViewMode::Shaded {
+                            d_pos += timed_push(perf, "assemble.positions", || {
+                                self.scratch_positions.clear();
+                                self.scratch_positions.extend(
+                                    mesh.positions
+                                        .iter()
+                                        .map(|p| Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64)),
+                                );
+                            })
+                            .unwrap_or_default();
                             d_norm += timed_push(perf, "assemble.normals", || {
-                                smooth = Some(shading::smooth_normals(&positions, &mesh.triangles));
+                                smooth = Some(shading::smooth_normals(
+                                    &self.scratch_positions,
+                                    &mesh.triangles,
+                                ));
                             })
                             .unwrap_or_default();
                         }
                         d_proj += timed_push(perf, "assemble.project+cull", || {
                             for t in &mesh.triangles {
-                                let poly = tri_positions(&mesh.positions, t);
-                                let normals = match &smooth {
-                                    Some(sm) => {
-                                        [sm[t[0] as usize], sm[t[1] as usize], sm[t[2] as usize]]
-                                    }
-                                    None => shading::flat_triangle_normals(&poly),
-                                };
-                                push_face(
-                                    &mut face_ndc,
+                                let mut poly: [Vec3; 3] = [Vec3::new(0.0, 0.0, 0.0); 3];
+                                let mut normals: [Vec3; 3] = [Vec3::new(0.0, 0.0, 1.0); 3];
+                                let mut missing = false;
+                                for k in 0..3 {
+                                    let Some(p) = mesh.positions.get(t[k] as usize) else {
+                                        missing = true;
+                                        break;
+                                    };
+                                    poly[k] = Vec3::new(p[0] as f64, p[1] as f64, p[2] as f64);
+                                    normals[k] = match &smooth {
+                                        Some(sm) => sm[t[k] as usize],
+                                        None => Vec3::new(0.0, 0.0, 1.0),
+                                    };
+                                }
+                                if missing {
+                                    continue; // identical to the old skip-partial-face path
+                                }
+                                if smooth.is_none() {
+                                    normals = shading::flat_triangle_normals(&poly);
+                                }
+                                arena_push(
+                                    &mut self.arena,
                                     &poly,
                                     &normals,
                                     color,
@@ -645,17 +753,15 @@ impl GpuBackend {
                         d_proj += timed_push(perf, "assemble.project+cull", || {
                             for (face, idxs) in quads.iter().zip(BOX_FACE_CORNERS.iter()) {
                                 let face_normal = crate::gpu::shading::newell(face);
-                                let normals: Vec<Vec3> = if smooth_corner.is_empty() {
-                                    vec![face_normal; face.len()]
-                                } else {
-                                    idxs.iter()
-                                        .map(|&i| {
-                                            smooth_corner.get(i).copied().unwrap_or(face_normal)
-                                        })
-                                        .collect()
-                                };
-                                push_face(
-                                    &mut face_ndc,
+                                let mut normals = [face_normal; 4];
+                                if !smooth_corner.is_empty() {
+                                    for (k, &i) in idxs.iter().enumerate() {
+                                        normals[k] =
+                                            smooth_corner.get(i).copied().unwrap_or(face_normal);
+                                    }
+                                }
+                                arena_push(
+                                    &mut self.arena,
                                     face,
                                     &normals,
                                     color,
@@ -669,9 +775,11 @@ impl GpuBackend {
                 }
             }
         }
+        let faces_submitted = self.arena.faces.len();
+
         // Painter: farthest (largest view z) first, exactly like the CPU path.
         d_sort += timed_push(perf, "assemble.sort", || {
-            face_ndc.sort_by(|a, b| {
+            self.arena.faces.sort_by(|a, b| {
                 b.depth
                     .partial_cmp(&a.depth)
                     .unwrap_or(std::cmp::Ordering::Equal)
@@ -679,28 +787,35 @@ impl GpuBackend {
         })
         .unwrap_or_default();
 
-        let mut faces: Vec<ShadedVertex> = Vec::with_capacity(face_ndc.len() * 3);
+        // Expand the sorted arena straight into the byte stream, in the exact
+        // pre-D10 order (fan `[0, i, i+1]`, world point + view normal + colour).
         d_expand += timed_push(perf, "assemble.expand", || {
-            for face in &face_ndc {
-                let idxs = fan_indices(face.world.len());
-                for (tri, idx) in fan_triangles(&face.world).iter().zip(idxs.iter()) {
-                    for (k, p) in tri.iter().enumerate() {
-                        faces.push(ShadedVertex::new(*p, face.normal[idx[k]], face.color));
+            for meta in &self.arena.faces {
+                resident::fan_emit(meta.world_len, |a, b, c| {
+                    for k in [a, b, c] {
+                        let p = self.arena.world[meta.world_start + k];
+                        let n = self.arena.normal[meta.normal_start + k];
+                        ShadedVertex::new([p[0], p[1], p[2]], [n[0], n[1], n[2]], meta.color)
+                            .pack_into(&mut self.face_bytes);
                     }
-                }
+                });
             }
         })
         .unwrap_or_default();
 
-        let mut lines: Vec<Vertex> = Vec::new();
         // The edge pass draws EXACTLY the boundary edge list: a mesh
         // primitive draws its committed `mesh.edges`; a box proxy draws its
         // 12 box edges (the proxy's boundary edge list). The count of line
         // primitives the pass submits is recorded (`edge_primitives`) so the
-        // acceptance can compare drawn vs fixture boundary edge count.
+        // acceptance can compare drawn vs fixture boundary edge count. Edges
+        // of culled primitives are skipped (their wire projects fully outside
+        // the frustum, so the rasterised pixels are identical either way).
         let mut edge_prims = 0usize;
         if mode == ViewMode::Shaded || mode == ViewMode::Edges {
-            for prim in &scene.primitives {
+            for (i, prim) in scene.primitives.iter().enumerate() {
+                if !self.visible[i] {
+                    continue;
+                }
                 let color = if prim.highlighted {
                     prim_color(prim)
                 } else {
@@ -714,15 +829,15 @@ impl GpuBackend {
                             else {
                                 continue;
                             };
-                            let before = lines.len();
+                            let before = self.lines.len();
                             push_wire(
-                                &mut lines,
+                                &mut self.lines,
                                 &Vec3::new(pa[0] as f64, pa[1] as f64, pa[2] as f64),
                                 &Vec3::new(pb[0] as f64, pb[1] as f64, pb[2] as f64),
                                 &vp,
                                 color,
                             );
-                            if lines.len() > before {
+                            if self.lines.len() > before {
                                 edge_prims += 1;
                             }
                         }
@@ -733,9 +848,9 @@ impl GpuBackend {
                             let (Some(pa), Some(pb)) = (corners.get(ia), corners.get(ib)) else {
                                 continue;
                             };
-                            let before = lines.len();
-                            push_wire(&mut lines, pa, pb, &vp, color);
-                            if lines.len() > before {
+                            let before = self.lines.len();
+                            push_wire(&mut self.lines, pa, pb, &vp, color);
+                            if self.lines.len() > before {
                                 edge_prims += 1;
                             }
                         }
@@ -757,24 +872,23 @@ impl GpuBackend {
         let extent = raw.into_iter().fold(1.0f64, f64::max);
         let spacing = overlay::nice_spacing(extent / 4.0);
         for seg in overlay::grid_segments(extent * 1.3, spacing) {
-            push_wire(&mut lines, &seg[0], &seg[1], &vp, grid_color());
+            push_wire(&mut self.lines, &seg[0], &seg[1], &vp, grid_color());
         }
-
-        // Drop of the per-face intermediate list is real per-frame transient
-        // garbage (1M `GpuFace`s, each with two heap-backed `Vec`s): moving
-        // the deallocation here (which is what returning would trigger)
-        // closes the assemble clock AFTER the cleanup, so the stage honestly
-        // owns build + teardown (it shows up in `assemble.other`).
-        drop(face_ndc);
 
         // Screen-constant triad arms (the CPU compositor's pixel-space arms,
         // converted to NDC for the passthrough stage).
-        append_screen_axis_arms(&mut lines, scene, &vp, width, height);
+        append_screen_axis_arms(&mut self.lines, scene, &vp, width, height);
 
-        // Close the exact partition: the whole-assemble wall (incl. the
-        // dropped intermediate) and the residual the five measured segments do
-        // not own (so `assemble` == positions + normals + project+cull + sort
-        // + expand + other, with no unmetered time left inside the function).
+        // Pack the line vertices into the reused byte buffer.
+        for v in &self.lines {
+            v.pack_into(&mut self.line_bytes);
+        }
+
+        // Close the exact partition (same as UI-D9): the whole-assemble wall
+        // time (incl. the primitive cull and the line/grid/triad assembly,
+        // both unmetered) and the residual the five measured segments do not
+        // own, so `assemble == positions + normals + project+cull + sort +
+        // expand + other` with no unmetered time left inside the function.
         if let Some(a0) = a_total {
             let total = a0.elapsed();
             let sub = d_pos + d_norm + d_proj + d_sort + d_expand;
@@ -789,7 +903,13 @@ impl GpuBackend {
             }
         }
 
-        (faces, lines, edge_prims)
+        (
+            faces_submitted,
+            tris_total,
+            culled,
+            edge_prims,
+            t0.elapsed(),
+        )
     }
 
     /// The number of feature-edge line primitives drawn by the LAST render
@@ -819,6 +939,75 @@ impl GpuBackend {
     pub fn re_render_with_current_shading(&mut self) {
         self.render_frame();
     }
+
+    /// Replace the scene (a mesh edit, highlight flip or re-tessellation).
+    /// Any primitive change funnels through here: the scene is owned by this
+    /// backend and immutable between calls, so bumping the scene generation
+    /// makes the resident dirty key (UI-D10) re-derive and re-upload the
+    /// changed streams on the next render.
+    pub fn set_scene(&mut self, scene: Scene) {
+        self.scene = scene;
+        self.session_epoch = self.session_epoch.wrapping_add(1);
+        self.render_frame();
+    }
+
+    /// Upload bytes written by the seam in the LAST render: the 64-byte MVP
+    /// uniform plus any genuinely dirty geometry/line bytes (a fast-path
+    /// frame moves exactly 64). Pre-D10 this was ~120,303,360 B every frame.
+    pub fn last_upload_bytes(&self) -> u64 {
+        self.last_upload_bytes
+    }
+
+    /// Device-buffer allocations made by the seam in the LAST render
+    /// (steady state: 0 — the resident buffers were created once before).
+    pub fn last_buffer_allocs(&self) -> u64 {
+        self.last_buffer_allocs
+    }
+
+    /// Cumulative device-buffer allocations the seam has made since
+    /// construction (the regression guard against `create_buffer_init`
+    /// coming back; must stay constant across the measured frames).
+    pub fn total_buffer_allocs(&self) -> u64 {
+        self.cache.allocations_total
+    }
+
+    /// Draw calls submitted in the LAST render (single-digit target).
+    pub fn last_draw_calls(&self) -> u64 {
+        self.last_draw_calls
+    }
+
+    /// Wall time of the LAST render's assemble (0 on a resident fast path,
+    /// where no assembly ran).
+    pub fn last_assemble_time(&self) -> Duration {
+        self.last_assemble
+    }
+
+    /// Faces submitted by the LAST full-path assemble (0 on a fast path).
+    pub fn last_faces_submitted(&self) -> usize {
+        self.last_faces_submitted
+    }
+
+    /// Total triangles of the scene seen by the LAST full-path assemble.
+    pub fn last_scene_triangles(&self) -> usize {
+        self.last_scene_triangles
+    }
+
+    /// Primitives the world-AABB frustum cull removed in the LAST full-path
+    /// assemble (0 on a fast path).
+    pub fn last_culled_prims(&self) -> usize {
+        self.last_culled_prims
+    }
+
+    /// Number of primitives in the current scene.
+    pub fn scene_primitive_count(&self) -> usize {
+        self.scene.primitives.len()
+    }
+
+    /// Whether the last render took the resident fast path (nothing dirty:
+    /// only the MVP uniform uploaded, the resident ranges drawn as-is).
+    pub fn last_fast_path(&self) -> bool {
+        self.last_assemble == Duration::ZERO && self.cache.is_resident()
+    }
 }
 
 fn prim_color(prim: &Primitive) -> [u8; 4] {
@@ -843,15 +1032,6 @@ fn grid_color() -> [u8; 4] {
     ]
 }
 
-/// Pack a list of vertices into interleaved LE bytes.
-fn pack(verts: &[Vertex]) -> Vec<u8> {
-    let mut bytes = Vec::with_capacity(verts.len() * 28);
-    for v in verts {
-        v.pack_into(&mut bytes);
-    }
-    bytes
-}
-
 /// Pack a `Mat4` into the 64-byte column-major `mat4x4<f32>` uniform layout
 /// the vertex stage consumes: each of the 16 f64 entries of
 /// `Mat4::to_array16()` narrowed to f32 in native order (no bytemuck — the
@@ -862,15 +1042,6 @@ fn pack_matrix4(m: &Mat4) -> Vec<u8> {
         .iter()
         .flat_map(|v| (*v as f32).to_ne_bytes())
         .collect()
-}
-
-/// Pack a list of shaded-face vertices into interleaved LE bytes (40 B each).
-fn pack_shaded(verts: &[ShadedVertex]) -> Vec<u8> {
-    let mut bytes = Vec::with_capacity(verts.len() * 40);
-    for v in verts {
-        v.pack_into(&mut bytes);
-    }
-    bytes
 }
 
 /// The world-space polygon of a mesh triangle.
@@ -898,18 +1069,20 @@ fn box_faces(prim: &Primitive) -> [Vec<Vec3>; 6] {
     ]
 }
 
-/// Push one world polygon through NDC culling into the face list, storing the
-/// per-vertex VIEW-SPACE normals and the base (unlit) colour for the studio
-/// fragment shader (mirror of `render::push_polygon`, clip-plane free, with
-/// the colour flattened instead of Lambert-shaded — the GPU owns the lighting
-/// now).
+/// Push one world polygon through NDC culling into the reused face arena,
+/// storing the per-vertex VIEW-SPACE normals and the base (unlit) colour for
+/// the studio fragment shader (the UI-D10 arena form of `push_face`: the
+/// old per-face `Vec` pair is replaced by ranges into the arena's flat
+/// scratch buffers, so full-path frames allocate no per-face storage). The
+/// projection, cull and normal math is byte-identical to the pre-D10 path.
 ///
-/// The stored points are the projected NDC (x/y) so the GPU rasterizes
-/// exactly the CPU's polygon. `normals` must be unit world-space normals (one
-/// per polygon vertex); they are rotated into view space here because the
-/// light rig is defined in view space.
-fn push_face(
-    faces: &mut Vec<GpuFace>,
+/// `normals` must be unit world-space normals (one per polygon vertex); they
+/// are rotated into view space here because the light rig is defined in view
+/// space (UI-D10 keeps this on the CPU: moving it to the vertex stage changes
+/// the per-vertex f32 normal bits — proven, see `resident` module docs).
+#[allow(clippy::too_many_arguments)]
+fn arena_push(
+    arena: &mut resident::FaceArena,
     poly: &[Vec3],
     world_normals: &[Vec3],
     color: [u8; 4],
@@ -921,8 +1094,8 @@ fn push_face(
     }
     let mut ok = true;
     let mut depth_sum = 0.0f64;
-    let mut world = Vec::with_capacity(poly.len());
-    let mut normal = Vec::with_capacity(poly.len());
+    let world_start = arena.world.len();
+    let normal_start = arena.normal.len();
     for (i, p) in poly.iter().enumerate() {
         let view = world_to_view.transform_point(p);
         // The single projection path: raw clip via transform_point4, divide,
@@ -935,7 +1108,7 @@ fn push_face(
             break;
         }
         depth_sum += view.z;
-        world.push([p.x, p.y, p.z]);
+        arena.world.push([p.x, p.y, p.z]);
         // Rotate the world normal into view space (normalize guards
         // degenerate input, matching the CPU's Newell fallback).
         let wn = world_normals
@@ -946,21 +1119,34 @@ fn push_face(
             .transform_vector(&wn)
             .normalize()
             .unwrap_or(Vec3::new(0.0, 0.0, 1.0));
-        normal.push([vn.x, vn.y, vn.z]);
+        arena.normal.push([vn.x, vn.y, vn.z]);
     }
-    if !ok || world.len() < 3 {
+    let world_len = arena.world.len() - world_start;
+    if !ok || world_len < 3 {
+        arena.world.truncate(world_start);
+        arena.normal.truncate(normal_start);
         return;
     }
     // The colour is stored UNLIT: the fragment shader applies the studio
     // key + fill lighting, so the same base colour reaches opaque and
     // transparent renders (the alpha was baked in the vertex colour by the
     // caller).
-    faces.push(GpuFace {
+    arena.faces.push(resident::FaceMeta {
         depth: depth_sum / poly.len() as f64,
         color,
-        world,
-        normal,
+        world_start,
+        world_len,
+        normal_start,
     });
+}
+
+/// The number of triangles a primitive contributes: its committed mesh
+/// triangles, or the 12 fan triangles of a box proxy's 6 quads.
+fn scene_triangle_count(prim: &Primitive) -> usize {
+    match &prim.mesh {
+        Some(mesh) => mesh.triangles.len(),
+        None => 12,
+    }
 }
 
 /// Project a single edge segment into visible NDC, clip it to the NDC cube
@@ -1038,16 +1224,6 @@ fn fan_triangles<const N: usize>(pts: &[[f64; N]]) -> Vec<[[f64; N]; 3]> {
     (1..pts.len() - 1)
         .map(|i| [pts[0], pts[i], pts[i + 1]])
         .collect()
-}
-
-/// The indices of each fan triangle's vertices (parallel to
-/// [`fan_triangles`]) — one `[0, i, i+1]` per fan triangle, so a face's
-/// per-vertex normals follow the geometry exactly.
-fn fan_indices(n: usize) -> Vec<[usize; 3]> {
-    if n < 3 {
-        return Vec::new();
-    }
-    (1..n - 1).map(|i| [0, i, i + 1]).collect()
 }
 
 /// Project a world-space point to pixel coordinates (top-left origin); `None`
