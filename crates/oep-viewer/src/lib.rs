@@ -28,23 +28,29 @@
 pub mod backend;
 pub mod camera;
 pub mod clip;
+pub mod gpu;
 pub mod overlay;
 pub mod pick;
 pub mod render;
 pub mod scene;
 /// Theme tokens for the accessibility/theme pass (P7-M5-T02).
 pub mod theme;
+/// Standard view math, cube-face hit test and section-plane presets
+/// (editor parity program, wave D, card UI-D4 UI-NAV).
+pub mod views;
 
 /// Workstream identity for the crate.
 pub const WORKSTREAM: &str = "P6-VIEWER";
 
-pub use backend::{CpuBackend, ViewportBackend};
+pub use backend::{select_backend, CpuBackend, ViewportBackend};
 pub use camera::Camera;
 pub use clip::{ClipPlane, Side};
-pub use oep_geo::math::Vec3;
+pub use gpu::GpuBackend;
+pub use oep_geo::math::{Vec3, Vec4};
 pub use overlay::{
     axis_arms, draw_label_chip, draw_text, fill_rect, grid_segments, nice_spacing, text_width,
 };
 pub use pick::{pick, pick_ray, Ray, Selection};
 pub use render::{render, render_present, PresentFrame, PresentOptions, RgbaImage};
 pub use scene::{build_scene, Aabb, MeshData, Primitive, Scene};
+pub use views::{CubeFace, SectionAxis, StandardView};

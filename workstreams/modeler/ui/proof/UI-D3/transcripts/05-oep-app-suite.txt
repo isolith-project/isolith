@@ -1,0 +1,48 @@
+$ cargo test -p oep-app
+     Running unittests src/main.rs (target/debug/deps/isolith-be0d284e4ce09cce)
+test result: ok. 117 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/constraints.rs (target/debug/deps/constraints-0bbec0cf43f920ed)
+test result: ok. 166 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.80s
+     Running tests/dimensions.rs (target/debug/deps/dimensions-8f3c95014b5a68f9)
+test result: ok. 211 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.42s
+     Running tests/doc_io.rs (target/debug/deps/doc_io-74d535f289c3d1ee)
+test result: ok. 123 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.05s
+     Running tests/feature_from_sketch.rs (target/debug/deps/feature_from_sketch-935c6ab4a6ac10ff)
+test result: ok. 180 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.50s
+     Running tests/feature_tree.rs (target/debug/deps/feature_tree-1c72521b8301480c)
+test result: ok. 124 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.11s
+     Running tests/harness.rs (target/debug/deps/harness-86169bb4eebf13b5)
+test result: ok. 120 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.08s
+     Running tests/heading_ink.rs (target/debug/deps/heading_ink-5faad35ebd862ba2)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/history.rs (target/debug/deps/history-0af9a07abf225060)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/input_router.rs (target/debug/deps/input_router-bffecf8a46f6f424)
+test result: ok. 130 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.31s
+     Running tests/kernel_features.rs (target/debug/deps/kernel_features-35b1048a96b5b469)
+test result: ok. 125 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/layout.rs (target/debug/deps/layout-d87407b388cdfa67)
+test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.22s
+     Running tests/measure.rs (target/debug/deps/measure-eeea8132fe6cc52b)
+test result: ok. 130 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.26s
+     Running tests/palette.rs (target/debug/deps/palette-e300aad5cad42099)
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.51s
+     Running tests/pick_gpu.rs (target/debug/deps/pick_gpu-40d99ae674f62f12)
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.51s
+     Running tests/property_panel.rs (target/debug/deps/property_panel-365b12565270c288)
+test result: ok. 213 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.23s
+     Running tests/rollback.rs (target/debug/deps/rollback-559c10056938c167)
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.54s
+     Running tests/sketch_draw.rs (target/debug/deps/sketch_draw-e4fd1bbe9ef1bd0c)
+test result: ok. 168 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.16s
+     Running tests/sketch_enter.rs (target/debug/deps/sketch_enter-4b6a8a8fa9638af1)
+test result: ok. 165 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.27s
+     Running tests/snap_inference.rs (target/debug/deps/snap_inference-309db1344d991771)
+test result: ok. 182 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.55s
+     Running tests/tree_empty_state.rs (target/debug/deps/tree_empty_state-26b9ff4d353cae0d)
+test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.12s
+     Running tests/variable_table.rs (target/debug/deps/variable_table-9641e2d382b9cc63)
+test result: ok. 157 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/viewport.rs (target/debug/deps/viewport-1c205dc841f388f9)
+test result: ok. 120 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.18s
+suite exit: 0

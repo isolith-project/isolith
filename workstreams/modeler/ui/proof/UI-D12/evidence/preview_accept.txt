@@ -1,0 +1,14 @@
+P6-M5-T02 preview viewer acceptance
+viewer: /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-viewer
+==================================================================
+PREVIEW VIEWER ACCEPTANCE FAILED (10)
+  - crates/oep-viewer/src/render.rs: em dash x3, curly quote x0
+  - crates/oep-viewer/src/gpu/resident.rs: em dash x5, curly quote x0
+  - crates/oep-viewer/src/gpu/idbuffer.rs: em dash x2, curly quote x0
+  - crates/oep-viewer/src/gpu/shading.rs: em dash x11, curly quote x0
+  - crates/oep-viewer/src/gpu/device.rs: em dash x3, curly quote x0
+  - crates/oep-viewer/src/gpu/mod.rs: em dash x22, curly quote x0
+  - crates/oep-viewer/tests/perf_budget.rs: em dash x10, curly quote x0
+  - crates/oep-viewer/tests/resident_scene.rs: em dash x3, curly quote x0
+  - crates/oep-viewer/tests/gpu_backend.rs: em dash x2, curly quote x0
+  - crates/oep-viewer/tests/render_axis_views.rs: em dash x2, curly quote x0

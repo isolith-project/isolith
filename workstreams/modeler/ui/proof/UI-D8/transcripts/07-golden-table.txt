@@ -1,0 +1,23 @@
+PASS  ui-d7-Front-cpu-400x300.png                          721209ec77edb9215960b075f14e5e316af8baa5de8c5ac0da1ddcba6b35c35a
+PASS  ui-d7-Front-gpu-400x300.png                          90750d3fb61497589f06089de39b6610095b8c96e1c717ed009562b0f27e9898
+PASS  ui-d7-Back-cpu-400x300.png                           16557c16c8aa75ce0cbe4c9f6617f61ff4aa8509a3efbfd7b0975d517c78690d
+PASS  ui-d7-Back-gpu-400x300.png                           11e7b4f92ba4bfc17bbb3d389e421a35e0341470a4434355789afbc0d641b977
+PASS  ui-d7-Left-cpu-400x300.png                           80468a5baf39f18c3a98602ba25b4c7527981d4379023271be319167b6f3bc00
+PASS  ui-d7-Left-gpu-400x300.png                           262389ff0ce9650d4a801ac7eeb3c765b6bb9980c3e2fe9d69a2315bdcec8568
+PASS  ui-d7-Right-cpu-400x300.png                          5b1a1247721e1db2850d036c64b01dc17b18a48fab1024bff373d39115784794
+PASS  ui-d7-Right-gpu-400x300.png                          e1eb01e8d4791d3cf8fa4e5487075756e5c52969f29a3936dfd5d812efc38d0d
+PASS  ui-d7-Top-cpu-400x300.png                            0a951c0e679627060c4816f9f6186050bcc2c7db152ac4853626c1c9d9f28618
+PASS  ui-d7-Top-gpu-400x300.png                            8ad31153c612d3a5257b594482d4ed22cceaa86629fef87665d4a5788f317f30
+PASS  ui-d7-Bottom-cpu-400x300.png                         f4c78e4b052bbf7046ca40b670256cf23b0ecc74c8ac5ad2a27b395a1680277e
+PASS  ui-d7-Bottom-gpu-400x300.png                         0e9f1b972f79576b08d46ce68aa7dee62eaeae62f035014d6f36e113e4b5cc78
+PASS  ui-d7-Iso-cpu-400x300.png                            adadf5c4df5bd1699c997d023048c37ef0ee4d81d73c8b72f42f1b3b84bb63e0
+PASS  ui-d7-Iso-gpu-400x300.png                            3164ea28d7571e83a2bc79deee5f8b593756ab2d939046a87bcb8a5f034bb054
+PASS  ui-d7-all-culled-cpu-400x300.png                     0f2e19116639692e6d20e9877c89d5033ddfb7e2fd6127173b9efaf333ec043f
+PASS  ui-d7-all-culled-gpu-400x300.png                     5ca67f6b3d8621323818f590ba38b2e2f07454fb159080166d452da1b91a4fbe
+PASS  ui-d2-shaded.png                                     68b991a446677afdc0dcd03344328d86bc313ed7864c2fd61fdda464451efe4d
+PASS  ui-d2-edges.png                                      1a34e7bf5dbfbbd5806a4c21ee1eaf2aad17dddc46cfacf1db7d5198b66b79de
+PASS  ui-d2-flat.png                                       cc69bd61be43c6020d7a4f87157111a877ee69ce145a1899f758f83b0b5e5daa
+PASS  ui-d2-smooth.png                                     bdc83f188647f7245670094e7e4d250192b2d3e30c41bf794f769b62473e972e
+PASS  ui-d2-transparent-50.png                             532c564261d71d94262b50859709415bc590b19b71fc00233c0fe7dd5d97fe05
+---
+goldens checked=21 pass=21 fail=0

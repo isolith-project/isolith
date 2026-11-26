@@ -1,0 +1,12 @@
+## UI-D6 ancestry audit (wave-D card branches vs github/wave/ui-d @ 91a07a5)
+date: Thu Nov 26 12:00:38 PM UTC 2026
+OK   ui/d1-gpu-backend
+OK   ui/d2-gpu-shading
+OK   ui/d3-gpu-pick
+OK   ui/d4-gpu-nav
+OK   ui/d5-perf
+OK   ui/d7-render-fix
+OK   ui/d8-vec4
+OK   ui/d9-perf-profile
+OK   ui/d10-resident-scene
+OK   ui/d12-gate-fix

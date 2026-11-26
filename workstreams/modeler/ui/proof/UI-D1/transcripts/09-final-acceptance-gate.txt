@@ -1,0 +1,16 @@
+GATE: cargo test -p oep-viewer --test gpu_backend
+running 6 tests
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.05s
+GATE exit: 0
+
+GATE: cargo tree -d -p oep-app | grep -c '^wgpu ' (expect 0 = single wgpu)
+0
+
+GATE: xvfb-run -a cargo run -p oep-app -- --smoke
+isolith smoke: renderer=wgpu viewport-backend=gpu (set ISOLITH_GPU=off to force cpu)
+frames=8 smoke ok
+smoke exit: 0
+
+GATE: cargo test -p oep-app --test viewport
+test result: ok. 117 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.47s
+viewport exit: 0

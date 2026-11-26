@@ -1,0 +1,6 @@
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+wrote /home/r1a/isolith-main/.worktrees/ui-d1/workstreams/modeler/ui/proof/UI-D1/launch-frame-after-gpu.png
+sha256:
+0641915bb23413f7701425679dcf1b4d990bb233ac16a3e1fabd9679afe3f97f  /home/r1a/isolith-main/.worktrees/ui-d1/workstreams/modeler/ui/proof/UI-D1/launch-frame-after-gpu.png
+capture EXIT=0

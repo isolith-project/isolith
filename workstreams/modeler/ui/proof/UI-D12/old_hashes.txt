@@ -1,0 +1,3 @@
+84adda8768b2e458748b5b8deb07ba10d7f8176365d46e7dd1846623768fbf0e  demos/editor-sketch-extrude/present-1080p-before.png
+f58523a61919ca8a1cc295be483f7788b4915f4a8d15c042d0c00539049a5f64  demos/editor-sketch-extrude/present-1080p-after.png
+a7594b124ac8ea49c95ef49d2c25106bf37cf309ca808d652e9943bb417586ef  workstreams/modeler/ui/proof/ui-a2/frame.png
