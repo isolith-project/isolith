@@ -1,0 +1,5 @@
+checkpoint head: 881405ae7e8802cd43ca019de2e1684e2c471be3 checkpoint(wave-ui-d): editor parity wave D -- render-seam performance fix, cards UI-D1..UI-D10 plus UI-D5 re-prove and UI-D12 gate fix
+parents: bed3d5040eef32a3140219da6f846a4e89433b5a 91a07a5bb4a272b64e86abc217338cb0f6d72c0f
+branch: checkpoint/wave-ui-d-91a07a5
+date:    Thu Nov 26 12:05:16 PM UTC 2026
+target dir: (none yet)
