@@ -19,6 +19,10 @@ that forced the brand check is the reason the codename is gone.
 - logo/ - the mark (SVG sources): isolith-mark.svg (primary), -dark, -mono,
   isolith-lockup.svg (mark + wordmark), favicon.svg. Plus raster exports in
   logo/png/ for convenience (never edit; regenerate from SVG).
+  logo/png/isolith-avatar-1024.png is the organization avatar: the mark cropped
+  to its ink bounds and centered on the paper tile, rebuilt with
+  logo/make-avatar.py. GitHub has no API for an organization avatar, so that
+  file is uploaded by hand under Organization settings, Profile.
 - design/DESIGN.md - DESIGN.md token spec (Google design.md format):
   palette, typography, spacing, components. WCAG AA-checked.
 - design/tokens.json - machine tokens for the docs site (colors, fonts, type,
