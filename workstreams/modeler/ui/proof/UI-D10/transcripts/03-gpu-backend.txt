@@ -1,0 +1,13 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/gpu_backend.rs (target/debug/deps/gpu_backend-5b456643314cafe6)
+
+running 6 tests
+test bracket_renders_non_empty_gpu_frame ... ok
+test demo_renders_non_empty_gpu_frame ... ok
+test gpu_geometry_coverage_within_5pct_of_cpu ... ok
+test gpu_off_falls_back_to_cpu_and_matches_precard_golden ... ok
+test gpu_renders_same_view_byte_identically ... ok
+test select_backend_returns_gpu_when_adapter_exists ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.15s
+
