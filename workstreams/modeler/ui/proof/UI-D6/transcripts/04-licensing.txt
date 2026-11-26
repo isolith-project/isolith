@@ -1,0 +1,8 @@
+licensing check: total=6 pass=6 fail=0 skip=0 | exit=0
+report: /home/r1a/isolith-main/.worktrees/ui-d6/docs/proof/licensing-check.json
+  [PASS] root-files: 4 licence files at root, index in sync
+  [PASS] boundary-schema: schema_version 1
+  [PASS] crate-boundary: 34 crates match the boundary map
+  [PASS] boundary-doc-sync: 34 rows in sync
+  [PASS] dependency-allowlist: 535 dependencies within the permissive allow-list
+  [PASS] notice-sync: 535 dependency lines + 1 native entries
