@@ -1,0 +1,26 @@
+    Finished `release` profile [optimized] target(s) in 0.11s
+     Running tests/perf_budget.rs (target/release/deps/perf_budget-2d010fa3eeca7182)
+
+running 1 test
+test perf_budget_1m_gpu_heavy has been running for over 60 seconds
+report written: /home/r1a/isolith-main/.worktrees/ui-d5/workstreams/modeler/ui/proof/UI-D5/perf.json
+UI-D5 perf: 1002528 triangles @ 1600x1000 (real wgpu adapter NVIDIA GB10)
+adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+frame ms: min=424.575 mean=431.977 p50=431.835 p95=438.617 p99=444.862 max=447.043
+fps: min=2.2 mean=2.3 over 120 measured frames (after 20 warm-up)
+cpu determinism: demo frame_hash = 12597229237775278722, committed golden = 12597229237775278722, match = true
+BUDGET: p95=438.617 ms vs committed threshold 16.6 ms -> THRESHOLD MISSED
+
+thread 'perf_budget_1m_gpu_heavy' (2747897) panicked at crates/oep-viewer/tests/perf_budget.rs:322:5:
+UI-D5 interactive budget NOT met on this device: p95 = 438.617 ms > 16.6 ms at 1002528 triangles / 1600x1000 on NVIDIA GB10 (NVIDIA) — recorded in /home/r1a/isolith-main/.worktrees/ui-d5/workstreams/modeler/ui/proof/UI-D5/perf.json, bar NOT lowered
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test perf_budget_1m_gpu_heavy ... FAILED
+
+failures:
+
+failures:
+    perf_budget_1m_gpu_heavy
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 62.35s
+
+error: test failed, to rerun pass `-p oep-viewer --test perf_budget`
