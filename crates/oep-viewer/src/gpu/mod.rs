@@ -9,12 +9,12 @@
 //!
 //! It is selected at runtime ([`crate::backend::select_backend`]) when a wgpu
 //! adapter is reachable, using THE SAME device the egui renderer uses when the
-//! app registered one ([`device::register_egui_device`] — the shared device
+//! app registered one ([`device::register_egui_device`]: the shared device
 //! with egui; the lock keeps a single wgpu version, checked by
 //! `cargo tree -p oep-app -i wgpu`). With no adapter, or `ISOLITH_GPU=off`,
 //! the caller falls back to the deterministic CPU backend.
 //!
-//! # Projection model (the vertex stage owns the transform — UI-D8)
+//! # Projection model (the vertex stage owns the transform, UI-D8)
 //!
 //! The GPU backend now hands the shaded pass WORLD positions (plus view-space
 //! normals and the flattened base colour) and the vertex stage owns the
@@ -22,7 +22,7 @@
 //! `Mat4::to_array16()` with `f32::to_ne_bytes`, no bytemuck) is applied as
 //! `clip = mvp · (world, 1)`, then the vertex stage does the perspective
 //! divide and outputs `w = 1` so the rasterizer's own divide is a no-op and
-//! attribute interpolation stays linear in screen space — byte-identical to
+//! attribute interpolation stays linear in screen space: byte-identical to
 //! the D1/D7 pre-projected behaviour. The CPU still runs the SAME projection
 //! (`render::project_ndc`, the crate's single NDC path) purely to cull faces
 //! and order the painter; the pixels come from the GPU's vertex stage.
@@ -31,7 +31,7 @@
 //! a passthrough for pre-projected NDC: the triad arms are pixel-space by
 //! construction (they come from `to_px`/`screen_ndc`, exactly the
 //! immediate-mode egui model), so there is no world-space form to transform.
-//! The store of the projection formula is `render::project_ndc` — one helper
+//! The store of the projection formula is `render::project_ndc`: one helper
 //! in `render.rs`, no duplicated `clip_w` anywhere in this module (UI-D8).
 //!
 //! The pre-D7 code fed the VIEW-space point into the w computation
@@ -50,7 +50,7 @@
 //! allows a documented band rather than byte equality.
 //!
 //! The one intentional visual difference from `CpuBackend`: the GPU path does
-//! not rasterize the axis tip letters X/Y/Z — the arms are drawn, the letters
+//! not rasterize the axis tip letters X/Y/Z: the arms are drawn, the letters
 //! are a wave-D2 (UI-GPU-SHADING) concern.
 //!
 //! Submodules: [`device`] (adapter/device acquisition, shared with egui),
@@ -98,9 +98,9 @@ const EDGE_RGB: [u8; 4] = [170, 176, 184, 255];
 /// Colour is straight-alpha source-over (`src.a * src + (1 - src.a) * dst`),
 /// so at `alpha = 1.0` it is byte-equivalent to REPLACE (the D1 opaque
 /// pass) and below 1.0 an overlapping body shows through. The ALPHA channel
-/// is written as the source alpha (`1 * src.a + 0 * dst.a` — REPLACE), so
+/// is written as the source alpha (`1 * src.a + 0 * dst.a`: REPLACE), so
 /// the transparency control is measurable at readback: a 50% body reads back
-/// alpha ≈ 128 instead of 255 — the number the UI-D2 acceptance prints
+/// alpha ≈ 128 instead of 255: the number the UI-D2 acceptance prints
 /// before/after. (wgpu's `ALPHA_BLENDING`/OVER alpha equation saturates the
 /// alpha channel to 1.0 once the dst below is opaque, which would make the
 /// readback proof unmeasurable; the source-alpha write keeps the control
@@ -223,7 +223,7 @@ impl ShadedVertex {
 /// applies the MVP from the bind group (`binding 0` uniform, column-major f32,
 /// packed from `Mat4::to_array16()`) and does the perspective divide; the
 /// line pipeline draws the grid, feature edges and triad arms (~passthrough
-/// colour, pre-projected NDC — the screen-constant arms are pixel-space by
+/// colour, pre-projected NDC: the screen-constant arms are pixel-space by
 /// construction so the overlay pass stays a passthrough).
 struct GpuPipeline {
     /// MVP (view-projection) uniform buffer: 64 bytes = `mat4x4<f32>`
@@ -244,7 +244,7 @@ struct GpuPipeline {
 /// When unset, `GpuBackend::perf` is `None` and the render path performs zero
 /// timing calls; no `Instant::now()` in the seam, so the unset binary is
 /// behaviour- and hash-identical to the pre-card tree (the fast smoke proves
-/// the GPU frame hash unchanged with and without the variable — UI-D10 re-proves
+/// the GPU frame hash unchanged with and without the variable, UI-D10 re-proves
 /// this on its committed tree). When set, `render_frame` records a partition of
 /// the driving wall clock into named stages and prints one machine-parseable
 /// line per frame to stderr, with each stage's duration against the frame total
@@ -378,7 +378,7 @@ pub struct GpuBackend {
     /// per frame).
     scratch_positions: Vec<Vec3>,
     // ---- seam instrumentation counters exposed to the acceptance harness ----
-    /// Upload bytes written in the last render (MVP + geometry + lines) —
+    /// Upload bytes written in the last render (MVP + geometry + lines):
     /// the pre-D10 per-frame total was 120,303,360 B; steady state is 64.
     last_upload_bytes: u64,
     /// Device-buffer allocations made in the last render.
@@ -400,7 +400,7 @@ impl GpuBackend {
     /// for an empty scene) on the given device context, and render once at
     /// the renderer's default size.
     ///
-    /// Returns `None` only when the caller should not use the GPU path — the
+    /// Returns `None` only when the caller should not use the GPU path: the
     /// module's contract is that `Some` is returned for any context whose
     /// device is usable (the seam test asserts exactly this when an adapter
     /// exists).
@@ -466,7 +466,7 @@ impl GpuBackend {
 
         // The MVP the vertex stage applies to the WORLD positions: the same
         // view-projection the CPU culling uses (`render::project_ndc`), packed
-        // column-major f32 — one transform, one place, shared with the CPU.
+        // column-major f32: one transform, one place, shared with the CPU.
         let aspect = f64::from(self.width) / f64::from(self.height);
         let vp = self.camera.view_projection(aspect);
 
@@ -503,7 +503,7 @@ impl GpuBackend {
             self.last_culled_prims = culled;
 
             // Vertex preparation: re-upload only the dirty streams through the
-            // resident buffers (write_buffer; no device-buffer allocation) —
+            // resident buffers (write_buffer; no device-buffer allocation):
             // the UI-D8 vertex-prep bucket, env-gated to the D9 stage table.
             let prep = timed_push(&mut self.perf, "vertex-prep", || {
                 self.cache.upload_faces(&self.ctx.queue, &self.face_bytes);
@@ -913,7 +913,7 @@ impl GpuBackend {
     }
 
     /// The number of feature-edge line primitives drawn by the LAST render
-    /// (the boundary edge list exactly — mesh edges for meshes, the 12 box
+    /// (the boundary edge list exactly: mesh edges for meshes, the 12 box
     /// edges for box proxies). Only `Shaded` and `Edges` modes run the pass,
     /// so other modes report 0. Zeroed at the start of every render.
     pub fn last_edge_primitives(&self) -> usize {
@@ -959,7 +959,7 @@ impl GpuBackend {
     }
 
     /// Device-buffer allocations made by the seam in the LAST render
-    /// (steady state: 0 — the resident buffers were created once before).
+    /// (steady state: 0; the resident buffers were created once before).
     pub fn last_buffer_allocs(&self) -> u64 {
         self.last_buffer_allocs
     }
@@ -1034,7 +1034,7 @@ fn grid_color() -> [u8; 4] {
 
 /// Pack a `Mat4` into the 64-byte column-major `mat4x4<f32>` uniform layout
 /// the vertex stage consumes: each of the 16 f64 entries of
-/// `Mat4::to_array16()` narrowed to f32 in native order (no bytemuck — the
+/// `Mat4::to_array16()` narrowed to f32 in native order (no bytemuck; the
 /// UI-D8 no-new-dependency rule). `Mat4` stores column-major
 /// `entry (r, c) at c*4 + r`, exactly WGSL's `mat4x4<f32>` memory layout.
 fn pack_matrix4(m: &Mat4) -> Vec<u8> {
@@ -1079,7 +1079,7 @@ fn box_faces(prim: &Primitive) -> [Vec<Vec3>; 6] {
 /// `normals` must be unit world-space normals (one per polygon vertex); they
 /// are rotated into view space here because the light rig is defined in view
 /// space (UI-D10 keeps this on the CPU: moving it to the vertex stage changes
-/// the per-vertex f32 normal bits — proven, see `resident` module docs).
+/// the per-vertex f32 normal bits: proven, see `resident` module docs).
 #[allow(clippy::too_many_arguments)]
 fn arena_push(
     arena: &mut resident::FaceArena,
@@ -1100,7 +1100,7 @@ fn arena_push(
         let view = world_to_view.transform_point(p);
         // The single projection path: raw clip via transform_point4, divide,
         // near/far and degenerate-w reject (`render::project_ndc`; D7's
-        // correction — the combined matrix applied to the body-space point it
+        // correction: the combined matrix applied to the body-space point it
         // owns, `w = -view.z`). Used for culling exactly like the CPU path.
         let rst = crate::render::project_ndc(p, vp);
         if rst.is_none() {
@@ -1215,7 +1215,7 @@ fn lerp_ndc_xy(a: [f64; 3], b: [f64; 3], t: f64) -> [f64; 2] {
     [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
 }
 
-/// Fan a convex polygon (any component count — NDC `[f64;2]` for the
+/// Fan a convex polygon (any component count: NDC `[f64;2]` for the
 /// id-buffer pass, world `[f64;3]` for the shaded pass) into a triangle list.
 fn fan_triangles<const N: usize>(pts: &[[f64; N]]) -> Vec<[[f64; N]; 3]> {
     if pts.len() < 3 {
@@ -1228,7 +1228,7 @@ fn fan_triangles<const N: usize>(pts: &[[f64; N]]) -> Vec<[[f64; N]; 3]> {
 
 /// Project a world-space point to pixel coordinates (top-left origin); `None`
 /// when behind the camera or outside the NDC z range. Delegates to the single
-/// `render::project_ndc` path (D7 — world point; one formula in the crate).
+/// `render::project_ndc` path (D7: world point; one formula in the crate).
 fn to_px(world: Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
     let [nx, ny, _] = crate::render::project_ndc(&world, vp)?;
     Some((
@@ -1315,7 +1315,7 @@ fn screen_ndc(x: f64, y: f64, width: u32, height: u32) -> [f64; 2] {
 ///
 /// One bind group layout carries the MVP (view-projection) uniform for the
 /// vertex stage (group 0, binding 0) and both pipelines share the resulting
-/// pipeline layout — the shaded pass consumes it in `shading.wgsl`'s vertex
+/// pipeline layout: the shaded pass consumes it in `shading.wgsl`'s vertex
 /// stage (multiply + divide), the line pass ignores it (screen-space
 /// passthrough). The uniform buffer is created once and rewritten every
 /// render via `queue.write_buffer`.
@@ -1332,7 +1332,7 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
 
     // MVP uniform: 4x4 column-major f32 = 64 bytes, visible to the vertex
     // stage only (the transform lives there). Packed from
-    // `Mat4::to_array16()` as f32 via `f32::to_ne_bytes` — no bytemuck (the
+    // `Mat4::to_array16()` as f32 via `f32::to_ne_bytes`: no bytemuck (the
     // card's explicit no-new-dependency rule).
     let uniform = device.create_buffer(&wgpu::BufferDescriptor {
         label: Some("isolith-gpu-viewport-mvp-uniform"),

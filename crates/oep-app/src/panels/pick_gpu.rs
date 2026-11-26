@@ -486,7 +486,9 @@ mod tests {
 
     #[test]
     fn min_box_constant_is_positive() {
-        const { assert!(MIN_BOX_PX > 0); }
+        const {
+            assert!(MIN_BOX_PX > 0);
+        }
     }
 
     #[test]

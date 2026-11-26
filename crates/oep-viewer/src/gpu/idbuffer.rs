@@ -5,7 +5,7 @@
 //! order) into a second offscreen target in which every pixel carries the
 //! index of the primitive whose face covers it (`0` = background / nothing),
 //! reads that target back into a host grid once per view change, and answers
-//! two queries from the grid — [`IdPass::pick_at`] (the primitive under a
+//! two queries from the grid: [`IdPass::pick_at`] (the primitive under a
 //! pixel, the hover/click pick) and [`IdPass::pick_rect`] (the exact set of
 //! primitives enclosed by a pixel rect, the box-select query).
 //!
@@ -129,7 +129,7 @@ fn assemble_id_faces(scene: &Scene, world_to_view: &Mat4, projection: &Mat4) -> 
             }
         }
     }
-    // Deepest (largest mean view z) first — the painter's back-to-front order.
+    // Deepest (largest mean view z) first: the painter's back-to-front order.
     faces.sort_by(|a, b| {
         b.depth
             .partial_cmp(&a.depth)

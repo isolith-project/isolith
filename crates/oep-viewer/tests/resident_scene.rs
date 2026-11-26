@@ -14,7 +14,7 @@
 //!    edited through `set_scene` (scene generation bumps the dirty key).
 //!    3. **No device-buffer allocations per frame.** `last_buffer_allocs() ==
 //!    0` and `total_buffer_allocs()` stays constant across the measured frames
-//!    — `create_buffer_init` per frame is gone (regression guard).
+//!    - `create_buffer_init` per frame is gone (regression guard).
 //! 4. **Per-primitive cull is a real reduction.** A framed multi-primitive
 //!    view culls whole primitives on their world AABB before assembling
 //!    anything (`last_culled_prims() > 0`, submitted < total, ratio printed).
@@ -23,7 +23,7 @@
 //!    through the fast path).
 //! 6. **Culling is conservative.** The demo box at every committed D7 standard
 //!    view is NEVER culled (0 culled), so the world-AABB test does not remove
-//!    geometry the pre-D10 path drew — the sha256 golden tests pin the pixels.
+//!    geometry the pre-D10 path drew: the sha256 golden tests pin the pixels.
 //!
 //! The pixel oracle (21 proof frames + CPU golden + coverage band) is enforced
 //! by the unchanged `render_axis_views`, `gpu_shading`, `gpu_backend` and
@@ -395,7 +395,7 @@ fn cull_is_conservative_on_the_committed_axis_views() {
         );
     }
     // The all-culled camera (near plane inside the model): the whole box IS
-    // genuinely outside the near plane, so culling legitimately removes it —
+    // genuinely outside the near plane, so culling legitimately removes it:
     // exactly the D7 empty-frame semantics.
     let bounds = scene.bounds.expect("bounds");
     let mut cam = Camera::framed(&bounds);
