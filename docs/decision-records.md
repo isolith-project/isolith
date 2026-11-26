@@ -1,6 +1,6 @@
 ---
 title: "Isolith Decision Record Index"
-version: 1.0.2
+version: 1.0.3
 date: 2026-10-27
 status: Ratified
 owner: Isolith program governance
@@ -54,6 +54,7 @@ in the program vault, not in this repository.
 | [STEP library](workstreams/step-interop/library-adr/step-library-adr.md) | 2026-10-16 | 1.0.0 | The STEP reader/writer library choice for the P4 interop lane. |
 | [PMI import](workstreams/step-interop/pmi/pmi-import-adr.md) | 2026-10-16 | 1.0.0 | Semantic PMI import approach on the P4-M2 lane. |
 | [JT import](workstreams/step-interop/qif/jt-import-decision-adr.md) | 2026-10-16 | 1.0.0 | JT is imported visualization-first (mesh / modern-era geometry for viewing); B-Rep and PMI are not claimed. |
+| [Render-seam performance](workstreams/modeler/ui/decisions/render-seam-performance.md) | 2026-11-25 | 1.0.1, Proposed | Wave-D interactive seam measured per stage (assemble 75.6 percent of the frame; the 120 MB per-frame re-upload about 191 ms); recommends GPU-resident geometry with CPU-side retention, defers the depth-buffer route to its own card, and records that no CPU-side option reaches 16.6 ms p95 at 1M visible triangles. |
 
 ## How to use this index
 

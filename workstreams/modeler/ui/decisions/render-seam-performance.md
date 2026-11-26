@@ -1,9 +1,9 @@
 ---
 title: Isolith Render-Seam Performance Decision (GPU-resident geometry, measured per-stage profile)
 decision: gpu_resident_geometry_with_cpu_side_retention_for_the_render_seam
-version: 1.0.0
+version: 1.0.1
 date: 2026-11-25
-status: Ratified
+status: Proposed (measured recommendation; ratification is Don's, see the UI-D9 card thread)
 owner: Isolith program governance / modeler UI workstream (wave D)
 applies_to: oep-viewer GPU backend (crates/oep-viewer/src/gpu, `render_frame` + `assemble`), the interactive seam and its 16.6 ms p95 budget (UI-D5), and the UI-D3 id-buffer / UI-D4 section-plane / UI-D2 transparency surfaces that ride on it
 supersedes: nothing (first render-seam performance record; UI-D5 measured the seam's miss, UI-D9 attributes the cost per stage and chooses the fix from evidence)
@@ -387,6 +387,11 @@ sequencing of 3b, which the brief itself resolves in favour of deferral.
 
 ## Change log
 
+- 1.0.1 (2026-11-25): status corrected to Proposed. The card's worker wrote
+  Ratified at 1.0.0, which nobody had granted; this record is a measured
+  recommendation awaiting Don's ratification, and the orchestrator recorded it
+  as such. The measured content and the recommendation are unchanged from
+  1.0.0.
 - 1.0.0 (2026-11-25): first record. Per-stage profile on the real NVIDIA GB10
   at 1,002,528 triangles and 1600x1000 (clean p95 424.81 ms this committed run;
   UI-D5 reference 434.94 ms); assemble = 75.6 percent of the frame, the 120 MB
