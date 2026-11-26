@@ -19,11 +19,17 @@ pub mod status;
 pub mod tree;
 pub mod viewport;
 
+// Wave-E (UI-E1 UI-ASSY-TREE): the assembly tree panel, hosted as the nested
+// lower portion of the model-tree column (see `config::ShellRegions::assembly`).
+// Like viewport.rs it will `#[path]`-include the E2-E4 assembly sub-panels
+// (mates, diagnostics, explode) as those cards land.
+pub mod assy_tree;
+
 use eframe::egui;
 
 use oep_ui_theme::{Mode, Palette};
 
-/// One of the five named shell regions, as the shell-contrast treatment knows
+/// One of the named shell regions, as the shell-contrast treatment knows
 /// them (UI-A9 UI-SHELL-CONTRAST).
 ///
 /// `app.rs` owns the region rects ([`crate::config::ShellLayout::regions`])
@@ -42,17 +48,21 @@ pub enum RegionKind {
     StatusBar,
     /// Top strip: the command palette host.
     PaletteHost,
+    /// Wave-E (UI-E1): the assembly tree, nested in the model-tree column's
+    /// lower portion. Same raised panel treatment as every region.
+    Assembly,
 }
 
 impl RegionKind {
     /// Every region, for tests and any whole-shell iteration.
     #[cfg(test)]
-    pub const ALL: [RegionKind; 5] = [
+    pub const ALL: [RegionKind; 6] = [
         RegionKind::PaletteHost,
         RegionKind::ModelTree,
         RegionKind::Viewport,
         RegionKind::Properties,
         RegionKind::StatusBar,
+        RegionKind::Assembly,
     ];
 }
 

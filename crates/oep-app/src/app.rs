@@ -120,6 +120,19 @@ impl App {
             panels::tree::show,
         );
 
+        // Wave-E (UI-E1 UI-ASSY-TREE): the assembly tree, nested in the lower
+        // portion of the model-tree column (same x-span, bottom 48%) so the
+        // five locked regions keep their exact rects. Rendered after the
+        // model tree so its raised panel paints over the column's lower area.
+        self.region(
+            ui,
+            "assembly_tree",
+            "assembly tree",
+            panels::RegionKind::Assembly,
+            region.assembly,
+            panels::assy_tree::show,
+        );
+
         // Centre column: viewport.
         self.region(
             ui,
