@@ -326,11 +326,11 @@ pub fn render_present(
 /// `push_face`) and single-point projections (`to_px`) draw from this one
 /// helper so a face is culled or an anchor rejected by the SAME test. WIRE
 /// `/segment` endpoints (`draw_wire`, gpu `to_ndc`) deliberately do NOT reject
-/// on the NDC-z range here — they use the same `transform_point4` formula but
+/// on the NDC-z range here: they use the same `transform_point4` formula but
 /// keep D7's segment semantics: an endpoint whose NDC z is outside `[-1,1]`
 /// is still projected so the segment can be clipped to the visible cube by
 /// `clip_ndc_line` (a wire crossing the near/far plane keeps its visible
-/// portion — exactly the D7 goldens). One homogeneous transform
+/// portion: exactly the D7 goldens). One homogeneous transform
 /// (`transform_point4`), one divide; the rejection policy is per-surface.
 pub(crate) fn project_ndc(world: &oep_geo::math::Vec3, vp: &Mat4) -> Option<[f64; 3]> {
     let h = vp.transform_point4(world);
@@ -445,7 +445,7 @@ const EDGE_RGB: [u8; 4] = [170, 176, 184, 255];
 ///
 /// A wire endpoint is rejected ONLY on a degenerate clip w (`w.abs() < 1e-9`,
 /// the D1/D7 wire semantics): endpoints outside the NDC-z range are NOT
-/// dropped here — the segment is clipped to the visible cube by
+/// dropped here: the segment is clipped to the visible cube by
 /// [`clip_ndc_line`], so a wire that crosses the near/far plane keeps its
 /// visible portion exactly as the D7 goldens captured.
 fn draw_wire(img: &mut RgbaImage, seg: [Vec3; 2], vp: &Mat4, color: [u8; 4]) {

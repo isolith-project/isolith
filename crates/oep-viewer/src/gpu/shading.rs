@@ -3,17 +3,17 @@
 //! This module is the single source of truth for how the GPU viewport turns a
 //! scene into a *studio viewport* rather than a flat wireframe:
 //!
-//! - a fixed two-point light rig — one directional **key** light plus a weaker
-//!   **fill** light — whose strengths and directions are baked into the WGSL
+//! - a fixed two-point light rig: one directional **key** light plus a weaker
+//!   **fill** light, whose strengths and directions are baked into the WGSL
 //!   shading pass ([`shading_wgsl`] builds the shader source from these exact
 //!   Rust constants, so the file and the numbers can never drift);
 //! - the feature-**edge list**: a mesh primitive draws its committed boundary
 //!   wires (`Primitive.mesh.edges`), a box proxy draws its 12 box edges, and
-//!   the [`edge_pass`] therefore draws EXACTLY the boundary edge list — the
+//!   the [`edge_pass`] therefore draws EXACTLY the boundary edge list: the
 //!   numeric proof counts drawn primitives against the fixture's edge count;
 //! - **view modes** ([`ViewMode`]): Shaded (smooth normals + edges), Edges
 //!   (the edge pass only), Flat (per-face normals), Smooth (per-vertex
-//!   normals) — the last two differ only in normal-driven pixels by design;
+//!   normals): the last two differ only in normal-driven pixels by design;
 //! - **transparency** ([`ShadingState::alpha`]): an opaque (1.0) to fully
 //!   transparent (0.0) control carried on the vertex colour, applied by the
 //!   shaded pipeline's alpha blending so an overlapping body shows through
@@ -43,7 +43,7 @@ use oep_geo::math::Vec3;
 pub enum ViewMode {
     /// Studio look: smooth normals, key+fill lighting, feature edges on top.
     Shaded,
-    /// The edge pass only — the boundary edge list, nothing else.
+    /// The edge pass only: the boundary edge list, nothing else.
     Edges,
     /// Flat (per-face) normals, key+fill lighting, no edge overlay.
     Flat,
@@ -91,13 +91,13 @@ impl Default for ShadingState {
 }
 
 // ---------------------------------------------------------------------------
-// The light rig — the single source of truth for the WGSL shading pass
+// The light rig: the single source of truth for the WGSL shading pass
 // ---------------------------------------------------------------------------
 
 /// Direction of the key light (view/eye space, unit length not required; the
 /// shader normalises). Sun-from-the-left-front: the classic studio key.
 pub const KEY_DIR: [f32; 3] = [-0.45, 0.60, 0.65];
-/// Direction of the fill light — dimmer, from the opposite low side, lifting
+/// Direction of the fill light: dimmer, from the opposite low side, lifting
 /// the shadows the key leaves.
 pub const FILL_DIR: [f32; 3] = [0.55, -0.25, 0.60];
 /// Intensity of the key light (fragment multiplies `max(dot(n, key), 0)`).
@@ -141,7 +141,7 @@ fn fmt(v: f32) -> String {
 /// `z = max` ring, verticals join the same x/y corner across rings).
 ///
 /// A box proxy has no `Primitive.mesh`, so this is the proxy's boundary edge
-/// list — the same 12 edges a tessellated box exposes.
+/// list: the same 12 edges a tessellated box exposes.
 pub const BOX_EDGES: [[usize; 2]; 12] = [
     // z = min ring
     [0, 1],
@@ -200,7 +200,7 @@ pub fn flat_normals(poly: &[Vec3]) -> Vec<Vec3> {
     vec![n; poly.len()]
 }
 
-/// The flat (per-face) normal of one triangle as its three vertex normals —
+/// The flat (per-face) normal of one triangle as its three vertex normals:
 /// the flat-shading normal for a triangle pass. `tri` must hold at least 3
 /// vertices.
 pub fn flat_triangle_normals(tri: &[Vec3]) -> [Vec3; 3] {
@@ -216,7 +216,7 @@ pub fn flat_triangle_normals(tri: &[Vec3]) -> [Vec3; 3] {
 ///
 /// `positions` is indexed by `triangles`; each vertex's normal is the
 /// area-weighted average of the normals of every triangle that uses it,
-/// renormalised — the classic Gouraud normal. Because it is computed from the
+/// renormalised: the classic Gouraud normal. Because it is computed from the
 /// *shared-indexed* triangle list, adjacent faces blend across the shared
 /// edge, which is what makes smooth shading differ from flat on the same
 /// geometry. For a box proxy the caller passes the 8 `world_corners` as
@@ -258,7 +258,7 @@ pub fn box_face_normal(corners: &[Vec3; 8], quad: &[usize; 4]) -> Vec3 {
 }
 
 /// The fanned triangle index list of an AABB-corners box: each of the six
-/// quads (in `Aabb::corners()` order — bottom ring 0..3, top ring 4..7, then
+/// quads (in `Aabb::corners()` order: bottom ring 0..3, top ring 4..7, then
 /// the four vertical side faces) split into two index triangles. This is the
 /// shape `smooth_normals` needs for a box proxy, and the same fan the GPU
 /// backend rasterizes per quad.

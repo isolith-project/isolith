@@ -6,7 +6,7 @@
 //!
 //! The card's pixel oracle is the strongest gate: the 21 committed GPU
 //! proof frames sha256-identical, so the GPU must receive EXACTLY the
-//! byte-identical vertex stream the pre-card path drew — the renderer's one
+//! byte-identical vertex stream the pre-card path drew: the renderer's one
 //! triangle list in global painter-sorted order (every face sorted by mean
 //! view depth, `assemble`). That order is camera-dependent, so the byte
 //! stream changes whenever the sort changes. A per-primitive buffer layout
@@ -14,7 +14,7 @@
 //! moving pixels on any scene whose faces interleave. Probe (committed as
 //! `proof/UI-D10/probe-normal-bits.txt`): rotating world normals in the GPU
 //! vertex stage instead of the CPU's per-frame view-space normals produces
-//! 292/292 per-vertex f32 mismatches across the golden fixtures — the
+//! 292/292 per-vertex f32 mismatches across the golden fixtures: the
 //! `normals computed once at upload` transport the ADR sketches is therefore
 //! REFUTED for this renderer by the byte-pixel requirement, and the proof
 //! says so (I1/I5 outrank transport in the ADR's own invariant contract).
@@ -23,7 +23,7 @@
 //! holding the byte-identical merged painter-sorted streams, created once and
 //! written with `queue.write_buffer` only when the frame's packed bytes
 //! actually change. Dirty tracking keys the whole frame on (scene generation,
-//! camera pose, size, shading state) — the scene is owned by `GpuBackend` and
+//! camera pose, size, shading state): the scene is owned by `GpuBackend` and
 //! immutable between `set_scene` calls, so a monotone scene generation is an
 //! exact, allocation-free oracle for every `(prim.id, version)` dirty key the
 //! card names (mesh bytes via `MeshData: PartialEq`, transform, highlighted,
@@ -279,7 +279,7 @@ impl ResidentScene {
 /// vertex streams: the scene generation (a monotone counter `GpuBackend`
 /// bumps on every `set_scene`; the scene is owned privately and immutable in
 /// between, so the epoch is an exact oracle for every per-primitive
-/// `(prim.id, version)` dirty key — mesh bytes via `MeshData: PartialEq`,
+/// `(prim.id, version)` dirty key: mesh bytes via `MeshData: PartialEq`,
 /// transform, highlighted and base colour), the camera pose (through both the
 /// view and the view-projection matrices, so rotation AND projection changes
 /// dirty the stream), the target size, and the shading state.
@@ -352,7 +352,7 @@ fn frustum_planes(vp: &Mat4) -> [[f64; 4]; 6] {
 }
 
 /// Conservative frustum test for a world AABB: the prim may be visible when
-/// its AABB intersects (or touches) the frustum volume — rejected ONLY when
+/// its AABB intersects (or touches) the frustum volume: rejected ONLY when
 /// the whole box lies strictly outside at least one plane (its most positive
 /// corner along the plane normal is still outside). This is the OCCT
 /// primitive-level BVH-cull essence; it never removes geometry that

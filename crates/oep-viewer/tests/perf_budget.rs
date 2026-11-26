@@ -4,26 +4,26 @@
 //! a >= 1,000,000-triangle scene at 1600x1000 through the SAME GPU viewport
 //! backend the app drives ([`GpuBackend`] behind the [`ViewportBackend`]
 //! seam, with the same `device::acquire()` context selection), and records the
-//! frame-time distribution — so "interactive" is a measured claim with a
+//! frame-time distribution: so "interactive" is a measured claim with a
 //! committed p95 number, not a hope.
 //!
 //! Two tests live here:
 //!
-//! * `perf_budget_fast_smoke` — ALWAYS runs (never `#[ignore]`). Builds the
+//! * `perf_budget_fast_smoke`: ALWAYS runs (never `#[ignore]`). Builds the
 //!   1M-triangle scene (cheap: index generation), prints the scene stats and
 //!   the committed CPU determinism oracle (the demo `CpuBackend` frame_hash
 //!   must still equal the committed golden, so unchanged CPU determinism is a
 //!   printed fact), and, when an adapter is reachable, renders the SMALL demo
 //!   scene once through the GPU backend and prints the adapter name and the
 //!   GPU determinism echo. Fast: no repeated rendering, no threshold gate.
-//! * `perf_budget_1m_gpu_heavy` — `#[ignore]`d by default (perf is a manual
+//! * `perf_budget_1m_gpu_heavy`: `#[ignore]`d by default (perf is a manual
 //!   measurement, not a CI assertion). Builds the 1M scene, renders it on the
 //!   GPU backend at 1600x1000, warms up 20 frames, times 120 frames, reports
 //!   p50 / p95 / p99 / max and min / mean fps plus the adapter name and driver
 //!   version, and writes the machine report JSON. The gate is the COMMITTED
 //!   threshold p95 <= 16.6 ms: if the measured p95 misses it, the report is
 //!   still written and the miss stated plainly, and the test fails loudly
-//!   (the card is then a legitimate `capability` block on this device — the
+//!   (the card is then a legitimate `capability` block on this device: the
 //!   bar is never lowered).
 //!
 //! The scene is the same deterministic heightfield grid the program's P6-M5-T03
@@ -113,7 +113,7 @@ fn million_triangle_scene() -> Scene {
     scene
 }
 
-/// The `frame_hash` of a freshly built `CpuBackend` demo — the committed CPU
+/// The `frame_hash` of a freshly built `CpuBackend` demo: the committed CPU
 /// determinism oracle value (printed by both tests).
 fn cpu_demo_frame_hash() -> u64 {
     CpuBackend::demo().frame_hash()
@@ -135,7 +135,7 @@ fn report_path() -> std::path::PathBuf {
         .unwrap_or_else(|| std::path::PathBuf::from("perf.json"))
 }
 
-/// FAST SMOKE — always runs (`cargo test -p oep-viewer --test perf_budget`).
+/// FAST SMOKE: always runs (`cargo test -p oep-viewer --test perf_budget`).
 ///
 /// No threshold is asserted here; this leg proves the harness composes: the
 /// 1M scene really contains >= 1,000,000 triangles, the committed CPU
@@ -187,26 +187,31 @@ fn perf_budget_fast_smoke() {
         "gpu adapter: name={} driver={} driver_info={} backend={:?} device_type={:?}",
         info.name, info.driver, info.driver_info, info.backend, info.device_type
     );
-    let mut gpu =
-        GpuBackend::new(CpuBackend::demo_scene(), ctx).expect("GpuBackend::new succeeds");
+    let mut gpu = GpuBackend::new(CpuBackend::demo_scene(), ctx).expect("GpuBackend::new succeeds");
     gpu.set_camera(gpu.camera()); // deterministic re-render of the same view
     let h1 = gpu.frame_hash();
     gpu.set_camera(gpu.camera());
     let h2 = gpu.frame_hash();
-    println!("gpu structural echo: frame_hash {h1} -> {h2}, identical = {}", h1 == h2);
-    assert_eq!(h1, h2, "GPU determinism oracle must hold on the harness leg");
+    println!(
+        "gpu structural echo: frame_hash {h1} -> {h2}, identical = {}",
+        h1 == h2
+    );
+    assert_eq!(
+        h1, h2,
+        "GPU determinism oracle must hold on the harness leg"
+    );
     assert!(
         gpu.frame().data.iter().any(|&b| b != 0),
         "demo GPU frame must not be blank"
     );
 }
 
-/// HEAVY — `#[ignore]`d by default. Runs the full 1M-triangle 1600x1000
+/// HEAVY: `#[ignore]`d by default. Runs the full 1M-triangle 1600x1000
 /// interactive measurement on the GPU backend and writes the machine report.
 ///
 /// Gate: p95 <= 16.6 ms (the COMMITTED bar). On a miss the report is still
 /// written with the real numbers and the miss is stated plainly, then the test
-/// fails so the outcome is loud — the card must then be blocked `capability`
+/// fails so the outcome is loud: the card must then be blocked `capability`
 /// with the measured p95; the bar is never lowered.
 #[test]
 #[ignore]
@@ -228,12 +233,14 @@ fn perf_budget_1m_gpu_heavy() {
     }
 
     // Measured run: TIMED frames, each a full render_frame on the seam path
-    // (CPU projection + submit + readback + GPU completion — the real
+    // (CPU projection + submit + readback + GPU completion: the real
     // interactive cost the app pays per frame at this size).
-    assert!(
-        MEASURED_FRAMES >= 120,
-        "the card requires at least 120 measured frames"
-    );
+    const {
+        assert!(
+            MEASURED_FRAMES >= 120,
+            "the card requires at least 120 measured frames"
+        );
+    }
     let mut samples: Vec<f64> = Vec::with_capacity(MEASURED_FRAMES);
     for _ in 0..MEASURED_FRAMES {
         let t0 = Instant::now();
@@ -316,12 +323,10 @@ fn perf_budget_1m_gpu_heavy() {
     } else {
         "THRESHOLD MISSED"
     };
-    println!(
-        "BUDGET: p95={p95_ms:.3} ms vs committed threshold {BUDGET_P95_MS} ms -> {verdict}"
-    );
+    println!("BUDGET: p95={p95_ms:.3} ms vs committed threshold {BUDGET_P95_MS} ms -> {verdict}");
     assert!(
         budget_met,
-        "UI-D5 interactive budget NOT met on this device: p95 = {p95_ms:.3} ms > {BUDGET_P95_MS} ms at {tris} triangles / {WIDTH}x{HEIGHT} on {} ({}) — recorded in {}, bar NOT lowered",
+        "UI-D5 interactive budget NOT met on this device: p95 = {p95_ms:.3} ms > {BUDGET_P95_MS} ms at {tris} triangles / {WIDTH}x{HEIGHT} on {} ({}) - recorded in {}, bar NOT lowered",
         info.name,
         info.driver,
         path.display()

@@ -78,7 +78,7 @@ fn standard_camera(scene: &oep_viewer::Scene, yaw: f64, pitch: f64) -> Camera {
 }
 
 /// The `w` a point gets under the OLD (pre-D7) formula: the combined
-/// view-projection's 4th row applied to the VIEW-SPACE point — the view
+/// view-projection's 4th row applied to the VIEW-SPACE point: the view
 /// transform applied twice.
 fn old_clip_w(vp: &Mat4, world: &Vec3, world_to_view: &Mat4) -> f64 {
     let view = world_to_view.transform_point(world);
@@ -194,7 +194,7 @@ fn back_view_near_corner_w_before_and_after() {
 
 /// An explicitly constructed all-culled scene: a camera whose frustum
 /// excludes the whole model (near plane pulled in past it). Neither backend
-/// panics, and neither draws ANY model pixels — the all-culled frame is
+/// panics, and neither draws ANY model pixels: the all-culled frame is
 /// byte-count-identical to the overlays-only baseline (the same scene with
 /// no primitives), which is what "renders an empty frame" means here. The
 /// old GPU path panicked on the empty face buffer (`buffer slice can not be
@@ -294,7 +294,7 @@ fn sha256_hex(bytes: &[u8]) -> String {
         msg.push(0);
     }
     msg.extend_from_slice(&ml.to_be_bytes());
-    for chunk in msg.chunks_exact(64) {
+    for chunk in msg.as_chunks::<64>().0 {
         let mut w = [0u32; 64];
         for i in 0..16 {
             w[i] = u32::from_be_bytes([
