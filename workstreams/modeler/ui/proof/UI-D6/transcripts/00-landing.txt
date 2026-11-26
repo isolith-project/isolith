@@ -1,0 +1,47 @@
+# Wave ui-d landing transcript (close card t_bba0ee42, 2026-11-26)
+
+Checkpoint: single no-ff commit on main carrying the wave/ui-d head.
+  checkpoint commit : 16e58f492865be89becce4e3e6e68c556f040f0f
+  parents           : c1e37ec14b93fb24d51d8d5fada9a1e600f8ac57 (main, PR #40 CI-GPU-ICD)
+                      b6176aa688bb396fab18cb967bba726ec51f3b3b (wave/ui-d final head)
+  amend             : 53a29a9 -> 16e58f4 (folded the fresh checkpoint-head gate
+                      transcripts into the same no-ff merge; parents unchanged,
+                      diff vs pre-amend = 8 transcript files only)
+
+Note on the CI-GPU-ICD fix (PR #40, c1e37ec): main moved after the first checkpoint
+attempt (c2948c7 on bed3d50). The checkpoint was rebuilt on the new main so the
+required GPU checks integration and quality-gate could go green. `.github/workflows`
+are byte-identical to main in the checkpoint; wave/ui-d (b6176aa) does not touch them.
+
+PR and merge (main is PR-protected):
+  PR #39 (head checklist c2948c7) closed as superseded; fresh PR #41 opened from
+  checkpoint/wave-ui-d-16e58f4 with the DCO sign-off line in the body.
+  PR #41: dco-sign-off PASS, all required checks green, integration (8m16s) and
+  quality-gate (14m43s) PASS with `deviceName = llvmpipe (LLVM 15.0.6, 256 bits)` /
+  `OK: software Vulkan adapter present in this container`, no gpu lock PoisonError.
+  mergeStateStatus CLEAN.
+  gh pr merge 41 --merge  -> main a4cd2db (merge commit, parents c1e37ec + 16e58f4)
+  Main's tree == checkpoint 16e58f4 tree (c271b09...). Single no-ff checkpoint on main.
+
+Annotated tag (on the CHECKPOINT, not main's tip):
+  wave-ui-d -> c5deb5dac1b71c5d73401d14fa7e1541425914e5  (peels to 16e58f4)
+  pushed to github and gitea.
+
+Mirror and advance:
+  git push gitea github/main:refs/heads/main   -> 6275787..a4cd2db (fast-forward)
+  git push github github/main:refs/heads/wave/ui-e -> new branch at a4cd2db
+
+Read-back (github):
+  a4cd2db683a8663c4b9442c56ee7273ab09ef271  refs/heads/main
+  b6176aa688bb396fab18cb967bba726ec51f3b3b  refs/heads/wave/ui-d
+  a4cd2db683a8663c4b9442c56ee7273ab09ef271  refs/heads/wave/ui-e
+  c5deb5dac1b71c5d73401d14fa7e1541425914e5  refs/tags/wave-ui-d
+Read-back (gitea):
+  a4cd2db683a8663c4b9442c56ee7273ab09ef271  refs/heads/main
+  c5deb5dac1b71c5d73401d14fa7e1541425914e5  refs/tags/wave-ui-d
+
+Checkpoint-head gate transcripts:
+  workstreams/modeler/ui/proof/UI-D6/transcripts/checkpoint-merged-head-53a29a9/
+  (fresh six-leg transcript set, folded into the checkpoint commit; the flaky
+  egui_kittest exit-time teardown SIGSEGV is recorded in the transcripts with the
+  clean re-runs as the evidence: test 4608/0, precommit PASS 559/28, shot no-drift)
