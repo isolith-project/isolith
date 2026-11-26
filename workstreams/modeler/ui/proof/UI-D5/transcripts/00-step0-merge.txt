@@ -1,31 +1,10 @@
 # UI-D5 STEP 0: git fetch github && git merge github/wave/ui-d
-# branch before: ui/d5-perf at 6275787 (wave cut point)
+# branch before: ui/d5-perf at 43572a8 (the pushed card tip; orchestrator reset
+#   the earlier local diagnostic merge ea67904 and its uncommitted re-measure)
 # result: fast-forwarded to the wave head ->
-23aa051 merge: UI-D4 ui/d4-gpu-nav (view cube, standard views, section planes)
-# commits brought by the merge:
-20
-23aa051 merge: UI-D4 ui/d4-gpu-nav (view cube, standard views, section planes)
-4f85c95 card(UI-D4): fix the nav card layout and land the UI-D4 proof
-bc803eb card(UI-D4): keep cube-face buttons one line so gizmo clicks resolve
-8a9395e Merge github/wave/ui-d into ui/d4-gpu-nav (STEP 0)
-ec6759a merge: UI-D7 ui/d7-render-fix (clip-w correction + empty-face safety, nav leg deferred to UI-D4)
-339b7a7 proof(UI-D7): record 2026-11-25 re-verified gates, deferred-to-D4 nav leg, and moved D2 goldens
-0776a6d proof(UI-D7): add verbatim six-cube nav output to the acceptance diagnosis
-3fab0a3 proof(UI-D7): document clip-w correction, goldens, and the nav acceptance diagnosis
-04a6fcf test(UI-D7): emit deterministic proof PNGs for all six standard views + all-culled frames
-b7bf432 card(UI-D7): correct the shared clip-w projection and re-register the CPU demo golden
-513ce8f Merge branch 'ui/d2-gpu-shading' into merge-UI-D2
-2986fb6 proof(UI-D2): record merged-tree re-gate after STEP 0 reconcile with UI-D3
-048e795 merge: github/wave/ui-d (UI-D3 UI-PICK) into ui/d2-gpu-shading
-9007ac1 card(UI-D2): studio shading on the GPU viewport
-a3dea18 card(UI-D4): nav surface - view cube, standard views, section planes (blocked on renderer clip-w)
-16b2d11 Merge branch 'ui/d3-gpu-pick' into merge-UI-D3
-e8195d7 card(UI-D3): id-buffer GPU picking - hover pre-highlight, shift-click multi-select, Alt-drag box select
-ca9aa1b Merge branch 'ui/d1-gpu-backend' into merge-UI-D1
-82d9302 card(UI-D1): record the final acceptance gate on the committed tree
-43ebe18 card(UI-D1): wgpu GPU viewport behind the seam, shared device with egui
-# working tree:
- M workstreams/modeler/ui/README.md
-?? crates/oep-viewer/tests/perf_budget.rs
-?? scripts/ui/perf.sh
-?? workstreams/modeler/ui/proof/UI-D5/
+ba7e3bc merge: UI-D10 resident-scene onto wave/ui-d (preserve-both merge with UI-D9)
+# the merge was a fast-forward (43572a8..ba7e3bc), 60 files changed, bringing
+# UI-D8 (vec4 pipeline), UI-D9 (perf profile ADR) and UI-D10 (GPU-resident
+# scene: per-primitive world-AABB cull, dirty-only re-upload) onto this branch.
+# working tree after the merge:
+#   (clean; this run then re-generated perf.json + the three transcripts)
