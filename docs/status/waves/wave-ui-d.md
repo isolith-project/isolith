@@ -27,23 +27,33 @@ is present on the wave head.
 
 ## Head sha
 
-- Wave head: `91a07a5` (`merge-UI-D12`, containing all wave-D cards UI-D1..UI-D10
-  plus UI-D5's merged-head re-prove and the UI-D12 gate fix).
-- Checkpoint merge commit: `881405a`, parents `bed3d50` (`github/main`) +
-  `91a07a5` (wave head). `main` is NOT an ancestor of the wave head (main
-  carries two post-wave-C docs PRs: readme-refresh and brand-avatar); the
-  checkpoint tree differs from the wave head only by those two docs commits
-  (`README.md`, `assets/brand/*`, `assets/readme/*`, `docs-site/index.html`),
-  none of which the six-leg gate touches. The full six-leg gate was run on the
-  checkpoint merged head and passed (transcripts
-  `proof/UI-D6/transcripts/checkpoint-merged-head/`).
+Final wave-D state (what `main` carries after the close; the landing is recorded
+verbatim in `proof/UI-D6/transcripts/00-landing.txt`):
+
+- Wave head (merged, final): `b6176aa` on `wave/ui-d`, containing all wave-D
+  cards UI-D1..UI-D10 plus UI-D5's merged-head re-prove, the UI-D12 gate fix,
+  and the UI-D6 wave-close record (this file, the README row, `proof/UI-D6/`).
+- Checkpoint merge commit: `16e58f4`, a single no-ff merge with parents
+  `c1e37ec` (`github/main`, which carries PR #40 CI-GPU-ICD) and `b6176aa`
+  (`wave/ui-d` final head). `main` moved after the first checkpoint attempt
+  (CI-GPU-ICD landed), so the checkpoint was rebuilt on the new main; the
+  checkpoint tree differs from the wave head only by main's two post-wave-C
+  docs PRs and the two CI workflow files, none of which the six-leg gate
+  touches. The checkpoint was amended (53a29a9 -> 16e58f4, docs-only, parents
+  unchanged) to fold the fresh checkpoint-head gate transcripts
+  (`proof/UI-D6/transcripts/checkpoint-merged-head-53a29a9/`). The full
+  six-leg gate was run on the checkpoint merged head and passed.
+- Landing: PR #39 (head checklist c2948c7) closed as superseded; PR #41 from
+  `checkpoint/wave-ui-d-16e58f4`, with the DCO sign-off line in the body, went
+  green (dco-sign-off PASS; integration and quality-gate PASS with the software
+  Vulkan adapter from PR #40, no gpu lock PoisonError) and was merged via
+  `gh pr merge 41 --merge` -> main `a4cd2db`. Main's tree == checkpoint
+  `16e58f4` tree. Annotated tag `wave-ui-d` -> `c5deb5d` (peels to `16e58f4`),
+  pushed to github and gitea. Gitea mirror fast-forwarded to `a4cd2db`.
+  `github/wave/ui-e` created at `a4cd2db`.
 - STEP 0 of the close card fast-forwarded nothing (the card worktree merged the
   new head `39425ee`); attempt 1's block on the pre-fix head `1097f76` was
   resolved by UI-D12 (see `proof/UI-D6/PROOF.md` for the full history).
-- Landing: PR #<PR> merged as `<MAIN>` (`github/main`), annotated tag `wave-ui-d`
-  (`<TAG>`) -> checkpoint `881405a`, Gitea mirror fast-forwarded to `<MAIN>`
-  with the tag, and `github/wave/ui-e` created at `<MAIN>`. Transcripts
-  `proof/UI-D6/transcripts/landing/`.
 - The UI-D6 record (this file, the README row, `proof/UI-D6/`) is folded into
   the single checkpoint commit and re-committed onto the wave branch, per the
   wave-close convention.
