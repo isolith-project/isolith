@@ -1,0 +1,289 @@
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-app/tests/../src/panels/pick_gpu.rs:486:
+ 
+     #[test]
+     fn min_box_constant_is_positive() {
+-        const { assert!(MIN_BOX_PX > 0); }
++        const {
++            assert!(MIN_BOX_PX > 0);
++        }
+     }
+ 
+     #[test]
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-viewer/tests/perf_budget.rs:187:
+         "gpu adapter: name={} driver={} driver_info={} backend={:?} device_type={:?}",
+         info.name, info.driver, info.driver_info, info.backend, info.device_type
+     );
+-    let mut gpu =
+-        GpuBackend::new(CpuBackend::demo_scene(), ctx).expect("GpuBackend::new succeeds");
++    let mut gpu = GpuBackend::new(CpuBackend::demo_scene(), ctx).expect("GpuBackend::new succeeds");
+     gpu.set_camera(gpu.camera()); // deterministic re-render of the same view
+     let h1 = gpu.frame_hash();
+     gpu.set_camera(gpu.camera());
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-viewer/tests/perf_budget.rs:195:
+     let h2 = gpu.frame_hash();
+-    println!("gpu structural echo: frame_hash {h1} -> {h2}, identical = {}", h1 == h2);
+-    assert_eq!(h1, h2, "GPU determinism oracle must hold on the harness leg");
++    println!(
++        "gpu structural echo: frame_hash {h1} -> {h2}, identical = {}",
++        h1 == h2
++    );
++    assert_eq!(
++        h1, h2,
++        "GPU determinism oracle must hold on the harness leg"
++    );
+     assert!(
+         gpu.frame().data.iter().any(|&b| b != 0),
+         "demo GPU frame must not be blank"
+Diff in /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-viewer/tests/perf_budget.rs:316:
+     } else {
+         "THRESHOLD MISSED"
+     };
+-    println!(
+-        "BUDGET: p95={p95_ms:.3} ms vs committed threshold {BUDGET_P95_MS} ms -> {verdict}"
+-    );
++    println!("BUDGET: p95={p95_ms:.3} ms vs committed threshold {BUDGET_P95_MS} ms -> {verdict}");
+     assert!(
+         budget_met,
+         "UI-D5 interactive budget NOT met on this device: p95 = {p95_ms:.3} ms > {BUDGET_P95_MS} ms at {tris} triangles / {WIDTH}x{HEIGHT} on {} ({}) — recorded in {}, bar NOT lowered",

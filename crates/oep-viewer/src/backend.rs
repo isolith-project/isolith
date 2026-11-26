@@ -48,7 +48,12 @@ pub fn frame_hash(img: &RgbaImage) -> u64 {
 /// backend behind the same surface: navigation changes the camera, the panel
 /// asks for the frame to draw, and `frame_hash()` stays the determinism oracle
 /// across backends.
-pub trait ViewportBackend {
+///
+/// The `Send + Sync` supertraits (wave D, card UI-D1) let the panel hold the
+/// backend behind the seam in the egui context store (which requires cloned,
+/// sendable state): [`CpuBackend`] remains byte-untouched and `GpuBackend`
+/// holds `wgpu` resources that are themselves `Send + Sync`.
+pub trait ViewportBackend: Send + Sync {
     /// Resize the render target (in pixels); re-rasterizes with the new size.
     fn resize(&mut self, width: u32, height: u32);
 
@@ -66,6 +71,33 @@ pub trait ViewportBackend {
 
     /// Wall time of the last rasterize, for the status bar frame-time field.
     fn frame_time_secs(&self) -> f64;
+
+    /// Short, stable name of this backend implementation (`"cpu"` /
+    /// `"gpu"`), for the smoke line, a status readout, and the backend
+    /// selection test (wave D, card UI-D1). [`CpuBackend`] inherits the
+    /// default; [`GpuBackend`](crate::gpu::GpuBackend) overrides it.
+    fn backend_name(&self) -> &'static str {
+        "cpu"
+    }
+}
+
+/// Select the runtime viewport backend (wave D, card UI-D1): the GPU wgpu
+/// backend when an adapter is reachable and not disabled by `ISOLITH_GPU=off`,
+/// the deterministic CPU backend otherwise.
+///
+/// The GPU path renders on the same [`wgpu`] the egui renderer uses (one
+/// `wgpu` version in the lock), sharing egui's own device when the app
+/// registered it; see [`crate::gpu::device`]. The CPU path stays forever as
+/// the determinism oracle for CI and GPU-less hosts.
+pub fn select_backend(scene: Scene) -> Box<dyn ViewportBackend> {
+    if crate::gpu::device::gpu_enabled() {
+        if let Some(ctx) = crate::gpu::device::acquire() {
+            if let Some(gpu) = crate::gpu::GpuBackend::new(scene.clone(), ctx) {
+                return Box::new(gpu);
+            }
+        }
+    }
+    Box::new(CpuBackend::new(scene))
 }
 
 /// Deterministic CPU viewport backend.

@@ -1,0 +1,16 @@
+$ cargo tree -d -p oep-app | grep -c '^wgpu '
+0
+(grep exit $? = no duplicate lines -> single wgpu)
+
+$ cargo tree -p oep-app -i wgpu
+wgpu v30.0.2
+├── egui-wgpu v0.37.0
+│   └── eframe v0.37.0
+│       ├── egui_kittest v0.37.0
+│       │   [dev-dependencies]
+│       │   └── oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-app)
+│       └── oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-app)
+└── oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-viewer)
+    ├── oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-app)
+    └── oep-shell v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-shell)
+        └── oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-app)

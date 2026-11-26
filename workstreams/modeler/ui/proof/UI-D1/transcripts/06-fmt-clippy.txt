@@ -1,0 +1,46 @@
+$ cargo fmt --all -- --check ; cargo clippy -p oep-viewer --all-targets -- -D warnings ; cargo clippy -p oep-app --all-targets -- -D warnings
+Diff in /home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-viewer/examples/_ui_d1_proof_tmp.rs:60:
+     fs::create_dir_all(&dir).expect("create proof dir");
+     let ctx = device::acquire().expect("gpu ctx");
+ 
+-    for (name, scene) in [("demo", CpuBackend::demo_scene()), ("bracket", bracket_scene())] {
++    for (name, scene) in [
++        ("demo", CpuBackend::demo_scene()),
++        ("bracket", bracket_scene()),
++    ] {
+         let b = scene.bounds.expect("bounds");
+         let mut c = Camera::framed(&b);
+         c.orbit(0.6, 0.35);
+Diff in /home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-viewer/examples/_ui_d1_proof_tmp.rs:71:
+         gpu.resize(800, 600);
+         let gpu_png = dir.join(format!("{name}-gpu-800x600.png"));
+         fs::write(&gpu_png, encode_png(gpu.frame())).expect("write gpu png");
+-        println!("{name} GPU covered={} img={} {}", non_bg(gpu.frame()), gpu_png.display(), sha256_note());
++        println!(
++            "{name} GPU covered={} img={} {}",
++            non_bg(gpu.frame()),
++            gpu_png.display(),
++            sha256_note()
++        );
+ 
+         // CPU
+         let mut cpu = CpuBackend::new(scene.clone());
+Diff in /home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-viewer/examples/_ui_d1_proof_tmp.rs:79:
+         cpu.resize(800, 600);
+         let cpu_png = dir.join(format!("{name}-cpu-800x600.png"));
+         fs::write(&cpu_png, encode_png(cpu.frame())).expect("write cpu png");
+-        println!("{name} CPU covered={} img={} {}", non_bg(cpu.frame()), cpu_png.display(), sha256_note());
++        println!(
++            "{name} CPU covered={} img={} {}",
++            non_bg(cpu.frame()),
++            cpu_png.display(),
++            sha256_note()
++        );
+     }
+     println!("done");
+ }
+fmt EXIT=1
+    Checking oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-viewer)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.40s
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d1/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.39s

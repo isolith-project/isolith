@@ -1,0 +1,16 @@
+   Compiling oep-geo v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-geo)
+   Compiling oep-step v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-step)
+   Compiling oep-kinematics v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-kinematics)
+   Compiling oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-viewer)
+   Compiling oep-assem v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-assem)
+   Compiling oep-import v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-import)
+   Compiling oep-pdm v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-pdm)
+   Compiling oep-sketch v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-sketch)
+   Compiling oep-shell v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-shell)
+   Compiling oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d5/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.07s
+     Running `target/debug/isolith --smoke`
+isolith smoke: renderer=wgpu viewport-backend=gpu (set ISOLITH_GPU=off to force cpu)
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok

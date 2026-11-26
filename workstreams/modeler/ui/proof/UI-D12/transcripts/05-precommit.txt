@@ -1,0 +1,8 @@
+== quality gate: ui-d12 ==
+  [run]  pytest
+  [ok]   pytest (559 passed, 28 skipped, 1 warning in 118.62s (0:01:58))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==

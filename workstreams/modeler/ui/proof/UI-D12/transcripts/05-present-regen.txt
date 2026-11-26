@@ -1,0 +1,27 @@
+oep-workbench: update check: OFF (no source configured; non-phoning default)
+editor open: part=part-1 body=body-1 sketch=sketch-1
+sketch point p0 at (0, 0)
+sketch point p1 at (3, 1)
+sketch point p2 at (4, 4)
+sketch point p3 at (1, 5)
+sketch line l0 (p0) to (p1)
+sketch line l1 (p1) to (p2)
+sketch line l2 (p2) to (p3)
+sketch line l3 (p3) to (p0)
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+constraint added
+variable width = 80 (volume n/a)
+variable height = 40 (volume n/a)
+solved dof=0 residual=6.181e-13 dims=2 points=4 lines=4
+  height = 40.000000
+  width = 80.000000
+extruded oep-feature-extrude-2: volume 32000.000000 faces=12 edges=12 bbox [2.9960651997941413e-13, 3.2034320304901e-13, 0.0, 80.0000000000006, 40.000000000000924, 10.0]
+camera framed
+rendered demos/editor-sketch-extrude/present-1080p-before.png sha256=1d0676b8ffe82bee11afe662cc8417fdb05fc23aa45c171e5c7b70f0528caff5 1920x1080 present grid=22 axes=3 labels=2
+variable width = 120 (volume 32000.000000 -> 48000.000000 live recompute)
+rendered demos/editor-sketch-extrude/present-1080p-after.png sha256=bcf33a5dd36127c890e79b35b1f4c3cac5a5b638eb018d213a9a7be2ad73cdeb 1920x1080 present grid=30 axes=3 labels=2

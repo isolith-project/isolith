@@ -1,0 +1,4 @@
+=== step0 merge recap ===
+1097f76 proof(UI-D5): re-gate on merged wave head (fast-forward to ba7e3bc w/ UI-D10) - budget MET, p95 6.408 ms
+ba7e3bc merge: UI-D10 resident-scene onto wave/ui-d (preserve-both merge with UI-D9)
+6050d8c proof(UI-D10): numbers, transcripts, pixel-oracle tables, README row

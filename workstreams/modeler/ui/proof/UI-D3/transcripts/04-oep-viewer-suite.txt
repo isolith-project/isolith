@@ -1,0 +1,15 @@
+$ cargo test -p oep-viewer
+     Running unittests src/lib.rs (target/debug/deps/oep_viewer-5b8fa3f6b6132d42)
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s
+     Running tests/accessibility_theme.rs (target/debug/deps/accessibility_theme-405ae3defdee966e)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/gpu_backend.rs (target/debug/deps/gpu_backend-5b456643314cafe6)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.99s
+     Running tests/mesh_scene.rs (target/debug/deps/mesh_scene-02115746378af3a0)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/render_present.rs (target/debug/deps/render_present-0fae660da3e9f18c)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/viewer_contract.rs (target/debug/deps/viewer_contract-bb9b925513f94f45)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+viewer exit: 0

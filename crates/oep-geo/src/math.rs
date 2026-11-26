@@ -152,6 +152,67 @@ impl Vec3 {
     }
 }
 
+/// 4D vector of `f64` coordinates (homogeneous clip-space component in the
+/// UI-D8 vec4 pipeline: `(x, y, z, w)` with `w` the perspective weight).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct Vec4 {
+    /// X coordinate.
+    pub x: f64,
+    /// Y coordinate.
+    pub y: f64,
+    /// Z coordinate.
+    pub z: f64,
+    /// W coordinate (homogeneous weight).
+    pub w: f64,
+}
+
+impl Vec4 {
+    /// Build a vector from four coordinates.
+    pub fn new(x: f64, y: f64, z: f64, w: f64) -> Self {
+        Self { x, y, z, w }
+    }
+
+    /// Zero vector.
+    pub fn zero() -> Self {
+        Self::new(0.0, 0.0, 0.0, 0.0)
+    }
+
+    /// Component-wise addition.
+    pub fn add(&self, o: &Vec4) -> Vec4 {
+        Vec4::new(self.x + o.x, self.y + o.y, self.z + o.z, self.w + o.w)
+    }
+
+    /// Component-wise subtraction.
+    pub fn sub(&self, o: &Vec4) -> Vec4 {
+        Vec4::new(self.x - o.x, self.y - o.y, self.z - o.z, self.w - o.w)
+    }
+
+    /// Scalar multiplication.
+    pub fn mul(&self, s: f64) -> Vec4 {
+        Vec4::new(self.x * s, self.y * s, self.z * s, self.w * s)
+    }
+
+    /// Scalar division.
+    pub fn div(&self, s: f64) -> Vec4 {
+        Vec4::new(self.x / s, self.y / s, self.z / s, self.w / s)
+    }
+
+    /// Dot (scalar) product.
+    pub fn dot(&self, o: &Vec4) -> f64 {
+        self.x * o.x + self.y * o.y + self.z * o.z + self.w * o.w
+    }
+
+    /// The four components as `[x, y, z, w]`.
+    pub fn to_array4(&self) -> [f64; 4] {
+        [self.x, self.y, self.z, self.w]
+    }
+
+    /// Build from a `[x, y, z, w]` array.
+    pub fn from_array4(a: [f64; 4]) -> Self {
+        Self::new(a[0], a[1], a[2], a[3])
+    }
+}
+
 // --------------------------------------------------------------------------
 // Mat3
 // --------------------------------------------------------------------------
@@ -383,6 +444,29 @@ impl Mat4 {
             self.data[0] * x + self.data[4] * y + self.data[8] * z + self.data[12],
             self.data[1] * x + self.data[5] * y + self.data[9] * z + self.data[13],
             self.data[2] * x + self.data[6] * y + self.data[10] * z + self.data[14],
+        )
+    }
+
+    /// Transform a point to the raw homogeneous `(x, y, z, w)` clip-space
+    /// result: `M · (p, 1)` with the FULL fourth row applied, **no**
+    /// perspective divide (the caller decides when to divide, or the GPU's
+    /// vertex stage does).
+    ///
+    /// This is the one place the clip `w` for a point is defined — the
+    /// perspective weight `w = row4(M) · (p, 1)` (for the renderer's
+    /// right-handed camera, `-view.z`). The colour, id-buffer and picking
+    /// surfaces all project from this single homogeneous transform (UI-D8
+    /// "one clip-space path"): project, then divide, then range-test, never
+    /// a handwritten `w` formula.
+    pub fn transform_point4(&self, p: &Vec3) -> Vec4 {
+        let x = p.x;
+        let y = p.y;
+        let z = p.z;
+        Vec4::new(
+            self.data[0] * x + self.data[4] * y + self.data[8] * z + self.data[12],
+            self.data[1] * x + self.data[5] * y + self.data[9] * z + self.data[13],
+            self.data[2] * x + self.data[6] * y + self.data[10] * z + self.data[14],
+            self.data[3] * x + self.data[7] * y + self.data[11] * z + self.data[15],
         )
     }
 
@@ -780,5 +864,87 @@ mod tests {
         let m = Mat3::from_axis_angle(Vec3::new(0.3, -0.7, 4.0).normalize().unwrap(), PI / 3.0)
             .unwrap();
         assert!((m.det() - 1.0).abs() < 1e-9);
+    }
+
+    // ---------------------------------------------------------------------
+    // UI-D8 vec4 pipeline: Vec4 + Mat4::transform_point4 (raw homogeneous)
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn vec4_basics() {
+        let a = Vec4::new(1.0, 2.0, 3.0, 4.0);
+        let b = Vec4::new(10.0, 20.0, 30.0, 40.0);
+        assert_eq!(a.add(&b), Vec4::new(11.0, 22.0, 33.0, 44.0));
+        assert_eq!(b.sub(&a), Vec4::new(9.0, 18.0, 27.0, 36.0));
+        assert_eq!(a.mul(2.0), Vec4::new(2.0, 4.0, 6.0, 8.0));
+        assert_eq!(a.div(2.0), Vec4::new(0.5, 1.0, 1.5, 2.0));
+        assert_eq!(a.dot(&b), 1.0 * 10.0 + 2.0 * 20.0 + 3.0 * 30.0 + 4.0 * 40.0);
+        assert_eq!(Vec4::zero(), Vec4::new(0.0, 0.0, 0.0, 0.0));
+        assert_eq!(a.to_array4(), [1.0, 2.0, 3.0, 4.0]);
+        assert_eq!(Vec4::from_array4([1.0, 2.0, 3.0, 4.0]), a);
+    }
+
+    #[test]
+    fn transform_point4_identity_is_point_with_w1() {
+        let m = Mat4::identity();
+        let p = Vec3::new(3.0, -2.0, 7.0);
+        let h = m.transform_point4(&p);
+        assert_eq!(h, Vec4::new(3.0, -2.0, 7.0, 1.0));
+    }
+
+    #[test]
+    fn transform_point4_translation_moves_xyz_leaves_w1() {
+        let m = Mat4::from_translation(Vec3::new(5.0, -3.0, 2.0));
+        let p = Vec3::new(1.0, 1.0, 1.0);
+        let h = m.transform_point4(&p);
+        assert_eq!(h, Vec4::new(6.0, -2.0, 3.0, 1.0));
+    }
+
+    #[test]
+    fn transform_point4_perspective_yields_w_equals_neg_z_view() {
+        // A right-handed perspective camera (the viewer's `Camera::projection`
+        // convention): view-space point `vz` at distance `d` in front maps to
+        // clip w == -view.z, exactly like camera.projection().transform_point4.
+        // Builds the same projection matrix shape: row 3 (clip.w) is
+        // [0, 0, -1, 0], so w = -z_view for any view point.
+        let f = 1.0 / (PI / 4.0).tan(); // fov_y = 90deg
+        let near = 0.1f64;
+        let far = 5000.0f64;
+        let nf = 1.0 / (near - far);
+        let proj = Mat4::from_array16([
+            f / 1.5,
+            0.0,
+            0.0,
+            0.0, // col 0
+            0.0,
+            f,
+            0.0,
+            0.0, // col 1
+            0.0,
+            0.0,
+            (far + near) * nf,
+            -1.0, // col 2
+            0.0,
+            0.0,
+            2.0 * far * near * nf,
+            0.0, // col 3
+        ])
+        .expect("projection finite");
+
+        for z_view in [-2.0f64, -5.0, -100.0, -137.2] {
+            let p = Vec3::new(2.0 * z_view, -3.0 * z_view, z_view); // view-space point
+            let h = proj.transform_point4(&p);
+            assert!(
+                (h.w - -z_view).abs() < 1e-9,
+                "perspective w must equal -view.z, got {} for z={}",
+                h.w,
+                z_view
+            );
+            // No divide: h keeps the raw homogeneous w (not 1, not normalized).
+            assert!(
+                (h.w - 1.0).abs() > 0.5,
+                "raw homogeneous w must differ from 1"
+            );
+        }
     }
 }

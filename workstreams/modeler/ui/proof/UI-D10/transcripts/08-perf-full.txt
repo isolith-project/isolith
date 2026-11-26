@@ -1,0 +1,50 @@
+== UI-D5 perf harness on promaxgb10-83f1 ==
+started: 2026-11-26T07:48:31Z
+
+== leg 1: perf_budget fast smoke ==
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/perf_budget.rs (target/debug/deps/perf_budget-9a090529fae1d8d8)
+
+running 2 tests
+test perf_budget_1m_gpu_heavy ... ignored
+test perf_budget_fast_smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+
+== leg 2: heavy 1M-triangle 1600x1000 measurement (release) ==
+   Compiling oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d10/crates/oep-viewer)
+    Finished `release` profile [optimized] target(s) in 3.42s
+     Running tests/perf_budget.rs (target/release/deps/perf_budget-2d010fa3eeca7182)
+
+running 1 test
+report written: /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D5/perf.json
+UI-D5 perf: 1002528 triangles @ 1600x1000 (real wgpu adapter NVIDIA GB10)
+adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+frame ms: min=5.991 mean=6.260 p50=6.276 p95=6.366 p99=6.429 max=6.856
+fps: min=145.9 mean=159.7 over 120 measured frames (after 20 warm-up)
+cpu determinism: demo frame_hash = 12597229237775278722, committed golden = 12597229237775278722, match = true
+BUDGET: p95=6.366 ms vs committed threshold 16.6 ms -> THRESHOLD MET
+test perf_budget_1m_gpu_heavy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 1.72s
+
+report written: /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D5/perf.json
+
+== leg 3: app smoke ==
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.14s
+     Running `target/debug/isolith --smoke`
+isolith smoke: renderer=wgpu viewport-backend=gpu (set ISOLITH_GPU=off to force cpu)
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok
+
+================================================================
+UI-D5 interactive budget verdict:
+  adapter : NVIDIA GB10
+  scene   : 1002528 triangles @ 1600x1000
+  p95     : 6.365852 ms (committed threshold 16.6 ms)
+  budget_met: True
+  report  : /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D5/perf.json
+================================================================
+BUDGET MET — interactive at 1M triangles on this device.

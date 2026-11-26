@@ -1,0 +1,13 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running tests/resident_scene.rs (target/debug/deps/resident_scene-580c7ad86589c356)
+
+running 6 tests
+test aabb_visible_plane_arithmetic ... ok
+test cull_is_conservative_on_the_committed_axis_views ... ok
+test fast_path_frame_is_byte_identical_to_full_path ... ok
+test frustum_culling_submits_a_culled_subset ... ok
+test resident_1m_grid_steady_state_uploads_only_mvp ... ok
+test upload_counter_moves_on_camera_move_and_mesh_edit ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.62s
+

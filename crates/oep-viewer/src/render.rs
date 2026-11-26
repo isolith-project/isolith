@@ -166,7 +166,7 @@ pub fn render(
     // Overlay wires on top: solid boundary edges and sketch lines. Drawn
     // last so silhouette and guidance lines read above the fill.
     for (seg, color) in wires {
-        draw_wire(&mut img, seg, &world_to_view, &vp, color);
+        draw_wire(&mut img, seg, &vp, color);
     }
     img
 }
@@ -216,7 +216,6 @@ pub fn render_present(
 ) -> PresentFrame {
     let mut img = render(scene, cam, clips, width, height);
     let aspect = width as f64 / height as f64;
-    let world_to_view = cam.view_matrix();
     let vp = cam.view_projection(aspect);
     let opacity = 255u8;
     let grid_color = theme::GRID_RGB;
@@ -243,7 +242,6 @@ pub fn render_present(
             draw_wire(
                 &mut img,
                 *seg,
-                &world_to_view,
                 &vp,
                 [grid_color[0], grid_color[1], grid_color[2], opacity],
             );
@@ -255,7 +253,7 @@ pub fn render_present(
             .map(|b| Vec3::new(0.0, 0.0, b.min.z.min(0.0)))
             .unwrap_or_else(Vec3::zero);
         // Anchor at the projected origin, clamped into the frame.
-        let proj_origin = to_px(world_to_view.transform_point(&origin), &vp, width, height);
+        let proj_origin = to_px(origin, &vp, width, height);
         let (ax, ay) = proj_origin.unwrap_or((0.0, 0.0));
         let ax = ax.clamp(8.0, width.saturating_sub(8) as f64);
         let ay = ay.clamp(8.0, height.saturating_sub(8) as f64);
@@ -270,7 +268,7 @@ pub fn render_present(
         let labels = ["X", "Y", "Z"];
         for (i, axis) in axes.iter().enumerate() {
             let p = origin.add(&Vec3::new(axis[0], axis[1], axis[2]).mul(arm_world));
-            let Some(pp) = to_px(world_to_view.transform_point(&p), &vp, width, height) else {
+            let Some(pp) = to_px(p, &vp, width, height) else {
                 continue;
             };
             let anchor = proj_origin.unwrap_or((0.0, 0.0));
@@ -317,19 +315,46 @@ pub fn render_present(
     }
 }
 
-/// Project a view-space point to pixel coordinates (top-left origin).
-fn to_px(view: oep_geo::math::Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
-    let clip = vp.transform_point(&view);
-    let w = clip_w(vp, &view);
-    if w.abs() < 1e-9 {
+/// Project a world-space point to NDC `[x, y, z]` under the combined
+/// view-projection `vp` via the crate's ONE homogeneous clip-space path
+/// (UI-D8): `transform_point4` gives the raw clip `(x, y, z, w)`, divide,
+/// then range-check. `None` when the clip `w` is degenerate (`w <= 1e-9`,
+/// i.e. at/behind the near plane) or the divided NDC z falls outside
+/// `[-1, 1]` (behind / beyond the frustum).
+///
+/// This is the point-visibility projection: faces (`push_polygon`,
+/// `push_face`) and single-point projections (`to_px`) draw from this one
+/// helper so a face is culled or an anchor rejected by the SAME test. WIRE
+/// `/segment` endpoints (`draw_wire`, gpu `to_ndc`) deliberately do NOT reject
+/// on the NDC-z range here: they use the same `transform_point4` formula but
+/// keep D7's segment semantics: an endpoint whose NDC z is outside `[-1,1]`
+/// is still projected so the segment can be clipped to the visible cube by
+/// `clip_ndc_line` (a wire crossing the near/far plane keeps its visible
+/// portion: exactly the D7 goldens). One homogeneous transform
+/// (`transform_point4`), one divide; the rejection policy is per-surface.
+pub(crate) fn project_ndc(world: &oep_geo::math::Vec3, vp: &Mat4) -> Option<[f64; 3]> {
+    let h = vp.transform_point4(world);
+    if h.w <= 1e-9 {
         return None;
     }
-    let nx = clip.x / w;
-    let ny = clip.y / w;
-    let nz = clip.z / w;
-    if nz < -1.0 || nz > 1.0 {
+    let ndc_x = h.x / h.w;
+    let ndc_y = h.y / h.w;
+    let ndc_z = h.z / h.w;
+    if !(-1.0..=1.0).contains(&ndc_z) {
         return None;
     }
+    Some([ndc_x, ndc_y, ndc_z])
+}
+
+/// Project a world-space point to pixel coordinates (top-left origin).
+///
+/// The point is expected in WORLD space: the single [`project_ndc`] path
+/// applies the combined view-projection `vp` to the point it is given, so
+/// giving it a view-space point (as the pre-D7 code did) applies the view
+/// transform a second time and degenerates to `w == 0` on exact axis views
+/// (UI-D4's Back-view blocker). Every caller here passes a world point.
+fn to_px(world: oep_geo::math::Vec3, vp: &Mat4, width: u32, height: u32) -> Option<(f64, f64)> {
+    let [nx, ny, _] = project_ndc(&world, vp)?;
     Some((
         (nx * 0.5 + 0.5) * width as f64,
         (0.5 - ny * 0.5) * height as f64,
@@ -389,20 +414,14 @@ fn push_polygon(
     let mut view_depth_sum = 0.0f64;
     for p in &clipped {
         let view = world_to_view.transform_point(p);
-        let clip = vp.transform_point(p);
-        let w = clip_w(vp, &view);
-        if w.abs() < 1e-9 {
+        // The single projection path: raw clip via transform_point4, divide,
+        // near/far and degenerate-w reject (UI-D8). `w` is the clip w of the
+        // SAME world point `p` the clip xyz came from (D7: the combined
+        // matrix applied to body space).
+        let Some([ndc_x, ndc_y, ndc_z]) = project_ndc(p, vp) else {
             ok = false;
             break;
-        }
-        let ndc_x = clip.x / w;
-        let ndc_y = clip.y / w;
-        let ndc_z = clip.z / w;
-        // Near/far frustum cull (NDC z in [-1,1]).
-        if ndc_z < -1.0 || ndc_z > 1.0 {
-            ok = false;
-            break;
-        }
+        };
         view_depth_sum += view.z;
         pts.push([ndc_x, ndc_y, ndc_z]);
     }
@@ -420,18 +439,23 @@ fn push_polygon(
 /// Overlay wire color for solid boundary edges (neutral light gray).
 const EDGE_RGB: [u8; 4] = [170, 176, 184, 255];
 
-/// Rasterize one wire segment: project both endpoints to NDC, clip the
-/// segment to the visible NDC cube, then draw it as a 1px line.
-fn draw_wire(img: &mut RgbaImage, seg: [Vec3; 2], world_to_view: &Mat4, vp: &Mat4, color: [u8; 4]) {
+/// Rasterize one wire segment: project both endpoints to NDC (world points,
+/// direct through `vp`), clip the segment to the visible NDC cube, then draw
+/// it as a 1px line.
+///
+/// A wire endpoint is rejected ONLY on a degenerate clip w (`w.abs() < 1e-9`,
+/// the D1/D7 wire semantics): endpoints outside the NDC-z range are NOT
+/// dropped here: the segment is clipped to the visible cube by
+/// [`clip_ndc_line`], so a wire that crosses the near/far plane keeps its
+/// visible portion exactly as the D7 goldens captured.
+fn draw_wire(img: &mut RgbaImage, seg: [Vec3; 2], vp: &Mat4, color: [u8; 4]) {
     let mut ndc = [[0.0f64; 3]; 2];
     for (k, p) in seg.iter().enumerate() {
-        let view = world_to_view.transform_point(p);
-        let clip = vp.transform_point(p);
-        let w = clip_w(vp, &view);
-        if w.abs() < 1e-9 {
+        let h = vp.transform_point4(p);
+        if h.w.abs() < 1e-9 {
             return;
         }
-        ndc[k] = [clip.x / w, clip.y / w, clip.z / w];
+        ndc[k] = [h.x / h.w, h.y / h.w, h.z / h.w];
     }
     let Some((t0, t1)) = clip_ndc_line(ndc[0], ndc[1]) else {
         return;
@@ -539,13 +563,6 @@ fn newell_normal(poly: &[Vec3]) -> Vec3 {
     }
     let n = Vec3::new(nx, ny, nz);
     n.normalize().unwrap_or(Vec3::new(0.0, 0.0, 1.0))
-}
-
-/// The `w` clip coordinate produced by the projection matrix.
-fn clip_w(vp: &Mat4, view: &Vec3) -> f64 {
-    // Row 3 (clip.w) = row3 · (view, 1). Column-major: element (3,c) at c*4+3.
-    let a = vp.to_array16();
-    a[3] * view.x + a[7] * view.y + a[11] * view.z + a[15]
 }
 
 /// Shade an opaque color by factor `k` in [0,1].
