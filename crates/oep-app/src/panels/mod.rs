@@ -30,6 +30,11 @@ pub mod assy_tree;
 // nav.rs is the registration call site and viewport.rs stays untouched).
 pub mod nav_cube;
 
+// Wave-F (UI-F1 UI-SHEET): the drafting panel (sheet tree + sheet
+// properties). Like assy_tree.rs it will `#[path]`-include the F2-F4 drawing
+// sub-panels (views, annotate, export) as those cards land.
+pub mod sheet;
+
 // The settings surface (UI-E6): `src/settings.rs`, reached by the panels as
 // `panels::settings`. Registered in this module so no sibling file (app.rs,
 // main.rs) has to change to host the settings surface.
@@ -62,18 +67,23 @@ pub enum RegionKind {
     /// Wave-E (UI-E1): the assembly tree, nested in the model-tree column's
     /// lower portion. Same raised panel treatment as every region.
     Assembly,
+    /// Wave-F (UI-F1): the drafting region (sheet tree + sheet properties),
+    /// nested in the properties column's lower portion. Same raised panel
+    /// treatment as every region.
+    Drafting,
 }
 
 impl RegionKind {
     /// Every region, for tests and any whole-shell iteration.
     #[cfg(test)]
-    pub const ALL: [RegionKind; 6] = [
+    pub const ALL: [RegionKind; 7] = [
         RegionKind::PaletteHost,
         RegionKind::ModelTree,
         RegionKind::Viewport,
         RegionKind::Properties,
         RegionKind::StatusBar,
         RegionKind::Assembly,
+        RegionKind::Drafting,
     ];
 }
 
