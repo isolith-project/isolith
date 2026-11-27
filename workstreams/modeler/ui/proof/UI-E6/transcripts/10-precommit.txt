@@ -1,0 +1,15 @@
+== quality gate: ui-e6 ==
+  [run]  pytest
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 206.72s (0:03:26))
+  [run]  cargo test
+  [FAIL] cargo test
+running 134 tests
+....................................................................................... 87/134
+.............................................error: test failed, to rerun pass `-p oep-app --test layout`
+
+Caused by:
+  process didn't exit successfully: `/home/r1a/isolith-main/.worktrees/ui-e6/target/debug/deps/layout-d87407b388cdfa67 --quiet` (signal: 11, SIGSEGV: invalid memory reference)
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate FAIL ==
+PRECOMMIT_EXIT=1

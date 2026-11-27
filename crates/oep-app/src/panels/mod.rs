@@ -25,6 +25,17 @@ pub mod viewport;
 // (mates, diagnostics, explode) as those cards land.
 pub mod assy_tree;
 
+// UI-E6 UI-NAV-CUBE: the 3D orientation cube panel (registered here per the
+// card; driven by one `nav_cube::update` call at the end of `nav::update`, so
+// nav.rs is the registration call site and viewport.rs stays untouched).
+pub mod nav_cube;
+
+// The settings surface (UI-E6): `src/settings.rs`, reached by the panels as
+// `panels::settings`. Registered in this module so no sibling file (app.rs,
+// main.rs) has to change to host the settings surface.
+#[path = "../settings.rs"]
+pub mod settings;
+
 use eframe::egui;
 
 use oep_ui_theme::{Mode, Palette};
