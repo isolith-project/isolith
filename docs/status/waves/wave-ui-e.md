@@ -36,10 +36,14 @@ nav-cube branch) IS an ancestor of the wave head (audit
   tree is byte-identical to the wave tree; `git diff --stat` HEAD vs
   `github/wave/ui-e` is empty. The six-leg gate therefore measures the same
   tree as the checkpoint merged head.
-- Landing: PR #<PR> merged as `<MAIN>` (`github/main`), annotated tag `wave-ui-e`
-  (`<TAG>`) -> checkpoint `41fc9104b788b3af786042c210c91f35d1f96380`, Gitea
-  mirror fast-forwarded to `<MAIN>` with the tag, and `github/wave/ui-f`
-  created at `<MAIN>`. Transcripts
+- Landing: PR #42 merged as `a68505da10107ad8ff8756cf242a83a82591f6d7`
+  (`github/main`), annotated tag `wave-ui-e`
+  (`166e0b05488f52bc3d5381fd6d562a16bfcfbb38`, peeled commit
+  `5f8d9db35ab70670ac22bd87806ef23d2679e1fd`) -> checkpoint
+  `5f8d9db35ab70670ac22bd87806ef23d2679e1fd`, Gitea
+  mirror fast-forwarded to `a68505d` with the tag (verified by read-back), and
+  `github/wave/ui-f`
+  created at `a68505d`. Transcripts
   `proof/UI-E5/transcripts/landing/`.
 - The UI-E5 record (this file, the README row, `proof/UI-E5/`) is folded into
   the single checkpoint commit and re-committed onto the wave branch, per the
