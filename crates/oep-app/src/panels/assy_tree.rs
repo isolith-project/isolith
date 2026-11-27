@@ -72,6 +72,15 @@ mod assy_mates;
 #[path = "assy_diagnostics.rs"]
 mod assy_diagnostics;
 
+// Wave E (card UI-E4 UI-ASSY-EXPLODE): the exploded-view control (explode
+// factor slider + per-component offsets, saved with the document). A `#[path]`
+// child module exactly like the diagnostics panel; `show` renders it with ONE
+// call below. The additive hook lives entirely in this file and the panel's
+// own file.
+#[allow(dead_code, clippy::duplicate_mod)]
+#[path = "assy_explode.rs"]
+mod assy_explode;
+
 /// Context-data key under which the panel publishes its plain-`String` report
 /// every frame: `open`, `assembly`, `rows`, `sel`, `grounded`, `visible`,
 /// `hash`. A private struct here would make the oracle unreadable across the
@@ -392,6 +401,20 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     // the tree report and the document hash published below reflect it
     // immediately.
     assy_mates::show(ui, app, &mut model);
+
+    // Wave E (UI-E4 UI-ASSY-EXPLODE): the ONE additive call of the exploded
+    // view control (explode factor slider + per-component offsets, saved with
+    // the document). Rendered AFTER the mate tool so the fixed-height
+    // assembly region keeps the diagnostics/mate layout it already has (the
+    // mate tool's pinned "+ Add mate" and "Delete 0" rows stay exactly where
+    // E2/E3 placed them, so the E3 dof test's click sequence is untouched);
+    // it mutates the SAME journaled document the tree reports, so the tree
+    // report and the doc hash published below reflect an explode immediately.
+    // Per E3's documented layout note, the shipped 1280x800 window already
+    // clips the assembly column's lower content (mates list scrolls); the
+    // explode section renders below it and is fully reachable in the taller
+    // acceptance window, exactly like the mate tool's own scroll list.
+    assy_explode::show(ui, app, &mut model);
 
     publish_report(ui.ctx(), &model, &rows);
     write_model(ui.ctx(), &model);
