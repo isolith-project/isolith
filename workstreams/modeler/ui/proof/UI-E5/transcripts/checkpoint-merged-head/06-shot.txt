@@ -1,0 +1,11 @@
+# Leg 6: bash scripts/ui/shot.sh
+head: 41fc9104b788b3af786042c210c91f35d1f96380
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+shot.sh: FATAL: frame drift detected vs committed golden
+  current : 6f81c1c5573b07a95340815bf5f094dd1838d94f8de22ed9a0134a1cada6da84
+  golden  : 56afced6473393b20a00388e1a1057032b2eeb0d6721fe01caebc43b23fd0f45
+  reference image: /home/r1a/isolith-main/.worktrees/ui-e5/workstreams/modeler/ui/proof/ui-a2/frame.png
+exit=1

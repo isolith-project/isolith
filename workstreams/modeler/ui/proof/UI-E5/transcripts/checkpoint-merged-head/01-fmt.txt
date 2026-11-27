@@ -1,0 +1,3 @@
+# Leg 1: cargo fmt --all -- --check
+head: 41fc9104b788b3af786042c210c91f35d1f96380
+exit=0
