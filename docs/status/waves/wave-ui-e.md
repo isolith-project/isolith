@@ -36,6 +36,12 @@ nav-cube branch) IS an ancestor of the wave head (audit
   tree is byte-identical to the wave tree; `git diff --stat` HEAD vs
   `github/wave/ui-e` is empty. The six-leg gate therefore measures the same
   tree as the checkpoint merged head.
+- Checkpoint merge commit: `5f8d9db`, a single no-ff merge with parents
+  `a4cd2db` (`github/main`) and `6b61b90` (`wave/ui-e` final head carrying the
+  UI-E5 record). The gate ran on the pre-fold merge head `41fc9104` (tree
+  byte-identical; the fold into `5f8d9db` was docs only, verified by
+  `git diff --stat 41fc9104 5f8d9db` = proof/transcripts/screenshots only),
+  and the amended commit `5f8d9db` is the one PR-merged and tagged.
 - Landing: PR #42 merged as `a68505da10107ad8ff8756cf242a83a82591f6d7`
   (`github/main`), annotated tag `wave-ui-e`
   (`166e0b05488f52bc3d5381fd6d562a16bfcfbb38`, peeled commit
