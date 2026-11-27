@@ -64,6 +64,14 @@ mod doc_io;
 #[path = "assy_mates.rs"]
 mod assy_mates;
 
+// Wave E (card UI-E3 UI-ASSY-DIAGNOSTICS): the diagnostics panel (degrees of
+// freedom readout + interference table with jump-to). A `#[path]` child
+// module exactly like `assy_mates`; `show` renders it with ONE call below.
+// The additive hook lives entirely in this file and the panel's own file.
+#[allow(dead_code, clippy::duplicate_mod)]
+#[path = "assy_diagnostics.rs"]
+mod assy_diagnostics;
+
 /// Context-data key under which the panel publishes its plain-`String` report
 /// every frame: `open`, `assembly`, `rows`, `sel`, `grounded`, `visible`,
 /// `hash`. A private struct here would make the oracle unreadable across the
@@ -369,11 +377,20 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
         apply_action(&mut model, action);
     }
 
+    // Wave E (UI-E3 UI-ASSY-DIAGNOSTICS): the ONE additive call of the
+    // diagnostics panel (dof readout + interference table with jump-to).
+    // Rendered BEFORE the mate tool so the fixed-height assembly region lays
+    // out every section in order with no overlap in the shipped window; the
+    // dof source is the mate tool's published report from the previous
+    // frame, so the readout reflects a mate op one repaint after it lands.
+    assy_diagnostics::show(ui, app, &mut model);
+
     // Wave E (UI-E2 UI-ASSY-MATES): the ONE additive call of the mate tool.
-    // Rendered right after the tree's own content, before the oracle is
-    // published: any mate op this frame (or a drag) has already written
-    // solved placements into the SAME journaled model, so the report and the
-    // document hash published below reflect it immediately.
+    // Rendered after the tree's own content and the diagnostics section,
+    // before the oracle is published: any mate op this frame (or a drag) has
+    // already written solved placements into the SAME journaled model, so
+    // the tree report and the document hash published below reflect it
+    // immediately.
     assy_mates::show(ui, app, &mut model);
 
     publish_report(ui.ctx(), &model, &rows);
