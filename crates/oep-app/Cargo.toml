@@ -40,6 +40,13 @@ oep-sketch = { path = "../oep-sketch" }
 # session exists and otherwise say so honestly, never drawing fake geometry.
 # The `kernel` feature forwards to oep-geo/kernel for the acceptance build.
 oep-geo = { path = "../oep-geo" }
+# UI-E3 UI-ASSY-DIAGNOSTICS (card-mandated path): the interference panel is
+# the EXISTING analysis check (`oep_analysis::clash::detect_in_assembly` over
+# the live assembly document - the card's "use the existing ... interference
+# check. Do not write a second collision test", the check the analysis crate
+# itself commits against its clash fixture). Path crate, already a workspace
+# member and already in the licensing tally; no new third-party dependency.
+oep-analysis = { path = "../oep-analysis" }
 
 [features]
 default = []

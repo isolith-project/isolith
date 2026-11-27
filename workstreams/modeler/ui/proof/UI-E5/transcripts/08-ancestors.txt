@@ -1,0 +1,7 @@
+# Ancestry audit: every wave-E card branch an ancestor of github/wave/ui-e
+wave head: 1a1c0f1934685be3b0ea2d9e711c8c6b80acfceb
+ANCESTOR: ui/e1-assy-tree
+ANCESTOR: ui/e2-assy-mates
+ANCESTOR: ui/e3-assy-diagnostics
+ANCESTOR: ui/e4-assy-explode
+ANCESTOR: ui/e6-nav-cube

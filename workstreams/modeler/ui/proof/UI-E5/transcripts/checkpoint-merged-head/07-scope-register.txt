@@ -1,0 +1,4 @@
+# Supplementary: scope_register_check on the upgraded register
+head: 41fc9104b788b3af786042c210c91f35d1f96380
+summary: {'rows': 14, 'practitioner_rows': 9, 'pass': 23, 'fail': 0, 'failures': []}
+exit=0
