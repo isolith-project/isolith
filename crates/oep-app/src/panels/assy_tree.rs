@@ -56,6 +56,14 @@ use oep_shell::assem::{self, AssemblySession};
 #[path = "../doc_io.rs"]
 mod doc_io;
 
+// Wave E (card UI-E2 UI-ASSY-MATES): the mate tool. A `#[path]` child module
+// exactly like `doc_io`, so it reaches this panel's private `AssemModel` and
+// its routed history directly; `show` renders it with ONE call below. The
+// additive hook lives entirely in this file and the tool's own file.
+#[allow(dead_code, clippy::duplicate_mod)]
+#[path = "assy_mates.rs"]
+mod assy_mates;
+
 /// Context-data key under which the panel publishes its plain-`String` report
 /// every frame: `open`, `assembly`, `rows`, `sel`, `grounded`, `visible`,
 /// `hash`. A private struct here would make the oracle unreadable across the
@@ -360,6 +368,13 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
     if !action.is_none() {
         apply_action(&mut model, action);
     }
+
+    // Wave E (UI-E2 UI-ASSY-MATES): the ONE additive call of the mate tool.
+    // Rendered right after the tree's own content, before the oracle is
+    // published: any mate op this frame (or a drag) has already written
+    // solved placements into the SAME journaled model, so the report and the
+    // document hash published below reflect it immediately.
+    assy_mates::show(ui, app, &mut model);
 
     publish_report(ui.ctx(), &model, &rows);
     write_model(ui.ctx(), &model);
