@@ -1,0 +1,16 @@
+# Wave E landing transcript (continued)
+
+## mirror (gitea main fast-forwarded to github/main)
+a68505da10107ad8ff8756cf242a83a82591f6d7	refs/heads/main
+  (gitea main should == github main a68505d)
+
+## wave/ui-f advanced at main
+a68505da10107ad8ff8756cf242a83a82591f6d7	refs/heads/wave/ui-f
+  (wave/ui-f should == github main a68505d)
+
+## read-back: every wave-E feature branch an ancestor of main
+ANCESTOR of main: ui/e1-assy-tree
+ANCESTOR of main: ui/e2-assy-mates
+ANCESTOR of main: ui/e3-assy-diagnostics
+ANCESTOR of main: ui/e4-assy-explode
+ANCESTOR of main: ui/e6-nav-cube

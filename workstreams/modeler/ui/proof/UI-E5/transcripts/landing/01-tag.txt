@@ -1,0 +1,15 @@
+# Wave E landing transcript (from the close card, after the landing)
+date: 2026-11-27T18:11:27Z
+
+## merge
+PR: https://github.com/isolith-project/isolith/pull/42
+main after PR merge: a68505da10107ad8ff8756cf242a83a82591f6d7
+checkpoint commit (amended, the one tagged): 5f8d9db35ab70670ac22bd87806ef23d2679e1fd
+checkpoint parents: a4cd2db (main) + 6b61b90 (wave/ui-e)
+
+## tag
+annotated tag wave-ui-e -> 5f8d9db35ab70670ac22bd87806ef23d2679e1fd (must equal the checkpoint sha, NOT main tip a68505da10107ad8ff8756cf242a83a82591f6d7)
+git ls-remote github refs/tags/wave-ui-e:
+166e0b05488f52bc3d5381fd6d562a16bfcfbb38	refs/tags/wave-ui-e
+git ls-remote gitea refs/tags/wave-ui-e:
+166e0b05488f52bc3d5381fd6d562a16bfcfbb38	refs/tags/wave-ui-e
