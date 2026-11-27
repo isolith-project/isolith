@@ -37,8 +37,9 @@ nav-cube branch) IS an ancestor of the wave head (audit
   `github/wave/ui-e` is empty. The six-leg gate therefore measures the same
   tree as the checkpoint merged head.
 - Landing: PR #<PR> merged as `<MAIN>` (`github/main`), annotated tag `wave-ui-e`
-  (`<TAG>`) -> checkpoint `<CPT>`, Gitea mirror fast-forwarded to `<MAIN>`
-  with the tag, and `github/wave/ui-f` created at `<MAIN>`. Transcripts
+  (`<TAG>`) -> checkpoint `41fc9104b788b3af786042c210c91f35d1f96380`, Gitea
+  mirror fast-forwarded to `<MAIN>` with the tag, and `github/wave/ui-f`
+  created at `<MAIN>`. Transcripts
   `proof/UI-E5/transcripts/landing/`.
 - The UI-E5 record (this file, the README row, `proof/UI-E5/`) is folded into
   the single checkpoint commit and re-committed onto the wave branch, per the
@@ -46,18 +47,20 @@ nav-cube branch) IS an ancestor of the wave head (audit
 
 ## Full gate on the checkpoint merged head
 
-Transcripts in `workstreams/modeler/ui/proof/UI-E5/transcripts/checkpoint-merged-head/`:
+Checkpoint merged head: `41fc9104b788b3af786042c210c91f35d1f96380`, parents
+`a4cd2db` (github/main) + `6b61b90` (wave/ui-e head). Transcripts in
+`workstreams/modeler/ui/proof/UI-E5/transcripts/checkpoint-merged-head/`:
 
 | Leg | Result |
 |---|---|
 | `cargo fmt --all -- --check` | PASS (0) |
 | `cargo clippy --workspace --all-targets -- -D warnings` | PASS (0) |
-| `cargo test --workspace` | PASS (0) - <SUITES> suites, aggregate <PASS> passed / 0 failed |
-| `python3 scripts/licensing-check.py` | PASS (0) - 6/6 |
-| `bash scripts/gate/precommit-gate.sh` | PASS - <PRECOMMIT> |
-| `bash scripts/ui/shot.sh` | PASS (0) - frame <SHOT>, byte-identical x2, <DRIFT> |
+| `cargo test --workspace` | PASS (0) - 230 suites, aggregate 5793 passed / 0 failed (clean run at `-j 4`; one full-parallel run tripped the documented egui_kittest exit-time SIGSEGV teardown flake in `feature_from_sketch` + `feature_tree`, both green isolated, note in `03-test-workspace.txt`) |
+| `python3 scripts/licensing-check.py` | PASS (0) - 6/6, 34 crates, 535 deps |
+| `bash scripts/gate/precommit-gate.sh` | PASS - pytest 558 passed / 29 skipped; cargo test green (the documented kittest teardown flake surfaced on attempts 1-2 and re-ran clean on attempt 3; flake transcripts preserved as `05-precommit-attempt{2,3}.txt`) |
+| `bash scripts/ui/shot.sh` | PASS (0) after a DOCUMENTED golden refresh - frame `6f81c1c5...`, byte-identical x2. The launch golden legitimately drifted: wave E wired the assembly-tree region into the model-tree column (the shot frame shows the shell), and no upstream E card delegated the refresh. Superseded golden preserved as `ui-a2-golden-before-ui-e.png`, refreshed solely through `scripts/ui/shot.sh` per the wave-close convention |
 
-`scope_register_check`: <N>/<N> (`proof/UI-E5/transcripts/07-scope-register.txt`).
+`scope_register_check`: 23/23 (`proof/UI-E5/transcripts/07-scope-register.txt`).
 Unlike every wave before it, wave E UPGRADES two register rows, because a
 wave-E green accepted test genuinely proves each:
 
@@ -79,10 +82,10 @@ updated together and `scope_register_check` stays green.
 
 | Shot | sha256 | Shows |
 |---|---|---|
-| assembly-tree | <A>/<B> | default launch of the merged head: model tree + assembly tree (base/cap rows, Insert/Ground/Isolate toolbar), the wave-E surfaces |
-| mate | <A>/<B> | a coincident mate added through the real binary (grounded base, + Add mate, solve dof=3) with the report line |
-| interference | <A>/<B> | the diagnostics panel INTERFERENCE readout after the same mate: real clash analysis detects `1 pair, base x cap (overlap 2902.0 mm3 ...)` - genuine overlap, live from `oep_analysis::clash::detect_in_assembly` |
-| explode | <A>/<B> | honest note: the explode panel sits BELOW the fixed-height assembly region's clip in the shipped 1280x800 window (the mates scroll area consumes the available region height, so there is no scroll or resize that reveals it - verified at window heights 1800/2400). The wave-E explode evidence is the kittest acceptance `--test assy_explode` 142/0 on the merged head (real app::App, AccessKit slider SetValue + offset DragValues), committed under `proof/UI-E4/`. No fake frame is rendered. |
+| assembly-tree | `b59ed1fed33f75e7819ac8d78dd07348fbfd46a2765f23176abc6da8ad5049dd` | shipped 1280x800 launch: model tree + assembly tree with base/cap rows and the Insert/Ground/Isolate toolbar, diagnostics section |
+| mate | `2e207c76d67079e6b879f0eb415c0cda40ddbee8a42d169b2180bcf391080473` | grounded base + a coincident mate added through the real binary: the Mates section shows the pinned report `solve dof=3 moved=1 max_dist=0.000e0`, kind coincident/distance and the added mate row `coincident cap:origin == base:top`. The Mates section sits below the fold at the shipped 1280x800 window, so this frame drives the SAME real binary at a 1280x1500 native window (assembly region is height-proportional, UI-A4) |
+| interference | `42c29e2e2c42e6f64034f87e8d3eba7de27492f32c8a58aaaef97b9eb6365a14` (see `interference.png.sha256`) | the SAME mated state at the shipped 1280x800 window: the diagnostics panel live clash readout `interference: 1 pair, base x cap (overlap 2902.0 mm3 ...)` - a genuine overlap created by the coincident mate, detected by `oep_analysis::clash::detect_in_assembly` on the live document, never faked |
+| explode | HONEST NOTE | the explode panel renders BELOW the fixed-height assembly region's clip in the shipped 1280x800 window: the mates ScrollArea consumes the region's available height and there is no scroll or window resize (verified 1800/2400 tall) that reveals it. The wave-E explode evidence is the UI-E4 kittest acceptance `--test assy_explode` 142/0 on the merged head. No fake frame is rendered. |
 
 No image was fabricated; each real-binary frame is a genuine launch of the
 merged-head binary driven through XTEST and is deterministic (byte-identical
