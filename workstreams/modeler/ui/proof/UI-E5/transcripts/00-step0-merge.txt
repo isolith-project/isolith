@@ -1,0 +1,19 @@
+# STEP 0: fetch + merge github/wave/ui-e (card worktree ui-e5)
+
+PWD: /home/r1a/isolith-main/.worktrees/ui-e5
+branch: ui/e5-integrate
+HEAD before STEP 0: 6275787 (wave-ui-c checkpoint merge, the stale landing of a
+  previous wave the worktree branch was cut from)
+git fetch github; then `git merge github/wave/ui-e`:
+  Merge made by the 'ort' strategy.
+  24 files changed, 1533 insertions(+), 1 deletion(-)
+  (real first-run output; the merge brought the full wave-E head incl.
+   UI-E1 assy-tree, UI-E2 mates, UI-E3 diagnostics, UI-E4 explode, UI-E6
+   nav cube and the UI-D head below it)
+
+HEAD now: 1a1c0f1934685be3b0ea2d9e711c8c6b80acfceb == github/wave/ui-e tip
+git merge-base --is-ancestor github/main github/wave/ui-e -> YES
+  (main a4cd2db is an ancestor of the wave head, so the checkpoint merge tree
+   is byte-identical to the wave tree: the six-leg gate result for the wave
+   head and for the checkpoint merged head are the same numbers)
+git diff --stat HEAD github/wave/ui-e -> (empty)

@@ -341,6 +341,11 @@ pub fn update(ui: &egui::Ui, rect: egui::Rect, _scale: f32, _app: &mut App) {
     ctx.data_mut(|d| {
         d.insert_temp::<NavSnapshot>(nav_id(), (section, offset, measured, analytic));
     });
+
+    // UI-E6 UI-NAV-CUBE: registration site for the 3D orientation cube. Drawn
+    // after the nav card (above it, right column), from this frame's camera.
+    // The button panel above is untouched: this is a pure appended call.
+    super::super::nav_cube::update(ui, rect, _scale, _app);
 }
 
 #[cfg(test)]

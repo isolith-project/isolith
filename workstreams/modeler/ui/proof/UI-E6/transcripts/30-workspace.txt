@@ -1,0 +1,11 @@
+workspace aggregate: 5365 passed / 0 failed across 227 suites, exit 0
+(full run: cargo test --workspace -j 4 on the ui-e6 committed tree merged with
+the wave head incl. UI-E1; no FAILED lines, no compile errors, no panics.
+-j 4 bounds the parallel test-binary load: under default full parallelism
+this host trips the documented egui_kittest exit-time SIGSEGV teardown flake
+(layout/pick_gpu, same class UI-D7/D4/D6/E1 recorded; both binaries pass
+142/0 and 143/0 isolated); with bounded parallelism the run is clean.)
+tail of the run:)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+WS_EXIT=0

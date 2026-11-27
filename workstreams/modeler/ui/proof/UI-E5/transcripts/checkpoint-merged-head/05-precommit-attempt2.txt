@@ -1,0 +1,14 @@
+== quality gate: ui-e5 ==
+  [run]  pytest
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 135.01s (0:02:15))
+  [run]  cargo test
+  [FAIL] cargo test
+running 143 tests
+....................................................................................... 87/143
+...................................................error: test failed, to rerun pass `-p oep-app --test assy_mates`
+
+Caused by:
+  process didn't exit successfully: `/home/r1a/isolith-main/.worktrees/ui-e5/target/debug/deps/assy_mates-deda3484c99ba78a --quiet` (signal: 11, SIGSEGV: invalid memory reference)
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate FAIL ==
