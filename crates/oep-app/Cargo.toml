@@ -47,6 +47,12 @@ oep-geo = { path = "../oep-geo" }
 # itself commits against its clash fixture). Path crate, already a workspace
 # member and already in the licensing tally; no new third-party dependency.
 oep-analysis = { path = "../oep-analysis" }
+# UI-F1 UI-SHEET (card-mandated path): the drafting panel uses the EXISTING
+# drafting seam (`oep_drafting::layout` for sheet/view placement and
+# `oep_drafting::builder::drive_bracket_drawing` for the committed bracket
+# fixture) - no second layout engine. Path crate, already a workspace member
+# and already in the licensing tally; no new third-party dependency.
+oep-drafting = { path = "../oep-drafting" }
 
 [features]
 default = []

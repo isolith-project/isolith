@@ -66,7 +66,12 @@ impl Default for ShellLayout {
 /// (the left column's lower portion) so the five named regions keep their
 /// exact rects and the UI-A4 tile/no-overlap contract is untouched. The
 /// assembly tree renders as a nested child Ui at that rect, like the model
-/// tree content renders inside its own region.
+/// tree content renders inside its own region. [`ShellRegions::drafting`] is
+/// the wave-F drawing-sheet sub-region (UI-F1): it lives INSIDE the same
+/// five-column shell, nested in the lower portion of the properties column
+/// (right column), for the same reason - the five locked rects stay exact.
+/// The sheet tree + sheet properties render as a nested child Ui at that
+/// rect.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct ShellRegions {
     pub palette_host: egui::Rect,
@@ -77,6 +82,10 @@ pub struct ShellRegions {
     /// Wave-E (UI-E1): the assembly-tree region, nested in the lower portion
     /// of the model-tree column (same x-span, bottom 48%).
     pub assembly: egui::Rect,
+    /// Wave-F (UI-F1): the drafting region (sheet tree + sheet properties),
+    /// nested in the lower portion of the properties column (right column,
+    /// same x-span, bottom 48%).
+    pub drafting: egui::Rect,
 }
 
 impl ShellLayout {
@@ -188,6 +197,16 @@ impl ShellLayout {
                 0.0,
                 middle_top + (middle_bottom - middle_top) * 0.52,
                 tree_width,
+                middle_bottom,
+            ),
+            // Wave-F (UI-F1): the drafting region (sheet tree + sheet
+            // properties) is the lower 48% of the properties column (right
+            // column), nested INSIDE it so the five locked regions keep their
+            // exact rects.
+            drafting: to_rect(
+                w - props_width,
+                middle_top + (middle_bottom - middle_top) * 0.52,
+                w,
                 middle_bottom,
             ),
         }
