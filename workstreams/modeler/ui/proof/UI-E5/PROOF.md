@@ -26,8 +26,9 @@ Every wave-E card branch IS an ancestor of `github/wave/ui-e` (audit
 ## Checkpoint merged head
 
 - `git switch -c checkpoint/wave-ui-e-1a1c0f1 github/main` then
-  `git merge --no-ff github/wave/ui-e` -> checkpoint commit `<CPT>`,
-  parents `a4cd2db` (github/main) + `1a1c0f1` (wave/ui-e head).
+  `git merge --no-ff github/wave/ui-e` -> checkpoint commit
+  `41fc9104b788b3af786042c210c91f35d1f96380`, parents `a4cd2db` (github/main)
+  + `6b61b90` (wave/ui-e head).
 - `main` IS an ancestor of the wave head, so the checkpoint tree is
   byte-identical to the wave tree; `git diff --stat HEAD github/wave/ui-e`
   is EMPTY. The six-leg gate on the checkpoint merged head therefore measures
@@ -53,19 +54,21 @@ carries a green accepted test for EACH, so both move to `building`/`test`
 JSON + markdown updated together; `scope_register_check` green
 (transcript `checkpoint-merged-head/07-scope-register.txt`).
 
-## Full gate on the checkpoint merged head `<CPT>`
+## Full gate on the checkpoint merged head `41fc9104`
 
-Transcripts in `transcripts/checkpoint-merged-head/` (real command output).
-Filled below at the gate step.
+Transcripts in `transcripts/checkpoint-merged-head/` (real command output):
 
 | Leg | Result |
 |---|---|
-| `cargo fmt --all -- --check` | (see 01-fmt.txt) |
-| `cargo clippy --workspace --all-targets -- -D warnings` | (see 02-clippy.txt) |
-| `cargo test --workspace` | (see 03-test-workspace.txt) |
-| `python3 scripts/licensing-check.py` | (see 04-licensing.txt) |
-| `bash scripts/gate/precommit-gate.sh` | (see 05-precommit.txt) |
-| `bash scripts/ui/shot.sh` | (see 06-shot.txt) |
+| `cargo fmt --all -- --check` | PASS (exit 0) - `01-fmt.txt` |
+| `cargo clippy --workspace --all-targets -- -D warnings` | PASS (exit 0) - `02-clippy.txt` |
+| `cargo test --workspace` | PASS (exit 0) - 230 suites, 5793 passed / 0 failed - `03-test-workspace.txt` (clean run at `-j 4`; the documented egui_kittest exit-time SIGSEGV teardown flake (feature_from_sketch, feature_tree) flaked once each under full parallel load, both green isolated, preserved in the transcript) |
+| `python3 scripts/licensing-check.py` | PASS (exit 0) - 6/6, 34 crates, 535 deps - `04-licensing.txt` (the timestamp-only `docs/proof/licensing-check.json` rewrite was reverted, outside the owned list) |
+| `bash scripts/gate/precommit-gate.sh` | PASS - pytest 558 passed / 29 skipped, cargo test green - `05-precommit.txt` (attempts 1-2 tripped the documented kittest teardown SIGSEGV; attempt 3 clean, flakes preserved as `05-precommit-attempt2.txt` / `05-precommit-attempt3.txt`) |
+| `bash scripts/ui/shot.sh` | PASS (exit 0) after a DOCUMENTED golden refresh - frame `6f81c1c5573a...` byte-identical x2 - `06-shot.txt`. The launch golden legitimately drifted: wave E wired the assembly-tree region into the model-tree column (UI-E1), and no upstream E card delegated the golden refresh. Superseded golden preserved as `workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-e.png` (`56afced6...`), refreshed solely through `scripts/ui/shot.sh` per the wave-close convention |
+
+`scope_register_check`: 23/23 pass, `07-scope-register.txt` - see the register
+upgrade above.
 
 ## Screenshots (acceptance)
 
@@ -76,10 +79,10 @@ mode must produce byte-identical PNGs; the `.sha256` is the oracle.
 
 | Shot | sha256 | Shows |
 |---|---|---|
-| assembly-tree | (filled at capture) | default launch: model tree + assembly tree with base/cap rows, Insert/Ground/Isolate toolbar |
-| mate | (filled at capture) | grounded base + a coincident mate added (+ Add mate): solve report `dof=3` and the mate row |
-| interference | (filled at capture) | the SAME mated state, diagnostics panel live clash readout: `interference: 1 pair, base x cap (overlap 2902.0 mm3 ...)` - a real overlap detected by `oep_analysis::clash::detect_in_assembly` on the live document |
-| explode | HONEST NOTE | the explode panel renders BELOW the fixed-height assembly region's clip in the shipped 1280x800 window: the mates ScrollArea consumes the region's available height and there is no scroll or window resize (verified 1800/2400 tall) that reveals it. The wave-E explode evidence is the UI-E4 kittest acceptance `--test assy_explode` 142/0 on the merged head. No fake frame is rendered. |
+| assembly-tree | `b59ed1fed33f75e7819ac8d78dd07348fbfd46a2765f23176abc6da8ad5049dd` | shipped 1280x800 launch of the merged head: model tree + assembly tree with base/cap rows, the Insert/Ground/Isolate toolbar, diagnostics section |
+| mate | `2e207c76d67079e6b879f0eb415c0cda40ddbee8a42d169b2180bcf391080473` | the real binary, base grounded + coincident mate added: the Mates section shows the pinned report `solve dof=3 moved=1 max_dist=0.000e0`, kind coincident/distance and the added mate row `coincident cap:origin == base:top`. The Mates section sits below the fold at the shipped 1280x800 window, so this frame drives the SAME real binary at a 1280x1500 native window (the assembly region is height-proportional, UI-A4) |
+| interference | `42c29e2e2c42e6f64034f87e8d3eba7de27492f32c8a58aaaef97b9eb6365a14` | the SAME mated state at the shipped 1280x800 window: the diagnostics panel live clash readout `interference: 1 pair, base x cap (overlap 2902.0 mm3 ...)` - a genuine overlap created by the coincident mate, reported by `oep_analysis::clash::detect_in_assembly` on the live document, never faked |
+| explode | HONEST NOTE | the explode panel renders BELOW the fixed-height assembly region's clip in the shipped 1280x800 window: the mates ScrollArea consumes the region's available height and there is no scroll or window resize (verified at 1800 and 2400 tall) that reveals it. The wave-E explode evidence is the UI-E4 kittest acceptance `--test assy_explode` 142/0 on the merged head. No fake frame is rendered. |
 
 ## Folding into the checkpoint
 

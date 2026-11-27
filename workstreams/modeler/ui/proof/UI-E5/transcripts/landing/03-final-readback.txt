@@ -1,0 +1,15 @@
+# Wave E landing - final read-back (post landing)
+date: 2026-11-27T18:16:33Z
+tag wave-ui-e peel == checkpoint 5f8d9db? YES
+tag != main tip (a68505d)? YES
+github tag:
+166e0b05488f52bc3d5381fd6d562a16bfcfbb38	refs/tags/wave-ui-e
+gitea tag:
+166e0b05488f52bc3d5381fd6d562a16bfcfbb38	refs/tags/wave-ui-e
+github main:
+a68505da10107ad8ff8756cf242a83a82591f6d7	refs/heads/main
+gitea main:
+a68505da10107ad8ff8756cf242a83a82591f6d7	refs/heads/main
+wave/ui-f:
+a68505da10107ad8ff8756cf242a83a82591f6d7	refs/heads/wave/ui-f
+checkpoint ancestor of main: YES
