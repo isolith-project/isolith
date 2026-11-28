@@ -2942,6 +2942,7 @@ dependencies = [
  "egui",
  "egui_kittest",
  "oep-analysis",
+ "oep-drafting",
  "oep-geo",
  "oep-import",
  "oep-shell",

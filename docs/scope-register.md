@@ -69,7 +69,7 @@ honest-claims rule binds the Isolith `status` column, not these.
 
 | capability | CATIA | SolidWorks | cost class | owning workstream | status | evidence |
 |---|---|---|---|---|---|---|
-| 2d-drafting - 2D drafting / drawings (sheets, views, dimensions, title block, export) | base | base | class-1-additive | editor: drafting workbench (card EDITOR-2D-DRAFTING, running) | planned | decision #13/#19; card EDITOR-2D-DRAFTING |
+| 2d-drafting - 2D drafting / drawings (sheets, views, dimensions, title block, export) | base | base | class-1-additive | editor: drafting workbench (card EDITOR-2D-DRAFTING, running) | shippable | green test: crates/oep-app/tests/drawing_export.rs + sheet.rs / views.rs / annotate.rs (wave-F UI-F1..F4: sheets, views, dimensions/title block, SVG+PDF export; PDF byte-identical to the committed golden) |
 | configurations-design-tables - Configurations / design tables (variant states over the feature tree) | base | base | class-2-model-extend | modeler: oep-geo model-extend (configurations as variant states / design tables; workstream not yet opened) | planned | decision #13 (2027.2 pull-forward) / #19; master plan 2027.2 scope |
 | mass-properties - Mass properties (volume, mass, centroid, moments of inertia) | base | base | class-1-additive | editor: mass properties (card EDITOR-MASS-PROP, running) | planned | decision #13/#19; card EDITOR-MASS-PROP |
 | interference-clash - Assembly interference / clash detection | base | base | class-1-additive | editor: assembly interference/clash (card EDITOR-MASS-PROP, running) | building | green test: crates/oep-app/tests/assy_diagnostics.rs (UI-E3: exactly the known i-base x i-block pair, vol 750.0 mm3, no-false-positive) |

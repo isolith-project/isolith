@@ -1,0 +1,38 @@
+UI-D11 Stage 1 - MISORDER CONFIRMED (painter-sort defect proven, current pipeline)
+
+Method: constructed scenes rendered through the EXISTING render path
+(GpuBackend colour frame + IdPass id buffer, which use the same painter-sorted
+face set) and compared per-pixel against an independent analytic oracle
+(camera-ray / nearest-triangle over the same world triangles, f64). Verdict
+is quoted in the test output; the oracle itself is validated with a control.
+
+Real output (cargo test -p oep-viewer --test depth_sort_defect), 640x480,
+current pipeline BEFORE any Stage 2 change:
+
+  interpenetrating-walls (case a: two interpenetrating components)
+    chosen pose yaw=1.90 pitch=0.55: wrong-surface px = 18003 / 55192 compared (32.62%)
+    colour frame sha256 = 9f5522477b83ff44a2f017758eb92ec5954f557e5e92cd6c31772c2caf26e0aa
+    sample px (277,174): current pipeline draws prim 0, analytic expects 1
+    (sample pixel run continues px (278..283,174..176), all draw prim 0 expect 1)
+
+  concave-l-cross (case b: concave L sheet crossing a vertical wall)
+    chosen pose yaw=0.60 pitch=0.30: wrong-surface px = 8189 / 35443 compared (23.10%)
+    colour frame sha256 = 4bb8484554b67509458735ad269549cba1537597605a078af0359178b3206820
+    sample px (403,196): current pipeline draws prim 0, analytic expects 1
+    (sample pixels all draw the L sheet where the wall is actually nearer)
+
+  control-disjoint-boxes (oracle validation: three disjoint boxes, painter
+    ordering IS correct here)
+    chosen pose yaw=5.20 pitch=0.30: wrong-surface px = 384 / 39845 compared (0.96%)
+    colour frame sha256 = 0f7eeca3db93e528275c5ee6318fcbfaa1d84961f86b5fb7b97b29d16e87030d
+
+  Assertions green (bands separated by design):
+    control < 2% (silhouette-rounding band), each failing case >= 10% and >= 10x
+    the control rate. 18003 and 8189 wrong-surface pixels are the numbers the
+    card asked for; the control proves the analytic oracle, not the painter,
+    is not the source of the disagreement.
+
+Images (sha256 files alongside each PNG):
+  interpenetrating-walls-colour.png / -wrongmask.png
+  concave-l-cross-colour.png / -wrongmask.png
+  control-disjoint-boxes-colour.png / -wrongmask.png

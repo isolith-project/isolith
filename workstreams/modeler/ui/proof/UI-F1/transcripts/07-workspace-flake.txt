@@ -1,0 +1,24 @@
+Known flake, re-run clean:
+
+The egui_kittest teardown SIGSEGV under full parallel load (the documented
+host flake: the process crashes at exit with signal 11 after all its tests
+have passed, so a harness that re-runs the whole suite reports a non-zero
+process exit even though every `test result` line is `ok`).
+
+From this card's runs:
+
+  cargo test --workspace:
+    attempt 1 exit=101  error: test failed, to rerun pass `-p oep-app --test layout`
+    attempt 2 exit=101  error: test failed, to rerun pass `-p oep-app --test layout`
+    attempt 3 exit=0    clean (231 suites / 6284 passed / 0 failed)
+
+  precommit-gate.sh (cargo leg):
+    run 1 FAIL  pick_gpu SIGSEGV (this binary also flaked once earlier)
+    run 2 FAIL  layout SIGSEGV
+    run 3 FAIL  pick_gpu SIGSEGV
+    run 4 PASS  (pytest 559 passed / 28 skipped; cargo test all green)
+
+  layout / pick_gpu run green in isolation (`cargo test -p oep-app --test
+  layout`: 154 passed / 0 failed, three clean attempts; `--test pick_gpu`:
+  155 passed / 0 failed isolated). No test was weakened or skipped; the flake
+  is preserved in these transcripts exactly as documented by waves D, E and F.

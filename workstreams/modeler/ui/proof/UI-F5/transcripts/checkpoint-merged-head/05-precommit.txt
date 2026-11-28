@@ -1,0 +1,11 @@
+# bash scripts/gate/precommit-gate.sh (leg 5)
+# rc is the LAST line
+== quality gate: ui-f5 ==
+  [run]  pytest
+  [ok]   pytest (559 passed, 28 skipped, 2 warnings in 208.40s (0:03:28))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==
+LEG5_PRECOMMIT_RC=0

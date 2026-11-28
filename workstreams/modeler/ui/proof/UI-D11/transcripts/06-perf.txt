@@ -1,0 +1,17 @@
+== UI-D5 perf harness on promaxgb10-83f1 ==
+== leg 1: perf_budget fast smoke ==
+== leg 2: heavy 1M-triangle 1600x1000 measurement (release) ==
+report written: /home/r1a/isolith-main/.worktrees/ui-d11/workstreams/modeler/ui/proof/UI-D5/perf.json
+frame ms: min=6.066 mean=6.316 p50=6.324 p95=6.492 p99=6.530 max=6.562
+BUDGET: p95=6.492 ms vs committed threshold 16.6 ms -> THRESHOLD MET
+report written: /home/r1a/isolith-main/.worktrees/ui-d11/workstreams/modeler/ui/proof/UI-D5/perf.json
+== leg 3: app smoke ==
+frames=8 smoke ok
+================================================================
+  adapter : NVIDIA GB10
+  scene   : 1002528 triangles @ 1600x1000
+  p95     : 6.491841 ms (committed threshold 16.6 ms)
+  budget_met: True
+  report  : /home/r1a/isolith-main/.worktrees/ui-d11/workstreams/modeler/ui/proof/UI-D5/perf.json
+================================================================
+BUDGET MET — interactive at 1M triangles on this device.

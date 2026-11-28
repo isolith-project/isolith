@@ -1,0 +1,8 @@
+# UI-F5 six-leg gate on the checkpoint merged head
+# checkpoint merged head: ad90892ccaef714b983fb410c84cf9856505c487
+# parents: a68505da10107ad8ff8756cf242a83a82591f6d7 92601fd666684cd23c5e2fdfdca8a257e5930439
+# main IS an ancestor of the wave head, so this tree is byte-identical to the wave tree.
+# git diff --stat HEAD github/wave/ui-f ->
+# (the empty line above means the checkpoint tree == wave tree; the gate measures the same code)
+# rustc/cargo: rustc 1.98.1 (48a229cea 2026-09-01), cargo 1.98.1 (797e8a9bc 2026-08-05)
+# date: 2026-11-28T10:15:06-08:00

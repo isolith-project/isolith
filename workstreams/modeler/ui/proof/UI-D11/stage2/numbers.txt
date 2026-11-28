@@ -1,0 +1,40 @@
+UI-D11 UI-DEPTH-SORT - Stage 2 evidence: reverse-Z depth buffer resolves the defect
+====================================================================================
+
+Run: 2026-11-28, worktree ui-d11, branch ui/d11-depth-sort
+Pipeline: GpuBackend + IdPass with reverse-Z D32Float depth attachment
+  (near -> 1.0, far -> 0.0; depth compare GreaterEqual; clear 0.0).
+Scene: 640x480, constructed scenes (deterministic, no RNG), fixed pose set
+  (framed camera + POSE_OFFSETS).
+
+Stage 1 (committed on the pre-fix tree, evidence in stage1/):
+  interpenetrating-walls  yaw=1.90 pitch=0.55  wrong-surface px = 18003 / 55192 compared (32.62%)
+  concave-l-cross         yaw=0.60 pitch=0.30  wrong-surface px =  8189 / 35443 compared (23.10%)
+  control-disjoint-boxes  (painter)            wrong-surface px =   384 / 39845 compared ( 0.96%)
+  Verdict: MISORDER CONFIRMED
+
+Stage 2 (this tree, reverse-Z depth buffer; worst pose per scene is reported):
+  interpenetrating-walls  worst pose yaw=2.40 pitch=0.35  wrong-surface px = 91 / 53205 compared (0.17%)
+                          (8 poses: 0.00% .. 0.17%)
+  concave-l-cross         worst pose                     wrong-surface px =  0 / 33286 compared (0.00%)
+                          (all 8 poses 0.00%)
+  control-disjoint-boxes  all 8 poses                    wrong-surface px = 0 (0.00%)
+
+Both once-misordered cases now resolve to the oracle surface within the thin
+silhouette band (<< the 2% gate; the constructed cases are at or below 0.17%).
+The CPU mean-depth painter sort is GONE from the GPU path: the opaque set is
+packed in assembly order and the reverse-Z depth buffer resolves the nearest
+surface per pixel; the transparent set (alpha < 1) draws after it, depth
+test on / write off, still entity-sorted back-to-front.
+
+Numbers per pose (stage 2), interpenetrating-walls:
+  yaw=0.35: 10 (0.02%); 0.60: 1 (0.00%); 0.90: 0; 1.20: 7 (0.01%);
+  1.90: 25 (0.05%); 2.40: 91 (0.17%); 4.60: 7 (0.01%); 5.20: 32 (0.06%).
+
+Numbers per pose (stage 2), concave-l-cross:
+  all 8 poses: 0 (0.00%).
+
+Numbers per pose (stage 2), control-disjoint-boxes:
+  all 8 poses: 0 (0.00%) (the oracle and the depth buffer agree pixel-for-pixel).
+
+Images: stage2/*.png + *.sha256 (colour frame + wrong-surface mask per scene).

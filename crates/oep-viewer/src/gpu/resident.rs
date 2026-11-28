@@ -53,8 +53,11 @@ pub const MVP_UNIFORM_BYTES: u64 = 64;
 /// exactly the same polygon the pre-card path fanned.
 #[derive(Clone, Copy)]
 pub struct FaceMeta {
-    /// Mean view-space depth (`depth_sum / len`), the painter sort key.
+    /// Mean view-space depth (`depth_sum / len`), retained as the transparent
+    /// set's entity-level sort key (UI-D11; the opaque path no longer sorts).
     pub depth: f64,
+    /// The scene primitive index this face came from (UI-D11 entity level).
+    pub entity: usize,
     /// Flat base colour (alpha baked), byte-identical to the old per-face
     /// `GpuFace::color`.
     pub color: [u8; 4],
@@ -100,6 +103,12 @@ pub struct ResidentScene {
     face: Option<wgpu::Buffer>,
     face_cap: u64,
     face_len: u64,
+    /// Bytes of the opaque prefix of the packed face stream. The opaque pass
+    /// draws `[0, face_opaque_len)`, then the transparent set draws
+    /// `[face_opaque_len, face_len)`. Derived from the same frame key as the
+    /// bytes (the alpha bits are in [`frame_key`]), so a resident fast path
+    /// reuses the stored split exactly as it reuses the bytes.
+    face_opaque_len: u64,
     line: Option<wgpu::Buffer>,
     line_cap: u64,
     line_len: u64,
@@ -129,6 +138,7 @@ impl ResidentScene {
             face: None,
             face_cap: 0,
             face_len: 0,
+            face_opaque_len: 0,
             line: None,
             line_cap: 0,
             line_len: 0,
@@ -158,6 +168,14 @@ impl ResidentScene {
     /// Valid face bytes in the resident face buffer (0 draws nothing).
     pub fn face_len_bytes(&self) -> u64 {
         self.face_len
+    }
+
+    /// Bytes of the opaque prefix in the resident face stream (0 means every
+    /// packed face is transparent; face_len_bytes() - face_opaque_bytes() is
+    /// the transparent set). The opaque pass draws [0, split) with depth write
+    /// on; the transparent set draws [split, face_len) with depth write off.
+    pub fn face_opaque_bytes(&self) -> u64 {
+        self.face_opaque_len
     }
 
     /// Valid line bytes in the resident line buffer.
@@ -209,11 +227,15 @@ impl ResidentScene {
     }
 
     /// Write the packed face stream into the resident face buffer, creating
-    /// or growing it when needed. A device buffer is allocated only when no
-    /// buffer exists or the stream outgrew it (both tracked by the counters,
-    /// so a steady-state frame makes zero allocations).
-    pub fn upload_faces(&mut self, queue: &Queue, bytes: &[u8]) {
+    /// or growing it when needed. `opaque_bytes` is the byte length of the
+    /// opaque prefix (see [`face_opaque_bytes`]); it is part of the same
+    /// frame key as the bytes, so a fast-path reuse keeps the stored split.
+    /// A device buffer is allocated only when no buffer exists or the stream
+    /// outgrew it (both tracked by the counters, so a steady-state frame makes
+    /// zero allocations).
+    pub fn upload_faces(&mut self, queue: &Queue, bytes: &[u8], opaque_bytes: u64) {
         self.face_len = 0;
+        self.face_opaque_len = 0;
         if bytes.is_empty() {
             return;
         }
@@ -232,6 +254,7 @@ impl ResidentScene {
         }
         queue.write_buffer(self.face.as_ref().unwrap(), 0, bytes);
         self.face_len = need;
+        self.face_opaque_len = opaque_bytes.min(need);
         self.upload_bytes += need;
     }
 
