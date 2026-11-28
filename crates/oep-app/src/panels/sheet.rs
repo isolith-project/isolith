@@ -46,6 +46,14 @@ use oep_geo::{Document, ProjectionType, SheetSize, ViewKind};
 #[path = "../doc_io.rs"]
 mod doc_io;
 
+// Wave F (card UI-F2 UI-VIEWS): the view placement tools (base / projected /
+// section / detail placement with base-alignment). A `#[path]` child module
+// exactly like the assembly panel hosts its E2-E4 tools; `show` renders it
+// with ONE call below, keeping both sides touching nothing else in this file.
+#[allow(dead_code, clippy::duplicate_mod)]
+#[path = "views.rs"]
+mod views;
+
 /// Context-data key under which the panel reports its `String` oracle every
 /// frame (sheet count, selection, per-sheet properties, placement legality,
 /// document hash). Cross-`#[path]`-copy safe; the acceptance harness names it
@@ -580,6 +588,12 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
                         .italics(),
                 );
             }
+
+            // Wave F (card UI-F2 UI-VIEWS): the ONE additive call of the view
+            // placement tools, rendered after the sheet controls (so those keep
+            // their exact layout). Everything below stays placed on the same
+            // selected sheet through the same journaled model.
+            views::show(ui, app, &mut model);
         });
 
     publish_report(ui.ctx(), &model);
