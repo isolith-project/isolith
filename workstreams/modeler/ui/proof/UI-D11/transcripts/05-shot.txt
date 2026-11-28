@@ -1,0 +1,4 @@
+shot.sh: ok
+  frame    : workstreams/modeler/ui/proof/ui-a2/frame.png
+  sha256   : 7fcf893f6ca1f3d79eaaaf653d6c5a5720599e79e6d8f87e2310820450b6d07c
+SHOT2_RC=0

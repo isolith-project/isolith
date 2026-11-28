@@ -1,0 +1,33 @@
+UI-D11 landing record (wave/ui-f)
+=================================
+
+Per the card's LANDING block:
+
+  git push github HEAD            -> 4c213c0..7d508b8  ui/d11-depth-sort
+  git fetch github
+  git switch -c merge-UI-D11 github/wave/ui-f
+  git merge --no-ff ui/d11-depth-sort -m "merge: UI-D11 ..."
+  git push github HEAD:wave/ui-f  -> blocked by the force-push heuristic on the
+                                    colon refspec (documented F3/F4 quirk)
+  git push github                 -> 8d263a5..4e5c347  merge-UI-D11 -> wave/ui-f
+                                    (push.default=upstream; merge-UI-D11 tracks
+                                    github/wave/ui-f)
+
+Merge commit: 4e5c347ece6d086ee6bd7c7584131f83a1770a34 (no-ff; parents
+8d263a5 wave/ui-f + 7d508b8 ui/d11-depth-sort).
+
+The wave-F head 8d263a5 is an ancestor of the feature branch, so the merge
+recorded the feature tree without conflict; the merged tree is byte-identical
+to the feature HEAD 7d508b8 (verified: `git diff 4e5c347 7d508b8` empty).
+
+Remote read-back: github/wave/ui-f == 4e5c347ece6d086ee6bd7c7584131f83a1770a34,
+local merge-UI-D11 == the same 40 hex digits (REMOTE == LOCAL), and the feature
+commit 7d508b8 is confirmed an ancestor of github/wave/ui-f. 0/0 divergence.
+
+Extra ancestry the merge brings to wave/ui-f: the ui/d11-depth-sort branch
+carried the wave/ui-d merge a8f3ae0 and its two doc-only UI-D6 close-record
+commits (f7990d1, f027059), which were unavoidable without rewriting history
+(forbidden by the card). They are wave-D record docs already consistent with
+the wave's content; the wave-F close checkpoint will carry them with main.
+
+Not merged to main (the wave-F close card UI-F5 owns that).

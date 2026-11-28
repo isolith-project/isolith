@@ -17,13 +17,35 @@ use wgpu::TextureUsages;
 /// output bytes round-trip to the read image exactly.
 pub const TARGET_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Rgba8Unorm;
 
-/// A colour target the backend renders into each frame, plus the statics for
-/// reading it back.
+/// The reverse-Z depth attachment format (UI-D11 UI-DEPTH-SORT).
+///
+/// Per-pixel hidden-surface resolution replaces the CPU mean-depth painter
+/// sort. D32Float (32-bit float depth) is the depth-precision answer the
+/// prior-art brief settled on, and reverse-Z (near plane maps to depth 1.0,
+/// far to 0.0) is the standard CAD/game variant: it packs the most precision
+/// at the near plane where the eye is. This is the attachment the opaque pass
+/// writes with depth test on / write on, and the id-buffer pass attaches the
+/// same semantics so the topmost id equals the topmost colour fragment.
+pub const DEPTH_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Depth32Float;
+
+/// The depth clear value for reverse-Z: 0.0 is the FAR plane (in reverse-Z,
+/// far -> 0.0 and near -> 1.0), so clearing to 0.0 means "initially as far as
+/// possible", exactly the reverse-Z default. Combined with a GreaterEqual
+/// depth compare the nearest (largest) depth wins per pixel.
+pub const DEPTH_CLEAR: f32 = 0.0;
+
+/// A colour target the backend renders into each frame, plus its reverse-Z
+/// depth attachment and the statics for reading the colour back.
 pub struct GpuTarget {
     /// The render target texture (`Rgba8Unorm`, render-attachment + copy-src).
     pub texture: wgpu::Texture,
     /// View the render pass clears and draws into.
     pub view: wgpu::TextureView,
+    /// Reverse-Z depth texture (D32Float, render-attachment only; never read
+    /// back to the host, so no COPY_SRC usage).
+    pub depth_texture: wgpu::Texture,
+    /// View the render pass uses as its depth attachment.
+    pub depth_view: wgpu::TextureView,
     /// Width in texels.
     pub width: u32,
     /// Height in texels.
@@ -54,18 +76,41 @@ impl GpuTarget {
             view_formats: &[],
         });
         let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
+
+        // Reverse-Z depth attachment: same size as the colour target,
+        // D32Float, render-attachment only. Depth32Float has no requirement to
+        // be a copy source, and the depth is never read back to the host, so
+        // RENDER_ATTACHMENT is the whole usage set.
+        let depth_texture = device.create_texture(&wgpu::TextureDescriptor {
+            label: Some("isolith-gpu-viewport-depth"),
+            size: wgpu::Extent3d {
+                width,
+                height,
+                depth_or_array_layers: 1,
+            },
+            mip_level_count: 1,
+            sample_count: 1,
+            dimension: wgpu::TextureDimension::D2,
+            format: DEPTH_FORMAT,
+            usage: TextureUsages::RENDER_ATTACHMENT,
+            view_formats: &[],
+        });
+        let depth_view = depth_texture.create_view(&wgpu::TextureViewDescriptor::default());
+
         let padded_bytes_per_row = align_up(width * 4, 256);
         Self {
             texture,
             view,
+            depth_texture,
+            depth_view,
             width,
             height,
             padded_bytes_per_row,
         }
     }
 
-    /// The colour attachment for this target (clear to `clear`, write on
-    /// `false` so later draws overwrite like the CPU painter's algorithm).
+    /// The colour attachment for this target (clear to `clear`, store on so
+    /// later draws overwrite like the CPU painter's algorithm).
     pub fn color_attachment(&self, clear: [f32; 4]) -> wgpu::RenderPassColorAttachment<'_> {
         wgpu::RenderPassColorAttachment {
             view: &self.view,
@@ -80,6 +125,20 @@ impl GpuTarget {
                 }),
                 store: wgpu::StoreOp::Store,
             },
+        }
+    }
+
+    /// The reverse-Z depth attachment: cleared to [`DEPTH_CLEAR`] (far, 0.0)
+    /// and stored, so a frame-scoped depth buffer starts as far as possible
+    /// and the opaque pass's nearer fragments overwrite it per pixel.
+    pub fn depth_attachment(&self) -> wgpu::RenderPassDepthStencilAttachment<'_> {
+        wgpu::RenderPassDepthStencilAttachment {
+            view: &self.depth_view,
+            depth_ops: Some(wgpu::Operations {
+                load: wgpu::LoadOp::Clear(DEPTH_CLEAR),
+                store: wgpu::StoreOp::Store,
+            }),
+            stencil_ops: None,
         }
     }
 

@@ -153,6 +153,21 @@ impl App {
             panels::properties::show,
         );
 
+        // Wave-F (UI-F1 UI-SHEET): the drafting region (sheet tree + sheet
+        // properties), nested in the lower portion of the properties column
+        // (right column) so the five locked regions keep their exact rects.
+        // Rendered after the properties panel so its raised panel paints over
+        // the column's lower area, exactly like the assembly tree in the
+        // model-tree column.
+        self.region(
+            ui,
+            "drafting",
+            "drafting",
+            panels::RegionKind::Drafting,
+            region.drafting,
+            panels::sheet::show,
+        );
+
         // Bottom strip: status bar.
         self.region(
             ui,

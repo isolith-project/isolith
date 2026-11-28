@@ -6,7 +6,7 @@
 //!    rasterized into an [`oep_viewer::gpu::idbuffer::IdPass`]; 20 sampled
 //!    screen points that are genuinely ON a drawn face have their id-buffer
 //!    identity compared to the analytic ray pick (`oep_viewer::pick`) for the
-//!    SAME camera — printed one per line, all equal.
+//!    SAME camera, printed one per line, all equal.
 //!
 //! 2. **Real-app kittest interactions.** The real `app::App` runs with the
 //!    viewport backend AND the pick surface pointed at the same three-cube
@@ -15,7 +15,7 @@
 //!    needed); shift-click accumulates the exact multi-select id list; an
 //!    alt-drag box over a committed viewport rect returns exactly the
 //!    enclosed set (analytic grid expectation printed against the returned
-//!    ids — must match); a plain click on empty background clears the
+//!    ids, must match); a plain click on empty background clears the
 //!    selection and picks nothing.
 //!
 //! The scene has three separated cubes (`cube-a` / `cube-b` / `cube-c`) so a
