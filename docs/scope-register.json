@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "task": "FEATURE-BASELINE (t_a686d2b9)",
- "updated": "2026-11-27",
+ "updated": "2026-11-28",
  "description": "Isolith CATIA/SolidWorks editor parity baseline. Decision #19 sets the product bar: same-or-greater editor functionality than CATIA/SolidWorks for the working engineer. This register stops being an exclusion list and becomes the PARITY BASELINE inventory an engineer reads to judge whether Isolith covers their main job. Machine-checkable copy of docs/scope-register.md. Every row carries a current-status token (not-scoped / planned / building / shippable) and evidence; a row may NOT claim a status higher than a green accepted test proves (honest-claims discipline, enforced by python/oep_tooling/scope_register_check.py and tests/test_scope_register.py). Also carries the practitioner_input_contract section (schema 2): the INPUT AND BEHAVIOUR contract an experienced user carries in their hands, free-specified by the LTT practitioner test of SolidCraft and Purrametric (Don directive 2026-10-27) - one row per behaviour with an explicit test hook, under the same honest-claims status ceiling.",
  "policy": {
   "product_bar": "same-or-greater editor functionality than CATIA/SolidWorks for the working engineer (decision #19, 2026-10-22)",
@@ -103,11 +103,11 @@
    "solidworks": "base",
    "cost_class": "class-1-additive",
    "workstream": "editor: drafting workbench (card EDITOR-2D-DRAFTING, running)",
-   "status": "planned",
+   "status": "shippable",
    "evidence": {
-    "kind": "decision",
-    "ref": "decision #13 and #19 (master plan scope register + vault Topics/Isolith.md v1.23); card EDITOR-2D-DRAFTING",
-    "note": "near-term pull-forward #1: drafting is what engineers hand to fabrication"
+    "kind": "test",
+    "ref": "crates/oep-app/tests/drawing_export.rs",
+    "note": "wave-F drafting lane (UI-F1..UI-F4) green accepted tests on the committed bracket drawing: sheet 170/0, views 169/0, annotate 170/0, drawing_export 170/0; the export PDF matches the committed golden byte-identically (1946 == 1946 bytes) and SVG is deterministic across independent exports. First shippable claim in the register (2026-11-28, wave F close)."
    }
   },
   {

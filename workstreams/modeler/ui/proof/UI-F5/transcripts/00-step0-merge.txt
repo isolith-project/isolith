@@ -1,0 +1,42 @@
+# STEP 0: git fetch github && git merge github/wave/ui-f (card worktree ui/f5-integrate)
+# Merged head now: 80c27ea9613f9b31d0a0d6ed64926f8a7c5f6f8e (parents 6275787 stale wave-C landing + eaedab0 wave/ui-f head)
+# The merge was NOT empty: the card branch was parked at the wave-C landing 6275787;
+# the merge brought the whole wave-F head into the working tree.
+
+## git log of the merge commit
+80c27ea9613f9b31d0a0d6ed64926f8a7c5f6f8e
+parents: 62757872139aa778e5c66e6b1376df8d90c38d68 eaedab0d3e1d420dc13694e59b730c6c949ae555
+subject: merge ui-f5-init
+author: Don Allen <don@redonealpha.com>
+date: Sat Nov 28 09:46:58 2026 -0800
+
+## merge stat (wave-F content brought in by STEP 0)
+ create mode 100644 workstreams/modeler/ui/proof/UI-F3/transcripts/04-workspace-green.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F3/transcripts/05-fmt.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F3/transcripts/06-clippy.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F3/transcripts/07-licensing.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F3/transcripts/08-flake-parallel-app-run.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F3/ui_f3_inject.c
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/PROOF.md
+ create mode 100755 workstreams/modeler/ui/proof/UI-F4/capture_f4.sh
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/export.png
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/export.png.sha256
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/images.sha256
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/00-head.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/00-step0.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/01-export-acceptance.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/01b-numbers.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/02-smoke.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/03-f1f2f3-regression.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/04-workspace.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/05-fmt.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/06-clippy.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/transcripts/07-licensing.txt
+ create mode 100644 workstreams/modeler/ui/proof/UI-F4/ui_f4_inject.c
+ create mode 100644 workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-d.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-e.png
+ create mode 100644 workstreams/modeler/ui/proof/ui-a2/ui-a2-golden-before-ui-e.png.sha256
+
+## card branch head BEFORE step 0 (stale wave-C landing)
+62757872139aa778e5c66e6b1376df8d90c38d68
+6275787 Merge pull request #31 from isolith-project/checkpoint/wave-ui-c-bc69f8b
