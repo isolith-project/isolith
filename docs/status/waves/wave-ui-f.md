@@ -51,20 +51,21 @@ depth-sort branch) IS an ancestor of the wave head (audit
 
 ## Full gate on the checkpoint merged head
 
-Checkpoint merged head: `<CHECKPOINT>`, parents `a68505d` (github/main) +
-`<WAVE>` (wave/ui-f head at close). Transcripts in
+Checkpoint merged head: `ad90892` (pre-amend; the amended commit sha is in
+the landing transcripts), parents `a68505d` (github/main) + `92601fd`
+(wave/ui-f head at record time). Transcripts in
 `workstreams/modeler/ui/proof/UI-F5/transcripts/checkpoint-merged-head/`:
 
 | Leg | Result |
 |---|---|
-| `cargo fmt --all -- --check` | `<result>` |
-| `cargo clippy --workspace --all-targets -- -D warnings` | `<result>` |
-| `cargo test --workspace` | `<result>` |
-| `python3 scripts/licensing-check.py` | `<result>` |
-| `bash scripts/gate/precommit-gate.sh` | `<result>` |
-| `bash scripts/ui/shot.sh` | `<result>` |
+| `cargo fmt --all -- --check` | PASS (exit 0) - `01-fmt.txt` |
+| `cargo clippy --workspace --all-targets -- -D warnings` | PASS (exit 0) - `02-clippy.txt` |
+| `cargo test --workspace` | PASS (exit 0) - 235 suites, aggregate 7229 passed / 0 failed (clean at `-j 4`) - `03-test-workspace.txt` |
+| `python3 scripts/licensing-check.py` | PASS (exit 0) - 6/6, 34 crates, 535 deps - `04-licensing.txt` |
+| `bash scripts/gate/precommit-gate.sh` | PASS - pytest 559 passed / 28 skipped, `cargo test` clean - `05-precommit.txt` |
+| `bash scripts/ui/shot.sh` | PASS (exit 0) - frame `7fcf893f6ca1...` byte-identical x2, golden did NOT drift (no regolden) - `06-shot.txt` |
 
-`scope_register_check`: <N>/<N> (`proof/UI-F5/transcripts/checkpoint-merged-head/07-scope-register.txt`).
+`scope_register_check`: 23/23 (`proof/UI-F5/transcripts/checkpoint-merged-head/07-scope-register.txt`).
 Unlike every wave before it, wave F makes the register's FIRST `shippable`
 claim, because a wave-F green accepted test plus the committed export golden
 genuinely proves the whole capability:
@@ -84,10 +85,10 @@ stays green.
 
 | Shot | sha256 | Shows |
 |---|---|---|
-| sheet | `<sha>` | shipped 1280x800 launch: the drafting panel's sheet section - sheet tree (Sheet 1), Add sheet, size/scale/projection selectors, placement-legality line |
-| views | `<sha>` | the F2 views tools clicked: canvas with the accent base chip, the aligned projected-top chip, the hatched section outline and the detail chip |
-| annotate | `<sha>` | dimension placed + leader/note records: the part-name editor, the `value=80 measured=80 geometry_w=80` readout, both restored records |
-| export-preview | `<sha>` | the F4 export section at the drafting scroll clamp: print-preview canvas (45 graphical elements), export path, both Export SVG / Export PDF buttons |
+| sheet | `e610d79e3390e0b531685cd1eba428caebbe04998beceda7322c3f74f63966fd` | shipped 1280x800 launch: the drafting panel's sheet section - sheet tree (`Sheet 1 - A4 landscape third-angle scale 1:1`), Add sheet, size/scale/projection selectors, placement-legality line |
+| views | `1f51a4afce953f5aee0887bd6621922c32f2fb6139cf72661195dea27af602c8` | the F2 views tools clicked through the real binary: canvas with the accent base chip, the aligned projected-top chip, the hatched section outline and the detail view label |
+| annotate | `fe3faf10c13510495f3f1d9fcaef694af339390f5455d0bf616b96c1cb4d4652` | dimension placed + leader/note records (at a 1280x1200 native window, wave-E mate precedent; see the note below): the part-name editor, the `value=80 measured=80 geometry_w=80` readout, both restored records |
+| export-preview | `aae03ab9a94634ef6d868a9a428d708c602f2a87b0a7d3a96e02a87f6dad602f` | the F4 export section at the drafting scroll clamp: print-preview canvas (45 graphical elements), export path, both Export SVG / Export PDF buttons - the Export SVG click really wrote `drawing.svg` (3158 bytes) |
 
 Each is a genuine real-binary frame from the merged-head `isolith` binary
 under xvfb driven through XTEST, deterministic (byte-identical across two
@@ -95,9 +96,16 @@ independent captures, sha256 oracle in proof).
 
 ## What is not done / deferred
 
-- The four drafting surfaces are all reachable in the real binary at the
-  shipped 1280x800 window, so every acceptance frame is real - no
-  unreachable-panel exception was needed (unlike wave E's explode section).
+- Three drafting surfaces (sheet, views, export-preview) are fully reachable
+  in the real binary AT the shipped 1280x800 window. The annotate RECORD ROWS
+  render below the drafting scroll area's clip at 1280x800 (the F4 export
+  section starts immediately below the annotation buttons, so no 800-tall
+  scroll position reveals them - verified across multiple notches), so the
+  annotate frame drives the SAME merged-head binary at a 1280x1200 native
+  window (the wave-E mate precedent), revealing the full section including
+  both records; no fake frame and no unreachable panel. A future layout card
+  could give the drafting region a taller scroll or a dedicated annotate
+  view; this close records the captured evidence as-is.
 - The wave-C variables / kernel-features hosting gaps are unchanged by wave F.
 - The `wave/ui-f`, `merge-UI-F5`, checkpoint and card branches are left in
   place so the wave history and record are preserved.

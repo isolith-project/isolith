@@ -1,0 +1,3 @@
+# cargo fmt --all -- --check (leg 1)
+# rc is the LAST line
+LEG1_FMT_RC=0

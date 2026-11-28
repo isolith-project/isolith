@@ -89,13 +89,13 @@ SCROLL_X=1200; SCROLL_Y=700
 # gesture, pointer parked neutral.
 # F2 views tools at the drafting scroll-area bottom clamp (probe coordinates
 # from the UI-F2 capture): Base / Top / Section / Detail.
-VIEWS=( "click 1018 567" "click 1145 567" "click 1154 590" "click 1005 613" )
-VIEWS_SCROLL=30
+VIEWS=( "click 1030 453" "click 1160 453" "click 1160 476" "click 1030 499" )
+VIEWS_SCROLL=4
 # F3 annotate tools (UI-F3 capture): Place dimension, then Add leader / Add
 # note, with a re-clamp after the dimension grows the section.
-ANNOTATE1=( "click 1057 693" )
-ANNOTATE2=( "click 1003 735" "click 1085 735" )
-ANNOTATE_SCROLL=30
+ANNOTATE1=( "click 1025 672" )
+ANNOTATE2=( "click 999 738" "click 1045 738" )
+ANNOTATE_SCROLL=8
 # F4 export section at the bottom clamp (UI-F4 capture): Export SVG.
 EXPORT=( "click 1004 748" )
 EXPORT_SCROLL=40
@@ -105,7 +105,7 @@ EXPORT_SCROLL=40
 case "$MODE" in
   sheet)          GEST1=();            GEST2=();            GEST3=(); SCROLL1=0;      SCROLL2=0;      SCROLL3=0;      LAUNCHDIR=NO ;;
   views)          GEST1=("${VIEWS[@]}"); GEST2=();          GEST3=(); SCROLL1=$VIEWS_SCROLL; SCROLL2=0; SCROLL3=0; LAUNCHDIR=NO ;;
-  annotate)       GEST1=("${ANNOTATE1[@]}"); GEST2=("${ANNOTATE2[@]}"); GEST3=(); SCROLL1=$ANNOTATE_SCROLL; SCROLL2=$ANNOTATE_SCROLL; SCROLL3=$ANNOTATE_SCROLL; LAUNCHDIR=NO ;;
+  annotate)       GEST1=("${ANNOTATE1[@]}"); GEST2=("${ANNOTATE2[@]}"); GEST3=(); SCROLL1=$ANNOTATE_SCROLL; SCROLL2=0; SCROLL3=0; LAUNCHDIR=NO ;;
   export-preview) GEST1=("${EXPORT[@]}");   GEST2=();       GEST3=(); SCROLL1=$EXPORT_SCROLL; SCROLL2=0;      SCROLL3=0;      LAUNCHDIR=$OUTDIR ;;
   *) echo "usage: capture_ui_f5.sh <sheet|views|annotate|export-preview>" >&2; exit 2 ;;
 esac
@@ -116,6 +116,7 @@ BIN="$BIN"; INJ="$INJ"; RAW="$RAW"; DISP="\$DISPLAY"
 OUTDIR="$OUTDIR"; LAUNCHDIR="$LAUNCHDIR"
 SCROLL_X=$SCROLL_X; SCROLL_Y=$SCROLL_Y; NEUTRAL_X=$NEUTRAL_X; NEUTRAL_Y=$NEUTRAL_Y
 SCROLL1=$SCROLL1; SCROLL2=$SCROLL2; SCROLL3=$SCROLL3
+mkdir -p "\$OUTDIR"
 rm -f "\$OUTDIR"/*.svg "\$OUTDIR"/*.pdf
 # Launch the real binary FROM the launch dir (repo root unless export-preview,
 # where the panel's default export path "drawing" resolves into \$OUTDIR so
