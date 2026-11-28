@@ -253,4 +253,10 @@ skipped or deleted; the depth_sort_defect regression is new and permanent.
 ## Landing
 
 Per the card: pushed to `github`, merged no-ff onto `github/wave/ui-f` from
-`merge-UI-D11`, remote read-back verified. Recorded in `transcripts/07-landing.txt`.
+`merge-UI-D11`, remote read-back verified (github/wave/ui-f ==
+`4e5c347ece6d086ee6bd7c7584131f83a1770a34` == local merge HEAD, feature commit
+`7d508b8` a confirmed ancestor, merged tree byte-identical to the feature
+tree). The colon-refspec push was blocked by the force-push heuristic (the
+same documented quirk as UI-F3/F4) and landed via `git push github` from the
+tracking merge branch. Not merged to main; wave-F close card UI-F5 owns that.
+Full record: `transcripts/07-landing.txt`.
