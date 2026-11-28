@@ -77,7 +77,7 @@ use crate::{overlay, theme};
 use device::GpuContext;
 use resident::{FaceArena, ResidentScene};
 use shading::{ViewMode, BOX_EDGES};
-use target::{GpuTarget, TARGET_FORMAT};
+use target::{GpuTarget, DEPTH_FORMAT, TARGET_FORMAT};
 
 /// The background colour the target is cleared to (the theme's viewport
 /// background, in 0..1 floats, byte-identical to the CPU background after the
@@ -231,9 +231,17 @@ struct GpuPipeline {
     uniform: wgpu::Buffer,
     /// Bind group for the MVP (group 0, binding 0), shared by both pipelines.
     bind_group: wgpu::BindGroup,
-    /// Studio-lit triangle pipeline (shading.wgsl, alpha blended).
+    /// Studio-lit triangle pipeline (shading.wgsl, alpha blended, reverse-Z
+    /// depth write ON): the opaque pass, drawn in any order because the depth
+    /// buffer resolves per-pixel nearest (UI-D11).
     shading: wgpu::RenderPipeline,
-    /// Line pipeline for grid/edges/triad (viewport.wgsl, replace blend).
+    /// The transparent set's pipeline: same shader and blend, depth test ON
+    /// but depth write OFF, so it composites source-over after the opaque pass
+    /// without perturbing the resolved depth (UI-D11).
+    transparent: wgpu::RenderPipeline,
+    /// Line pipeline for grid/edges/triad (viewport.wgsl, replace blend,
+    /// depth test Always / write off so the overlay stays on top exactly like
+    /// the pre-depth pipeline).
     lines: wgpu::RenderPipeline,
     target: GpuTarget,
 }
@@ -389,6 +397,11 @@ pub struct GpuBackend {
     last_assemble: Duration,
     /// Faces submitted by the last full-path assemble (0 on a fast path).
     last_faces_submitted: usize,
+    /// Opaque byte prefix of the last full-path packed face stream: the
+    /// opaque pass draws [0, split), the transparent set [split, face_len).
+    /// Set by `assemble`, reused verbatim on a resident fast path (same key =>
+    /// same bytes => same split).
+    opaque_face_bytes: u64,
     /// Total triangles of the scene the last assemble saw.
     last_scene_triangles: usize,
     /// Primitives the world-AABB cull removed in the last assemble.
@@ -445,6 +458,7 @@ impl GpuBackend {
             last_draw_calls: 0,
             last_assemble: Duration::ZERO,
             last_faces_submitted: 0,
+            opaque_face_bytes: 0,
             last_scene_triangles: 0,
             last_culled_prims: 0,
         };
@@ -506,7 +520,8 @@ impl GpuBackend {
             // resident buffers (write_buffer; no device-buffer allocation):
             // the UI-D8 vertex-prep bucket, env-gated to the D9 stage table.
             let prep = timed_push(&mut self.perf, "vertex-prep", || {
-                self.cache.upload_faces(&self.ctx.queue, &self.face_bytes);
+                self.cache
+                    .upload_faces(&self.ctx.queue, &self.face_bytes, self.opaque_face_bytes);
                 self.cache.upload_lines(&self.ctx.queue, &self.line_bytes);
             })
             .unwrap_or_default();
@@ -536,25 +551,47 @@ impl GpuBackend {
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("isolith-gpu-viewport-pass"),
             color_attachments: &[Some(self.pipeline.target.color_attachment(CLEAR))],
-            depth_stencil_attachment: None,
+            depth_stencil_attachment: Some(self.pipeline.target.depth_attachment()),
             timestamp_writes: None,
             occlusion_query_set: None,
             multiview_mask: None,
         });
         pass.set_bind_group(0, &self.pipeline.bind_group, &[]);
 
-        // 1. Filled faces, painter-sorted back-to-front (deepest first) so
-        //    later draws overwrite nearer ones exactly like the CPU raster.
+        // 1. Opaque faces: the byte range [0, opaque_len). Depth test on and
+        //    depth write on; the reverse-Z buffer resolves nearest per pixel,
+        //    so the CPU painter sort is gone and draw order is irrelevant.
         //    (Skip in `Edges` mode, which draws the boundary edge list only.)
         let face_len = self.cache.face_len_bytes();
-        if face_len > 0 {
+        let opaque_len = self.cache.face_opaque_bytes().min(face_len);
+        if opaque_len > 0 {
             pass.set_pipeline(&self.pipeline.shading);
             pass.set_vertex_buffer(0, self.cache.face_buffer().slice(..));
             self.cache.record_draw();
-            pass.draw(0..(face_len as u32) / resident::SHADED_STRIDE as u32, 0..1);
+            pass.draw(
+                0..(opaque_len as u32) / resident::SHADED_STRIDE as u32,
+                0..1,
+            );
         }
 
-        // 2. Lines (feature edges, grid, then the triad arms).
+        // 2. Transparent set: drawn after the opaque pass, depth test on but
+        //    depth write off, so it composites source-over over the resolved
+        //    opaque depth without perturbing it.
+        let transparent_len = face_len - opaque_len;
+        if transparent_len > 0 {
+            pass.set_pipeline(&self.pipeline.transparent);
+            pass.set_vertex_buffer(0, self.cache.face_buffer().slice(..));
+            self.cache.record_draw();
+            pass.draw(
+                opaque_len as u32 / resident::SHADED_STRIDE as u32
+                    ..face_len as u32 / resident::SHADED_STRIDE as u32,
+                0..1,
+            );
+        }
+
+        // 3. Lines (feature edges, grid, then the triad arms). The overlay
+        //    keeps depth compare Always + write off, so it stays on top
+        //    exactly like the pre-depth pass.
         let line_len = self.cache.line_len_bytes();
         if line_len > 0 {
             pass.set_pipeline(&self.pipeline.lines);
@@ -715,6 +752,7 @@ impl GpuBackend {
                                 }
                                 arena_push(
                                     &mut self.arena,
+                                    i,
                                     &poly,
                                     &normals,
                                     color,
@@ -762,6 +800,7 @@ impl GpuBackend {
                                 }
                                 arena_push(
                                     &mut self.arena,
+                                    i,
                                     face,
                                     &normals,
                                     color,
@@ -777,20 +816,63 @@ impl GpuBackend {
         }
         let faces_submitted = self.arena.faces.len();
 
-        // Painter: farthest (largest view z) first, exactly like the CPU path.
+        // UI-D11: per-pixel hidden-surface resolution replaces the CPU painter
+        // sort. The packed face stream is [opaque set][transparent set]:
+        //  - Opaque faces (vertex alpha == 255, i.e. the whole scene when the
+        //    global opacity slider is at 1.0) stay in assembly order — ordering
+        //    dropped — and the reverse-Z depth buffer resolves the nearest
+        //    surface per pixel.
+        //  - Transparent faces (alpha < 255, i.e. the whole scene below 1.0)
+        //    are packed after the opaque set, sorted back-to-front at ENTITY
+        //    level (per primitive), and draw after the opaque pass with depth
+        //    test on / write off so the source-over composite is depth-correct.
+        // `assemble.sort` now measures the transparent entity sort only (0 for
+        // an all-opaque frame, where ordering truly survives nowhere).
+        let mut opaque_face_bytes = 0u64;
         d_sort += timed_push(perf, "assemble.sort", || {
-            self.arena.faces.sort_by(|a, b| {
-                b.depth
-                    .partial_cmp(&a.depth)
-                    .unwrap_or(std::cmp::Ordering::Equal)
-            });
+            let has_transparent = self.arena.faces.iter().any(|f| f.color[3] != 255);
+            if has_transparent {
+                // Entity-level depth: the mean view z of each primitive's
+                // faces (contiguous in arena order, so a stable per-entity
+                // sort keeps one entity's faces together).
+                let mut ent_sum = vec![0.0f64; scene.primitives.len()];
+                let mut ent_cnt = vec![0usize; scene.primitives.len()];
+                for f in &self.arena.faces {
+                    ent_sum[f.entity] += f.depth;
+                    ent_cnt[f.entity] += 1;
+                }
+                let ent_depth: Vec<f64> = ent_sum
+                    .iter()
+                    .zip(&ent_cnt)
+                    .map(|(s, c)| if *c > 0 { s / *c as f64 } else { 0.0 })
+                    .collect();
+                // Stable: opaque first in assembly order, then transparent
+                // entities back-to-front (farthest first -> largest depth
+                // first, the painter's convention), ties by entity index.
+                self.arena.faces.sort_by(|a, b| {
+                    let ao = a.color[3] == 255u8;
+                    let bo = b.color[3] == 255u8;
+                    match (ao, bo) {
+                        (true, false) => std::cmp::Ordering::Less,
+                        (false, true) => std::cmp::Ordering::Greater,
+                        (true, true) => std::cmp::Ordering::Equal,
+                        (false, false) => ent_depth[b.entity]
+                            .partial_cmp(&ent_depth[a.entity])
+                            .unwrap_or(std::cmp::Ordering::Equal)
+                            .then(a.entity.cmp(&b.entity)),
+                    }
+                });
+            }
         })
         .unwrap_or_default();
 
-        // Expand the sorted arena straight into the byte stream, in the exact
-        // pre-D10 order (fan `[0, i, i+1]`, world point + view normal + colour).
+        // Expand into the byte stream in the exact pre-D10 layout (fan
+        // `[0, i, i+1]`, world point + view normal + colour), recording the
+        // byte offset where the transparent set begins.
         d_expand += timed_push(perf, "assemble.expand", || {
             for meta in &self.arena.faces {
+                let before = self.face_bytes.len();
+                let is_opaque = meta.color[3] == 255;
                 resident::fan_emit(meta.world_len, |a, b, c| {
                     for k in [a, b, c] {
                         let p = self.arena.world[meta.world_start + k];
@@ -799,9 +881,13 @@ impl GpuBackend {
                             .pack_into(&mut self.face_bytes);
                     }
                 });
+                if is_opaque {
+                    opaque_face_bytes += (self.face_bytes.len() - before) as u64;
+                }
             }
         })
         .unwrap_or_default();
+        self.opaque_face_bytes = opaque_face_bytes;
 
         // The edge pass draws EXACTLY the boundary edge list: a mesh
         // primitive draws its committed `mesh.edges`; a box proxy draws its
@@ -1083,6 +1169,7 @@ fn box_faces(prim: &Primitive) -> [Vec<Vec3>; 6] {
 #[allow(clippy::too_many_arguments)]
 fn arena_push(
     arena: &mut resident::FaceArena,
+    entity: usize,
     poly: &[Vec3],
     world_normals: &[Vec3],
     color: [u8; 4],
@@ -1133,6 +1220,7 @@ fn arena_push(
     // caller).
     arena.faces.push(resident::FaceMeta {
         depth: depth_sum / poly.len() as f64,
+        entity,
         color,
         world_start,
         world_len,
@@ -1379,6 +1467,7 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
                 fragment_entry: &str,
                 layout: wgpu::VertexBufferLayout<'_>,
                 blend: Option<wgpu::BlendState>,
+                depth: Option<wgpu::DepthStencilState>,
                 label: &str| {
         device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some(label),
@@ -1408,11 +1497,36 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
                 polygon_mode: wgpu::PolygonMode::Fill,
                 conservative: false,
             },
-            depth_stencil: None,
+            depth_stencil: depth,
             multisample: wgpu::MultisampleState::default(),
             multiview_mask: None,
             cache: None,
         })
+    };
+
+    // Reverse-Z depth state shared by every pass pipeline (D32Float).
+    // Reverse-Z + the shading shader's negated NDC z: near plane -> clip z
+    // +1 -> depth 1.0, far plane -> clip z -1 -> depth 0.0. Clear 0.0 (far);
+    // `Greater` keeps the nearer (larger) fragment per pixel. Strict, so two
+    // coplanar/coincident faces pass ONLY on the ascent: the first-drawn (in
+    // assembly order) wins the equal-depth tie exactly as the no-depth painter
+    // did for convex scenes, keeping the tie-break order-independent.
+    let depth = |depth_write: bool| wgpu::DepthStencilState {
+        format: DEPTH_FORMAT,
+        depth_write_enabled: Some(depth_write),
+        depth_compare: Some(wgpu::CompareFunction::Greater),
+        stencil: Default::default(),
+        bias: Default::default(),
+    };
+    // The line overlay keeps depth write off and a constant-pass compare, so
+    // it stays on top of the depth-resolved faces exactly like the pre-depth
+    // pipeline (whose geometry had no depth and always replaced).
+    let lines_depth = wgpu::DepthStencilState {
+        format: DEPTH_FORMAT,
+        depth_write_enabled: Some(false),
+        depth_compare: Some(wgpu::CompareFunction::Always),
+        stencil: Default::default(),
+        bias: Default::default(),
     };
 
     let shading = make(
@@ -1422,7 +1536,18 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
         "fs_main",
         SHADED_VERTEX_LAYOUT,
         Some(STUDIO_BLEND),
+        Some(depth(true)),
         "isolith-gpu-viewport-shading-pipeline",
+    );
+    let transparent = make(
+        wgpu::PrimitiveTopology::TriangleList,
+        &shading_shader,
+        "vs_main",
+        "fs_main",
+        SHADED_VERTEX_LAYOUT,
+        Some(STUDIO_BLEND),
+        Some(depth(false)),
+        "isolith-gpu-viewport-transparent-pipeline",
     );
     let lines = make(
         wgpu::PrimitiveTopology::LineList,
@@ -1431,6 +1556,7 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
         "fs_color",
         VERTEX_LAYOUT,
         Some(wgpu::BlendState::REPLACE),
+        Some(lines_depth),
         "isolith-gpu-viewport-lines-pipeline",
     );
 
@@ -1438,6 +1564,7 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
         uniform,
         bind_group,
         shading,
+        transparent,
         lines,
         target,
     })

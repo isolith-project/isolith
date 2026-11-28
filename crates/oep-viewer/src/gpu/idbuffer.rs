@@ -54,21 +54,20 @@ pub const ID_TARGET_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::R32Uint;
 
 /// One id-pass face: which primitive it belongs to, its painter depth and its
 /// NDC polygon (projected with the standard perspective divide, matching
-/// `oep_viewer::pick`, per the module docs).
+/// `oep_viewer::pick`, per the module docs). Each vertex carries its NDC z so
+/// the id pass can resolve per-pixel nearest with the reverse-Z depth buffer.
 struct IdFace {
     /// Index into `Scene::primitives`.
     prim: u32,
-    /// Mean view-space z of the face (the painter key).
-    depth: f64,
-    /// Projected NDC polygon.
-    ndc: Vec<[f64; 2]>,
+    /// Projected NDC polygon, as `[x, y, z]` per vertex (z = NDC z, in
+    /// reverse-Z convention the shader negates exactly like the colour pass).
+    ndc: Vec<[f64; 3]>,
 }
 
 /// Project one world polygon into visible NDC with the standard perspective
 /// divide (`nx = clip.x / -view.z`, the `oep_viewer::pick` convention):
-/// vertices behind the camera or outside the NDC z cube are culled, and the
-/// face's painter depth is its mean view z. Mirrors the colour pass's face
-/// SET and painter order, with the corrected divide (module docs).
+/// vertices behind the camera or outside the NDC z cube are culled. Mirrors
+/// the colour pass's face SET, with the corrected divide (module docs).
 fn push_id_polygon(
     out: &mut Vec<IdFace>,
     prim: u32,
@@ -80,7 +79,6 @@ fn push_id_polygon(
         return;
     }
     let mut ok = true;
-    let mut depth_sum = 0.0f64;
     let mut ndc = Vec::with_capacity(poly.len());
     for p in poly {
         let view = world_to_view.transform_point(p);
@@ -97,21 +95,18 @@ fn push_id_polygon(
             ok = false;
             break;
         }
-        depth_sum += view.z;
-        ndc.push([nx, ny]);
+        ndc.push([nx, ny, nz]);
     }
     if !ok || ndc.len() < 3 {
         return;
     }
-    out.push(IdFace {
-        prim,
-        depth: depth_sum / poly.len() as f64,
-        ndc,
-    });
+    out.push(IdFace { prim, ndc });
 }
 
 /// Walk the scene and build the id-pass face list (the same face polygon set
-/// and painter order as the colour pass, projected with the standard divide).
+/// as the colour pass, projected with the standard divide). The face ORDER is
+/// irrelevant for topmost (the reverse-Z depth buffer resolves per-pixel
+/// nearest exactly like the colour pass), so no CPU painter sort survives.
 fn assemble_id_faces(scene: &Scene, world_to_view: &Mat4, projection: &Mat4) -> Vec<IdFace> {
     let mut faces: Vec<IdFace> = Vec::new();
     for (i, prim) in scene.primitives.iter().enumerate() {
@@ -129,12 +124,6 @@ fn assemble_id_faces(scene: &Scene, world_to_view: &Mat4, projection: &Mat4) -> 
             }
         }
     }
-    // Deepest (largest mean view z) first: the painter's back-to-front order.
-    faces.sort_by(|a, b| {
-        b.depth
-            .partial_cmp(&a.depth)
-            .unwrap_or(std::cmp::Ordering::Equal)
-    });
     faces
 }
 
@@ -147,9 +136,24 @@ fn scene_id_keys(scene: &Scene) -> Vec<String> {
 
 /// A 32-bit unsigned id target (render attachment + copy source) with host
 /// readback, mirrored after [`super::target::GpuTarget`] for the id format.
+///
+/// UI-D11: the target also owns a reverse-Z D32Float depth attachment with the
+/// same format/clear/compare/write semantics as the viewport colour target, so
+/// the id pass resolves the per-pixel NEAREST fragment exactly like the colour
+/// pass (the topmost id equals the topmost colour fragment). The id vertices
+/// carry their NDC z, so identical reverse-Z depth values reach both passes.
 struct IdTarget {
     texture: wgpu::Texture,
     view: wgpu::TextureView,
+    /// Reverse-Z depth texture (D32Float): the same format and semantics as
+    /// [`super::target::GpuTarget`]'s depth attachment, so the id pass and the
+    /// colour pass agree on the per-pixel nearest face.
+    ///
+    /// Stored (never read on the host) to keep the texture alive for the
+    /// [`IdTarget::depth_view`] the pass attaches.
+    #[allow(dead_code)]
+    depth_texture: wgpu::Texture,
+    depth_view: wgpu::TextureView,
     width: u32,
     height: u32,
     /// Bytes per row the copy uses (padded to the 256-byte alignment).
@@ -181,10 +185,30 @@ impl IdTarget {
             view_formats: &[],
         });
         let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
+        // Reverse-Z depth attachment, identical to the colour target's: the id
+        // pass must resolve per-pixel nearest with the same D32Float reverse-Z
+        // semantics as the colour pass so topmost id == topmost colour.
+        let depth_texture = device.create_texture(&wgpu::TextureDescriptor {
+            label: Some("isolith-gpu-id-depth"),
+            size: wgpu::Extent3d {
+                width,
+                height,
+                depth_or_array_layers: 1,
+            },
+            mip_level_count: 1,
+            sample_count: 1,
+            dimension: wgpu::TextureDimension::D2,
+            format: super::target::DEPTH_FORMAT,
+            usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+            view_formats: &[],
+        });
+        let depth_view = depth_texture.create_view(&wgpu::TextureViewDescriptor::default());
         Self {
             padded_bytes_per_row: align_256(width * std::mem::size_of::<u32>() as u32),
             texture,
             view,
+            depth_texture,
+            depth_view,
             width,
             height,
         }
@@ -202,6 +226,20 @@ impl IdTarget {
                 load: wgpu::LoadOp::Clear(wgpu::Color::default()),
                 store: wgpu::StoreOp::Store,
             },
+        }
+    }
+
+    /// The reverse-Z depth attachment, cleared to far (`DEPTH_CLEAR`) exactly
+    /// like the colour target, so the id pass starts "as far as possible" and
+    /// writes the nearest fragment's id just like the colour pass.
+    fn depth_attachment(&self) -> wgpu::RenderPassDepthStencilAttachment<'_> {
+        wgpu::RenderPassDepthStencilAttachment {
+            view: &self.depth_view,
+            depth_ops: Some(wgpu::Operations {
+                load: wgpu::LoadOp::Clear(super::target::DEPTH_CLEAR),
+                store: wgpu::StoreOp::Store,
+            }),
+            stencil_ops: None,
         }
     }
 
@@ -283,9 +321,9 @@ struct IdVertex {
 }
 
 impl IdVertex {
-    fn new(pos: [f64; 2], id: u32) -> Self {
+    fn new(pos: [f64; 3], id: u32) -> Self {
         Self {
-            pos: [pos[0] as f32, pos[1] as f32, 0.0],
+            pos: [pos[0] as f32, pos[1] as f32, pos[2] as f32],
             id,
         }
     }
@@ -445,7 +483,7 @@ impl IdPass {
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("isolith-gpu-id-pass"),
             color_attachments: &[Some(self.target.attachment())],
-            depth_stencil_attachment: None,
+            depth_stencil_attachment: Some(self.target.depth_attachment()),
             timestamp_writes: None,
             occlusion_query_set: None,
             multiview_mask: None,
@@ -510,7 +548,18 @@ fn build_pipeline(ctx: &GpuContext) -> Option<wgpu::RenderPipeline> {
                 polygon_mode: wgpu::PolygonMode::Fill,
                 conservative: false,
             },
-            depth_stencil: None,
+            // Reverse-Z D32Float aligned with the colour pass: with the id
+            // vertices carrying their NDC z (negated in the vertex stage), the
+            // id pass keeps only the nearest fragment per pixel — the same
+            // face the viewport colour pass resolved — so the topmost id
+            // equals the topmost colour fragment (I1).
+            depth_stencil: Some(wgpu::DepthStencilState {
+                format: super::target::DEPTH_FORMAT,
+                depth_write_enabled: Some(true),
+                depth_compare: Some(wgpu::CompareFunction::GreaterEqual),
+                stencil: Default::default(),
+                bias: Default::default(),
+            }),
             multisample: wgpu::MultisampleState::default(),
             multiview_mask: None,
             cache: None,
@@ -550,7 +599,10 @@ struct IdOut {
 @vertex
 fn vs_id(in: IdIn) -> IdOut {
     var out: IdOut;
-    out.clip = vec4<f32>(in.pos.x, in.pos.y, 0.0, 1.0);
+    // Reverse-Z, exactly like the colour pass shading.wgsl: map the NDC z so
+    // near (nz=-1) -> depth 1.0 and far (nz=+1) -> depth 0.0, matching the
+    // viewport target's depth attachment. x/y are passed through untouched.
+    out.clip = vec4<f32>(in.pos.x, in.pos.y, 0.5 - 0.5 * in.pos.z, 1.0);
     out.id = in.id;
     return out;
 }

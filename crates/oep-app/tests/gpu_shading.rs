@@ -11,12 +11,12 @@
 //!    edge line primitives the pass submits (`last_edge_primitives`) is
 //!    printed and compared to the fixture's boundary edge count (mesh
 //!    `Primitive.mesh.edges` plus the 12 box edges per box proxy).
-//! 3. **No z-fighting** — the shading + lines pipelines carry NO depth
-//!    stencil at all (`depth_stencil: None`), so the renderer performs zero
-//!    depth comparisons and reports 0 depth-equal competing fragments by
-//!    construction; additionally the committed snapshot is scanned for
-//!    alternating-pixel pairs along shared edges and 0 are found (method
-//!    documented inline).
+//! 3. **No z-fighting** — since UI-D11 the shading + lines pipelines carry a
+//!    reverse-Z D32Float depth stencil, so every face is drawn in arbitrary
+//!    order and the depth test resolves each pixel's nearest surface
+//!    deterministically (per-pixel hidden-surface resolution); the committed
+//!    snapshot is scanned for alternating-pixel pairs along shared edges and
+//!    0 are found (method documented inline).
 //! 4. **Smooth vs Flat differ only in normal-driven pixels** — a non-zero
 //!    differing-pixel count between the two renders, with an unchanged
 //!    silhouette (identical non-background masks).
@@ -280,10 +280,14 @@ fn no_z_fighting_on_the_committed_snapshot() {
     render_with(&mut gpu, oep_viewer::gpu::shading::ViewMode::Shaded, 1.0);
     let img = gpu.frame().clone();
 
-    // Structural claim: no depth attachment anywhere in either pipeline.
-    // There is no depth buffer, so the GPU never compares depths.
+    // Structural claim: the viewport pipelines carry a reverse-Z depth
+    // stencil (Depth32Float, compare GreaterEqual) — the UI-D11 per-pixel
+    // hidden-surface resolution. The scan below is the measurable proof that
+    // coplanar coincident faces never interleave on the committed snapshot
+    // even though all faces are now drawn in arbitrary order (the depth test
+    // resolves each pixel's nearest surface deterministically).
     println!(
-        "depth_stencil: None on shading and lines pipelines => depth comparisons performed = 0"
+        "reverse-Z D32Float depth stencil on shading and lines pipelines => per-pixel hidden-surface resolution"
     );
 
     // Alternation scan: count LONG period-2 colour runs (>= 4 px) that

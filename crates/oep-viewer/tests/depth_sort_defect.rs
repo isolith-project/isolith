@@ -1,21 +1,19 @@
-//! UI-D11 UI-DEPTH-SORT, Stage 1: PROVE the painter-sort misorder.
+//! UI-D11 UI-DEPTH-SORT: the painter-sort defect gate AND its reverse-Z fix.
 //!
-//! This is the gate test of card UI-D11. The shared projection and the face
-//! list are byte-trusted (UI-D7/D8/D10 pinned them); what is on trial here is
-//! ORDER: the mean-depth painter sort orders each face by its AVERAGE view
-//! depth, so it cannot be per-pixel correct where (a) two components
-//! interpenetrate and the nearer surface changes inside one face, or (b) one
-//! large face's near and far ends fall on opposite sides of another face.
+//! The card is two-stage. **Stage 1** (committed as the gate) proves the
+//! mean-depth painter sort misorders where (a) two components interpenetrate
+//! and the nearer surface changes inside one face, or (b) one large face's
+//! near and far ends fall on opposite sides of another face; the verdict was
+//! quoted as MISORDER CONFIRMED with the wrong-surface pixel counts and the
+//! evidence landed under `proof/UI-D11/stage1/`.
 //!
-//! The test CONSTRUCTS both failing cases (no RNG, no corpus file, fully
-//! deterministic geometry + a fixed set of camera poses) and measures, through
-//! the EXISTING render path (the real [`GpuBackend`] + the real [`IdPass`]),
-//! how many pixels the current pipeline paints with the wrong surface, against
-//! an independent analytic oracle: per-pixel, the nearest triangle along the
-//! camera ray.
-//!
-//! The verdict is quoted in the print output as MISORDER CONFIRMED with the
-//! wrong-surface pixel count, or NOT REPRODUCED with what failed to break it.
+//! **Stage 2** replaces the CPU painter sort with a per-pixel reverse-Z depth
+//! buffer (the UI-D11 fix). The same harness now runs against the fixed
+//! pipeline: it reconstructs the same deterministic scenes and camera poses
+//! and asserts the depth buffer resolves the two once-misordered cases to the
+//! analytic oracle surface within the same thin silhouette band as the (always
+//! correct) disjoint-box control. This file is therefore both the defect proof
+//! (Stage 1, evidence preserved) and the fix regression (Stage 2).
 //!
 //! Everything is deterministic: the scenes are built from fixed coordinates,
 //! the camera poses are a fixed list (framed, then the committed orbit
@@ -32,8 +30,8 @@ use oep_viewer::render::{encode_png, RgbaImage};
 use oep_viewer::scene::{MeshData, Primitive, Scene};
 use oep_viewer::{GpuBackend, ViewportBackend};
 
-/// The proof directory for Stage 1 images / numbers (worktree-relative).
-fn stage1_dir() -> std::path::PathBuf {
+/// UI-D11 proof phase directory (`proof/UI-D11/<phase>`).
+fn super_stage_dir(phase: &str) -> std::path::PathBuf {
     std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("..")
         .join("..")
@@ -42,7 +40,7 @@ fn stage1_dir() -> std::path::PathBuf {
         .join("ui")
         .join("proof")
         .join("UI-D11")
-        .join("stage1")
+        .join(phase)
 }
 
 /// Serialises every test that creates or drops a wgpu device (the repo-wide
@@ -227,9 +225,12 @@ fn scene_interpenetrating_walls() -> Scene {
         build(-1.0, -1.0, 1.0, &ua, &va, &na),
         build(-1.0, -1.0, -1.0, &ua, &va, &na),
     ];
-    scene
-        .primitives
-        .push(Primitive::from_mesh("wall-a", "pa", "ba", rotated_box_mesh(&pa)));
+    scene.primitives.push(Primitive::from_mesh(
+        "wall-a",
+        "pa",
+        "ba",
+        rotated_box_mesh(&pa),
+    ));
 
     // Wall B: plane y = -x. Axes u=(-c,s,0), v=(0,0,1), n=(s,c,0).
     let ub = Vec3::new(-c, s, 0.0);
@@ -244,9 +245,12 @@ fn scene_interpenetrating_walls() -> Scene {
         build(-1.0, -1.0, 1.0, &ub, &va, &nb),
         build(-1.0, -1.0, -1.0, &ub, &va, &nb),
     ];
-    scene
-        .primitives
-        .push(Primitive::from_mesh("wall-b", "pb", "bb", rotated_box_mesh(&pb)));
+    scene.primitives.push(Primitive::from_mesh(
+        "wall-b",
+        "pb",
+        "bb",
+        rotated_box_mesh(&pb),
+    ));
 
     scene.bounds = scene
         .primitives
@@ -268,9 +272,7 @@ fn scene_concave_l_crossing_wall() -> Scene {
     // Four triangles as a simple ear fan around vertex 0.
     let xs = [-7.0, 7.0, 7.0, 0.0, 0.0, -7.0];
     let zs = [-6.0, -6.0, -1.5, -1.5, 6.0, 6.0];
-    let positions: Vec<[f32; 3]> = (0..6)
-        .map(|i| [xs[i] as f32, 0.0, zs[i] as f32])
-        .collect();
+    let positions: Vec<[f32; 3]> = (0..6).map(|i| [xs[i] as f32, 0.0, zs[i] as f32]).collect();
     let triangles = vec![[0u32, 1, 2], [0, 2, 3], [0, 3, 4], [0, 4, 5]];
     let mesh_l = MeshData {
         positions,
@@ -308,30 +310,24 @@ fn control_disjoint_boxes() -> Scene {
     // Three separated boxes at different depths along the camera's default
     // view direction so one fully occludes another portion (no crossing).
     // Box 1: front-left, Box 2: back-centre, Box 3: front-right, disjoint.
-    scene
-        .primitives
-        .push(Primitive::from_mesh(
-            "box-1",
-            "p1",
-            "b1",
-            box_mesh([-10.0, -4.0, -2.0], [-2.0, 4.0, 4.0]),
-        ));
-    scene
-        .primitives
-        .push(Primitive::from_mesh(
-            "box-2",
-            "p2",
-            "b2",
-            box_mesh([-3.0, -4.0, -14.0], [5.0, 4.0, -8.0]),
-        ));
-    scene
-        .primitives
-        .push(Primitive::from_mesh(
-            "box-3",
-            "p3",
-            "b3",
-            box_mesh([6.0, -4.0, -2.0], [14.0, 4.0, 4.0]),
-        ));
+    scene.primitives.push(Primitive::from_mesh(
+        "box-1",
+        "p1",
+        "b1",
+        box_mesh([-10.0, -4.0, -2.0], [-2.0, 4.0, 4.0]),
+    ));
+    scene.primitives.push(Primitive::from_mesh(
+        "box-2",
+        "p2",
+        "b2",
+        box_mesh([-3.0, -4.0, -14.0], [5.0, 4.0, -8.0]),
+    ));
+    scene.primitives.push(Primitive::from_mesh(
+        "box-3",
+        "p3",
+        "b3",
+        box_mesh([6.0, -4.0, -2.0], [14.0, 4.0, 4.0]),
+    ));
     scene.bounds = scene
         .primitives
         .iter()
@@ -448,13 +444,14 @@ fn analytic_nearest_grid(scene: &Scene, cam: &Camera, width: u32, height: u32) -
 
 /// Compare the current pipeline's id buffer (same painter order as the colour
 /// pass) to the analytic nearest-surface grid wherever both see a face.
-/// Returns (wrong_pixels, compared_pixels, sampled mismatches).
+/// Returns `(wrong_pixels, compared_pixels, sampled mismatches)`.
+type WrongStats = (usize, usize, Vec<(u32, u32, u32, u32)>);
 fn wrong_surface_stats(
     pass: &IdPass,
     analytic: &[i32],
     width: u32,
     height: u32,
-) -> (usize, usize, Vec<(u32, u32, u32, u32)>) {
+) -> WrongStats {
     let mut wrong = 0usize;
     let mut compared = 0usize;
     let mut samples = Vec::new();
@@ -478,8 +475,12 @@ fn wrong_surface_stats(
 
 /// Save one Stage-1 PNG and return its sha256.
 fn save_stage1_image(name: &str, img: &RgbaImage) -> String {
-    let dir = stage1_dir();
-    std::fs::create_dir_all(&dir).expect("stage1 dir");
+    // UI-D11 stage 2: this harness now runs against the reverse-Z depth
+    // buffer, so its renders are post-fix. Stage-1's original misordered
+    // images stay committed unchanged in `stage1/` (the gate evidence);
+    // the current renders land in `stage2/`.
+    let dir = super_stage_dir("stage2");
+    std::fs::create_dir_all(&dir).expect("stage2 dir");
     let bytes = encode_png(img);
     let hash = sha256_hex(&bytes);
     std::fs::write(dir.join(format!("{name}.png")), &bytes).expect("write png");
@@ -521,13 +522,13 @@ fn probe_scene(name: &'static str, scene: Scene, ctx: &GpuContext) -> ProbeResul
     let bounds = scene.bounds.expect("scene bounds");
     let base_cam = Camera::framed(&bounds);
 
-    let mut best: Option<(f64, f64, usize, usize, Vec<(u32, u32, u32, u32)>)> = None;
+    let mut best: Option<(f64, f64, WrongStats)> = None;
     for (dyaw, dpitch) in POSE_OFFSETS {
         let mut cam = base_cam;
         cam.orbit(dyaw, dpitch);
         let analytic = analytic_nearest_grid(&scene, &cam, WIDTH, HEIGHT);
-        let pass = IdPass::new(ctx.clone(), scene.clone(), cam, WIDTH, HEIGHT)
-            .expect("id pass resources");
+        let pass =
+            IdPass::new(ctx.clone(), scene.clone(), cam, WIDTH, HEIGHT).expect("id pass resources");
         let (wrong, compared, samples) = wrong_surface_stats(&pass, &analytic, WIDTH, HEIGHT);
         println!(
             "pose yaw={dyaw:.2} pitch={dpitch:.2} -> compared px={compared} wrong-surface px={wrong} ({:.2}% of compared)",
@@ -537,15 +538,11 @@ fn probe_scene(name: &'static str, scene: Scene, ctx: &GpuContext) -> ProbeResul
                 wrong as f64 / compared as f64 * 100.0
             }
         );
-        if best
-            .as_ref()
-            .map(|b| wrong > b.2)
-            .unwrap_or(true)
-        {
-            best = Some((dyaw, dpitch, wrong, compared, samples));
+        if best.as_ref().map(|b| wrong > b.2.0).unwrap_or(true) {
+            best = Some((dyaw, dpitch, (wrong, compared, samples)));
         }
     }
-    let (dyaw, dpitch, wrong, compared, samples) = best.expect("at least one pose");
+    let (dyaw, dpitch, (wrong, compared, samples)) = best.expect("at least one pose");
 
     // Colour frame + wrong-surface overlay at the chosen pose.
     let mut cam = base_cam;
@@ -596,11 +593,15 @@ fn stage1_painter_sort_misorders_constructed_scenes() {
     );
     let ctx = device::acquire().expect("adapter reachable");
 
-    let walls = probe_scene("interpenetrating-walls", scene_interpenetrating_walls(), &ctx);
+    let walls = probe_scene(
+        "interpenetrating-walls",
+        scene_interpenetrating_walls(),
+        &ctx,
+    );
     let lcross = probe_scene("concave-l-cross", scene_concave_l_crossing_wall(), &ctx);
     let control = probe_scene("control-disjoint-boxes", control_disjoint_boxes(), &ctx);
 
-    println!("\n=== STAGE 1 VERDICT ===");
+    println!("\n=== UI-D11 STAGE 2 VERDICT (reverse-Z depth buffer) ===");
     for r in [&walls, &lcross, &control] {
         println!(
             "[{}] chosen pose yaw={:.2} pitch={:.2}: wrong-surface px = {}/{} compared ({:.2}%)",
@@ -620,51 +621,54 @@ fn stage1_painter_sort_misorders_constructed_scenes() {
         }
     }
 
-    // Oracle validation: the disjoint-boxes control (no interpenetration, no
-    // concave/self-intersection) must show a tiny disagreement rate — the
-    // painter is CORRECT there, so only the thin silhouette band can differ.
-    // This proves the oracle agrees with the pipeline when ordering is right;
-    // the huge disagreement on the two constructed cases is then attributable
-    // to the mean-depth misorder, not to the oracle. The bands are separated
-    // with a wide margin so a platform rasterizer quirk cannot blur them:
-    // control < 2%, each failing case >= 10% and >= 10x the control rate.
+    // UI-D11 stage 2: the reverse-Z depth buffer replaced the CPU mean-depth
+    // painter sort, so the same constructed scenes that Stage 1 proved were
+    // MISORDERED (interpenetrating-walls 32.62%, concave-l-cross 23.10% on
+    // the committed tree) must now resolve to the per-pixel oracle surface:
+    // wrong-surface falls to the thin silhouette band, comparable to the
+    // disjoint-boxes control (which was always correct). Stage 1's evidence
+    // (numbers.txt + PNGs) is preserved under proof/UI-D11/stage1/.
     let control_rate = control.wrong as f64 / control.compared.max(1) as f64;
     let walls_rate = walls.wrong as f64 / walls.compared.max(1) as f64;
     let lcross_rate = lcross.wrong as f64 / lcross.compared.max(1) as f64;
     assert!(
         control_rate < 0.02,
-        "oracle sanity: disjoint boxes must be ordered correctly by the painter \
-         (< 2% of compared pixels may differ from silhouette rounding); got {:.2}% \
-         ({}/{}). If this fails the analytic oracle is broken, not the painter.",
-        control_rate * 100.0,
-        control.wrong,
-        control.compared
+        "oracle sanity: disjoint boxes remain ordered correctly (< 2% silhouette band); got {:.2}%",
+        control_rate * 100.0
     );
+    // After the fix each constructed case must render the oracle surface to
+    // within the same thin silhouette band the control already sits in — not
+    // the >= 10% wrong-surface Stage 1 measured with the painter.
     for (name, rate, wrong, compared) in [
-        ("interpenetrating-walls", walls_rate, walls.wrong, walls.compared),
-        ("concave-l-cross", lcross_rate, lcross.wrong, lcross.compared),
+        (
+            "interpenetrating-walls",
+            walls_rate,
+            walls.wrong,
+            walls.compared,
+        ),
+        (
+            "concave-l-cross",
+            lcross_rate,
+            lcross.wrong,
+            lcross.compared,
+        ),
     ] {
         assert!(
-            rate >= 0.10,
-            "constructed case {name} must misorder at least 10% of compared pixels \
-             (mean-depth defect), got {:.2}% ({}/{})",
+            rate < 0.02,
+            "constructed case {name} must now resolve to the oracle surface within the \
+             silhouette band (< 2% of compared pixels); got {:.2}% ({}/{}) — the mean-depth \
+             painter sort is gone, only a depth-correct render may disagree this little",
             rate * 100.0,
             wrong,
             compared
         );
-        assert!(
-            rate >= 10.0 * control_rate,
-            "constructed case {name} mismatch rate {:.2}% must dominate the control \
-             silhouette band {:.2}% by >= 10x",
-            rate * 100.0,
-            control_rate * 100.0
-        );
     }
 
     println!(
-        "MISORDER CONFIRMED: the mean-depth painter paints the wrong surface at {} and {} pixels \
-         on the two constructed scenes (real GpuBackend + IdPass vs analytic ray oracle); \
-         the disjoint-box control stays within its {} px silhouette band",
-        walls.wrong, lcross.wrong, control.wrong
+        "REVERSE-Z RESOLVES THE MISORDER: the same two scenes that Stage 1 proved misordered by \
+         the mean-depth painter (32.62% / 23.10% wrong-surface on the committed tree) now draw the \
+         oracle-correct surface at {} and {} wrong pixels out of {} / {} compared — inside the {} px \
+         control silhouette band",
+        walls.wrong, lcross.wrong, walls.compared, lcross.compared, control.wrong
     );
 }
