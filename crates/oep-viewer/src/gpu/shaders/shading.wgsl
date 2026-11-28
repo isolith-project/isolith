@@ -1,7 +1,7 @@
 // WGSL shading pass for the GPU viewport (wave D, cards UI-D2 + UI-D8).
 //
 // The host hands it a WORLD-space position (the vertex buffer carries world
-// coordinates now, NOT pre-projected NDC — UI-D8 moved the transform into the
+// coordinates now, NOT pre-projected NDC: UI-D8 moved the transform into the
 // vertex stage), a VIEW-SPACE normal and a BASE colour + alpha, and the vertex
 // stage applies the MVP identity from the uniform buffer:
 //
@@ -52,7 +52,7 @@ fn vs_main(in: VsIn) -> VsOut {
     // pre-D8 screen-space-linear interpolation semantics are preserved exactly.
     let clip = u.mvp * vec4<f32>(in.pos, 1.0);
     // Perspective divide, then REVERSE-Z: negate the NDC z so the near plane
-    // (NDC z = -1) maps to depth 1.0 and far (NDC z = +1) to depth 0.0 —
+    // (NDC z = -1) maps to depth 1.0 and far (NDC z = +1) to depth 0.0;
     // the reverse-Z convention the depth attachment uses (UI-D11). x/y are
     // untouched, so raster coverage is bit-for-bit the forward-Z position and
     // the CPU/GPU coverage band is unchanged; only the depth ordering flips.

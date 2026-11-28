@@ -819,8 +819,8 @@ impl GpuBackend {
         // UI-D11: per-pixel hidden-surface resolution replaces the CPU painter
         // sort. The packed face stream is [opaque set][transparent set]:
         //  - Opaque faces (vertex alpha == 255, i.e. the whole scene when the
-        //    global opacity slider is at 1.0) stay in assembly order — ordering
-        //    dropped — and the reverse-Z depth buffer resolves the nearest
+        //    global opacity slider is at 1.0) stay in assembly order, ordering
+        //    dropped, and the reverse-Z depth buffer resolves the nearest
         //    surface per pixel.
         //  - Transparent faces (alpha < 255, i.e. the whole scene below 1.0)
         //    are packed after the opaque set, sorted back-to-front at ENTITY
@@ -1507,14 +1507,15 @@ fn init_pipeline(ctx: &GpuContext, width: u32, height: u32) -> Option<GpuPipelin
     // Reverse-Z depth state shared by every pass pipeline (D32Float).
     // Reverse-Z + the shading shader's negated NDC z: near plane -> clip z
     // +1 -> depth 1.0, far plane -> clip z -1 -> depth 0.0. Clear 0.0 (far);
-    // `Greater` keeps the nearer (larger) fragment per pixel. Strict, so two
-    // coplanar/coincident faces pass ONLY on the ascent: the first-drawn (in
-    // assembly order) wins the equal-depth tie exactly as the no-depth painter
-    // did for convex scenes, keeping the tie-break order-independent.
+    // `GreaterEqual` keeps the nearer (larger) fragment per pixel, and on an
+    // exact-equal tie (coplanar coincident faces) the later-drawn fragment
+    // wins exactly as the pre-depth painter let the last draw overwrite,
+    // and identically to the id pass (which uses the same GreaterEqual), so
+    // the topmost id always equals the topmost colour fragment (I1).
     let depth = |depth_write: bool| wgpu::DepthStencilState {
         format: DEPTH_FORMAT,
         depth_write_enabled: Some(depth_write),
-        depth_compare: Some(wgpu::CompareFunction::Greater),
+        depth_compare: Some(wgpu::CompareFunction::GreaterEqual),
         stencil: Default::default(),
         bias: Default::default(),
     };

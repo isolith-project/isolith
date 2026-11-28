@@ -637,7 +637,7 @@ fn stage1_painter_sort_misorders_constructed_scenes() {
         control_rate * 100.0
     );
     // After the fix each constructed case must render the oracle surface to
-    // within the same thin silhouette band the control already sits in — not
+    // within the same thin silhouette band the control already sits in, not
     // the >= 10% wrong-surface Stage 1 measured with the painter.
     for (name, rate, wrong, compared) in [
         (
@@ -656,7 +656,7 @@ fn stage1_painter_sort_misorders_constructed_scenes() {
         assert!(
             rate < 0.02,
             "constructed case {name} must now resolve to the oracle surface within the \
-             silhouette band (< 2% of compared pixels); got {:.2}% ({}/{}) — the mean-depth \
+             silhouette band (< 2% of compared pixels); got {:.2}% ({}/{}); the mean-depth \
              painter sort is gone, only a depth-correct render may disagree this little",
             rate * 100.0,
             wrong,
@@ -667,7 +667,7 @@ fn stage1_painter_sort_misorders_constructed_scenes() {
     println!(
         "REVERSE-Z RESOLVES THE MISORDER: the same two scenes that Stage 1 proved misordered by \
          the mean-depth painter (32.62% / 23.10% wrong-surface on the committed tree) now draw the \
-         oracle-correct surface at {} and {} wrong pixels out of {} / {} compared — inside the {} px \
+         oracle-correct surface at {} and {} wrong pixels out of {} / {} compared, inside the {} px \
          control silhouette band",
         walls.wrong, lcross.wrong, walls.compared, lcross.compared, control.wrong
     );

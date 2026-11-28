@@ -4,26 +4,26 @@
 //! snapshots, that the GPU viewport draws like a studio viewport rather than
 //! a flat wireframe:
 //!
-//! 1. **Five distinct rendered states** — `Shaded` / `Edges` / `Flat` /
-//!    `Smooth` / 50%-transparent — are five snapshot PNGs under
+//! 1. **Five distinct rendered states**: `Shaded` / `Edges` / `Flat` /
+//!    `Smooth` / 50%-transparent: five snapshot PNGs under
 //!    `proof/UI-D2/`, each with its sha256; all five hashes differ.
-//! 2. **The edge pass draws exactly the boundary edge list** — the number of
+//! 2. **The edge pass draws exactly the boundary edge list**: the number of
 //!    edge line primitives the pass submits (`last_edge_primitives`) is
 //!    printed and compared to the fixture's boundary edge count (mesh
 //!    `Primitive.mesh.edges` plus the 12 box edges per box proxy).
-//! 3. **No z-fighting** — since UI-D11 the shading + lines pipelines carry a
+//! 3. **No z-fighting**: since UI-D11 the shading + lines pipelines carry a
 //!    reverse-Z D32Float depth stencil, so every face is drawn in arbitrary
 //!    order and the depth test resolves each pixel's nearest surface
 //!    deterministically (per-pixel hidden-surface resolution); the committed
 //!    snapshot is scanned for alternating-pixel pairs along shared edges and
 //!    0 are found (method documented inline).
-//! 4. **Smooth vs Flat differ only in normal-driven pixels** — a non-zero
+//! 4. **Smooth vs Flat differ only in normal-driven pixels**: a non-zero
 //!    differing-pixel count between the two renders, with an unchanged
 //!    silhouette (identical non-background masks).
-//! 5. **Transparency changes the readback alpha of the overlapping body** —
+//! 5. **Transparency changes the readback alpha of the overlapping body**:
 //!    the mean alpha of the two-body overlap region is printed before
 //!    (opaque ≈ 255) and after (50% ≈ 128), and the change is asserted.
-//! 6. **The shading panel is runtime-selectable** — kittest drives the real
+//! 6. **The shading panel is runtime-selectable**: kittest drives the real
 //!    app: clicking `Shaded`/`Edges`/`Flat`/`Smooth` and dragging the
 //!    transparency slider updates the panel's oracle, the process-wide shading
 //!    state the GPU backend renders, and the re-render (viewport hash moves).
@@ -265,7 +265,7 @@ fn edge_pass_draws_exactly_the_boundary_edge_list() {
 }
 
 /// 3. No z-fighting. The pipelines have NO depth stencil at all, so the
-///    renderer performs zero depth comparisons — the count of depth-equal
+///    renderer performs zero depth comparisons: the count of depth-equal
 ///    competing fragments is 0 by construction (there is no depth buffer to
 ///    fight over). Additionally the committed shaded snapshot is scanned for
 ///    alternating-pixel pairs along shared edges and 0 are found. Method:
@@ -281,7 +281,7 @@ fn no_z_fighting_on_the_committed_snapshot() {
     let img = gpu.frame().clone();
 
     // Structural claim: the viewport pipelines carry a reverse-Z depth
-    // stencil (Depth32Float, compare GreaterEqual) — the UI-D11 per-pixel
+    // stencil (Depth32Float, compare GreaterEqual), the UI-D11 per-pixel
     // hidden-surface resolution. The scan below is the measurable proof that
     // coplanar coincident faces never interleave on the committed snapshot
     // even though all faces are now drawn in arbitrary order (the depth test
@@ -291,7 +291,7 @@ fn no_z_fighting_on_the_committed_snapshot() {
     );
 
     // Alternation scan: count LONG period-2 colour runs (>= 4 px) that
-    // alternate between two FACE colours — the z-fight signature. The line
+    // alternate between two FACE colours: the z-fight signature. The line
     // pass (feature edges, grid, triad) uses opaque REPLACE pixels whose
     // colours (EDGE_RGB, GRID_RGB, the three axis RGBs) and the background
     // are NOT face colours; a diagonal feature edge rasterizes as a 1px
@@ -299,7 +299,7 @@ fn no_z_fighting_on_the_committed_snapshot() {
     // artifact we WANT to exclude (not a z-fight). So a run counts only while
     // BOTH alternating colours are real shaded-face colours: neither the
     // background nor any line-pass colour. With no depth buffer this count is
-    // 0 by construction (two coplanar faces never interleave) — the scan is
+    // 0 by construction (two coplanar faces never interleave); the scan is
     // the measurable re-proof on the committed snapshot.
     // Method: every horizontal and vertical scanline run is walked; a run is
     // an alternation when it strictly follows `c[i] == c[i+2] != c[i+1]` for

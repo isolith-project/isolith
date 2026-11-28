@@ -550,8 +550,8 @@ fn build_pipeline(ctx: &GpuContext) -> Option<wgpu::RenderPipeline> {
             },
             // Reverse-Z D32Float aligned with the colour pass: with the id
             // vertices carrying their NDC z (negated in the vertex stage), the
-            // id pass keeps only the nearest fragment per pixel — the same
-            // face the viewport colour pass resolved — so the topmost id
+            // id pass keeps only the nearest fragment per pixel: the same
+            // face the viewport colour pass resolved, so the topmost id
             // equals the topmost colour fragment (I1).
             depth_stencil: Some(wgpu::DepthStencilState {
                 format: super::target::DEPTH_FORMAT,
