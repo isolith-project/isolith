@@ -4188,11 +4188,12 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "step-io"
-version = "0.2.5"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "749d04bbe46d889fd83b7f6676786f2ebea0654c1e0503c242e774027c2bb893"
+checksum = "22cc66e033d7f70f04d8d7f962d2d6c001e152d04f16aa7f7ac84cf107eb4dae"
 dependencies = [
  "logos",
+ "memchr",
 ]
 
 [[package]]

@@ -10,7 +10,7 @@ repository.workspace = true
 [dependencies]
 # P4-M1-T01: wrapped OSS STEP library (pure Rust, MIT OR Apache-2.0), pinned
 # per supply-chain doctrine. Library choice: workstreams/step-interop/library-adr/step-library-adr.md.
-step-io = { version = "=0.2.5" }
+step-io = { version = "=0.3.1" }
 # The canonical native model (dependency-free). oep-step is a leaf reader that
 # maps parsed facets onto it (P4 feed for the P6 importer hub).
 oep-geo = { path = "../oep-geo" }
