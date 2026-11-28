@@ -9,6 +9,9 @@ repository.workspace = true
 
 [dependencies]
 oep-geo = { path = "../oep-geo" }
+# UI-D1 UI-GPU-BACKEND (card-mandated dependency): the shared workspace wgpu
+# (same version egui 0.37 resolves), used only by the GPU viewport backend.
+wgpu = { workspace = true }
 
 [dev-dependencies]
 serde_json = "1"

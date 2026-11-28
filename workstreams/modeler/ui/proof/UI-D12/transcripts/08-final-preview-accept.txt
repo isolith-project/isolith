@@ -1,0 +1,4 @@
+P6-M5-T02 preview viewer acceptance
+viewer: /home/r1a/isolith-main/.worktrees/ui-d12/crates/oep-viewer
+==================================================================
+PREVIEW VIEWER ACCEPTANCE PASSED: desktop app shell shows the real oep-geo bracket model; orbit camera, screen-space selection, and clip-plane culling verified on the committed golden document; proof images full + clipped committed and valid.

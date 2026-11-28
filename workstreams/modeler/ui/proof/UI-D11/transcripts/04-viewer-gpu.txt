@@ -1,0 +1,83 @@
+#### cargo test -p oep-viewer --test depth_sort_defect
+[control-disjoint-boxes] colour frame sha256 = c0a74470d413b24363d84b552194b4f2b65702522a5b1e70684c282088635822
+REVERSE-Z RESOLVES THE MISORDER: the same two scenes that Stage 1 proved misordered by the mean-depth painter (32.62% / 23.10% wrong-surface on the committed tree) now draw the oracle-correct surface at 91 and 0 wrong pixels out of 53205 / 33801 compared, inside the 0 px control silhouette band
+test stage1_painter_sort_misorders_constructed_scenes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.33s
+
+#### cargo test -p oep-app --test gpu_shading
+test shading_panel_transparency_slider_changes_runtime_alpha ... ok
+
+test result: ok. 172 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.24s
+
+#### cargo test -p oep-app --test pick_gpu
+test shift_click_accumulates_multi_select_set ... ok
+
+test result: ok. 170 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.50s
+
+#### cargo test -p oep-viewer --test render_axis_views
+running 4 tests
+clip-w formula change: row4(vp)·(view,1)  ->  row4(vp)·(world,1) = -view.z
+corner              old_w             d7_w
+              0.000000000    136.108800207
+              0.000000000    136.108800207
+              0.000000000    136.108800207
+              0.000000000    136.108800207
+Back view CPU covered-pixels after fix: 22810
+test back_view_near_corner_w_before_and_after ... ok
+Front CPU: sha256 721209ec77edb9215960b075f14e5e316af8baa5de8c5ac0da1ddcba6b35c35a  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Front-cpu-400x300.png)
+Front GPU: sha256 9921a50d90bb08738e8284e989073011411c8ab3b3df4fe821ba34f614d1a72b  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Front-gpu-400x300.png)
+Back CPU: sha256 16557c16c8aa75ce0cbe4c9f6617f61ff4aa8509a3efbfd7b0975d517c78690d  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Back-cpu-400x300.png)
+Back GPU: sha256 11e7b4f92ba4bfc17bbb3d389e421a35e0341470a4434355789afbc0d641b977  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Back-gpu-400x300.png)
+Left CPU: sha256 80468a5baf39f18c3a98602ba25b4c7527981d4379023271be319167b6f3bc00  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Left-cpu-400x300.png)
+Left GPU: sha256 72820921715100322f6a9068a636a84579eea974b6bb71159d76f7b28a4c51bf  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Left-gpu-400x300.png)
+Right CPU: sha256 5b1a1247721e1db2850d036c64b01dc17b18a48fab1024bff373d39115784794  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Right-cpu-400x300.png)
+Right GPU: sha256 e39e8a8530a6544858efb758fd3511cac24b266caa939006c1beec448bc7fcaa  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Right-gpu-400x300.png)
+Top CPU: sha256 0a951c0e679627060c4816f9f6186050bcc2c7db152ac4853626c1c9d9f28618  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Top-cpu-400x300.png)
+Top GPU: sha256 483aa9728575473f833e881c590dd154a6f613731704637c9629d79b633f5e0f  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Top-gpu-400x300.png)
+Bottom CPU: sha256 f4c78e4b052bbf7046ca40b670256cf23b0ecc74c8ac5ad2a27b395a1680277e  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Bottom-cpu-400x300.png)
+Bottom GPU: sha256 279f4345184c9ec853e5c1773dfd3dbb24c6946fe0313d5e1edc6cda4f69d12c  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Bottom-gpu-400x300.png)
+Iso CPU: sha256 adadf5c4df5bd1699c997d023048c37ef0ee4d81d73c8b72f42f1b3b84bb63e0  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Iso-cpu-400x300.png)
+Iso GPU: sha256 e887bfd9d6298f08940843ec466f6fe9b5fb9b115456e6b8c28d9046a2cc6a3a  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-Iso-gpu-400x300.png)
+all-culled CPU: sha256 0f2e19116639692e6d20e9877c89d5033ddfb7e2fd6127173b9efaf333ec043f  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-all-culled-cpu-400x300.png)
+all-culled GPU: sha256 5ca67f6b3d8621323818f590ba38b2e2f07454fb159080166d452da1b91a4fbe  (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer/../../workstreams/modeler/ui/proof/UI-D7/ui-d7-all-culled-gpu-400x300.png)
+test proof_images_for_all_standard_views ... ok
+all-culled scene: CPU faces=231 baseline=231; GPU faces=246 baseline=246; no panic
+view        gpu_px     cpu_px   drift%
+test all_culled_scene_renders_empty_frame_without_panic_on_both_backends ... ok
+Front        22487      22827   0.0149
+Back         22520      22810   0.0127
+Left          5576       5745   0.0294
+Right         5635       5471   0.0291
+Top           7853       7817   0.0046
+Bottom        7834       7813   0.0027
+Iso          22161      21628   0.0241
+test all_standard_views_render_on_both_backends ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.97s
+
+#### cargo test -p oep-viewer --test gpu_backend
+test gpu_off_falls_back_to_cpu_and_matches_precard_golden ... ok
+GPU demo(800x600): covered=45866 hash=12788952667469233851
+CPU demo(800x600): covered=45357 hash=11255545883467950329
+GPU bracket(800x600): covered=53534 hash=11438149808522214191
+CPU bracket(800x600): covered=52783 hash=13204220467755026013
+test gpu_geometry_coverage_within_5pct_of_cpu ... ok
+test gpu_renders_same_view_byte_identically ... ok
+GPU bracket(800x600): non-background pixels = 76992
+test bracket_renders_non_empty_gpu_frame ... ok
+GPU demo(800x600): non-background pixels = 85397
+test demo_renders_non_empty_gpu_frame ... ok
+test select_backend_returns_gpu_when_adapter_exists ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.17s
+
+#### cargo test -p oep-viewer --test resident_scene
+test frustum_culling_submits_a_culled_subset ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.02s
+
+#### xvfb smoke
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+frames=8 smoke ok

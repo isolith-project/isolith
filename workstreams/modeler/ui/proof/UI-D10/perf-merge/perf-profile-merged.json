@@ -1,0 +1,71 @@
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "device_type": "IntegratedGpu",
+    "driver": "NVIDIA",
+    "driver_info": "580.178.04",
+    "name": "NVIDIA GB10"
+  },
+  "assemble_subs_mean_ms": {
+    "assemble.expand": 0.0,
+    "assemble.normals": 0.0,
+    "assemble.other": 0.0,
+    "assemble.positions": 0.0,
+    "assemble.project+cull": 0.0,
+    "assemble.sort": 0.0
+  },
+  "benchmark": "ui-d9-per-stage-frame-split",
+  "card": "UI-D9",
+  "card_stage_mean_ms": {
+    "assemble": 0.0,
+    "readback+w": 1.2994,
+    "submit": 0.061,
+    "vertex-prep": 0.0
+  },
+  "card_stage_share_pct": {
+    "assemble": 0.0,
+    "readback+w": 93.57,
+    "submit": 4.39,
+    "vertex-prep": 0.0
+  },
+  "card_stage_sum_ms": 1.3603,
+  "clean_mean_frame_ms": 6.340496150000001,
+  "clean_p95_frame_ms": 6.449675999999999,
+  "cpu_demo_frame_hash": 12597229237775278722,
+  "cpu_demo_golden_hash": 12597229237775278722,
+  "cpu_determinism_unchanged": true,
+  "date_utc": "2026-11-26T07:48:44Z",
+  "frame_total_mean_ms": 1.3886,
+  "gpu_echo_hash_set": {
+    "h1": 9287941873092625150,
+    "h2": 9287941873092625150,
+    "identical": true
+  },
+  "gpu_echo_hash_unset": {
+    "h1": 9287941873092625150,
+    "h2": 9287941873092625150,
+    "identical": true
+  },
+  "gpu_frame_hash_identical_unset_vs_set": true,
+  "height": 1000,
+  "host": "u1",
+  "instrumented_mean_frame_ms": 6.354687725000002,
+  "instrumented_p95_frame_ms": 6.487068000000001,
+  "measured_frames": 120,
+  "median_frame": {
+    "frame": 31,
+    "total_ms": 1.393
+  },
+  "median_frame_line": "ISOLITH_PERF_STAGES frame=31 total=1.393ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.302ms hash=4.952ms",
+  "note_stage_coverage": "the four seam stages (assemble + vertex-prep + submit + readback+w) partition the interactive frame; assemble.* are the internal sub-split of the CPU re-derivation and partition `assemble` exactly (incl. the unmetered residual assemble.other). frame_time is captured in render_frame BEFORE the final frame_hash, so `hash` is post-frame oracle work reported separately (seam_end_to_end = card_sum + hash). 'readback+w' includes the synchronous device.poll that waits for GPU raster + copy completion (the seam is synchronous), so it owns the GPU exec time. The gap from the stage sum to the clean p95 = the small untimed slivers plus frame-to-frame variance between the batched (unset/set) heavy legs.",
+  "perf_unavailable_reason": "kernel.perf_event_paranoid=4 denies unprivileged sampling (perf record: 'Access to performance monitoring and observability operations is limited'); no passwordless sudo, no setcap on perf",
+  "post_frame_hash_mean_ms": 4.9525,
+  "scene_triangles": 1002528,
+  "seam_end_to_end_mean_ms": 6.3129,
+  "stage_method": "env-gated wall-clock stage timers (ISOLITH_PERF_STAGES=1) in crates/oep-viewer/src/gpu/mod.rs; perf record blocked on this host",
+  "stage_sum_vs_clean_p95_gap_ms": 5.0894,
+  "stage_sum_vs_mean_total_gap_ms": 0.0283,
+  "untimed_slivers_ms": 0.0283,
+  "warmup_frames": 20,
+  "width": 1600
+}

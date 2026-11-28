@@ -1,0 +1,250 @@
+== UI-D9 per-stage frame profile on promaxgb10-83f1 ==
+started: 2026-11-26T07:48:39Z
+
+== leg 1: perf_budget fast smoke (ISOLITH_PERF_STAGES unset) ==
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/perf_budget.rs (target/debug/deps/perf_budget-9a090529fae1d8d8)
+
+running 2 tests
+test perf_budget_1m_gpu_heavy ... ignored
+perf scene: 1002528 triangles (target >= 1,000,000), 502681 vertices, bounds Some((Vec3 { x: -1.0, y: -1.0, z: -0.19999893009662628 }, Vec3 { x: 1.0, y: 1.0, z: 0.19999893009662628 }))
+cpu determinism: demo frame_hash = 12597229237775278722  (committed golden 12597229237775278722, equal = true)
+gpu adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+gpu structural echo: frame_hash 9287941873092625150 -> 9287941873092625150, identical = true
+test perf_budget_fast_smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+
+== leg 2: perf_budget fast smoke (ISOLITH_PERF_STAGES=1) ==
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/perf_budget.rs (target/debug/deps/perf_budget-9a090529fae1d8d8)
+
+running 2 tests
+test perf_budget_1m_gpu_heavy ... ignored
+perf scene: 1002528 triangles (target >= 1,000,000), 502681 vertices, bounds Some((Vec3 { x: -1.0, y: -1.0, z: -0.19999893009662628 }, Vec3 { x: 1.0, y: 1.0, z: 0.19999893009662628 }))
+cpu determinism: demo frame_hash = 12597229237775278722  (committed golden 12597229237775278722, equal = true)
+gpu adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+ISOLITH_PERF_STAGES frame=1 total=6.757ms assemble.normals=0.009ms assemble.project+cull=0.007ms assemble.sort=0.001ms assemble.expand=0.021ms assemble=0.083ms assemble.other=0.045ms vertex-prep=0.089ms submit=0.432ms readback+w=6.084ms hash=5.228ms
+ISOLITH_PERF_STAGES frame=2 total=0.948ms assemble=0.000ms vertex-prep=0.000ms submit=0.273ms readback+w=0.449ms hash=5.346ms
+ISOLITH_PERF_STAGES frame=3 total=0.717ms assemble=0.000ms vertex-prep=0.000ms submit=0.195ms readback+w=0.438ms hash=5.337ms
+gpu structural echo: frame_hash 9287941873092625150 -> 9287941873092625150, identical = true
+test perf_budget_fast_smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.53s
+
+
+== leg 3: heavy 1M 1600x1000, unset (release; clean p95) ==
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/perf_budget.rs (target/release/deps/perf_budget-2d010fa3eeca7182)
+
+running 1 test
+report written: /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D9/perf.json
+UI-D5 perf: 1002528 triangles @ 1600x1000 (real wgpu adapter NVIDIA GB10)
+adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+frame ms: min=6.030 mean=6.340 p50=6.351 p95=6.450 p99=7.027 max=7.067
+fps: min=141.5 mean=157.7 over 120 measured frames (after 20 warm-up)
+cpu determinism: demo frame_hash = 12597229237775278722, committed golden = 12597229237775278722, match = true
+BUDGET: p95=6.450 ms vs committed threshold 16.6 ms -> THRESHOLD MET
+test perf_budget_1m_gpu_heavy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 1.74s
+
+heavy-unset exit=0 (non-zero = the committed 16.6 ms bar is still missed at this scene size; bar never lowered)
+
+== leg 4: heavy 1M 1600x1000, ISOLITH_PERF_STAGES=1 (release) ==
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/perf_budget.rs (target/release/deps/perf_budget-2d010fa3eeca7182)
+
+running 1 test
+ISOLITH_PERF_STAGES frame=1 total=244.650ms assemble.positions=2.713ms assemble.normals=5.637ms assemble.project+cull=60.155ms assemble.sort=42.871ms assemble.expand=111.338ms assemble=224.529ms assemble.other=1.815ms vertex-prep=13.050ms submit=0.158ms readback+w=6.887ms hash=0.950ms
+ISOLITH_PERF_STAGES frame=2 total=154.333ms assemble.positions=0.360ms assemble.normals=3.399ms assemble.project+cull=19.469ms assemble.sort=39.174ms assemble.expand=84.330ms assemble=146.740ms assemble.other=0.009ms vertex-prep=4.972ms submit=0.089ms readback+w=2.518ms hash=4.940ms
+ISOLITH_PERF_STAGES frame=3 total=1.489ms assemble=0.000ms vertex-prep=0.000ms submit=0.087ms readback+w=1.364ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=4 total=1.259ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.159ms hash=4.961ms
+ISOLITH_PERF_STAGES frame=5 total=1.286ms assemble=0.000ms vertex-prep=0.000ms submit=0.019ms readback+w=1.260ms hash=4.955ms
+ISOLITH_PERF_STAGES frame=6 total=1.386ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.283ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=7 total=1.343ms assemble=0.000ms vertex-prep=0.000ms submit=0.065ms readback+w=1.248ms hash=5.001ms
+ISOLITH_PERF_STAGES frame=8 total=1.385ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.289ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=9 total=1.384ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.284ms hash=4.971ms
+ISOLITH_PERF_STAGES frame=10 total=1.257ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.165ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=11 total=1.349ms assemble=0.000ms vertex-prep=0.000ms submit=0.024ms readback+w=1.316ms hash=4.975ms
+ISOLITH_PERF_STAGES frame=12 total=1.410ms assemble=0.000ms vertex-prep=0.000ms submit=0.070ms readback+w=1.308ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=13 total=1.373ms assemble=0.000ms vertex-prep=0.000ms submit=0.082ms readback+w=1.258ms hash=4.954ms
+ISOLITH_PERF_STAGES frame=14 total=1.376ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.277ms hash=4.962ms
+ISOLITH_PERF_STAGES frame=15 total=2.055ms assemble=0.000ms vertex-prep=0.000ms submit=0.646ms readback+w=1.375ms hash=5.038ms
+ISOLITH_PERF_STAGES frame=16 total=1.360ms assemble=0.000ms vertex-prep=0.000ms submit=0.075ms readback+w=1.248ms hash=4.942ms
+ISOLITH_PERF_STAGES frame=17 total=1.359ms assemble=0.000ms vertex-prep=0.000ms submit=0.036ms readback+w=1.308ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=18 total=1.452ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.349ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=19 total=1.465ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.365ms hash=4.953ms
+ISOLITH_PERF_STAGES frame=20 total=1.410ms assemble=0.000ms vertex-prep=0.000ms submit=0.065ms readback+w=1.314ms hash=4.955ms
+ISOLITH_PERF_STAGES frame=21 total=1.422ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.324ms hash=4.943ms
+ISOLITH_PERF_STAGES frame=22 total=1.312ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.219ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=23 total=1.408ms assemble=0.000ms vertex-prep=0.000ms submit=0.032ms readback+w=1.368ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=24 total=1.381ms assemble=0.000ms vertex-prep=0.000ms submit=0.069ms readback+w=1.279ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=25 total=1.430ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.336ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=26 total=1.449ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.356ms hash=4.958ms
+ISOLITH_PERF_STAGES frame=27 total=1.430ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.328ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=28 total=1.275ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.184ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=29 total=1.368ms assemble=0.000ms vertex-prep=0.000ms submit=0.022ms readback+w=1.338ms hash=4.945ms
+ISOLITH_PERF_STAGES frame=30 total=1.400ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.307ms hash=4.981ms
+ISOLITH_PERF_STAGES frame=31 total=1.393ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.302ms hash=4.952ms
+ISOLITH_PERF_STAGES frame=32 total=1.413ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.322ms hash=4.959ms
+ISOLITH_PERF_STAGES frame=33 total=1.416ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.320ms hash=4.954ms
+ISOLITH_PERF_STAGES frame=34 total=1.309ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.216ms hash=4.972ms
+ISOLITH_PERF_STAGES frame=35 total=1.362ms assemble=0.000ms vertex-prep=0.000ms submit=0.022ms readback+w=1.333ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=36 total=1.431ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.333ms hash=4.959ms
+ISOLITH_PERF_STAGES frame=37 total=1.314ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.222ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=38 total=1.220ms assemble=0.000ms vertex-prep=0.000ms submit=0.021ms readback+w=1.191ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=39 total=1.328ms assemble=0.000ms vertex-prep=0.000ms submit=0.021ms readback+w=1.299ms hash=4.953ms
+ISOLITH_PERF_STAGES frame=40 total=1.399ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.308ms hash=4.956ms
+ISOLITH_PERF_STAGES frame=41 total=1.401ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.308ms hash=4.980ms
+ISOLITH_PERF_STAGES frame=42 total=1.408ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.315ms hash=4.965ms
+ISOLITH_PERF_STAGES frame=43 total=1.379ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.281ms hash=4.971ms
+ISOLITH_PERF_STAGES frame=44 total=1.502ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.412ms hash=4.965ms
+ISOLITH_PERF_STAGES frame=45 total=1.513ms assemble=0.000ms vertex-prep=0.000ms submit=0.060ms readback+w=1.426ms hash=4.959ms
+ISOLITH_PERF_STAGES frame=46 total=1.385ms assemble=0.000ms vertex-prep=0.000ms submit=0.059ms readback+w=1.297ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=47 total=1.383ms assemble=0.000ms vertex-prep=0.000ms submit=0.061ms readback+w=1.293ms hash=4.952ms
+ISOLITH_PERF_STAGES frame=48 total=1.700ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.606ms hash=4.939ms
+ISOLITH_PERF_STAGES frame=49 total=1.443ms assemble=0.000ms vertex-prep=0.000ms submit=0.072ms readback+w=1.337ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=50 total=1.492ms assemble=0.000ms vertex-prep=0.000ms submit=0.065ms readback+w=1.396ms hash=4.941ms
+ISOLITH_PERF_STAGES frame=51 total=1.452ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.346ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=52 total=1.429ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.328ms hash=4.955ms
+ISOLITH_PERF_STAGES frame=53 total=1.374ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.280ms hash=4.940ms
+ISOLITH_PERF_STAGES frame=54 total=1.351ms assemble=0.000ms vertex-prep=0.000ms submit=0.065ms readback+w=1.254ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=55 total=1.448ms assemble=0.000ms vertex-prep=0.000ms submit=0.081ms readback+w=1.333ms hash=5.103ms
+ISOLITH_PERF_STAGES frame=56 total=1.491ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.394ms hash=4.955ms
+ISOLITH_PERF_STAGES frame=57 total=1.435ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.335ms hash=4.964ms
+ISOLITH_PERF_STAGES frame=58 total=1.429ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.334ms hash=4.974ms
+ISOLITH_PERF_STAGES frame=59 total=1.343ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.250ms hash=4.953ms
+ISOLITH_PERF_STAGES frame=60 total=1.428ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.336ms hash=4.939ms
+ISOLITH_PERF_STAGES frame=61 total=1.422ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.323ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=62 total=1.428ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.334ms hash=4.955ms
+ISOLITH_PERF_STAGES frame=63 total=1.464ms assemble=0.000ms vertex-prep=0.000ms submit=0.062ms readback+w=1.371ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=64 total=1.658ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.564ms hash=4.958ms
+ISOLITH_PERF_STAGES frame=65 total=1.407ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.313ms hash=4.943ms
+ISOLITH_PERF_STAGES frame=66 total=1.288ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.194ms hash=4.953ms
+ISOLITH_PERF_STAGES frame=67 total=1.347ms assemble=0.000ms vertex-prep=0.000ms submit=0.023ms readback+w=1.316ms hash=4.987ms
+ISOLITH_PERF_STAGES frame=68 total=1.448ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.348ms hash=4.945ms
+ISOLITH_PERF_STAGES frame=69 total=1.701ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.603ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=70 total=1.701ms assemble=0.000ms vertex-prep=0.000ms submit=0.069ms readback+w=1.600ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=71 total=1.449ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.350ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=72 total=1.312ms assemble=0.000ms vertex-prep=0.000ms submit=0.065ms readback+w=1.214ms hash=4.938ms
+ISOLITH_PERF_STAGES frame=73 total=1.507ms assemble=0.000ms vertex-prep=0.000ms submit=0.029ms readback+w=1.468ms hash=4.954ms
+ISOLITH_PERF_STAGES frame=74 total=1.371ms assemble=0.000ms vertex-prep=0.000ms submit=0.023ms readback+w=1.340ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=75 total=1.381ms assemble=0.000ms vertex-prep=0.000ms submit=0.082ms readback+w=1.266ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=76 total=1.466ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.367ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=77 total=1.381ms assemble=0.000ms vertex-prep=0.000ms submit=0.065ms readback+w=1.284ms hash=4.940ms
+ISOLITH_PERF_STAGES frame=78 total=1.347ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.251ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=79 total=1.301ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.204ms hash=4.945ms
+ISOLITH_PERF_STAGES frame=80 total=1.351ms assemble=0.000ms vertex-prep=0.000ms submit=0.023ms readback+w=1.319ms hash=4.953ms
+ISOLITH_PERF_STAGES frame=81 total=1.525ms assemble=0.000ms vertex-prep=0.000ms submit=0.086ms readback+w=1.398ms hash=4.960ms
+ISOLITH_PERF_STAGES frame=82 total=1.324ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.224ms hash=4.954ms
+ISOLITH_PERF_STAGES frame=83 total=1.408ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.305ms hash=4.942ms
+ISOLITH_PERF_STAGES frame=84 total=1.341ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.242ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=85 total=1.326ms assemble=0.000ms vertex-prep=0.000ms submit=0.072ms readback+w=1.218ms hash=4.952ms
+ISOLITH_PERF_STAGES frame=86 total=1.360ms assemble=0.000ms vertex-prep=0.000ms submit=0.022ms readback+w=1.328ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=87 total=1.400ms assemble=0.000ms vertex-prep=0.000ms submit=0.092ms readback+w=1.269ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=88 total=1.503ms assemble=0.000ms vertex-prep=0.000ms submit=0.073ms readback+w=1.393ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=89 total=1.459ms assemble=0.000ms vertex-prep=0.000ms submit=0.074ms readback+w=1.351ms hash=4.945ms
+ISOLITH_PERF_STAGES frame=90 total=1.442ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.345ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=91 total=1.356ms assemble=0.000ms vertex-prep=0.000ms submit=0.069ms readback+w=1.256ms hash=4.937ms
+ISOLITH_PERF_STAGES frame=92 total=1.412ms assemble=0.000ms vertex-prep=0.000ms submit=0.025ms readback+w=1.377ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=93 total=1.435ms assemble=0.000ms vertex-prep=0.000ms submit=0.070ms readback+w=1.331ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=94 total=1.338ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.243ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=95 total=1.469ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.368ms hash=4.960ms
+ISOLITH_PERF_STAGES frame=96 total=1.294ms assemble=0.000ms vertex-prep=0.000ms submit=0.064ms readback+w=1.199ms hash=4.964ms
+ISOLITH_PERF_STAGES frame=97 total=1.380ms assemble=0.000ms vertex-prep=0.000ms submit=0.024ms readback+w=1.336ms hash=5.026ms
+ISOLITH_PERF_STAGES frame=98 total=1.452ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.348ms hash=4.964ms
+ISOLITH_PERF_STAGES frame=99 total=1.442ms assemble=0.000ms vertex-prep=0.000ms submit=0.073ms readback+w=1.333ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=100 total=1.419ms assemble=0.000ms vertex-prep=0.000ms submit=0.069ms readback+w=1.317ms hash=4.960ms
+ISOLITH_PERF_STAGES frame=101 total=1.393ms assemble=0.000ms vertex-prep=0.000ms submit=0.070ms readback+w=1.290ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=102 total=1.374ms assemble=0.000ms vertex-prep=0.000ms submit=0.073ms readback+w=1.267ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=103 total=1.269ms assemble=0.000ms vertex-prep=0.000ms submit=0.032ms readback+w=1.225ms hash=4.935ms
+ISOLITH_PERF_STAGES frame=104 total=1.426ms assemble=0.000ms vertex-prep=0.000ms submit=0.025ms readback+w=1.391ms hash=4.953ms
+ISOLITH_PERF_STAGES frame=105 total=1.455ms assemble=0.000ms vertex-prep=0.000ms submit=0.082ms readback+w=1.333ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=106 total=1.354ms assemble=0.000ms vertex-prep=0.000ms submit=0.075ms readback+w=1.244ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=107 total=1.469ms assemble=0.000ms vertex-prep=0.000ms submit=0.082ms readback+w=1.352ms hash=4.934ms
+ISOLITH_PERF_STAGES frame=108 total=1.351ms assemble=0.000ms vertex-prep=0.000ms submit=0.078ms readback+w=1.235ms hash=4.945ms
+ISOLITH_PERF_STAGES frame=109 total=1.336ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.231ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=110 total=1.359ms assemble=0.000ms vertex-prep=0.000ms submit=0.072ms readback+w=1.253ms hash=4.957ms
+ISOLITH_PERF_STAGES frame=111 total=1.374ms assemble=0.000ms vertex-prep=0.000ms submit=0.073ms readback+w=1.268ms hash=4.942ms
+ISOLITH_PERF_STAGES frame=112 total=1.346ms assemble=0.000ms vertex-prep=0.000ms submit=0.070ms readback+w=1.242ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=113 total=1.415ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.311ms hash=4.951ms
+ISOLITH_PERF_STAGES frame=114 total=1.424ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.325ms hash=4.940ms
+ISOLITH_PERF_STAGES frame=115 total=1.341ms assemble=0.000ms vertex-prep=0.000ms submit=0.070ms readback+w=1.238ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=116 total=1.322ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.224ms hash=4.955ms
+ISOLITH_PERF_STAGES frame=117 total=1.414ms assemble=0.000ms vertex-prep=0.000ms submit=0.074ms readback+w=1.307ms hash=4.942ms
+ISOLITH_PERF_STAGES frame=118 total=1.393ms assemble=0.000ms vertex-prep=0.000ms submit=0.076ms readback+w=1.277ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=119 total=1.325ms assemble=0.000ms vertex-prep=0.000ms submit=0.069ms readback+w=1.223ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=120 total=1.429ms assemble=0.000ms vertex-prep=0.000ms submit=0.069ms readback+w=1.329ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=121 total=1.334ms assemble=0.000ms vertex-prep=0.000ms submit=0.068ms readback+w=1.231ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=122 total=1.315ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.218ms hash=4.963ms
+ISOLITH_PERF_STAGES frame=123 total=1.321ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.224ms hash=4.939ms
+ISOLITH_PERF_STAGES frame=124 total=1.181ms assemble=0.000ms vertex-prep=0.000ms submit=0.027ms readback+w=1.144ms hash=4.974ms
+ISOLITH_PERF_STAGES frame=125 total=1.271ms assemble=0.000ms vertex-prep=0.000ms submit=0.023ms readback+w=1.240ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=126 total=1.430ms assemble=0.000ms vertex-prep=0.000ms submit=0.073ms readback+w=1.322ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=127 total=1.359ms assemble=0.000ms vertex-prep=0.000ms submit=0.082ms readback+w=1.242ms hash=4.944ms
+ISOLITH_PERF_STAGES frame=128 total=1.345ms assemble=0.000ms vertex-prep=0.000ms submit=0.070ms readback+w=1.239ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=129 total=1.376ms assemble=0.000ms vertex-prep=0.000ms submit=0.067ms readback+w=1.277ms hash=4.954ms
+ISOLITH_PERF_STAGES frame=130 total=1.241ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.143ms hash=4.943ms
+ISOLITH_PERF_STAGES frame=131 total=1.157ms assemble=0.000ms vertex-prep=0.000ms submit=0.027ms readback+w=1.120ms hash=4.937ms
+ISOLITH_PERF_STAGES frame=132 total=1.095ms assemble=0.000ms vertex-prep=0.000ms submit=0.021ms readback+w=1.067ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=133 total=1.235ms assemble=0.000ms vertex-prep=0.000ms submit=0.020ms readback+w=1.208ms hash=4.949ms
+ISOLITH_PERF_STAGES frame=134 total=1.315ms assemble=0.000ms vertex-prep=0.000ms submit=0.023ms readback+w=1.283ms hash=4.946ms
+ISOLITH_PERF_STAGES frame=135 total=1.406ms assemble=0.000ms vertex-prep=0.000ms submit=0.078ms readback+w=1.291ms hash=4.942ms
+ISOLITH_PERF_STAGES frame=136 total=1.470ms assemble=0.000ms vertex-prep=0.000ms submit=0.074ms readback+w=1.359ms hash=4.948ms
+ISOLITH_PERF_STAGES frame=137 total=1.381ms assemble=0.000ms vertex-prep=0.000ms submit=0.073ms readback+w=1.274ms hash=4.950ms
+ISOLITH_PERF_STAGES frame=138 total=1.349ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.251ms hash=4.939ms
+ISOLITH_PERF_STAGES frame=139 total=1.499ms assemble=0.000ms vertex-prep=0.000ms submit=0.078ms readback+w=1.391ms hash=4.947ms
+ISOLITH_PERF_STAGES frame=140 total=1.294ms assemble=0.000ms vertex-prep=0.000ms submit=0.066ms readback+w=1.196ms hash=4.959ms
+ISOLITH_PERF_STAGES frame=141 total=1.215ms assemble=0.000ms vertex-prep=0.000ms submit=0.071ms readback+w=1.113ms hash=4.942ms
+ISOLITH_PERF_STAGES frame=142 total=1.144ms assemble=0.000ms vertex-prep=0.000ms submit=0.024ms readback+w=1.111ms hash=4.942ms
+report written: /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D9/perf-set.json
+UI-D5 perf: 1002528 triangles @ 1600x1000 (real wgpu adapter NVIDIA GB10)
+adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+frame ms: min=6.051 mean=6.355 p50=6.360 p95=6.487 p99=6.662 max=6.666
+fps: min=150.0 mean=157.4 over 120 measured frames (after 20 warm-up)
+cpu determinism: demo frame_hash = 12597229237775278722, committed golden = 12597229237775278722, match = true
+BUDGET: p95=6.487 ms vs committed threshold 16.6 ms -> THRESHOLD MET
+test perf_budget_1m_gpu_heavy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 1.73s
+
+heavy-set exit=0 (non-zero expected: bar missed; stage numbers below)
+
+== leg 5: aggregate profile.json ==
+profile written: /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D9/profile.json
+
+per-stage frame cost, 1,002,528 triangles @ 1600x1000, NVIDIA GB10
+  measured frames: 120  (mean total 1.4 ms)
+  stage                        mean ms   share
+  assemble                        0.00    0.0%
+  vertex-prep                     0.00    0.0%
+  submit                          0.06    4.4%
+  readback+w                      1.30   93.6%
+    assemble.positions            0.00
+    assemble.normals              0.00
+    assemble.project+cull         0.00
+    assemble.sort                 0.00
+    assemble.expand               0.00
+    assemble.other                0.00
+
+  card-stage sum       : 1.36 ms
+    + post-frame hash  : 4.95 ms
+    = end-to-end       : 6.31 ms
+  untimed slivers      : 0.03 ms
+  clean p95 (leg 3)    : 6.45 ms
+  instrumented p95     : 6.49 ms
+  gap sum->clean p95   : 5.09 ms
+
+  median measured frame line:
+    ISOLITH_PERF_STAGES frame=31 total=1.393ms assemble=0.000ms vertex-prep=0.000ms submit=0.063ms readback+w=1.302ms hash=4.952ms
+
+  cpu determinism      : demo frame_hash 12597229237775278722 == golden 12597229237775278722 (match=True)
+  gpu echo hash        : unset {'h1': 9287941873092625150, 'h2': 9287941873092625150, 'identical': True} | set {'h1': 9287941873092625150, 'h2': 9287941873092625150, 'identical': True}  identical-unset-vs-set=True
+
+======================================================================
+UI-D9 per-stage frame profile:
+  report : /home/r1a/isolith-main/.worktrees/ui-d10/workstreams/modeler/ui/proof/UI-D9/profile.json
+  clean p95 : 6.449675999999999 ms
+======================================================================

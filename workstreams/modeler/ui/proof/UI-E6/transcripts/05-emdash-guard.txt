@@ -1,0 +1,7 @@
+em-dash / en-dash scan over this card's Rust files (U+2014 = em dash, U+2013 = en dash):
+  crates/oep-app/src/settings.rs em=0 en=0
+  crates/oep-app/src/panels/nav_cube.rs em=0 en=0
+  crates/oep-app/src/panels/nav.rs em=0 en=0
+  crates/oep-app/src/panels/mod.rs em=0 en=0
+  crates/oep-app/tests/nav_cube.rs em=0 en=0
+  crates/oep-app/tests/nav.rs em=0 en=0

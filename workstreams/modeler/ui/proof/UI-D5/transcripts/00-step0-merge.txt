@@ -1,0 +1,10 @@
+# UI-D5 STEP 0: git fetch github && git merge github/wave/ui-d
+# branch before: ui/d5-perf at 43572a8 (the pushed card tip; orchestrator reset
+#   the earlier local diagnostic merge ea67904 and its uncommitted re-measure)
+# result: fast-forwarded to the wave head ->
+ba7e3bc merge: UI-D10 resident-scene onto wave/ui-d (preserve-both merge with UI-D9)
+# the merge was a fast-forward (43572a8..ba7e3bc), 60 files changed, bringing
+# UI-D8 (vec4 pipeline), UI-D9 (perf profile ADR) and UI-D10 (GPU-resident
+# scene: per-primitive world-AABB cull, dirty-only re-upload) onto this branch.
+# working tree after the merge:
+#   (clean; this run then re-generated perf.json + the three transcripts)

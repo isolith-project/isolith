@@ -1,0 +1,9 @@
+STEP 0: git fetch github && git merge github/wave/ui-f
+(ran from the ui-f4 worktree)
+
+Updating 6275787..be379fc
+Fast-forward
+
+The merge brought wave F's committed sheets, views and annotation (F1 sheet.rs,
+F2 views.rs, F3 annotate.rs, the F1-F3 proofs, and the wave-E assembly lane).
+Working tree clean after merge; work began from be379fc (the UI-F3 merge head).

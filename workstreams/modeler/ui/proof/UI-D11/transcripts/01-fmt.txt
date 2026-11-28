@@ -1,0 +1,4 @@
+$ cargo fmt --check
+(no diff output; exit 0)
+
+rc=0

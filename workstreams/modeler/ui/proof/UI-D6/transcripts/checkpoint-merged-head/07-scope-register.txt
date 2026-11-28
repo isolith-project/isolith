@@ -1,0 +1,178 @@
+{
+ "schema_version": 2,
+ "task": "FEATURE-BASELINE scope register (t_a686d2b9) + practitioner input contract (t_5b00868e)",
+ "register": "docs/scope-register.json",
+ "exit": 0,
+ "rows": [
+  {
+   "id": "2d-drafting",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "configurations-design-tables",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "mass-properties",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "interference-clash",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "exploded-views",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "sheet-metal",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "weldments",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "mold-tooling",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "routing",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "electrical-harness",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "composites",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "cam",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "fea",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "class-a-surfacing",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  }
+ ],
+ "practitioner_rows": [
+  {
+   "id": "input-command-search",
+   "status": "building",
+   "evidence_kind": "test",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-right-click-wheel",
+   "status": "building",
+   "evidence_kind": "test",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-spacebar-accept",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-snap-inference",
+   "status": "building",
+   "evidence_kind": "test",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-escape-semantics",
+   "status": "building",
+   "evidence_kind": "test",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-cut-region",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-datum-plane-legibility",
+   "status": "building",
+   "evidence_kind": "test",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-toolbar-customisation",
+   "status": "planned",
+   "evidence_kind": "decision",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "id": "input-undo-redo-parity",
+   "status": "building",
+   "evidence_kind": "test",
+   "ok": true,
+   "detail": "ok"
+  }
+ ],
+ "summary": {
+  "rows": 14,
+  "practitioner_rows": 9,
+  "pass": 23,
+  "fail": 0,
+  "failures": []
+ }
+}

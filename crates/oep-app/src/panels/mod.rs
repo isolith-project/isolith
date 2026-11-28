@@ -19,11 +19,33 @@ pub mod status;
 pub mod tree;
 pub mod viewport;
 
+// Wave-E (UI-E1 UI-ASSY-TREE): the assembly tree panel, hosted as the nested
+// lower portion of the model-tree column (see `config::ShellRegions::assembly`).
+// Like viewport.rs it will `#[path]`-include the E2-E4 assembly sub-panels
+// (mates, diagnostics, explode) as those cards land.
+pub mod assy_tree;
+
+// UI-E6 UI-NAV-CUBE: the 3D orientation cube panel (registered here per the
+// card; driven by one `nav_cube::update` call at the end of `nav::update`, so
+// nav.rs is the registration call site and viewport.rs stays untouched).
+pub mod nav_cube;
+
+// Wave-F (UI-F1 UI-SHEET): the drafting panel (sheet tree + sheet
+// properties). Like assy_tree.rs it will `#[path]`-include the F2-F4 drawing
+// sub-panels (views, annotate, export) as those cards land.
+pub mod sheet;
+
+// The settings surface (UI-E6): `src/settings.rs`, reached by the panels as
+// `panels::settings`. Registered in this module so no sibling file (app.rs,
+// main.rs) has to change to host the settings surface.
+#[path = "../settings.rs"]
+pub mod settings;
+
 use eframe::egui;
 
 use oep_ui_theme::{Mode, Palette};
 
-/// One of the five named shell regions, as the shell-contrast treatment knows
+/// One of the named shell regions, as the shell-contrast treatment knows
 /// them (UI-A9 UI-SHELL-CONTRAST).
 ///
 /// `app.rs` owns the region rects ([`crate::config::ShellLayout::regions`])
@@ -42,17 +64,26 @@ pub enum RegionKind {
     StatusBar,
     /// Top strip: the command palette host.
     PaletteHost,
+    /// Wave-E (UI-E1): the assembly tree, nested in the model-tree column's
+    /// lower portion. Same raised panel treatment as every region.
+    Assembly,
+    /// Wave-F (UI-F1): the drafting region (sheet tree + sheet properties),
+    /// nested in the properties column's lower portion. Same raised panel
+    /// treatment as every region.
+    Drafting,
 }
 
 impl RegionKind {
     /// Every region, for tests and any whole-shell iteration.
     #[cfg(test)]
-    pub const ALL: [RegionKind; 5] = [
+    pub const ALL: [RegionKind; 7] = [
         RegionKind::PaletteHost,
         RegionKind::ModelTree,
         RegionKind::Viewport,
         RegionKind::Properties,
         RegionKind::StatusBar,
+        RegionKind::Assembly,
+        RegionKind::Drafting,
     ];
 }
 

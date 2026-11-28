@@ -1,0 +1,1 @@
+perf-profile.sh exit=0

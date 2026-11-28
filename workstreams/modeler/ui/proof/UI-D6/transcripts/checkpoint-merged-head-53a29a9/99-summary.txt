@@ -1,0 +1,15 @@
+checkpoint head : 53a29a9a184989be846bc2cc42798dd95a6c6746
+main (1st par)  : c1e37ec14b93fb24d51d8d5fada9a1e600f8ac57 (PR #40 CI-GPU-ICD on main)
+wave (2nd par)  : b6176aa688bb396fab18cb967bba726ec51f3b3b (wave/ui-d final head)
+
+six-leg gate on the NEW checkpoint merged head (fresh transcripts, not d0761bd's):
+  fmt       : exit 0
+  licensing : exit 0 (6/6)
+  clippy    : exit 0 (--workspace --all-targets -D warnings)
+  test      : exit 0 (4608 passed / 0 failed; first parallel run hit the
+              documented egui_kittest exit-time teardown SIGSEGV in pick_gpu,
+              zero test failures, isolated pick_gpu 123/0 + feature_tree 125/0
+              both exit 0; clean re-run is the gate evidence)
+  precommit : gate PASS (pytest 559 passed / 28 skipped; rollback/layout binary
+              teardown SIGSEGV flakes re-run clean)
+  shot      : exit 0, frame 56afced6... == UI-D12 golden, no drift

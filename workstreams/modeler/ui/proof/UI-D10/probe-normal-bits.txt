@@ -1,0 +1,13 @@
+demo Front    camera-rot-normal mismatches (smooth/flat) = 0 / 0
+demo Back     camera-rot-normal mismatches (smooth/flat) = 0 / 24
+demo Left     camera-rot-normal mismatches (smooth/flat) = 24 / 16
+demo Right    camera-rot-normal mismatches (smooth/flat) = 24 / 16
+demo Top      camera-rot-normal mismatches (smooth/flat) = 24 / 16
+demo Bottom   camera-rot-normal mismatches (smooth/flat) = 24 / 16
+demo Iso      camera-rot-normal mismatches (smooth/flat) = 24 / 24
+demo all-culled camera mismatches = 24
+overlap 3/4 camera: box-proxy smooth mismatches = 24, mesh-cube smooth mismatches = 36
+TOTAL mismatched per-vertex normals across golden fixtures = 292
+thread 'probe_d10_normal_bits' (1304703) panicked at crates/oep-viewer/tests/probe_d10_normals.rs:177:5:
+Design A normal rotation is NOT bit-identical (292 mismatches); Design B required
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

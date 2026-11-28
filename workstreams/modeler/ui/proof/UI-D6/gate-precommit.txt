@@ -1,0 +1,14 @@
+# gate-precommit: bash scripts/gate/precommit-gate.sh (VIRTUAL_ENV=/home/r1a/.hermes/hermes-agent/venv)
+# head: f628f99a3094f26f3edea3e1e4f5d78e6c8be333
+# run: 2026-11-26T13:34:39Z
+
+== quality gate: ui-d6 ==
+  [run]  pytest
+  [ok]   pytest (559 passed, 28 skipped, 1 warning in 123.04s (0:02:03))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==
+
+## exit: 0

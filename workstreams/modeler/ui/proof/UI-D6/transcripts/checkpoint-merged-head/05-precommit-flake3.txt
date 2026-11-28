@@ -1,0 +1,15 @@
+== quality gate: ui-d6 ==
+  [run]  pytest
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 190.66s (0:03:10))
+  [run]  cargo test
+  [FAIL] cargo test
+running 123 tests
+....................................................................................... 87/123
+................................error: test failed, to rerun pass `-p oep-app --test pick_gpu`
+
+Caused by:
+  process didn't exit successfully: `/home/r1a/isolith-main/.worktrees/ui-d6/target/debug/deps/pick_gpu-40d99ae674f62f12 --quiet` (signal: 11, SIGSEGV: invalid memory reference)
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate FAIL ==
+PRECOMMIT_RC=1

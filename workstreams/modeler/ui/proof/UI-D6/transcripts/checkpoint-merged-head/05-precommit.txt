@@ -1,0 +1,9 @@
+== quality gate: ui-d6 ==
+  [run]  pytest
+  [ok]   pytest (558 passed, 29 skipped, 1 warning in 123.56s (0:02:03))
+  [run]  cargo test
+  [ok]   cargo test
+  [skip] no UI files staged
+  [skip] render mode not configured
+== gate PASS ==
+PRECOMMIT_RC=0

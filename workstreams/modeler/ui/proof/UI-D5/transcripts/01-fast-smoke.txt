@@ -1,0 +1,10 @@
+   Compiling oep-viewer v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d11/crates/oep-viewer)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.85s
+     Running tests/perf_budget.rs (target/debug/deps/perf_budget-9a090529fae1d8d8)
+
+running 2 tests
+test perf_budget_1m_gpu_heavy ... ignored
+test perf_budget_fast_smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.57s
+

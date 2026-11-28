@@ -1,0 +1,207 @@
+   Compiling oep-geo v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-d8/crates/oep-geo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.60s
+     Running unittests src/lib.rs (target/debug/deps/oep_geo-dcbb33f940b5fd51)
+
+running 23 tests
+test math::tests::identity_quat_is_identity_rotation ... ok
+test math::tests::transform_point4_identity_is_point_with_w1 ... ok
+test math::tests::mat4_mul_by_identity_is_identity ... ok
+test math::tests::rotation_det_is_one ... ok
+test math::tests::quat_to_axis_angle_identity ... ok
+test math::tests::transform_point4_perspective_yields_w_equals_neg_z_view ... ok
+test math::tests::transform_point4_translation_moves_xyz_leaves_w1 ... ok
+test math::tests::vec4_basics ... ok
+test tessellate::tests::concave_profile_clips_without_error ... ok
+test tessellate::tests::extrude_is_deterministic ... ok
+test tessellate::tests::extrude_rectangle_volume_and_bbox ... ok
+test tessellate::tests::extrude_rejects_degenerate_and_bad_height ... ok
+test tessellate::tests::extrude_winding_counter_clockwise_input_reversed ... ok
+test tessellate::tests::revolve_half_turn_quarter_volume ... ok
+test tessellate::tests::revolve_is_deterministic ... ok
+test tessellate::tests::revolve_rectangle_full_turn_annular_volume ... ok
+test tessellate::tests::revolve_rejects_negative_radius ... ok
+test tolerance::tests::default_constants_match_struct ... ok
+test tolerance::tests::explicit_constructor ... ok
+test transform::tests::identity_layout ... ok
+test transform::tests::translation_layout ... ok
+test units::tests::canonical_identity_angle ... ok
+test units::tests::canonical_identity_length ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/exporters_contract.rs (target/debug/deps/exporters_contract-2acfbe8a638788ec)
+
+running 12 tests
+test degenerate_triangle_is_type_error_not_panic ... ok
+test binary_stl_matches_golden ... ok
+test empty_mesh_is_type_error_not_panic ... ok
+test ascii_stl_is_well_formed ... ok
+test glb_matches_golden ... ok
+test obj_matches_golden ... ok
+test gltf_json_bin_pair_matches_glb ... ok
+test out_of_range_index_is_type_error_not_panic ... ok
+test pdf_drawing_matches_golden ... ok
+test writers_sink_to_any_write_without_panic ... ok
+test step_matches_golden ... ok
+test svg_2d_matches_golden ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/feature_graph_contract.rs (target/debug/deps/feature_graph_contract-6d048db5385f2dbb)
+
+running 15 tests
+test builds_bracket_tree_with_parent_and_ref_edges ... ok
+test add_root_and_add_child_reject_dup_ids_and_unknown_parents ... ok
+test evaluator_is_pluggable_with_custom_value_type ... ok
+test committed_golden_roundtrips ... ok
+test from_text_rejects_garbage_and_malformed ... ok
+test params_are_sorted_and_typed ... ok
+test parent_feeds_input_when_no_refs ... ok
+test regenerate_golden ... ok
+test replay_is_deterministic ... ok
+test replay_produces_known_good_trace_in_creation_order ... ok
+test unknown_kind_and_unknown_ids_still_decode ... ok
+test serializer_matches_committed_golden ... ok
+test serialize_deserialize_is_identity_and_canonical ... ok
+test unknown_kind_is_tolerant_with_partial_trace ... ok
+test validate_rejects_unknown_and_forward_refs ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/history_contract.rs (target/debug/deps/history_contract-9dc202e4b4bb25c4)
+
+running 13 tests
+test bounded_capacity_drops_oldest ... ok
+test clear_resets_to_empty ... ok
+test commit_undo_redo_cursor_semantics ... ok
+test from_text_rejects_garbage_and_malformed ... ok
+test new_commit_truncates_redo_branch ... ok
+test regenerate_golden ... ok
+test golden_roundtrips_and_has_expected_shape ... ok
+test serialize_then_deserialize_is_identity ... ok
+test serializer_snapshot_matches_committed_golden ... ok
+test topology_state_encode_decode_is_strict ... ok
+test topology_state_records_default_empty ... ok
+test unbounded_capacity_keeps_everything ... ok
+test undo_at_bottom_and_redo_at_top_are_noops ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/kernel_replay.rs (target/debug/deps/kernel_replay-291894fae7aa6dee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/kernel_seam.rs (target/debug/deps/kernel_seam-fee7ba16cc063753)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/math_contract.rs (target/debug/deps/math_contract-3774d85a4bc108fd)
+
+running 17 tests
+test golden_quat_rotate_x_about_z_90 ... ok
+test errors_are_typed_not_panics ... ok
+test golden_rotate_x_about_z_90 ... ok
+test golden_translation_compose ... ok
+test golden_roundtrip_array16 ... ok
+test slerp_endpoints_and_midpoint ... ok
+test prop_vec3_normalize ... ok
+test prop_quat_inverse_roundtrip ... ok
+test prop_quat_matrix_equiv ... ok
+test prop_vec3_dot_cross_identities ... ok
+test prop_quat_group_morphism ... ok
+test prop_quat_rotation_isometry ... ok
+test prop_rotation_isometry_mat4 ... ok
+test prop_translation_composition_random ... ok
+test prop_mat3_associative ... ok
+test prop_mat4_array16_roundtrip_random ... ok
+test prop_mat4_inverse_recovers ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/nurbs_eval.rs (target/debug/deps/nurbs_eval-526c5b60076d2e4c)
+
+running 9 tests
+test bspline_basis_sum_to_one ... ok
+test circle_curve_matches_golden_spots ... ok
+test circle_curve_radius_is_exactly_one ... ok
+test cubic_bezier_matches_bernstein ... ok
+test linear_bspline_reproduces_polygon ... ok
+test cylinder_surface_matches_golden_spots ... ok
+test derivative_agrees_with_finite_difference ... ok
+test circle_curve_tangent_orthogonal_to_radius ... ok
+test cylinder_surface_radius_is_exactly_one ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/predicates_contract.rs (target/debug/deps/predicates_contract-dfcdf96dba51fe34)
+
+running 18 tests
+test degenerate_and_non_finite_never_panic ... ok
+test golden_aabb_containment ... ok
+test golden_line_distance_and_on ... ok
+test golden_on_plane_tolerance_bucket ... ok
+test golden_plane_signed_and_unsigned_distance ... ok
+test golden_point_point_distance ... ok
+test golden_segment_distance_and_on ... ok
+test golden_sphere_distance_containment ... ok
+test golden_triangle_containment_with_coplanarity_gate ... ok
+test prop_point_point_symmetry ... ok
+test prop_plane_signed_vs_reference_and_unsigned_consistency ... ok
+test prop_aabb_containment_reference ... ok
+test prop_triangle_constructed_inside_outside ... ok
+test prop_sphere_containment_and_boundary ... ok
+test prop_triangle_containment_vs_halfplane_reference ... ok
+test prop_on_off_line_segment_consistency ... ok
+test prop_line_distance_vs_numeric_reference ... ok
+test prop_segment_distance_vs_numeric_reference ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/schema_serde.rs (target/debug/deps/schema_serde-2b2b491f2bfb17e6)
+
+running 14 tests
+test regenerate_golden ... ok
+test instance_source_serializes_as_interned_tag ... ok
+test transform_helpers_build_documented_matrices ... ok
+test drawing_model_round_trips_in_document ... ok
+test v1_payload_migrates_to_current_version ... ok
+test serializer_snapshot_matches_committed_golden ... ok
+test validate_rejects_assembly_cycle ... ok
+test validate_rejects_broken_drawings ... ok
+test golden_roundtrips_and_validates_clean ... ok
+test serialize_then_deserialize_is_identity ... ok
+test validate_rejects_non_finite_transform ... ok
+test validate_rejects_duplicate_id ... ok
+test validate_rejects_unresolved_instance_source ... ok
+test validate_rejects_unresolved_part_ref ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/units_tolerance.rs (target/debug/deps/units_tolerance-6430910cfef2e764)
+
+running 12 tests
+test angle_unit_degree_radian_roundtrip ... ok
+test approx_eq_relative_scale_invariance ... ok
+test approx_eq_absolute_floor ... ok
+test approx_zero ... ok
+test golden_byte_locked ... ok
+test in_units_rescales_linear_abs ... ok
+test length_unit_cross_convert ... ok
+test length_unit_exact_conversions_to_millimetre ... ok
+test length_unit_parse_symbol_table ... ok
+test non_finite_inputs_never_panic ... ok
+test points_eq_distance ... ok
+test tolerance_defaults ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests oep_geo
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,8 @@
+$ cargo test --workspace
+
+exit 0; 235 test-result blocks: 7229 passed / 0 failed (includes unit+integration+doc tests across every workspace crate).
+
+Tail of the run:
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

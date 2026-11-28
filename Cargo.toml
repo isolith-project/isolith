@@ -57,3 +57,4 @@ repository = "https://github.com/isolith-project/isolith"
 [workspace.dependencies]
 eframe = { version = "0.37.0" }
 egui = { version = "0.37.0" }
+wgpu = { version = "30.0.2" }

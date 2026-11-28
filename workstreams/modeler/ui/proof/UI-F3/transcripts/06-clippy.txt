@@ -1,0 +1,3 @@
+    Checking oep-app v0.1.0 (/home/r1a/isolith-main/.worktrees/ui-f3/crates/oep-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.20s
+CLIPPY=0

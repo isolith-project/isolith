@@ -1,0 +1,12 @@
+$ git fetch github
+
+$ git merge github/wave/ui-d (STEP 0, run first, at the start of this run)
+Already up to date.
+
+STEP 0 outcome: my branch ui/d3-gpu-pick now == wave head
+ca9aa1b Merge branch 'ui/d1-gpu-backend' into merge-UI-D1
+82d9302 card(UI-D1): record the final acceptance gate on the committed tree
+43ebe18 card(UI-D1): wgpu GPU viewport behind the seam, shared device with egui
+6275787 Merge pull request #31 from isolith-project/checkpoint/wave-ui-c-bc69f8b
+c5aea6d checkpoint(wave-ui-c): model tree, properties, variables -- cards UI-C1..UI-C7
+bc69f8b merge-UI-C7: UI-WAVE-C-INTEGRATE record (proof, README row, wave record, decision record)

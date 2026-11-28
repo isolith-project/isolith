@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running tests/perf_budget.rs (target/debug/deps/perf_budget-9a090529fae1d8d8)
+
+running 2 tests
+test perf_budget_1m_gpu_heavy ... ignored
+perf scene: 1002528 triangles (target >= 1,000,000), 502681 vertices, bounds Some((Vec3 { x: -1.0, y: -1.0, z: -0.19999893009662628 }, Vec3 { x: 1.0, y: 1.0, z: 0.19999893009662628 }))
+cpu determinism: demo frame_hash = 12597229237775278722  (committed golden 12597229237775278722, equal = true)
+gpu adapter: name=NVIDIA GB10 driver=NVIDIA driver_info=580.178.04 backend=Vulkan device_type=IntegratedGpu
+ISOLITH_PERF_STAGES frame=1 total=7.192ms assemble.normals=0.010ms assemble.project+cull=0.009ms assemble.sort=0.001ms assemble.expand=0.007ms assemble=0.045ms assemble.other=0.019ms vertex-prep=0.198ms submit=0.424ms readback+w=6.501ms hash=5.451ms
+ISOLITH_PERF_STAGES frame=2 total=1.094ms assemble.normals=0.008ms assemble.project+cull=0.008ms assemble.sort=0.001ms assemble.expand=0.007ms assemble=0.040ms assemble.other=0.017ms vertex-prep=0.318ms submit=0.275ms readback+w=0.441ms hash=5.327ms
+ISOLITH_PERF_STAGES frame=3 total=0.790ms assemble.normals=0.007ms assemble.project+cull=0.007ms assemble.sort=0.001ms assemble.expand=0.006ms assemble=0.036ms assemble.other=0.015ms vertex-prep=0.164ms submit=0.199ms readback+w=0.379ms hash=5.336ms
+gpu structural echo: frame_hash 9287941873092625150 -> 9287941873092625150, identical = true
+test perf_budget_fast_smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
