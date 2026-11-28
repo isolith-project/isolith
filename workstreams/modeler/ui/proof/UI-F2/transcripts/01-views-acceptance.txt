@@ -1,0 +1,15 @@
+test views_panel_publishes_report_with_placement_surface_reachable ... ok
+after place base + projected top:
+ALIGN: base_cx = 148.5  proj_cx = 148.5
+pre-drag deltas: base=(0.000000000, 0.000000000) proj=(0.000000000, 0.000000000)
+after placing detail view:
+DETAIL: requested scale=0.5 rendered=(160, 12) analytic=(160, 12)
+after placing section view:
+SECTION HATCH: rendered = 17  analytic = 17
+section region (mm) = 40x6
+test detail_view_magnifies_region_at_exactly_the_requested_scale ... ok
+test section_view_shows_hatching_equal_to_the_analytic_count ... ok
+after base drag:
+DRAG DELTA: base moved (141.414141414, -53.030303030) mm, projected moved (141.414141414, -53.030303030) mm
+test base_and_projected_stay_aligned_and_follow_the_base_drag_exactly ... ok
+test result: ok. 158 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.92s
