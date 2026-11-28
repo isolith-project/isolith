@@ -61,6 +61,13 @@ mod views;
 #[path = "annotate.rs"]
 mod annotate;
 
+// Wave F (card UI-F4 UI-DRAWING-EXPORT): SVG and PDF export from the UI with
+// a print preview and honest errors. A `#[path]` child module exactly like
+// `views` and `annotate` above; `show` renders it with ONE call below.
+#[allow(dead_code, clippy::duplicate_mod)]
+#[path = "drawing_export.rs"]
+mod drawing_export;
+
 /// Context-data key under which the panel reports its `String` oracle every
 /// frame (sheet count, selection, per-sheet properties, placement legality,
 /// document hash). Cross-`#[path]`-copy safe; the acceptance harness names it
@@ -606,6 +613,11 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             // annotation tools (dimensions, leaders, notes, document-bound
             // title block), rendered after the view placement tools.
             annotate::show(ui, app, &mut model);
+
+            // Wave F (card UI-F4 UI-DRAWING-EXPORT): the ONE additive call of
+            // the export tools (print preview + SVG/PDF export + honest
+            // errors), rendered after the annotation tools.
+            drawing_export::show(ui, app, &mut model);
         });
 
     publish_report(ui.ctx(), &model);

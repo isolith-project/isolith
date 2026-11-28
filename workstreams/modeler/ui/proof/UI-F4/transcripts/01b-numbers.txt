@@ -1,0 +1,14 @@
+error=ExportError::Io { path: "/home/r1a/.hermes/cache/scratch/ui-f4-unwritable-3439032/drawing.blocker/out.pdf", source: Not a directory (os error 20) }
+GOLDEN pdf: page 0 0 297 210, content ops 45
+ACTUAL pdf: page 0 0 297 210, content ops 45
+PDF byte-identical to golden: 1946 == 1946 bytes
+preview elements = 45, SVG serialized elements = 45
+test unwritable_export_path_surfaces_named_error_and_leaves_no_partial_file ... ok
+test export_runs_from_the_real_ui_path ... ok
+test pdf_matches_the_committed_bracket_golden_within_tolerance ... ok
+PDF serialized elements = 45
+test print_preview_element_count_matches_the_export ... ok
+SVG #1 hash = 7869596012267675978 (3158 bytes)
+SVG #2 hash = 7869596012267675978 (3158 bytes)
+test svg_export_is_deterministic_two_exports_byte_identical ... ok
+test result: ok. 170 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.45s
