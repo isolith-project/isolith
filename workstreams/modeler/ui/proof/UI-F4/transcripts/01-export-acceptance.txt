@@ -1,0 +1,260 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.15s
+     Running tests/drawing_export.rs (target/debug/deps/drawing_export-b927fd5478f64885)
+
+running 170 tests
+test app::panels::assy_tree::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::assy_tree::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+analytic-corner: dir=(0.577350,0.577350,0.577350) yaw=0.785398163397 pitch=0.615479708670 current=Top expected=Top match=true
+analytic-corner: dir=(-0.577350,0.577350,0.577350) yaw=-0.785398163397 pitch=0.615479708670 current=Top expected=Top match=true
+test app::panels::assy_tree::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... analytic-corner: dir=(0.577350,-0.577350,0.577350) yaw=0.785398163397 pitch=-0.615479708670 current=Bottom expected=Bottom match=true
+analytic-corner: dir=(-0.577350,-0.577350,0.577350) yaw=-0.785398163397 pitch=-0.615479708670 current=Bottom expected=Bottom match=true
+analytic: view=Front yaw=0.000000000000 pitch=0.000000000000 current=Front expected=Front match=true
+analytic: view=Back yaw=3.141592653590 pitch=0.000000000000 current=Back expected=Back match=true
+okanalytic: view=Left yaw=-1.570796326795 pitch=0.000000000000 current=Left expected=Left match=true
+analytic: view=Right yaw=1.570796326795 pitch=0.000000000000 current=Right expected=Right match=true
+
+analytic: view=Top yaw=0.000000000000 pitch=1.540000000000 current=Top expected=Top match=true
+analytic: view=Bottom yaw=0.000000000000 pitch=-1.540000000000 current=Bottom expected=Bottom match=true
+test app::panels::assy_tree::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::assy_tree::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::assy_tree::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::assy_tree::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::assy_tree::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::doc::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::doc::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+resolve: "Front" at its own point resolves to "Left-Bottom" (covered at this pose)
+test app::panels::doc::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+resolve: "Back" at its own point resolves to "Right-Top" (covered at this pose)
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... ok
+resolve: "Left" at its own point resolves to "Front" (covered at this pose)
+test app::panels::doc::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+resolve: "Top" at its own point resolves to "Back-Left" (covered at this pose)
+test app::panels::doc::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+resolve: "Bottom" at its own point resolves to "Front-Right" (covered at this pose)
+test app::panels::doc::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::doc::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::doc::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::nav_cube::tests::cube_rect_is_clear_of_shading_card ... ok
+test app::panels::nav_cube::tests::current_face_at_four_isometric_corners ... ok
+test app::panels::nav_cube::tests::current_face_matches_literal_standard_views ... ok
+test app::panels::nav_cube::tests::camera_quaternion_matches_target_orientation_to_1e9 ... ok
+test app::panels::nav_cube::tests::edge_and_corner_directions_are_analytic ... ok
+test app::panels::nav_cube::tests::projection_is_flush_and_centred ... ok
+test app::panels::nav_cube::tests::edge_and_corner_tables_are_geometrically_sound ... ok
+test app::panels::properties::dimensions::tests::measure_last_line_from_the_sketch_oracle ... ok
+test app::panels::properties::dimensions::tests::place_with_no_line_is_an_honest_noop ... ok
+test app::panels::properties::dimensions::tests::resolve_width_times_factor ... ok
+test app::panels::properties::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::properties::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::nav_cube::tests::resolve_picks_each_target_at_its_own_point ... ok
+test app::panels::properties::dimensions::tests::resolve_unknown_variable_is_named ... ok
+test app::panels::properties::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::nav_cube::tests::each_target_resolves_at_its_own_pose ... ok
+test app::panels::properties::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::properties::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::properties::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::properties::feature_preview::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::properties::feature_preview::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::properties::feature_preview::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::properties::feature_preview::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::properties::feature_preview::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::properties::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::properties::dimensions::tests::resolve_malformed_expressions_are_named ... ok
+test app::panels::properties::feature_preview::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::properties::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::properties::dimensions::tests::resolve_bare_name_through_the_variable_table ... ok
+test app::panels::properties::feature_preview::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::properties::feature_preview::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::sheet::annotate::tests::annotation_json_is_deterministic ... ok
+test app::panels::properties::feature_preview::tests::feature_tokens_are_registry_validated ... ok
+test app::panels::settings::tests::help_text_explains_flag_and_conservative_default ... ok
+test app::panels::properties::feature_preview::tests::open_chain_is_not_a_closed_loop ... ok
+test app::panels::properties::dimensions::tests::resolve_arithmetic_precedence_and_parentheses ... ok
+test app::panels::properties::feature_preview::tests::geometry_parses_a_closed_loop ... ok
+test app::panels::properties::dimensions::tests::invalid_expression_refused_and_leaves_everything_untouched ... ok
+test app::panels::settings::tests::nav_cube_click_to_align_defaults_off ... ok
+test app::panels::sheet::annotate::tests::fnv_matches_the_waves_hash_constant ... ok
+test app::panels::sheet::annotate::tests::leader_and_note_json_round_trip_byte_identical ... ok
+test app::panels::sheet::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::sheet::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::sheet::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::settings::tests::settings_round_trip_through_context_store ... ok
+test app::panels::sheet::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::properties::dimensions::tests::place_sets_width_and_drives_the_document_volume ... ok
+test app::panels::sheet::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::sheet::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::sheet::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::sheet::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::sheet::drawing_export::tests::empty_document_renders_no_sheet_honestly ... ok
+test app::panels::properties::feature_preview::tests::closed_loop_clone_extrudes_and_reports_volume ... ok
+test app::panels::sheet::tests::legal_placement_matches_layout_seam ... ok
+test app::panels::sheet::tests::scale_mapping_round_trips ... ok
+test app::panels::sheet::tests::third_angle_forbids_first_angle_top_placement ... ok
+test app::panels::properties::dimensions::tests::unknown_variable_error_names_the_variable ... ok
+test app::panels::properties::feature_preview::tests::closed_loop_clone_revolves ... ok
+test app::panels::sheet::drawing_export::tests::panel_render_matches_the_committed_fixture ... ok
+test app::panels::sheet::tests::bracket_fixture_round_trips_through_canonical_bytes ... ok
+test app::panels::tree::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::tree::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::tree::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::tree::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::tree::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::tree::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::tree::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::tree::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::viewport::features::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::viewport::features::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::viewport::features::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::sheet::drawing_export::tests::writers_serialize_the_same_element_count_as_the_preview ... ok
+test app::panels::viewport::features::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::viewport::features::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::viewport::features::tests::feature_tokens_are_registry_validated ... ok
+test app::panels::viewport::features::tests::geometry_parses_a_closed_loop ... ok
+test app::panels::viewport::features::tests::open_chain_is_not_a_closed_loop ... ok
+test app::panels::viewport::features::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::viewport::features::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::viewport::nav::tests::committed_section_numbers_match_literals ... ok
+test app::panels::properties::dimensions::tests::edit_width_times_factor_moves_the_volume ... ok
+test app::panels::viewport::sketch::constraints::tests::apply_with_no_target_is_an_honest_noop ... ok
+test app::panels::viewport::features::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::viewport::pick_gpu::tests::scene_of_defaults_to_the_demo_scene ... ok
+test app::panels::viewport::pick_gpu::tests::scene_override_key_is_respected ... ok
+test app::panels::viewport::pick_gpu::tests::min_box_constant_is_positive ... ok
+test app::panels::sheet::drawing_export::tests::export_writes_and_reports_or_fails_named_without_partial_file ... ok
+test app::panels::viewport::sketch::constraints::tests::coincident_cost_matches_the_solver ... ok
+test app::panels::sheet::annotate::tests::title_block_is_bound_to_the_document_part_name_property ... ok
+test app::panels::sheet::views::tests::section_hatch_is_nonzero_and_matches_analytic ... ok
+test app::panels::sheet::annotate::tests::place_dimension_writes_a_width_record_to_the_sheet ... ok
+test app::panels::viewport::sketch::constraints::tests::apply_and_remove_drive_the_whole_tool_path ... ok
+test app::panels::viewport::features::tests::closed_loop_clone_revolves ... ok
+test app::panels::viewport::sketch::constraints::tests::inconsistent_set_is_a_named_conflict_not_a_partial_solve ... ok
+test app::panels::viewport::sketch::constraints::tests::unknown_target_is_a_named_error ... ok
+test app::panels::viewport::sketch::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::viewport::sketch::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::viewport::sketch::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::viewport::sketch::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::sheet::views::tests::detail_extents_match_analytic_at_requested_scale ... ok
+test app::panels::viewport::sketch::constraints::tests::targets_resolve_the_last_committed_entities ... ok
+test app::panels::sheet::views::tests::base_drag_moves_projected_by_exact_delta ... ok
+test app::panels::viewport::sketch::constraints::tests::dof_matches_the_solver_on_the_tool_path ... ok
+test app::panels::sheet::views::tests::projected_top_offset_is_x_aligned_from_layout_seam ... ok
+test app::panels::viewport::features::tests::closed_loop_clone_extrudes_and_reports_volume ... ok
+test app::panels::sheet::drawing_export::tests::rederived_graph_replays_to_the_fixture_mesh ... ok
+test app::panels::viewport::sketch::constraints::tests::removing_restores_the_prior_dof ... ok
+test app::panels::viewport::sketch::constraints::tests::kinds_are_stable_and_describe_their_targets ... ok
+test app::panels::viewport::sketch::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::viewport::sketch::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::viewport::sketch::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::viewport::sketch::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::viewport::sketch::constraints::tests::redundant_constraint_reports_over_constrained_named_state ... ok
+test app::panels::viewport::sketch::snap::tests::closest_point_on_a_segment_is_clamped ... ok
+test app::panels::viewport::sketch::snap::tests::priority_order_is_explicit_and_ranked ... ok
+test app::panels::viewport::sketch::snap::tests::every_kind_has_a_distinct_id_and_label ... ok
+test app::panels::viewport::sketch::constraints::tests::length_dim_expression_round_trips_through_the_seam ... ok
+test app::panels::viewport::sketch::snap::tests::toggle_token_is_a_sk_family_command_token ... ok
+test app::panels::viewport::sketch::tests::every_plane_has_consistent_axes ... ok
+test app::panels::viewport::sketch::tests::orientation_looks_along_the_normal ... ok
+test app::panels::viewport::sketch::tests::nearest_and_most_frontal_plane_wins ... ok
+test app::panels::viewport::sketch::snap::tests::segment_crossings_are_found_exactly ... ok
+test app::panels::viewport::sketch::tests::report_keeps_uib3_fields_and_carries_doc_counts ... ok
+test app::panels::viewport::sketch::tests::vertical_normal_never_degenerates ... ok
+test app::panels::viewport::sketch::tools::tests::circle_tool_commits_centre_and_radius ... ok
+test app::panels::viewport::sketch::tools::tests::adding_geometry_changes_the_document_hash ... ok
+test app::panels::viewport::sketch::tools::tests::completion_counts_are_the_cards ... ok
+test app::panels::viewport::sketch::tools::tests::emitted_command_tokens_are_registry_validated ... ok
+test app::panels::viewport::sketch::tools::tests::escape_cancels_one_step_then_the_second_leaves_the_tool ... ok
+test app::panels::viewport::sketch::tests::plane_uv_round_trips_a_world_point_on_the_plane ... ok
+test app::panels::viewport::sketch::tools::tests::four_clicks_build_a_closed_rectangle_and_reset ... ok
+test app::panels::viewport::sketch::tools::tests::line_tool_commits_two_points_and_one_line ... ok
+test app::panels::viewport::sketch::tools::tests::placing_a_vertex_rearms_the_one_cancel ... ok
+test app::panels::viewport::sketch::tools::tests::every_tool_has_a_distinct_key_and_id ... ok
+test app::panels::viewport::sketch::tools::tests::polyline_defers_commit_until_finish ... ok
+test app::panels::viewport::sketch::tools::tests::point_tool_commits_one_point ... ok
+test app::panels::viewport::sketch::tools::tests::polyline_single_vertex_finishes_as_a_point ... ok
+test app::panels::viewport::sketch::tools::tests::preview_is_tool_state_until_the_gesture_completes ... ok
+test app::panels::viewport::sketch::tools::tests::sketch_doc_assigns_ids_and_hashes_deterministically ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test app::panels::sheet::annotate::tests::re_driven_dimension_numbers_agree_at_multiple_widths ... ok
+test app::panels::viewport::sketch::constraints::tests::driver_reports_over_constrained_and_remove_heals ... ok
+test app::panels::properties::dimensions::tests::driven_volume_is_5_times_width_squared ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+preview report (before export):
+preview=1
+elements=45
+path=/home/r1a/.hermes/cache/scratch/ui-f4-preview-3439032/drawing
+svg_bytes=0
+svg_hash=0
+pdf_bytes=0
+pdf_hash=0
+last_was_svg=0
+error=-
+last=-
+
+real UI buttons reachable: Export SVG at [[964 2295] - [1045.0938 2315]], Export PDF at [[1053.0938 2295] - [1134.5 2315]]
+first export report:
+preview=1
+elements=45
+path=/home/r1a/.hermes/cache/scratch/ui-f4-svg-a-3439032/drawing
+svg_bytes=3158
+svg_hash=7869596012267675978
+pdf_bytes=0
+pdf_hash=0
+last_was_svg=1
+error=-
+last=exported /home/r1a/.hermes/cache/scratch/ui-f4-svg-a-3439032/drawing.svg (3158 bytes, hash 7869596012267675978)
+
+failed export report:
+preview=1
+elements=45
+path=/home/r1a/.hermes/cache/scratch/ui-f4-unwritable-3439032/drawing.blocker/out
+svg_bytes=0
+svg_hash=0
+pdf_bytes=0
+pdf_hash=0
+last_was_svg=0
+error=ExportError::Io { path: "/home/r1a/.hermes/cache/scratch/ui-f4-unwritable-3439032/drawing.blocker/out.pdf", source: Not a directory (os error 20) }
+last=export PDF failed: ExportError::Io { path: "/home/r1a/.hermes/cache/scratch/ui-f4-unwritable-3439032/drawing.blocker/out.pdf", source: Not a directory (os error 20) }
+
+pdf export report:
+preview=1
+elements=45
+path=/home/r1a/.hermes/cache/scratch/ui-f4-pdf-3439032/drawing
+svg_bytes=0
+svg_hash=0
+pdf_bytes=1946
+pdf_hash=6195926147067519631
+last_was_svg=0
+error=-
+last=exported /home/r1a/.hermes/cache/scratch/ui-f4-pdf-3439032/drawing.pdf (1946 bytes, hash 6195926147067519631)
+
+GOLDEN pdf: page 0 0 297 210, content ops 45
+ACTUAL pdf: page 0 0 297 210, content ops 45
+PDF byte-identical to golden: 1946 == 1946 bytes
+preview elements = 45, SVG serialized elements = 45
+export report:
+preview=1
+elements=45
+path=/home/r1a/.hermes/cache/scratch/ui-f4-uipath-3439032/drawing
+svg_bytes=3158
+svg_hash=7869596012267675978
+pdf_bytes=0
+pdf_hash=0
+last_was_svg=1
+error=-
+last=exported /home/r1a/.hermes/cache/scratch/ui-f4-uipath-3439032/drawing.svg (3158 bytes, hash 7869596012267675978)
+
+test unwritable_export_path_surfaces_named_error_and_leaves_no_partial_file ... ok
+test export_runs_from_the_real_ui_path ... ok
+test pdf_matches_the_committed_bracket_golden_within_tolerance ... ok
+PDF serialized elements = 45
+test print_preview_element_count_matches_the_export ... ok
+SVG #1 hash = 7869596012267675978 (3158 bytes)
+SVG #2 hash = 7869596012267675978 (3158 bytes)
+test svg_export_is_deterministic_two_exports_byte_identical ... ok
+
+test result: ok. 170 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.45s
+

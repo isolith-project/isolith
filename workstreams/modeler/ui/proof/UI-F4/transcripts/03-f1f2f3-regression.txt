@@ -1,0 +1,11 @@
+cargo test -p oep-app --test sheet
+SHEET_EXIT=0
+test result: ok. 170 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.04s
+
+cargo test -p oep-app --test views
+VIEWS_EXIT=0
+test result: ok. 169 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.06s
+
+cargo test -p oep-app --test annotate
+ANNOTATE_EXIT=0
+test result: ok. 170 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.33s
