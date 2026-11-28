@@ -1,0 +1,383 @@
+
+running 165 tests
+test app::panels::assy_tree::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::assy_tree::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::assy_tree::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::assy_tree::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::assy_tree::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::assy_tree::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::doc::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::assy_tree::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::doc::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::assy_tree::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::doc::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+analytic-corner: dir=(0.577350,0.577350,0.577350) yaw=0.785398163397 pitch=0.615479708670 current=Top expected=Top match=true
+analytic-corner: dir=(-0.577350,0.577350,0.577350) yaw=-0.785398163397 pitch=0.615479708670 current=Top expected=Top match=true
+test app::panels::contrast_test::every_region_frame_carries_stroke_and_fill_distinct_from_window_surface ... analytic-corner: dir=(0.577350,-0.577350,0.577350) yaw=0.785398163397 pitch=-0.615479708670 current=Bottom expected=Bottom match=true
+ok
+analytic-corner: dir=(-0.577350,-0.577350,0.577350) yaw=-0.785398163397 pitch=-0.615479708670 current=Bottom expected=Bottom match=true
+test app::panels::doc::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::doc::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::doc::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::doc::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+resolve: "Front" at its own point resolves to "Left-Bottom" (covered at this pose)
+test app::panels::doc::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+resolve: "Back" at its own point resolves to "Right-Top" (covered at this pose)
+resolve: "Left" at its own point resolves to "Front" (covered at this pose)
+analytic: view=Front yaw=0.000000000000 pitch=0.000000000000 current=Front expected=Front match=true
+analytic: view=Back yaw=3.141592653590 pitch=0.000000000000 current=Back expected=Back match=true
+analytic: view=Left yaw=-1.570796326795 pitch=0.000000000000 current=Left expected=Left match=true
+analytic: view=Right yaw=1.570796326795 pitch=0.000000000000 current=Right expected=Right match=true
+analytic: view=Top yaw=0.000000000000 pitch=1.540000000000 current=Top expected=Top match=true
+analytic: view=Bottom yaw=0.000000000000 pitch=-1.540000000000 current=Bottom expected=Bottom match=true
+resolve: "Top" at its own point resolves to "Back-Left" (covered at this pose)
+resolve: "Bottom" at its own point resolves to "Front-Right" (covered at this pose)
+test app::panels::nav_cube::tests::camera_quaternion_matches_target_orientation_to_1e9 ... ok
+test app::panels::nav_cube::tests::cube_rect_is_clear_of_shading_card ... ok
+test app::panels::nav_cube::tests::current_face_at_four_isometric_corners ... ok
+test app::panels::properties::dimensions::tests::resolve_arithmetic_precedence_and_parentheses ... ok
+test app::panels::nav_cube::tests::current_face_matches_literal_standard_views ... ok
+test app::panels::properties::dimensions::tests::resolve_unknown_variable_is_named ... ok
+test app::panels::nav_cube::tests::edge_and_corner_tables_are_geometrically_sound ... ok
+test app::panels::nav_cube::tests::projection_is_flush_and_centred ... ok
+test app::panels::properties::dimensions::tests::place_with_no_line_is_an_honest_noop ... ok
+test app::panels::properties::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::properties::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::nav_cube::tests::resolve_picks_each_target_at_its_own_point ... ok
+test app::panels::properties::dimensions::tests::measure_last_line_from_the_sketch_oracle ... ok
+test app::panels::properties::dimensions::tests::resolve_width_times_factor ... ok
+test app::panels::properties::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::properties::dimensions::tests::resolve_bare_name_through_the_variable_table ... ok
+test app::panels::properties::dimensions::tests::resolve_malformed_expressions_are_named ... ok
+test app::panels::properties::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::properties::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::properties::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::properties::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::nav_cube::tests::edge_and_corner_directions_are_analytic ... ok
+test app::panels::properties::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::properties::feature_preview::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::properties::feature_preview::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::properties::feature_preview::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::properties::feature_preview::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::properties::feature_preview::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::properties::feature_preview::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::properties::feature_preview::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::properties::feature_preview::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::properties::feature_preview::tests::feature_tokens_are_registry_validated ... ok
+test app::panels::properties::feature_preview::tests::geometry_parses_a_closed_loop ... ok
+test app::panels::properties::feature_preview::tests::open_chain_is_not_a_closed_loop ... ok
+test app::panels::settings::tests::help_text_explains_flag_and_conservative_default ... ok
+test app::panels::settings::tests::nav_cube_click_to_align_defaults_off ... ok
+test app::panels::sheet::annotate::tests::fnv_matches_the_waves_hash_constant ... ok
+test app::panels::sheet::annotate::tests::annotation_json_is_deterministic ... ok
+test app::panels::nav_cube::tests::each_target_resolves_at_its_own_pose ... ok
+test app::panels::settings::tests::settings_round_trip_through_context_store ... ok
+test app::panels::sheet::annotate::tests::leader_and_note_json_round_trip_byte_identical ... ok
+test app::panels::sheet::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::sheet::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::sheet::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::sheet::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::sheet::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::sheet::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::sheet::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::sheet::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::sheet::tests::legal_placement_matches_layout_seam ... ok
+test app::panels::sheet::tests::scale_mapping_round_trips ... ok
+test app::panels::sheet::tests::third_angle_forbids_first_angle_top_placement ... ok
+test app::panels::tree::doc_io::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::properties::feature_preview::tests::closed_loop_clone_extrudes_and_reports_volume ... ok
+test app::panels::tree::doc_io::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::tree::doc_io::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::tree::doc_io::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::viewport::features::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::tree::doc_io::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::tree::doc_io::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::viewport::features::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::tree::doc_io::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::viewport::features::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::viewport::features::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::viewport::features::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::viewport::features::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::viewport::features::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::viewport::features::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::viewport::features::tests::feature_tokens_are_registry_validated ... ok
+test app::panels::tree::doc_io::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::properties::dimensions::tests::invalid_expression_refused_and_leaves_everything_untouched ... ok
+test app::panels::sheet::views::tests::projected_top_offset_is_x_aligned_from_layout_seam ... ok
+test app::panels::viewport::features::tests::geometry_parses_a_closed_loop ... ok
+test app::panels::properties::feature_preview::tests::closed_loop_clone_revolves ... ok
+test app::panels::viewport::pick_gpu::tests::min_box_constant_is_positive ... ok
+test app::panels::viewport::nav::tests::committed_section_numbers_match_literals ... ok
+test app::panels::viewport::sketch::constraints::tests::apply_with_no_target_is_an_honest_noop ... ok
+test app::panels::sheet::annotate::tests::title_block_is_bound_to_the_document_part_name_property ... ok
+test app::panels::viewport::pick_gpu::tests::scene_of_defaults_to_the_demo_scene ... ok
+test app::panels::sheet::tests::bracket_fixture_round_trips_through_canonical_bytes ... ok
+test app::panels::viewport::features::tests::open_chain_is_not_a_closed_loop ... ok
+test app::panels::viewport::sketch::constraints::tests::coincident_cost_matches_the_solver ... ok
+test app::panels::properties::dimensions::tests::unknown_variable_error_names_the_variable ... ok
+test app::panels::viewport::pick_gpu::tests::scene_override_key_is_respected ... ok
+test app::panels::viewport::features::tests::closed_loop_clone_extrudes_and_reports_volume ... ok
+test app::panels::sheet::views::tests::base_drag_moves_projected_by_exact_delta ... ok
+test app::panels::viewport::sketch::constraints::tests::kinds_are_stable_and_describe_their_targets ... ok
+test app::panels::sheet::views::tests::detail_extents_match_analytic_at_requested_scale ... ok
+test app::panels::viewport::sketch::constraints::tests::apply_and_remove_drive_the_whole_tool_path ... ok
+test app::panels::viewport::sketch::constraints::tests::targets_resolve_the_last_committed_entities ... ok
+test app::panels::sheet::views::tests::section_hatch_is_nonzero_and_matches_analytic ... ok
+test app::panels::viewport::sketch::constraints::tests::unknown_target_is_a_named_error ... ok
+test app::panels::viewport::sketch::history::tests::bounded_capacity_drops_the_oldest ... ok
+test app::panels::viewport::sketch::history::tests::boundary_undo_at_bottom_and_redo_at_top_are_noops ... ok
+test app::panels::viewport::sketch::history::tests::discrete_commands_never_coalesce ... ok
+test app::panels::viewport::sketch::history::tests::different_drag_id_opens_a_fresh_entry ... ok
+test app::panels::viewport::sketch::history::tests::fifty_same_drag_commands_coalesce_into_one_entry ... ok
+test app::panels::viewport::sketch::history::tests::new_edit_after_undo_truncates_the_redo_branch ... ok
+test app::panels::viewport::sketch::history::tests::same_drag_id_after_end_drag_starts_a_new_entry ... ok
+test app::panels::viewport::sketch::constraints::tests::dof_matches_the_solver_on_the_tool_path ... ok
+test app::panels::viewport::sketch::history::tests::undo_and_redo_return_the_exact_hashes ... ok
+test app::panels::viewport::sketch::constraints::tests::length_dim_expression_round_trips_through_the_seam ... ok
+test app::panels::viewport::sketch::snap::tests::closest_point_on_a_segment_is_clamped ... ok
+test app::panels::viewport::sketch::constraints::tests::inconsistent_set_is_a_named_conflict_not_a_partial_solve ... ok
+test app::panels::viewport::sketch::snap::tests::every_kind_has_a_distinct_id_and_label ... ok
+test app::panels::viewport::sketch::snap::tests::priority_order_is_explicit_and_ranked ... ok
+test app::panels::viewport::sketch::snap::tests::segment_crossings_are_found_exactly ... ok
+test app::panels::viewport::sketch::snap::tests::toggle_token_is_a_sk_family_command_token ... ok
+test app::panels::viewport::sketch::tests::every_plane_has_consistent_axes ... ok
+test app::panels::viewport::sketch::tests::orientation_looks_along_the_normal ... ok
+test app::panels::viewport::sketch::tests::nearest_and_most_frontal_plane_wins ... ok
+test app::panels::viewport::features::tests::closed_loop_clone_revolves ... ok
+test app::panels::viewport::sketch::tests::plane_uv_round_trips_a_world_point_on_the_plane ... ok
+test app::panels::viewport::sketch::tests::report_keeps_uib3_fields_and_carries_doc_counts ... ok
+test app::panels::sheet::annotate::tests::place_dimension_writes_a_width_record_to_the_sheet ... ok
+test app::panels::viewport::sketch::tests::vertical_normal_never_degenerates ... ok
+test app::panels::viewport::sketch::tools::tests::adding_geometry_changes_the_document_hash ... ok
+test app::panels::viewport::sketch::tools::tests::circle_tool_commits_centre_and_radius ... ok
+test app::panels::viewport::sketch::tools::tests::completion_counts_are_the_cards ... ok
+test app::panels::viewport::sketch::tools::tests::emitted_command_tokens_are_registry_validated ... ok
+test app::panels::viewport::sketch::tools::tests::escape_cancels_one_step_then_the_second_leaves_the_tool ... ok
+test app::panels::viewport::sketch::tools::tests::every_tool_has_a_distinct_key_and_id ... ok
+test app::panels::viewport::sketch::tools::tests::four_clicks_build_a_closed_rectangle_and_reset ... ok
+test app::panels::viewport::sketch::tools::tests::line_tool_commits_two_points_and_one_line ... ok
+test app::panels::viewport::sketch::tools::tests::placing_a_vertex_rearms_the_one_cancel ... ok
+test app::panels::viewport::sketch::tools::tests::point_tool_commits_one_point ... ok
+test app::panels::viewport::sketch::tools::tests::polyline_defers_commit_until_finish ... ok
+test app::panels::viewport::sketch::tools::tests::polyline_single_vertex_finishes_as_a_point ... ok
+test app::panels::viewport::sketch::tools::tests::preview_is_tool_state_until_the_gesture_completes ... ok
+test app::panels::viewport::sketch::tools::tests::sketch_doc_assigns_ids_and_hashes_deterministically ... ok
+test config::tests::regions_partition_window_without_overlap_at_acceptance_sizes ... ok
+test config::tests::missing_or_malformed_config_falls_back_safely ... ok
+test config::tests::shell_layout_round_trips_same_sizes ... ok
+test theme::guard::the_guard_tools_themselves_detect_literals ... ok
+test app::panels::properties::dimensions::tests::place_sets_width_and_drives_the_document_volume ... ok
+test app::panels::viewport::sketch::constraints::tests::removing_restores_the_prior_dof ... ok
+test app::panels::viewport::sketch::constraints::tests::redundant_constraint_reports_over_constrained_named_state ... ok
+test app::panels::properties::dimensions::tests::driven_volume_is_5_times_width_squared ... ok
+test app::panels::sheet::annotate::tests::re_driven_dimension_numbers_agree_at_multiple_widths ... ok
+test app::panels::properties::dimensions::tests::edit_width_times_factor_moves_the_volume ... ok
+test theme::guard::no_strong_text_outside_theme_rs ... ok
+test app::panels::viewport::sketch::constraints::tests::driver_reports_over_constrained_and_remove_heals ... ok
+test theme::guard::no_raw_hex_or_direct_colour_construction_in_crates_oep_app_src ... ok
+fresh annotate report:
+tb_title=bracket
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket
+dim_placed=0
+dim_before=-
+dim_measured_before=-
+dim_geom_before=-
+dim_after=-
+dim_measured_after=-
+dim_geom_after=-
+dim_value_measured_diff=-
+dim_agree=-
+leaders=0
+notes=0
+annotate_json={"leaders":[],"notes":[]}
+json_hash=9574275848073481016
+last=-
+
+ORIGINAL part_name = bracket
+fresh annotate report:
+tb_title=bracket
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket
+dim_placed=0
+dim_before=-
+dim_measured_before=-
+dim_geom_before=-
+dim_after=-
+dim_measured_after=-
+dim_geom_after=-
+dim_value_measured_diff=-
+dim_agree=-
+leaders=0
+notes=0
+annotate_json={"leaders":[],"notes":[]}
+json_hash=9574275848073481016
+last=-
+
+tool "Place dimension (front width)" reachable at rect [[964 1965] - [1150.4375 1985]]
+tool "Add leader" reachable at rect [[964 2020] - [1043.0625 2040]]
+tool "Add note" reachable at rect [[1051.0625 2020] - [1120.625 2040]]
+tool "Edit part name" reachable at rect [[1092 1910] - [1193.1563 1930]]
+test annotate_tools_are_reachable_and_report_populated ... ok
+after placing leader + note:
+tb_title=bracket
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket
+dim_placed=0
+dim_before=-
+dim_measured_before=-
+dim_geom_before=-
+dim_after=-
+dim_measured_after=-
+dim_geom_after=-
+dim_value_measured_diff=-
+dim_agree=-
+leaders=1
+notes=1
+annotate_json={"leaders":[{"id":"oep-leader-1","text":"LEADER 1: C/L THIS FEATURE","x":120,"y":40,"to_x":148.5,"to_y":95}],"notes":[{"id":"oep-note-1","text":"NOTE 1: REMOVE ALL SHARP EDGES","x":100,"y":30}]}
+json_hash=7453889304312849599
+last=added note 1
+
+SAVED annotation JSON =
+{"leaders":[{"id":"oep-leader-1","text":"LEADER 1: C/L THIS FEATURE","x":120,"y":40,"to_x":148.5,"to_y":95}],"notes":[{"id":"oep-note-1","text":"NOTE 1: REMOVE ALL SHARP EDGES","x":100,"y":30}]}
+SAVED json hash = 7453889304312849599
+BEFORE edit: label=80 geometry=80
+after placing dimension:
+tb_title=bracket
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket
+dim_placed=1
+dim_before=80.000000000
+dim_measured_before=80.000000000
+dim_geom_before=80.000000000
+dim_after=80.000000000
+dim_measured_after=80.000000000
+dim_geom_after=80.000000000
+dim_value_measured_diff=0.000e0
+dim_agree=1
+leaders=0
+notes=0
+annotate_json={"leaders":[],"notes":[]}
+json_hash=9574275848073481016
+last=placed width dimension between two view points
+
+DIMENSION value = 80.000000000  measured = 80.000000000  geometry_w = 80.000000000  |value-measured| = 0.000e0
+after part-name edit:
+tb_title=bracket-mk2
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket-mk2
+dim_placed=0
+dim_before=-
+dim_measured_before=-
+dim_geom_before=-
+dim_after=-
+dim_measured_after=-
+dim_geom_after=-
+dim_value_measured_diff=-
+dim_agree=-
+leaders=0
+notes=0
+annotate_json={"leaders":[],"notes":[]}
+json_hash=9574275848073481016
+last=set part name = bracket-mk2
+
+DOC PROPERTY part_name = bracket-mk2
+TITLE BLOCK tb_title = bracket-mk2
+after edit:
+tb_title=bracket
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket
+dim_placed=1
+dim_before=80.000000000
+dim_measured_before=80.000000000
+dim_geom_before=80.000000000
+dim_after=120.000000000
+dim_measured_after=120.000000000
+dim_geom_after=120.000000000
+dim_value_measured_diff=0.000e0
+dim_agree=1
+leaders=0
+notes=0
+annotate_json={"leaders":[],"notes":[]}
+json_hash=9574275848073481016
+last=dim 80 -> 120: label 80.000000->120.000000, geometry 80.000000->120.000000, agree=true
+
+AFTER edit: label=120 measured=120 geometry=120 diff=0.000e0 agree=1
+test placed_dimension_reads_the_model_value_within_1e_6 ... ok
+test title_block_is_fed_from_document_properties_no_second_edit ... ok
+test editing_dimension_moves_both_view_geometry_and_label ... ok
+REOPENED annotation JSON =
+{"leaders":[{"id":"oep-leader-1","text":"LEADER 1: C/L THIS FEATURE","x":120,"y":40,"to_x":148.5,"to_y":95}],"notes":[{"id":"oep-note-1","text":"NOTE 1: REMOVE ALL SHARP EDGES","x":100,"y":30}]}
+REOPENED json hash = 7453889304312849599
+reopened report:
+tb_title=bracket
+tb_part_number=ISO-BKT-001
+tb_material=6061-T6
+tb_scale=1:1
+tb_revision=A
+tb_drawn_by=oep-drafting
+tb_date=2026-10-22
+tb_sheet=1 of 1
+tb_company=Isolith
+part_name=bracket
+dim_placed=0
+dim_before=-
+dim_measured_before=-
+dim_geom_before=-
+dim_after=-
+dim_measured_after=-
+dim_geom_after=-
+dim_value_measured_diff=-
+dim_agree=-
+leaders=1
+notes=1
+annotate_json={"leaders":[{"id":"oep-leader-1","text":"LEADER 1: C/L THIS FEATURE","x":120,"y":40,"to_x":148.5,"to_y":95}],"notes":[{"id":"oep-note-1","text":"NOTE 1: REMOVE ALL SHARP EDGES","x":100,"y":30}]}
+json_hash=7453889304312849599
+last=reopened annotation records
+
+test leader_and_note_round_trip_through_save_and_reopen ... ok
+
+test result: ok. 165 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.24s
+

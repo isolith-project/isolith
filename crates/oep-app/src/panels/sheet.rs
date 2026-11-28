@@ -54,6 +54,13 @@ mod doc_io;
 #[path = "views.rs"]
 mod views;
 
+// Wave F (card UI-F3 UI-ANNOTATE): the annotation tools - dimension, leader
+// and note placement plus the document-bound title block. A `#[path]` child
+// module exactly like `views` above; `show` renders it with ONE call below.
+#[allow(dead_code, clippy::duplicate_mod)]
+#[path = "annotate.rs"]
+mod annotate;
+
 /// Context-data key under which the panel reports its `String` oracle every
 /// frame (sheet count, selection, per-sheet properties, placement legality,
 /// document hash). Cross-`#[path]`-copy safe; the acceptance harness names it
@@ -594,6 +601,11 @@ pub fn show(ui: &mut egui::Ui, app: &mut App) {
             // their exact layout). Everything below stays placed on the same
             // selected sheet through the same journaled model.
             views::show(ui, app, &mut model);
+
+            // Wave F (card UI-F3 UI-ANNOTATE): the ONE additive call of the
+            // annotation tools (dimensions, leaders, notes, document-bound
+            // title block), rendered after the view placement tools.
+            annotate::show(ui, app, &mut model);
         });
 
     publish_report(ui.ctx(), &model);
