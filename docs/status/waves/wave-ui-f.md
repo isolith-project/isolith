@@ -37,11 +37,14 @@ depth-sort branch) IS an ancestor of the wave head (audit
 - `main` (`a68505d`) IS an ancestor of the wave head, so the checkpoint merge
   tree is byte-identical to the wave tree; `git diff --stat` HEAD vs
   `github/wave/ui-f` is empty. The six-leg gate therefore measures the same
-  tree as the checkpoint merged head.
-- Landing: PR #<PR> merged as `<MAIN>` (`github/main`), annotated tag
-  `wave-ui-f` (`<TAG>`) -> checkpoint `<CHECKPOINT>`, Gitea mirror
-  fast-forwarded to `<MAIN>` with the tag, and `github/wave/ui-g` created at
-  `<MAIN>`. Transcripts `proof/UI-F5/transcripts/landing/`.
+  tree as the checkpoint merged head. The checkpoint commit was amended with
+  the close record + gate transcripts + screenshots (docs only, same parents)
+  to `af13b2b` - that amended commit is the one merged and tagged.
+- Landing: PR #43 merged as `1edbf639` (`github/main`), annotated tag
+  `wave-ui-f` (`63a83145`, peeling to the checkpoint commit `af13b2b` - never
+  main's tip), Gitea mirror fast-forwarded to `1edbf639` with the tag, and
+  `github/wave/ui-g` created at `1edbf639`. Transcripts
+  `proof/UI-F5/transcripts/landing/`.
 - The UI-F5 record (this file, the README row, `proof/UI-F5/`) is folded into
   the single checkpoint commit and re-committed onto the wave branch, per the
   wave-close convention.

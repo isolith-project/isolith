@@ -1,0 +1,16 @@
+# post-landing read-back (real output)
+# github ls-remote
+1edbf639acdbadb357bce23a84e5ab3db8ed7816	refs/heads/main
+92601fd666684cd23c5e2fdfdca8a257e5930439	refs/heads/wave/ui-f
+1edbf639acdbadb357bce23a84e5ab3db8ed7816	refs/heads/wave/ui-g
+63a831456292002b1a4f4120378318724ea67cb9	refs/tags/wave-ui-f
+# gitea ls-remote
+1edbf639acdbadb357bce23a84e5ab3db8ed7816	refs/heads/main
+63a831456292002b1a4f4120378318724ea67cb9	refs/tags/wave-ui-f
+# wave-F card branches ancestor of github/wave/ui-f:
+  ANCESTOR  ui/f1-sheet (4f48f30)
+  ANCESTOR  ui/f2-views (a0ac7ef)
+  ANCESTOR  ui/f3-annotate (355a355)
+  ANCESTOR  ui/f4-drawing-export (ef1dc5b)
+  ANCESTOR  ui/d11-depth-sort (7d508b8)
+# tag target: af13b2b6dafa2c901cb562157ab9542aa6ec8d69

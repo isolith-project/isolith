@@ -1,0 +1,4 @@
+# annotated tag wave-ui-f at the CHECKPOINT commit (not main's tip)
+# git rev-parse wave-ui-f^{commit} = af13b2b6dafa2c901cb562157ab9542aa6ec8d69
+# expected: af13b2b (main tip is 1edbf639 - would be wrong)
+# pushed to github (git push github --tags) and gitea (git push gitea --tags)

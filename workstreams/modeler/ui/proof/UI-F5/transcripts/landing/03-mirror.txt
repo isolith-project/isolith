@@ -1,0 +1,4 @@
+# Gitea mirror fast-forward
+# git push gitea (temp branch tracking refs/heads/main):
+#   a68505d..1edbf63  temp-gitea-mirror -> main
+# gitea main now == github main == 1edbf639; tag wave-ui-f pushed to gitea

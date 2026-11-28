@@ -1,0 +1,6 @@
+# PR merge
+# PR #43: checkpoint(wave-ui-f): drafting lane - cards UI-F1..UI-F4 and UI-D11
+# head checkpoint/wave-ui-f-eaedab0, base main; merged 2026-11-28T19:45:09Z
+# merge commit on main: 1edbf639acdbadb357bce23a84e5ab3db8ed7816 (parents a68505d + af13b2b)
+# all 16 CI checks green (14 SUCCESS, 2 SKIPPED: export-control-release-required, reproducible-build); mergeStateStatus CLEAN before merge
+# gh --merge (never squash): the checkpoint commit af13b2b survives as a parent of main
