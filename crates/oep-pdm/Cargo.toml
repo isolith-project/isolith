@@ -15,7 +15,7 @@ serde_json = "1"
 # Content addressing (P8-M1-T02): file blobs live under their sha-256.
 sha2 = "0.10"
 # Contract wire encoding for uploads (base64 file content in JSON body).
-base64 = "0.22"
+base64 = "0.23"
 
 # Web stack (P8-M1-T01 decision: workstreams/pdm/service/web-stack-adr.md, Rust axum).
 # Pinned major; the exact resolutions live in the workspace Cargo.lock.
