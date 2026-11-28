@@ -446,12 +446,7 @@ fn analytic_nearest_grid(scene: &Scene, cam: &Camera, width: u32, height: u32) -
 /// pass) to the analytic nearest-surface grid wherever both see a face.
 /// Returns `(wrong_pixels, compared_pixels, sampled mismatches)`.
 type WrongStats = (usize, usize, Vec<(u32, u32, u32, u32)>);
-fn wrong_surface_stats(
-    pass: &IdPass,
-    analytic: &[i32],
-    width: u32,
-    height: u32,
-) -> WrongStats {
+fn wrong_surface_stats(pass: &IdPass, analytic: &[i32], width: u32, height: u32) -> WrongStats {
     let mut wrong = 0usize;
     let mut compared = 0usize;
     let mut samples = Vec::new();
@@ -516,8 +511,9 @@ struct ProbeResult {
 }
 
 /// Run the whole Stage-1 probe on one scene: render through the real backend
-/// + id pass at every pose, count wrong surfaces vs the analytic oracle, keep
-/// the worst pose, dump the colour frame + a wrong-surface overlay image.
+/// and id pass at every pose, count wrong surfaces vs the analytic oracle,
+/// keep the worst pose, and dump the colour frame plus a wrong-surface
+/// overlay image.
 fn probe_scene(name: &'static str, scene: Scene, ctx: &GpuContext) -> ProbeResult {
     let bounds = scene.bounds.expect("scene bounds");
     let base_cam = Camera::framed(&bounds);
@@ -538,7 +534,7 @@ fn probe_scene(name: &'static str, scene: Scene, ctx: &GpuContext) -> ProbeResul
                 wrong as f64 / compared as f64 * 100.0
             }
         );
-        if best.as_ref().map(|b| wrong > b.2.0).unwrap_or(true) {
+        if best.as_ref().map(|b| wrong > b.2 .0).unwrap_or(true) {
             best = Some((dyaw, dpitch, (wrong, compared, samples)));
         }
     }

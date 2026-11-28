@@ -161,16 +161,17 @@ two independent launches byte-identical each (sha256 in proof):
 
 ## What is not done / deferred
 
-- **UI-D11 (UI-DEPTH-SORT, reverse-Z depth buffer) is deliberately NOT part of
-  wave D and is deferred (parked in `scheduled` for Don's decision).** It is a
-  correctness upgrade that changes the GPU output contract (per-pixel depth
-  ordering, GPU regolden, id-parity and transparency re-verification), NOT a
-  budget fix. The premise that auto-cut it - that the painter sort could not
-  reach the budget - is false: UI-D10 measured p95 6.366 ms at the full
-  1,002,528-triangle / 1600x1000 scene against the 16.6 ms bar, so the budget is
-  met with the painter sort retained. Its branch `ui/d11-depth-sort` was never
-  merged into `wave/ui-d` (no remote branch exists) and the ancestry check does
-  not fail on it.
+- **UI-D11 (UI-DEPTH-SORT, reverse-Z depth buffer) was deliberately NOT part of
+  wave D.** On 2026-11-28 Don authorised it as a render-correctness fix
+  (ADR Option B / prior-art Stage 3b) with measured proof, and it lands inside
+  wave F (before the wave-F checkpoint and tag) from branch `ui/d11-depth-sort`
+  merged onto `github/wave/ui-f`. It is a correctness upgrade that changes the
+  GPU output contract (per-pixel depth ordering, GPU regolden, id-parity and
+  transparency re-verification), NOT a budget fix: the painter-sort-budget
+  premise is false (UI-D10 measured p95 6.366 ms at 1,002,528 triangles against
+  the 16.6 ms bar), but the painter was measured wrong on 23-33% of
+  interpenetrating/concave surfaces (proof `workstreams/modeler/ui/proof/UI-D11/`),
+  which is what the depth buffer fixes.
 - The wave-C variables/ kernel-features hosting gap (panels delivered
   `#[path]`-includable and unhosted) is unchanged by wave D; the UI-C3 kittest
   harness remains the accepted variables evidence per the wave-C orchestrator
